@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{644F9ECF-5910-FB24-BE75-204F942F3D04}</ProjectGuid>
+    <ProjectGuid>{34FE23E3-7CBF-6040-0356-4F0970009238}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>FMODUnity</AssemblyName>
@@ -53,33 +53,33 @@
     <UnityVersion>2021.2.11f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_studio.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformPlayInEditor.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\BankRefAttribute.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\ParamRefAttribute.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioGlobalParameterTrigger.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_dsp.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformGroup.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioListener.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_errors.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioGlobalParameterTrigger.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\Timeline\FMODEventTrack.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\RuntimeUtils.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\FMODRuntimeManagerOnGUIHelper.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformDefault.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_dsp.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\Platform.cs" />
-    <Compile Include="Assets\Plugins\FMOD\platforms\win\src\PlatformWindows.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Runtime\ParamRef.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\Settings.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\Timeline\FMODEventPlayable.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\RuntimeManager.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioEventEmitter.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\RuntimeUtils.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Runtime\EventHandler.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\ParamRefAttribute.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\Timeline\FMODEventTrack.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\Timeline\FMODEventPlayable.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\CodeGeneration.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_studio.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\Settings.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioBankLoader.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod_errors.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\BankRefAttribute.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\Platform.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\FMODRuntimeManagerOnGUIHelper.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\RuntimeManager.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Runtime\EventRefAttribute.cs" />
+    <Compile Include="Assets\Plugins\FMOD\platforms\win\src\PlatformWindows.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\wrapper\fmod.cs" />
     <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioParameterTrigger.cs" />
     <Compile Include="Assets\Plugins\FMOD\platforms\mac\src\PlatformMac.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioBankLoader.cs" />
-    <Compile Include="Assets\Plugins\FMOD\src\Runtime\CodeGeneration.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\StudioEventEmitter.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformPlayInEditor.cs" />
+    <Compile Include="Assets\Plugins\FMOD\src\Runtime\PlatformDefault.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\FMOD\lib\win\x86\resonanceaudio.dll" />
@@ -370,11 +370,11 @@
     <Reference Include="log4netPlastic">
       <HintPath>Library\PackageCache\com.unity.collab-proxy@1.15.7\Lib\Editor\PlasticSCM\log4netPlastic.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.Burst.Cecil.Rocks">
-      <HintPath>Library\PackageCache\com.unity.burst@1.6.4\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.VisualScripting.Antlr3.Runtime">
       <HintPath>Library\PackageCache\com.unity.visualscripting@1.7.6\Runtime\VisualScripting.Flow\Dependencies\NCalc\Unity.VisualScripting.Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.Burst.Cecil.Rocks">
+      <HintPath>Library\PackageCache\com.unity.burst@1.6.4\Unity.Burst.CodeGen\Unity.Burst.Cecil.Rocks.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>Library\PackageCache\com.unity.nuget.newtonsoft-json@2.0.0\Runtime\Newtonsoft.Json.dll</HintPath>

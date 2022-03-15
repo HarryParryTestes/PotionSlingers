@@ -26,6 +26,7 @@ public class Hover_MarketCards : MonoBehaviour, IPointerEnterHandler, IPointerEx
         transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
         transform.localScale = new Vector3(3f, 3f, 3f);
         // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
     }
  
     // When mouse stops hovering over object:
