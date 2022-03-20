@@ -13,6 +13,9 @@ public class Card : MonoBehaviour
     public string cardQuality; // Cold, Dry, Wet, Hot, None
     public Image cardImage; // Ex: PS_AS_BasicBattleBaster.png
     public Sprite cardSprite;
+    public int buyPrice;
+    public int sellPrice;
+    public string desc;
 
 
     public Card() 
@@ -21,7 +24,7 @@ public class Card : MonoBehaviour
     }
 
     public Card(int Id, string CardName, string CardType, string CardEffect, int EffectAmount, 
-                string CardQuality) 
+                string CardQuality, int sell, int buy, string description) 
     {
         id = Id;
         cardName = CardName;
@@ -29,6 +32,9 @@ public class Card : MonoBehaviour
         cardEffect = CardEffect;
         effectAmount = EffectAmount;
         cardQuality = CardQuality;
+        sellPrice = sell;
+        buyPrice = buy;
+        desc = description;
         //cardImage = gameObject.GetComponent<Image>();
     }
 
@@ -45,5 +51,43 @@ public class Card : MonoBehaviour
         ret.cardQuality = cardQuality;
 
         return ret;
+    }
+
+    public void runAbility() {
+        Console.Write("This should be overwritten");
+    }
+
+    //Add x points to the given player's health
+    //Parameters:
+        //x: Number of points to add
+        //player: The player whose health is to be added
+    public void Heal(int x, Player player) {
+        player.health += x;
+        if(player.health > 10) {
+            player.health = 10;
+        }
+    }
+
+    //Subtract x points to the given player's health
+    //Parameters:
+        //x: Number of points to subtract
+        //player: The player from which health is to be taken
+    public void Attack(int x, Player player) {
+        player.health -= x;
+        if(player.health < 0) {
+            player.health = 0;
+        }
+    }
+
+    public void moveCardToDeck(Card card, Deck deck) {
+        deck.add(card);
+    }
+
+    public string getCardEffect() {
+        return this.cardEffect;
+    }
+
+    public int getEffectAmount() {
+        return this.effectAmount;
     }
 }
