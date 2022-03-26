@@ -54,34 +54,34 @@ public class Card : MonoBehaviour
     }
 
     public void runAbility() {
-        Console.Write("This should be overwritten");
+        Debug.Log("This should be overwritten");
     }
 
     //Add x points to the given player's health
     //Parameters:
         //x: Number of points to add
         //player: The player whose health is to be added
-    public void Heal(int x, Player player) {
-        player.health += x;
-        if(player.health > 10) {
-            player.health = 10;
-        }
-    }
+    // public void Heal(int x, Player player) {
+    //     player.health += x;
+    //     if(player.health > 10) {
+    //         player.health = 10;
+    //     }
+    // }
 
     //Subtract x points to the given player's health
     //Parameters:
         //x: Number of points to subtract
         //player: The player from which health is to be taken
-    public void Attack(int x, Player player) {
-        player.health -= x;
-        if(player.health < 0) {
-            player.health = 0;
-        }
-    }
+    // public void Attack(int x, Player player) {
+    //     player.health -= x;
+    //     if(player.health < 0) {
+    //         player.health = 0;
+    //     }
+    // }
 
-    public void moveCardToDeck(Card card, Deck deck) {
-        deck.add(card);
-    }
+    // public void moveCardToDeck(Card card, Deck deck) {
+    //     deck.add(card);
+    // }
 
     public string getCardEffect() {
         return this.cardEffect;
