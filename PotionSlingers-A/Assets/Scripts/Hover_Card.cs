@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Hover_PlayerCards : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     Vector3 cachedScale;
     Vector3 originalPos;
