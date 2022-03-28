@@ -22,8 +22,10 @@ public class Hover_PlayerCards : MonoBehaviour, IPointerEnterHandler, IPointerEx
         float width = rt.sizeDelta.x * rt.localScale.x;
         float height = rt.sizeDelta.y * rt.localScale.y;
         transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
-        transform.localScale = new Vector3(3f, 3f, 3f);
-        transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
+        transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+        // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
+
+        // Card Hover sound effect:
         FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
     }
  

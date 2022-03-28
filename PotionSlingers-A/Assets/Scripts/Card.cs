@@ -24,7 +24,7 @@ public class Card : MonoBehaviour
     }
 
     public Card(int Id, string CardName, string CardType, string CardEffect, int EffectAmount, 
-                string CardQuality, int sell, int buy, string description) 
+                string CardQuality, int SellPrice, int BuyPrice, string Description) 
     {
         id = Id;
         cardName = CardName;
@@ -32,9 +32,9 @@ public class Card : MonoBehaviour
         cardEffect = CardEffect;
         effectAmount = EffectAmount;
         cardQuality = CardQuality;
-        sellPrice = sell;
-        buyPrice = buy;
-        desc = description;
+        sellPrice = SellPrice;
+        buyPrice = BuyPrice;
+        desc = Description;
         //cardImage = gameObject.GetComponent<Image>();
     }
 
