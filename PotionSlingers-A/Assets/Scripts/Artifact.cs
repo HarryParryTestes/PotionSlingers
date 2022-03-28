@@ -12,7 +12,9 @@ public class Artifact : Card
 
     public Artifact(int Id, string cardName, string cardType, string CardEffect, 
     int effectAmount, string cardQuality, int sell, int buy, string desc) {
+        // Java uses super keyword, C# uses base keyword
         // super(Id, cardName, cardType, cardEffect, effectAmount, cardQuality, sell, buy, desc);
+
         artifactArr = new Card[1];
     }
 

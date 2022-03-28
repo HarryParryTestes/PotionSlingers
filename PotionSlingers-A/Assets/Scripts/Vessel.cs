@@ -43,7 +43,7 @@ public class Vessel : MonoBehaviour
     //         sendCardToBottomOfDeck(c, p.deck);
     //     }
     //     vesselArr[0] = null;
-    //     vesselArr[0] = null;
+    //     vesselArr[1] = null;
     // }
 
     /*
