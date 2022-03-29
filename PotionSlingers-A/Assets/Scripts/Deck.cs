@@ -5,39 +5,46 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     // the deck is uninitialized to begin with
-    public Queue deckQueue = null;
+    public List<Card> deckList;
     public bool isBuilt;
 
     public Deck()
     {
         isBuilt = false;
-        deckQueue = new Queue();
+        deckList = new List<Card>();
     }
 
-    public void setBuilt (bool isBuilt)
+    public void buildDeck()
     {
-        this.isBuilt = isBuilt;
+        if(isBuilt == false)
+        {
+            foreach (Card card in CardDatabase.cardList)
+            {
+                putCardOnTop(card);
+            }
+            isBuilt = true;
+            Debug.Log("Deck built:");
+        }
     }
 
     // puts a card on the bottom of the deck
     public void putCardOnBottom(Card card)
     {
-        deckQueue.Enqueue(card);
+        deckList.Add(card);
     }
 
     // puts a card on top of deck
     // get deque working for this?
     public void putCardOnTop(Card card)
     {
-        // figure this out lol
-
+        deckList.Insert(0, card);
     }
     public Card popCard()
     {
-        Card temp = default(Card);
-        if(deckQueue.Count > 1 && isBuilt)
+        Card temp = deckList[0];
+        if(deckList.Count > 1 && isBuilt)
         {
-            temp = (Card)deckQueue.Dequeue();
+            deckList.RemoveAt(0);
             Debug.Log("Card popped: ");
         }
         return temp;
