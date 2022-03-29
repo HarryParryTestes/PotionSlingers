@@ -38,6 +38,7 @@ public class Card : MonoBehaviour
         //cardImage = gameObject.GetComponent<Image>();
     }
 
+    // TODO: refactor this to include the buy and sell price, you'll have to refactor the code in CardDatabase.cs too
     public static Card MakeCardObject(int id, string cardName, string cardType, string cardEffect,
         int effectAmount, string cardQuality)
     {
