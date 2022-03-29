@@ -16,7 +16,8 @@ public class ThisCard : MonoBehaviour
 
     private string folderLocation;
     private Image myImg;
-    
+
+    /*
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +47,7 @@ public class ThisCard : MonoBehaviour
         cardSprite = Resources.Load<Sprite>("" + folderLocation + cardName);
         myImg.sprite = cardSprite;
     }
+    */
 
     // Update is called once per frame
     void Update()
