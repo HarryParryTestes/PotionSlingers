@@ -1026,6 +1026,8 @@ GameObject:
   - component: {fileID: 573524215}
   - component: {fileID: 573524217}
   - component: {fileID: 573524216}
+  - component: {fileID: 573524218}
+  - component: {fileID: 573524219}
   m_Layer: 5
   m_Name: DeckPile
   m_TagString: Untagged
@@ -1091,6 +1093,34 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 573524214}
   m_CullTransparentMesh: 1
+--- !u!114 &573524218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573524214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0986346dcd3ede4681d1ae62a25fd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckList: []
+  cardDisplay: {fileID: 573524219}
+--- !u!114 &573524219
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573524214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090810f65fe479e49a1497d6ce5fbf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: 627d44a7fc7ead542b158286e5c619e4, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &628987347
 GameObject:
   m_ObjectHideFlags: 0
