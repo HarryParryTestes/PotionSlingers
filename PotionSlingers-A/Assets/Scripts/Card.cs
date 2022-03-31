@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Card : MonoBehaviour
+[CreateAssetMenu(fileName = "New Card", menuName = "Card")]
+public class Card : ScriptableObject
 {
     public int id;
     public string cardName; // Ex: PS_AS_BasicBattleBaster
@@ -11,18 +12,14 @@ public class Card : MonoBehaviour
     public string cardEffect; // Attack, Heal, etc.
     public int effectAmount; // +2 Damage, +3 Heal, etc.
     public string cardQuality; // Cold, Dry, Wet, Hot, None
-    public Image cardImage; // Ex: PS_AS_BasicBattleBaster.png
+    //public Image cardImage; // Ex: PS_AS_BasicBattleBaster.png
     public Sprite cardSprite;
     public int buyPrice;
     public int sellPrice;
     public string desc;
 
 
-    public Card() 
-    {
-
-    }
-
+    /*
     public Card(int Id, string CardName, string CardType, string CardEffect, int EffectAmount, 
                 string CardQuality, int SellPrice, int BuyPrice, string Description) 
     {
@@ -37,7 +34,9 @@ public class Card : MonoBehaviour
         desc = Description;
         //cardImage = gameObject.GetComponent<Image>();
     }
+    */
 
+    /*
     // TODO: refactor this to include the buy and sell price, you'll have to refactor the code in CardDatabase.cs too
     public static Card MakeCardObject(int id, string cardName, string cardType, string cardEffect,
         int effectAmount, string cardQuality)
@@ -57,6 +56,7 @@ public class Card : MonoBehaviour
     public void runAbility() {
         Debug.Log("This should be overwritten");
     }
+    */
 
     //Add x points to the given player's health
     //Parameters:

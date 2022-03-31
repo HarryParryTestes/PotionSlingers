@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardDatabase : MonoBehaviour
 {
-    public static List<Card> cardList = new List<Card>();
+    //public static List<Card> cardList = new List<Card>();
 
     /*
     public int id;
@@ -18,6 +18,7 @@ public class CardDatabase : MonoBehaviour
 
     void Start()
     {
+        /*
         //cardList.Add(new Card(1, "PS_AS_BasicBattleBaster", "ARTIFACT", "DAMAGE", 2, "STARTER"));
         Card card1 = Card.MakeCardObject(1, "PS_AS_BasicBattleBaster", "ARTIFACT", "DAMAGE", 2, "STARTER");
         Card card2 = Card.MakeCardObject(2, "PS_AS_NeighborsHose", "ARTIFACT", "DAMAGE", 2, "STARTER");
@@ -31,5 +32,6 @@ public class CardDatabase : MonoBehaviour
         cardList.Add(card4);
         cardList.Add(card5);
         cardList.Add(card6);
+        */
     }
 }

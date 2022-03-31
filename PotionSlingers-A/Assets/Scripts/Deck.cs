@@ -5,15 +5,16 @@ using UnityEngine;
 public class Deck : MonoBehaviour
 {
     // the deck is uninitialized to begin with
-    public List<Card> deckList;
+    //public List<Card> deckList;
     public bool isBuilt;
 
     public Deck()
     {
         isBuilt = false;
-        deckList = new List<Card>();
+        //deckList = new List<Card>();
     }
 
+    /*
     public void buildDeck()
     {
         if(isBuilt == false)
@@ -49,6 +50,7 @@ public class Deck : MonoBehaviour
         }
         return temp;
     }
+    */
 
     // Start is called before the first frame update
     void Start()
