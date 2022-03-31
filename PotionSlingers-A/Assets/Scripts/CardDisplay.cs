@@ -15,4 +15,15 @@ public class CardDisplay : MonoBehaviour
         artworkImage.sprite = card.cardSprite;
     }
 
+    public void setCardImage()
+    {
+        artworkImage = this.GetComponent<Image>();
+        artworkImage.sprite = card.cardSprite;
+    }
+
+    // called when a card in deck/holster is clicked
+    public void clicked()
+    {
+        Debug.Log(card.cardName + " has been clicked.");
+    }
 }

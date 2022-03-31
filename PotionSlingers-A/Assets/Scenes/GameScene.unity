@@ -1028,6 +1028,7 @@ GameObject:
   - component: {fileID: 573524216}
   - component: {fileID: 573524218}
   - component: {fileID: 573524219}
+  - component: {fileID: 573524220}
   m_Layer: 5
   m_Name: DeckPile
   m_TagString: Untagged
@@ -1121,6 +1122,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   card: {fileID: 11400000, guid: 627d44a7fc7ead542b158286e5c619e4, type: 2}
   artworkImage: {fileID: 0}
+--- !u!114 &573524220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 573524214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &628987347
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,6 +1397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861909481}
+  - component: {fileID: 861909482}
   m_Layer: 5
   m_Name: Holster
   m_TagString: Untagged
@@ -1415,6 +1429,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &861909482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861909480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3657a840136c9dc4ba40c28f16b5e0eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cardList: []
+  deck: {fileID: 573524218}
+  card1: {fileID: 8365923717578268710}
+  card2: {fileID: 7758924205767680233}
+  card3: {fileID: 7314541838479060040}
+  card4: {fileID: 5161119629248880046}
 --- !u!1 &905353793
 GameObject:
   m_ObjectHideFlags: 0
