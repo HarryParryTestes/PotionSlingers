@@ -33,7 +33,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler
     public void putCardOnTop(Card card)
     {
         deckList.Insert(0, card);
-        //updateCardSprite();
+        updateCardSprite();
     }
     public Card popCard()
     {
@@ -42,7 +42,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler
         {
             deckList.RemoveAt(0);
             Debug.Log("Card popped: ");
-            //updateCardSprite();
+            updateCardSprite();
         }
         return temp;
     }
@@ -51,12 +51,14 @@ public class Deck : MonoBehaviour, IPointerDownHandler
     {
         //Output the name of the GameObject that is being clicked
         Debug.Log(name + "Game Object Click in Progress");
-        cardDisplay.clicked();
+        popCard();
     }
 
+    // makes the sprite of the cardDisplay match the top card in the list
     public void updateCardSprite()
     {
-        cardDisplay.card.cardSprite = deckList[0].cardSprite;
+        cardDisplay.card = deckList[0];
+        cardDisplay.artworkImage.sprite = cardDisplay.card.cardSprite;
     }
 
 
