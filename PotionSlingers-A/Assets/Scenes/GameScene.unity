@@ -133,7 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5979564}
   - component: {fileID: 5979569}
-  - component: {fileID: 5979568}
+  - component: {fileID: 5979570}
+  - component: {fileID: 5979571}
   m_Layer: 5
   m_Name: TheTwins
   m_TagString: Untagged
@@ -161,7 +162,29 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 165.4, y: 283.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5979568
+--- !u!222 &5979569
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979563}
+  m_CullTransparentMesh: 1
+--- !u!114 &5979570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5979563}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d824e6e0e650e479ba06f0c1a6b10cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 11400000, guid: e126101c9d11f44b18e0b4b27d14054a, type: 2}
+  artworkImage: {fileID: 0}
+--- !u!114 &5979571
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -181,7 +204,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 23483e3f5c9421a4498f13174c147555, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -191,14 +214,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!222 &5979569
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5979563}
-  m_CullTransparentMesh: 1
 --- !u!1 &55763528
 GameObject:
   m_ObjectHideFlags: 0
@@ -950,6 +965,7 @@ GameObject:
   - component: {fileID: 543400064}
   - component: {fileID: 543400066}
   - component: {fileID: 543400065}
+  - component: {fileID: 543400067}
   m_Layer: 5
   m_Name: Pluot
   m_TagString: Untagged
@@ -997,7 +1013,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 8eaec2f1bd587734fb18bfa386605a40, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1015,6 +1031,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 543400063}
   m_CullTransparentMesh: 1
+--- !u!114 &543400067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 543400063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d824e6e0e650e479ba06f0c1a6b10cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &573524214
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,6 +2121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1316039901}
+  - component: {fileID: 1316039902}
   m_Layer: 5
   m_Name: CharacterCard
   m_TagString: Untagged
@@ -2119,6 +2150,20 @@ RectTransform:
   m_AnchoredPosition: {x: 82.70001, y: 141.75}
   m_SizeDelta: {x: 165.40002, y: 283.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1316039902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316039900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d824e6e0e650e479ba06f0c1a6b10cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 0}
+  artworkImage: {fileID: 0}
 --- !u!1 &1317657373
 GameObject:
   m_ObjectHideFlags: 0
@@ -2838,6 +2883,7 @@ GameObject:
   - component: {fileID: 1624123899}
   - component: {fileID: 1624123901}
   - component: {fileID: 1624123900}
+  - component: {fileID: 1624123902}
   m_Layer: 5
   m_Name: TheTwins
   m_TagString: Untagged
@@ -2885,7 +2931,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 23483e3f5c9421a4498f13174c147555, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2903,6 +2949,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624123898}
   m_CullTransparentMesh: 1
+--- !u!114 &1624123902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624123898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d824e6e0e650e479ba06f0c1a6b10cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 11400000, guid: 51f610b86ef694a9ca5e7d96bb09e025, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &1645400816
 GameObject:
   m_ObjectHideFlags: 0
@@ -3070,6 +3130,7 @@ GameObject:
   - component: {fileID: 1714507734}
   - component: {fileID: 1714507736}
   - component: {fileID: 1714507735}
+  - component: {fileID: 1714507737}
   m_Layer: 5
   m_Name: Bolo
   m_TagString: Untagged
@@ -3117,7 +3178,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 31ad5ad439cf76242a86b6264d1c8f68, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3135,6 +3196,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1714507733}
   m_CullTransparentMesh: 1
+--- !u!114 &1714507737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714507733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d824e6e0e650e479ba06f0c1a6b10cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!114 &1733491772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3561,7 +3636,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: -230}
+  m_AnchoredPosition: {x: -20.000122, y: -230}
   m_SizeDelta: {x: 124.05, y: 212.625}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2001424105
@@ -4257,7 +4332,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 517358774657288987}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1

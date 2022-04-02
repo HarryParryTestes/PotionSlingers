@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427fc92928c31468884b9f596ff8bc38, type: 3}
+  m_Name: Pluot
+  m_EditorClassIdentifier: 
+  id: 0
+  cardName: Pluot
+  desc: At the start of your turn, Choose Hot, Cold, Wet or Dry. Potions of that
+    Quality deal +1 damage
+  image: {fileID: 21300000, guid: 8eaec2f1bd587734fb18bfa386605a40, type: 3}
+  flipTask: Throw all 4 potion qualities in 1 turn
+  flipped: 1
+  flippedImage: {fileID: 21300000, guid: 8beaf19038f9fce4794a3483ddb85a5d, type: 3}
+  flippedDesc: You may put "The Extra Inventory" into your holster. If you do, Flip
+    Pluot.
