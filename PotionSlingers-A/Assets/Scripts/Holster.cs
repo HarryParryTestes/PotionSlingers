@@ -24,7 +24,6 @@ public class Holster : MonoBehaviour, IPointerDownHandler
     {
         //Output the name of the GameObject that is being clicked
         Debug.Log(name + "Game Object Click in Progress");
-        deck.putCardOnTop(card4.card);
     }
 
     // Update is called once per frame
