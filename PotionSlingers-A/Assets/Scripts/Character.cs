@@ -17,6 +17,6 @@ public class Character : ScriptableObject, IPointerDownHandler
     
     public void OnPointerDown(PointerEventData pointerEventData) {
         flipped = !flipped;
-        Debug.Log(cardName + " has been clicked. Flipped is now: " + flipped);
+        Debug.Log(cardName + " has been clicked. Flipped is now: " + flipped); 
     }
 }
