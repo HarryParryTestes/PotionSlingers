@@ -51,6 +51,7 @@ public class Deck : MonoBehaviour, IPointerDownHandler
     {
         //Output the name of the GameObject that is being clicked
         Debug.Log(name + "Game Object Click in Progress");
+        popCard();
     }
 
     // makes the sprite of the cardDisplay match the top card in the list
@@ -65,6 +66,8 @@ public class Deck : MonoBehaviour, IPointerDownHandler
     void Start()
     {
         buildDeck();
+        //this.sprite = cardDisplay.artworkImage.sprite;
+        //this.sprite = deckList[0].cardSprite;
     }
 
     // Update is called once per frame
