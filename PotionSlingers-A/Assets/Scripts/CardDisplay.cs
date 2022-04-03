@@ -15,4 +15,26 @@ public class CardDisplay : MonoBehaviour
         artworkImage.sprite = card.cardSprite;
     }
 
+    // public void OnPointerDown(PointerEventData pointerEventData)
+    // {
+    //     //Output the name of the GameObject that is being clicked
+    //     Debug.Log("Card is clicked!");
+    //     attached = !attached;
+    //     if(!attached) {
+    //         this.transform.position = Input.mousePosition;
+    //         Hover_Card.canHover = true;
+    //     }
+    // }
+
+    public void setCardImage()
+    {
+        artworkImage = this.GetComponent<Image>();
+        artworkImage.sprite = card.cardSprite;
+    }
+
+    // called when a card in deck/holster is clicked
+    public void clicked()
+    {
+        Debug.Log(card.cardName + " has been clicked.");
+    }
 }

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class Deck : MonoBehaviour
+public class Deck : MonoBehaviour, IPointerDownHandler
 {
     // the deck is uninitialized to begin with
     public List<Card> deckList;
@@ -32,7 +33,7 @@ public class Deck : MonoBehaviour
     public void putCardOnTop(Card card)
     {
         deckList.Insert(0, card);
-        this.sprite = card.cardSprite;
+        updateCardSprite();
     }
     public Card popCard()
     {
@@ -41,17 +42,29 @@ public class Deck : MonoBehaviour
         {
             deckList.RemoveAt(0);
             Debug.Log("Card popped: ");
+            updateCardSprite();
         }
         return temp;
     }
-    
+
+    public void OnPointerDown(PointerEventData pointerEventData)
+    {
+        //Output the name of the GameObject that is being clicked
+        Debug.Log(name + "Game Object Click in Progress");
+    }
+
+    // makes the sprite of the cardDisplay match the top card in the list
+    public void updateCardSprite()
+    {
+        cardDisplay.card = deckList[0];
+        cardDisplay.artworkImage.sprite = cardDisplay.card.cardSprite;
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
         buildDeck();
-        //this.sprite = cardDisplay.artworkImage.sprite;
-        //this.sprite = deckList[0].cardSprite;
     }
 
     // Update is called once per frame

@@ -18,6 +18,29 @@ public class Card : ScriptableObject
     public int sellPrice;
     public string desc;
 
+    public enum TYPE
+    {
+        POTION = 1,
+        ARTIFACT = 2,
+        VESSEL = 3,
+        RING = 4
+    }
+
+    public enum EFFECT
+    {
+        ATTACK,
+        HEAL,
+        BONUS
+    }
+
+    public enum QUALITY
+    {
+        COLD,
+        DRY,
+        WET,
+        HOT,
+        NONE
+    }
 
     /*
     public Card(int Id, string CardName, string CardType, string CardEffect, int EffectAmount, 
