@@ -26,9 +26,9 @@ public class CardDisplay : MonoBehaviour
     //     }
     // }
 
-    public void setCardImage()
+    public void updateCard(Card card)
     {
-        artworkImage = this.GetComponent<Image>();
+        this.card = card;
         artworkImage.sprite = card.cardSprite;
     }
 
