@@ -1205,6 +1205,7 @@ GameObject:
   - component: {fileID: 628987348}
   - component: {fileID: 628987350}
   - component: {fileID: 628987349}
+  - component: {fileID: 628987351}
   m_Layer: 5
   m_Name: SpecialCardPile
   m_TagString: Untagged
@@ -1270,6 +1271,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628987347}
   m_CullTransparentMesh: 1
+--- !u!114 &628987351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628987347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852838df1b7fe304f90824c464f1dcd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckList:
+  - {fileID: 11400000, guid: 800853ae6dc12d54589da2296344c598, type: 2}
+  - {fileID: 11400000, guid: 43eaf9d1e2af60245a732309cb333bb3, type: 2}
+  - {fileID: 11400000, guid: 0c473cfd616fd4845976385a87a91145, type: 2}
+  - {fileID: 11400000, guid: e2e92e19e3b2dfd4882b00d1b8513004, type: 2}
+  - {fileID: 11400000, guid: 6c49f36a7cddcef44854aa4beac03502, type: 2}
+  - {fileID: 11400000, guid: 3a8447f48e660864c8ef4677e056deab, type: 2}
+  - {fileID: 11400000, guid: 91ccc8691acea544f92e9f9e621b8f39, type: 2}
+  - {fileID: 11400000, guid: 2dae9ca8fa1dcd448a45f8bf4a018f77, type: 2}
+  - {fileID: 11400000, guid: 82bbb4feaa046374d83c17f8a0d18414, type: 2}
+  - {fileID: 11400000, guid: 8c0239f538c1b5a44bdd49beb284a5ba, type: 2}
+  - {fileID: 11400000, guid: cef715ee4de7bcc4fa43f7193ed950ea, type: 2}
+  cardDisplay1: {fileID: 908084162}
+  cardDisplay2: {fileID: 690513024}
+  cardDisplay3: {fileID: 1831950244}
 --- !u!1 &690513019
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,6 +1978,7 @@ GameObject:
   - component: {fileID: 1168455950}
   - component: {fileID: 1168455952}
   - component: {fileID: 1168455951}
+  - component: {fileID: 1168455953}
   m_Layer: 5
   m_Name: PotionPile
   m_TagString: Untagged
@@ -2015,6 +2044,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168455949}
   m_CullTransparentMesh: 1
+--- !u!114 &1168455953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168455949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852838df1b7fe304f90824c464f1dcd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckList:
+  - {fileID: 11400000, guid: 6901b9df27d5d6b48aaf43a7968f97ce, type: 2}
+  - {fileID: 11400000, guid: e6fb4d251bf23c542b1f73038b410fcf, type: 2}
+  - {fileID: 11400000, guid: a180eed59bc6d2e4ba6d2000058be65e, type: 2}
+  - {fileID: 11400000, guid: ef48841b20ed0004d821268bc9bc44a9, type: 2}
+  - {fileID: 11400000, guid: 9cb8447cc5dd7ce4b8f8ff5accb33627, type: 2}
+  - {fileID: 11400000, guid: dadca94b7cf13754cab4ef381ee8c586, type: 2}
+  cardDisplay1: {fileID: 292815344}
+  cardDisplay2: {fileID: 2065021267}
+  cardDisplay3: {fileID: 486512870}
 --- !u!1 &1246341449
 GameObject:
   m_ObjectHideFlags: 0

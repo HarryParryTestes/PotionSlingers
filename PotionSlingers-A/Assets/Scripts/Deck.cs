@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Deck : MonoBehaviour, IPointerDownHandler
+public class Deck : MonoBehaviour
 {
     // the deck is uninitialized to begin with
     public List<Card> deckList;
@@ -47,11 +47,13 @@ public class Deck : MonoBehaviour, IPointerDownHandler
         return temp;
     }
 
+    /*
     public void OnPointerDown(PointerEventData pointerEventData)
     {
         //Output the name of the GameObject that is being clicked
         Debug.Log(name + "Game Object Click in Progress");
     }
+    */
 
     // makes the sprite of the cardDisplay match the top card in the list
     public void updateCardSprite()
