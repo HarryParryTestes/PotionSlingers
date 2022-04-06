@@ -14,6 +14,7 @@ public class Character : ScriptableObject, IPointerDownHandler
     public bool flipped;
     public Sprite flippedImage;
     public string flippedDesc;
+    public UniqueCard uniqueCard;
     
     public void OnPointerDown(PointerEventData pointerEventData) {
         flipped = !flipped;
