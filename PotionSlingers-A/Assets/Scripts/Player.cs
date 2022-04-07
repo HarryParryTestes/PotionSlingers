@@ -31,38 +31,38 @@ public class Player : MonoBehaviour
         dead = false;
     }
 
-    public void addHealth(int health) {
-        hp += health;
+    // public void addHealth(int health) {
+    //     hp += health;
 
-        //Make sure that hp cannot go above 10
-        if(hp > 10) {
-            hp = 10;
-        }
-    }
+    //     //Make sure that hp cannot go above 10
+    //     if(hp > 10) {
+    //         hp = 10;
+    //     }
+    // }
 
-    public void subHealth(int health) {
-        hp -= health;
+    // public void subHealth(int health) {
+    //     hp -= health;
 
-        //Make sure that hp doesn't go below 0
-        //If hp goes below 0, set it to 10 and subtract a health cube
-        if(hp < 0) {
-            if(hpCubes > 0) {
-                hp = 10;
-                hpCubes--;
-            } else {
-                dead = true;
-            }
-        }
-    }
+    //     //Make sure that hp doesn't go below 0
+    //     //If hp goes below 0, set it to 10 and subtract a health cube
+    //     if(hp < 0) {
+    //         if(hpCubes > 0) {
+    //             hp = 10;
+    //             hpCubes--;
+    //         } else {
+    //             dead = true;
+    //         }
+    //     }
+    // }
 
-    public void giveCube(Player player) {
-        player.getCube();
-        hpCubes--;
-    }
+    // public void giveCube(Player player) {
+    //     player.getCube();
+    //     hpCubes--;
+    // }
 
-    public void getCube() {
-        takenHPCubes++;
-    }
+    // public void getCube() {
+    //     takenHPCubes++;
+    // }
 
     public void addPips(int morePips) {
         pips += morePips;

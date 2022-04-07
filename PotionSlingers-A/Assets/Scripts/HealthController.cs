@@ -37,7 +37,7 @@ public class HealthController : MonoBehaviour
     }
 
     public void giveCube(Player player) {
-        player.getCube();
+        player.health.getCube();
         essenceCubes--;
     }
 

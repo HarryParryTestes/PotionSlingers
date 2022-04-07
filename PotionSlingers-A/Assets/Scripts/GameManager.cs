@@ -29,12 +29,9 @@ public class GameManager : MonoBehaviour
     {
         SetUp();
         while(State != Gamestate.Lose && State != Gamestate.Win) {
-            if(State == Gamestate.PlayerTurn) {
-                updateGameState(Gamestate.PlayerTurn);
-            } else {
-                updateGameState(Gamestate.OpponentTurn);
-            }
+            updateGameState(State);
         }
+        updateGameState(State);
     }
 
     // Update is called once per frame
@@ -67,10 +64,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(player2.holster.card3.card.cardName+"\n");
         Debug.Log(player2.holster.card4.card.cardName+"\n");
 
-    }
-
-    void PlayerTurn() {
-        
+        State = Gamestate.PlayerTurn;
     }
 
     void updateGameState(Gamestate newState) {
@@ -78,11 +72,13 @@ public class GameManager : MonoBehaviour
 
         switch (newState) {
             case Gamestate.PlayerTurn:
-                PlayerTurn();
+                handlePlayerTurn();
                 break;
             case Gamestate.OpponentTurn:
+                handleOpponentTurn();
                 break;
             case Gamestate.Win:
+                handleWin();
                 break;
             case Gamestate.Lose:
                 break;
@@ -93,7 +89,21 @@ public class GameManager : MonoBehaviour
     }
 
     void handlePlayerTurn() {
+        player2.health.subHealth(10);
+        if(player2.dead) {
+            State = Gamestate.Win;
+        } else {
+            State = Gamestate.OpponentTurn;
+        }
+    }
 
+    void handleOpponentTurn() {
+        Debug.Log("Opponent took a turn");
+        State = Gamestate.PlayerTurn;
+    }
+
+    void handleWin() {
+        Debug.Log("YOU WON!");
     }
 }
 
