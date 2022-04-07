@@ -6,10 +6,12 @@ public class Player : MonoBehaviour
 {
     public int hp;
     public int hpCubes;
+    public int takenHPCubes;    //HP Cubes that have been taken from opponents
     public Deck deck;
     public Holster holster;
     public int pips;
     public bool dead;           //Does the player still have health left?
+    public CharacterDisplay character;
 
     public Player()
     {
@@ -18,9 +20,9 @@ public class Player : MonoBehaviour
         dead = false;
     }
 
-    public Player(int Hp, int HPCubes)
+    public Player(int HPCubes)
     {
-        hp = Hp;
+        hp = 10;
         hpCubes = HPCubes;
         dead = false;
     }
@@ -47,6 +49,15 @@ public class Player : MonoBehaviour
                 dead = true;
             }
         }
+    }
+
+    public void giveCube(Player player) {
+        player.getCube();
+        hpCubes--;
+    }
+
+    public void getCube() {
+        takenHPCubes ++;
     }
 
     public void addPips(int morePips) {
