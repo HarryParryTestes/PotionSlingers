@@ -2708,6 +2708,7 @@ GameObject:
   - component: {fileID: 1437059660}
   - component: {fileID: 1437059659}
   - component: {fileID: 1437059658}
+  - component: {fileID: 1437059661}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -2779,7 +2780,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1437059659}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1437059661}
+        m_TargetAssemblyTypeName: TriggerAudio, Assembly-CSharp
+        m_MethodName: PlayOneShot
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1437059659
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2818,6 +2831,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1437059656}
   m_CullTransparentMesh: 1
+--- !u!114 &1437059661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1437059656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc77fd874ccde804cb1362cba4605de9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: event:/UI/UI_EndTurn
+  PlayOnAwake: 0
 --- !u!1 &1541586479
 GameObject:
   m_ObjectHideFlags: 0

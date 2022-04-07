@@ -28,10 +28,12 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
         {
             Debug.Log("You just flipped the card!");
             artworkImage.sprite = character.flippedImage;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Character_Flip");
         } else 
         {
             Debug.Log("You just flipped the card back over!");
             artworkImage.sprite = character.image;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Character_Flip");
         }
     }
 }

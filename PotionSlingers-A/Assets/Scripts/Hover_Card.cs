@@ -54,6 +54,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         // else, if no Card is not attached anymore, Cards are hoverable again.
         attached = !attached;
         canHover = !canHover;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Pickup");
         if(attached) {
             mousePos = Input.mousePosition;
             this.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
