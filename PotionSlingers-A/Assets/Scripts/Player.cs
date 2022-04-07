@@ -12,11 +12,15 @@ public class Player : MonoBehaviour
     public int pips;
     public bool dead;           //Does the player still have health left?
     public CharacterDisplay character;
+    public HealthController health;
+
+    void Awake() {
+        GameObject go = new GameObject("HealthController");
+        health = go.AddComponent<HealthController>();
+    }
 
     public Player()
     {
-        hp = 10;
-        hpCubes = 2;
         dead = false;
     }
 
@@ -57,7 +61,7 @@ public class Player : MonoBehaviour
     }
 
     public void getCube() {
-        takenHPCubes ++;
+        takenHPCubes++;
     }
 
     public void addPips(int morePips) {
