@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class GameManager : MonoBehaviour
     public Gamestate State;
     public Holster playerHolster;
     public Holster enemyHolster;
+    public Text notificationText;
+    public Text playerHealth;
+    public Text playerCubes;
+    public Text oppHealth;
+    public Text oppCubes;
 
     void Awake() {
         manager = this;
@@ -27,18 +33,39 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        notificationText = GameObject.Find("Notification").GetComponent<Text>();
+        
+
+        healthSetUp();
         SetUp();
-        while(State != Gamestate.Lose && State != Gamestate.Win) {
-            updateGameState(State);
-        }
+
+        updatePlayerText();
+        //while(State != Gamestate.Lose && State != Gamestate.Win) {
+            //updateGameState(State);
+        //}
         updateGameState(State);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //updateGameState(State);
     }
+
+    void healthSetUp() {
+        playerHealth = GameObject.Find("pHealth").GetComponent<Text>();
+        playerCubes = GameObject.Find("pEssenceCubes").GetComponent<Text>();
+        oppHealth = GameObject.Find("Health").GetComponent<Text>();
+        oppCubes = GameObject.Find("EssenceCubes").GetComponent<Text>();
+    }
+
+    void updatePlayerText() {
+        playerHealth.text = player1.health.hp.ToString();
+        playerCubes.text = player1.health.essenceCubes.ToString();
+        oppHealth.text = player2.health.hp.ToString();
+        oppCubes.text = player2.health.essenceCubes.ToString();
+    }
+
 
     void SetUp() {
         //player1 = new Player();
@@ -65,6 +92,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(player2.holster.card4.card.cardName+"\n");
 
         State = Gamestate.PlayerTurn;
+        Debug.Log("State is: " + State);
     }
 
     void updateGameState(Gamestate newState) {
@@ -72,10 +100,10 @@ public class GameManager : MonoBehaviour
 
         switch (newState) {
             case Gamestate.PlayerTurn:
-                handlePlayerTurn();
+                StartCoroutine(handlePlayerTurn());
                 break;
             case Gamestate.OpponentTurn:
-                handleOpponentTurn();
+                StartCoroutine(handleOpponentTurn());
                 break;
             case Gamestate.Win:
                 handleWin();
@@ -88,22 +116,53 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void handlePlayerTurn() {
+    IEnumerator handlePlayerTurn() {
+        Debug.Log("You just took a turn");
+
+        yield return new WaitForSeconds(2f);
+        Debug.Log("You finished waiting 2 seconds");
+
         player2.health.subHealth(10);
-        if(player2.dead) {
+        Debug.Log("Opponent's health is: " + player2.health.hp);
+        if(player2.health.dead) {
             State = Gamestate.Win;
-        } else {
-            State = Gamestate.OpponentTurn;
-        }
+            updateGameState(State);
+        } 
+
+        updatePlayerText();
     }
 
-    void handleOpponentTurn() {
+    public void endTurn() {
+        Debug.Log("You just ended your turn.");
+        State = Gamestate.OpponentTurn;
+        Debug.Log("State is: " + State);
+
+        updateGameState(State);
+    }
+
+    IEnumerator handleOpponentTurn() {
         Debug.Log("Opponent took a turn");
-        State = Gamestate.PlayerTurn;
+
+        yield return new WaitForSeconds(2f);
+
+        if(player1.health.dead) {
+            State = Gamestate.Lose;
+        } else {
+            State = Gamestate.PlayerTurn;
+        }
+
+        updatePlayerText();
+        updateGameState(State);
     }
 
     void handleWin() {
         Debug.Log("YOU WON!");
+        notificationText.text = "YOU WIN!";
+    }
+
+    void handleLoss() {
+        Debug.Log("YOU LOST!");
+        notificationText.text = "YOU LOSE!";
     }
 }
 

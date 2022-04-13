@@ -19,6 +19,8 @@ public class HealthController : MonoBehaviour
         if(hp > 10) {
             hp = 10;
         }
+
+        // healthText.text = hp.ToString();
     }
 
     public void subHealth(int health) {
@@ -26,18 +28,20 @@ public class HealthController : MonoBehaviour
 
         //Make sure that hp doesn't go below 0
         //If hp goes below 0, set it to 10 and subtract a health cube
-        if(hp < 0) {
+        if(hp <= 0) {
             if(essenceCubes > 0) {
                 hp = 10;
-                essenceCubes--;
+                giveCube();
+                // Debug.Log("EssenceCubes.ToString: " + essenceCubes.ToString());
             } else {
                 dead = true;
             }
         }
+
+        // essenceCubesText.text = essenceCubes.ToString();
     }
 
-    public void giveCube(Player player) {
-        player.health.getCube();
+    public void giveCube() {
         essenceCubes--;
     }
 
@@ -45,13 +49,26 @@ public class HealthController : MonoBehaviour
         takenEssenceCubes++;
     }
 
+    public void setHP() {
+
+    }
+
+    void Awake() {
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         hp = 10;
         essenceCubes = 2;
-        healthText.text = "" + hp;
-        essenceCubesText.text = "" + essenceCubes;
+
+        // Debug.Log("hp is: " + hp);
+        // Debug.Log("essenceCube is: " + essenceCubes);
+        // healthText = GameObject.Find("Health").GetComponent<Text>();
+        // essenceCubesText = GameObject.Find("EssenceCubes").GetComponent<Text>();
+
+        // healthText.text = hp.ToString();
+        // essenceCubesText.text = essenceCubes.ToString();
     }
 
     // Update is called once per frame
