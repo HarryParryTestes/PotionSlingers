@@ -8,16 +8,20 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     Vector3 cachedScale; // Tracks original size of Card (for hovering as it manipulates scale of Card).
     Vector3 originalPos; // Tracks original position of Card.
     Vector3 mousePos; // Tracks current mouse cursor position.
+    Quaternion originalRotation;
 
     RectTransform rt;
 
     // canHover is public static because if not static, other cards can be hovered
     // over while a card is clicked and attached to cursor.
     public static bool canHover = true; // Determines if cards can be hovered over.
-    bool attached = false; // Determines if a card has been clicked and attached to the mouse cursor.
+    // bool attached = false; // Determines if a card has been clicked and attached to the mouse cursor.
 
-    Transform cardMenu;
-    Transform viewCardMenu;
+    Transform cardMenu = null;
+    Transform viewCardMenu = null;
+    GameObject parentObject = null;
+    GameObject attackMenu = null;
+    GameObject viewingCardObject = null;
     bool cardSelected = false;
     public static bool viewingCard = false;
 
@@ -26,26 +30,40 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         rt = transform.GetComponent<RectTransform>();
         cachedScale = transform.localScale;
         originalPos = gameObject.transform.position;
+        originalRotation = this.transform.localRotation;
+
+        parentObject = this.transform.parent.gameObject;
         cardMenu = this.transform.Find("CardMenu");
         viewCardMenu = this.transform.Find("ViewCardMenu");
+        attackMenu = GameObject.Find("ChooseAttackPlayer");
+        viewingCardObject = GameObject.Find("ViewingCard");
+
         if(cardMenu == null) {
             Debug.Log("Error: CardMenu doesn't exist!");
         }
         if(viewCardMenu == null) {
             Debug.Log("Error: ViewCardMenu doesn't exist!");
         }
+        if(attackMenu == null) {
+            Debug.Log("Error: ChooseAttackPlayer doesn't exist!");
+        }
+        if(viewingCardObject == null) {
+            Debug.Log("Error: ViewingCard doesn't exist!");
+        }
+
         cardSelected = false;
         viewingCard = false;
         cardMenu.gameObject.SetActive(false);
         viewCardMenu.gameObject.SetActive(false);
+        attackMenu.gameObject.SetActive(false);
     }
 
     void Update() {
         // If Card is attached to cursor, the Card follows the cursor's X/Y position until unattached.
-        mousePos = Input.mousePosition;
-        if(attached == true && canHover == false) {
-            this.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-        }
+        // mousePos = Input.mousePosition;
+        // if(attached == true && canHover == false) {
+        //     this.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+        // }
     }
  
     // On mouse hovering over object: 
@@ -111,10 +129,13 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         viewingCard = true;
         if(cardSelected) {
             cardMenu.gameObject.SetActive(false);
-            transform.SetSiblingIndex(this.transform.parent.transform.childCount - 1);
-            transform.localScale = new Vector3(4f, 4f, 4f);
-            this.transform.position = new Vector3(255, 285, 0);
+            this.transform.SetParent(viewingCardObject.transform);
+            // transform.SetSiblingIndex(this.transform.parent.transform.childCount - 1);
+            this.transform.localRotation = Quaternion.identity;
+            this.transform.localScale = new Vector3(4f, 4f, 4f);
+            this.transform.position = new Vector3 (Screen.width * 0.5f, Screen.height * 0.5f, 0);
             viewCardMenu.gameObject.SetActive(true);
+            this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);
         }
     }
 
@@ -123,9 +144,20 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         viewCardMenu.gameObject.SetActive(false);
         if(cardSelected) {
             cardSelected = false;
+            // this.transform.localRotation = originalRotation;
+            this.transform.SetParent(parentObject.transform);
+            this.transform.localRotation = Quaternion.identity;
             transform.localScale = cachedScale;
             gameObject.transform.position = originalPos;
             canHover = true;
+        }
+    }
+
+    public void ChooseAttackPlayer() {
+        viewingCard = true;
+        if(cardSelected) {
+            cardMenu.gameObject.SetActive(false);
+            attackMenu.SetActive(true);
         }
     }
 }
