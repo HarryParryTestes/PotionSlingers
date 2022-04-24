@@ -5,10 +5,40 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static Player player1;
-    public static Player player2;
-    public static GameManager manager;
+    int numPlayers = 0;
+    int currentPlayer = 0;
+    public Player[] players = new Player[4];
+    GameObject ob;
+    GameObject ob2;
+    GameObject ob3;
+    GameObject ob4;
 
+    void Start()
+    {
+        initPlayers();
+    }
+
+    void initPlayers()
+    {
+        ob = GameObject.Find("CharacterCard");
+        players[0] = ob.GetComponent<Player>();
+        ob2 = GameObject.Find("CharacterCard (Top)");
+        players[1] = ob2.GetComponent<Player>();
+
+        if(numPlayers > 2)
+        {
+            ob3 = GameObject.Find("CharacterCard (Left)");
+            players[2] = ob3.GetComponent<Player>();
+            
+            if(numPlayers > 3)
+            {
+                ob4 = GameObject.Find("CharacterCard (Right)");
+                players[3] = ob4.GetComponent<Player>();
+            }
+        }
+    }
+
+    /*
     //delete once this is production ready
     public CharacterDisplay playerCharacter;
     public CharacterDisplay enemyCharacter;
@@ -164,6 +194,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("YOU LOST!");
         notificationText.text = "YOU LOSE!";
     }
+    */
 }
 
 public enum Gamestate {

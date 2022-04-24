@@ -1864,6 +1864,7 @@ GameObject:
   m_Component:
   - component: {fileID: 189316752}
   - component: {fileID: 189316753}
+  - component: {fileID: 189316754}
   m_Layer: 5
   m_Name: CharacterCard (Top)
   m_TagString: Untagged
@@ -1906,6 +1907,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
   artworkImage: {fileID: 0}
+--- !u!114 &189316754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189316751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: 
+  user_id: 0
+  takenHPCubes: 0
+  deck: {fileID: 0}
+  holster: {fileID: 0}
+  pips: 0
+  dead: 0
+  character: {fileID: 0}
 --- !u!1 &221112647
 GameObject:
   m_ObjectHideFlags: 0
@@ -3506,16 +3528,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCharacter: {fileID: 0}
-  enemyCharacter: {fileID: 0}
-  State: 0
-  playerHolster: {fileID: 0}
-  enemyHolster: {fileID: 0}
-  notificationText: {fileID: 0}
-  playerHealth: {fileID: 0}
-  playerCubes: {fileID: 0}
-  oppHealth: {fileID: 0}
-  oppCubes: {fileID: 0}
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!222 &344823240
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -12925,6 +12942,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1316039901}
   - component: {fileID: 1316039902}
+  - component: {fileID: 1316039903}
   m_Layer: 5
   m_Name: CharacterCard
   m_TagString: Untagged
@@ -12967,6 +12985,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 11400000, guid: e126101c9d11f44b18e0b4b27d14054a, type: 2}
   artworkImage: {fileID: 0}
+--- !u!114 &1316039903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316039900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: 
+  user_id: 0
+  takenHPCubes: 0
+  deck: {fileID: 573524218}
+  holster: {fileID: 861909482}
+  pips: 6
+  dead: 0
+  character: {fileID: 1316039902}
 --- !u!1 &1317657373
 GameObject:
   m_ObjectHideFlags: 0
@@ -12976,6 +13015,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1317657374}
+  - component: {fileID: 1317657375}
   m_Layer: 5
   m_Name: CharacterCard (Left)
   m_TagString: Untagged
@@ -13004,6 +13044,27 @@ RectTransform:
   m_AnchoredPosition: {x: 20, y: 230}
   m_SizeDelta: {x: 124.05, y: 212.625}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1317657375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317657373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: 
+  user_id: 0
+  takenHPCubes: 0
+  deck: {fileID: 0}
+  holster: {fileID: 0}
+  pips: 0
+  dead: 0
+  character: {fileID: 0}
 --- !u!1 &1319871941
 GameObject:
   m_ObjectHideFlags: 0
@@ -20295,6 +20356,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1986209882}
+  - component: {fileID: 1986209883}
   m_Layer: 5
   m_Name: CharacterCard (Right)
   m_TagString: Untagged
@@ -20311,7 +20373,7 @@ RectTransform:
   m_GameObject: {fileID: 1986209881}
   m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.99999994}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1624123899}
@@ -20323,6 +20385,27 @@ RectTransform:
   m_AnchoredPosition: {x: -20.000122, y: -230}
   m_SizeDelta: {x: 124.05, y: 212.625}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1986209883
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986209881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: 
+  user_id: 0
+  takenHPCubes: 0
+  deck: {fileID: 0}
+  holster: {fileID: 0}
+  pips: 0
+  dead: 0
+  character: {fileID: 0}
 --- !u!1 &1996797255
 GameObject:
   m_ObjectHideFlags: 0
@@ -21810,16 +21893,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCharacter: {fileID: 0}
-  enemyCharacter: {fileID: 0}
-  State: 0
-  playerHolster: {fileID: 0}
-  enemyHolster: {fileID: 0}
-  notificationText: {fileID: 0}
-  playerHealth: {fileID: 0}
-  playerCubes: {fileID: 0}
-  oppHealth: {fileID: 0}
-  oppCubes: {fileID: 0}
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!4 &2083794570
 Transform:
   m_ObjectHideFlags: 0

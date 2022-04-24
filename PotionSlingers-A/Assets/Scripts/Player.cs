@@ -5,15 +5,23 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     public int hp;
-    public int hpCubes;
+    public string name;
+    public int user_id;
     public int takenHPCubes;    //HP Cubes that have been taken from opponents
     public Deck deck;
     public Holster holster;
     public int pips;
     public bool dead;           //Does the player still have health left?
     public CharacterDisplay character;
-    public HealthController health;
+    //public HealthController health;
 
+    public Player(int user_id, string name)
+    {
+        this.user_id = user_id;
+        this.name = name;
+    }
+
+    /*
     void Awake() {
         GameObject go = new GameObject("HealthController");
         health = go.AddComponent<HealthController>();
@@ -30,6 +38,7 @@ public class Player : MonoBehaviour
         hpCubes = HPCubes;
         dead = false;
     }
+    */
 
     // public void addHealth(int health) {
     //     hp += health;
