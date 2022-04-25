@@ -5967,6 +5967,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deckList: []
   cardDisplay: {fileID: 573524219}
+  placeholder: {fileID: 11400000, guid: 77f27c8f7299af440bdd8cc35765936f, type: 2}
 --- !u!114 &573524219
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13406,6 +13407,7 @@ GameObject:
   - component: {fileID: 1356589441}
   - component: {fileID: 1356589443}
   - component: {fileID: 1356589442}
+  - component: {fileID: 1356589444}
   m_Layer: 5
   m_Name: TrashPile
   m_TagString: Untagged
@@ -13471,6 +13473,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1356589440}
   m_CullTransparentMesh: 1
+--- !u!114 &1356589444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1356589440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdd2616f28bd0754cb24932c37de8293, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckList: []
+  card: {fileID: 11400000, guid: 77f27c8f7299af440bdd8cc35765936f, type: 2}
 --- !u!1 &1359385594
 GameObject:
   m_ObjectHideFlags: 0
@@ -18362,6 +18378,7 @@ GameObject:
   - component: {fileID: 1806986080}
   - component: {fileID: 1806986079}
   - component: {fileID: 1806986078}
+  - component: {fileID: 1806986081}
   m_Layer: 5
   m_Name: Bolo
   m_TagString: Untagged
@@ -18441,6 +18458,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1806986076}
   m_CullTransparentMesh: 1
+--- !u!114 &1806986081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1806986076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
 --- !u!1 &1808253378
 GameObject:
   m_ObjectHideFlags: 0
@@ -21874,6 +21904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2083794570}
   - component: {fileID: 2083794569}
+  - component: {fileID: 2083794571}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -21913,6 +21944,70 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2083794571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083794568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 811bed4ac49f18444a2ec31f42221987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  unityEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: throwPotion
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Hello
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1356589444}
+        m_TargetAssemblyTypeName: TrashDeck, Assembly-CSharp
+        m_MethodName: addCard
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8365923717578268710}
+          m_ObjectArgumentAssemblyTypeName: CardDisplay, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2017186513}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1326899256}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2084119116
 GameObject:
   m_ObjectHideFlags: 0

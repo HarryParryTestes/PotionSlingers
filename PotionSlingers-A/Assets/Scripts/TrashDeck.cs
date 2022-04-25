@@ -5,6 +5,7 @@ using UnityEngine;
 public class TrashDeck : MonoBehaviour
 {
     public List<Card> deckList;
+    public Card card;
 
     // Start is called before the first frame update
     void Start()
@@ -12,9 +13,10 @@ public class TrashDeck : MonoBehaviour
 
     }
 
-    public void addCard(Card card)
+    public void addCard(CardDisplay cd)
     {
-        deckList.Add(card);
+        deckList.Add(cd.card);
+        cd.updateCard(card);
     }
 }
 

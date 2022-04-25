@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class CardThrow : MonoBehaviour
+public class CardThrow : MonoBehaviour, IPointerDownHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] GameEvent _throwPotion;
+
+    public void OnPointerDown(PointerEventData pointerEventData)
     {
-        
+        Throw();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Throw()
     {
-        
+        _throwPotion?.Invoke();
     }
 }

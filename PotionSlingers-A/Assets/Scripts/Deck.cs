@@ -10,6 +10,7 @@ public class Deck : MonoBehaviour
     public List<Card> deckList;
     public CardDisplay cardDisplay;
     private Sprite sprite;
+    public Card placeholder;
 
     public Deck()
     {
@@ -37,14 +38,16 @@ public class Deck : MonoBehaviour
     }
     public Card popCard()
     {
-        Card temp = deckList[0];
-        if(deckList.Count > 1)
+        if (deckList.Count >= 1)
         {
+            Card temp = deckList[0];
             deckList.RemoveAt(0);
-            Debug.Log("Card popped: ");
+            //Debug.Log("Card popped: ");
             updateCardSprite();
+            return temp;
         }
-        return temp;
+        Debug.Log("ERROR: Card not returned!");
+        return cardDisplay.card;
     }
 
     /*
@@ -58,8 +61,15 @@ public class Deck : MonoBehaviour
     // makes the sprite of the cardDisplay match the top card in the list
     public void updateCardSprite()
     {
-        cardDisplay.card = deckList[0];
-        cardDisplay.artworkImage.sprite = cardDisplay.card.cardSprite;
+        if(deckList.Count >= 1)
+        {
+            cardDisplay.updateCard(deckList[0]);
+        }
+        else
+        {
+            cardDisplay.updateCard(placeholder);
+        }
+        
     }
 
 

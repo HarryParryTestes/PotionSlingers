@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    //[SerializeField] UnityEvent throwPotion<Player, CardDisplay, Player>;
+    
     int numPlayers = 0;
     int currentPlayer = 0;
     public Player[] players = new Player[4];
@@ -36,6 +38,46 @@ public class GameManager : MonoBehaviour
                 players[3] = ob4.GetComponent<Player>();
             }
         }
+    }
+
+    public void onStartTurn(Player player)
+    {
+        if(player.holster.card1.card.name == "placeholder")
+        {
+            player.holster.card1.updateCard(player.deck.popCard());
+        }
+        if (player.holster.card2.card.name == "placeholder")
+        {
+            player.holster.card2.updateCard(player.deck.popCard());
+        }
+        if (player.holster.card3.card.name == "placeholder")
+        {
+            player.holster.card3.updateCard(player.deck.popCard());
+        }
+        if (player.holster.card4.card.name == "placeholder")
+        {
+            player.holster.card4.updateCard(player.deck.popCard());
+        }
+    }
+
+    public void endTurn()
+    {
+        //currentPlayer++;
+        //if(currentPlayer == numPlayers)
+        //{
+            //currentPlayer = 0;
+        //}
+        onStartTurn(players[currentPlayer]);
+    }
+
+    public void throwPotion(Player player, CardDisplay cd, Player opponent)
+    {
+        Debug.Log("GameManager Throw Potion");
+    }
+
+    public void throwPotion()
+    {
+        Debug.Log("GameManager Throw Potion");
     }
 
     /*
