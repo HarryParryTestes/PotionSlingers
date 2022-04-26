@@ -1921,13 +1921,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   name: 
+  charName: 
   user_id: 0
+  hpCubes: 0
   takenHPCubes: 0
   deck: {fileID: 0}
   holster: {fileID: 0}
   pips: 0
   dead: 0
+  potionsThrown: 0
   character: {fileID: 0}
+  ringBonus: 0
+  bonusAmount: 0
 --- !u!1 &221112647
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,6 +2715,7 @@ GameObject:
   - component: {fileID: 292815342}
   - component: {fileID: 292815341}
   - component: {fileID: 292815343}
+  - component: {fileID: 292815344}
   m_Layer: 5
   m_Name: Market_Potion (1)
   m_TagString: Untagged
@@ -2787,6 +2793,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &292815344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292815339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090810f65fe479e49a1497d6ce5fbf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: 6901b9df27d5d6b48aaf43a7968f97ce, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &296813534
 GameObject:
   m_ObjectHideFlags: 0
@@ -5015,6 +5035,7 @@ GameObject:
   - component: {fileID: 486512868}
   - component: {fileID: 486512867}
   - component: {fileID: 486512869}
+  - component: {fileID: 486512870}
   m_Layer: 5
   m_Name: Market_Potion (3)
   m_TagString: Untagged
@@ -5092,6 +5113,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &486512870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 486512865}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090810f65fe479e49a1497d6ce5fbf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: e6fb4d251bf23c542b1f73038b410fcf, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &517924100
 GameObject:
   m_ObjectHideFlags: 0
@@ -6292,6 +6327,7 @@ GameObject:
   - component: {fileID: 628987348}
   - component: {fileID: 628987350}
   - component: {fileID: 628987349}
+  - component: {fileID: 628987351}
   m_Layer: 5
   m_Name: SpecialCardPile
   m_TagString: Untagged
@@ -6357,6 +6393,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 628987347}
   m_CullTransparentMesh: 1
+--- !u!114 &628987351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628987347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852838df1b7fe304f90824c464f1dcd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckList:
+  - {fileID: 11400000, guid: 800853ae6dc12d54589da2296344c598, type: 2}
+  - {fileID: 11400000, guid: 43eaf9d1e2af60245a732309cb333bb3, type: 2}
+  - {fileID: 11400000, guid: 0c473cfd616fd4845976385a87a91145, type: 2}
+  - {fileID: 11400000, guid: e2e92e19e3b2dfd4882b00d1b8513004, type: 2}
+  - {fileID: 11400000, guid: 6c49f36a7cddcef44854aa4beac03502, type: 2}
+  - {fileID: 11400000, guid: 3a8447f48e660864c8ef4677e056deab, type: 2}
+  - {fileID: 11400000, guid: 91ccc8691acea544f92e9f9e621b8f39, type: 2}
+  - {fileID: 11400000, guid: 2dae9ca8fa1dcd448a45f8bf4a018f77, type: 2}
+  - {fileID: 11400000, guid: 82bbb4feaa046374d83c17f8a0d18414, type: 2}
+  - {fileID: 11400000, guid: 8c0239f538c1b5a44bdd49beb284a5ba, type: 2}
+  - {fileID: 11400000, guid: cef715ee4de7bcc4fa43f7193ed950ea, type: 2}
+  cardDisplay1: {fileID: 908084162}
+  cardDisplay2: {fileID: 690513024}
+  cardDisplay3: {fileID: 1831950244}
 --- !u!1 &638179128
 GameObject:
   m_ObjectHideFlags: 0
@@ -6979,6 +7042,7 @@ GameObject:
   - component: {fileID: 690513022}
   - component: {fileID: 690513021}
   - component: {fileID: 690513023}
+  - component: {fileID: 690513024}
   m_Layer: 5
   m_Name: Market_Ring
   m_TagString: Untagged
@@ -7056,6 +7120,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &690513024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 690513019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090810f65fe479e49a1497d6ce5fbf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: 666fdfd5051dfa64a8b3cc3b2239d8c2, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &691912460
 GameObject:
   m_ObjectHideFlags: 0
@@ -8832,6 +8910,7 @@ GameObject:
   - component: {fileID: 908084160}
   - component: {fileID: 908084159}
   - component: {fileID: 908084161}
+  - component: {fileID: 908084162}
   m_Layer: 5
   m_Name: Market_Artifact
   m_TagString: Untagged
@@ -8909,6 +8988,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &908084162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908084157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090810f65fe479e49a1497d6ce5fbf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: e1bc2ee02ad23984e91cbd35ed9550fd, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &922417463
 GameObject:
   m_ObjectHideFlags: 0
@@ -11885,6 +11978,7 @@ GameObject:
   - component: {fileID: 1168455950}
   - component: {fileID: 1168455952}
   - component: {fileID: 1168455951}
+  - component: {fileID: 1168455953}
   m_Layer: 5
   m_Name: PotionPile
   m_TagString: Untagged
@@ -11950,6 +12044,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168455949}
   m_CullTransparentMesh: 1
+--- !u!114 &1168455953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168455949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 852838df1b7fe304f90824c464f1dcd9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deckList:
+  - {fileID: 11400000, guid: a180eed59bc6d2e4ba6d2000058be65e, type: 2}
+  - {fileID: 11400000, guid: e6fb4d251bf23c542b1f73038b410fcf, type: 2}
+  - {fileID: 11400000, guid: 6901b9df27d5d6b48aaf43a7968f97ce, type: 2}
+  - {fileID: 11400000, guid: e64e302117a835b45ac087d4c401499f, type: 2}
+  cardDisplay1: {fileID: 292815344}
+  cardDisplay2: {fileID: 2065021267}
+  cardDisplay3: {fileID: 486512870}
 --- !u!1 &1181165907
 GameObject:
   m_ObjectHideFlags: 0
@@ -13000,13 +13114,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   name: 
+  charName: 
   user_id: 0
+  hpCubes: 0
   takenHPCubes: 0
   deck: {fileID: 573524218}
   holster: {fileID: 861909482}
   pips: 6
   dead: 0
+  potionsThrown: 0
   character: {fileID: 1316039902}
+  ringBonus: 0
+  bonusAmount: 0
 --- !u!1 &1317657373
 GameObject:
   m_ObjectHideFlags: 0
@@ -13059,13 +13178,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   name: 
+  charName: 
   user_id: 0
+  hpCubes: 0
   takenHPCubes: 0
   deck: {fileID: 0}
   holster: {fileID: 0}
   pips: 0
   dead: 0
+  potionsThrown: 0
   character: {fileID: 0}
+  ringBonus: 0
+  bonusAmount: 0
 --- !u!1 &1319871941
 GameObject:
   m_ObjectHideFlags: 0
@@ -18736,6 +18860,7 @@ GameObject:
   - component: {fileID: 1831950242}
   - component: {fileID: 1831950241}
   - component: {fileID: 1831950243}
+  - component: {fileID: 1831950244}
   m_Layer: 5
   m_Name: Market_Vessel
   m_TagString: Untagged
@@ -18813,6 +18938,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1831950244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1831950239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090810f65fe479e49a1497d6ce5fbf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: c7fbd61646828774a8f3becbf5f13bfd, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &1838374471
 GameObject:
   m_ObjectHideFlags: 0
@@ -20429,13 +20568,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   name: 
+  charName: 
   user_id: 0
+  hpCubes: 0
   takenHPCubes: 0
   deck: {fileID: 0}
   holster: {fileID: 0}
   pips: 0
   dead: 0
+  potionsThrown: 0
   character: {fileID: 0}
+  ringBonus: 0
+  bonusAmount: 0
 --- !u!1 &1996797255
 GameObject:
   m_ObjectHideFlags: 0
@@ -21568,6 +21712,7 @@ GameObject:
   - component: {fileID: 2065021265}
   - component: {fileID: 2065021264}
   - component: {fileID: 2065021266}
+  - component: {fileID: 2065021267}
   m_Layer: 5
   m_Name: Market_Potion (2)
   m_TagString: Untagged
@@ -21645,6 +21790,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2065021267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2065021262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090810f65fe479e49a1497d6ce5fbf55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  card: {fileID: 11400000, guid: a180eed59bc6d2e4ba6d2000058be65e, type: 2}
+  artworkImage: {fileID: 0}
 --- !u!1 &2067404678
 GameObject:
   m_ObjectHideFlags: 0
@@ -21963,11 +22122,11 @@ MonoBehaviour:
       - m_Target: {fileID: 2083794569}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: throwPotion
-        m_Mode: 1
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: Hello
           m_BoolArgument: 0

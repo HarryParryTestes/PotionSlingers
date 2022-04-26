@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     //[SerializeField] UnityEvent throwPotion<Player, CardDisplay, Player>;
-    
+
+    public static GameManager manager;
     int numPlayers = 0;
     int currentPlayer = 0;
     public Player[] players = new Player[4];
@@ -14,14 +15,31 @@ public class GameManager : MonoBehaviour
     GameObject ob2;
     GameObject ob3;
     GameObject ob4;
+    GameObject td;
+    GameObject md1;
+    GameObject md2;
+
+    void Awake()
+    {
+        manager = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
     void Start()
     {
+        init();
+    }
+
+    public void init()
+    {
         initPlayers();
+        initDecks();
     }
 
     void initPlayers()
     {
+        td = GameObject.Find("TrashPile");
+        td.GetComponent<TrashDeck>();
         ob = GameObject.Find("CharacterCard");
         players[0] = ob.GetComponent<Player>();
         ob2 = GameObject.Find("CharacterCard (Top)");
@@ -40,24 +58,28 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void initDecks()
+    {
+        md1 = GameObject.Find("PotionPile");
+        md1.GetComponent<MarketDeck>();
+        md2 = GameObject.Find("SpecialCardPile");
+        md2.GetComponent<MarketDeck>();
+    }
+
+    // if there are open spots in the holster, move cards from deck to holster
     public void onStartTurn(Player player)
     {
-        if(player.holster.card1.card.name == "placeholder")
+        foreach(CardDisplay cd in player.holster.cardList)
         {
-            player.holster.card1.updateCard(player.deck.popCard());
+            if(player.deck.deckList.Count >= 1)
+            {
+                if(cd.card.name == "placeholder")
+                {
+                    cd.updateCard(player.deck.popCard());
+                }
+            }
         }
-        if (player.holster.card2.card.name == "placeholder")
-        {
-            player.holster.card2.updateCard(player.deck.popCard());
-        }
-        if (player.holster.card3.card.name == "placeholder")
-        {
-            player.holster.card3.updateCard(player.deck.popCard());
-        }
-        if (player.holster.card4.card.name == "placeholder")
-        {
-            player.holster.card4.updateCard(player.deck.popCard());
-        }
+        player.setDefaultTurn();
     }
 
     public void endTurn()
@@ -70,14 +92,40 @@ public class GameManager : MonoBehaviour
         onStartTurn(players[currentPlayer]);
     }
 
+    /*
     public void throwPotion(Player player, CardDisplay cd, Player opponent)
     {
         Debug.Log("GameManager Throw Potion");
     }
+    */
 
-    public void throwPotion()
+    public void throwPotion(int cd)
     {
+        int damage = 0;
         Debug.Log("GameManager Throw Potion");
+        //
+        switch (cd)
+        {
+            case 1: damage = players[currentPlayer].holster.card1.card.effectAmount;
+                break;
+            case 2: damage = players[currentPlayer].holster.card2.card.effectAmount;
+                break;
+            case 3: damage = players[currentPlayer].holster.card3.card.effectAmount;
+                break;
+            case 4: damage = players[currentPlayer].holster.card4.card.effectAmount;
+                break;
+            default: damage = 0;
+                break;
+        }
+        if(cd == 1)
+        {
+            damage = players[currentPlayer].holster.card1.card.effectAmount;
+        }
+        if (players[currentPlayer].ringBonus)
+        {
+            damage += players[currentPlayer].bonusAmount;
+        }
+        //players[oppId - 1].subHealth(damage);
     }
 
     /*

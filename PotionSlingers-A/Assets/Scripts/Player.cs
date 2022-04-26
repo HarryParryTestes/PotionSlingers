@@ -6,19 +6,31 @@ public class Player : MonoBehaviour
 {
     public int hp;
     public string name;
+    public string charName;
     public int user_id;
+    public int hpCubes;
     public int takenHPCubes;    //HP Cubes that have been taken from opponents
     public Deck deck;
     public Holster holster;
     public int pips;
     public bool dead;           //Does the player still have health left?
+    public int potionsThrown;
     public CharacterDisplay character;
+    public bool ringBonus;
+    public int bonusAmount;
     //public HealthController health;
 
     public Player(int user_id, string name)
     {
         this.user_id = user_id;
         this.name = name;
+    }
+
+    public void setDefaultTurn()
+    {
+        pips = 6;
+        potionsThrown = 0;
+        ringBonus = false;
     }
 
     /*
@@ -49,20 +61,20 @@ public class Player : MonoBehaviour
     //     }
     // }
 
-    // public void subHealth(int health) {
-    //     hp -= health;
+     public void subHealth(int health) {
+         hp -= health;
 
-    //     //Make sure that hp doesn't go below 0
-    //     //If hp goes below 0, set it to 10 and subtract a health cube
-    //     if(hp < 0) {
-    //         if(hpCubes > 0) {
-    //             hp = 10;
-    //             hpCubes--;
-    //         } else {
-    //             dead = true;
-    //         }
-    //     }
-    // }
+         //Make sure that hp doesn't go below 0
+         //If hp goes below 0, set it to 10 and subtract a health cube
+         if(hp < 0) {
+             if(hpCubes > 0) {
+                 hp = 10;
+                 hpCubes--;
+             } else {
+                 dead = true;
+             }
+         }
+     }
 
     // public void giveCube(Player player) {
     //     player.getCube();

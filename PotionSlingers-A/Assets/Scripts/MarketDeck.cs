@@ -61,10 +61,4 @@ public class MarketDeck : MonoBehaviour
         //}
         initCardDisplays();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
