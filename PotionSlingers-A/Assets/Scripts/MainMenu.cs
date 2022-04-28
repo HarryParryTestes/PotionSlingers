@@ -35,6 +35,9 @@ public class MainMenu : MonoBehaviour
 	private Character p3Char;
 	private Character p4Char;
 
+	private Character playerChar;
+	private CharacterDisplay playerCharDisplay;
+
 	private string p1Name = "Player 1";
 	private string p2Name = "Player 2";
 	private string p3Name = "Player 3";
@@ -49,6 +52,8 @@ public class MainMenu : MonoBehaviour
 	public TMPro.TMP_InputField playerPasswordInputField;
 	private TMPro.TMP_InputField playerInputField;
 	private TMPro.TMP_InputField opponentInputField;
+
+	public TMPro.TextMeshProUGUI authUsername;
 
 	private bool ready = false;
 	private bool op1Ready = false;
@@ -83,6 +88,14 @@ public class MainMenu : MonoBehaviour
 	public void onCharacterClick(string character)
     {
 		Debug.Log("Send CharReq");
+		foreach (Character character2 in characters)
+		{
+			if (character2.cardName == character)
+			{
+				playerChar = character2;
+				playerCharDisplay.updateCharacter(playerChar);
+			}
+		}
 		bool connected = networkManager.SendCharacterRequest(character);
     }
 
@@ -93,6 +106,7 @@ public class MainMenu : MonoBehaviour
 		{
 			if (args.user_id == 1)
 			{
+				playerCharDisplay = p1CharCard;
 				Constants.OP1_ID = 2;
 				Constants.OP2_ID = 3;
 				Constants.OP3_ID = 4;
@@ -101,6 +115,7 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.user_id == 2)
 			{
+				playerCharDisplay = p2CharCard;
 				Constants.OP1_ID = 1;
 				Constants.OP2_ID = 3;
 				Constants.OP3_ID = 4;
@@ -109,6 +124,7 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.user_id == 3)
 			{
+				playerCharDisplay = p3CharCard;
 				Constants.OP1_ID = 1;
 				Constants.OP2_ID = 2;
 				Constants.OP3_ID = 4;
@@ -117,6 +133,7 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.user_id == 4)
 			{
+				playerCharDisplay = p4CharCard;
 				Constants.OP1_ID = 1;
 				Constants.OP2_ID = 2;
 				Constants.OP3_ID = 3;
@@ -139,6 +156,7 @@ public class MainMenu : MonoBehaviour
 	public void OnPlayerNameSet()
 	{
 		string name = playerUsernameInputField.text;
+		authUsername.text = name;
 		Debug.Log("Send SetNameReq: " + name);
 		networkManager.SendSetNameRequest(name);
 		if (Constants.USER_ID == 1)
@@ -208,8 +226,8 @@ public class MainMenu : MonoBehaviour
 			foreach(Character character in characters){
 				if(character.cardName == args.name)
                 {
-					p1Char = character;
-					p1CharCard.updateCharacter(character);
+					playerChar = character;
+					playerCharDisplay.updateCharacter(playerChar);
                 }
             }
 		}
@@ -219,8 +237,8 @@ public class MainMenu : MonoBehaviour
 			{
 				if (character.cardName == args.name)
 				{
-					p2Char = character;
-					p2CharCard.updateCharacter(character);
+					playerChar = character;
+					playerCharDisplay.updateCharacter(playerChar);
 				}
 			}
 		}
@@ -230,7 +248,8 @@ public class MainMenu : MonoBehaviour
 			{
 				if (character.cardName == args.name)
 				{
-					p3CharCard.updateCharacter(character);
+					playerChar = character;
+					playerCharDisplay.updateCharacter(playerChar);
 				}
 			}
 		}
@@ -240,7 +259,8 @@ public class MainMenu : MonoBehaviour
 			{
 				if (character.cardName == args.name)
 				{
-					p4CharCard.updateCharacter(character);
+					playerChar = character;
+					playerCharDisplay.updateCharacter(playerChar);
 				}
 			}
 		}
@@ -324,7 +344,8 @@ public class MainMenu : MonoBehaviour
 	public void StartNetworkGame()
     {
 		Debug.Log("Start the game!");
-    }
+		SceneManager.LoadScene("GameScene");
+	}
 
 	public void PlayGame()
     {
