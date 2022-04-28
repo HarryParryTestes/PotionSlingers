@@ -166,15 +166,28 @@ public class MainMenu : MonoBehaviour
 	public void OnResponseSetName(ExtendedEventArgs eventArgs)
 	{
 		ResponseSetNameEventArgs args = eventArgs as ResponseSetNameEventArgs;
+		// if user_id is opponent
 		if (args.user_id != Constants.USER_ID)
 		{
-			if (args.user_id == 1)
+			// p1 op1
+			if (args.user_id == Constants.OP1_ID  && args.user_id == 2)
+			{
+				player2Name.text = args.name;
+			}
+			// p2 op1
+			if (args.user_id == Constants.OP1_ID && args.user_id == 1)
 			{
 				player1Name.text = args.name;
 			}
-			else if (args.user_id == 2)
+			// p1 op2
+			if (args.user_id == Constants.OP2_ID && args.user_id == 3)
 			{
-				player2Name.text = args.name;
+				player3Name.text = args.name;
+			}
+			// p2 op2
+			if (args.user_id == Constants.OP2_ID && args.user_id == 3)
+			{
+				player3Name.text = args.name;
 			}
 			else if (args.user_id == 3)
 			{
