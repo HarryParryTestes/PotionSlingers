@@ -23,5 +23,7 @@ public class Constants
 	public static readonly short CMSG_HEARTBEAT = 111;
 
 	public static int USER_ID = -1;
-	public static int OP_ID = -1;
+	public static int OP1_ID = -1;
+	public static int OP2_ID = -1;
+	public static int OP3_ID = -1;
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class GameManagerTest : MonoBehaviour
 {
-	public Player[] Players = new Player[2];
+	public static GameManagerTest manager;
+	public Player[] Players = new Player[4];
 	//public GameObject HeroPrefab;
 
 	//private Hero[,] gameBoard = new Hero[6,5];
@@ -21,6 +22,12 @@ public class GameManagerTest : MonoBehaviour
 
 	private bool useNetwork;
 	private NetworkManager networkManager;
+
+	void Awake()
+	{
+		manager = this;
+		DontDestroyOnLoad(gameObject);
+	}
 
 	void Start()
 	{
