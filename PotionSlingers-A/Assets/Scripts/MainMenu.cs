@@ -319,7 +319,7 @@ public class MainMenu : MonoBehaviour
 		Debug.Log("Opponent2 Ready?: " + op2Ready);
 		Debug.Log("Opponent3 Ready?: " + op3Ready);
 
-		if((ready && op1Ready) && numPlayers == 2)
+		if((ready && op1Ready))
         {
 			StartNetworkGame();
         }
