@@ -17,6 +17,13 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
         character.flipped = false;
     }
 
+    public void updateCharacter(Character character)
+    {
+        artworkImage = this.GetComponent<Image>();
+        this.character = character;
+        this.artworkImage.sprite = character.image;
+    }
+
     //A placeholder for code that will allow the character cards to flip
     //after completing the flip criteria
     //For now, clicking the card allows it to flip
