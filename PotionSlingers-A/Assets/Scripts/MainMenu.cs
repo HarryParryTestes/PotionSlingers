@@ -263,7 +263,13 @@ public class MainMenu : MonoBehaviour
 		}
 		else
 		{
-			if (args.user_id == Constants.OP1_ID)
+			// p1 op1
+			if (args.user_id == Constants.OP1_ID && args.user_id == 2)
+			{
+				op1Ready = true;
+			}
+			// p2 op1
+			if (args.user_id == Constants.OP1_ID && args.user_id == 1)
 			{
 				op1Ready = true;
 			}
