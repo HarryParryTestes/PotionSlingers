@@ -52,7 +52,7 @@ public class MarketDeck : MonoBehaviour
     }
 
     // Start is called before the first frame update
-    void Start()
+    public void init()
     {
         deckList = shuffle();
         //for(int i = 0; i < deckList.Count; i++)

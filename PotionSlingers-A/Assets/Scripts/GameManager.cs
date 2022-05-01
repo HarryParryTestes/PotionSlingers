@@ -18,8 +18,8 @@ public class GameManager : MonoBehaviour
     GameObject ob3;
     GameObject ob4;
     GameObject td;
-    GameObject md1;
-    GameObject md2;
+    MarketDeck md1;
+    MarketDeck md2;
 
     public CharacterDisplay op1;
     public CharacterDisplay op2;
@@ -66,10 +66,10 @@ public class GameManager : MonoBehaviour
 
     void initDecks()
     {
-        md1 = GameObject.Find("PotionPile");
-        md1.GetComponent<MarketDeck>();
-        md2 = GameObject.Find("SpecialCardPile");
-        md2.GetComponent<MarketDeck>();
+        md1 = GameObject.Find("PotionPile").GetComponent<MarketDeck>();
+        md1.init();
+        md2 = GameObject.Find("SpecialCardPile").GetComponent<MarketDeck>();
+        md2.init();
     }
 
     // if there are open spots in the holster, move cards from deck to holster
@@ -102,23 +102,72 @@ public class GameManager : MonoBehaviour
     {
         int damage = 0;
         Debug.Log("GameManager Throw Potion");
-        //
+
+        // check card type
         switch (selectedCardInt)
         {
-            case 1: damage = players[currentPlayer].holster.card1.card.effectAmount;
+            case 1:
+                if (players[currentPlayer].holster.card1.card.cardType == "Potion")
+                {
+                    damage = players[currentPlayer].holster.card1.card.effectAmount;
+                    break;
+                } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
+                {
+
+                }
+                else if (players[currentPlayer].holster.card1.card.cardType == "Artifact")
+                {
+
+                }
                 break;
-            case 2: damage = players[currentPlayer].holster.card2.card.effectAmount;
+
+            case 2:
+                if (players[currentPlayer].holster.card2.card.cardType == "Potion")
+                {
+                    damage = players[currentPlayer].holster.card2.card.effectAmount;
+                    break;
+                }
+                else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
+                {
+
+                }
+                else if (players[currentPlayer].holster.card2.card.cardType == "Artifact")
+                {
+
+                }
                 break;
-            case 3: damage = players[currentPlayer].holster.card3.card.effectAmount;
+            case 3:
+                if (players[currentPlayer].holster.card3.card.cardType == "Potion")
+                {
+                    damage = players[currentPlayer].holster.card3.card.effectAmount;
+                    break;
+                }
+                else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
+                {
+
+                }
+                else if (players[currentPlayer].holster.card3.card.cardType == "Artifact")
+                {
+
+                }
                 break;
-            case 4: damage = players[currentPlayer].holster.card4.card.effectAmount;
+            case 4:
+                if (players[currentPlayer].holster.card4.card.cardType == "Potion")
+                {
+                    damage = players[currentPlayer].holster.card4.card.effectAmount;
+                    break;
+                }
+                else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
+                {
+
+                }
+                else if (players[currentPlayer].holster.card4.card.cardType == "Artifact")
+                {
+
+                }
                 break;
             default: damage = 0;
                 break;
-        }
-        if(selectedCardInt == 1)
-        {
-            damage = players[currentPlayer].holster.card1.card.effectAmount;
         }
         if (players[currentPlayer].ringBonus)
         {
