@@ -68,11 +68,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
     void Update() {
-        // If Card is attached to cursor, the Card follows the cursor's X/Y position until unattached.
-        // mousePos = Input.mousePosition;
-        // if(attached == true && canHover == false) {
-        //     this.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-        // }
+
     }
  
     // On mouse hovering over object: 
@@ -81,7 +77,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if(canHover) {
             float width = rt.sizeDelta.x * rt.localScale.x;
             float height = rt.sizeDelta.y * rt.localScale.y;
-            transform.SetSiblingIndex(this.transform.parent.transform.childCount - 1);
+            this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
             transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
@@ -95,20 +91,6 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // (any click, a boolean tracks whether the click is to activate or deactivate something)
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        // If Card is clicked on and attached to cursor, other cards aren't hoverable,
-        // else, if no Card is not attached anymore, Cards are hoverable again.
-
-        // attached = !attached;
-        // canHover = !canHover;
-        // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Pickup");
-        // if(attached) {
-        //     mousePos = Input.mousePosition;
-        //     this.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
-        // }
-        // if(!attached && canHover) {
-        //     transform.localScale = cachedScale;
-        //     originalPos = gameObject.transform.position;
-        // }
         if(!viewingCard) {
             cardSelected = !cardSelected;
             if(cardSelected) {
@@ -141,7 +123,6 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if(cardSelected) {
             cardMenu.gameObject.SetActive(false);
             this.transform.SetParent(viewingCardObject.transform);
-            // transform.SetSiblingIndex(this.transform.parent.transform.childCount - 1);
             this.transform.localRotation = Quaternion.identity;
             this.transform.localScale = new Vector3(3f, 3f, 3f);
             this.transform.position = new Vector3 (Screen.width * 0.5f, Screen.height * 0.5f, 0);
@@ -155,7 +136,6 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         viewCardMenu.gameObject.SetActive(false);
         if(cardSelected) {
             cardSelected = false;
-            // this.transform.localRotation = originalRotation;
             this.transform.SetParent(parentObject.transform);
             this.transform.localRotation = Quaternion.identity;
             transform.localScale = cachedScale;
