@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
+public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     Vector3 cachedScale; // Tracks original size of Card (for hovering as it manipulates scale of Card).
     Vector3 originalPos; // Tracks original position of Card.
@@ -21,7 +21,6 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     Transform viewCardMenu = null;
     Transform highlighted = null;
     GameObject parentObject = null;
-    GameObject attackMenu = null;
     GameObject viewingCardObject = null;
     bool cardSelected = false;
     public static bool viewingCard = false;
@@ -36,35 +35,20 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         parentObject = this.transform.parent.gameObject;
         cardMenu = this.transform.Find("CardMenu");
         viewCardMenu = this.transform.Find("ViewCardMenu");
-        highlighted = parentObject.transform.Find("Highlighted");
-        attackMenu = GameObject.Find("ChooseAttackPlayer");
         viewingCardObject = GameObject.Find("ViewingCard");
 
         if(parentObject == null) {
             Debug.Log("Error: parentObject doesn't exist!");
         }
-        if(cardMenu == null) {
-            Debug.Log("Error: CardMenu doesn't exist!");
-        }
-        if(viewCardMenu == null) {
-            Debug.Log("Error: ViewCardMenu doesn't exist!");
-        }
-        if(attackMenu == null) {
-            Debug.Log("Error: ChooseAttackPlayer doesn't exist!");
-        }
         if(viewingCardObject == null) {
             Debug.Log("Error: ViewingCard doesn't exist!");
-        }
-        if(highlighted == null) {
-            Debug.Log("Error: Highlighted child doesn't exist!");
         }
 
         cardSelected = false;
         viewingCard = false;
         cardMenu.gameObject.SetActive(false);
         viewCardMenu.gameObject.SetActive(false);
-        attackMenu.gameObject.SetActive(false);
-        highlighted.gameObject.SetActive(false);
+        // highlighted.gameObject.SetActive(false);
     }
 
     void Update() {
@@ -78,6 +62,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // On mouse hovering over object: 
     // (aka when mouse cursor enters GameObject's X/Y/Z boundaries)
     public void OnPointerEnter(PointerEventData eventData) {
+        Debug.Log("Entered Market Card!");
         if(canHover) {
             float width = rt.sizeDelta.x * rt.localScale.x;
             float height = rt.sizeDelta.y * rt.localScale.y;
@@ -143,7 +128,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             this.transform.SetParent(viewingCardObject.transform);
             // transform.SetSiblingIndex(this.transform.parent.transform.childCount - 1);
             this.transform.localRotation = Quaternion.identity;
-            this.transform.localScale = new Vector3(3f, 3f, 3f);
+            this.transform.localScale = new Vector3(4f, 4f, 4f);
             this.transform.position = new Vector3 (Screen.width * 0.5f, Screen.height * 0.5f, 0);
             viewCardMenu.gameObject.SetActive(true);
             this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);
@@ -161,15 +146,6 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             transform.localScale = cachedScale;
             gameObject.transform.position = originalPos;
             canHover = true;
-            highlighted.gameObject.SetActive(false);
-        }
-    }
-
-    public void ChooseAttackPlayer() {
-        viewingCard = true;
-        if(cardSelected) {
-            cardMenu.gameObject.SetActive(false);
-            attackMenu.SetActive(true);
         }
     }
 }
