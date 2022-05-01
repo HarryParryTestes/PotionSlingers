@@ -92,8 +92,8 @@ public class MainMenu : MonoBehaviour
 		{
 			if (character2.cardName == character)
 			{
-				playerChar = character2;
-				playerCharDisplay.updateCharacter(playerChar);
+				Debug.Log(character + " chosen");
+				//playerCharDisplay.updateCharacter(character);
 			}
 		}
 		bool connected = networkManager.SendCharacterRequest(character);
@@ -190,6 +190,7 @@ public class MainMenu : MonoBehaviour
 			else if (args.user_id == 2)
 			{
 				player2Name.text = args.name;
+				numPlayers = 2;
 			}
 			else if (args.user_id == 3)
 			{
@@ -209,6 +210,7 @@ public class MainMenu : MonoBehaviour
 			foreach(Character character in characters){
 				if(character.cardName == args.name)
                 {
+					Debug.Log(character.cardName);
 					p1CharCard.updateCharacter(character);
                 }
             }
@@ -219,6 +221,7 @@ public class MainMenu : MonoBehaviour
 			{
 				if (character.cardName == args.name)
 				{
+					Debug.Log(character.cardName);
 					p2CharCard.updateCharacter(character);
 				}
 			}
@@ -256,13 +259,11 @@ public class MainMenu : MonoBehaviour
 	public void OnResponseReady(ExtendedEventArgs eventArgs)
 	{
 		ResponseReadyEventArgs args = eventArgs as ResponseReadyEventArgs;
-		// p1 op1
 		if (args.user_id == 1)
 		{
 			p1Ready = true;
 		}
-		// p2 op1
-		if (args.user_id == 2)
+		else if (args.user_id == 2)
 		{
 			p2Ready = true;
 		}
