@@ -16457,12 +16457,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 2133140393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 11500d427c9a29b43a3ef507c7470eac, type: 3}
+  m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Players:
+  numPlayers: 0
+  selectedCardInt: 0
+  selectedOpponentInt: 0
+  players:
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  characters: []
+  op1: {fileID: 0}
+  op2: {fileID: 0}
+  op3: {fileID: 0}
 --- !u!1 &2139450297
 GameObject:
   m_ObjectHideFlags: 0

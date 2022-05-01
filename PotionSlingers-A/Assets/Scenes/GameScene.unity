@@ -1657,6 +1657,7 @@ GameObject:
   - component: {fileID: 160461281}
   - component: {fileID: 160461280}
   - component: {fileID: 160461279}
+  - component: {fileID: 160461282}
   m_Layer: 5
   m_Name: Pluot
   m_TagString: Untagged
@@ -1736,6 +1737,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160461277}
   m_CullTransparentMesh: 1
+--- !u!114 &160461282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160461277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 2
 --- !u!1 &169650269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,7 +1937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   name: 
-  charName: 
+  charName: Pluot
   user_id: 0
   hpCubes: 0
   takenHPCubes: 0
@@ -1930,7 +1946,7 @@ MonoBehaviour:
   pips: 0
   dead: 0
   potionsThrown: 0
-  character: {fileID: 0}
+  character: {fileID: 543400067}
   ringBonus: 0
   bonusAmount: 0
 --- !u!1 &221112647
@@ -3548,11 +3564,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numPlayers: 0
+  selectedCardInt: 0
+  selectedOpponentInt: 0
   players:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  characters: []
+  op1: {fileID: 0}
+  op2: {fileID: 0}
+  op3: {fileID: 0}
 --- !u!222 &344823240
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5215,6 +5238,30 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: displayOpponents
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11430,7 +11477,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1094063417}
-  - component: {fileID: 1094063418}
   m_Layer: 5
   m_Name: CharacterCard (Top)
   m_TagString: Untagged
@@ -11460,20 +11506,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 413.5, y: 708.75}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1094063418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1094063416}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d824e6e0e650e479ba06f0c1a6b10cfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  character: {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
-  artworkImage: {fileID: 0}
 --- !u!1 &1102760926
 GameObject:
   m_ObjectHideFlags: 0
@@ -11952,6 +11984,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -13205,7 +13249,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   name: 
-  charName: 
+  charName: Bolo
   user_id: 0
   hpCubes: 0
   takenHPCubes: 0
@@ -13214,7 +13258,7 @@ MonoBehaviour:
   pips: 0
   dead: 0
   potionsThrown: 0
-  character: {fileID: 0}
+  character: {fileID: 1714507737}
   ringBonus: 0
   bonusAmount: 0
 --- !u!1 &1319871941
@@ -16654,6 +16698,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1623096571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18622,6 +18678,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 1
 --- !u!1 &1808253378
 GameObject:
   m_ObjectHideFlags: 0
@@ -20595,7 +20653,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hp: 10
   name: 
-  charName: 
+  charName: Twins
   user_id: 0
   hpCubes: 0
   takenHPCubes: 0
@@ -20604,7 +20662,7 @@ MonoBehaviour:
   pips: 0
   dead: 0
   potionsThrown: 0
-  character: {fileID: 0}
+  character: {fileID: 1624123902}
   ringBonus: 0
   bonusAmount: 0
 --- !u!1 &1996797255
@@ -21379,6 +21437,7 @@ GameObject:
   - component: {fileID: 2044632198}
   - component: {fileID: 2044632197}
   - component: {fileID: 2044632196}
+  - component: {fileID: 2044632199}
   m_Layer: 5
   m_Name: TheTwins
   m_TagString: Untagged
@@ -21458,6 +21517,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044632194}
   m_CullTransparentMesh: 1
+--- !u!114 &2044632199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044632194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 3
 --- !u!1 &2053633988
 GameObject:
   m_ObjectHideFlags: 0
@@ -22110,11 +22184,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numPlayers: 0
+  selectedCardInt: 0
+  selectedOpponentInt: 0
   players:
   - {fileID: 1316039903}
   - {fileID: 189316754}
   - {fileID: 1317657375}
   - {fileID: 1986209883}
+  characters:
+  - {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
+  - {fileID: 11400000, guid: 6f37677945eff4915957fbaf9b104512, type: 2}
+  - {fileID: 11400000, guid: d9f921f65e72546dba4939253745cb60, type: 2}
+  - {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
+  - {fileID: 11400000, guid: b3fa98b132be44beda013cba1c0bea2d, type: 2}
+  - {fileID: 11400000, guid: 829aa6fa9b07d464ca8489dad4ee4f33, type: 2}
+  - {fileID: 11400000, guid: a3977bdfbf9ec43c185c71fb055d0234, type: 2}
+  - {fileID: 11400000, guid: 51f610b86ef694a9ca5e7d96bb09e025, type: 2}
+  - {fileID: 11400000, guid: e126101c9d11f44b18e0b4b27d14054a, type: 2}
+  op1: {fileID: 1806986078}
+  op2: {fileID: 160461279}
+  op3: {fileID: 2044632196}
 --- !u!4 &2083794570
 Transform:
   m_ObjectHideFlags: 0
@@ -22149,7 +22239,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2083794569}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: throwPotion
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -22513,6 +22603,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1

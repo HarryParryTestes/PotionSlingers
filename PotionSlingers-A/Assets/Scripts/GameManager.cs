@@ -5,12 +5,14 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    //[SerializeField] UnityEvent throwPotion<Player, CardDisplay, Player>;
 
     public static GameManager manager;
-    int numPlayers = 0;
+    public int numPlayers = 0;
+    public int selectedCardInt;
+    public int selectedOpponentInt;
     int currentPlayer = 0;
     public Player[] players = new Player[4];
+    public Character[] characters;
     GameObject ob;
     GameObject ob2;
     GameObject ob3;
@@ -18,6 +20,10 @@ public class GameManager : MonoBehaviour
     GameObject td;
     GameObject md1;
     GameObject md2;
+
+    public CharacterDisplay op1;
+    public CharacterDisplay op2;
+    public CharacterDisplay op3;
 
     void Awake()
     {
@@ -27,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        init();
+        //init();
     }
 
     public void init()
@@ -92,19 +98,12 @@ public class GameManager : MonoBehaviour
         onStartTurn(players[currentPlayer]);
     }
 
-    /*
-    public void throwPotion(Player player, CardDisplay cd, Player opponent)
-    {
-        Debug.Log("GameManager Throw Potion");
-    }
-    */
-
-    public void throwPotion(int cd)
+    public void throwPotion()
     {
         int damage = 0;
         Debug.Log("GameManager Throw Potion");
         //
-        switch (cd)
+        switch (selectedCardInt)
         {
             case 1: damage = players[currentPlayer].holster.card1.card.effectAmount;
                 break;
@@ -117,7 +116,7 @@ public class GameManager : MonoBehaviour
             default: damage = 0;
                 break;
         }
-        if(cd == 1)
+        if(selectedCardInt == 1)
         {
             damage = players[currentPlayer].holster.card1.card.effectAmount;
         }
@@ -126,6 +125,61 @@ public class GameManager : MonoBehaviour
             damage += players[currentPlayer].bonusAmount;
         }
         //players[oppId - 1].subHealth(damage);
+    }
+
+    public void setSCInt(int num)
+    {
+        selectedCardInt = num;
+    }
+
+    public void setOPInt(int num)
+    {
+        selectedOpponentInt = num;
+    }
+
+    public void displayOpponents()
+    {
+        int set = 0;
+        foreach (Player player in players)
+        {
+            if(player.user_id != players[currentPlayer].user_id)
+            {
+                if(set == 0)
+                {
+                    foreach(Character character in characters)
+                    {
+                        if(player.charName == character.cardName)
+                        {
+                            op1.updateCharacter(character);
+                            set++;
+                        }
+                    }
+                }
+
+                if (set == 1)
+                {
+                    foreach (Character character in characters)
+                    {
+                        if (player.charName == character.cardName)
+                        {
+                            op2.updateCharacter(character);
+                            set++;
+                        }
+                    }
+                }
+
+                if (set == 2)
+                {
+                    foreach (Character character in characters)
+                    {
+                        if (player.charName == character.cardName)
+                        {
+                            op2.updateCharacter(character);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /*

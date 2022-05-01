@@ -13,7 +13,7 @@ public class MainMenu : MonoBehaviour
 	private GameObject startGameButton;
 	private GameObject networkMenu;
 	private NetworkManager networkManager;
-	public static GameManagerTest gameManager;
+	public GameManager gameManager;
 	private MessageQueue msgQueue;
 
 	public List<Character> characters;
@@ -345,6 +345,7 @@ public class MainMenu : MonoBehaviour
     {
 		Debug.Log("Start the game!");
 		SceneManager.LoadScene("GameScene");
+		gameManager.init();
 	}
 
 	public void PlayGame()
