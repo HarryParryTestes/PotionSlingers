@@ -109,6 +109,7 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card1.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card1.card.effectAmount;
+                    td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                     break;
                 } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
                 {
@@ -124,6 +125,7 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card2.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card2.card.effectAmount;
+                    td.addCard(players[currentPlayer].holster.card2);
                     break;
                 }
                 else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
@@ -139,6 +141,7 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card3.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card3.card.effectAmount;
+                    td.addCard(players[currentPlayer].holster.card3);
                     break;
                 }
                 else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
@@ -154,6 +157,7 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card4.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card4.card.effectAmount;
+                    td.addCard(players[currentPlayer].holster.card4);
                     break;
                 }
                 else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
@@ -172,7 +176,8 @@ public class GameManager : MonoBehaviour
         {
             damage += players[currentPlayer].bonusAmount;
         }
-        //players[oppId - 1].subHealth(damage);
+        // send protocol to server
+
     }
 
     public void setSCInt(int num)
@@ -222,7 +227,7 @@ public class GameManager : MonoBehaviour
                     {
                         if (player.charName == character.cardName)
                         {
-                            op2.updateCharacter(character);
+                            op3.updateCharacter(character);
                         }
                     }
                 }
@@ -324,6 +329,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Cycle Card");
         players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+        players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
     }
 
     /*

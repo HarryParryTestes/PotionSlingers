@@ -7,6 +7,7 @@ public class CardDisplay : MonoBehaviour
 {
     public Card card;
     public Image artworkImage;
+    public Card placeholder;
 
     // Start is called before the first frame update
     void Start()
