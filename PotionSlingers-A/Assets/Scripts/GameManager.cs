@@ -311,7 +311,19 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Sell Card");
         players[currentPlayer].pips += players[currentPlayer].holster.cardList[selectedCardInt - 1].card.sellPrice;
-        
+        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+    }
+
+    public void trashCard()
+    {
+        Debug.Log("Trash Card");
+        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+    }
+
+    public void cycleCard()
+    {
+        Debug.Log("Cycle Card");
+        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
     }
 
     /*
