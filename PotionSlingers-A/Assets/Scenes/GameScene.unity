@@ -1167,7 +1167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 36975341}
   m_Layer: 5
-  m_Name: MarketPotion2
+  m_Name: Market_Potion2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3462,6 +3462,7 @@ GameObject:
   - component: {fileID: 160461281}
   - component: {fileID: 160461280}
   - component: {fileID: 160461279}
+  - component: {fileID: 160461282}
   m_Layer: 5
   m_Name: Pluot
   m_TagString: Untagged
@@ -3541,6 +3542,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 160461277}
   m_CullTransparentMesh: 1
+--- !u!114 &160461282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 160461277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 2
 --- !u!1 &167530496
 GameObject:
   m_ObjectHideFlags: 0
@@ -5442,7 +5458,7 @@ GameObject:
   - component: {fileID: 292815345}
   - component: {fileID: 292815344}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: CardDisplay (Potion1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6675,11 +6691,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numPlayers: 0
+  selectedCardInt: 0
+  selectedOpponentInt: 0
   players:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  characters: []
+  op1: {fileID: 0}
+  op2: {fileID: 0}
+  op3: {fileID: 0}
 --- !u!222 &344823240
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6774,7 +6797,7 @@ GameObject:
   m_Component:
   - component: {fileID: 347968894}
   m_Layer: 5
-  m_Name: MarketPotion3
+  m_Name: Market_Potion3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9972,7 +9995,7 @@ GameObject:
   - component: {fileID: 486512871}
   - component: {fileID: 486512870}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: CardDisplay (Potion3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10469,6 +10492,30 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: displayOpponents
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -11933,7 +11980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 584145804}
   m_Layer: 5
-  m_Name: Special1
+  m_Name: Market_Special1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14082,7 +14129,7 @@ GameObject:
   - component: {fileID: 690513024}
   - component: {fileID: 690513025}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: CardDisplay (Special2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14184,7 +14231,7 @@ GameObject:
   m_Component:
   - component: {fileID: 691010928}
   m_Layer: 5
-  m_Name: Special3
+  m_Name: Market_Special3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18088,6 +18135,7 @@ GameObject:
   - component: {fileID: 905353794}
   - component: {fileID: 905353796}
   - component: {fileID: 905353795}
+  - component: {fileID: 905353797}
   m_Layer: 5
   m_Name: EnemyArea (Top)
   m_TagString: Untagged
@@ -18156,6 +18204,32 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905353793}
   m_CullTransparentMesh: 1
+--- !u!114 &905353797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905353793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: 
+  charName: 
+  user_id: 0
+  hpCubes: 0
+  takenHPCubes: 0
+  deck: {fileID: 0}
+  holster: {fileID: 0}
+  pips: 0
+  dead: 0
+  potionsThrown: 0
+  character: {fileID: 0}
+  ringBonus: 0
+  bonusAmount: 0
 --- !u!1 &908084157
 GameObject:
   m_ObjectHideFlags: 0
@@ -18170,7 +18244,7 @@ GameObject:
   - component: {fileID: 908084163}
   - component: {fileID: 908084162}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: CardDisplay (Special1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23004,6 +23078,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -31693,6 +31779,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 4
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &1623096571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35296,6 +35394,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 1
 --- !u!1 &1807991617
 GameObject:
   m_ObjectHideFlags: 0
@@ -35774,7 +35874,7 @@ GameObject:
   - component: {fileID: 1831950244}
   - component: {fileID: 1831950245}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: CardDisplay (Special3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39235,7 +39335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2013784968}
   m_Layer: 5
-  m_Name: MarketPotion1
+  m_Name: Market_Potion1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40032,6 +40132,7 @@ GameObject:
   - component: {fileID: 2044632198}
   - component: {fileID: 2044632197}
   - component: {fileID: 2044632196}
+  - component: {fileID: 2044632199}
   m_Layer: 5
   m_Name: TheTwins
   m_TagString: Untagged
@@ -40111,6 +40212,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2044632194}
   m_CullTransparentMesh: 1
+--- !u!114 &2044632199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044632194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 3
 --- !u!1 &2049560698
 GameObject:
   m_ObjectHideFlags: 0
@@ -40389,7 +40505,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2054869058}
   m_Layer: 5
-  m_Name: Special2
+  m_Name: Market_Special2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40641,7 +40757,7 @@ GameObject:
   - component: {fileID: 2065021268}
   - component: {fileID: 2065021267}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: CardDisplay (Potion2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -41260,11 +41376,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numPlayers: 0
+  selectedCardInt: 0
+  selectedOpponentInt: 0
   players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1316039903}
+  - {fileID: 189316754}
+  - {fileID: 1317657375}
+  - {fileID: 1317657375}
+  characters: []
+  op1: {fileID: 1806986078}
+  op2: {fileID: 160461279}
+  op3: {fileID: 2044632196}
 --- !u!4 &2083794570
 Transform:
   m_ObjectHideFlags: 0
@@ -41299,7 +41422,7 @@ MonoBehaviour:
       - m_Target: {fileID: 2083794569}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: throwPotion
-        m_Mode: 3
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -41909,6 +42032,18 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
@@ -42840,7 +42975,7 @@ GameObject:
   - component: {fileID: 1733491772}
   - component: {fileID: 7758924205767680233}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: Card2Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42939,7 +43074,7 @@ GameObject:
   - component: {fileID: 1805889192}
   - component: {fileID: 5161119629248880046}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: Card4Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43029,7 +43164,7 @@ GameObject:
   - component: {fileID: 8365923717578268709}
   - component: {fileID: 8365923717578268710}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: Card1Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43426,7 +43561,7 @@ GameObject:
   - component: {fileID: 933143404}
   - component: {fileID: 7314541838479060040}
   m_Layer: 5
-  m_Name: CardDisplay
+  m_Name: Card3Display
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
