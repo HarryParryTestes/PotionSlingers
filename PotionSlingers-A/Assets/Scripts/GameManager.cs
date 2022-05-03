@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
     GameObject ob2;
     GameObject ob3;
     GameObject ob4;
-    GameObject td;
+    TrashDeck td;
     MarketDeck md1;
     MarketDeck md2;
 
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //init();
+        init();
     }
 
     public void init()
@@ -44,8 +44,7 @@ public class GameManager : MonoBehaviour
 
     void initPlayers()
     {
-        td = GameObject.Find("TrashPile");
-        td.GetComponent<TrashDeck>();
+        td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
         ob = GameObject.Find("CharacterCard");
         players[0] = ob.GetComponent<Player>();
         ob2 = GameObject.Find("CharacterCard (Top)");
@@ -229,6 +228,90 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    // subtract pips, update deck display and market display
+    public void topMarketBuy()
+    {
+        Debug.Log("Top Market Buy");
+        switch (md1.cardInt)
+        {
+            case 1:
+                if(players[currentPlayer].pips >= md1.cardDisplay1.card.buyPrice)
+                {
+                    players[currentPlayer].pips -= md1.cardDisplay1.card.buyPrice;
+                    players[currentPlayer].deck.putCardOnTop(md1.cardDisplay1.card);
+                    Card card = md1.popCard();
+                    md1.cardDisplay1.updateCard(card);
+                }
+                break;
+            case 2:
+                if (players[currentPlayer].pips >= md1.cardDisplay2.card.buyPrice)
+                {
+                    players[currentPlayer].pips -= md1.cardDisplay2.card.buyPrice;
+                    players[currentPlayer].deck.putCardOnTop(md1.cardDisplay2.card);
+                    Card card = md1.popCard();
+                    md1.cardDisplay2.updateCard(card);
+                }
+                break;
+            case 3:
+                if (players[currentPlayer].pips >= md1.cardDisplay3.card.buyPrice)
+                {
+                    players[currentPlayer].pips -= md1.cardDisplay3.card.buyPrice;
+                    players[currentPlayer].deck.putCardOnTop(md1.cardDisplay3.card);
+                    Card card = md1.popCard();
+                    md1.cardDisplay3.updateCard(card);
+                }
+                break;
+            default:
+                Debug.Log("MarketDeck Error!");
+                break;
+        }
+    }
+
+    public void bottomMarketBuy()
+    {
+        Debug.Log("Bottom Market Buy");
+        switch (md2.cardInt)
+        {
+            case 1:
+                if (players[currentPlayer].pips >= md2.cardDisplay1.card.buyPrice)
+                {
+                    players[currentPlayer].pips -= md2.cardDisplay1.card.buyPrice;
+                    players[currentPlayer].deck.putCardOnTop(md2.cardDisplay1.card);
+                    Card card = md2.popCard();
+                    md2.cardDisplay1.updateCard(card);
+                }
+                break;
+            case 2:
+                if (players[currentPlayer].pips >= md2.cardDisplay2.card.buyPrice)
+                {
+                    players[currentPlayer].pips -= md2.cardDisplay2.card.buyPrice;
+                    players[currentPlayer].deck.putCardOnTop(md2.cardDisplay2.card);
+                    Card card = md2.popCard();
+                    md2.cardDisplay2.updateCard(card);
+                }
+                break;
+            case 3:
+                if (players[currentPlayer].pips >= md2.cardDisplay3.card.buyPrice)
+                {
+                    players[currentPlayer].pips -= md2.cardDisplay3.card.buyPrice;
+                    players[currentPlayer].deck.putCardOnTop(md2.cardDisplay3.card);
+                    Card card = md2.popCard();
+                    md2.cardDisplay3.updateCard(card);
+                }
+                break;
+            default:
+                Debug.Log("MarketDeck Error!");
+                break;
+        }
+    }
+
+    public void sellCard()
+    {
+        Debug.Log("Sell Card");
+        players[currentPlayer].pips += players[currentPlayer].holster.cardList[selectedCardInt - 1].card.sellPrice;
+        
     }
 
     /*

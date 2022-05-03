@@ -5457,6 +5457,7 @@ GameObject:
   - component: {fileID: 292815341}
   - component: {fileID: 292815345}
   - component: {fileID: 292815344}
+  - component: {fileID: 292815346}
   m_Layer: 5
   m_Name: CardDisplay (Potion1)
   m_TagString: Untagged
@@ -5550,6 +5551,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8759493d504c6c441b86067246502114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &292815346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 292815339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa90c8cc3655384cb91c6999b702e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Market1Buy: {fileID: 11400000, guid: b3c85780854712742b10eb69859126e7, type: 2}
+  manager: {fileID: 0}
 --- !u!1 &296813534
 GameObject:
   m_ObjectHideFlags: 0
@@ -6907,7 +6922,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 358098622}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1168455953}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: topMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &358098622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9465,7 +9504,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 468891081}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setSCInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: sellCard
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &468891081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12606,7 +12669,7 @@ RectTransform:
   m_GameObject: {fileID: 628987347}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1865351852}
@@ -12614,7 +12677,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -158.75, y: 10}
+  m_AnchoredPosition: {x: -158.74997, y: 10}
   m_SizeDelta: {x: 112.5, y: 157.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &628987349
@@ -12679,6 +12742,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 82bbb4feaa046374d83c17f8a0d18414, type: 2}
   - {fileID: 11400000, guid: 8c0239f538c1b5a44bdd49beb284a5ba, type: 2}
   - {fileID: 11400000, guid: cef715ee4de7bcc4fa43f7193ed950ea, type: 2}
+  cardInt: 0
   cardDisplay1: {fileID: 908084162}
   cardDisplay2: {fileID: 690513024}
   cardDisplay3: {fileID: 1831950244}
@@ -15158,7 +15222,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 728457169}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 628987351}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: bottomMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &728457169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19999,7 +20087,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 986593100}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 628987351}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: bottomMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &986593100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23226,6 +23338,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: e6fb4d251bf23c542b1f73038b410fcf, type: 2}
   - {fileID: 11400000, guid: 6901b9df27d5d6b48aaf43a7968f97ce, type: 2}
   - {fileID: 11400000, guid: e64e302117a835b45ac087d4c401499f, type: 2}
+  - {fileID: 11400000, guid: e64e302117a835b45ac087d4c401499f, type: 2}
+  - {fileID: 11400000, guid: e64e302117a835b45ac087d4c401499f, type: 2}
+  cardInt: 0
   cardDisplay1: {fileID: 292815344}
   cardDisplay2: {fileID: 2065021267}
   cardDisplay3: {fileID: 486512870}
@@ -29112,7 +29227,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1493141435}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 628987351}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: bottomMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1493141435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31286,6 +31425,7 @@ GameObject:
   - component: {fileID: 1606579610}
   - component: {fileID: 1606579609}
   - component: {fileID: 1606579608}
+  - component: {fileID: 1606579611}
   m_Layer: 5
   m_Name: BUY
   m_TagString: Untagged
@@ -31357,7 +31497,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1606579609}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1168455953}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: topMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1606579609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31396,6 +31560,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606579606}
   m_CullTransparentMesh: 1
+--- !u!114 &1606579611
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1606579606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa90c8cc3655384cb91c6999b702e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Market1Buy: {fileID: 11400000, guid: b3c85780854712742b10eb69859126e7, type: 2}
+  manager: {fileID: 2083794569}
 --- !u!1 &1608397067
 GameObject:
   m_ObjectHideFlags: 0
@@ -38221,6 +38399,7 @@ GameObject:
   - component: {fileID: 1952706364}
   - component: {fileID: 1952706363}
   - component: {fileID: 1952706362}
+  - component: {fileID: 1952706365}
   m_Layer: 5
   m_Name: BUY
   m_TagString: Untagged
@@ -38292,7 +38471,31 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1952706363}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1168455953}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: topMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1952706363
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38331,6 +38534,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1952706360}
   m_CullTransparentMesh: 1
+--- !u!114 &1952706365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1952706360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fa90c8cc3655384cb91c6999b702e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Market1Buy: {fileID: 11400000, guid: b3c85780854712742b10eb69859126e7, type: 2}
+  manager: {fileID: 2083794569}
 --- !u!1 &1959636661
 GameObject:
   m_ObjectHideFlags: 0
@@ -41384,7 +41601,16 @@ MonoBehaviour:
   - {fileID: 189316754}
   - {fileID: 1317657375}
   - {fileID: 1317657375}
-  characters: []
+  characters:
+  - {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
+  - {fileID: 11400000, guid: 6f37677945eff4915957fbaf9b104512, type: 2}
+  - {fileID: 11400000, guid: d9f921f65e72546dba4939253745cb60, type: 2}
+  - {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
+  - {fileID: 11400000, guid: b3fa98b132be44beda013cba1c0bea2d, type: 2}
+  - {fileID: 11400000, guid: 829aa6fa9b07d464ca8489dad4ee4f33, type: 2}
+  - {fileID: 11400000, guid: a3977bdfbf9ec43c185c71fb055d0234, type: 2}
+  - {fileID: 11400000, guid: 51f610b86ef694a9ca5e7d96bb09e025, type: 2}
+  - {fileID: 11400000, guid: e126101c9d11f44b18e0b4b27d14054a, type: 2}
   op1: {fileID: 1806986078}
   op2: {fileID: 160461279}
   op3: {fileID: 2044632196}

@@ -9,6 +9,7 @@ public class MarketDeck : MonoBehaviour
 {
     // the deck is uninitialized to begin with
     public List<Card> deckList;
+    public int cardInt;
     public CardDisplay cardDisplay1;
     public CardDisplay cardDisplay2;
     public CardDisplay cardDisplay3;
@@ -60,5 +61,10 @@ public class MarketDeck : MonoBehaviour
         //    Debug.Log("Card " + i + ": " + deckList[i]);
         //}
         initCardDisplays();
+    }
+
+    public void setCardInt(int card)
+    {
+        cardInt = card;
     }
 }
