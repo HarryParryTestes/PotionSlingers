@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
     TrashDeck td;
     MarketDeck md1;
     MarketDeck md2;
+    public List<GameObject> successMessages;
+    public List<GameObject> errorMessages;
 
     public CharacterDisplay op1;
     public CharacterDisplay op2;
@@ -110,6 +112,7 @@ public class GameManager : MonoBehaviour
                 {
                     damage = players[currentPlayer].holster.card1.card.effectAmount;
                     td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                    sendSuccessMessage(2);
                     break;
                 } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
                 {
@@ -126,6 +129,7 @@ public class GameManager : MonoBehaviour
                 {
                     damage = players[currentPlayer].holster.card2.card.effectAmount;
                     td.addCard(players[currentPlayer].holster.card2);
+                    sendSuccessMessage(2);
                     break;
                 }
                 else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
@@ -142,6 +146,7 @@ public class GameManager : MonoBehaviour
                 {
                     damage = players[currentPlayer].holster.card3.card.effectAmount;
                     td.addCard(players[currentPlayer].holster.card3);
+                    sendSuccessMessage(2);
                     break;
                 }
                 else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
@@ -158,6 +163,7 @@ public class GameManager : MonoBehaviour
                 {
                     damage = players[currentPlayer].holster.card4.card.effectAmount;
                     td.addCard(players[currentPlayer].holster.card4);
+                    sendSuccessMessage(2);
                     break;
                 }
                 else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
@@ -188,6 +194,46 @@ public class GameManager : MonoBehaviour
     public void setOPInt(int num)
     {
         selectedOpponentInt = num;
+    }
+
+    // find potions and display them in LoadItemMenu
+    public void displayPotions()
+    {
+        int set = 0;
+        CardDisplay left = GameObject.Find("Card (Left)").GetComponent<CardDisplay>();
+        CardDisplay middle = GameObject.Find("Card (Middle)").GetComponent<CardDisplay>();
+        CardDisplay right = GameObject.Find("Card (Right)").GetComponent<CardDisplay>();
+        foreach (CardDisplay cd in players[currentPlayer].holster.cardList)
+        {
+           if(cd.card.cardType == "Potion")
+            {
+                switch (set)
+                {
+                    case 0:
+                        left.updateCard(cd.card);
+                        set++;
+                        break;
+                    case 1:
+                        middle.updateCard(cd.card);
+                        set++;
+                        break;
+                    case 2:
+                        right.updateCard(cd.card);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        if(set == 1)
+        {
+            middle.updateCard(players[currentPlayer].deck.placeholder);
+            right.updateCard(players[currentPlayer].deck.placeholder);
+        }
+        if(set == 2)
+        {
+            right.updateCard(players[currentPlayer].deck.placeholder);
+        }
     }
 
     public void displayOpponents()
@@ -248,6 +294,10 @@ public class GameManager : MonoBehaviour
                     players[currentPlayer].deck.putCardOnTop(md1.cardDisplay1.card);
                     Card card = md1.popCard();
                     md1.cardDisplay1.updateCard(card);
+                    sendSuccessMessage(1);
+                } else
+                {
+                    sendErrorMessage(6);
                 }
                 break;
             case 2:
@@ -257,6 +307,11 @@ public class GameManager : MonoBehaviour
                     players[currentPlayer].deck.putCardOnTop(md1.cardDisplay2.card);
                     Card card = md1.popCard();
                     md1.cardDisplay2.updateCard(card);
+                    sendSuccessMessage(1);
+                }
+                else
+                {
+                    sendErrorMessage(6);
                 }
                 break;
             case 3:
@@ -266,6 +321,11 @@ public class GameManager : MonoBehaviour
                     players[currentPlayer].deck.putCardOnTop(md1.cardDisplay3.card);
                     Card card = md1.popCard();
                     md1.cardDisplay3.updateCard(card);
+                    sendSuccessMessage(1);
+                }
+                else
+                {
+                    sendErrorMessage(6);
                 }
                 break;
             default:
@@ -286,6 +346,11 @@ public class GameManager : MonoBehaviour
                     players[currentPlayer].deck.putCardOnTop(md2.cardDisplay1.card);
                     Card card = md2.popCard();
                     md2.cardDisplay1.updateCard(card);
+                    sendSuccessMessage(1);
+                }
+                else
+                {
+                    sendErrorMessage(6);
                 }
                 break;
             case 2:
@@ -295,6 +360,11 @@ public class GameManager : MonoBehaviour
                     players[currentPlayer].deck.putCardOnTop(md2.cardDisplay2.card);
                     Card card = md2.popCard();
                     md2.cardDisplay2.updateCard(card);
+                    sendSuccessMessage(1);
+                }
+                else
+                {
+                    sendErrorMessage(6);
                 }
                 break;
             case 3:
@@ -304,6 +374,11 @@ public class GameManager : MonoBehaviour
                     players[currentPlayer].deck.putCardOnTop(md2.cardDisplay3.card);
                     Card card = md2.popCard();
                     md2.cardDisplay3.updateCard(card);
+                    sendSuccessMessage(1);
+                }
+                else
+                {
+                    sendErrorMessage(6);
                 }
                 break;
             default:
@@ -317,19 +392,56 @@ public class GameManager : MonoBehaviour
         Debug.Log("Sell Card");
         players[currentPlayer].pips += players[currentPlayer].holster.cardList[selectedCardInt - 1].card.sellPrice;
         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+        sendSuccessMessage(8);
     }
 
     public void trashCard()
     {
         Debug.Log("Trash Card");
         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+        sendSuccessMessage(9);
     }
 
     public void cycleCard()
     {
         Debug.Log("Cycle Card");
-        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
-        players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
+        if(players[currentPlayer].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+        {
+            players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+            players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
+            sendSuccessMessage(7);
+            
+        }
+        else if (players[currentPlayer].pips < 1)
+        {
+            sendErrorMessage(5);
+        }
+        else
+        {
+            players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+            players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
+            sendSuccessMessage(7);
+        }
+    }
+
+    public void sendSuccessMessage(int notif)
+    {
+        GameObject message = successMessages[notif - 1];
+        message.SetActive(true);
+        StartCoroutine(waitThreeSeconds(message));
+    }
+
+    public void sendErrorMessage(int notif)
+    {
+        GameObject message = errorMessages[notif - 1];
+        message.SetActive(true);
+        StartCoroutine(waitThreeSeconds(message));
+    }
+
+    IEnumerator waitThreeSeconds(GameObject gameObj)
+    {
+        yield return new WaitForSeconds(3);
+        gameObj.SetActive(false);
     }
 
     /*
