@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager manager;
+    private NetworkManager networkManager;
     public int numPlayers = 0;
     public int selectedCardInt;
     public int selectedOpponentInt;
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         init();
     }
 
@@ -112,6 +114,12 @@ public class GameManager : MonoBehaviour
                 {
                     damage = players[currentPlayer].holster.card1.card.effectAmount;
                     td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                    if (players[currentPlayer].ringBonus)
+                    {
+                        damage += players[currentPlayer].bonusAmount;
+                    }
+                    // send protocol to server
+                    bool connected = networkManager.SendThrowPotionRequest(currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                     sendSuccessMessage(2);
                     break;
                 } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
@@ -178,12 +186,6 @@ public class GameManager : MonoBehaviour
             default: damage = 0;
                 break;
         }
-        if (players[currentPlayer].ringBonus)
-        {
-            damage += players[currentPlayer].bonusAmount;
-        }
-        // send protocol to server
-
     }
 
     public void setSCInt(int num)
@@ -421,6 +423,20 @@ public class GameManager : MonoBehaviour
             players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
             players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
             sendSuccessMessage(7);
+        }
+    }
+
+    public void onResponsePotionThrow(ExtendedEventArgs eventArgs)
+    {
+        ResponsePotionThrowEventArgs args = eventArgs as ResponsePotionThrowEventArgs;
+        Debug.Log("User ID: " + args.user_id);
+        Debug.Log("Current Player? " + args.x);
+        Debug.Log("Card Int: " + args.y);
+        Debug.Log("Opponent ID: " + args.z);
+
+        if (Constants.USER_ID != args.user_id)
+        {
+            Debug.Log("Change this client");
         }
     }
 

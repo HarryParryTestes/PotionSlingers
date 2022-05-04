@@ -115,7 +115,19 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-	public IEnumerator RequestHeartbeat(float time)
+    public bool SendThrowPotionRequest(int player, int card, int op)
+    {
+        if (cManager && cManager.IsConnected())
+        {
+            RequestPotionThrow request = new RequestPotionThrow();
+            request.send(player, card, op);
+            cManager.send(request);
+            return true;
+        }
+        return false;
+    }
+
+    public IEnumerator RequestHeartbeat(float time)
 	{
 		yield return new WaitForSeconds(time);
 
