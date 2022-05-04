@@ -15,7 +15,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // canHover is public static because if not static, other cards can be hovered
     // over while a card is clicked and attached to cursor.
     public static bool canHover = true; // Determines if cards can be hovered over.
-    // bool attached = false; // Determines if a card has been clicked and attached to the mouse cursor.
+    public static bool clicked = false; // Determines if cards can be clicked.
 
     Transform cardMenu = null;
     Transform viewCardMenu = null;
@@ -91,21 +91,34 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // (any click, a boolean tracks whether the click is to activate or deactivate something)
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        if(!viewingCard) {
-            cardSelected = !cardSelected;
-            if(cardSelected) {
-                canHover = false;
-                transform.localScale = cachedScale;
-                gameObject.transform.position = originalPos;
-                cardMenu.gameObject.SetActive(true);
-                highlighted.gameObject.SetActive(true);
+        if (!clicked) {
+            if(!viewingCard) {
+                // cardSelected = !cardSelected;
+                cardSelected = true;
+                if(cardSelected) {
+                    canHover = false;
+                    clicked = true;
+                    transform.localScale = cachedScale;
+                    gameObject.transform.position = originalPos;
+                    cardMenu.gameObject.SetActive(true);
+                    highlighted.gameObject.SetActive(true);
+                }
+                // else if (!cardSelected) {
+                //     clicked = false;
+                //     canHover = true;
+                //     transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+                //     cardMenu.gameObject.SetActive(false);
+                //     highlighted.gameObject.SetActive(false);
+                // }
             }
-            else if (!cardSelected) {
-                transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-                canHover = true;
-                cardMenu.gameObject.SetActive(false);
-                highlighted.gameObject.SetActive(false);
-            }
+        }
+        else if(clicked && cardSelected) {
+            clicked = false;
+            cardSelected = false;
+            canHover = true;
+            transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+            cardMenu.gameObject.SetActive(false);
+            highlighted.gameObject.SetActive(false);
         }
     }
  
@@ -135,6 +148,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         viewingCard = false;
         viewCardMenu.gameObject.SetActive(false);
         if(cardSelected) {
+            clicked = false;
             cardSelected = false;
             this.transform.SetParent(parentObject.transform);
             this.transform.localRotation = Quaternion.identity;
