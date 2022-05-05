@@ -40,25 +40,6 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         attackMenu = GameObject.Find("ChooseAttackPlayer");
         viewingCardObject = GameObject.Find("ViewingCard");
 
-        if(parentObject == null) {
-            Debug.Log("Error: parentObject doesn't exist!");
-        }
-        if(cardMenu == null) {
-            Debug.Log("Error: CardMenu doesn't exist!");
-        }
-        if(viewCardMenu == null) {
-            Debug.Log("Error: ViewCardMenu doesn't exist!");
-        }
-        if(attackMenu == null) {
-            Debug.Log("Error: ChooseAttackPlayer doesn't exist!");
-        }
-        if(viewingCardObject == null) {
-            Debug.Log("Error: ViewingCard doesn't exist!");
-        }
-        if(highlighted == null) {
-            Debug.Log("Error: Highlighted child doesn't exist!");
-        }
-
         cardSelected = false;
         viewingCard = false;
         cardMenu.gameObject.SetActive(false);
