@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        init();
+        //init();
     }
 
     public void init()
