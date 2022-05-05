@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 
     public static GameManager manager;
     private NetworkManager networkManager;
-    public int numPlayers = 0;
+    public int numPlayers = 2;
     public int selectedCardInt;
     public int selectedOpponentInt;
     int currentPlayer = 0;
@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        //init();
+        init();
     }
 
     public void init()
