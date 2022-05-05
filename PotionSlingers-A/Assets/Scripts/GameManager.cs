@@ -48,7 +48,23 @@ public class GameManager : MonoBehaviour
 
     void initPlayers()
     {
-        td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
+        if(numPlayers == 2)
+        {
+            ob = GameObject.Find("CharacterCard");
+            ob2 = GameObject.Find("CharacterCard (Top)");
+            // player 1 setup
+            if (Constants.USER_ID == 1)
+            {
+                players[0] = ob.GetComponent<Player>();
+                players[1] = ob2.GetComponent<Player>();
+            }
+            // player 2 setup
+            else if(Constants.USER_ID == 2)
+            {
+                players[0] = ob2.GetComponent<Player>();
+                players[1] = ob.GetComponent<Player>();
+            }
+        }
         ob = GameObject.Find("CharacterCard");
         players[0] = ob.GetComponent<Player>();
         ob2 = GameObject.Find("CharacterCard (Top)");
@@ -69,6 +85,7 @@ public class GameManager : MonoBehaviour
 
     void initDecks()
     {
+        td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
         md1 = GameObject.Find("PotionPile").GetComponent<MarketDeck>();
         md1.init();
         md2 = GameObject.Find("SpecialCardPile").GetComponent<MarketDeck>();
@@ -434,9 +451,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("Card Int: " + args.y);
         Debug.Log("Opponent ID: " + args.z);
 
+        // if request didn't come from player
         if (Constants.USER_ID != args.user_id)
         {
             Debug.Log("Change this client");
+            td.addCard(players[args.user_id - 1].holster.cardList[args.y - 1]);
         }
     }
 

@@ -1829,7 +1829,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -2001,7 +2001,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onPlayClick
         m_Mode: 1
@@ -2975,6 +2975,72 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 282566351}
   m_CullTransparentMesh: 1
+--- !u!1 &285935877
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 285935879}
+  - component: {fileID: 285935878}
+  m_Layer: 0
+  m_Name: MainMenuScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &285935878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285935877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7542693425501d3499df6eda77552287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  characters:
+  - {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
+  - {fileID: 11400000, guid: 6f37677945eff4915957fbaf9b104512, type: 2}
+  - {fileID: 11400000, guid: d9f921f65e72546dba4939253745cb60, type: 2}
+  - {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
+  - {fileID: 11400000, guid: b3fa98b132be44beda013cba1c0bea2d, type: 2}
+  - {fileID: 11400000, guid: 829aa6fa9b07d464ca8489dad4ee4f33, type: 2}
+  - {fileID: 11400000, guid: a3977bdfbf9ec43c185c71fb055d0234, type: 2}
+  - {fileID: 11400000, guid: 51f610b86ef694a9ca5e7d96bb09e025, type: 2}
+  - {fileID: 11400000, guid: e126101c9d11f44b18e0b4b27d14054a, type: 2}
+  player1Name: {fileID: 654741441}
+  player2Name: {fileID: 175685095}
+  player3Name: {fileID: 1150382569}
+  player4Name: {fileID: 1149568295}
+  p1CharCard: {fileID: 1369240281}
+  p2CharCard: {fileID: 667913864}
+  p3CharCard: {fileID: 489624158}
+  p4CharCard: {fileID: 133381679}
+  playerUsernameInputField: {fileID: 736945853}
+  playerPasswordInputField: {fileID: 1081959302}
+  authUsername: {fileID: 1247857891}
+--- !u!4 &285935879
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285935877}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 374.65237, y: 190.10309, z: -0.47125942}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &287916040
 GameObject:
   m_ObjectHideFlags: 0
@@ -3503,7 +3569,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -3930,7 +3996,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -6673,7 +6739,7 @@ MonoBehaviour:
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnPlayerNameSet
         m_Mode: 1
@@ -6980,7 +7046,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -8002,7 +8068,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -8533,7 +8599,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnReadyClick
         m_Mode: 1
@@ -8982,7 +9048,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1194325630}
-  - component: {fileID: 1194325631}
   m_Layer: 5
   m_Name: MainMenu
   m_TagString: Untagged
@@ -9015,39 +9080,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1.9142, y: -212}
   m_SizeDelta: {x: 496.1716, y: 595.4036}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1194325631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194325629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7542693425501d3499df6eda77552287, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characters:
-  - {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
-  - {fileID: 11400000, guid: 6f37677945eff4915957fbaf9b104512, type: 2}
-  - {fileID: 11400000, guid: d9f921f65e72546dba4939253745cb60, type: 2}
-  - {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
-  - {fileID: 11400000, guid: b3fa98b132be44beda013cba1c0bea2d, type: 2}
-  - {fileID: 11400000, guid: 829aa6fa9b07d464ca8489dad4ee4f33, type: 2}
-  - {fileID: 11400000, guid: a3977bdfbf9ec43c185c71fb055d0234, type: 2}
-  - {fileID: 11400000, guid: 51f610b86ef694a9ca5e7d96bb09e025, type: 2}
-  - {fileID: 11400000, guid: e126101c9d11f44b18e0b4b27d14054a, type: 2}
-  player1Name: {fileID: 654741441}
-  player2Name: {fileID: 175685095}
-  player3Name: {fileID: 1150382569}
-  player4Name: {fileID: 1149568295}
-  p1CharCard: {fileID: 1369240281}
-  p2CharCard: {fileID: 667913864}
-  p3CharCard: {fileID: 489624158}
-  p4CharCard: {fileID: 133381679}
-  playerUsernameInputField: {fileID: 736945853}
-  playerPasswordInputField: {fileID: 1081959302}
-  authUsername: {fileID: 1247857891}
 --- !u!1 &1203235521
 GameObject:
   m_ObjectHideFlags: 0
@@ -9890,7 +9922,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -12574,7 +12606,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -13398,7 +13430,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -13594,7 +13626,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OnReadyClick
         m_Mode: 1
@@ -14151,7 +14183,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
@@ -14506,7 +14538,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1194325631}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: onCharacterClick
         m_Mode: 5
@@ -16416,62 +16448,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2111246707}
   m_CullTransparentMesh: 1
---- !u!1 &2133140393
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2133140394}
-  - component: {fileID: 2133140395}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2133140394
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133140393}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 556.2632, y: 329.44904, z: -10.346007}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2133140395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2133140393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  numPlayers: 0
-  selectedCardInt: 0
-  selectedOpponentInt: 0
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  characters: []
-  op1: {fileID: 0}
-  op2: {fileID: 0}
-  op3: {fileID: 0}
 --- !u!1 &2139450297
 GameObject:
   m_ObjectHideFlags: 0

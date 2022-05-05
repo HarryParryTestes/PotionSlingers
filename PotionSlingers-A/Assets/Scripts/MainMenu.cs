@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-
+    public static MainMenu menu;
 	private int numPlayers;
 	private GameObject playButton;
 	private GameObject loginButton;
@@ -59,6 +59,12 @@ public class MainMenu : MonoBehaviour
 	private bool p2Ready = false;
 	private bool p3Ready = false;
 	private bool p4Ready = false;
+
+    void Awake()
+    {
+        menu = this;
+        DontDestroyOnLoad(gameObject);
+    }
 
 	void Start()
     {
@@ -314,6 +320,7 @@ public class MainMenu : MonoBehaviour
     {
 		Debug.Log("Start the game!");
 		SceneManager.LoadScene("GameScene");
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		gameManager.numPlayers = numPlayers;
 		gameManager.init();
 	}
