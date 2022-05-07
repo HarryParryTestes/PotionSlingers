@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     public CharacterDisplay op2;
     public CharacterDisplay op3;
 
+    public MainMenu menu;
+
     void Awake()
     {
         manager = this;
@@ -37,6 +39,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        menu = GameObject.Find("MainMenuScript").GetComponent<MainMenu>();
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         msgQueue = networkManager.GetComponent<MessageQueue>();
         msgQueue.AddCallback(Constants.SMSG_P_THROW, onResponsePotionThrow);
@@ -59,21 +62,35 @@ public class GameManager : MonoBehaviour
             if (Constants.USER_ID == 1)
             {
                 players[0] = ob.GetComponent<Player>();
+                players[0].username.text = menu.p1Name;
                 players[1] = ob2.GetComponent<Player>();
+                players[1].username.text = menu.p2Name;
             }
             // player 2 setup
             else if(Constants.USER_ID == 2)
             {
                 players[0] = ob2.GetComponent<Player>();
+                players[0].username.text = menu.p2Name;
                 players[1] = ob.GetComponent<Player>();
+                players[1].username.text = menu.p1Name;
             }
         }
-        ob = GameObject.Find("CharacterCard");
-        players[0] = ob.GetComponent<Player>();
-        ob2 = GameObject.Find("CharacterCard (Top)");
-        players[1] = ob2.GetComponent<Player>();
+        //ob = GameObject.Find("CharacterCard");
+        //players[0] = ob.GetComponent<Player>();
+        //ob2 = GameObject.Find("CharacterCard (Top)");
+        //players[1] = ob2.GetComponent<Player>();
 
-        if(numPlayers > 2)
+        foreach (CardDisplay cd in players[2].holster.cardList)
+        {
+            cd.updateCard(players[0].deck.placeholder);
+        }
+
+        foreach (CardDisplay cd in players[3].holster.cardList)
+        {
+            cd.updateCard(players[0].deck.placeholder);
+        }
+
+        if (numPlayers > 2)
         {
             ob3 = GameObject.Find("CharacterCard (Left)");
             players[2] = ob3.GetComponent<Player>();
@@ -113,11 +130,11 @@ public class GameManager : MonoBehaviour
 
     public void endTurn()
     {
-        //currentPlayer++;
-        //if(currentPlayer == numPlayers)
-        //{
-            //currentPlayer = 0;
-        //}
+        currentPlayer++;
+        if(currentPlayer == numPlayers)
+        {
+            currentPlayer = 0;
+        }
         onStartTurn(players[currentPlayer]);
     }
 
@@ -133,15 +150,19 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card1.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card1.card.effectAmount;
-                    td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                     if (players[currentPlayer].ringBonus)
                     {
                         damage += players[currentPlayer].bonusAmount;
                     }
                     // send protocol to server
-                    bool connected = networkManager.SendThrowPotionRequest(currentPlayer + 1, selectedCardInt, selectedOpponentInt);
-                    sendSuccessMessage(2);
-                    break;
+                    // also check if they're the current player
+                    if(Constants.USER_ID - 1 == currentPlayer)
+                    {
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(2);
+                        break;
+                    }
                 } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
                 {
 
@@ -156,51 +177,84 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card2.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card2.card.effectAmount;
-                    td.addCard(players[currentPlayer].holster.card2);
-                    sendSuccessMessage(2);
+                    if (players[currentPlayer].ringBonus)
+                    {
+                        damage += players[currentPlayer].bonusAmount;
+                    }
+                    // send protocol to server
+                    // also check if they're the current player
+                    if (Constants.USER_ID - 1 == currentPlayer)
+                    {
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(2);
+                        break;
+                    }
+                    else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
+                    {
+
+                    }
+                    else if (players[currentPlayer].holster.card2.card.cardType == "Artifact")
+                    {
+
+                    }
                     break;
-                }
-                else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
-                {
-
-                }
-                else if (players[currentPlayer].holster.card2.card.cardType == "Artifact")
-                {
-
                 }
                 break;
             case 3:
                 if (players[currentPlayer].holster.card3.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card3.card.effectAmount;
-                    td.addCard(players[currentPlayer].holster.card3);
-                    sendSuccessMessage(2);
+                    if (players[currentPlayer].ringBonus)
+                    {
+                        damage += players[currentPlayer].bonusAmount;
+                    }
+                    // send protocol to server
+                    // also check if they're the current player
+                    if (Constants.USER_ID - 1 == currentPlayer)
+                    {
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(2);
+                        break;
+                    }
+                    else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
+                    {
+
+                    }
+                    else if (players[currentPlayer].holster.card3.card.cardType == "Artifact")
+                    {
+
+                    }
                     break;
-                }
-                else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
-                {
-
-                }
-                else if (players[currentPlayer].holster.card3.card.cardType == "Artifact")
-                {
-
                 }
                 break;
             case 4:
                 if (players[currentPlayer].holster.card4.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card4.card.effectAmount;
-                    td.addCard(players[currentPlayer].holster.card4);
-                    sendSuccessMessage(2);
+                    if (players[currentPlayer].ringBonus)
+                    {
+                        damage += players[currentPlayer].bonusAmount;
+                    }
+                    // send protocol to server
+                    // also check if they're the current player
+                    if (Constants.USER_ID - 1 == currentPlayer)
+                    {
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(2);
+                        break;
+                    }
+                    else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
+                    {
+
+                    }
+                    else if (players[currentPlayer].holster.card4.card.cardType == "Artifact")
+                    {
+
+                    }
                     break;
-                }
-                else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
-                {
-
-                }
-                else if (players[currentPlayer].holster.card4.card.cardType == "Artifact")
-                {
-
                 }
                 break;
             default: damage = 0;
@@ -450,6 +504,7 @@ public class GameManager : MonoBehaviour
     {
         ResponsePotionThrowEventArgs args = eventArgs as ResponsePotionThrowEventArgs;
         Debug.Log("Constant: " + Constants.USER_ID);
+        Debug.Log("Damage: " + args.w);
         Debug.Log("User ID: " + args.user_id);
         Debug.Log("Current Player? " + args.x);
         Debug.Log("Card Int: " + args.y);
@@ -461,10 +516,23 @@ public class GameManager : MonoBehaviour
             // p1 request
             if (args.user_id == 1)
             {
+                // player 2
                 if (args.z == 1)
                 {
                     Debug.Log("Change this client");
                     td.addCard(players[1].holster.cardList[args.y - 1]);
+                    players[0].subHealth(args.w);
+                }
+            }
+            // p2 request
+            else if (args.user_id == 2)
+            {
+                // player 1
+                if (args.z == 1)
+                {
+                    Debug.Log("Change this client");
+                    td.addCard(players[1].holster.cardList[args.y - 1]);
+                    players[0].subHealth(args.w);
                 }
             }
         }

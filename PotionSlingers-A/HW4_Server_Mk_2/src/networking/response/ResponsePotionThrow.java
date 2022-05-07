@@ -11,6 +11,7 @@ import utility.Log;
  */
 public class ResponsePotionThrow extends GameResponse {
     private Player player;
+    private int w;
     private int x;
     private int y;
     private int z;
@@ -23,6 +24,7 @@ public class ResponsePotionThrow extends GameResponse {
     public byte[] constructResponseInBytes() {
         GamePacket packet = new GamePacket(responseCode);
         packet.addInt32(player.getID());
+        packet.addInt32(w);
         packet.addInt32(x);
         packet.addInt32(y);
         packet.addInt32(z);
@@ -36,7 +38,8 @@ public class ResponsePotionThrow extends GameResponse {
         this.player = player;
     }
 
-    public void setData(int x, int y, int z) {
+    public void setData(int w, int x, int y, int z) {
+        this.w = w;
         this.x = x;
         this.y = y;
         this.z = z;
