@@ -189,22 +189,41 @@ public class MainMenu : MonoBehaviour
 	{
 		ResponseSetNameEventArgs args = eventArgs as ResponseSetNameEventArgs;
 		
-			if (args.user_id == 1)
+			// if (args.user_id == 1)
+			// {
+			// 	player1Name.text = args.name;
+			// }
+			// else if (args.user_id == 2)
+			// {
+			// 	player2Name.text = args.name;
+			// 	numPlayers = 2;
+			// }
+			// else if (args.user_id == 3)
+			// {
+			// 	player3Name.text = args.name;
+			// }
+			// else if (args.user_id == 4)
+			// {
+			// 	player4Name.text = args.name;
+			// }
+
+			if (args.numPlayers == 1 && args.user_id1 != null)
 			{
-				player1Name.text = args.name;
+				player1Name.text = args.name1;
 			}
-			else if (args.user_id == 2)
+			else if (args.numPlayers == 2 && args.user_id2 != null)
 			{
-				player2Name.text = args.name;
+				player1Name.text = args.name1;
+				player2Name.text = args.name2;
 				numPlayers = 2;
 			}
-			else if (args.user_id == 3)
+			else if (args.numPlayers == 3)
 			{
-				player3Name.text = args.name;
+				// player3Name.text = args.name;
 			}
-			else if (args.user_id == 4)
+			else if (args.numPlayers == 4)
 			{
-				player4Name.text = args.name;
+				// player4Name.text = args.name;
 			}
 	}
 
