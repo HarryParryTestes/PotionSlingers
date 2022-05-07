@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     MarketDeck md2;
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
+    private MessageQueue msgQueue;
 
     public CharacterDisplay op1;
     public CharacterDisplay op2;
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     {
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         msgQueue = networkManager.GetComponent<MessageQueue>();
-        msgQueue.AddCallback(Constants.SMSG_P_THROW, OnResponsePotionThrow);
+        msgQueue.AddCallback(Constants.SMSG_P_THROW, onResponsePotionThrow);
         init();
     }
 
