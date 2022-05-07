@@ -15,7 +15,7 @@ public class NetworkResponseTable
 		add(Constants.SMSG_LEAVE, "ResponseLeave");
 		add(Constants.SMSG_SETNAME, "ResponseSetName");
 		add(Constants.SMSG_READY, "ResponseReady");
-		add(Constants.SMSG_MOVE, "ResponseMove");
+		//add(Constants.SMSG_MOVE, "ResponseMove");
 		add(Constants.SMSG_INTERACT, "ResponseInteract");
 		add(Constants.SMSG_CHARACTER, "ResponseCharacter");
         add(Constants.SMSG_P_THROW, "ResponsePotionThrow");

@@ -16,7 +16,7 @@ public class ResponsePotionThrow extends GameResponse {
     private int z;
 
     public ResponsePotionThrow() {
-        responseCode = Constants.SMSG_MOVE;
+        responseCode = Constants.SMSG_P_THROW;
     }
 
     @Override
