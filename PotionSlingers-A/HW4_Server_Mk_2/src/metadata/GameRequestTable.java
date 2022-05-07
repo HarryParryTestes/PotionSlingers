@@ -30,6 +30,7 @@ public class GameRequestTable {
         add(Constants.CMSG_HEARTBEAT, "RequestHeartbeat");
         add(Constants.CMSG_CHARACTER, "RequestCharacter");
         add(Constants.CMSG_P_THROW, "RequestPotionThrow");
+        add(Constants.CMSG_END_TURN, "RequestPotionThrow");
     }
 
     /**

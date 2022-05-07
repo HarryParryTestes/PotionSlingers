@@ -16,12 +16,14 @@ public class Constants
 	public static readonly short SMSG_READY = 204;
 	public static readonly short CMSG_MOVE = 108;
 	public static readonly short SMSG_MOVE = 208;
-	public static readonly short CMSG_INTERACT = 106;
-	public static readonly short SMSG_INTERACT = 206;
+	public static readonly short CMSG_INTERACT = 109;
+	public static readonly short SMSG_INTERACT = 209;
 	public static readonly short CMSG_CHARACTER = 107;
 	public static readonly short SMSG_CHARACTER = 207;
     public static readonly short CMSG_P_THROW = 105;
     public static readonly short SMSG_P_THROW = 205;
+    public static readonly short CMSG_END_TURN = 106;
+    public static readonly short SMSG_END_TURN = 206;
     public static readonly short CMSG_HEARTBEAT = 111;
 
 	public static int USER_ID = -1;

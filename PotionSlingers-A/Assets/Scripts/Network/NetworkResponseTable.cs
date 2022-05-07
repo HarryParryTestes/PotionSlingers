@@ -19,6 +19,7 @@ public class NetworkResponseTable
 		add(Constants.SMSG_INTERACT, "ResponseInteract");
 		add(Constants.SMSG_CHARACTER, "ResponseCharacter");
         add(Constants.SMSG_P_THROW, "ResponsePotionThrow");
+        add(Constants.SMSG_END_TURN, "ResponseEndTurn");
     }
 
 	public static void add(short response_id, string name)

@@ -21,12 +21,14 @@ public class Constants {
 	final public static short SMSG_READY = 204;
 	final public static short CMSG_MOVE = 108;
 	final public static short SMSG_MOVE = 208;
-	final public static short CMSG_INTERACT = 106;
-	final public static short SMSG_INTERACT = 206;
+	final public static short CMSG_INTERACT = 109;
+	final public static short SMSG_INTERACT = 209;
 	final public static short CMSG_CHARACTER = 107;
 	final public static short SMSG_CHARACTER = 207;
 	final public static short CMSG_P_THROW = 105;
 	final public static short SMSG_P_THROW = 205;
+	final public static short CMSG_END_TURN= 106;
+	final public static short SMSG_END_TURN = 206;
 
 	final public static short CMSG_HEARTBEAT = 111;
 

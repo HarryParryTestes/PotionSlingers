@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         msgQueue = networkManager.GetComponent<MessageQueue>();
         msgQueue.AddCallback(Constants.SMSG_P_THROW, onResponsePotionThrow);
+        msgQueue.AddCallback(Constants.SMSG_END_TURN, onResponseEndTurn);
         init();
     }
 
@@ -138,6 +139,29 @@ public class GameManager : MonoBehaviour
             currentPlayer = 0;
         }
         onStartTurn(players[currentPlayer]);
+        bool connected = networkManager.sendEndTurnRequest(currentPlayer);
+    }
+
+    public void onResponseEndTurn(ExtendedEventArgs eventArgs)
+    {
+        ResponseEndTurnEventArgs args = eventArgs as ResponseEndTurnEventArgs;
+        Debug.Log("Current Player: " + args.w);
+        Debug.Log("User ID: " + args.user_id);
+
+        // if it didn't come from your own client, change the player
+        if (Constants.USER_ID != args.user_id)
+        {
+            // player 1 just ended turn in 2p game
+            if(args.w == 1)
+            {
+                currentPlayer = args.w;
+                // player 2 just ended turn in 2p game
+            } else if(args.w == 0)
+            {
+                currentPlayer = args.w;
+            }
+            onStartTurn(players[currentPlayer]);
+        }
     }
 
     public void throwPotion()
