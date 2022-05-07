@@ -207,18 +207,33 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.numPlayers == 2 && args.user_id2 != null)
 			{
+				p2Waiting.SetActive(false);
 				player2Name.gameObject.SetActive(true);
+				p2NotReadyButton.SetActive(true);
 				player1Name.text = args.name1;
 				player2Name.text = args.name2;
 				numPlayers = 2;
 			}
 			else if (args.numPlayers == 3)
 			{
-				// player3Name.text = args.name;
+				p3Waiting.SetActive(false);
+				player3Name.gameObject.SetActive(true);
+				p3NotReadyButton.SetActive(true);
+				player1Name.text = args.name1;
+				player2Name.text = args.name2;
+				// player3Name.text = args.name3;
+				numPlayers = 3;
 			}
 			else if (args.numPlayers == 4)
 			{
-				// player4Name.text = args.name;
+				p4Waiting.SetActive(false);
+				player4Name.gameObject.SetActive(true);
+				p4NotReadyButton.SetActive(true);
+				player1Name.text = args.name1;
+				player2Name.text = args.name2;
+				// player3Name.text = args.name3;
+				// player4Name.text = args.name4;
+				numPlayers = 4;
 			}
 	}
 
@@ -238,7 +253,6 @@ public class MainMenu : MonoBehaviour
 		else if (args.user_id == 2)
 		{
 			p2CharCard.gameObject.SetActive(true);
-			p2NotReadyButton.SetActive(true);
 			foreach (Character character in characters)
 			{
 				if (character.cardName == args.name)
@@ -250,6 +264,7 @@ public class MainMenu : MonoBehaviour
 		}
 		else if (args.user_id == 3)
 		{
+			p3CharCard.gameObject.SetActive(true);
 			foreach (Character character in characters)
 			{
 				if (character.cardName == args.name)
@@ -260,6 +275,7 @@ public class MainMenu : MonoBehaviour
 		}
 		else if (args.user_id == 4)
 		{
+			p4CharCard.gameObject.SetActive(true);
 			foreach (Character character in characters)
 			{
 				if (character.cardName == args.name)
