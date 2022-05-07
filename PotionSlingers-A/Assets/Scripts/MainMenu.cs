@@ -59,10 +59,13 @@ public class MainMenu : MonoBehaviour
 	public GameObject p1NotReadyButton;
 	public GameObject p2ReadyButton;
 	public GameObject p2NotReadyButton;
+	public GameObject p2Waiting;
 	public GameObject p3ReadyButton;
 	public GameObject p3NotReadyButton;
+	public GameObject p3Waiting;
 	public GameObject p4ReadyButton;
 	public GameObject p4NotReadyButton;
+	public GameObject p4Waiting;
 
 	private bool p1Ready = false;
 	private bool p2Ready = false;
@@ -137,7 +140,7 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.user_id == 3)
 			{
-				playerCharDisplay = p3CharCard;
+				// playerCharDisplay = p3CharCard;
 				//Constants.OP1_ID = 1;
 				//Constants.OP2_ID = 2;
 				//Constants.OP3_ID = 4;
@@ -146,7 +149,7 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.user_id == 4)
 			{
-				playerCharDisplay = p4CharCard;
+				// playerCharDisplay = p4CharCard;
 				//Constants.OP1_ID = 1;
 				//Constants.OP2_ID = 2;
 				//Constants.OP3_ID = 3;
@@ -175,22 +178,22 @@ public class MainMenu : MonoBehaviour
 		if (Constants.USER_ID == 1)
 		{
 			p1Name = name;
-			player1Name.text = p1Name;
+			// player1Name.text = p1Name;
 		}
 		else if(Constants.USER_ID == 2)
 		{
 			p2Name = name;
-			player2Name.text = p2Name;
+			// player2Name.text = p2Name;
 		}
 		else if (Constants.USER_ID == 3)
 		{
 			p3Name = name;
-			player3Name.text = p3Name;
+			// player3Name.text = p3Name;
 		}
 		else if (Constants.USER_ID == 4)
 		{
 			p4Name = name;
-			player4Name.text = p4Name;
+			// player4Name.text = p4Name;
 		}
 	}
 
@@ -204,6 +207,7 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.numPlayers == 2 && args.user_id2 != null)
 			{
+				player2Name.gameObject.SetActive(true);
 				player1Name.text = args.name1;
 				player2Name.text = args.name2;
 				numPlayers = 2;
@@ -233,6 +237,8 @@ public class MainMenu : MonoBehaviour
 		}
 		else if (args.user_id == 2)
 		{
+			p2CharCard.gameObject.SetActive(true);
+			p2NotReadyButton.SetActive(true);
 			foreach (Character character in characters)
 			{
 				if (character.cardName == args.name)
