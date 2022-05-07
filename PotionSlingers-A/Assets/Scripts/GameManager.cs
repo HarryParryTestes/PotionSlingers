@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
     public int numPlayers = 2;
     public int selectedCardInt;
     public int selectedOpponentInt;
-    int currentPlayer = 0;
+    public int currentPlayer = 0;
     public Player[] players = new Player[4];
     public Character[] characters;
     GameObject ob;
@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
             // player 2 setup
             else if(Constants.USER_ID == 2)
             {
+                currentPlayer = 1;
                 players[0] = ob2.GetComponent<Player>();
                 //players[0].username.text = menu.p2Name;
                 players[1] = ob.GetComponent<Player>();
@@ -139,11 +140,13 @@ public class GameManager : MonoBehaviour
             currentPlayer = 0;
         }
         onStartTurn(players[currentPlayer]);
+        Debug.Log("Request End Turn");
         bool connected = networkManager.sendEndTurnRequest(currentPlayer);
     }
 
     public void onResponseEndTurn(ExtendedEventArgs eventArgs)
     {
+        Debug.Log("End Turn!");
         ResponseEndTurnEventArgs args = eventArgs as ResponseEndTurnEventArgs;
         Debug.Log("Current Player: " + args.w);
         Debug.Log("User ID: " + args.user_id);
