@@ -15,11 +15,12 @@ public class NetworkRequestTable
 		add(Constants.CMSG_LEAVE, "RequestLeave");
 		add(Constants.CMSG_SETNAME, "RequestSetName");
 		add(Constants.CMSG_READY, "RequestReady");
-		add(Constants.CMSG_MOVE, "RequestMove");
+		//add(Constants.CMSG_MOVE, "RequestMove");
 		add(Constants.CMSG_INTERACT, "RequestInteract");
 		add(Constants.CMSG_CHARACTER, "RequestCharacter");
         add(Constants.CMSG_P_THROW, "RequestPotionThrow");
-		Debug.Log("Inited");
+        add(Constants.CMSG_END_TURN, "RequestEndTurn");
+        Debug.Log("Inited");
 	}
 
 	public static void add(short request_id, string name)

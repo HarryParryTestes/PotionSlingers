@@ -5,6 +5,7 @@ using UnityEngine;
 public class ResponsePotionThrowEventArgs : ExtendedEventArgs
 {
     public int user_id { get; set; } // The user_id of whom who sent the request
+    public int w { get; set; } // The x coordinate of the target location
     public int x { get; set; } // The x coordinate of the target location
     public int y { get; set; } // The y coordinate of the target location
     public int z { get; set; } // The z coordinate of the target location
@@ -18,6 +19,7 @@ public class ResponsePotionThrowEventArgs : ExtendedEventArgs
 public class ResponsePotionThrow : NetworkResponse
 {
     private int user_id;
+    private int w;
     private int x;
     private int y;
     private int z;
@@ -29,6 +31,7 @@ public class ResponsePotionThrow : NetworkResponse
     public override void parse()
     {
         user_id = DataReader.ReadInt(dataStream);
+        w = DataReader.ReadInt(dataStream);
         x = DataReader.ReadInt(dataStream);
         y = DataReader.ReadInt(dataStream);
         z = DataReader.ReadInt(dataStream);
@@ -39,6 +42,7 @@ public class ResponsePotionThrow : NetworkResponse
         ResponsePotionThrowEventArgs args = new ResponsePotionThrowEventArgs
         {
             user_id = user_id,
+            w = w,
             x = x,
             y = y,
             z = z

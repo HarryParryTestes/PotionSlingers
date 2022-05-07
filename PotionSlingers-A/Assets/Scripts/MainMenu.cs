@@ -38,10 +38,10 @@ public class MainMenu : MonoBehaviour
 	private Character playerChar;
 	private CharacterDisplay playerCharDisplay;
 
-	private string p1Name = "Player 1";
-	private string p2Name = "Player 2";
-	private string p3Name = "Player 3";
-	private string p4Name = "Player 4";
+	public string p1Name = "Player 1";
+    public string p2Name = "Player 2";
+	public string p3Name = "Player 3";
+	public string p4Name = "Player 4";
 
 	private TMPro.TextMeshProUGUI playerName;
 	private TMPro.TextMeshProUGUI opponentName;
@@ -189,22 +189,41 @@ public class MainMenu : MonoBehaviour
 	{
 		ResponseSetNameEventArgs args = eventArgs as ResponseSetNameEventArgs;
 		
-			if (args.user_id == 1)
+			// if (args.user_id == 1)
+			// {
+			// 	player1Name.text = args.name;
+			// }
+			// else if (args.user_id == 2)
+			// {
+			// 	player2Name.text = args.name;
+			// 	numPlayers = 2;
+			// }
+			// else if (args.user_id == 3)
+			// {
+			// 	player3Name.text = args.name;
+			// }
+			// else if (args.user_id == 4)
+			// {
+			// 	player4Name.text = args.name;
+			// }
+
+			if (args.numPlayers == 1 && args.user_id1 != null)
 			{
-				player1Name.text = args.name;
+				player1Name.text = args.name1;
 			}
-			else if (args.user_id == 2)
+			else if (args.numPlayers == 2 && args.user_id2 != null)
 			{
-				player2Name.text = args.name;
+				player1Name.text = args.name1;
+				player2Name.text = args.name2;
 				numPlayers = 2;
 			}
-			else if (args.user_id == 3)
+			else if (args.numPlayers == 3)
 			{
-				player3Name.text = args.name;
+				// player3Name.text = args.name;
 			}
-			else if (args.user_id == 4)
+			else if (args.numPlayers == 4)
 			{
-				player4Name.text = args.name;
+				// player4Name.text = args.name;
 			}
 	}
 

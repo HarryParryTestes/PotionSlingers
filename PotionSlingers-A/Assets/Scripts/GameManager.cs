@@ -8,25 +8,28 @@ public class GameManager : MonoBehaviour
 
     public static GameManager manager;
     private NetworkManager networkManager;
-    public int numPlayers = 0;
+    public int numPlayers = 2;
     public int selectedCardInt;
     public int selectedOpponentInt;
-    int currentPlayer = 0;
+    public int currentPlayer = 0;
     public Player[] players = new Player[4];
     public Character[] characters;
     GameObject ob;
     GameObject ob2;
     GameObject ob3;
     GameObject ob4;
-    TrashDeck td;
+    public TrashDeck td;
     MarketDeck md1;
     MarketDeck md2;
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
+    private MessageQueue msgQueue;
 
     public CharacterDisplay op1;
     public CharacterDisplay op2;
     public CharacterDisplay op3;
+
+    //public MainMenu menu;
 
     void Awake()
     {
@@ -36,8 +39,12 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        //menu = GameObject.Find("MainMenuScript").GetComponent<MainMenu>();
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        //init();
+        msgQueue = networkManager.GetComponent<MessageQueue>();
+        msgQueue.AddCallback(Constants.SMSG_P_THROW, onResponsePotionThrow);
+        msgQueue.AddCallback(Constants.SMSG_END_TURN, onResponseEndTurn);
+        init();
     }
 
     public void init()
@@ -56,21 +63,38 @@ public class GameManager : MonoBehaviour
             if (Constants.USER_ID == 1)
             {
                 players[0] = ob.GetComponent<Player>();
+                //players[0].username.text = menu.p1Name;
                 players[1] = ob2.GetComponent<Player>();
+                //players[1].username.text = menu.p2Name;
             }
             // player 2 setup
             else if(Constants.USER_ID == 2)
             {
+                currentPlayer = 1;
                 players[0] = ob2.GetComponent<Player>();
+                //players[0].username.text = menu.p2Name;
                 players[1] = ob.GetComponent<Player>();
+                //players[1].username.text = menu.p1Name;
             }
         }
-        ob = GameObject.Find("CharacterCard");
-        players[0] = ob.GetComponent<Player>();
-        ob2 = GameObject.Find("CharacterCard (Top)");
-        players[1] = ob2.GetComponent<Player>();
+        //ob = GameObject.Find("CharacterCard");
+        //players[0] = ob.GetComponent<Player>();
+        //ob2 = GameObject.Find("CharacterCard (Top)");
+        //players[1] = ob2.GetComponent<Player>();
 
-        if(numPlayers > 2)
+        /*
+        foreach (CardDisplay cd in players[2].holster.cardList)
+        {
+            cd.updateCard(players[0].deck.placeholder);
+        }
+
+        foreach (CardDisplay cd in players[3].holster.cardList)
+        {
+            cd.updateCard(players[0].deck.placeholder);
+        }
+        */
+
+        if (numPlayers > 2)
         {
             ob3 = GameObject.Find("CharacterCard (Left)");
             players[2] = ob3.GetComponent<Player>();
@@ -85,7 +109,7 @@ public class GameManager : MonoBehaviour
 
     void initDecks()
     {
-        td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
+        //td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
         md1 = GameObject.Find("PotionPile").GetComponent<MarketDeck>();
         md1.init();
         md2 = GameObject.Find("SpecialCardPile").GetComponent<MarketDeck>();
@@ -110,12 +134,37 @@ public class GameManager : MonoBehaviour
 
     public void endTurn()
     {
-        //currentPlayer++;
-        //if(currentPlayer == numPlayers)
-        //{
-            //currentPlayer = 0;
-        //}
+        currentPlayer++;
+        if(currentPlayer == numPlayers)
+        {
+            currentPlayer = 0;
+        }
         onStartTurn(players[currentPlayer]);
+        Debug.Log("Request End Turn");
+        bool connected = networkManager.sendEndTurnRequest(currentPlayer);
+    }
+
+    public void onResponseEndTurn(ExtendedEventArgs eventArgs)
+    {
+        Debug.Log("End Turn!");
+        ResponseEndTurnEventArgs args = eventArgs as ResponseEndTurnEventArgs;
+        Debug.Log("Current Player: " + args.w);
+        Debug.Log("User ID: " + args.user_id);
+
+        // if it didn't come from your own client, change the player
+        if (Constants.USER_ID != args.user_id)
+        {
+            // player 1 just ended turn in 2p game
+            if(args.w == 1)
+            {
+                currentPlayer = args.w;
+                // player 2 just ended turn in 2p game
+            } else if(args.w == 0)
+            {
+                currentPlayer = args.w;
+            }
+            onStartTurn(players[currentPlayer]);
+        }
     }
 
     public void throwPotion()
@@ -130,15 +179,19 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card1.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card1.card.effectAmount;
-                    td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                     if (players[currentPlayer].ringBonus)
                     {
                         damage += players[currentPlayer].bonusAmount;
                     }
                     // send protocol to server
-                    bool connected = networkManager.SendThrowPotionRequest(currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                    // also check if they're the current player
+                    //if(Constants.USER_ID - 1 == currentPlayer)
+                    //{
+                    bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                    td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                     sendSuccessMessage(2);
                     break;
+                    //}
                 } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
                 {
 
@@ -153,51 +206,84 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card2.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card2.card.effectAmount;
-                    td.addCard(players[currentPlayer].holster.card2);
-                    sendSuccessMessage(2);
+                    if (players[currentPlayer].ringBonus)
+                    {
+                        damage += players[currentPlayer].bonusAmount;
+                    }
+                    // send protocol to server
+                    // also check if they're the current player
+                    if (Constants.USER_ID - 1 == currentPlayer)
+                    {
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(2);
+                        break;
+                    }
+                    else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
+                    {
+
+                    }
+                    else if (players[currentPlayer].holster.card2.card.cardType == "Artifact")
+                    {
+
+                    }
                     break;
-                }
-                else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
-                {
-
-                }
-                else if (players[currentPlayer].holster.card2.card.cardType == "Artifact")
-                {
-
                 }
                 break;
             case 3:
                 if (players[currentPlayer].holster.card3.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card3.card.effectAmount;
-                    td.addCard(players[currentPlayer].holster.card3);
-                    sendSuccessMessage(2);
+                    if (players[currentPlayer].ringBonus)
+                    {
+                        damage += players[currentPlayer].bonusAmount;
+                    }
+                    // send protocol to server
+                    // also check if they're the current player
+                    if (Constants.USER_ID - 1 == currentPlayer)
+                    {
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(2);
+                        break;
+                    }
+                    else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
+                    {
+
+                    }
+                    else if (players[currentPlayer].holster.card3.card.cardType == "Artifact")
+                    {
+
+                    }
                     break;
-                }
-                else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
-                {
-
-                }
-                else if (players[currentPlayer].holster.card3.card.cardType == "Artifact")
-                {
-
                 }
                 break;
             case 4:
                 if (players[currentPlayer].holster.card4.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card4.card.effectAmount;
-                    td.addCard(players[currentPlayer].holster.card4);
-                    sendSuccessMessage(2);
+                    if (players[currentPlayer].ringBonus)
+                    {
+                        damage += players[currentPlayer].bonusAmount;
+                    }
+                    // send protocol to server
+                    // also check if they're the current player
+                    if (Constants.USER_ID - 1 == currentPlayer)
+                    {
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(2);
+                        break;
+                    }
+                    else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
+                    {
+
+                    }
+                    else if (players[currentPlayer].holster.card4.card.cardType == "Artifact")
+                    {
+
+                    }
                     break;
-                }
-                else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
-                {
-
-                }
-                else if (players[currentPlayer].holster.card4.card.cardType == "Artifact")
-                {
-
                 }
                 break;
             default: damage = 0;
@@ -446,6 +532,8 @@ public class GameManager : MonoBehaviour
     public void onResponsePotionThrow(ExtendedEventArgs eventArgs)
     {
         ResponsePotionThrowEventArgs args = eventArgs as ResponsePotionThrowEventArgs;
+        Debug.Log("Constant: " + Constants.USER_ID);
+        Debug.Log("Damage: " + args.w);
         Debug.Log("User ID: " + args.user_id);
         Debug.Log("Current Player? " + args.x);
         Debug.Log("Card Int: " + args.y);
@@ -454,8 +542,28 @@ public class GameManager : MonoBehaviour
         // if request didn't come from player
         if (Constants.USER_ID != args.user_id)
         {
-            Debug.Log("Change this client");
-            td.addCard(players[args.user_id - 1].holster.cardList[args.y - 1]);
+            // p1 request
+            if (args.user_id == 1)
+            {
+                // player 2
+                if (args.z == 1)
+                {
+                    Debug.Log("Change this client");
+                    td.addCard(players[1].holster.cardList[args.y - 1]);
+                    players[0].subHealth(args.w);
+                }
+            }
+            // p2 request
+            else if (args.user_id == 2)
+            {
+                // player 1
+                if (args.z == 1)
+                {
+                    Debug.Log("Change this client");
+                    td.addCard(players[1].holster.cardList[args.y - 1]);
+                    players[0].subHealth(args.w);
+                }
+            }
         }
     }
 

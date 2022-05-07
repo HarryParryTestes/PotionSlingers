@@ -9,15 +9,12 @@ import utility.Log;
  * The ResponseLogin class contains information about the authentication
  * process.
  */
-public class ResponsePotionThrow extends GameResponse {
+public class ResponseEndTurn extends GameResponse {
     private Player player;
     private int w;
-    private int x;
-    private int y;
-    private int z;
 
-    public ResponsePotionThrow() {
-        responseCode = Constants.SMSG_P_THROW;
+    public ResponseEndTurn() {
+        responseCode = Constants.SMSG_END_TURN;
     }
 
     @Override
@@ -25,11 +22,8 @@ public class ResponsePotionThrow extends GameResponse {
         GamePacket packet = new GamePacket(responseCode);
         packet.addInt32(player.getID());
         packet.addInt32(w);
-        packet.addInt32(x);
-        packet.addInt32(y);
-        packet.addInt32(z);
 
-        Log.printf("Player with id %d has thrown potion in card slot %d", player.getID(), y);
+        Log.printf("Player with id %d has ended their turn", player.getID());
 
         return packet.getBytes();
     }
@@ -38,10 +32,7 @@ public class ResponsePotionThrow extends GameResponse {
         this.player = player;
     }
 
-    public void setData(int w, int x, int y, int z) {
+    public void setData(int w) {
         this.w = w;
-        this.x = x;
-        this.y = y;
-        this.z = z;
     }
 }

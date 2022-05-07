@@ -19,6 +19,7 @@ public class Player : MonoBehaviour
     public bool ringBonus;
     public int bonusAmount;
     //public HealthController health;
+    public TMPro.TextMeshProUGUI username;
 
     public Player(int user_id, string name)
     {

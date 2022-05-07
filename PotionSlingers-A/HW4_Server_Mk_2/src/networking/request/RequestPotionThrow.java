@@ -10,7 +10,7 @@ import utility.DataReader;
 import core.NetworkManager;
 
 public class RequestPotionThrow extends GameRequest {
-    private int x, y, z;
+    private int w, x, y, z;
     // Responses
     private ResponsePotionThrow responsePotionThrow;
 
@@ -20,6 +20,7 @@ public class RequestPotionThrow extends GameRequest {
 
     @Override
     public void parse() throws IOException {
+        w = DataReader.readInt(dataInput);
         x = DataReader.readInt(dataInput);
         y = DataReader.readInt(dataInput);
         z = DataReader.readInt(dataInput);
@@ -30,7 +31,7 @@ public class RequestPotionThrow extends GameRequest {
         Player player = client.getPlayer();
 
         responsePotionThrow.setPlayer(player);
-        responsePotionThrow.setData(x, y, z);
+        responsePotionThrow.setData(w, x, y, z);
         NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responsePotionThrow);
     }
 }
