@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        msgQueue = networkManager.GetComponent<MessageQueue>();
+        msgQueue.AddCallback(Constants.SMSG_P_THROW, OnResponsePotionThrow);
         init();
     }
 
