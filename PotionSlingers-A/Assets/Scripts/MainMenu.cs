@@ -38,10 +38,10 @@ public class MainMenu : MonoBehaviour
 	private Character playerChar;
 	private CharacterDisplay playerCharDisplay;
 
-	private string p1Name = "Player 1";
-	private string p2Name = "Player 2";
-	private string p3Name = "Player 3";
-	private string p4Name = "Player 4";
+	public string p1Name = "Player 1";
+    public string p2Name = "Player 2";
+	public string p3Name = "Player 3";
+	public string p4Name = "Player 4";
 
 	private TMPro.TextMeshProUGUI playerName;
 	private TMPro.TextMeshProUGUI opponentName;

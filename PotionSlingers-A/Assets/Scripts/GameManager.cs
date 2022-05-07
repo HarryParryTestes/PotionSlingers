@@ -18,7 +18,7 @@ public class GameManager : MonoBehaviour
     GameObject ob2;
     GameObject ob3;
     GameObject ob4;
-    TrashDeck td;
+    public TrashDeck td;
     MarketDeck md1;
     MarketDeck md2;
     public List<GameObject> successMessages;
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     public CharacterDisplay op2;
     public CharacterDisplay op3;
 
-    public MainMenu menu;
+    //public MainMenu menu;
 
     void Awake()
     {
@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        menu = GameObject.Find("MainMenuScript").GetComponent<MainMenu>();
+        //menu = GameObject.Find("MainMenuScript").GetComponent<MainMenu>();
         networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
         msgQueue = networkManager.GetComponent<MessageQueue>();
         msgQueue.AddCallback(Constants.SMSG_P_THROW, onResponsePotionThrow);
@@ -62,17 +62,17 @@ public class GameManager : MonoBehaviour
             if (Constants.USER_ID == 1)
             {
                 players[0] = ob.GetComponent<Player>();
-                players[0].username.text = menu.p1Name;
+                //players[0].username.text = menu.p1Name;
                 players[1] = ob2.GetComponent<Player>();
-                players[1].username.text = menu.p2Name;
+                //players[1].username.text = menu.p2Name;
             }
             // player 2 setup
             else if(Constants.USER_ID == 2)
             {
                 players[0] = ob2.GetComponent<Player>();
-                players[0].username.text = menu.p2Name;
+                //players[0].username.text = menu.p2Name;
                 players[1] = ob.GetComponent<Player>();
-                players[1].username.text = menu.p1Name;
+                //players[1].username.text = menu.p1Name;
             }
         }
         //ob = GameObject.Find("CharacterCard");
@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         //ob2 = GameObject.Find("CharacterCard (Top)");
         //players[1] = ob2.GetComponent<Player>();
 
+        /*
         foreach (CardDisplay cd in players[2].holster.cardList)
         {
             cd.updateCard(players[0].deck.placeholder);
@@ -89,6 +90,7 @@ public class GameManager : MonoBehaviour
         {
             cd.updateCard(players[0].deck.placeholder);
         }
+        */
 
         if (numPlayers > 2)
         {
@@ -105,7 +107,7 @@ public class GameManager : MonoBehaviour
 
     void initDecks()
     {
-        td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
+        //td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
         md1 = GameObject.Find("PotionPile").GetComponent<MarketDeck>();
         md1.init();
         md2 = GameObject.Find("SpecialCardPile").GetComponent<MarketDeck>();
@@ -156,13 +158,13 @@ public class GameManager : MonoBehaviour
                     }
                     // send protocol to server
                     // also check if they're the current player
-                    if(Constants.USER_ID - 1 == currentPlayer)
-                    {
-                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
-                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
-                        sendSuccessMessage(2);
-                        break;
-                    }
+                    //if(Constants.USER_ID - 1 == currentPlayer)
+                    //{
+                    bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                    td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                    sendSuccessMessage(2);
+                    break;
+                    //}
                 } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
                 {
 
