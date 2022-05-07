@@ -295,7 +295,7 @@ GameObject:
   - component: {fileID: 14195861}
   - component: {fileID: 14195860}
   m_Layer: 5
-  m_Name: NOT READY
+  m_Name: P3NOTREADY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -593,7 +593,7 @@ GameObject:
   - component: {fileID: 42627928}
   - component: {fileID: 42627927}
   m_Layer: 5
-  m_Name: NOT READY
+  m_Name: P4NOTREADY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3152,7 +3152,7 @@ GameObject:
   - component: {fileID: 282566354}
   - component: {fileID: 282566353}
   m_Layer: 5
-  m_Name: READY
+  m_Name: P1READY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3320,6 +3320,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 285935878}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnNotReadyClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &282566357
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3413,6 +3425,14 @@ MonoBehaviour:
   playerUsernameInputField: {fileID: 736945853}
   playerPasswordInputField: {fileID: 1081959302}
   authUsername: {fileID: 1247857891}
+  p1ReadyButton: {fileID: 282566351}
+  p1NotReadyButton: {fileID: 1633960379}
+  p2ReadyButton: {fileID: 1523790211}
+  p2NotReadyButton: {fileID: 1125837567}
+  p3ReadyButton: {fileID: 384751648}
+  p3NotReadyButton: {fileID: 14195858}
+  p4ReadyButton: {fileID: 2064047090}
+  p4NotReadyButton: {fileID: 42627925}
 --- !u!4 &285935879
 Transform:
   m_ObjectHideFlags: 0
@@ -4741,7 +4761,7 @@ GameObject:
   - component: {fileID: 384751650}
   - component: {fileID: 384751649}
   m_Layer: 5
-  m_Name: READY
+  m_Name: P3READY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4879,6 +4899,18 @@ MonoBehaviour:
       - m_Target: {fileID: 384751651}
         m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 285935878}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnNotReadyClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10076,7 +10108,7 @@ GameObject:
   - component: {fileID: 1125837570}
   - component: {fileID: 1125837569}
   m_Layer: 5
-  m_Name: NOT READY
+  m_Name: P2NOTREADY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14646,7 +14678,7 @@ GameObject:
   - component: {fileID: 1523790213}
   - component: {fileID: 1523790212}
   m_Layer: 5
-  m_Name: READY
+  m_Name: P2READY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14784,6 +14816,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1523790214}
         m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 285935878}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnNotReadyClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15470,7 +15514,7 @@ GameObject:
   - component: {fileID: 1633960382}
   - component: {fileID: 1633960381}
   m_Layer: 5
-  m_Name: NOT READY
+  m_Name: P1NOTREADY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18775,7 +18819,7 @@ GameObject:
   - component: {fileID: 2064047092}
   - component: {fileID: 2064047091}
   m_Layer: 5
-  m_Name: READY
+  m_Name: P4READY
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18913,6 +18957,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2064047093}
         m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
         m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 285935878}
+        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+        m_MethodName: OnNotReadyClick
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

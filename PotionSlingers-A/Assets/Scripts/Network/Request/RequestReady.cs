@@ -9,8 +9,9 @@ public class RequestReady : NetworkRequest
 		request_id = Constants.CMSG_READY;
 	}
 
-	public void send()
+	public void send(int readyStatus)
 	{
 		packet = new GamePacket(request_id);
+		packet.addInt32(readyStatus);
 	}
 }

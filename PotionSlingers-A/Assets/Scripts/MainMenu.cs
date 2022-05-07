@@ -55,6 +55,15 @@ public class MainMenu : MonoBehaviour
 
 	public TMPro.TextMeshProUGUI authUsername;
 
+	public GameObject p1ReadyButton;
+	public GameObject p1NotReadyButton;
+	public GameObject p2ReadyButton;
+	public GameObject p2NotReadyButton;
+	public GameObject p3ReadyButton;
+	public GameObject p3NotReadyButton;
+	public GameObject p4ReadyButton;
+	public GameObject p4NotReadyButton;
+
 	private bool p1Ready = false;
 	private bool p2Ready = false;
 	private bool p3Ready = false;
@@ -188,24 +197,6 @@ public class MainMenu : MonoBehaviour
 	public void OnResponseSetName(ExtendedEventArgs eventArgs)
 	{
 		ResponseSetNameEventArgs args = eventArgs as ResponseSetNameEventArgs;
-		
-			// if (args.user_id == 1)
-			// {
-			// 	player1Name.text = args.name;
-			// }
-			// else if (args.user_id == 2)
-			// {
-			// 	player2Name.text = args.name;
-			// 	numPlayers = 2;
-			// }
-			// else if (args.user_id == 3)
-			// {
-			// 	player3Name.text = args.name;
-			// }
-			// else if (args.user_id == 4)
-			// {
-			// 	player4Name.text = args.name;
-			// }
 
 			if (args.numPlayers == 1 && args.user_id1 != null)
 			{
@@ -278,12 +269,19 @@ public class MainMenu : MonoBehaviour
 	public void OnReadyClick()
 	{
 		Debug.Log("Send ReadyReq");
-		networkManager.SendReadyRequest();
+		networkManager.SendReadyRequest(1);
+	}
+
+	public void OnNotReadyClick()
+	{
+		Debug.Log("Send ReadyReq");
+		networkManager.SendReadyRequest(0);
 	}
 
 	public void OnResponseReady(ExtendedEventArgs eventArgs)
 	{
 		ResponseReadyEventArgs args = eventArgs as ResponseReadyEventArgs;
+		/*
 		if (args.user_id == 1)
 		{
 			p1Ready = true;
@@ -306,6 +304,55 @@ public class MainMenu : MonoBehaviour
 			//messageBoxMsg.text = "Error starting game. Network returned invalid response.";
 			//messageBox.SetActive(true);
 			return;
+		}
+		*/
+
+		if(args.numPlayers == 1) {
+			if(args.player1Ready) {
+				p1NotReadyButton.SetActive(false);
+				p1ReadyButton.SetActive(true);
+				p1Ready = true;
+			}
+			else {
+				p1ReadyButton.SetActive(false);
+				p1NotReadyButton.SetActive(true);
+				p1Ready = false;
+			}
+		}
+
+		else if(args.numPlayers == 2) {
+			if(args.player1Ready) {
+				p1NotReadyButton.SetActive(false);
+				p1ReadyButton.SetActive(true);
+				p1Ready = true;
+			}
+			else {
+				p1ReadyButton.SetActive(false);
+				p1NotReadyButton.SetActive(true);
+				p1Ready = false;
+			}
+			if(args.player2Ready) {
+				p2NotReadyButton.SetActive(false);
+				p2ReadyButton.SetActive(true);
+				p2Ready = true;
+			}
+			else {
+				p2ReadyButton.SetActive(false);
+				p2NotReadyButton.SetActive(true);
+				p2Ready = false;
+			}
+		}
+
+		else if(args.numPlayers == 3) {
+			Debug.Log("READY ERROR: 3 Players has not been set up yet!");
+		}
+
+		else if(args.numPlayers == 4) {
+			Debug.Log("READY ERROR: 4 Players has not been set up yet!");
+		}
+
+		else {
+			Debug.Log("READY ERROR: numPlayers is invalid or incorrect!");
 		}
 
 		Debug.Log("Player Ready?: " + p1Ready);

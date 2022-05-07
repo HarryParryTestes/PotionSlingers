@@ -79,12 +79,12 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-	public bool SendReadyRequest()
+	public bool SendReadyRequest(int readyStatus)
 	{
 		if (cManager && cManager.IsConnected())
 		{
 			RequestReady request = new RequestReady();
-			request.send();
+			request.send(readyStatus);
 			cManager.send(request);
 			return true;
 		}
