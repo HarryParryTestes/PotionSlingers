@@ -9330,7 +9330,7 @@ MonoBehaviour:
   hpCubes: 0
   takenHPCubes: 0
   deck: {fileID: 1885509569}
-  holster: {fileID: 0}
+  holster: {fileID: 81936594}
   pips: 0
   dead: 0
   potionsThrown: 0
@@ -42142,7 +42142,6 @@ GameObject:
   - component: {fileID: 905353794}
   - component: {fileID: 905353796}
   - component: {fileID: 905353795}
-  - component: {fileID: 905353797}
   m_Layer: 5
   m_Name: EnemyArea (Top)
   m_TagString: Untagged
@@ -42214,32 +42213,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905353793}
   m_CullTransparentMesh: 1
---- !u!114 &905353797
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 905353793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 10
-  name: 
-  charName: 
-  user_id: 0
-  hpCubes: 0
-  takenHPCubes: 0
-  deck: {fileID: 0}
-  holster: {fileID: 0}
-  pips: 0
-  dead: 0
-  potionsThrown: 0
-  character: {fileID: 0}
-  ringBonus: 0
-  bonusAmount: 0
 --- !u!1 &908084157
 GameObject:
   m_ObjectHideFlags: 0

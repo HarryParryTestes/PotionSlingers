@@ -449,6 +449,7 @@ public class GameManager : MonoBehaviour
     public void onResponsePotionThrow(ExtendedEventArgs eventArgs)
     {
         ResponsePotionThrowEventArgs args = eventArgs as ResponsePotionThrowEventArgs;
+        Debug.Log("Constant: " + Constants.USER_ID);
         Debug.Log("User ID: " + args.user_id);
         Debug.Log("Current Player? " + args.x);
         Debug.Log("Card Int: " + args.y);
@@ -457,8 +458,15 @@ public class GameManager : MonoBehaviour
         // if request didn't come from player
         if (Constants.USER_ID != args.user_id)
         {
-            Debug.Log("Change this client");
-            td.addCard(players[args.user_id - 1].holster.cardList[args.y - 1]);
+            // p1 request
+            if (args.user_id == 1)
+            {
+                if (args.z == 1)
+                {
+                    Debug.Log("Change this client");
+                    td.addCard(players[1].holster.cardList[args.y - 1]);
+                }
+            }
         }
     }
 
