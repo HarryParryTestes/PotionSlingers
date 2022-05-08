@@ -46,6 +46,8 @@ public class GameManager : MonoBehaviour
         msgQueue.AddCallback(Constants.SMSG_END_TURN, onResponseEndTurn);
         msgQueue.AddCallback(Constants.SMSG_BUY, onResponseBuy);
         msgQueue.AddCallback(Constants.SMSG_SELL, onResponseSell);
+        msgQueue.AddCallback(Constants.SMSG_CYCLE, onResponseCycle);
+        msgQueue.AddCallback(Constants.SMSG_TRASH, onResponseTrash);
         init();
     }
 
@@ -57,26 +59,53 @@ public class GameManager : MonoBehaviour
 
     void initPlayers()
     {
-        if(numPlayers == 2)
+        ob = GameObject.Find("CharacterCard");
+        ob2 = GameObject.Find("CharacterCard (Top)");
+        players[0] = ob.GetComponent<Player>();
+        players[1] = ob2.GetComponent<Player>();
+        ob3 = GameObject.Find("CharacterCard (Left)");
+        players[2] = ob3.GetComponent<Player>();
+
+        ob4 = GameObject.Find("CharacterCard (Right)");
+        players[3] = ob4.GetComponent<Player>();
+
+        if (numPlayers == 4)
         {
-            ob = GameObject.Find("CharacterCard");
-            ob2 = GameObject.Find("CharacterCard (Top)");
+            // TODO
+
+        } else if(numPlayers == 3)
+        {
+            // TODO
+        }
+        else if(numPlayers == 2)
+        {
+            // gotta fix this
+            /*
+            GameObject obj = GameObject.Find("EnemyArea (Right Side)");
+            GameObject obj2 = GameObject.Find("EnemyArea (Left Side)");
+            obj.SetActive(false);
+            obj2.SetActive(false);
+            */
+
             // player 1 setup
             if (Constants.USER_ID == 1)
             {
-                players[0] = ob.GetComponent<Player>();
-                //players[0].username.text = menu.p1Name;
-                players[1] = ob2.GetComponent<Player>();
-                //players[1].username.text = menu.p2Name;
+                // we're good
             }
             // player 2 setup
             else if(Constants.USER_ID == 2)
             {
-                //currentPlayer = 1;
+                // switching players around for p2 to be at bottom
+
+                // this could be wrong so I'm scrapping it for now
+                /*
+                players[3] = players[0];
+                players[0] = players[1];
+                players[1] = players[3];
+                */
+
                 players[0] = ob2.GetComponent<Player>();
-                //players[0].username.text = menu.p2Name;
                 players[1] = ob.GetComponent<Player>();
-                //players[1].username.text = menu.p1Name;
             }
         }
         //ob = GameObject.Find("CharacterCard");
@@ -95,18 +124,6 @@ public class GameManager : MonoBehaviour
             cd.updateCard(players[0].deck.placeholder);
         }
         */
-
-        if (numPlayers > 2)
-        {
-            ob3 = GameObject.Find("CharacterCard (Left)");
-            players[2] = ob3.GetComponent<Player>();
-            
-            if(numPlayers > 3)
-            {
-                ob4 = GameObject.Find("CharacterCard (Right)");
-                players[3] = ob4.GetComponent<Player>();
-            }
-        }
     }
 
     void initDecks()
@@ -332,6 +349,16 @@ public class GameManager : MonoBehaviour
                 td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
             }
         }
+    }
+
+    public void onResponseCycle(ExtendedEventArgs eventArgs)
+    {
+        // TODO
+    }
+
+    public void onResponseTrash(ExtendedEventArgs eventArgs)
+    {
+        // TODO
     }
 
     public void throwPotion()
