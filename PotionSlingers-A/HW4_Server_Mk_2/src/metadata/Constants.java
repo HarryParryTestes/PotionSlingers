@@ -33,6 +33,10 @@ public class Constants {
 	final public static short SMSG_BUY = 210;
 	final public static short CMSG_SELL = 112;
 	final public static short SMSG_SELL = 212;
+	final public static short CMSG_CYCLE = 113;
+	final public static short SMSG_CYCLE = 213;
+	final public static short CMSG_TRASH = 114;
+	final public static short SMSG_TRASH = 214;
 
 	final public static short CMSG_HEARTBEAT = 111;
 

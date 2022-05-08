@@ -163,6 +163,30 @@ public class NetworkManager : MonoBehaviour
         return false;
     }
 
+    public bool sendCycleRequest(int x, int y)
+    {
+        if (cManager && cManager.IsConnected())
+        {
+            RequestCycle request = new RequestCycle();
+            request.send(x, y);
+            cManager.send(request);
+            return true;
+        }
+        return false;
+    }
+
+    public bool sendTrashRequest(int x, int y)
+    {
+        if (cManager && cManager.IsConnected())
+        {
+            RequestTrash request = new RequestTrash();
+            request.send(x, y);
+            cManager.send(request);
+            return true;
+        }
+        return false;
+    }
+
     public IEnumerator RequestHeartbeat(float time)
 	{
 		yield return new WaitForSeconds(time);

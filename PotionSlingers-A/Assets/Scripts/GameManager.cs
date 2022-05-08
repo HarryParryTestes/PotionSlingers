@@ -354,11 +354,27 @@ public class GameManager : MonoBehaviour
     public void onResponseCycle(ExtendedEventArgs eventArgs)
     {
         // TODO
+        Debug.Log("Cycle Response");
+        ResponseCycleEventArgs args = eventArgs as ResponseCycleEventArgs;
+
+        if (Constants.USER_ID != args.user_id)
+        {
+            players[args.user_id - 1].pips--;
+            players[args.user_id - 1].deck.putCardOnBottom(players[args.user_id - 1].holster.cardList[args.x - 1].card);
+            players[args.user_id - 1].holster.cardList[args.x - 1].updateCard(players[0].holster.card1.placeholder);
+        }
     }
 
     public void onResponseTrash(ExtendedEventArgs eventArgs)
     {
         // TODO
+        Debug.Log("Trash Response");
+        ResponseTrashEventArgs args = eventArgs as ResponseTrashEventArgs;
+
+        if(Constants.USER_ID != args.user_id)
+        {
+            td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
+        }
     }
 
     public void throwPotion()
@@ -715,6 +731,7 @@ public class GameManager : MonoBehaviour
         {
             players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
             players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
+            bool connected = networkManager.sendCycleRequest(selectedCardInt, 0);
             sendSuccessMessage(7);
             
         }
@@ -724,8 +741,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            players[currentPlayer].pips--;
             players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
             players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
+            bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
             sendSuccessMessage(7);
         }
     }

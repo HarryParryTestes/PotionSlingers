@@ -22,6 +22,8 @@ public class NetworkRequestTable
         add(Constants.CMSG_END_TURN, "RequestEndTurn");
         add(Constants.CMSG_BUY, "RequestBuy");
         add(Constants.CMSG_SELL, "RequestSell");
+        add(Constants.CMSG_CYCLE, "RequestCycle");
+        add(Constants.CMSG_TRASH, "RequestTrash");
         Debug.Log("Inited");
 	}
 
