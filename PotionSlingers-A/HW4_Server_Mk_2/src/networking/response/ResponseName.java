@@ -37,7 +37,8 @@ public class ResponseName extends GameResponse {
          * P1 name
          * P2 id
          * P2 name
-         * */
+         * ...
+         */
 
         int numPlayers = 0;
         for(Player p : activePlayers) {

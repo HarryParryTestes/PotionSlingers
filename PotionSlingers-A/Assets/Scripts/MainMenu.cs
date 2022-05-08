@@ -55,6 +55,18 @@ public class MainMenu : MonoBehaviour
 
 	public TMPro.TextMeshProUGUI authUsername;
 
+	public GameObject p1ReadyButton;
+	public GameObject p1NotReadyButton;
+	public GameObject p2ReadyButton;
+	public GameObject p2NotReadyButton;
+	public GameObject p2Waiting;
+	public GameObject p3ReadyButton;
+	public GameObject p3NotReadyButton;
+	public GameObject p3Waiting;
+	public GameObject p4ReadyButton;
+	public GameObject p4NotReadyButton;
+	public GameObject p4Waiting;
+
 	private bool p1Ready = false;
 	private bool p2Ready = false;
 	private bool p3Ready = false;
@@ -128,7 +140,7 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.user_id == 3)
 			{
-				playerCharDisplay = p3CharCard;
+				// playerCharDisplay = p3CharCard;
 				//Constants.OP1_ID = 1;
 				//Constants.OP2_ID = 2;
 				//Constants.OP3_ID = 4;
@@ -137,7 +149,7 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.user_id == 4)
 			{
-				playerCharDisplay = p4CharCard;
+				// playerCharDisplay = p4CharCard;
 				//Constants.OP1_ID = 1;
 				//Constants.OP2_ID = 2;
 				//Constants.OP3_ID = 3;
@@ -166,46 +178,28 @@ public class MainMenu : MonoBehaviour
 		if (Constants.USER_ID == 1)
 		{
 			p1Name = name;
-			player1Name.text = p1Name;
+			// player1Name.text = p1Name;
 		}
 		else if(Constants.USER_ID == 2)
 		{
 			p2Name = name;
-			player2Name.text = p2Name;
+			// player2Name.text = p2Name;
 		}
 		else if (Constants.USER_ID == 3)
 		{
 			p3Name = name;
-			player3Name.text = p3Name;
+			// player3Name.text = p3Name;
 		}
 		else if (Constants.USER_ID == 4)
 		{
 			p4Name = name;
-			player4Name.text = p4Name;
+			// player4Name.text = p4Name;
 		}
 	}
 
 	public void OnResponseSetName(ExtendedEventArgs eventArgs)
 	{
 		ResponseSetNameEventArgs args = eventArgs as ResponseSetNameEventArgs;
-		
-			// if (args.user_id == 1)
-			// {
-			// 	player1Name.text = args.name;
-			// }
-			// else if (args.user_id == 2)
-			// {
-			// 	player2Name.text = args.name;
-			// 	numPlayers = 2;
-			// }
-			// else if (args.user_id == 3)
-			// {
-			// 	player3Name.text = args.name;
-			// }
-			// else if (args.user_id == 4)
-			// {
-			// 	player4Name.text = args.name;
-			// }
 
 			if (args.numPlayers == 1 && args.user_id1 != null)
 			{
@@ -213,17 +207,33 @@ public class MainMenu : MonoBehaviour
 			}
 			else if (args.numPlayers == 2 && args.user_id2 != null)
 			{
+				p2Waiting.SetActive(false);
+				player2Name.gameObject.SetActive(true);
+				p2NotReadyButton.SetActive(true);
 				player1Name.text = args.name1;
 				player2Name.text = args.name2;
 				numPlayers = 2;
 			}
 			else if (args.numPlayers == 3)
 			{
-				// player3Name.text = args.name;
+				p3Waiting.SetActive(false);
+				player3Name.gameObject.SetActive(true);
+				p3NotReadyButton.SetActive(true);
+				player1Name.text = args.name1;
+				player2Name.text = args.name2;
+				// player3Name.text = args.name3;
+				numPlayers = 3;
 			}
 			else if (args.numPlayers == 4)
 			{
-				// player4Name.text = args.name;
+				p4Waiting.SetActive(false);
+				player4Name.gameObject.SetActive(true);
+				p4NotReadyButton.SetActive(true);
+				player1Name.text = args.name1;
+				player2Name.text = args.name2;
+				// player3Name.text = args.name3;
+				// player4Name.text = args.name4;
+				numPlayers = 4;
 			}
 	}
 
@@ -242,6 +252,7 @@ public class MainMenu : MonoBehaviour
 		}
 		else if (args.user_id == 2)
 		{
+			p2CharCard.gameObject.SetActive(true);
 			foreach (Character character in characters)
 			{
 				if (character.cardName == args.name)
@@ -253,6 +264,7 @@ public class MainMenu : MonoBehaviour
 		}
 		else if (args.user_id == 3)
 		{
+			p3CharCard.gameObject.SetActive(true);
 			foreach (Character character in characters)
 			{
 				if (character.cardName == args.name)
@@ -263,6 +275,7 @@ public class MainMenu : MonoBehaviour
 		}
 		else if (args.user_id == 4)
 		{
+			p4CharCard.gameObject.SetActive(true);
 			foreach (Character character in characters)
 			{
 				if (character.cardName == args.name)
@@ -278,12 +291,19 @@ public class MainMenu : MonoBehaviour
 	public void OnReadyClick()
 	{
 		Debug.Log("Send ReadyReq");
-		networkManager.SendReadyRequest();
+		networkManager.SendReadyRequest(1);
+	}
+
+	public void OnNotReadyClick()
+	{
+		Debug.Log("Send ReadyReq");
+		networkManager.SendReadyRequest(0);
 	}
 
 	public void OnResponseReady(ExtendedEventArgs eventArgs)
 	{
 		ResponseReadyEventArgs args = eventArgs as ResponseReadyEventArgs;
+		/*
 		if (args.user_id == 1)
 		{
 			p1Ready = true;
@@ -306,6 +326,55 @@ public class MainMenu : MonoBehaviour
 			//messageBoxMsg.text = "Error starting game. Network returned invalid response.";
 			//messageBox.SetActive(true);
 			return;
+		}
+		*/
+
+		if(args.numPlayers == 1) {
+			if(args.player1Ready) {
+				p1NotReadyButton.SetActive(false);
+				p1ReadyButton.SetActive(true);
+				p1Ready = true;
+			}
+			else {
+				p1ReadyButton.SetActive(false);
+				p1NotReadyButton.SetActive(true);
+				p1Ready = false;
+			}
+		}
+
+		else if(args.numPlayers == 2) {
+			if(args.player1Ready) {
+				p1NotReadyButton.SetActive(false);
+				p1ReadyButton.SetActive(true);
+				p1Ready = true;
+			}
+			else {
+				p1ReadyButton.SetActive(false);
+				p1NotReadyButton.SetActive(true);
+				p1Ready = false;
+			}
+			if(args.player2Ready) {
+				p2NotReadyButton.SetActive(false);
+				p2ReadyButton.SetActive(true);
+				p2Ready = true;
+			}
+			else {
+				p2ReadyButton.SetActive(false);
+				p2NotReadyButton.SetActive(true);
+				p2Ready = false;
+			}
+		}
+
+		else if(args.numPlayers == 3) {
+			Debug.Log("READY ERROR: 3 Players has not been set up yet!");
+		}
+
+		else if(args.numPlayers == 4) {
+			Debug.Log("READY ERROR: 4 Players has not been set up yet!");
+		}
+
+		else {
+			Debug.Log("READY ERROR: numPlayers is invalid or incorrect!");
 		}
 
 		Debug.Log("Player Ready?: " + p1Ready);
