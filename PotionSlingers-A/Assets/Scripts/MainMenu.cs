@@ -204,6 +204,7 @@ public class MainMenu : MonoBehaviour
 			if (args.numPlayers == 1 && args.user_id1 != null)
 			{
 				player1Name.text = args.name1;
+                p1Name = args.name1;
 			}
 			else if (args.numPlayers == 2 && args.user_id2 != null)
 			{
@@ -212,6 +213,8 @@ public class MainMenu : MonoBehaviour
 				p2NotReadyButton.SetActive(true);
 				player1Name.text = args.name1;
 				player2Name.text = args.name2;
+                p1Name = args.name1;
+                p2Name = args.name2;
 				numPlayers = 2;
 			}
 			else if (args.numPlayers == 3)
@@ -222,6 +225,9 @@ public class MainMenu : MonoBehaviour
 				player1Name.text = args.name1;
 				player2Name.text = args.name2;
 				// player3Name.text = args.name3;
+                p1Name = args.name1;
+                p2Name = args.name2;
+                // p3Name = args.name3;
 				numPlayers = 3;
 			}
 			else if (args.numPlayers == 4)
@@ -233,6 +239,10 @@ public class MainMenu : MonoBehaviour
 				player2Name.text = args.name2;
 				// player3Name.text = args.name3;
 				// player4Name.text = args.name4;
+                p1Name = args.name1;
+                p2Name = args.name2;
+                // p3Name = args.name3;
+                // p4Name = args.name4;
 				numPlayers = 4;
 			}
 	}
@@ -240,50 +250,127 @@ public class MainMenu : MonoBehaviour
 	public void OnResponseCharacter(ExtendedEventArgs eventArgs)
 	{
 		ResponseCharacterEventArgs args = eventArgs as ResponseCharacterEventArgs;
-		if (args.user_id == 1)
-		{
-			foreach(Character character in characters){
-				if(character.cardName == args.name)
+
+        if (args.numPlayers == 1 && args.user_id1 != null) {
+            foreach(Character character in characters) {
+				if(character.cardName == args.characterName1)
                 {
 					Debug.Log(character.cardName);
 					p1CharCard.updateCharacter(character);
                 }
             }
-		}
-		else if (args.user_id == 2)
-		{
-			p2CharCard.gameObject.SetActive(true);
-			foreach (Character character in characters)
+        }
+
+        else if (args.numPlayers == 2 && args.user_id2 != null) {
+            p2CharCard.gameObject.SetActive(true);
+            foreach (Character character in characters)
 			{
-				if (character.cardName == args.name)
+                if(character.cardName == args.characterName1)
+                {
+					Debug.Log(character.cardName);
+					p1CharCard.updateCharacter(character);
+                }
+				else if (character.cardName == args.characterName2)
 				{
 					Debug.Log(character.cardName);
 					p2CharCard.updateCharacter(character);
 				}
 			}
-		}
-		else if (args.user_id == 3)
-		{
-			p3CharCard.gameObject.SetActive(true);
-			foreach (Character character in characters)
+        }
+
+        else if (args.numPlayers == 3) {
+            p3CharCard.gameObject.SetActive(true);
+            foreach (Character character in characters)
 			{
-				if (character.cardName == args.name)
+                if(character.cardName == args.characterName1)
+                {
+					Debug.Log(character.cardName);
+					p1CharCard.updateCharacter(character);
+                }
+				else if (character.cardName == args.characterName2)
 				{
-					p3CharCard.updateCharacter(character);
+					Debug.Log(character.cardName);
+					p2CharCard.updateCharacter(character);
 				}
+                // else if (character.cardName == args.characterName3)
+				// {
+				// 	Debug.Log(character.cardName);
+				// 	p3CharCard.updateCharacter(character);
+				// }
 			}
-		}
-		else if (args.user_id == 4)
-		{
-			p4CharCard.gameObject.SetActive(true);
-			foreach (Character character in characters)
+        }
+
+        else if (args.numPlayers == 4) {
+            p4CharCard.gameObject.SetActive(true);
+            foreach (Character character in characters)
 			{
-				if (character.cardName == args.name)
+                if(character.cardName == args.characterName1)
+                {
+					Debug.Log(character.cardName);
+					p1CharCard.updateCharacter(character);
+                }
+				else if (character.cardName == args.characterName2)
 				{
-					p4CharCard.updateCharacter(character);
+					Debug.Log(character.cardName);
+					p2CharCard.updateCharacter(character);
 				}
+                // else if (character.cardName == args.characterName3)
+				// {
+				// 	Debug.Log(character.cardName);
+				// 	p3CharCard.updateCharacter(character);
+				// }
+                // else if (character.cardName == args.characterName4)
+				// {
+				// 	Debug.Log(character.cardName);
+				// 	p4CharCard.updateCharacter(character);
+				// }
 			}
-		}
+        }
+
+		// if (args.user_id == 1)
+		// {
+		// 	foreach(Character character in characters){
+		// 		if(character.cardName == args.name)
+        //         {
+		// 			Debug.Log(character.cardName);
+		// 			p1CharCard.updateCharacter(character);
+        //         }
+        //     }
+		// }
+		// else if (args.user_id == 2)
+		// {
+		// 	p2CharCard.gameObject.SetActive(true);
+		// 	foreach (Character character in characters)
+		// 	{
+		// 		if (character.cardName == args.name)
+		// 		{
+		// 			Debug.Log(character.cardName);
+		// 			p2CharCard.updateCharacter(character);
+		// 		}
+		// 	}
+		// }
+		// else if (args.user_id == 3)
+		// {
+		// 	p3CharCard.gameObject.SetActive(true);
+		// 	foreach (Character character in characters)
+		// 	{
+		// 		if (character.cardName == args.name)
+		// 		{
+		// 			p3CharCard.updateCharacter(character);
+		// 		}
+		// 	}
+		// }
+		// else if (args.user_id == 4)
+		// {
+		// 	p4CharCard.gameObject.SetActive(true);
+		// 	foreach (Character character in characters)
+		// 	{
+		// 		if (character.cardName == args.name)
+		// 		{
+		// 			p4CharCard.updateCharacter(character);
+		// 		}
+		// 	}
+		// }
 	
 		Debug.Log("Character changed");
 	}
