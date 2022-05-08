@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
             // player 2 setup
             else if(Constants.USER_ID == 2)
             {
-                currentPlayer = 1;
+                //currentPlayer = 1;
                 players[0] = ob2.GetComponent<Player>();
                 //players[0].username.text = menu.p2Name;
                 players[1] = ob.GetComponent<Player>();
@@ -157,13 +157,29 @@ public class GameManager : MonoBehaviour
         if (Constants.USER_ID != args.user_id)
         {
             // player 1 just ended turn in 2p game
-            if(args.w == 1)
+            if(args.user_id == 1)
             {
-                currentPlayer = args.w;
+                currentPlayer = 1;
                 // player 2 just ended turn in 2p game
-            } else if(args.w == 0)
+            } else if(args.user_id == 2)
             {
-                currentPlayer = args.w;
+                if(numPlayers > 2)
+                {
+                    currentPlayer = 2;
+                }
+                else
+                {
+                    currentPlayer = 0;
+                }
+            } else if (args.user_id == 3)
+            {
+                if(numPlayers > 3)
+                {
+                    currentPlayer = 3;
+                } else
+                {
+                    currentPlayer = 0;
+                }
             }
             onStartTurn(players[currentPlayer]);
         }
@@ -172,11 +188,150 @@ public class GameManager : MonoBehaviour
     public void onResponseBuy(ExtendedEventArgs eventArgs)
     {
         Debug.Log("ResponseBuy");
+        ResponseBuyEventArgs args = eventArgs as ResponseBuyEventArgs;
+        Debug.Log("ID: " + args.user_id);
+        Debug.Log("cardInt: " + args.x);
+        Debug.Log("Price: " + args.y);
+        Debug.Log("T or B: " + args.z);
+        if (Constants.USER_ID != args.user_id)
+        {
+            // request coming fom p1
+            if(args.user_id == 1)
+            {
+                // if top market
+                if(args.z == 1)
+                {
+                    switch (args.x)
+                    {
+                        case 1:
+                            players[args.user_id - 1].pips -= md1.cardDisplay1.card.buyPrice;
+                            players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay1.card);
+                            Card card = md1.popCard();
+                            md1.cardDisplay1.updateCard(card);
+                            break;
+                        case 2:
+                            players[args.user_id - 1].pips -= md1.cardDisplay2.card.buyPrice;
+                            players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay2.card);
+                            Card card2 = md1.popCard();
+                            md1.cardDisplay2.updateCard(card2);
+                            break;
+                        case 3:
+                            players[args.user_id - 1].pips -= md1.cardDisplay3.card.buyPrice;
+                            players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay3.card);
+                            Card card3 = md1.popCard();
+                            md1.cardDisplay3.updateCard(card3);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (args.x)
+                    {
+                        case 1:
+                            players[args.user_id - 1].pips -= md2.cardDisplay1.card.buyPrice;
+                            players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay1.card);
+                            Card card4 = md2.popCard();
+                            md2.cardDisplay1.updateCard(card4);
+                            break;
+                        case 2:
+                            players[args.user_id - 1].pips -= md2.cardDisplay2.card.buyPrice;
+                            players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay2.card);
+                            Card card5 = md2.popCard();
+                            md2.cardDisplay2.updateCard(card5);
+                            break;
+                        case 3:
+                            players[args.user_id - 1].pips -= md2.cardDisplay3.card.buyPrice;
+                            players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay3.card);
+                            Card card6 = md2.popCard();
+                            md2.cardDisplay3.updateCard(card6);
+                            break;
+                    }
+                }
+            }
+        } else if(args.user_id == 2)
+        {
+            // if top market
+            if (args.z == 1)
+            {
+                switch (args.x)
+                {
+                    case 1:
+                        players[args.user_id - 1].pips -= md1.cardDisplay1.card.buyPrice;
+                        players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay1.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay1.updateCard(card);
+                        break;
+                    case 2:
+                        players[args.user_id - 1].pips -= md1.cardDisplay2.card.buyPrice;
+                        players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay2.card);
+                        Card card2 = md1.popCard();
+                        md1.cardDisplay2.updateCard(card2);
+                        break;
+                    case 3:
+                        players[args.user_id - 1].pips -= md1.cardDisplay3.card.buyPrice;
+                        players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay3.card);
+                        Card card3 = md1.popCard();
+                        md1.cardDisplay3.updateCard(card3);
+                        break;
+                }
+            }
+            else
+            {
+                switch (args.x)
+                {
+                    case 1:
+                        players[args.user_id - 1].pips -= md2.cardDisplay1.card.buyPrice;
+                        players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay1.card);
+                        Card card4 = md2.popCard();
+                        md2.cardDisplay1.updateCard(card4);
+                        break;
+                    case 2:
+                        players[args.user_id - 1].pips -= md2.cardDisplay2.card.buyPrice;
+                        players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay2.card);
+                        Card card5 = md2.popCard();
+                        md2.cardDisplay2.updateCard(card5);
+                        break;
+                    case 3:
+                        players[args.user_id - 1].pips -= md2.cardDisplay3.card.buyPrice;
+                        players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay3.card);
+                        Card card6 = md2.popCard();
+                        md2.cardDisplay3.updateCard(card6);
+                        break;
+                }
+            }
+        }
     }
 
     public void onResponseSell(ExtendedEventArgs eventArgs)
     {
         Debug.Log("ResponseSell");
+        ResponseSellEventArgs args = eventArgs as ResponseSellEventArgs;
+        Debug.Log("ID: " + args.user_id);
+        Debug.Log("cardInt: " + args.x);
+        Debug.Log("Sell Price: " + args.y);
+
+        if(Constants.USER_ID != args.user_id)
+        {
+            // p1 request
+            if (args.user_id == 1)
+            {
+                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[selectedCardInt - 1].card.sellPrice;
+                td.addCard(players[args.user_id - 1].holster.cardList[selectedCardInt - 1]);
+                // p2 request
+            } else if (args.user_id == 2)
+            {
+                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[selectedCardInt - 1].card.sellPrice;
+                td.addCard(players[args.user_id - 1].holster.cardList[selectedCardInt - 1]);
+            } else if(args.user_id == 3)
+            {
+                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[selectedCardInt - 1].card.sellPrice;
+                td.addCard(players[args.user_id - 1].holster.cardList[selectedCardInt - 1]);
+            } else if (args.user_id == 4)
+            {
+                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[selectedCardInt - 1].card.sellPrice;
+                td.addCard(players[args.user_id - 1].holster.cardList[selectedCardInt - 1]);
+            }
+        }
     }
 
     public void throwPotion()
@@ -412,7 +567,7 @@ public class GameManager : MonoBehaviour
                     Card card = md1.popCard();
                     md1.cardDisplay1.updateCard(card);
                     sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice);
+                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                 } else
                 {
                     sendErrorMessage(6);
@@ -426,7 +581,7 @@ public class GameManager : MonoBehaviour
                     Card card = md1.popCard();
                     md1.cardDisplay2.updateCard(card);
                     sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice);
+                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                 }
                 else
                 {
@@ -441,7 +596,7 @@ public class GameManager : MonoBehaviour
                     Card card = md1.popCard();
                     md1.cardDisplay3.updateCard(card);
                     sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice);
+                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                 }
                 else
                 {
@@ -467,7 +622,7 @@ public class GameManager : MonoBehaviour
                     Card card = md2.popCard();
                     md2.cardDisplay1.updateCard(card);
                     sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice);
+                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                 }
                 else
                 {
@@ -482,7 +637,7 @@ public class GameManager : MonoBehaviour
                     Card card = md2.popCard();
                     md2.cardDisplay2.updateCard(card);
                     sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice);
+                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                 }
                 else
                 {
@@ -497,7 +652,7 @@ public class GameManager : MonoBehaviour
                     Card card = md2.popCard();
                     md2.cardDisplay3.updateCard(card);
                     sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice);
+                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                 }
                 else
                 {
@@ -515,6 +670,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Sell Card");
         players[currentPlayer].pips += players[currentPlayer].holster.cardList[selectedCardInt - 1].card.sellPrice;
         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+        bool connected = networkManager.sendSellRequest(selectedCardInt, players[currentPlayer].holster.cardList[selectedCardInt - 1].card.sellPrice);
         sendSuccessMessage(8);
     }
 

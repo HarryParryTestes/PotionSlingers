@@ -139,12 +139,12 @@ public class NetworkManager : MonoBehaviour
         return false;
     }
 
-    public bool sendBuyRequest(int x, int y)
+    public bool sendBuyRequest(int x, int y, int z)
     {
         if (cManager && cManager.IsConnected())
         {
             RequestBuy request = new RequestBuy();
-            request.send(x, y);
+            request.send(x, y, z);
             cManager.send(request);
             return true;
         }

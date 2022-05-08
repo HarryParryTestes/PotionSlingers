@@ -11,7 +11,7 @@ import utility.Log;
  */
 public class ResponseBuy extends GameResponse {
     private Player player;
-    private int x, y;
+    private int x, y, z;
 
     public ResponseBuy() {
         responseCode = Constants.SMSG_BUY;
@@ -23,9 +23,10 @@ public class ResponseBuy extends GameResponse {
         packet.addInt32(player.getID());
         packet.addInt32(x);
         packet.addInt32(y);
+        packet.addInt32(z);
 
         Log.printf("Player with id %d bought card in slot %d for %d pips",
-                player.getID(), x, y);
+                player.getID(), x, y, z);
 
         return packet.getBytes();
     }
@@ -34,8 +35,9 @@ public class ResponseBuy extends GameResponse {
         this.player = player;
     }
 
-    public void setData(int x, int y) {
+    public void setData(int x, int y, int z) {
         this.x = x;
         this.y = y;
+        this.z = z;
     }
 }

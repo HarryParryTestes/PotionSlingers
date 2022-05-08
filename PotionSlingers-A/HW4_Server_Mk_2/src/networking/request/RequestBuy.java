@@ -10,7 +10,7 @@ import utility.DataReader;
 import core.NetworkManager;
 
 public class RequestBuy extends GameRequest {
-    private int x, y;
+    private int x, y, z;
     // Responses
     private ResponseBuy responseBuy;
 
@@ -22,6 +22,7 @@ public class RequestBuy extends GameRequest {
     public void parse() throws IOException {
         x = DataReader.readInt(dataInput);
         y = DataReader.readInt(dataInput);
+        z = DataReader.readInt(dataInput);
     }
 
     @Override
@@ -29,7 +30,7 @@ public class RequestBuy extends GameRequest {
         Player player = client.getPlayer();
 
         responseBuy.setPlayer(player);
-        responseBuy.setData(x, y);
+        responseBuy.setData(x, y, z);
         NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseBuy);
     }
 }
