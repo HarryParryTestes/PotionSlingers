@@ -315,21 +315,21 @@ public class GameManager : MonoBehaviour
             // p1 request
             if (args.user_id == 1)
             {
-                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[selectedCardInt - 1].card.sellPrice;
-                td.addCard(players[args.user_id - 1].holster.cardList[selectedCardInt - 1]);
+                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[args.x - 1].card.sellPrice;
+                td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
                 // p2 request
             } else if (args.user_id == 2)
             {
-                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[selectedCardInt - 1].card.sellPrice;
-                td.addCard(players[args.user_id - 1].holster.cardList[selectedCardInt - 1]);
+                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[args.x - 1].card.sellPrice;
+                td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
             } else if(args.user_id == 3)
             {
-                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[selectedCardInt - 1].card.sellPrice;
-                td.addCard(players[args.user_id - 1].holster.cardList[selectedCardInt - 1]);
+                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[args.x - 1].card.sellPrice;
+                td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
             } else if (args.user_id == 4)
             {
-                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[selectedCardInt - 1].card.sellPrice;
-                td.addCard(players[args.user_id - 1].holster.cardList[selectedCardInt - 1]);
+                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[args.x - 1].card.sellPrice;
+                td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
             }
         }
     }
