@@ -20,6 +20,8 @@ public class NetworkRequestTable
 		add(Constants.CMSG_CHARACTER, "RequestCharacter");
         add(Constants.CMSG_P_THROW, "RequestPotionThrow");
         add(Constants.CMSG_END_TURN, "RequestEndTurn");
+        add(Constants.CMSG_BUY, "RequestBuy");
+        add(Constants.CMSG_SELL, "RequestSell");
         Debug.Log("Inited");
 	}
 

@@ -24,6 +24,10 @@ public class Constants
     public static readonly short SMSG_P_THROW = 205;
     public static readonly short CMSG_END_TURN = 106;
     public static readonly short SMSG_END_TURN = 206;
+    public static readonly short CMSG_BUY = 110;
+    public static readonly short SMSG_BUY = 210;
+    public static readonly short CMSG_SELL = 112;
+    public static readonly short SMSG_SELL = 212;
     public static readonly short CMSG_HEARTBEAT = 111;
 
 	public static int USER_ID = -1;

@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
         msgQueue = networkManager.GetComponent<MessageQueue>();
         msgQueue.AddCallback(Constants.SMSG_P_THROW, onResponsePotionThrow);
         msgQueue.AddCallback(Constants.SMSG_END_TURN, onResponseEndTurn);
+        msgQueue.AddCallback(Constants.SMSG_BUY, onResponseBuy);
+        msgQueue.AddCallback(Constants.SMSG_SELL, onResponseSell);
         init();
     }
 
@@ -165,6 +167,16 @@ public class GameManager : MonoBehaviour
             }
             onStartTurn(players[currentPlayer]);
         }
+    }
+
+    public void onResponseBuy(ExtendedEventArgs eventArgs)
+    {
+        Debug.Log("ResponseBuy");
+    }
+
+    public void onResponseSell(ExtendedEventArgs eventArgs)
+    {
+        Debug.Log("ResponseSell");
     }
 
     public void throwPotion()
@@ -400,6 +412,7 @@ public class GameManager : MonoBehaviour
                     Card card = md1.popCard();
                     md1.cardDisplay1.updateCard(card);
                     sendSuccessMessage(1);
+                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice);
                 } else
                 {
                     sendErrorMessage(6);
@@ -413,6 +426,7 @@ public class GameManager : MonoBehaviour
                     Card card = md1.popCard();
                     md1.cardDisplay2.updateCard(card);
                     sendSuccessMessage(1);
+                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice);
                 }
                 else
                 {
@@ -427,6 +441,7 @@ public class GameManager : MonoBehaviour
                     Card card = md1.popCard();
                     md1.cardDisplay3.updateCard(card);
                     sendSuccessMessage(1);
+                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice);
                 }
                 else
                 {
@@ -452,6 +467,7 @@ public class GameManager : MonoBehaviour
                     Card card = md2.popCard();
                     md2.cardDisplay1.updateCard(card);
                     sendSuccessMessage(1);
+                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice);
                 }
                 else
                 {
@@ -466,6 +482,7 @@ public class GameManager : MonoBehaviour
                     Card card = md2.popCard();
                     md2.cardDisplay2.updateCard(card);
                     sendSuccessMessage(1);
+                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice);
                 }
                 else
                 {
@@ -480,6 +497,7 @@ public class GameManager : MonoBehaviour
                     Card card = md2.popCard();
                     md2.cardDisplay3.updateCard(card);
                     sendSuccessMessage(1);
+                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice);
                 }
                 else
                 {

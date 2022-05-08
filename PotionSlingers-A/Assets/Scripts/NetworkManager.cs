@@ -139,6 +139,30 @@ public class NetworkManager : MonoBehaviour
         return false;
     }
 
+    public bool sendBuyRequest(int x, int y)
+    {
+        if (cManager && cManager.IsConnected())
+        {
+            RequestBuy request = new RequestBuy();
+            request.send(x, y);
+            cManager.send(request);
+            return true;
+        }
+        return false;
+    }
+
+    public bool sendSellRequest(int x, int y)
+    {
+        if (cManager && cManager.IsConnected())
+        {
+            RequestSell request = new RequestSell();
+            request.send(x, y);
+            cManager.send(request);
+            return true;
+        }
+        return false;
+    }
+
     public IEnumerator RequestHeartbeat(float time)
 	{
 		yield return new WaitForSeconds(time);

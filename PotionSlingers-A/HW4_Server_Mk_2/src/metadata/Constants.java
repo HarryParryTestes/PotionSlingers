@@ -29,6 +29,10 @@ public class Constants {
 	final public static short SMSG_P_THROW = 205;
 	final public static short CMSG_END_TURN= 106;
 	final public static short SMSG_END_TURN = 206;
+	final public static short CMSG_BUY = 110;
+	final public static short SMSG_BUY = 210;
+	final public static short CMSG_SELL = 112;
+	final public static short SMSG_SELL = 212;
 
 	final public static short CMSG_HEARTBEAT = 111;
 

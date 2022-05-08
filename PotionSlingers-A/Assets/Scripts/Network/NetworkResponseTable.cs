@@ -20,6 +20,8 @@ public class NetworkResponseTable
 		add(Constants.SMSG_CHARACTER, "ResponseCharacter");
         add(Constants.SMSG_P_THROW, "ResponsePotionThrow");
         add(Constants.SMSG_END_TURN, "ResponseEndTurn");
+        add(Constants.SMSG_BUY, "ResponseBuy");
+        add(Constants.SMSG_SELL, "ResponseSell");
     }
 
 	public static void add(short response_id, string name)
