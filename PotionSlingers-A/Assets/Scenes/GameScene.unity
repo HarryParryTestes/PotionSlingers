@@ -33510,7 +33510,7 @@ GameObject:
   - component: {fileID: 697779238}
   - component: {fileID: 697779237}
   m_Layer: 5
-  m_Name: Text
+  m_Name: TopUsernameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39774,7 +39774,7 @@ GameObject:
   - component: {fileID: 837115358}
   - component: {fileID: 837115357}
   m_Layer: 5
-  m_Name: Text
+  m_Name: LeftUsernameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63710,7 +63710,7 @@ GameObject:
   - component: {fileID: 1425693225}
   - component: {fileID: 1425693224}
   m_Layer: 5
-  m_Name: Text
+  m_Name: RightUsernameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78898,7 +78898,7 @@ GameObject:
   - component: {fileID: 1720454978}
   - component: {fileID: 1720454977}
   m_Layer: 5
-  m_Name: Text
+  m_Name: BottomUsernameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -96580,6 +96580,10 @@ MonoBehaviour:
   op1: {fileID: 1806986078}
   op2: {fileID: 160461279}
   op3: {fileID: 2044632196}
+  playerBottomName: {fileID: 1720454977}
+  playerLeftName: {fileID: 837115357}
+  playerTopName: {fileID: 697779237}
+  playerRightName: {fileID: 1425693224}
 --- !u!4 &2083794570
 Transform:
   m_ObjectHideFlags: 0

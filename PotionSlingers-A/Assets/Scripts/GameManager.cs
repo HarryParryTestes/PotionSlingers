@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
 
     public static GameManager manager;
     private NetworkManager networkManager;
+
+    // Later change to be however many players joined when the GameScene loads in.
+    // (Maybe transferring numPlayers from MainMenu script to here? Maybe get from server?)
     public int numPlayers = 2;
     public int selectedCardInt;
     public int selectedOpponentInt;
@@ -28,8 +31,16 @@ public class GameManager : MonoBehaviour
     public CharacterDisplay op1;
     public CharacterDisplay op2;
     public CharacterDisplay op3;
+    public TMPro.TextMeshProUGUI playerBottomName;
+    public TMPro.TextMeshProUGUI playerLeftName;
+    public TMPro.TextMeshProUGUI playerTopName;
+    public TMPro.TextMeshProUGUI playerRightName;
 
-    //public MainMenu menu;
+    GameObject mainMenu;
+    MainMenu mainMenuScript;
+
+    GameObject player1Area;
+    GameObject player2Area;
 
     void Awake()
     {
@@ -48,6 +59,10 @@ public class GameManager : MonoBehaviour
         msgQueue.AddCallback(Constants.SMSG_SELL, onResponseSell);
         msgQueue.AddCallback(Constants.SMSG_CYCLE, onResponseCycle);
         msgQueue.AddCallback(Constants.SMSG_TRASH, onResponseTrash);
+
+        mainMenu = GameObject.Find("MainMenuScript");
+        mainMenuScript = mainMenu.GetComponent<MainMenu>();
+
         init();
     }
 
@@ -59,6 +74,11 @@ public class GameManager : MonoBehaviour
 
     void initPlayers()
     {
+        // Player1 = Client1 set up
+        // Debug.Log("Player1 name is" + mainMenuScript.p1Name);
+        // Debug.Log("Default name is" + playerBottomName.text);
+        playerBottomName.text = mainMenuScript.p1Name;
+        playerTopName.text = mainMenuScript.p2Name;
         ob = GameObject.Find("CharacterCard");
         ob2 = GameObject.Find("CharacterCard (Top)");
         players[0] = ob.GetComponent<Player>();
@@ -69,15 +89,7 @@ public class GameManager : MonoBehaviour
         ob4 = GameObject.Find("CharacterCard (Right)");
         players[3] = ob4.GetComponent<Player>();
 
-        if (numPlayers == 4)
-        {
-            // TODO
-
-        } else if(numPlayers == 3)
-        {
-            // TODO
-        }
-        else if(numPlayers == 2)
+        if(numPlayers == 2)
         {
             // gotta fix this
             /*
@@ -92,7 +104,7 @@ public class GameManager : MonoBehaviour
             {
                 // we're good
             }
-            // player 2 setup
+            // Player 2 = Client2 setup
             else if(Constants.USER_ID == 2)
             {
                 // switching players around for p2 to be at bottom
@@ -104,10 +116,22 @@ public class GameManager : MonoBehaviour
                 players[1] = players[3];
                 */
 
+                playerBottomName.text = mainMenuScript.p2Name;
+                playerTopName.text = mainMenuScript.p1Name;
                 players[0] = ob2.GetComponent<Player>();
                 players[1] = ob.GetComponent<Player>();
             }
         }
+
+        else if (numPlayers == 3)
+        {
+            // TODO
+
+        } else if(numPlayers == 4)
+        {
+            // TODO
+        }
+
         //ob = GameObject.Find("CharacterCard");
         //players[0] = ob.GetComponent<Player>();
         //ob2 = GameObject.Find("CharacterCard (Top)");
