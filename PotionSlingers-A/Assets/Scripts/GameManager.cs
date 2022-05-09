@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public int numPlayers = 2;
     public int selectedCardInt;
     public int selectedOpponentInt;
+    public int loadedCardInt;
     public int currentPlayer = 0;
     public Player[] players = new Player[4];
     public Character[] characters;
@@ -536,6 +537,7 @@ public class GameManager : MonoBehaviour
     }
 
     // find potions and display them in LoadItemMenu
+    // TODO: fix this to display properly
     public void displayPotions()
     {
         int set = 0;
@@ -575,6 +577,26 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void loadPotion()
+    {
+        Debug.Log("Load Potion");
+
+        // TODO: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
+
+        // if it's an artifact or vessel
+        if(players[currentPlayer].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact" ||
+            players[currentPlayer].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
+        {
+            // do something
+        }
+    }
+
+    public void setLoadedInt(int cardInt)
+    {
+        loadedCardInt = cardInt;
+    }
+
+    // TODO: fix this to display properly
     public void displayOpponents()
     {
         int set = 0;
