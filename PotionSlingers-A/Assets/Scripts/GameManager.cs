@@ -78,8 +78,8 @@ public class GameManager : MonoBehaviour
         // Player1 = Client1 set up
         // Debug.Log("Player1 name is" + mainMenuScript.p1Name);
         // Debug.Log("Default name is" + playerBottomName.text);
-        playerBottomName.text = mainMenuScript.p1Name;
-        playerTopName.text = mainMenuScript.p2Name;
+        // playerBottomName.text = mainMenuScript.p1Name;
+        // playerTopName.text = mainMenuScript.p2Name;
         ob = GameObject.Find("CharacterCard");
         ob2 = GameObject.Find("CharacterCard (Top)");
         players[0] = ob.GetComponent<Player>();
@@ -89,6 +89,33 @@ public class GameManager : MonoBehaviour
 
         ob4 = GameObject.Find("CharacterCard (Right)");
         players[3] = ob4.GetComponent<Player>();
+
+        // player 1 setup
+        if (Constants.USER_ID == 1)
+        {
+            // we're good
+            Debug.Log("NEW P1 worked");
+            playerBottomName.text = mainMenuScript.p1Name;
+            playerTopName.text = mainMenuScript.p2Name;
+        }
+        // Player 2 = Client2 setup
+        else if(Constants.USER_ID == 2)
+        {
+            // switching players around for p2 to be at bottom
+
+            // this could be wrong so I'm scrapping it for now
+            /*
+            players[3] = players[0];
+            players[0] = players[1];
+            players[1] = players[3];
+            */
+            Debug.Log("NEW P2 worked");
+            currentPlayer = 1;
+            playerBottomName.text = mainMenuScript.p2Name;
+            playerTopName.text = mainMenuScript.p1Name;
+            players[0] = ob2.GetComponent<Player>();
+            players[1] = ob.GetComponent<Player>();
+        }
 
         if(numPlayers == 2)
         {
@@ -104,6 +131,8 @@ public class GameManager : MonoBehaviour
             if (Constants.USER_ID == 1)
             {
                 // we're good
+                playerBottomName.text = mainMenuScript.p1Name;
+                playerTopName.text = mainMenuScript.p2Name;
             }
             // Player 2 = Client2 setup
             else if(Constants.USER_ID == 2)
@@ -117,6 +146,7 @@ public class GameManager : MonoBehaviour
                 players[1] = players[3];
                 */
 
+                currentPlayer = 1;
                 playerBottomName.text = mainMenuScript.p2Name;
                 playerTopName.text = mainMenuScript.p1Name;
                 players[0] = ob2.GetComponent<Player>();
