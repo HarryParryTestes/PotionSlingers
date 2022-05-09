@@ -76,27 +76,29 @@ public class GameManager : MonoBehaviour
     void initPlayers()
     {
         // Player1 = Client1 set up
-        // Debug.Log("Player1 name is" + mainMenuScript.p1Name);
-        // Debug.Log("Default name is" + playerBottomName.text);
-        // playerBottomName.text = mainMenuScript.p1Name;
-        // playerTopName.text = mainMenuScript.p2Name;
         ob = GameObject.Find("CharacterCard");
         ob2 = GameObject.Find("CharacterCard (Top)");
         players[0] = ob.GetComponent<Player>();
         players[1] = ob2.GetComponent<Player>();
+
         ob3 = GameObject.Find("CharacterCard (Left)");
         players[2] = ob3.GetComponent<Player>();
-
         ob4 = GameObject.Find("CharacterCard (Right)");
         players[3] = ob4.GetComponent<Player>();
 
+        // Took this if + else if statements out of if(numPlayers == 2) check
+        // because it wasn't running for some reason.
         // player 1 setup
         if (Constants.USER_ID == 1)
         {
             // we're good
-            Debug.Log("NEW P1 worked");
+            Debug.Log("P1 character is: " + mainMenuScript.p1CharCard.character.cardName);
             playerBottomName.text = mainMenuScript.p1Name;
             playerTopName.text = mainMenuScript.p2Name;
+            CharacterDisplay p1Character = ob.GetComponent<CharacterDisplay>();
+            p1Character.character = mainMenuScript.p1CharCard.character;
+            p1Character.updateCharacter(p1Character.character);
+            
         }
         // Player 2 = Client2 setup
         else if(Constants.USER_ID == 2)
@@ -109,12 +111,15 @@ public class GameManager : MonoBehaviour
             players[0] = players[1];
             players[1] = players[3];
             */
-            Debug.Log("NEW P2 worked");
+            Debug.Log("P2 character is: " + mainMenuScript.p2CharCard.character.cardName);
             currentPlayer = 1;
             playerBottomName.text = mainMenuScript.p2Name;
             playerTopName.text = mainMenuScript.p1Name;
             players[0] = ob2.GetComponent<Player>();
             players[1] = ob.GetComponent<Player>();
+            CharacterDisplay p2Character = ob.GetComponent<CharacterDisplay>();
+            p2Character.character = mainMenuScript.p2CharCard.character;
+            p2Character.updateCharacter(p2Character.character);
         }
 
         if(numPlayers == 2)
