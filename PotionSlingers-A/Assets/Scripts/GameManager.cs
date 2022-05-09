@@ -448,7 +448,7 @@ public class GameManager : MonoBehaviour
                     // also check if they're the current player
                     //if(Constants.USER_ID - 1 == currentPlayer)
                     //{
-                    bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer, selectedCardInt, selectedOpponentInt);
+                    bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                     td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                     sendSuccessMessage(2);
                     break;
@@ -475,7 +475,7 @@ public class GameManager : MonoBehaviour
                     // also check if they're the current player
                     if (Constants.USER_ID - 1 == currentPlayer)
                     {
-                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer, selectedCardInt, selectedOpponentInt);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                         sendSuccessMessage(2);
                         break;
@@ -503,7 +503,7 @@ public class GameManager : MonoBehaviour
                     // also check if they're the current player
                     if (Constants.USER_ID - 1 == currentPlayer)
                     {
-                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer, selectedCardInt, selectedOpponentInt);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                         sendSuccessMessage(2);
                         break;
@@ -841,7 +841,7 @@ public class GameManager : MonoBehaviour
                 if (args.z == 1)
                 {
                     Debug.Log("Change this client");
-                    td.addCard(players[1].holster.cardList[args.y - 1]);
+                    td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
                     players[0].subHealth(args.w);
                 }
             }
@@ -852,7 +852,7 @@ public class GameManager : MonoBehaviour
                 if (args.z == 1)
                 {
                     Debug.Log("Change this client");
-                    td.addCard(players[0].holster.cardList[args.y - 1]);
+                    td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
                     players[1].subHealth(args.w);
                 }
             }
