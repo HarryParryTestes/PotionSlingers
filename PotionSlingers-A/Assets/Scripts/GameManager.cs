@@ -88,6 +88,7 @@ public class GameManager : MonoBehaviour
 
         // Took this if + else if statements out of if(numPlayers == 2) check
         // because it wasn't running for some reason.
+        // TO FIX: Need to fix to act differently depending on number of players!
         // player 1 setup
         if (Constants.USER_ID == 1)
         {
@@ -96,8 +97,11 @@ public class GameManager : MonoBehaviour
             playerBottomName.text = mainMenuScript.p1Name;
             playerTopName.text = mainMenuScript.p2Name;
             CharacterDisplay p1Character = ob.GetComponent<CharacterDisplay>();
+            CharacterDisplay p2Character = ob2.GetComponent<CharacterDisplay>();
             p1Character.character = mainMenuScript.p1CharCard.character;
+            p2Character.character = mainMenuScript.p2CharCard.character;
             p1Character.updateCharacter(p1Character.character);
+            p2Character.updateCharacter(p2Character.character);
             
         }
         // Player 2 = Client2 setup
@@ -118,8 +122,11 @@ public class GameManager : MonoBehaviour
             players[0] = ob2.GetComponent<Player>();
             players[1] = ob.GetComponent<Player>();
             CharacterDisplay p2Character = ob.GetComponent<CharacterDisplay>();
+            CharacterDisplay p1Character = ob2.GetComponent<CharacterDisplay>();
             p2Character.character = mainMenuScript.p2CharCard.character;
+            p1Character.character = mainMenuScript.p1CharCard.character;
             p2Character.updateCharacter(p2Character.character);
+            p1Character.updateCharacter(p1Character.character);
         }
 
         if(numPlayers == 2)
