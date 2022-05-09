@@ -288,20 +288,20 @@ public class GameManager : MonoBehaviour
                     switch (args.x)
                     {
                         case 1:
-                            players[args.user_id - 1].pips -= md1.cardDisplay1.card.buyPrice;
-                            players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay1.card);
+                            players[currentPlayer].pips -= md1.cardDisplay1.card.buyPrice;
+                            players[currentPlayer].deck.putCardOnTop(md1.cardDisplay1.card);
                             Card card = md1.popCard();
                             md1.cardDisplay1.updateCard(card);
                             break;
                         case 2:
-                            players[args.user_id - 1].pips -= md1.cardDisplay2.card.buyPrice;
-                            players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay2.card);
+                            players[currentPlayer].pips -= md1.cardDisplay2.card.buyPrice;
+                            players[currentPlayer].deck.putCardOnTop(md1.cardDisplay2.card);
                             Card card2 = md1.popCard();
                             md1.cardDisplay2.updateCard(card2);
                             break;
                         case 3:
-                            players[args.user_id - 1].pips -= md1.cardDisplay3.card.buyPrice;
-                            players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay3.card);
+                            players[currentPlayer].pips -= md1.cardDisplay3.card.buyPrice;
+                            players[currentPlayer].deck.putCardOnTop(md1.cardDisplay3.card);
                             Card card3 = md1.popCard();
                             md1.cardDisplay3.updateCard(card3);
                             break;
@@ -312,20 +312,20 @@ public class GameManager : MonoBehaviour
                     switch (args.x)
                     {
                         case 1:
-                            players[args.user_id - 1].pips -= md2.cardDisplay1.card.buyPrice;
-                            players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay1.card);
+                            players[currentPlayer].pips -= md2.cardDisplay1.card.buyPrice;
+                            players[currentPlayer].deck.putCardOnTop(md2.cardDisplay1.card);
                             Card card4 = md2.popCard();
                             md2.cardDisplay1.updateCard(card4);
                             break;
                         case 2:
-                            players[args.user_id - 1].pips -= md2.cardDisplay2.card.buyPrice;
-                            players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay2.card);
+                            players[currentPlayer].pips -= md2.cardDisplay2.card.buyPrice;
+                            players[currentPlayer].deck.putCardOnTop(md2.cardDisplay2.card);
                             Card card5 = md2.popCard();
                             md2.cardDisplay2.updateCard(card5);
                             break;
                         case 3:
-                            players[args.user_id - 1].pips -= md2.cardDisplay3.card.buyPrice;
-                            players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay3.card);
+                            players[currentPlayer].pips -= md2.cardDisplay3.card.buyPrice;
+                            players[currentPlayer].deck.putCardOnTop(md2.cardDisplay3.card);
                             Card card6 = md2.popCard();
                             md2.cardDisplay3.updateCard(card6);
                             break;
@@ -340,20 +340,20 @@ public class GameManager : MonoBehaviour
                 switch (args.x)
                 {
                     case 1:
-                        players[args.user_id - 1].pips -= md1.cardDisplay1.card.buyPrice;
-                        players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay1.card);
+                        players[currentPlayer].pips -= md1.cardDisplay1.card.buyPrice;
+                        players[currentPlayer].deck.putCardOnTop(md1.cardDisplay1.card);
                         Card card = md1.popCard();
                         md1.cardDisplay1.updateCard(card);
                         break;
                     case 2:
-                        players[args.user_id - 1].pips -= md1.cardDisplay2.card.buyPrice;
-                        players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay2.card);
+                        players[currentPlayer].pips -= md1.cardDisplay2.card.buyPrice;
+                        players[currentPlayer].deck.putCardOnTop(md1.cardDisplay2.card);
                         Card card2 = md1.popCard();
                         md1.cardDisplay2.updateCard(card2);
                         break;
                     case 3:
-                        players[args.user_id - 1].pips -= md1.cardDisplay3.card.buyPrice;
-                        players[args.user_id - 1].deck.putCardOnTop(md1.cardDisplay3.card);
+                        players[currentPlayer].pips -= md1.cardDisplay3.card.buyPrice;
+                        players[currentPlayer].deck.putCardOnTop(md1.cardDisplay3.card);
                         Card card3 = md1.popCard();
                         md1.cardDisplay3.updateCard(card3);
                         break;
@@ -364,20 +364,20 @@ public class GameManager : MonoBehaviour
                 switch (args.x)
                 {
                     case 1:
-                        players[args.user_id - 1].pips -= md2.cardDisplay1.card.buyPrice;
-                        players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay1.card);
+                        players[currentPlayer].pips -= md2.cardDisplay1.card.buyPrice;
+                        players[currentPlayer].deck.putCardOnTop(md2.cardDisplay1.card);
                         Card card4 = md2.popCard();
                         md2.cardDisplay1.updateCard(card4);
                         break;
                     case 2:
-                        players[args.user_id - 1].pips -= md2.cardDisplay2.card.buyPrice;
-                        players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay2.card);
+                        players[currentPlayer].pips -= md2.cardDisplay2.card.buyPrice;
+                        players[currentPlayer].deck.putCardOnTop(md2.cardDisplay2.card);
                         Card card5 = md2.popCard();
                         md2.cardDisplay2.updateCard(card5);
                         break;
                     case 3:
-                        players[args.user_id - 1].pips -= md2.cardDisplay3.card.buyPrice;
-                        players[args.user_id - 1].deck.putCardOnTop(md2.cardDisplay3.card);
+                        players[currentPlayer].pips -= md2.cardDisplay3.card.buyPrice;
+                        players[currentPlayer].deck.putCardOnTop(md2.cardDisplay3.card);
                         Card card6 = md2.popCard();
                         md2.cardDisplay3.updateCard(card6);
                         break;
@@ -394,27 +394,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("cardInt: " + args.x);
         Debug.Log("Sell Price: " + args.y);
 
-        if(Constants.USER_ID != args.user_id)
+        if (Constants.USER_ID != args.user_id)
         {
-            // p1 request
-            if (args.user_id == 1)
-            {
-                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[args.x - 1].card.sellPrice;
-                td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
-                // p2 request
-            } else if (args.user_id == 2)
-            {
-                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[args.x - 1].card.sellPrice;
-                td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
-            } else if(args.user_id == 3)
-            {
-                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[args.x - 1].card.sellPrice;
-                td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
-            } else if (args.user_id == 4)
-            {
-                players[args.user_id - 1].pips += players[args.user_id - 1].holster.cardList[args.x - 1].card.sellPrice;
-                td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
-            }
+            players[currentPlayer].pips += players[currentPlayer].holster.cardList[args.x - 1].card.sellPrice;
+            td.addCard(players[currentPlayer].holster.cardList[args.x - 1]);
+
         }
     }
 
@@ -426,21 +410,21 @@ public class GameManager : MonoBehaviour
 
         if (Constants.USER_ID != args.user_id)
         {
-            players[args.user_id - 1].pips--;
-            players[args.user_id - 1].deck.putCardOnBottom(players[args.user_id - 1].holster.cardList[args.x - 1].card);
-            players[args.user_id - 1].holster.cardList[args.x - 1].updateCard(players[0].holster.card1.placeholder);
+            players[currentPlayer].pips--;
+            players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.cardList[args.x - 1].card);
+            players[currentPlayer].holster.cardList[args.x - 1].updateCard(players[0].holster.card1.placeholder);
         }
     }
 
     public void onResponseTrash(ExtendedEventArgs eventArgs)
     {
-        // TODO
+        // args.x is cardInt
         Debug.Log("Trash Response");
         ResponseTrashEventArgs args = eventArgs as ResponseTrashEventArgs;
 
         if(Constants.USER_ID != args.user_id)
         {
-            td.addCard(players[args.user_id - 1].holster.cardList[args.x - 1]);
+            td.addCard(players[currentPlayer].holster.cardList[args.x - 1]);
         }
     }
 
@@ -464,7 +448,7 @@ public class GameManager : MonoBehaviour
                     // also check if they're the current player
                     //if(Constants.USER_ID - 1 == currentPlayer)
                     //{
-                    bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                    bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer, selectedCardInt, selectedOpponentInt);
                     td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                     sendSuccessMessage(2);
                     break;
@@ -491,7 +475,7 @@ public class GameManager : MonoBehaviour
                     // also check if they're the current player
                     if (Constants.USER_ID - 1 == currentPlayer)
                     {
-                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer, selectedCardInt, selectedOpponentInt);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                         sendSuccessMessage(2);
                         break;
@@ -519,7 +503,7 @@ public class GameManager : MonoBehaviour
                     // also check if they're the current player
                     if (Constants.USER_ID - 1 == currentPlayer)
                     {
-                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer, selectedCardInt, selectedOpponentInt);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                         sendSuccessMessage(2);
                         break;
@@ -868,8 +852,8 @@ public class GameManager : MonoBehaviour
                 if (args.z == 1)
                 {
                     Debug.Log("Change this client");
-                    td.addCard(players[1].holster.cardList[args.y - 1]);
-                    players[0].subHealth(args.w);
+                    td.addCard(players[0].holster.cardList[args.y - 1]);
+                    players[1].subHealth(args.w);
                 }
             }
         }
