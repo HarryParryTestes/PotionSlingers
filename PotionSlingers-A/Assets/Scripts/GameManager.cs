@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
             players[1] = players[3];
             */
             Debug.Log("P2 character is: " + mainMenuScript.p2CharCard.character.cardName);
-            currentPlayer = 1;
+            // currentPlayer = 1;
             playerBottomName.text = mainMenuScript.p2Name;
             playerTopName.text = mainMenuScript.p1Name;
             players[0] = ob2.GetComponent<Player>();
@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
                 players[1] = players[3];
                 */
 
-                currentPlayer = 1;
+                // currentPlayer = 1;
                 playerBottomName.text = mainMenuScript.p2Name;
                 playerTopName.text = mainMenuScript.p1Name;
                 players[0] = ob2.GetComponent<Player>();
