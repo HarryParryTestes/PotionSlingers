@@ -37,6 +37,8 @@ public class Constants {
 	final public static short SMSG_CYCLE = 213;
 	final public static short CMSG_TRASH = 114;
 	final public static short SMSG_TRASH = 214;
+	final public static short CMSG_LOAD = 115;
+	final public static short SMSG_LOAD = 215;
 
 	final public static short CMSG_HEARTBEAT = 111;
 

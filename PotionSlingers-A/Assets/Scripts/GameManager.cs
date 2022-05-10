@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
         msgQueue.AddCallback(Constants.SMSG_SELL, onResponseSell);
         msgQueue.AddCallback(Constants.SMSG_CYCLE, onResponseCycle);
         msgQueue.AddCallback(Constants.SMSG_TRASH, onResponseTrash);
+        msgQueue.AddCallback(Constants.SMSG_LOAD, onResponseLoad);
 
         mainMenu = GameObject.Find("MainMenuScript");
         mainMenuScript = mainMenu.GetComponent<MainMenu>();
@@ -495,6 +496,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void onResponseLoad(ExtendedEventArgs eventArgs)
+    {
+        Debug.Log("Load Response");
+        ResponseLoadEventArgs args = eventArgs as ResponseLoadEventArgs;
+
+        // TODO
+    }
+
     public void throwPotion()
     {
         int damage = 0;
@@ -700,6 +709,9 @@ public class GameManager : MonoBehaviour
             players[currentPlayer].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
         {
             // do something
+
+            // test for protocol, must replace parameters later
+            bool connected = networkManager.sendLoadRequest(0, 0);
         }
     }
 
