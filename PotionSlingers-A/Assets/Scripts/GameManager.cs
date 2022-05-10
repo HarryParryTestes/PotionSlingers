@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI playerLeftName;
     public TMPro.TextMeshProUGUI playerTopName;
     public TMPro.TextMeshProUGUI playerRightName;
+    public GameObject attackMenu;
 
     GameObject mainMenu;
     MainMenu mainMenuScript;
@@ -91,6 +92,11 @@ public class GameManager : MonoBehaviour
         CharacterDisplay leftCharacter = obLeft.GetComponent<CharacterDisplay>();
         CharacterDisplay rightCharacter = obRight.GetComponent<CharacterDisplay>();
 
+        // Children objects of attackMenu
+        GameObject leftAttack = attackMenu.transform.Find("CharacterCard (Left)").gameObject;
+        GameObject topAttack = attackMenu.transform.Find("CharacterCard (Top)").gameObject;
+        GameObject rightAttack = attackMenu.transform.Find("CharacterCard (Right)").gameObject;
+
         // Took this if + else if statements out of if(numPlayers == 2) check
         // because it wasn't running for some reason.
         // TO FIX: Need to fix to act differently depending on number of players!
@@ -122,6 +128,8 @@ public class GameManager : MonoBehaviour
                     players[1].character = topCharacter;
                     obLeft.transform.parent.gameObject.SetActive(false);
                     obRight.transform.parent.gameObject.SetActive(false);
+                    leftAttack.SetActive(false);
+                    rightAttack.SetActive(false);
                     break;
                 case 3:
                     // TO DO: Finish configuring 
@@ -172,6 +180,8 @@ public class GameManager : MonoBehaviour
                     players[1].character = topCharacter;
                     obLeft.transform.parent.gameObject.SetActive(false);
                     obRight.transform.parent.gameObject.SetActive(false);
+                    leftAttack.SetActive(false);
+                    rightAttack.SetActive(false);
                     break;
                 case 3:
                     // TO DO: Finish configuring 
