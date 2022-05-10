@@ -501,8 +501,30 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Load Response");
         ResponseLoadEventArgs args = eventArgs as ResponseLoadEventArgs;
-
         // TODO
+        if(Constants.USER_ID != args.user_id)
+        {
+            if(players[currentPlayer].holster.cardList[args.y].card.cardType == "Artifact")
+            {
+                players[currentPlayer].holster.cardList[args.y].artifactSlot.transform.parent.gameObject.SetActive(true);
+                players[currentPlayer].holster.cardList[args.y].aPotion.card = players[currentPlayer].holster.cardList[args.x - 1].card;
+                players[currentPlayer].holster.cardList[args.y].aPotion.updateCard(players[currentPlayer].holster.cardList[args.x - 1].card);
+            } else if(players[currentPlayer].holster.cardList[args.y].card.cardType == "Vessel")
+            {
+                players[currentPlayer].holster.cardList[args.y].vesselSlot1.transform.parent.gameObject.SetActive(true);
+                players[currentPlayer].holster.cardList[args.y].vesselSlot2.transform.parent.gameObject.SetActive(true);
+                if(players[currentPlayer].holster.cardList[args.y].vPotion1.card.cardName != "placeholder")
+                {
+                    players[currentPlayer].holster.cardList[args.y].vPotion1.card = players[currentPlayer].holster.cardList[args.x - 1].card;
+                    players[currentPlayer].holster.cardList[args.y].vPotion1.updateCard(players[currentPlayer].holster.cardList[args.x - 1].card);
+                }
+                else
+                {
+                    players[currentPlayer].holster.cardList[args.y].vPotion2.card = players[currentPlayer].holster.cardList[args.x - 1].card;
+                    players[currentPlayer].holster.cardList[args.y].vPotion2.updateCard(players[currentPlayer].holster.cardList[args.x - 1].card);
+                }
+            }
+        }
     }
 
     public void throwPotion()
