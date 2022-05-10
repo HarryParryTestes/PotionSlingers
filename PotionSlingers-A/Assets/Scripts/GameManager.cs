@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI playerTopName;
     public TMPro.TextMeshProUGUI playerRightName;
     public GameObject attackMenu;
+    public GameObject loadMenu;
 
     GameObject mainMenu;
     MainMenu mainMenuScript;
@@ -637,24 +638,36 @@ public class GameManager : MonoBehaviour
     public void displayPotions()
     {
         int set = 0;
-        CardDisplay left = GameObject.Find("Card (Left)").GetComponent<CardDisplay>();
-        CardDisplay middle = GameObject.Find("Card (Middle)").GetComponent<CardDisplay>();
-        CardDisplay right = GameObject.Find("Card (Right)").GetComponent<CardDisplay>();
+        loadMenu.transform.Find("Card (Left)").gameObject.SetActive(true);
+        loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(true);
+        loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
+        CardDisplay left = loadMenu.transform.Find("Card (Left)").GetComponent<CardDisplay>();
+        CardDisplay middle = loadMenu.transform.Find("Card (Middle)").GetComponent<CardDisplay>();
+        CardDisplay right = loadMenu.transform.Find("Card (Right)").GetComponent<CardDisplay>();
         foreach (CardDisplay cd in players[currentPlayer].holster.cardList)
         {
-           if(cd.card.cardType == "Potion")
+            // Debug.Log("CardName is: " + cd.card.cardName + ". CardType is: " + cd.card.cardType);
+            // if(cd.card.cardType.ToLower() == "potion")
+            if(cd.card.cardType.ToLower() == "artifact" || cd.card.cardType.ToLower() == "vessel")
             {
+                Debug.Log("CardName is: " + cd.card.cardName);
                 switch (set)
                 {
                     case 0:
+                        left.card = cd.card;
+                        Debug.Log("Left Card: " + left.card.cardName);
                         left.updateCard(cd.card);
                         set++;
                         break;
                     case 1:
+                        middle.card = cd.card;
+                        Debug.Log("Middle Card: " + middle.card.cardName);
                         middle.updateCard(cd.card);
                         set++;
                         break;
                     case 2:
+                        right.card = cd.card;
+                        Debug.Log("Right Card: " + right.card.cardName);
                         right.updateCard(cd.card);
                         break;
                     default:
@@ -664,12 +677,15 @@ public class GameManager : MonoBehaviour
         }
         if(set == 1)
         {
-            middle.updateCard(players[currentPlayer].deck.placeholder);
-            right.updateCard(players[currentPlayer].deck.placeholder);
+            // middle.updateCard(players[currentPlayer].deck.placeholder);
+            // right.updateCard(players[currentPlayer].deck.placeholder);
+            loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(false);
+            loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
         }
         if(set == 2)
         {
-            right.updateCard(players[currentPlayer].deck.placeholder);
+            // right.updateCard(players[currentPlayer].deck.placeholder);
+            loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
         }
     }
 
