@@ -53708,6 +53708,7 @@ GameObject:
   - component: {fileID: 1168341597}
   - component: {fileID: 1168341596}
   - component: {fileID: 1168341599}
+  - component: {fileID: 1168341600}
   m_Layer: 5
   m_Name: Card (Left)
   m_TagString: Untagged
@@ -53788,6 +53789,21 @@ MonoBehaviour:
   card: {fileID: 0}
   artworkImage: {fileID: 0}
   placeholder: {fileID: 11400000, guid: 77f27c8f7299af440bdd8cc35765936f, type: 2}
+--- !u!114 &1168341600
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168341593}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efdcc904e439ac4e846bf9aef527b54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadPotion: {fileID: 11400000, guid: c3357622ae98f864789ab92c14620791, type: 2}
+  manager: {fileID: 2083794569}
+  cardInt: 1
 --- !u!1 &1168455949
 GameObject:
   m_ObjectHideFlags: 0
@@ -58717,6 +58733,7 @@ GameObject:
   - component: {fileID: 1293921062}
   - component: {fileID: 1293921061}
   - component: {fileID: 1293921064}
+  - component: {fileID: 1293921065}
   m_Layer: 5
   m_Name: Card (Middle)
   m_TagString: Untagged
@@ -58797,6 +58814,21 @@ MonoBehaviour:
   card: {fileID: 0}
   artworkImage: {fileID: 0}
   placeholder: {fileID: 11400000, guid: 77f27c8f7299af440bdd8cc35765936f, type: 2}
+--- !u!114 &1293921065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1293921058}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efdcc904e439ac4e846bf9aef527b54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadPotion: {fileID: 11400000, guid: c3357622ae98f864789ab92c14620791, type: 2}
+  manager: {fileID: 2083794569}
+  cardInt: 2
 --- !u!1 &1295702922
 GameObject:
   m_ObjectHideFlags: 0
@@ -73916,6 +73948,7 @@ GameObject:
   - component: {fileID: 1621495042}
   - component: {fileID: 1621495041}
   - component: {fileID: 1621495043}
+  - component: {fileID: 1621495044}
   m_Layer: 5
   m_Name: Card (Right)
   m_TagString: Untagged
@@ -73996,6 +74029,21 @@ MonoBehaviour:
   card: {fileID: 0}
   artworkImage: {fileID: 0}
   placeholder: {fileID: 11400000, guid: 77f27c8f7299af440bdd8cc35765936f, type: 2}
+--- !u!114 &1621495044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621495038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9efdcc904e439ac4e846bf9aef527b54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _loadPotion: {fileID: 11400000, guid: c3357622ae98f864789ab92c14620791, type: 2}
+  manager: {fileID: 2083794569}
+  cardInt: 3
 --- !u!1 &1623096568
 GameObject:
   m_ObjectHideFlags: 0
