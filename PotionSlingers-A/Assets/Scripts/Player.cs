@@ -32,6 +32,16 @@ public class Player : MonoBehaviour
         pips = 6;
         potionsThrown = 0;
         ringBonus = false;
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // if there's a starter ring
+            if (cd.card.cardType == "Ring" &&
+                cd.card.cardQuality == "Starter")
+            {
+                ringBonus = true;
+            }
+        }
     }
 
     /*
