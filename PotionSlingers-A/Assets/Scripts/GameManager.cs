@@ -496,9 +496,9 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card1.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card1.card.effectAmount;
-                    if (players[currentPlayer].ringBonus)
+                    if (players[currentPlayer].ringBonus && players[currentPlayer].potionsThrown == 0)
                     {
-                        damage += players[currentPlayer].bonusAmount;
+                        damage++;
                     }
                     // send protocol to server
                     // also check if they're the current player
@@ -506,6 +506,7 @@ public class GameManager : MonoBehaviour
                     //{
                     bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                     td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                    players[currentPlayer].potionsThrown++;
                     sendSuccessMessage(2);
                     break;
                     //}
@@ -523,9 +524,9 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card2.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card2.card.effectAmount;
-                    if (players[currentPlayer].ringBonus)
+                    if (players[currentPlayer].ringBonus && players[currentPlayer].potionsThrown == 0)
                     {
-                        damage += players[currentPlayer].bonusAmount;
+                        damage++;
                     }
                     // send protocol to server
                     // also check if they're the current player
@@ -533,6 +534,7 @@ public class GameManager : MonoBehaviour
                     {
                         bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        players[currentPlayer].potionsThrown++;
                         sendSuccessMessage(2);
                         break;
                     }
@@ -551,9 +553,9 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card3.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card3.card.effectAmount;
-                    if (players[currentPlayer].ringBonus)
+                    if (players[currentPlayer].ringBonus && players[currentPlayer].potionsThrown == 0)
                     {
-                        damage += players[currentPlayer].bonusAmount;
+                        damage++;
                     }
                     // send protocol to server
                     // also check if they're the current player
@@ -561,6 +563,7 @@ public class GameManager : MonoBehaviour
                     {
                         bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        players[currentPlayer].potionsThrown++;
                         sendSuccessMessage(2);
                         break;
                     }
@@ -579,9 +582,9 @@ public class GameManager : MonoBehaviour
                 if (players[currentPlayer].holster.card4.card.cardType == "Potion")
                 {
                     damage = players[currentPlayer].holster.card4.card.effectAmount;
-                    if (players[currentPlayer].ringBonus)
+                    if (players[currentPlayer].ringBonus && players[currentPlayer].potionsThrown == 0)
                     {
-                        damage += players[currentPlayer].bonusAmount;
+                        damage++;
                     }
                     // send protocol to server
                     // also check if they're the current player
@@ -589,6 +592,7 @@ public class GameManager : MonoBehaviour
                     {
                         bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        players[currentPlayer].potionsThrown++;
                         sendSuccessMessage(2);
                         break;
                     }
