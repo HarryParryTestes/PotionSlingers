@@ -158,6 +158,7 @@ public class GameManager : MonoBehaviour
         // Player 2 = Client 2 setup
         else if(Constants.USER_ID == mainMenuScript.p2UserId)
         {
+            currentPlayer = 1;
             players[0] = ob.GetComponent<Player>();
             // Sets mainPlayer area belonging to this client's user.
             players[0].user_id = Constants.USER_ID;
@@ -567,6 +568,7 @@ public class GameManager : MonoBehaviour
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                         sendSuccessMessage(4);
                     } else
                     {
@@ -624,6 +626,7 @@ public class GameManager : MonoBehaviour
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                         sendSuccessMessage(4);
                     }
                     else
@@ -639,6 +642,7 @@ public class GameManager : MonoBehaviour
                         damage = players[currentPlayer].holster.cardList[selectedCardInt - 1].card.effectAmount;
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].aPotion);
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                         sendSuccessMessage(3);
                     }
                     else
@@ -684,6 +688,7 @@ public class GameManager : MonoBehaviour
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                         sendSuccessMessage(4);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                     }
                     else
                     {
@@ -699,6 +704,7 @@ public class GameManager : MonoBehaviour
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].aPotion);
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
                         sendSuccessMessage(3);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                     }
                     else
                     {
@@ -741,6 +747,7 @@ public class GameManager : MonoBehaviour
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                         sendSuccessMessage(4);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                     }
                     else
                     {
@@ -756,6 +763,7 @@ public class GameManager : MonoBehaviour
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].aPotion);
                         players[currentPlayer].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
                         sendSuccessMessage(3);
+                        bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
                     }
                     else
                     {
@@ -1143,6 +1151,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Card Int: " + args.y);
         Debug.Log("Opponent ID: " + args.z);
 
+        /*
         // Loops through players array to update target's health and thrower's holster.
         for(int i = 0; i < numPlayers; i++) {
             // Find Player in players array that got damaged.
@@ -1156,33 +1165,55 @@ public class GameManager : MonoBehaviour
                 td.addCard(players[i].holster.cardList[args.y - 1]);
             }
         }
+        */
 
         // If the request didn't come from this Client
-        // if (Constants.USER_ID != args.user_id)
-        // {
-        //     // p1 request
-        //     if (args.user_id == 1)
-        //     {
-        //         // player 2
-        //         if (args.z == 1)
-        //         {
-        //             Debug.Log("Change this client");
-        //             td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
-        //             players[0].subHealth(args.w);
-        //         }
-        //     }
-        //     // p2 request
-        //     else if (args.user_id == 2)
-        //     {
-        //         // player 1
-        //         if (args.z == 1)
-        //         {
-        //             Debug.Log("Change this client");
-        //             td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
-        //             players[1].subHealth(args.w);
-        //         }
-        //     }
-        // }
+        if (Constants.USER_ID != args.user_id)
+        {
+            // p1 request
+            if (args.user_id == 1)
+            {
+                // player 2
+                if (args.z == 1)
+                {
+                    if(players[currentPlayer].holster.cardList[args.y - 1].card.cardName == "Potion")
+                    {
+                        Debug.Log("Damaged by potion");
+                        td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
+                        players[0].subHealth(args.w);
+                    } else if (players[currentPlayer].holster.cardList[args.y - 1].card.cardName == "Artifact")
+                    {
+                        Debug.Log("Damaged by artifact");
+                    }
+                    else if (players[currentPlayer].holster.cardList[args.y - 1].card.cardName == "Vessel")
+                    {
+                        Debug.Log("Damaged by vessel");
+                    }
+                }
+            }
+            // p2 request
+            else if (args.user_id == 2)
+            {
+                // player 1
+                if (args.z == 1)
+                {
+                    if (players[currentPlayer].holster.cardList[args.y - 1].card.cardName == "Potion")
+                    {
+                        Debug.Log("Damaged by potion");
+                        td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
+                        players[1].subHealth(args.w);
+                    }
+                    else if (players[currentPlayer].holster.cardList[args.y - 1].card.cardName == "Artifact")
+                    {
+                        Debug.Log("Damaged by artifact");
+                    }
+                    else if (players[currentPlayer].holster.cardList[args.y - 1].card.cardName == "Vessel")
+                    {
+                        Debug.Log("Damaged by vessel");
+                    }
+                }
+            }
+        }
     }
 
     public void sendSuccessMessage(int notif)
