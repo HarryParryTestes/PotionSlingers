@@ -8,12 +8,11 @@ public class CardLoad : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] GameEvent _loadPotion;
     public GameManager manager;
-
-    public int cardInt;
+    public CardDisplay cd;
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        manager.setLoadedInt(cardInt);
+        manager.setLoadedInt(cd.card.cardName);
         Throw();
     }
 

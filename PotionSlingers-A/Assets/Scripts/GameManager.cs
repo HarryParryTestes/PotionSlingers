@@ -703,21 +703,76 @@ public class GameManager : MonoBehaviour
         Debug.Log("Load Potion");
 
         // TODO: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
+        // test for protocol, must replace parameters later
+        // bool connected = networkManager.sendLoadRequest(0, 0);
 
         // if it's an artifact or vessel
-        if(players[currentPlayer].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact" ||
-            players[currentPlayer].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
+        if(players[currentPlayer].holster.cardList[selectedCardInt - 1].card.cardType == "Potion") 
         {
-            // do something
+            // Loading a Vessel:
+            if(players[currentPlayer].holster.cardList[loadedCardInt].card.cardType == "Vessel")
+            {
+                // Enable Vessel menu if it wasn't already enabled.
+                Debug.Log("Vessel menu enabled.");
+                players[currentPlayer].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
 
-            // test for protocol, must replace parameters later
-            bool connected = networkManager.sendLoadRequest(0, 0);
+                // Check for existing loaded potion(s) if Vessel menu was already enabled.
+                if(players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
+                {
+                    // If Vessel slot 2 is filled.
+                    if(players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
+                    {
+                        Debug.Log("Vessel is fully loaded!");
+                    }
+                    else 
+                    {
+                        // Fill Vessel slot 2 with loaded potion.
+                        players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
+                        players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+                        Debug.Log("Potion loaded in Vessel slot 2!");
+                    }
+                }
+                // Vessel slot 1 is unloaded.
+                else
+                {
+                    players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
+                    players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+                    Debug.Log("Potion loaded in Vessel slot 1!");
+                }
+            }
+            
+            // Loading an Artifact:
+            else if(players[currentPlayer].holster.cardList[loadedCardInt].card.cardType == "Artifact")
+            {
+                // Enable Artifact menu if it wasn't already enabled.
+                Debug.Log("Artifact menu enabled.");
+                players[currentPlayer].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+
+                // Check for existing loaded potion if Artifact menu was already enabled.
+                if(players[currentPlayer].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
+                {
+                    Debug.Log("Artifact is fully loaded!");
+                }
+                // Artifact slot is unloaded.
+                else
+                {
+                    players[currentPlayer].holster.cardList[loadedCardInt].aPotion.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
+                    players[currentPlayer].holster.cardList[loadedCardInt].aPotion.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+                    Debug.Log("Potion loaded in Artifact slot!");
+                }
+            }
         }
     }
 
-    public void setLoadedInt(int cardInt)
+    public void setLoadedInt(string cardName)
     {
-        loadedCardInt = cardInt;
+        for(int i = 0; i < 4; i++)
+        {
+            if(players[currentPlayer].holster.cardList[i].card.cardName == cardName)
+            {
+                loadedCardInt = i;
+            }
+        }
     }
 
     // TODO: fix this to display properly

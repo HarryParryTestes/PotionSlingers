@@ -9,6 +9,16 @@ public class CardDisplay : MonoBehaviour
     public Image artworkImage;
     public Card placeholder;
 
+    // Artifact loaded potion slot:
+    public GameObject artifactSlot;
+    public CardDisplay aPotion;
+    
+    // Vessel loaded potion slots:
+    public GameObject vesselSlot1;
+    public GameObject vesselSlot2;
+    public CardDisplay vPotion1;
+    public CardDisplay vPotion2;
+
     // Start is called before the first frame update
     void Start()
     {
