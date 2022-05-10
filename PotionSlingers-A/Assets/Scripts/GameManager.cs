@@ -120,6 +120,8 @@ public class GameManager : MonoBehaviour
                     topCharacter.character = mainMenuScript.p2CharCard.character;
                     topCharacter.updateCharacter(topCharacter.character);
                     players[1].character = topCharacter;
+                    obLeft.transform.parent.gameObject.SetActive(false);
+                    obRight.transform.parent.gameObject.SetActive(false);
                     break;
                 case 3:
                     // TO DO: Finish configuring 
@@ -168,6 +170,8 @@ public class GameManager : MonoBehaviour
                     topCharacter.character = mainMenuScript.p1CharCard.character;
                     topCharacter.updateCharacter(topCharacter.character);
                     players[1].character = topCharacter;
+                    obLeft.transform.parent.gameObject.SetActive(false);
+                    obRight.transform.parent.gameObject.SetActive(false);
                     break;
                 case 3:
                     // TO DO: Finish configuring 
