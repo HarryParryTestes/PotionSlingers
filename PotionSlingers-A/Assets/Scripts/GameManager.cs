@@ -532,7 +532,22 @@ public class GameManager : MonoBehaviour
                     //}
                 } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
                 {
-
+                    // check for loaded potions
+                    if(players[currentPlayer].holster.card1.vPotion1.card.cardName != "placeholder" &&
+                        players[currentPlayer].holster.card1.vPotion2.card.cardName != "placeholder")
+                    {
+                        damage = players[currentPlayer].holster.card1.vPotion1.card.effectAmount + players[currentPlayer].holster.card1.vPotion2.card.effectAmount;
+                        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card1.vPotion1.card);
+                        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card1.vPotion2.card);
+                        players[currentPlayer].holster.card1.vPotion1.updateCard(players[0].deck.placeholder);
+                        players[currentPlayer].holster.card1.vPotion2.updateCard(players[0].deck.placeholder);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(4);
+                    } else
+                    {
+                        Debug.Log("Vessel Error");
+                        sendErrorMessage(1);
+                    }
                 }
                 else if (players[currentPlayer].holster.card1.card.cardType == "Artifact")
                 {
@@ -558,15 +573,31 @@ public class GameManager : MonoBehaviour
                         sendSuccessMessage(2);
                         break;
                     }
-                    else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
-                    {
-
-                    }
-                    else if (players[currentPlayer].holster.card2.card.cardType == "Artifact")
-                    {
-
-                    }
                     break;
+                }
+                else if (players[currentPlayer].holster.card2.card.cardType == "Vessel")
+                {
+                    // check for loaded potions
+                    if (players[currentPlayer].holster.card2.vPotion1.card.cardName != "placeholder" &&
+                        players[currentPlayer].holster.card2.vPotion2.card.cardName != "placeholder")
+                    {
+                        damage = players[currentPlayer].holster.card2.vPotion1.card.effectAmount + players[currentPlayer].holster.card2.vPotion2.card.effectAmount;
+                        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card2.vPotion1.card);
+                        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card2.vPotion2.card);
+                        players[currentPlayer].holster.card2.vPotion1.updateCard(players[0].deck.placeholder);
+                        players[currentPlayer].holster.card2.vPotion2.updateCard(players[0].deck.placeholder);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(4);
+                    }
+                    else
+                    {
+                        Debug.Log("Vessel Error");
+                        sendErrorMessage(1);
+                    }
+                }
+                else if (players[currentPlayer].holster.card2.card.cardType == "Artifact")
+                {
+
                 }
                 break;
             case 3:
@@ -587,15 +618,33 @@ public class GameManager : MonoBehaviour
                         sendSuccessMessage(2);
                         break;
                     }
-                    else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
-                    {
-
-                    }
-                    else if (players[currentPlayer].holster.card3.card.cardType == "Artifact")
-                    {
-
-                    }
                     break;
+                }
+                else if (players[currentPlayer].holster.card3.card.cardType == "Vessel")
+                {
+                    Debug.Log("Reached vessel");
+                    // check for loaded potions
+                    if (players[currentPlayer].holster.card3.vPotion1.card.cardName != "placeholder" &&
+                        players[currentPlayer].holster.card3.vPotion2.card.cardName != "placeholder")
+                    {
+                        Debug.Log("Reached cards");
+                        damage = players[currentPlayer].holster.card3.vPotion1.card.effectAmount + players[currentPlayer].holster.card3.vPotion2.card.effectAmount;
+                        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card3.vPotion1.card);
+                        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card3.vPotion2.card);
+                        players[currentPlayer].holster.card3.vPotion1.updateCard(players[0].deck.placeholder);
+                        players[currentPlayer].holster.card3.vPotion2.updateCard(players[0].deck.placeholder);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(4);
+                    }
+                    else
+                    {
+                        Debug.Log("Vessel Error");
+                        sendErrorMessage(1);
+                    }
+                }
+                else if (players[currentPlayer].holster.card3.card.cardType == "Artifact")
+                {
+
                 }
                 break;
             case 4:
@@ -616,15 +665,31 @@ public class GameManager : MonoBehaviour
                         sendSuccessMessage(2);
                         break;
                     }
-                    else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
-                    {
-
-                    }
-                    else if (players[currentPlayer].holster.card4.card.cardType == "Artifact")
-                    {
-
-                    }
                     break;
+                }
+                else if (players[currentPlayer].holster.card4.card.cardType == "Vessel")
+                {
+                    // check for loaded potions
+                    if (players[currentPlayer].holster.card4.vPotion1.card.cardName != "placeholder" &&
+                        players[currentPlayer].holster.card4.vPotion2.card.cardName != "placeholder")
+                    {
+                        damage = players[currentPlayer].holster.card4.vPotion1.card.effectAmount + players[currentPlayer].holster.card4.vPotion2.card.effectAmount;
+                        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card4.vPotion1.card);
+                        players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card4.vPotion2.card);
+                        players[currentPlayer].holster.card4.vPotion1.updateCard(players[0].deck.placeholder);
+                        players[currentPlayer].holster.card4.vPotion2.updateCard(players[0].deck.placeholder);
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        sendSuccessMessage(4);
+                    }
+                    else
+                    {
+                        Debug.Log("Vessel Error");
+                        sendErrorMessage(1);
+                    }
+                }
+                else if (players[currentPlayer].holster.card4.card.cardType == "Artifact")
+                {
+
                 }
                 break;
             default: damage = 0;
