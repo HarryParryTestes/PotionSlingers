@@ -496,6 +496,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // (selectedCardInt, loadedCardInt)
     public void onResponseLoad(ExtendedEventArgs eventArgs)
     {
         Debug.Log("Load Response");
@@ -542,16 +543,28 @@ public class GameManager : MonoBehaviour
                         players[currentPlayer].holster.card1.vPotion1.updateCard(players[0].deck.placeholder);
                         players[currentPlayer].holster.card1.vPotion2.updateCard(players[0].deck.placeholder);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                         sendSuccessMessage(4);
                     } else
                     {
-                        Debug.Log("Vessel Error");
+                        //Debug.Log("Vessel Error");
                         sendErrorMessage(1);
                     }
                 }
                 else if (players[currentPlayer].holster.card1.card.cardType == "Artifact")
                 {
-
+                    if (players[currentPlayer].holster.card1.aPotion.card.cardName != "placeholder")
+                    {
+                        damage = players[currentPlayer].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].aPotion);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                        sendSuccessMessage(3);
+                    }
+                    else
+                    {
+                        sendErrorMessage(0);
+                    }
                 }
                 break;
 
@@ -586,6 +599,8 @@ public class GameManager : MonoBehaviour
                         players[currentPlayer].deck.putCardOnBottom(players[currentPlayer].holster.card2.vPotion2.card);
                         players[currentPlayer].holster.card2.vPotion1.updateCard(players[0].deck.placeholder);
                         players[currentPlayer].holster.card2.vPotion2.updateCard(players[0].deck.placeholder);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                         sendSuccessMessage(4);
                     }
@@ -597,7 +612,17 @@ public class GameManager : MonoBehaviour
                 }
                 else if (players[currentPlayer].holster.card2.card.cardType == "Artifact")
                 {
-
+                    if (players[currentPlayer].holster.card2.aPotion.card.cardName != "placeholder")
+                    {
+                        damage = players[currentPlayer].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].aPotion);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                        sendSuccessMessage(3);
+                    }
+                    else
+                    {
+                        sendErrorMessage(0);
+                    }
                 }
                 break;
             case 3:
@@ -634,6 +659,8 @@ public class GameManager : MonoBehaviour
                         players[currentPlayer].holster.card3.vPotion1.updateCard(players[0].deck.placeholder);
                         players[currentPlayer].holster.card3.vPotion2.updateCard(players[0].deck.placeholder);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                         sendSuccessMessage(4);
                     }
                     else
@@ -644,7 +671,17 @@ public class GameManager : MonoBehaviour
                 }
                 else if (players[currentPlayer].holster.card3.card.cardType == "Artifact")
                 {
-
+                    if (players[currentPlayer].holster.card1.aPotion.card.cardName != "placeholder")
+                    {
+                        damage = players[currentPlayer].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].aPotion);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                        sendSuccessMessage(3);
+                    }
+                    else
+                    {
+                        sendErrorMessage(0);
+                    }
                 }
                 break;
             case 4:
@@ -679,6 +716,8 @@ public class GameManager : MonoBehaviour
                         players[currentPlayer].holster.card4.vPotion1.updateCard(players[0].deck.placeholder);
                         players[currentPlayer].holster.card4.vPotion2.updateCard(players[0].deck.placeholder);
                         td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                         sendSuccessMessage(4);
                     }
                     else
@@ -689,7 +728,17 @@ public class GameManager : MonoBehaviour
                 }
                 else if (players[currentPlayer].holster.card4.card.cardType == "Artifact")
                 {
-
+                    if (players[currentPlayer].holster.card1.aPotion.card.cardName != "placeholder")
+                    {
+                        damage = players[currentPlayer].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                        td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].aPotion);
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                        sendSuccessMessage(3);
+                    }
+                    else
+                    {
+                        sendErrorMessage(0);
+                    }
                 }
                 break;
             default: damage = 0;
@@ -796,6 +845,9 @@ public class GameManager : MonoBehaviour
                         Card placeholder = players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.card;
                         players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
                         players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+                        sendSuccessMessage(5);
+
+                        bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         Debug.Log("Potion loaded in Vessel slot 2!");
 
                         // Updates Holster card to be empty.
@@ -809,6 +861,8 @@ public class GameManager : MonoBehaviour
                     Card placeholder = players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.card;
                     players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
                     players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+                    sendSuccessMessage(5);
+                    bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                     Debug.Log("Potion loaded in Vessel slot 1!");
 
                     // Updates Holster card to be empty.
@@ -835,6 +889,8 @@ public class GameManager : MonoBehaviour
                     Card placeholder = players[currentPlayer].holster.cardList[loadedCardInt].aPotion.card;
                     players[currentPlayer].holster.cardList[loadedCardInt].aPotion.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
                     players[currentPlayer].holster.cardList[loadedCardInt].aPotion.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
+                    sendSuccessMessage(5);
+                    bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                     Debug.Log("Potion loaded in Artifact slot!");
 
                     // Updates Holster card to be empty.
