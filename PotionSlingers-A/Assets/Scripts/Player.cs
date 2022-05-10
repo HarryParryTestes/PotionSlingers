@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -19,7 +20,9 @@ public class Player : MonoBehaviour
     public bool ringBonus;
     public int bonusAmount;
     //public HealthController health;
-    public TMPro.TextMeshProUGUI username;
+    public GameObject playerHP;
+    public GameObject playerHPCubes;
+    public GameObject playerPips;
 
     public Player(int user_id, string name)
     {
@@ -77,14 +80,22 @@ public class Player : MonoBehaviour
 
          //Make sure that hp doesn't go below 0
          //If hp goes below 0, set it to 10 and subtract a health cube
-         if(hp < 0) {
-             if(hpCubes > 0) {
-                 hp = 10;
-                 hpCubes--;
-             } else {
-                 dead = true;
-             }
-         }
+        if(hp < 0) {
+            if(hpCubes > 0) {
+                hp = 10;
+                hpCubes--;
+            } else {
+                dead = true;
+            }
+        }
+
+        Debug.Log("Subtracted "+health+"from "+charName);
+        Debug.Log(charName+"'s health = "+hp+" HP");
+
+        if(playerHP != null && playerHPCubes != null) {
+            playerHP.GetComponent<Text>().text = hp.ToString();
+            playerHPCubes.GetComponent<Text>().text = hpCubes.ToString();
+        }
      }
 
     // public void giveCube(Player player) {
@@ -98,10 +109,16 @@ public class Player : MonoBehaviour
 
     public void addPips(int morePips) {
         pips += morePips;
+        if(playerPips != null) {
+            playerPips.GetComponent<Text>().text = pips.ToString() + " Pips";
+        }
     }
 
     public void subPips(int lessPips) {
         pips -= lessPips;
+        if(playerPips != null) {
+            playerPips.GetComponent<Text>().text = pips.ToString() + " Pips";
+        }
     }
 
     //function to call when checking on if the player is dead

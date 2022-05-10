@@ -1065,32 +1065,46 @@ public class GameManager : MonoBehaviour
         Debug.Log("Card Int: " + args.y);
         Debug.Log("Opponent ID: " + args.z);
 
-        // if request didn't come from player
-        if (Constants.USER_ID != args.user_id)
-        {
-            // p1 request
-            if (args.user_id == 1)
+        // Loops through players array to update target's health and thrower's holster.
+        for(int i = 0; i < numPlayers; i++) {
+            // Find Player in players array that got damaged.
+            if(players[i].user_id == args.z)
             {
-                // player 2
-                if (args.z == 1)
-                {
-                    Debug.Log("Change this client");
-                    td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
-                    players[0].subHealth(args.w);
-                }
+                players[i].subHealth(args.w);
             }
-            // p2 request
-            else if (args.user_id == 2)
+            // Update Holster of player who threw the Potion.
+            if(players[i].user_id == args.user_id) 
             {
-                // player 1
-                if (args.z == 1)
-                {
-                    Debug.Log("Change this client");
-                    td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
-                    players[1].subHealth(args.w);
-                }
+                td.addCard(players[i].holster.cardList[args.y - 1]);
             }
         }
+
+        // If the request didn't come from this Client
+        // if (Constants.USER_ID != args.user_id)
+        // {
+        //     // p1 request
+        //     if (args.user_id == 1)
+        //     {
+        //         // player 2
+        //         if (args.z == 1)
+        //         {
+        //             Debug.Log("Change this client");
+        //             td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
+        //             players[0].subHealth(args.w);
+        //         }
+        //     }
+        //     // p2 request
+        //     else if (args.user_id == 2)
+        //     {
+        //         // player 1
+        //         if (args.z == 1)
+        //         {
+        //             Debug.Log("Change this client");
+        //             td.addCard(players[currentPlayer].holster.cardList[args.y - 1]);
+        //             players[1].subHealth(args.w);
+        //         }
+        //     }
+        // }
     }
 
     public void sendSuccessMessage(int notif)
