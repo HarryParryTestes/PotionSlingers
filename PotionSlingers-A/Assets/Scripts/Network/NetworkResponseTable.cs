@@ -22,6 +22,9 @@ public class NetworkResponseTable
         add(Constants.SMSG_END_TURN, "ResponseEndTurn");
         add(Constants.SMSG_BUY, "ResponseBuy");
         add(Constants.SMSG_SELL, "ResponseSell");
+        add(Constants.SMSG_CYCLE, "ResponseCycle");
+        add(Constants.SMSG_TRASH, "ResponseTrash");
+        add(Constants.SMSG_LOAD, "ResponseLoad");
     }
 
 	public static void add(short response_id, string name)

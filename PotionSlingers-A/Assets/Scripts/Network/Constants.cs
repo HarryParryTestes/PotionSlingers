@@ -32,6 +32,8 @@ public class Constants
     public static readonly short SMSG_CYCLE = 213;
     public static readonly short CMSG_TRASH = 114;
     public static readonly short SMSG_TRASH = 214;
+    public static readonly short CMSG_LOAD = 115;
+    public static readonly short SMSG_LOAD = 215;
     public static readonly short CMSG_HEARTBEAT = 111;
 
 	public static int USER_ID = -1;

@@ -187,6 +187,18 @@ public class NetworkManager : MonoBehaviour
         return false;
     }
 
+    public bool sendLoadRequest(int x, int y)
+    {
+        if (cManager && cManager.IsConnected())
+        {
+            RequestLoad request = new RequestLoad();
+            request.send(x, y);
+            cManager.send(request);
+            return true;
+        }
+        return false;
+    }
+
     public IEnumerator RequestHeartbeat(float time)
 	{
 		yield return new WaitForSeconds(time);

@@ -24,6 +24,7 @@ public class NetworkRequestTable
         add(Constants.CMSG_SELL, "RequestSell");
         add(Constants.CMSG_CYCLE, "RequestCycle");
         add(Constants.CMSG_TRASH, "RequestTrash");
+        add(Constants.CMSG_LOAD, "RequestLoad");
         Debug.Log("Inited");
 	}
 
