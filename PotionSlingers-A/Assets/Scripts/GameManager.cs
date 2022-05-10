@@ -11,7 +11,7 @@ public class GameManager : MonoBehaviour
 
     // Later change to be however many players joined when the GameScene loads in.
     // (Maybe transferring numPlayers from MainMenu script to here? Maybe get from server?)
-    public int numPlayers = 2;
+    public int numPlayers;
     public int selectedCardInt;
     public int selectedOpponentInt;
     public int loadedCardInt;
@@ -19,9 +19,9 @@ public class GameManager : MonoBehaviour
     public Player[] players = new Player[4];
     public Character[] characters;
     GameObject ob;
-    GameObject ob2;
-    GameObject ob3;
-    GameObject ob4;
+    GameObject obTop;
+    GameObject obLeft;
+    GameObject obRight;
     public TrashDeck td;
     MarketDeck md1;
     MarketDeck md2;
@@ -64,6 +64,11 @@ public class GameManager : MonoBehaviour
         mainMenu = GameObject.Find("MainMenuScript");
         mainMenuScript = mainMenu.GetComponent<MainMenu>();
 
+        numPlayers = mainMenuScript.getNumPlayers();
+        Debug.Log("NumPlayers is: " + numPlayers);
+        Debug.Log("P1 ID is: " + mainMenuScript.p1UserId);
+        Debug.Log("P2 ID is: " + mainMenuScript.p2UserId);
+
         init();
     }
 
@@ -77,58 +82,104 @@ public class GameManager : MonoBehaviour
     {
         // Player1 = Client1 set up
         ob = GameObject.Find("CharacterCard");
-        ob2 = GameObject.Find("CharacterCard (Top)");
-        players[0] = ob.GetComponent<Player>();
-        players[1] = ob2.GetComponent<Player>();
+        obTop = GameObject.Find("CharacterCard (Top)");
+        obLeft = GameObject.Find("CharacterCard (Left)");
+        obRight = GameObject.Find("CharacterCard (Right)");
 
-        ob3 = GameObject.Find("CharacterCard (Left)");
-        players[2] = ob3.GetComponent<Player>();
-        ob4 = GameObject.Find("CharacterCard (Right)");
-        players[3] = ob4.GetComponent<Player>();
+        CharacterDisplay bottomCharacter = ob.GetComponent<CharacterDisplay>();
+        CharacterDisplay topCharacter = obTop.GetComponent<CharacterDisplay>();
+        CharacterDisplay leftCharacter = obLeft.GetComponent<CharacterDisplay>();
+        CharacterDisplay rightCharacter = obRight.GetComponent<CharacterDisplay>();
 
         // Took this if + else if statements out of if(numPlayers == 2) check
         // because it wasn't running for some reason.
         // TO FIX: Need to fix to act differently depending on number of players!
-        // player 1 setup
-        if (Constants.USER_ID == 1)
+
+        // Player 1 setup (attempt to be less hard coded)
+        if (Constants.USER_ID == mainMenuScript.p1UserId)
         {
-            // we're good
-            Debug.Log("P1 character is: " + mainMenuScript.p1CharCard.character.cardName);
-            playerBottomName.text = mainMenuScript.p1Name;
-            playerTopName.text = mainMenuScript.p2Name;
-            CharacterDisplay p1Character = ob.GetComponent<CharacterDisplay>();
-            CharacterDisplay p2Character = ob2.GetComponent<CharacterDisplay>();
-            p1Character.character = mainMenuScript.p1CharCard.character;
-            p2Character.character = mainMenuScript.p2CharCard.character;
-            p1Character.updateCharacter(p1Character.character);
-            p2Character.updateCharacter(p2Character.character);
+            players[0] = ob.GetComponent<Player>();
+            // Sets mainPlayer area belonging to this client's user.
+            players[0].user_id = Constants.USER_ID;
+
+            players[0].name = mainMenuScript.p1Name;
+            players[0].charName = mainMenuScript.p1CharCard.character.cardName;
+            playerBottomName.text = players[0].name;
+
+            // Updating PlayerArea CharacterDisplay to belong to P1's chosen character
+            bottomCharacter.character = mainMenuScript.p1CharCard.character;
+            bottomCharacter.updateCharacter(bottomCharacter.character);
+            players[0].character = bottomCharacter;
+
+            switch(numPlayers) {
+                case 2: 
+                    players[1] = obTop.GetComponent<Player>();
+                    players[1].user_id = mainMenuScript.p2UserId;
+                    players[1].charName = mainMenuScript.p2CharCard.character.cardName;
+                    playerTopName.text = mainMenuScript.p2Name;
+                    topCharacter.character = mainMenuScript.p2CharCard.character;
+                    topCharacter.updateCharacter(topCharacter.character);
+                    players[1].character = topCharacter;
+                    break;
+                case 3:
+                    // TO DO: Finish configuring 
+                    // players[1] = obLeft.GetComponent<Player>();
+                    // players[2] = obRight.GetComponent<Player>();
+                    // players[1].user_id = mainMenuScript.p2UserId;
+                    // players[2].user_id = mainMenuScript.p3UserId;
+                    // playerLeftName.text = mainMenuScript.p2Name;
+                    // playerRightName.text = mainMenuScript.p3Name;
+                    break;
+                case 4:
+                    // TO DO: Finish configuring 
+                    // players[1] = obLeft.GetComponent<Player>();
+                    // players[2] = obTop.GetComponent<Player>();
+                    // players[3] = obRight.GetComponent<Player>();
+                    // players[1].user_id = mainMenuScript.p2UserId;
+                    // players[2].user_id = mainMenuScript.p3UserId;
+                    // players[3].user_id = mainMenuScript.p3UserId;
+                    break;
+                default: Debug.Log("ERROR in initPlayers()"); break;
+            }
             
         }
-        // Player 2 = Client2 setup
-        else if(Constants.USER_ID == 2)
+        // Player 2 = Client 2 setup
+        else if(Constants.USER_ID == mainMenuScript.p2UserId)
         {
-            // switching players around for p2 to be at bottom
+            players[0] = ob.GetComponent<Player>();
+            // Sets mainPlayer area belonging to this client's user.
+            players[0].user_id = Constants.USER_ID;
 
-            // this could be wrong so I'm scrapping it for now
-            /*
-            players[3] = players[0];
-            players[0] = players[1];
-            players[1] = players[3];
-            */
-            Debug.Log("P2 character is: " + mainMenuScript.p2CharCard.character.cardName);
-            // currentPlayer = 1;
-            playerBottomName.text = mainMenuScript.p2Name;
-            playerTopName.text = mainMenuScript.p1Name;
-            players[0] = ob2.GetComponent<Player>();
-            players[1] = ob.GetComponent<Player>();
-            CharacterDisplay p2Character = ob.GetComponent<CharacterDisplay>();
-            CharacterDisplay p1Character = ob2.GetComponent<CharacterDisplay>();
-            p2Character.character = mainMenuScript.p2CharCard.character;
-            p1Character.character = mainMenuScript.p1CharCard.character;
-            p2Character.updateCharacter(p2Character.character);
-            p1Character.updateCharacter(p1Character.character);
+            players[0].name = mainMenuScript.p2Name;
+            players[0].charName = mainMenuScript.p2CharCard.character.cardName;
+            playerBottomName.text = players[0].name;
+
+            // Updating PlayerArea CharacterDisplay to belong to P2's chosen character
+            bottomCharacter.character = mainMenuScript.p2CharCard.character;
+            bottomCharacter.updateCharacter(bottomCharacter.character);
+            players[0].character = bottomCharacter;
+
+            switch(numPlayers) {
+                case 2: 
+                    players[1] = obTop.GetComponent<Player>();
+                    players[1].user_id = mainMenuScript.p1UserId;
+                    players[1].charName = mainMenuScript.p1CharCard.character.cardName;
+                    playerTopName.text = mainMenuScript.p1Name;
+                    topCharacter.character = mainMenuScript.p1CharCard.character;
+                    topCharacter.updateCharacter(topCharacter.character);
+                    players[1].character = topCharacter;
+                    break;
+                case 3:
+                    // TO DO: Finish configuring 
+                    break;
+                case 4:
+                    // TO DO: Finish configuring 
+                    break;
+                default: Debug.Log("ERROR in initPlayers()"); break;
+            }
         }
 
+        /*
         if(numPlayers == 2)
         {
             // gotta fix this
@@ -137,7 +188,7 @@ public class GameManager : MonoBehaviour
             GameObject obj2 = GameObject.Find("EnemyArea (Left Side)");
             obj.SetActive(false);
             obj2.SetActive(false);
-            */
+            /
 
             // player 1 setup
             if (Constants.USER_ID == 1)
@@ -156,15 +207,16 @@ public class GameManager : MonoBehaviour
                 players[3] = players[0];
                 players[0] = players[1];
                 players[1] = players[3];
-                */
+                /
 
                 // currentPlayer = 1;
                 playerBottomName.text = mainMenuScript.p2Name;
                 playerTopName.text = mainMenuScript.p1Name;
-                players[0] = ob2.GetComponent<Player>();
+                players[0] = obTop.GetComponent<Player>();
                 players[1] = ob.GetComponent<Player>();
             }
         }
+        */
 
         else if (numPlayers == 3)
         {

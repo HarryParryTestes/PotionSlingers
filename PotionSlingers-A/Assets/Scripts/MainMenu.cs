@@ -39,9 +39,13 @@ public class MainMenu : MonoBehaviour
 	private CharacterDisplay playerCharDisplay;
 
 	public string p1Name = "Player 1";
+	public int p1UserId = 0;
     public string p2Name = "Player 2";
+	public int p2UserId = 0;
 	public string p3Name = "Player 3";
+	public int p3UserId = 0;
 	public string p4Name = "Player 4";
+	public int p4UserId = 0;
 
 	private TMPro.TextMeshProUGUI playerName;
 	private TMPro.TextMeshProUGUI opponentName;
@@ -90,6 +94,10 @@ public class MainMenu : MonoBehaviour
 		msgQueue.AddCallback(Constants.SMSG_CHARACTER, OnResponseCharacter);
 		msgQueue.AddCallback(Constants.SMSG_SETNAME, OnResponseSetName);
 		msgQueue.AddCallback(Constants.SMSG_READY, OnResponseReady);
+	}
+
+	public int getNumPlayers() {
+		return numPlayers;
 	}
 
 	public void onPlayClick()
@@ -205,6 +213,7 @@ public class MainMenu : MonoBehaviour
 			{
 				player1Name.text = args.name1;
                 p1Name = args.name1;
+				p1UserId = args.user_id1;
 			}
 			else if (args.numPlayers == 2 && args.user_id2 != null)
 			{
@@ -215,6 +224,8 @@ public class MainMenu : MonoBehaviour
 				player2Name.text = args.name2;
                 p1Name = args.name1;
                 p2Name = args.name2;
+				p1UserId = args.user_id1;
+				p2UserId = args.user_id2;
 				numPlayers = 2;
 			}
 			else if (args.numPlayers == 3)
@@ -228,6 +239,9 @@ public class MainMenu : MonoBehaviour
                 p1Name = args.name1;
                 p2Name = args.name2;
                 // p3Name = args.name3;
+				p1UserId = args.user_id1;
+				p2UserId = args.user_id2;
+				// p3UserId = args.user_id3;
 				numPlayers = 3;
 			}
 			else if (args.numPlayers == 4)
@@ -243,6 +257,10 @@ public class MainMenu : MonoBehaviour
                 p2Name = args.name2;
                 // p3Name = args.name3;
                 // p4Name = args.name4;
+				p1UserId = args.user_id1;
+				p2UserId = args.user_id2;
+				// p3UserId = args.user_id3;
+				// p4UserId = args.user_id4;
 				numPlayers = 4;
 			}
 	}
