@@ -723,21 +723,32 @@ public class GameManager : MonoBehaviour
                     if(players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
                     {
                         Debug.Log("Vessel is fully loaded!");
+                        // TODO: Insert error that displays on screen.
                     }
                     else 
                     {
                         // Fill Vessel slot 2 with loaded potion.
+                        Card placeholder = players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.card;
                         players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
                         players[currentPlayer].holster.cardList[loadedCardInt].vPotion2.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
                         Debug.Log("Potion loaded in Vessel slot 2!");
+
+                        // Updates Holster card to be empty.
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].card = placeholder;
+                        players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                     }
                 }
                 // Vessel slot 1 is unloaded.
                 else
                 {
+                    Card placeholder = players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.card;
                     players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
                     players[currentPlayer].holster.cardList[loadedCardInt].vPotion1.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
                     Debug.Log("Potion loaded in Vessel slot 1!");
+
+                    // Updates Holster card to be empty.
+                    players[currentPlayer].holster.cardList[selectedCardInt - 1].card = placeholder;
+                    players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                 }
             }
             
@@ -756,9 +767,14 @@ public class GameManager : MonoBehaviour
                 // Artifact slot is unloaded.
                 else
                 {
+                    Card placeholder = players[currentPlayer].holster.cardList[loadedCardInt].aPotion.card;
                     players[currentPlayer].holster.cardList[loadedCardInt].aPotion.card = players[currentPlayer].holster.cardList[selectedCardInt - 1].card;
                     players[currentPlayer].holster.cardList[loadedCardInt].aPotion.updateCard(players[currentPlayer].holster.cardList[selectedCardInt - 1].card);
                     Debug.Log("Potion loaded in Artifact slot!");
+
+                    // Updates Holster card to be empty.
+                    players[currentPlayer].holster.cardList[selectedCardInt - 1].card = placeholder;
+                    players[currentPlayer].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                 }
             }
         }
