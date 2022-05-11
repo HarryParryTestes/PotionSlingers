@@ -375,6 +375,7 @@ public class GameManager : MonoBehaviour
             else if(players[i].user_id == args.newCurrentPlayerId)
             {
                 Debug.Log("Request: Starting turn for PlayerName: " + players[i].name);
+                currentPlayerId = args.newCurrentPlayerId;
                 players[i].setCurrentPlayer();
                 onStartTurn(players[i]);
             }
