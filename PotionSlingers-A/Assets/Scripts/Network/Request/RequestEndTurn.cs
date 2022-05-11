@@ -9,9 +9,9 @@ public class RequestEndTurn : NetworkRequest
         request_id = Constants.CMSG_END_TURN;
     }
 
-    public void send(int player)
+    public void send(int newCurrentPlayerId)
     {
         packet = new GamePacket(request_id);
-        packet.addInt32(player);
+        packet.addInt32(newCurrentPlayerId);
     }
 }

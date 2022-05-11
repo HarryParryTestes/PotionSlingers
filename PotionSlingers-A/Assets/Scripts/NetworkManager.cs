@@ -128,12 +128,12 @@ public class NetworkManager : MonoBehaviour
         return false;
     }
 
-    public bool sendEndTurnRequest(int playerInt)
+    public bool sendEndTurnRequest(int newCurrentPlayerId)
     {
         if (cManager && cManager.IsConnected())
         {
             RequestEndTurn request = new RequestEndTurn();
-            request.send(playerInt);
+            request.send(newCurrentPlayerId);
             cManager.send(request);
             return true;
         }

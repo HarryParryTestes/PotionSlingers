@@ -10,7 +10,7 @@ import utility.DataReader;
 import core.NetworkManager;
 
 public class RequestEndTurn extends GameRequest {
-    private int w;
+    private int newCurrentPlayerId;
     // Responses
     private ResponseEndTurn responseEndTurn;
 
@@ -20,7 +20,7 @@ public class RequestEndTurn extends GameRequest {
 
     @Override
     public void parse() throws IOException {
-        w = DataReader.readInt(dataInput);
+        newCurrentPlayerId = DataReader.readInt(dataInput);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class RequestEndTurn extends GameRequest {
         Player player = client.getPlayer();
 
         responseEndTurn.setPlayer(player);
-        responseEndTurn.setData(w);
+        responseEndTurn.setData(newCurrentPlayerId);
         NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responseEndTurn);
     }
 }

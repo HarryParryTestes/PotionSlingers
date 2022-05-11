@@ -5,7 +5,7 @@ using UnityEngine;
 public class ResponseEndTurnEventArgs : ExtendedEventArgs
 {
     public int user_id { get; set; } // The user_id of whom who sent the request
-    public int w { get; set; } // current player
+    public int newCurrentPlayerId { get; set; } // current player
 
     public ResponseEndTurnEventArgs()
     {
@@ -16,7 +16,7 @@ public class ResponseEndTurnEventArgs : ExtendedEventArgs
 public class ResponseEndTurn : NetworkResponse
 {
     private int user_id;
-    private int w;
+    private int newCurrentPlayerId;
 
     public ResponseEndTurn()
     {
@@ -26,7 +26,7 @@ public class ResponseEndTurn : NetworkResponse
     public override void parse()
     {
         user_id = DataReader.ReadInt(dataStream);
-        w = DataReader.ReadInt(dataStream);
+        newCurrentPlayerId = DataReader.ReadInt(dataStream);
     }
 
     public override ExtendedEventArgs process()
@@ -34,7 +34,7 @@ public class ResponseEndTurn : NetworkResponse
         ResponseEndTurnEventArgs args = new ResponseEndTurnEventArgs
         {
             user_id = user_id,
-            w = w,
+            newCurrentPlayerId = newCurrentPlayerId,
         };
 
         return args;

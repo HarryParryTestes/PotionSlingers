@@ -11,7 +11,7 @@ public class GameManagerTest : MonoBehaviour
 
 	//private Hero[,] gameBoard = new Hero[6,5];
 
-	private int currentPlayer = 1;
+	private int myPlayerIndex = 1;
 	private bool canInteract = false;
 	private bool choosingInteraction = false;
 
@@ -40,14 +40,14 @@ public class GameManagerTest : MonoBehaviour
 
 	public Player GetCurrentPlayer()
 	{
-		return Players[currentPlayer - 1];
+		return Players[myPlayerIndex - 1];
 	}
 
 	public void Init(Player player1, Player player2)
 	{
 		Players[0] = player1;
 		Players[1] = player2;
-		currentPlayer = 1;
+		myPlayerIndex = 1;
 		upButton = GameObject.Find("Up Arrow Button");
 		downButton = GameObject.Find("Down Arrow Button");
 		leftButton = GameObject.Find("Left Arrow Button");
@@ -78,7 +78,7 @@ public class GameManagerTest : MonoBehaviour
 
 	public void onUpClick()
 	{
-		// Players[currentPlayer - 1].MoveUp();
+		// Players[myPlayerIndex - 1].MoveUp();
 		// networkManager.SendMoveRequest();
 		networkManager.SendMoveRequest(0, 1, 0);
 		Debug.Log("Request to move up sent from GameManager!");
@@ -141,7 +141,7 @@ public class GameManagerTest : MonoBehaviour
 	{
 		ObjectSelector.SetSelectedObject(null);
 		canInteract = false;
-		currentPlayer = 3 - currentPlayer;
+		myPlayerIndex = 3 - myPlayerIndex;
 	}
 	*/
 
@@ -198,7 +198,7 @@ public class GameManagerTest : MonoBehaviour
 				{
 					ObjectSelector.SetSelectedObject(null);
 				}
-				else if (hero.Owner.IsMouseControlled && hero.Owner == Players[currentPlayer - 1])
+				else if (hero.Owner.IsMouseControlled && hero.Owner == Players[myPlayerIndex - 1])
 				{
 					ObjectSelector.SetSelectedObject(hitObject);
 				}
@@ -237,7 +237,7 @@ public class GameManagerTest : MonoBehaviour
 			Hero hero = gameObject.GetComponentInParent<Hero>();
 			if (hero)
 			{
-				return (hero.Owner.IsMouseControlled && hero.Owner == Players[currentPlayer - 1]);
+				return (hero.Owner.IsMouseControlled && hero.Owner == Players[myPlayerIndex - 1]);
 			}
 		}
 		return true;

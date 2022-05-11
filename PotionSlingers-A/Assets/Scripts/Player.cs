@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     public GameObject playerHP;
     public GameObject playerHPCubes;
     public GameObject playerPips;
+    public GameObject currentPlayerHighlight;
 
     public Player(int user_id, string name)
     {
@@ -43,6 +44,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void updatePipsUI() {
+        if(playerPips != null) {
+            playerPips.GetComponent<Text>().text = pips.ToString() + " Pips";
+        }
+    }
+
     public void setDefaultTurn()
     {
         pips = 6;
@@ -58,6 +65,16 @@ public class Player : MonoBehaviour
                 ringBonus = true;
             }
         }
+
+        updatePipsUI();
+    }
+
+    public void setCurrentPlayer() {
+        currentPlayerHighlight.SetActive(true);
+    }
+
+    public void removeCurrentPlayer() {
+        currentPlayerHighlight.SetActive(false);
     }
 
     /*
@@ -119,16 +136,12 @@ public class Player : MonoBehaviour
 
     public void addPips(int morePips) {
         pips += morePips;
-        if(playerPips != null) {
-            playerPips.GetComponent<Text>().text = pips.ToString() + " Pips";
-        }
+        updatePipsUI();
     }
 
     public void subPips(int lessPips) {
         pips -= lessPips;
-        if(playerPips != null) {
-            playerPips.GetComponent<Text>().text = pips.ToString() + " Pips";
-        }
+        updatePipsUI();
     }
 
     //function to call when checking on if the player is dead

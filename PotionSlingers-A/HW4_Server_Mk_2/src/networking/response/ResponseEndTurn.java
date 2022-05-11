@@ -11,7 +11,7 @@ import utility.Log;
  */
 public class ResponseEndTurn extends GameResponse {
     private Player player;
-    private int w;
+    private int newCurrentPlayerId;
 
     public ResponseEndTurn() {
         responseCode = Constants.SMSG_END_TURN;
@@ -20,8 +20,13 @@ public class ResponseEndTurn extends GameResponse {
     @Override
     public byte[] constructResponseInBytes() {
         GamePacket packet = new GamePacket(responseCode);
+
+        if(newCurrentPlayerId == player.getID()) {
+            Log.printf("ERROR: Current player hasn't been set to the next player!");
+        }
+
         packet.addInt32(player.getID());
-        packet.addInt32(w);
+        packet.addInt32(newCurrentPlayerId);
 
         Log.printf("Player with id %d has ended their turn", player.getID());
 
@@ -33,6 +38,6 @@ public class ResponseEndTurn extends GameResponse {
     }
 
     public void setData(int w) {
-        this.w = w;
+        this.newCurrentPlayerId = newCurrentPlayerId;
     }
 }
