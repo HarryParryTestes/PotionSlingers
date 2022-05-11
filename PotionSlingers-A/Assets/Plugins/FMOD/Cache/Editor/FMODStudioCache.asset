@@ -23,6 +23,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 321
+--- !u!114 &-6162920759811238225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/BGM_Western
+  m_EditorClassIdentifier: 
+  Path: event:/Music/BGM_Western
+  guid: 9167011d59887742b9920c9f95ea9e9f
+  Banks:
+  - {fileID: 2042036851978099352}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 235998
 --- !u!114 &-5462556529915659721
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46,6 +69,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 230
+--- !u!114 &-3931533853001625200
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/Gameplay
+  m_EditorClassIdentifier: 
+  Path: event:/Music/Gameplay
+  guid: 47b36c4080c24147a3e46e93c7085391
+  Banks:
+  - {fileID: 2042036851978099352}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 235998
 --- !u!114 &-1034114711044735174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92,12 +138,15 @@ MonoBehaviour:
   - {fileID: 8503519933277279006}
   - {fileID: 3807023185243710871}
   - {fileID: 5940039349755740359}
+  - {fileID: 8765636527844749678}
+  - {fileID: -3931533853001625200}
+  - {fileID: -6162920759811238225}
   EditorParameters: []
   MasterBanks:
   - {fileID: 2042036851978099352}
   StringsBanks:
   - {fileID: 2370175381869687952}
-  stringsBankWriteTime: 637873015384990064
+  stringsBankWriteTime: 637878351619299598
   cacheVersion: 6
 --- !u!114 &2026387450755041156
 MonoBehaviour:
@@ -137,7 +186,7 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 637873015384980035
+  lastModified: 637878351619289591
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -156,11 +205,11 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 637873015384990064
+  lastModified: 637878351619299598
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 1058
+    Value: 1202
   Exists: 1
 --- !u!114 &3807023185243710871
 MonoBehaviour:
@@ -231,3 +280,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 290
+--- !u!114 &8765636527844749678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/BGM_Outlands
+  m_EditorClassIdentifier: 
+  Path: event:/Music/BGM_Outlands
+  guid: 10bbdc5d721c194a805d8b220cfab245
+  Banks:
+  - {fileID: 2042036851978099352}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 207818
