@@ -1174,7 +1174,8 @@ public class GameManager : MonoBehaviour
             if (args.user_id == 1)
             {
                 // player 2
-                if (args.z == 1)
+                // this is for two players only cause it's the middle CharacterDisplay
+                if (args.z == 2 && numPlayers == 2)
                 {
                     if(players[currentPlayer].holster.cardList[args.y - 1].card.cardName == "Potion")
                     {
@@ -1195,7 +1196,8 @@ public class GameManager : MonoBehaviour
             else if (args.user_id == 2)
             {
                 // player 1
-                if (args.z == 1)
+                // this is for two players only cause it's the middle CharacterDisplay
+                if (args.z == 2 && numPlayers == 2)
                 {
                     if (players[currentPlayer].holster.cardList[args.y - 1].card.cardName == "Potion")
                     {
