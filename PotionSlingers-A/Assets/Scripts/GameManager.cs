@@ -271,7 +271,12 @@ public class GameManager : MonoBehaviour
             // Sets first joined player to be the first current player.
             if(players[i].user_id == mainMenuScript.p1UserId) {
                 currentPlayerId = players[i].user_id;
+                Debug.Log("CurrentPlayerID is: " + currentPlayerId);
                 players[i].setCurrentPlayer();
+            }
+            else
+            {
+                players[i].removeCurrentPlayer();
             }
         }
     }
@@ -315,25 +320,28 @@ public class GameManager : MonoBehaviour
         else
         {
             bool currentFound = false;
-            int currentIndex = 0;
-            int index = -1;
+            int currentIndex = -1;
             for(int i = 0; i < numPlayers; i++)
             {
                 if(players[i].user_id == currentPlayerId) {
-                    currentIndex = players[i].user_id;
-                    index = i;
+                    currentIndex = i;
                 }
             }
 
-            int newIndex = currentIndex++;
-            if(newIndex == numPlayers) {
+            int newIndex = currentIndex + 1;
+            if(newIndex >= numPlayers) {
                 newIndex = 0;
             }
 
             Debug.Log("Request End Turn");
+            Debug.Log("Request: Ending turn for PlayerName: " + players[currentIndex].name);
+            Debug.Log("Request: Starting turn for PlayerName: " + players[newIndex].name);
+            Debug.Log("Request: Ending turn for PlayerID: " + players[currentIndex].user_id);
+            Debug.Log("Request: Starting turn for PlayerID: " + players[newIndex].user_id);
+            int newId = players[newIndex].user_id;
             // Sends user_id of new current player based on index of new current player
             // in this client's players array.
-            bool connected = networkManager.sendEndTurnRequest(players[newIndex].user_id);
+            bool connected = networkManager.sendEndTurnRequest(newId);
         }
 
         // myPlayerIndex++;
@@ -361,10 +369,12 @@ public class GameManager : MonoBehaviour
             // Remove currentPlayer highlight from previous player.
             if(players[i].user_id == args.user_id)
             {
+                Debug.Log("Response: Ending turn for PlayerName: " + players[i].name);
                 players[i].removeCurrentPlayer();
             }
             else if(players[i].user_id == args.newCurrentPlayerId)
             {
+                Debug.Log("Request: Starting turn for PlayerName: " + players[i].name);
                 players[i].setCurrentPlayer();
                 onStartTurn(players[i]);
             }

@@ -29,6 +29,7 @@ public class ResponseEndTurn extends GameResponse {
         packet.addInt32(newCurrentPlayerId);
 
         Log.printf("Player with id %d has ended their turn", player.getID());
+        Log.printf("Starting turn for Player with id %d", newCurrentPlayerId);
 
         return packet.getBytes();
     }
@@ -37,7 +38,7 @@ public class ResponseEndTurn extends GameResponse {
         this.player = player;
     }
 
-    public void setData(int w) {
+    public void setData(int newCurrentPlayerId) {
         this.newCurrentPlayerId = newCurrentPlayerId;
     }
 }
