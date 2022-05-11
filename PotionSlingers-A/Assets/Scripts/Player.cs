@@ -30,6 +30,19 @@ public class Player : MonoBehaviour
         this.name = name;
     }
 
+    public void initHealth() {
+        hp = 10;
+        hpCubes = 3;
+        updateHealthUI();
+    }
+
+    public void updateHealthUI() {
+        if(playerHP != null && playerHPCubes != null) {
+            playerHP.GetComponent<Text>().text = hp.ToString();
+            playerHPCubes.GetComponent<Text>().text = hpCubes.ToString();
+        }
+    }
+
     public void setDefaultTurn()
     {
         pips = 6;
@@ -92,10 +105,7 @@ public class Player : MonoBehaviour
         Debug.Log("Subtracted "+health+"from "+charName);
         Debug.Log(charName+"'s health = "+hp+" HP");
 
-        if(playerHP != null && playerHPCubes != null) {
-            playerHP.GetComponent<Text>().text = hp.ToString();
-            playerHPCubes.GetComponent<Text>().text = hpCubes.ToString();
-        }
+        updateHealthUI();
      }
 
     // public void giveCube(Player player) {

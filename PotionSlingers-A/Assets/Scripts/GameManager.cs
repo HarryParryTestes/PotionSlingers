@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     public int numPlayers;
     public int selectedCardInt;
     public int selectedOpponentInt;
+    public string selectedOpponentCharName;
     public int loadedCardInt;
     public int currentPlayer = 0;
     public Player[] players = new Player[4];
@@ -29,9 +30,9 @@ public class GameManager : MonoBehaviour
     public List<GameObject> errorMessages;
     private MessageQueue msgQueue;
 
-    public CharacterDisplay op1;
-    public CharacterDisplay op2;
-    public CharacterDisplay op3;
+    public CharacterDisplay opLeft;
+    public CharacterDisplay opTop;
+    public CharacterDisplay opRight;
     public TMPro.TextMeshProUGUI playerBottomName;
     public TMPro.TextMeshProUGUI playerLeftName;
     public TMPro.TextMeshProUGUI playerTopName;
@@ -95,9 +96,9 @@ public class GameManager : MonoBehaviour
         CharacterDisplay rightCharacter = obRight.GetComponent<CharacterDisplay>();
 
         // Children objects of attackMenu
-        GameObject leftAttack = attackMenu.transform.Find("CharacterCard (Left)").gameObject;
-        GameObject topAttack = attackMenu.transform.Find("CharacterCard (Top)").gameObject;
-        GameObject rightAttack = attackMenu.transform.Find("CharacterCard (Right)").gameObject;
+        GameObject leftAttack = attackMenu.transform.Find("AttackCharacter (Left)").gameObject;
+        GameObject topAttack = attackMenu.transform.Find("AttackCharacter (Top)").gameObject;
+        GameObject rightAttack = attackMenu.transform.Find("AttackCharacter (Right)").gameObject;
 
         // Took this if + else if statements out of if(numPlayers == 2) check
         // because it wasn't running for some reason.
@@ -123,6 +124,7 @@ public class GameManager : MonoBehaviour
                 case 2: 
                     players[1] = obTop.GetComponent<Player>();
                     players[1].user_id = mainMenuScript.p2UserId;
+                    players[1].name = mainMenuScript.p2Name;
                     players[1].charName = mainMenuScript.p2CharCard.character.cardName;
                     playerTopName.text = mainMenuScript.p2Name;
                     topCharacter.character = mainMenuScript.p2CharCard.character;
@@ -176,6 +178,7 @@ public class GameManager : MonoBehaviour
                 case 2: 
                     players[1] = obTop.GetComponent<Player>();
                     players[1].user_id = mainMenuScript.p1UserId;
+                    players[1].name = mainMenuScript.p1Name;
                     players[1].charName = mainMenuScript.p1CharCard.character.cardName;
                     playerTopName.text = mainMenuScript.p1Name;
                     topCharacter.character = mainMenuScript.p1CharCard.character;
@@ -260,6 +263,11 @@ public class GameManager : MonoBehaviour
             cd.updateCard(players[0].deck.placeholder);
         }
         */
+
+        // Inits all player's health and essence (HP) cubes.
+        for(int i = 0; i < numPlayers; i++) {
+            players[i].initHealth();
+        }
     }
 
     void initDecks()
@@ -533,6 +541,14 @@ public class GameManager : MonoBehaviour
         int damage = 0;
         Debug.Log("GameManager Throw Potion");
 
+        // for (int i = 0; i < numPlayers; i++) 
+        // {
+        //     if(players[i].charName == selectedOpponentCharName) 
+        //     {
+        //         Debug.Log("Attacking Player: "+players[i].name);
+        //     }
+        // }
+
         // check card type
         switch (selectedCardInt)
         {
@@ -786,6 +802,11 @@ public class GameManager : MonoBehaviour
         selectedOpponentInt = num;
     }
 
+    public void setOPName(string characterName)
+    {
+        selectedOpponentCharName = characterName;
+    }
+
     // find potions and display them in LoadItemMenu
     // TODO: fix this to display properly
     public void displayPotions()
@@ -956,7 +977,7 @@ public class GameManager : MonoBehaviour
                     {
                         if(player.charName == character.cardName)
                         {
-                            op1.updateCharacter(character);
+                            opLeft.updateCharacter(character);
                             set++;
                         }
                     }
@@ -968,7 +989,7 @@ public class GameManager : MonoBehaviour
                     {
                         if (player.charName == character.cardName)
                         {
-                            op2.updateCharacter(character);
+                            opTop.updateCharacter(character);
                             set++;
                         }
                     }
@@ -980,7 +1001,7 @@ public class GameManager : MonoBehaviour
                     {
                         if (player.charName == character.cardName)
                         {
-                            op3.updateCharacter(character);
+                            opRight.updateCharacter(character);
                         }
                     }
                 }
