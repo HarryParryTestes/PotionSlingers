@@ -974,6 +974,69 @@ public class GameManager : MonoBehaviour
     // TODO: fix this to display properly
     public void displayOpponents()
     {
+        // Displaying opponents to attack for 2 player game.
+        if(numPlayers == 2) 
+        {
+            // For all players that are not this client's player, display their character in attackMenu.
+            for (int i = 0; i < numPlayers; i++)
+            {
+                if(players[i].user_id != Constants.USER_ID) 
+                {
+                    // Updates middle slot in attackMenu.
+                    opTop.updateCharacter(players[i].character.character);
+                }
+            }
+        }
+
+        // Displaying opponents to attack for 3 player game.
+        if(numPlayers == 3) 
+        {
+            int tracker = 0;
+            // For all players that are not this client's player, display their character in attackMenu.
+            for (int i = 0; i < numPlayers; i++)
+            {
+                if(players[i].user_id != Constants.USER_ID) 
+                {
+                    if(tracker == 0) 
+                    {
+                        // Updates left slot in attackMenu.
+                        opLeft.updateCharacter(players[i].character.character);
+                    }
+                    else if(tracker == 1)
+                    {
+                        opTop.updateCharacter(players[i].character.character);
+                    }
+                }
+            }
+        }
+
+        // Displaying opponents to attack for 4 player game.
+        if(numPlayers == 4) 
+        {
+            int tracker = 0;
+            // For all players that are not this client's player, display their character in attackMenu.
+            for (int i = 0; i < numPlayers; i++)
+            {
+                if(players[i].user_id != Constants.USER_ID) 
+                {
+                    if(tracker == 0) 
+                    {
+                        // Updates left slot in attackMenu.
+                        opLeft.updateCharacter(players[i].character.character);
+                    }
+                    else if(tracker == 1)
+                    {
+                        opTop.updateCharacter(players[i].character.character);
+                    }
+                    else if(tracker == 2)
+                    {
+                        opRight.updateCharacter(players[i].character.character);
+                    }
+                }
+            }
+        }
+        
+        /*
         int set = 0;
         foreach (Player player in players)
         {
@@ -1015,6 +1078,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     // subtract pips, update deck display and market display
