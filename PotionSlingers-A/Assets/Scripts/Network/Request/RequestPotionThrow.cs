@@ -9,13 +9,15 @@ public class RequestPotionThrow : NetworkRequest
         request_id = Constants.CMSG_P_THROW;
     }
 
-    public void send(int throwerId, int cardPosition, int targetId, int damage)
+    public void send(int throwerId, int cardPosition, int targetId, int damage, bool isArtifact, bool isVessel)
     {
         packet = new GamePacket(request_id);
         packet.addInt32(throwerId);
         packet.addInt32(cardPosition);
         packet.addInt32(targetId);
         packet.addInt32(damage);
+        packet.addBool(isArtifact);
+        packet.addBool(isVessel);
     }
 }
 

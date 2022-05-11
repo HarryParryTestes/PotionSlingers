@@ -11,6 +11,7 @@ import core.NetworkManager;
 
 public class RequestPotionThrow extends GameRequest {
     private int throwerId, cardPosition, targetId, damage;
+    private boolean isArtifact, isVessel;
     // Responses
     private ResponsePotionThrow responsePotionThrow;
 
@@ -24,6 +25,8 @@ public class RequestPotionThrow extends GameRequest {
         cardPosition = DataReader.readInt(dataInput);
         targetId = DataReader.readInt(dataInput);
         damage = DataReader.readInt(dataInput);
+        isArtifact = DataReader.readBoolean(dataInput);
+        isVessel = DataReader.readBoolean(dataInput);
     }
 
     @Override
@@ -31,7 +34,7 @@ public class RequestPotionThrow extends GameRequest {
         Player player = client.getPlayer();
 
         responsePotionThrow.setPlayer(player);
-        responsePotionThrow.setData(throwerId, cardPosition, targetId, damage);
+        responsePotionThrow.setData(throwerId, cardPosition, targetId, damage, isArtifact, isVessel);
         NetworkManager.addResponseForAllOnlinePlayers(player.getID(), responsePotionThrow);
     }
 }

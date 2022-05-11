@@ -644,30 +644,34 @@ public class GameManager : MonoBehaviour
                         //if(Constants.USER_ID - 1 == myPlayerIndex)
 
                         // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage);
+                        // Args Potion: throwerId, cardPosition, targetId, damage, isArtifact (T/F), isVessel (T/F)
+                        bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
 
                         // Update this on all clients?
-                        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                        players[myPlayerIndex].potionsThrown++;
+                        // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                        // players[myPlayerIndex].potionsThrown++;
 
                         sendSuccessMessage(2); // Only display on thrower's client.
                         break;
                         //}
                     } else if(players[myPlayerIndex].holster.card1.card.cardType == "Vessel")
                     {
-                        // check for loaded potions
+                        // Check for two loaded potions in Veseel.
                         if(players[myPlayerIndex].holster.card1.vPotion1.card.cardName != "placeholder" &&
                             players[myPlayerIndex].holster.card1.vPotion2.card.cardName != "placeholder")
                         {
                             damage = players[myPlayerIndex].holster.card1.vPotion1.card.effectAmount + players[myPlayerIndex].holster.card1.vPotion2.card.effectAmount;
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card1.vPotion1.card);
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card1.vPotion2.card);
-                            players[myPlayerIndex].holster.card1.vPotion1.updateCard(players[0].deck.placeholder);
-                            players[myPlayerIndex].holster.card1.vPotion2.updateCard(players[0].deck.placeholder);
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card1.vPotion1.card);
+                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card1.vPotion2.card);
+                            // players[myPlayerIndex].holster.card1.vPotion1.updateCard(players[0].deck.placeholder);
+                            // players[myPlayerIndex].holster.card1.vPotion2.updateCard(players[0].deck.placeholder);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+
+
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
                         } else
                         {
@@ -681,8 +685,13 @@ public class GameManager : MonoBehaviour
                         if (players[myPlayerIndex].holster.card1.aPotion.card.cardName != "placeholder")
                         {
                             damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                            
+                            // Update response to account for trashing loaded artifact's potion and not the artifact
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                            
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
                         }
                         else
@@ -705,9 +714,10 @@ public class GameManager : MonoBehaviour
                         // also check if they're the current player
                         if (Constants.USER_ID - 1 == myPlayerIndex)
                         {
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            players[myPlayerIndex].potionsThrown++;
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                            // players[myPlayerIndex].potionsThrown++;
                             sendSuccessMessage(2);
                             break;
                         }
@@ -720,14 +730,17 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].holster.card2.vPotion2.card.cardName != "placeholder")
                         {
                             damage = players[myPlayerIndex].holster.card2.vPotion1.card.effectAmount + players[myPlayerIndex].holster.card2.vPotion2.card.effectAmount;
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card2.vPotion1.card);
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card2.vPotion2.card);
-                            players[myPlayerIndex].holster.card2.vPotion1.updateCard(players[0].deck.placeholder);
-                            players[myPlayerIndex].holster.card2.vPotion2.updateCard(players[0].deck.placeholder);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            
+                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card2.vPotion1.card);
+                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card2.vPotion2.card);
+                            // players[myPlayerIndex].holster.card2.vPotion1.updateCard(players[0].deck.placeholder);
+                            // players[myPlayerIndex].holster.card2.vPotion2.updateCard(players[0].deck.placeholder);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
                         }
                         else
@@ -741,9 +754,11 @@ public class GameManager : MonoBehaviour
                         if (players[myPlayerIndex].holster.card2.aPotion.card.cardName != "placeholder")
                         {
                             damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
                         }
                         else
@@ -764,9 +779,11 @@ public class GameManager : MonoBehaviour
                         // also check if they're the current player
                         if (Constants.USER_ID - 1 == myPlayerIndex)
                         {
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            players[myPlayerIndex].potionsThrown++;
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                            // players[myPlayerIndex].potionsThrown++;
+
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                             sendSuccessMessage(2);
                             break;
                         }
@@ -781,15 +798,17 @@ public class GameManager : MonoBehaviour
                         {
                             Debug.Log("Reached cards");
                             damage = players[myPlayerIndex].holster.card3.vPotion1.card.effectAmount + players[myPlayerIndex].holster.card3.vPotion2.card.effectAmount;
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card3.vPotion1.card);
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card3.vPotion2.card);
-                            players[myPlayerIndex].holster.card3.vPotion1.updateCard(players[0].deck.placeholder);
-                            players[myPlayerIndex].holster.card3.vPotion2.updateCard(players[0].deck.placeholder);
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card3.vPotion1.card);
+                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card3.vPotion2.card);
+                            // players[myPlayerIndex].holster.card3.vPotion1.updateCard(players[0].deck.placeholder);
+                            // players[myPlayerIndex].holster.card3.vPotion2.updateCard(players[0].deck.placeholder);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                            
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         }
                         else
                         {
@@ -802,10 +821,11 @@ public class GameManager : MonoBehaviour
                         if (players[myPlayerIndex].holster.card1.aPotion.card.cardName != "placeholder")
                         {
                             damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         }
                         else
                         {
@@ -825,9 +845,11 @@ public class GameManager : MonoBehaviour
                         // also check if they're the current player
                         if (Constants.USER_ID - 1 == myPlayerIndex)
                         {
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            players[myPlayerIndex].potionsThrown++;
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                            // players[myPlayerIndex].potionsThrown++;
+
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                             sendSuccessMessage(2);
                             break;
                         }
@@ -840,15 +862,17 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].holster.card4.vPotion2.card.cardName != "placeholder")
                         {
                             damage = players[myPlayerIndex].holster.card4.vPotion1.card.effectAmount + players[myPlayerIndex].holster.card4.vPotion2.card.effectAmount;
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card4.vPotion1.card);
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card4.vPotion2.card);
-                            players[myPlayerIndex].holster.card4.vPotion1.updateCard(players[0].deck.placeholder);
-                            players[myPlayerIndex].holster.card4.vPotion2.updateCard(players[0].deck.placeholder);
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card4.vPotion1.card);
+                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card4.vPotion2.card);
+                            // players[myPlayerIndex].holster.card4.vPotion1.updateCard(players[0].deck.placeholder);
+                            // players[myPlayerIndex].holster.card4.vPotion2.updateCard(players[0].deck.placeholder);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         }
                         else
                         {
@@ -861,10 +885,12 @@ public class GameManager : MonoBehaviour
                         if (players[myPlayerIndex].holster.card1.aPotion.card.cardName != "placeholder")
                         {
                             damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+
+                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
-                            bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         }
                         else
                         {
@@ -1312,14 +1338,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+// THROW POTION RESPONSE
     public void onResponsePotionThrow(ExtendedEventArgs eventArgs)
     {
         ResponsePotionThrowEventArgs args = eventArgs as ResponsePotionThrowEventArgs;
+        // Args Potion: throwerId, cardPosition, targetId, damage, isArtifact (T/F), isVessel (T/F)
         Debug.Log("My User_ID: " + Constants.USER_ID);
         Debug.Log("Thrower ID: " + args.throwerId);
         Debug.Log("Card Position: " + args.cardPosition);
         Debug.Log("Target Opponent ID: " + args.targetId);
         Debug.Log("Damage: " + args.damage);
+        Debug.Log("isArtifact?: " + args.isArtifact);
+        Debug.Log("isVessel?: " + args.isVessel);
 
         
         // Loops through players array to update target's health and thrower's holster.
@@ -1332,7 +1362,53 @@ public class GameManager : MonoBehaviour
             // Update Holster of player who threw the Potion.
             if(players[i].user_id == args.throwerId) 
             {
-                td.addCard(players[i].holster.cardList[args.cardPosition - 1]);
+                // Threw a Potion (trash thrower's thrown Potion and increase potionsThrown)
+                if(args.isVessel == false && args.isArtifact == false)
+                {
+                    td.addCard(players[i].holster.cardList[args.cardPosition - 1]);
+                    players[i].potionsThrown++;
+                }
+                // Threw a Vessel (put loaded potions in thrower's deck, trash the Vessel card)
+                else if(args.isVessel == true && args.isArtifact == false) 
+                {
+                    // Determines if updating(holster.card1, holster.card2, etc.)
+                    switch(args.cardPosition) {
+                        case 1:
+                            players[i].deck.putCardOnBottom(players[i].holster.card1.vPotion1.card);
+                            players[i].deck.putCardOnBottom(players[i].holster.card1.vPotion2.card);
+                            players[i].holster.card1.vPotion1.updateCard(players[0].deck.placeholder);
+                            players[i].holster.card1.vPotion2.updateCard(players[0].deck.placeholder);
+                            break;
+                        case 2:
+                            players[i].deck.putCardOnBottom(players[i].holster.card2.vPotion1.card);
+                            players[i].deck.putCardOnBottom(players[i].holster.card2.vPotion2.card);
+                            players[i].holster.card2.vPotion1.updateCard(players[0].deck.placeholder);
+                            players[i].holster.card2.vPotion2.updateCard(players[0].deck.placeholder);
+                            break;
+                        case 3:
+                            players[i].deck.putCardOnBottom(players[i].holster.card3.vPotion1.card);
+                            players[i].deck.putCardOnBottom(players[i].holster.card3.vPotion2.card);
+                            players[i].holster.card3.vPotion1.updateCard(players[0].deck.placeholder);
+                            players[i].holster.card3.vPotion2.updateCard(players[0].deck.placeholder);
+                            break;
+                        case 4:
+                            players[i].deck.putCardOnBottom(players[i].holster.card4.vPotion1.card);
+                            players[i].deck.putCardOnBottom(players[i].holster.card4.vPotion2.card);
+                            players[i].holster.card4.vPotion1.updateCard(players[0].deck.placeholder);
+                            players[i].holster.card4.vPotion2.updateCard(players[0].deck.placeholder);
+                            break;
+                        default: Debug.Log("ERROR (ThrowPotionResponse): Can only update from card1 to card4"); break;
+                    }
+                    td.addCard(players[i].holster.cardList[args.cardPosition - 1]);
+                    players[i].holster.cardList[args.cardPosition - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                    players[i].holster.cardList[args.cardPosition - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                }
+                // Used an Artifact (trashes potion, keeps the Artifact in the holster)
+                else if(args.isVessel == false && args.isArtifact == true)
+                {
+                    td.addCard(players[i].holster.cardList[args.cardPosition - 1].aPotion);
+                    players[i].holster.cardList[args.cardPosition - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+                }
             }
         }
         
@@ -1410,163 +1486,7 @@ public class GameManager : MonoBehaviour
         gameObj.SetActive(false);
     }
 
-    /*
-    //delete once this is production ready
-    public CharacterDisplay playerCharacter;
-    public CharacterDisplay enemyCharacter;
-    public Gamestate State;
-    public Holster playerHolster;
-    public Holster enemyHolster;
-    public Text notificationText;
-    public Text playerHealth;
-    public Text playerCubes;
-    public Text oppHealth;
-    public Text oppCubes;
-
-    void Awake() {
-        manager = this;
-        GameObject go = new GameObject("Player");
-        player1 = go.AddComponent<Player>();
-
-        GameObject go2 = new GameObject("Player");
-        player2 = go2.AddComponent<Player>();
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        notificationText = GameObject.Find("Notification").GetComponent<Text>();
-        
-
-        healthSetUp();
-        SetUp();
-
-        updatePlayerText();
-        //while(State != Gamestate.Lose && State != Gamestate.Win) {
-            //updateGameState(State);
-        //}
-        updateGameState(State);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //updateGameState(State);
-    }
-
-    void healthSetUp() {
-        playerHealth = GameObject.Find("pHealth").GetComponent<Text>();
-        playerCubes = GameObject.Find("pEssenceCubes").GetComponent<Text>();
-        oppHealth = GameObject.Find("Health").GetComponent<Text>();
-        oppCubes = GameObject.Find("EssenceCubes").GetComponent<Text>();
-    }
-
-    void updatePlayerText() {
-        playerHealth.text = player1.health.hp.ToString();
-        playerCubes.text = player1.health.essenceCubes.ToString();
-        oppHealth.text = player2.health.hp.ToString();
-        oppCubes.text = player2.health.essenceCubes.ToString();
-    }
-
-
-    void SetUp() {
-        //player1 = new Player();
-        player1.character = playerCharacter;
-        player1.holster = playerHolster;
-
-        //player2 = new Player();
-        player2.character = enemyCharacter;
-        player2.holster = enemyHolster;
-
-        Debug.Log("Player Character is: " + player1.character.character.cardName);
-        Debug.Log("Enemy Character is: " + player2.character.character.cardName);
-
-        Debug.Log("Player Cards:\n");
-        Debug.Log(player1.holster.card1.card.cardName+"\n");
-        Debug.Log(player1.holster.card2.card.cardName+"\n");
-        Debug.Log(player1.holster.card3.card.cardName+"\n");
-        Debug.Log(player1.holster.card4.card.cardName+"\n");
-
-        Debug.Log("Enemy Cards:\n");
-        Debug.Log(player2.holster.card1.card.cardName+"\n");
-        Debug.Log(player2.holster.card2.card.cardName+"\n");
-        Debug.Log(player2.holster.card3.card.cardName+"\n");
-        Debug.Log(player2.holster.card4.card.cardName+"\n");
-
-        State = Gamestate.PlayerTurn;
-        Debug.Log("State is: " + State);
-    }
-
-    void updateGameState(Gamestate newState) {
-        State = newState;
-
-        switch (newState) {
-            case Gamestate.PlayerTurn:
-                StartCoroutine(handlePlayerTurn());
-                break;
-            case Gamestate.OpponentTurn:
-                StartCoroutine(handleOpponentTurn());
-                break;
-            case Gamestate.Win:
-                handleWin();
-                break;
-            case Gamestate.Lose:
-                break;
-            default:
-                Debug.Log("That state action shouldn't have happened...");
-                break;
-        }
-    }
-
-    IEnumerator handlePlayerTurn() {
-        Debug.Log("You just took a turn");
-
-        yield return new WaitForSeconds(2f);
-        Debug.Log("You finished waiting 2 seconds");
-
-        player2.health.subHealth(10);
-        Debug.Log("Opponent's health is: " + player2.health.hp);
-        if(player2.health.dead) {
-            State = Gamestate.Win;
-            updateGameState(State);
-        } 
-
-        updatePlayerText();
-    }
-
-    public void endTurn() {
-        Debug.Log("You just ended your turn.");
-        State = Gamestate.OpponentTurn;
-        Debug.Log("State is: " + State);
-
-        updateGameState(State);
-    }
-
-    IEnumerator handleOpponentTurn() {
-        Debug.Log("Opponent took a turn");
-
-        yield return new WaitForSeconds(2f);
-
-        if(player1.health.dead) {
-            State = Gamestate.Lose;
-        } else {
-            State = Gamestate.PlayerTurn;
-        }
-
-        updatePlayerText();
-        updateGameState(State);
-    }
-
-    void handleWin() {
-        Debug.Log("YOU WON!");
-        notificationText.text = "YOU WIN!";
-    }
-
-    void handleLoss() {
-        Debug.Log("YOU LOST!");
-        notificationText.text = "YOU LOSE!";
-    }
-    */
+    
 }
 
 public enum Gamestate {

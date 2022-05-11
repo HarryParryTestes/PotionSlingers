@@ -19,6 +19,8 @@ public class ResponsePotionThrow extends GameResponse {
     private int cardPosition;
     private int targetId;
     private int damage;
+    private boolean isArtifact;
+    private boolean isVessel;
 
     public ResponsePotionThrow() {
         responseCode = Constants.SMSG_P_THROW;
@@ -36,6 +38,8 @@ public class ResponsePotionThrow extends GameResponse {
         packet.addInt32(cardPosition);
         packet.addInt32(targetId);
         packet.addInt32(damage);
+        packet.addBoolean(isArtifact);
+        packet.addBoolean(isVessel);
 
         Log.printf("Player with id %d has thrown potion in card slot %d", player.getID(), cardPosition);
 
@@ -46,10 +50,12 @@ public class ResponsePotionThrow extends GameResponse {
         this.player = player;
     }
 
-    public void setData(int throwerId, int cardPosition, int targetId, int damage) {
+    public void setData(int throwerId, int cardPosition, int targetId, int damage, boolean isArtifact, boolean isVessel) {
         this.throwerId = throwerId;
         this.cardPosition = cardPosition;
         this.targetId = targetId;
         this.damage = damage;
+        this.isArtifact = isArtifact;
+        this.isVessel = isVessel;
     }
 }

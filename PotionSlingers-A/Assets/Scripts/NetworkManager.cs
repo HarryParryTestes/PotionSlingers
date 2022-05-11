@@ -115,13 +115,14 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-    public bool SendThrowPotionRequest(int throwerId, int cardPosition, int targetId, int damage)
+    public bool SendThrowPotionRequest(int throwerId, int cardPosition, int targetId, int damage, bool isArtifact, bool isVessel)
     {
+		// Args Potion: throwerId, cardPosition, targetId, damage, isArtifact (T/F), isVessel (T/F), vesselSpot (1 or 2, 0 if not Vessel)
         if (cManager && cManager.IsConnected())
         {
             RequestPotionThrow request = new RequestPotionThrow();
             // request.send(damage, player, card, op);
-            request.send(throwerId, cardPosition, targetId, damage);
+            request.send(throwerId, cardPosition, targetId, damage, isArtifact, isVessel);
             cManager.send(request);
             return true;
         }
