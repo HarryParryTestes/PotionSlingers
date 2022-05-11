@@ -13,10 +13,10 @@ public class CardThrow : MonoBehaviour, IPointerDownHandler
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        // CharacterDisplay opCharacter = this.gameObject.GetComponent<CharacterDisplay>();
-        // Debug.Log("Attacking Char: " + opCharacter.character.cardName);
-        // manager.setOPName(opCharacter.character.cardName);
-        manager.setOPInt(id);
+        CharacterDisplay opCharacter = this.gameObject.GetComponent<CharacterDisplay>();
+        Debug.Log("Attacking Char: " + opCharacter.character.cardName);
+        manager.setOPName(opCharacter.character.cardName);
+        // manager.setOPInt(id);
         Throw();
     }
 

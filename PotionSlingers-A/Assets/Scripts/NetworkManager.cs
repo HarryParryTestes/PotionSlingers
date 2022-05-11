@@ -115,12 +115,13 @@ public class NetworkManager : MonoBehaviour
 		return false;
 	}
 
-    public bool SendThrowPotionRequest(int damage, int player, int card, int op)
+    public bool SendThrowPotionRequest(int throwerId, int cardPosition, int targetId, int damage)
     {
         if (cManager && cManager.IsConnected())
         {
             RequestPotionThrow request = new RequestPotionThrow();
-            request.send(damage, player, card, op);
+            // request.send(damage, player, card, op);
+            request.send(throwerId, cardPosition, targetId, damage);
             cManager.send(request);
             return true;
         }

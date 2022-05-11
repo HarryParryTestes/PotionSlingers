@@ -539,15 +539,17 @@ public class GameManager : MonoBehaviour
     public void throwPotion()
     {
         int damage = 0;
+        int targetUserId = 0;
         Debug.Log("GameManager Throw Potion");
 
-        // for (int i = 0; i < numPlayers; i++) 
-        // {
-        //     if(players[i].charName == selectedOpponentCharName) 
-        //     {
-        //         Debug.Log("Attacking Player: "+players[i].name);
-        //     }
-        // }
+        for (int i = 0; i < numPlayers; i++) 
+        {
+            if(players[i].charName == selectedOpponentCharName) 
+            {
+                Debug.Log("Attacking Player: "+players[i].name);
+                targetUserId = players[i].user_id;
+            }
+        }
 
         // check card type
         switch (selectedCardInt)
@@ -563,11 +565,15 @@ public class GameManager : MonoBehaviour
                     // send protocol to server
                     // also check if they're the current player
                     //if(Constants.USER_ID - 1 == currentPlayer)
-                    //{
-                    bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+
+                    // bool connected = networkManager.SendThrowPotionRequest(damage, currentPlayer + 1, selectedCardInt, selectedOpponentInt);
+                    bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage);
+
+                    // Update this on all clients?
                     td.addCard(players[currentPlayer].holster.cardList[selectedCardInt - 1]);
                     players[currentPlayer].potionsThrown++;
-                    sendSuccessMessage(2);
+
+                    sendSuccessMessage(2); // Only display on thrower's client.
                     break;
                     //}
                 } else if(players[currentPlayer].holster.card1.card.cardType == "Vessel")
@@ -588,6 +594,7 @@ public class GameManager : MonoBehaviour
                         sendSuccessMessage(4);
                     } else
                     {
+                        // "Can't throw an unloaded Vessel!"
                         //Debug.Log("Vessel Error");
                         sendErrorMessage(1);
                     }
@@ -603,6 +610,7 @@ public class GameManager : MonoBehaviour
                     }
                     else
                     {
+                        // "Can't use an unloaded Artifact!"
                         sendErrorMessage(0);
                     }
                 }
@@ -1165,29 +1173,29 @@ public class GameManager : MonoBehaviour
     public void onResponsePotionThrow(ExtendedEventArgs eventArgs)
     {
         ResponsePotionThrowEventArgs args = eventArgs as ResponsePotionThrowEventArgs;
-        Debug.Log("Constant: " + Constants.USER_ID);
-        Debug.Log("Damage: " + args.w);
-        Debug.Log("User ID: " + args.user_id);
-        Debug.Log("Current Player? " + args.x);
-        Debug.Log("Card Int: " + args.y);
-        Debug.Log("Opponent ID: " + args.z);
+        Debug.Log("My User_ID: " + Constants.USER_ID);
+        Debug.Log("Thrower ID: " + args.throwerId);
+        Debug.Log("Card Position: " + args.cardPosition);
+        Debug.Log("Target Opponent ID: " + args.targetId);
+        Debug.Log("Damage: " + args.damage);
 
-        /*
+        
         // Loops through players array to update target's health and thrower's holster.
         for(int i = 0; i < numPlayers; i++) {
             // Find Player in players array that got damaged.
-            if(players[i].user_id == args.z)
+            if(players[i].user_id == args.targetId)
             {
-                players[i].subHealth(args.w);
+                players[i].subHealth(args.damage);
             }
             // Update Holster of player who threw the Potion.
-            if(players[i].user_id == args.user_id) 
+            if(players[i].user_id == args.throwerId) 
             {
-                td.addCard(players[i].holster.cardList[args.y - 1]);
+                td.addCard(players[i].holster.cardList[args.cardPosition - 1]);
             }
         }
-        */
+        
 
+        /*
         // If the request didn't come from this Client
         if (Constants.USER_ID != args.user_id)
         {
@@ -1237,6 +1245,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
     public void sendSuccessMessage(int notif)

@@ -1,20 +1,24 @@
 package networking.response;
 
 // Other Imports
+import core.GameServer;
 import metadata.Constants;
 import model.Player;
 import utility.GamePacket;
 import utility.Log;
+
+import java.util.List;
+
 /**
  * The ResponseLogin class contains information about the authentication
  * process.
  */
 public class ResponsePotionThrow extends GameResponse {
     private Player player;
-    private int w;
-    private int x;
-    private int y;
-    private int z;
+    private int throwerId;
+    private int cardPosition;
+    private int targetId;
+    private int damage;
 
     public ResponsePotionThrow() {
         responseCode = Constants.SMSG_P_THROW;
@@ -23,13 +27,17 @@ public class ResponsePotionThrow extends GameResponse {
     @Override
     public byte[] constructResponseInBytes() {
         GamePacket packet = new GamePacket(responseCode);
-        packet.addInt32(player.getID());
-        packet.addInt32(w);
-        packet.addInt32(x);
-        packet.addInt32(y);
-        packet.addInt32(z);
 
-        Log.printf("Player with id %d has thrown potion in card slot %d", player.getID(), y);
+        if(player.getID() != throwerId) {
+            Log.printf("ERROR: throwerId is NOT equal to this client's player in RequestPotionThrow");
+        }
+
+        packet.addInt32(player.getID());
+        packet.addInt32(cardPosition);
+        packet.addInt32(targetId);
+        packet.addInt32(damage);
+
+        Log.printf("Player with id %d has thrown potion in card slot %d", player.getID(), cardPosition);
 
         return packet.getBytes();
     }
@@ -38,10 +46,10 @@ public class ResponsePotionThrow extends GameResponse {
         this.player = player;
     }
 
-    public void setData(int w, int x, int y, int z) {
-        this.w = w;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+    public void setData(int throwerId, int cardPosition, int targetId, int damage) {
+        this.throwerId = throwerId;
+        this.cardPosition = cardPosition;
+        this.targetId = targetId;
+        this.damage = damage;
     }
 }

@@ -13,6 +13,9 @@ public class Player {
     private int player_id;
     private String name;
     private String character;
+    // Maybe keep track of player health/cubes on server side too?
+    // private int playerHealth;
+    // private int essenceCubes;
     private GameClient client; // References GameClient instance
 
     public Player(int player_id) {
