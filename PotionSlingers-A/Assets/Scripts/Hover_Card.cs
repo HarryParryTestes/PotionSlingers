@@ -49,7 +49,11 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
     void Update() {
-
+        if(this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
+        {
+            transform.localScale = cachedScale;
+            gameObject.transform.position = originalPos;
+        }
     }
  
     // On mouse hovering over object: 
@@ -150,8 +154,11 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
     public void resetCard() {
+        canHover = true;
         transform.localScale = cachedScale;
         gameObject.transform.position = originalPos;
+        clicked = false;
+        cardSelected = false;
         highlighted.gameObject.SetActive(false);
     }
 

@@ -43,10 +43,10 @@ public class Player : MonoBehaviour
 
     public void updateHealthUI() {
         if(playerHP != null && playerHPCubes != null) {
-            // playerHP.GetComponent<Text>().text = hp.ToString();
-            // playerHPCubes.GetComponent<Text>().text = hpCubes.ToString();
-            playerHP.GetComponent<Text>().text = "HP: " + hp.ToString() + " /10";
-            playerHPCubes.GetComponent<Text>().text = "Cubes: " + hpCubes.ToString();
+            playerHP.GetComponent<Text>().text = hp.ToString();
+            playerHPCubes.GetComponent<Text>().text = hpCubes.ToString();
+            // playerHP.GetComponent<Text>().text = "HP: " + hp.ToString() + " /10";
+            // playerHPCubes.GetComponent<Text>().text = "Cubes: " + hpCubes.ToString();
         }
     }
 
