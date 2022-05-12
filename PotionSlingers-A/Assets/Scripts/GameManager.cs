@@ -161,7 +161,7 @@ public class GameManager : MonoBehaviour
         // Player 2 = Client 2 setup
         else if(Constants.USER_ID == mainMenuScript.p2UserId)
         {
-            myPlayerIndex = 1;
+            // myPlayerIndex = 1;
             players[0] = ob.GetComponent<Player>();
             // Sets mainPlayer area belonging to this client's user.
             players[0].user_id = Constants.USER_ID;
@@ -277,6 +277,10 @@ public class GameManager : MonoBehaviour
             else
             {
                 players[i].removeCurrentPlayer();
+            }
+            if(players[i].user_id == Constants.USER_ID)
+            {
+                myPlayerIndex = i;
             }
         }
     }
@@ -415,14 +419,75 @@ public class GameManager : MonoBehaviour
         */
     }
 
+// BUY RESPONSE
     public void onResponseBuy(ExtendedEventArgs eventArgs)
     {
         Debug.Log("ResponseBuy");
         ResponseBuyEventArgs args = eventArgs as ResponseBuyEventArgs;
-        Debug.Log("ID: " + args.user_id);
-        Debug.Log("cardInt: " + args.x);
-        Debug.Log("Price: " + args.y);
-        Debug.Log("T or B: " + args.z);
+        Debug.Log("ID: " + args.user_id); // User_id of player who made purchase
+        Debug.Log("cardInt: " + args.x); // Card position in market (1, 2, or 3)
+        Debug.Log("Price: " + args.y); // Int price of card purchased
+        Debug.Log("T or B: " + args.z); // Top (1) or Bottom (0) market that card was purchased from.
+
+        
+        for(int i = 0; i < numPlayers; i++)
+        {
+            // Find player who made the Buy request.
+            if(players[i].user_id == args.user_id)
+            {
+                // Subtracts pips from Player who made purchase (buy request)
+                players[i].subPips(args.y);
+
+                // If purchase was made from the top market
+                if(args.z == 1)
+                {
+                    // Update based on card position in the top market (1, 2, or 3)
+                    switch (args.x)
+                    {
+                        case 1:
+                            players[i].deck.putCardOnTop(md1.cardDisplay1.card);
+                            Card card = md1.popCard();
+                            md1.cardDisplay1.updateCard(card);
+                            break;
+                        case 2:
+                            players[i].deck.putCardOnTop(md1.cardDisplay2.card);
+                            Card card2 = md1.popCard();
+                            md1.cardDisplay2.updateCard(card2);
+                            break;
+                        case 3:
+                            players[i].deck.putCardOnTop(md1.cardDisplay3.card);
+                            Card card3 = md1.popCard();
+                            md1.cardDisplay3.updateCard(card3);
+                            break;
+                    }
+                }
+                // If purchase was made from the bottom market
+                else
+                {
+                    // Update based on card position in the bottom market (1, 2, or 3)
+                    switch (args.x)
+                    {
+                        case 1:
+                            players[i].deck.putCardOnTop(md2.cardDisplay1.card);
+                            Card card4 = md2.popCard();
+                            md2.cardDisplay1.updateCard(card4);
+                            break;
+                        case 2:
+                            players[i].deck.putCardOnTop(md2.cardDisplay2.card);
+                            Card card5 = md2.popCard();
+                            md2.cardDisplay2.updateCard(card5);
+                            break;
+                        case 3:
+                            players[i].deck.putCardOnTop(md2.cardDisplay3.card);
+                            Card card6 = md2.popCard();
+                            md2.cardDisplay3.updateCard(card6);
+                            break;
+                    }
+                }
+            }
+        }
+        
+        /*
         if (Constants.USER_ID != args.user_id)
         {
             // request coming fom p1
@@ -478,7 +543,8 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-        } else if(args.user_id == 2)
+        } 
+        else if(args.user_id == 2)
         {
             // if top market
             if (args.z == 1)
@@ -530,8 +596,10 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        */
     }
 
+// SELL RESPONSE
     public void onResponseSell(ExtendedEventArgs eventArgs)
     {
         Debug.Log("ResponseSell");
@@ -1203,19 +1271,21 @@ public class GameManager : MonoBehaviour
         */
     }
 
-    // subtract pips, update deck display and market display
+// TOP MARKET REQUEST
+// subtract pips, update deck display and market display
     public void topMarketBuy()
     {
         Debug.Log("Top Market Buy");
+
         switch (md1.cardInt)
         {
             case 1:
                 if(players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice)
                 {
-                    players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                    Card card = md1.popCard();
-                    md1.cardDisplay1.updateCard(card);
+                    // players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
+                    // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                    // Card card = md1.popCard();
+                    // md1.cardDisplay1.updateCard(card);
                     sendSuccessMessage(1);
                     bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                 } else
@@ -1226,10 +1296,10 @@ public class GameManager : MonoBehaviour
             case 2:
                 if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice)
                 {
-                    players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                    Card card = md1.popCard();
-                    md1.cardDisplay2.updateCard(card);
+                    // players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
+                    // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                    // Card card = md1.popCard();
+                    // md1.cardDisplay2.updateCard(card);
                     sendSuccessMessage(1);
                     bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                 }
@@ -1241,10 +1311,10 @@ public class GameManager : MonoBehaviour
             case 3:
                 if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice)
                 {
-                    players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                    Card card = md1.popCard();
-                    md1.cardDisplay3.updateCard(card);
+                    // players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
+                    // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                    // Card card = md1.popCard();
+                    // md1.cardDisplay3.updateCard(card);
                     sendSuccessMessage(1);
                     bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                 }
@@ -1259,18 +1329,20 @@ public class GameManager : MonoBehaviour
         }
     }
 
+// BOTTOM MARKET REQUEST
     public void bottomMarketBuy()
     {
         Debug.Log("Bottom Market Buy");
+
         switch (md2.cardInt)
         {
             case 1:
                 if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice)
                 {
-                    players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                    Card card = md2.popCard();
-                    md2.cardDisplay1.updateCard(card);
+                    // players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
+                    // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                    // Card card = md2.popCard();
+                    // md2.cardDisplay1.updateCard(card);
                     sendSuccessMessage(1);
                     bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                 }
@@ -1282,10 +1354,10 @@ public class GameManager : MonoBehaviour
             case 2:
                 if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice)
                 {
-                    players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                    Card card = md2.popCard();
-                    md2.cardDisplay2.updateCard(card);
+                    // players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
+                    // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                    // Card card = md2.popCard();
+                    // md2.cardDisplay2.updateCard(card);
                     sendSuccessMessage(1);
                     bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                 }
@@ -1297,10 +1369,10 @@ public class GameManager : MonoBehaviour
             case 3:
                 if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice)
                 {
-                    players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                    Card card = md2.popCard();
-                    md2.cardDisplay3.updateCard(card);
+                    // players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
+                    // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                    // Card card = md2.popCard();
+                    // md2.cardDisplay3.updateCard(card);
                     sendSuccessMessage(1);
                     bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                 }
