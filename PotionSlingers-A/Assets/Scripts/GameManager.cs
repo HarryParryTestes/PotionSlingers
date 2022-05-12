@@ -1837,7 +1837,8 @@ public class GameManager : MonoBehaviour
         else
         {
             td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-            // SEND TRASH REQUEST
+            // SEND TRASH REQUEST (int x, int y)
+            bool connected = networkManager.sendTrashRequest(selectedCardInt, 0);
             sendSuccessMessage(9);
         }
     }

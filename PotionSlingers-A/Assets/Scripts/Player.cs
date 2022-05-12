@@ -24,6 +24,10 @@ public class Player : MonoBehaviour
     public GameObject playerHPCubes;
     public GameObject playerPips;
     public GameObject currentPlayerHighlight;
+    public GameObject damageSign;
+    public GameObject damageAmount;
+    public GameObject healSign;
+    public GameObject healAmount;
 
     public Player(int user_id, string name)
     {
@@ -105,8 +109,8 @@ public class Player : MonoBehaviour
     //     }
     // }
 
-     public void subHealth(int health) {
-         hp -= health;
+     public void subHealth(int damage) {
+         hp -= damage;
 
          //Make sure that hp doesn't go below 0
          //If hp goes below 0, set it to 10 and subtract a health cube
@@ -119,10 +123,16 @@ public class Player : MonoBehaviour
             }
         }
 
-        Debug.Log("Subtracted "+health+"from "+charName);
+        Debug.Log("Subtracted "+damage+"from "+charName);
         Debug.Log(charName+"'s health = "+hp+" HP");
-
         updateHealthUI();
+
+        // Flashes damage sign
+        damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
+        damageSign.SetActive(true);
+        damageAmount.SetActive(true);
+        StartCoroutine(waitThreeSeconds(damageSign));
+        StartCoroutine(waitThreeSeconds(damageAmount));
      }
 
     // public void giveCube(Player player) {
@@ -147,5 +157,11 @@ public class Player : MonoBehaviour
     //function to call when checking on if the player is dead
     public bool checkDead() {
         return dead;
+    }
+
+    IEnumerator waitThreeSeconds(GameObject gameObj)
+    {
+        yield return new WaitForSeconds(3);
+        gameObj.SetActive(false);
     }
 }

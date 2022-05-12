@@ -8699,7 +8699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &178160950
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9273,6 +9273,10 @@ MonoBehaviour:
   playerHPCubes: {fileID: 169650269}
   playerPips: {fileID: 0}
   currentPlayerHighlight: {fileID: 1916230032}
+  damageSign: {fileID: 2068996101}
+  damageAmount: {fileID: 1181464431}
+  healSign: {fileID: 1651675818}
+  healAmount: {fileID: 974692135}
 --- !u!114 &189316755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26181,7 +26185,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &554961665
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38457,7 +38461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &807864803
 RectTransform:
   m_ObjectHideFlags: 0
@@ -54749,7 +54753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1181464432
 RectTransform:
   m_ObjectHideFlags: 0
@@ -59654,6 +59658,10 @@ MonoBehaviour:
   playerHPCubes: {fileID: 396140709}
   playerPips: {fileID: 1309516603}
   currentPlayerHighlight: {fileID: 1028870251}
+  damageSign: {fileID: 1734046287}
+  damageAmount: {fileID: 178160949}
+  healSign: {fileID: 301505643}
+  healAmount: {fileID: 1737492488}
 --- !u!114 &1316039904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59798,6 +59806,10 @@ MonoBehaviour:
   playerHPCubes: {fileID: 1825471942}
   playerPips: {fileID: 0}
   currentPlayerHighlight: {fileID: 629886734}
+  damageSign: {fileID: 550185180}
+  damageAmount: {fileID: 177182558}
+  healSign: {fileID: 164053555}
+  healAmount: {fileID: 48977211}
 --- !u!1 &1319871941
 GameObject:
   m_ObjectHideFlags: 0
@@ -79703,7 +79715,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1734046288
 RectTransform:
   m_ObjectHideFlags: 0
@@ -92385,6 +92397,10 @@ MonoBehaviour:
   playerHPCubes: {fileID: 1046238518}
   playerPips: {fileID: 0}
   currentPlayerHighlight: {fileID: 1413486416}
+  damageSign: {fileID: 554961664}
+  damageAmount: {fileID: 807864802}
+  healSign: {fileID: 514978359}
+  healAmount: {fileID: 1859431382}
 --- !u!1 &1986849682
 GameObject:
   m_ObjectHideFlags: 0
@@ -96073,7 +96089,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2068996102
 RectTransform:
   m_ObjectHideFlags: 0
