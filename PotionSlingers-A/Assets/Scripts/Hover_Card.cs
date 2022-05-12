@@ -55,16 +55,19 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // On mouse hovering over object: 
     // (aka when mouse cursor enters GameObject's X/Y/Z boundaries)
     public void OnPointerEnter(PointerEventData eventData) {
-        if(canHover) {
-            float width = rt.sizeDelta.x * rt.localScale.x;
-            float height = rt.sizeDelta.y * rt.localScale.y;
-            this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
-            //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
-            transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-            // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
+        if(this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+        {
+            if(canHover) {
+                float width = rt.sizeDelta.x * rt.localScale.x;
+                float height = rt.sizeDelta.y * rt.localScale.y;
+                this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+                //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
+                transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+                // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
 
-            // Card Hover sound effect:
-            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
+                // Card Hover sound effect:
+                FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
+            }
         }
     }
 
@@ -72,43 +75,49 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // (any click, a boolean tracks whether the click is to activate or deactivate something)
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        if (!clicked) {
-            if(!viewingCard) {
-                // cardSelected = !cardSelected;
-                cardSelected = true;
-                if(cardSelected) {
-                    canHover = false;
-                    clicked = true;
-                    transform.localScale = cachedScale;
-                    gameObject.transform.position = originalPos;
-                    cardMenu.gameObject.SetActive(true);
-                    highlighted.gameObject.SetActive(true);
+        if(this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+        {
+            if (!clicked) {
+                if(!viewingCard) {
+                    // cardSelected = !cardSelected;
+                    cardSelected = true;
+                    if(cardSelected) {
+                        canHover = false;
+                        clicked = true;
+                        transform.localScale = cachedScale;
+                        gameObject.transform.position = originalPos;
+                        cardMenu.gameObject.SetActive(true);
+                        highlighted.gameObject.SetActive(true);
+                    }
+                    // else if (!cardSelected) {
+                    //     clicked = false;
+                    //     canHover = true;
+                    //     transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+                    //     cardMenu.gameObject.SetActive(false);
+                    //     highlighted.gameObject.SetActive(false);
+                    // }
                 }
-                // else if (!cardSelected) {
-                //     clicked = false;
-                //     canHover = true;
-                //     transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-                //     cardMenu.gameObject.SetActive(false);
-                //     highlighted.gameObject.SetActive(false);
-                // }
             }
-        }
-        else if(clicked && cardSelected) {
-            clicked = false;
-            cardSelected = false;
-            canHover = true;
-            transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-            cardMenu.gameObject.SetActive(false);
-            highlighted.gameObject.SetActive(false);
+            else if(clicked && cardSelected) {
+                clicked = false;
+                cardSelected = false;
+                canHover = true;
+                transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+                cardMenu.gameObject.SetActive(false);
+                highlighted.gameObject.SetActive(false);
+            }
         }
     }
  
     // When mouse stops hovering over object:
     // (aka when mouse cursor exits GameObject's X/Y/Z boundaries)
     public void OnPointerExit(PointerEventData eventData) {
-        if(canHover) {
-            transform.localScale = cachedScale;
-            gameObject.transform.position = originalPos;
+        if(this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+        {
+            if(canHover) {
+                transform.localScale = cachedScale;
+                gameObject.transform.position = originalPos;
+            }
         }
     }
 
@@ -138,6 +147,12 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             canHover = true;
             highlighted.gameObject.SetActive(false);
         }
+    }
+
+    public void resetCard() {
+        transform.localScale = cachedScale;
+        gameObject.transform.position = originalPos;
+        highlighted.gameObject.SetActive(false);
     }
 
     public void ChooseAttackPlayer() {
