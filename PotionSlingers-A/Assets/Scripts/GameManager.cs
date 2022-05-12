@@ -310,7 +310,200 @@ public class GameManager : MonoBehaviour
         player.setDefaultTurn();
     }
 
-// END TURN REQUEST
+    public void setSCInt(int num)
+    {
+        selectedCardInt = num;
+    }
+
+    public void setOPInt(int num)
+    {
+        selectedOpponentInt = num;
+    }
+
+    public void setOPName(string characterName)
+    {
+        selectedOpponentCharName = characterName;
+    }
+
+    public void setLoadedInt(string cardName)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            if(players[myPlayerIndex].holster.cardList[i].card.cardName == cardName)
+            {
+                loadedCardInt = i;
+            }
+        }
+    }
+
+    // DONE: fix this to display properly
+    // DISPLAY OPPONENTS
+    public void displayOpponents()
+    {
+        // Displaying opponents to attack for 2 player game.
+        if(numPlayers == 2) 
+        {
+            // For all players that are not this client's player, display their character in attackMenu.
+            for (int i = 0; i < numPlayers; i++)
+            {
+                if(players[i].user_id != Constants.USER_ID) 
+                {
+                    // Updates middle slot in attackMenu.
+                    opTop.updateCharacter(players[i].character.character);
+                }
+            }
+        }
+
+        // Displaying opponents to attack for 3 player game.
+        if(numPlayers == 3) 
+        {
+            int tracker = 0;
+            // For all players that are not this client's player, display their character in attackMenu.
+            for (int i = 0; i < numPlayers; i++)
+            {
+                if(players[i].user_id != Constants.USER_ID) 
+                {
+                    if(tracker == 0) 
+                    {
+                        // Updates left slot in attackMenu.
+                        opLeft.updateCharacter(players[i].character.character);
+                    }
+                    else if(tracker == 1)
+                    {
+                        opTop.updateCharacter(players[i].character.character);
+                    }
+                }
+            }
+        }
+
+        // Displaying opponents to attack for 4 player game.
+        if(numPlayers == 4) 
+        {
+            int tracker = 0;
+            // For all players that are not this client's player, display their character in attackMenu.
+            for (int i = 0; i < numPlayers; i++)
+            {
+                if(players[i].user_id != Constants.USER_ID) 
+                {
+                    if(tracker == 0) 
+                    {
+                        // Updates left slot in attackMenu.
+                        opLeft.updateCharacter(players[i].character.character);
+                    }
+                    else if(tracker == 1)
+                    {
+                        opTop.updateCharacter(players[i].character.character);
+                    }
+                    else if(tracker == 2)
+                    {
+                        opRight.updateCharacter(players[i].character.character);
+                    }
+                }
+            }
+        }
+        
+        /*
+        int set = 0;
+        foreach (Player player in players)
+        {
+            if(player.user_id != players[myPlayerIndex].user_id)
+            {
+                if(set == 0)
+                {
+                    foreach(Character character in characters)
+                    {
+                        if(player.charName == character.cardName)
+                        {
+                            opLeft.updateCharacter(character);
+                            set++;
+                        }
+                    }
+                }
+
+                if (set == 1)
+                {
+                    foreach (Character character in characters)
+                    {
+                        if (player.charName == character.cardName)
+                        {
+                            opTop.updateCharacter(character);
+                            set++;
+                        }
+                    }
+                }
+
+                if (set == 2)
+                {
+                    foreach (Character character in characters)
+                    {
+                        if (player.charName == character.cardName)
+                        {
+                            opRight.updateCharacter(character);
+                        }
+                    }
+                }
+            }
+        }
+        */
+    }
+
+    // find potions and display them in LoadItemMenu
+    // DONE: fix this to display properly
+    public void displayPotions()
+    {
+        int set = 0;
+        loadMenu.transform.Find("Card (Left)").gameObject.SetActive(true);
+        loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(true);
+        loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
+        CardDisplay left = loadMenu.transform.Find("Card (Left)").GetComponent<CardDisplay>();
+        CardDisplay middle = loadMenu.transform.Find("Card (Middle)").GetComponent<CardDisplay>();
+        CardDisplay right = loadMenu.transform.Find("Card (Right)").GetComponent<CardDisplay>();
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            // Debug.Log("CardName is: " + cd.card.cardName + ". CardType is: " + cd.card.cardType);
+            // if(cd.card.cardType.ToLower() == "potion")
+            if(cd.card.cardType.ToLower() == "artifact" || cd.card.cardType.ToLower() == "vessel")
+            {
+                Debug.Log("CardName is: " + cd.card.cardName);
+                switch (set)
+                {
+                    case 0:
+                        left.card = cd.card;
+                        Debug.Log("Left Card: " + left.card.cardName);
+                        left.updateCard(cd.card);
+                        set++;
+                        break;
+                    case 1:
+                        middle.card = cd.card;
+                        Debug.Log("Middle Card: " + middle.card.cardName);
+                        middle.updateCard(cd.card);
+                        set++;
+                        break;
+                    case 2:
+                        right.card = cd.card;
+                        Debug.Log("Right Card: " + right.card.cardName);
+                        right.updateCard(cd.card);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        if(set == 1)
+        {
+            // middle.updateCard(players[myPlayerIndex].deck.placeholder);
+            // right.updateCard(players[myPlayerIndex].deck.placeholder);
+            loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(false);
+            loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+        }
+        if(set == 2)
+        {
+            // right.updateCard(players[myPlayerIndex].deck.placeholder);
+            loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+        }
+    }
+
+    // END TURN REQUEST
     public void endTurn()
     {
         // If this client isn't the current player, display error message.
@@ -420,545 +613,7 @@ public class GameManager : MonoBehaviour
         */
     }
 
-// BUY RESPONSE
-    public void onResponseBuy(ExtendedEventArgs eventArgs)
-    {
-        Debug.Log("ResponseBuy");
-        ResponseBuyEventArgs args = eventArgs as ResponseBuyEventArgs;
-        Debug.Log("ID: " + args.user_id); // User_id of player who made purchase
-        Debug.Log("cardInt: " + args.x); // Card position in market (1, 2, or 3)
-        Debug.Log("Price: " + args.y); // Int price of card purchased
-        Debug.Log("T or B: " + args.z); // Top (1) or Bottom (0) market that card was purchased from.
-
-        
-        for(int i = 0; i < numPlayers; i++)
-        {
-            // Find player who made the Buy request.
-            if(players[i].user_id == args.user_id)
-            {
-                // Subtracts pips from Player who made purchase (buy request)
-                players[i].subPips(args.y);
-
-                // If purchase was made from the top market
-                if(args.z == 1)
-                {
-                    // Update based on card position in the top market (1, 2, or 3)
-                    switch (args.x)
-                    {
-                        case 1:
-                            players[i].deck.putCardOnTop(md1.cardDisplay1.card);
-                            Card card = md1.popCard();
-                            md1.cardDisplay1.updateCard(card);
-                            break;
-                        case 2:
-                            players[i].deck.putCardOnTop(md1.cardDisplay2.card);
-                            Card card2 = md1.popCard();
-                            md1.cardDisplay2.updateCard(card2);
-                            break;
-                        case 3:
-                            players[i].deck.putCardOnTop(md1.cardDisplay3.card);
-                            Card card3 = md1.popCard();
-                            md1.cardDisplay3.updateCard(card3);
-                            break;
-                    }
-                }
-                // If purchase was made from the bottom market
-                else
-                {
-                    // Update based on card position in the bottom market (1, 2, or 3)
-                    switch (args.x)
-                    {
-                        case 1:
-                            players[i].deck.putCardOnTop(md2.cardDisplay1.card);
-                            Card card4 = md2.popCard();
-                            md2.cardDisplay1.updateCard(card4);
-                            break;
-                        case 2:
-                            players[i].deck.putCardOnTop(md2.cardDisplay2.card);
-                            Card card5 = md2.popCard();
-                            md2.cardDisplay2.updateCard(card5);
-                            break;
-                        case 3:
-                            players[i].deck.putCardOnTop(md2.cardDisplay3.card);
-                            Card card6 = md2.popCard();
-                            md2.cardDisplay3.updateCard(card6);
-                            break;
-                    }
-                }
-            }
-        }
-        
-        /*
-        if (Constants.USER_ID != args.user_id)
-        {
-            // request coming fom p1
-            if(args.user_id == 1)
-            {
-                // if top market
-                if(args.z == 1)
-                {
-                    switch (args.x)
-                    {
-                        case 1:
-                            players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                            Card card = md1.popCard();
-                            md1.cardDisplay1.updateCard(card);
-                            break;
-                        case 2:
-                            players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                            Card card2 = md1.popCard();
-                            md1.cardDisplay2.updateCard(card2);
-                            break;
-                        case 3:
-                            players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                            Card card3 = md1.popCard();
-                            md1.cardDisplay3.updateCard(card3);
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (args.x)
-                    {
-                        case 1:
-                            players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                            Card card4 = md2.popCard();
-                            md2.cardDisplay1.updateCard(card4);
-                            break;
-                        case 2:
-                            players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                            Card card5 = md2.popCard();
-                            md2.cardDisplay2.updateCard(card5);
-                            break;
-                        case 3:
-                            players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                            Card card6 = md2.popCard();
-                            md2.cardDisplay3.updateCard(card6);
-                            break;
-                    }
-                }
-            }
-        } 
-        else if(args.user_id == 2)
-        {
-            // if top market
-            if (args.z == 1)
-            {
-                switch (args.x)
-                {
-                    case 1:
-                        players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay1.updateCard(card);
-                        break;
-                    case 2:
-                        players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                        Card card2 = md1.popCard();
-                        md1.cardDisplay2.updateCard(card2);
-                        break;
-                    case 3:
-                        players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                        Card card3 = md1.popCard();
-                        md1.cardDisplay3.updateCard(card3);
-                        break;
-                }
-            }
-            else
-            {
-                switch (args.x)
-                {
-                    case 1:
-                        players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                        Card card4 = md2.popCard();
-                        md2.cardDisplay1.updateCard(card4);
-                        break;
-                    case 2:
-                        players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                        Card card5 = md2.popCard();
-                        md2.cardDisplay2.updateCard(card5);
-                        break;
-                    case 3:
-                        players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                        Card card6 = md2.popCard();
-                        md2.cardDisplay3.updateCard(card6);
-                        break;
-                }
-            }
-        }
-        */
-    }
-
-// SELL RESPONSE
-    public void onResponseSell(ExtendedEventArgs eventArgs)
-    {
-        Debug.Log("ResponseSell");
-        ResponseSellEventArgs args = eventArgs as ResponseSellEventArgs;
-        Debug.Log("ID: " + args.user_id);
-        Debug.Log("cardInt: " + args.x);
-        Debug.Log("Sell Price: " + args.y);
-
-        if (Constants.USER_ID != args.user_id)
-        {
-            players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[args.x - 1].card.sellPrice;
-            td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
-
-        }
-    }
-
-    // LOAD REQUEST
-    public void loadPotion()
-    {
-        Debug.Log("Load Potion");
-
-        // TODO: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
-        // test for protocol, must replace parameters later
-        // bool connected = networkManager.sendLoadRequest(0, 0);
-
-        // if it's an artifact or vessel
-        if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion") 
-        {
-            // Loading a Vessel:
-            if(players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Vessel")
-            {
-                // Enable Vessel menu if it wasn't already enabled.
-                Debug.Log("Vessel menu enabled.");
-                // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
-
-                // Check for existing loaded potion(s) if Vessel menu was already enabled.
-                if(players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
-                {
-                    // If Vessel slot 2 is filled.
-                    if(players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
-                    {
-                        Debug.Log("Vessel is fully loaded!");
-                        // TODO: Insert error that displays on screen.
-                        // sendErrorMessage(#);
-                    }
-                    else 
-                    {
-                        // Fill Vessel slot 2 with loaded potion.
-                        // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
-                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-
-                        bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
-                        sendSuccessMessage(5);
-                        Debug.Log("Potion loaded in Vessel slot 2!");
-
-                        // // Updates Holster card to be empty.
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
-                    }
-                }
-                // Vessel slot 1 is unloaded.
-                else
-                {
-                    // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
-                    // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                    // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-
-                    bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
-                    sendSuccessMessage(5);
-                    Debug.Log("Potion loaded in Vessel slot 1!");
-
-                    // // Updates Holster card to be empty.
-                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
-                }
-            }
-            
-            // Loading an Artifact:
-            else if(players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Artifact")
-            {
-                // Enable Artifact menu if it wasn't already enabled.
-                Debug.Log("Artifact menu enabled.");
-                // players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
-
-                // Check for existing loaded potion if Artifact menu was already enabled.
-                if(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
-                {
-                    Debug.Log("Artifact is fully loaded!");
-                    // TODO: Insert error that displays on screen.
-                    // sendErrorMessage(#);
-                }
-                // Artifact slot is unloaded.
-                else
-                {
-                    // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
-                    // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                    // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-                    bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
-                    sendSuccessMessage(5);
-                    Debug.Log("Potion loaded in Artifact slot!");
-
-                    // // Updates Holster card to be empty.
-                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
-                }
-            }
-        }
-    }
-
-    // LOAD RESPONSE
-    public void onResponseLoad(ExtendedEventArgs eventArgs)
-    {
-        Debug.Log("Load Response");
-        ResponseLoadEventArgs args = eventArgs as ResponseLoadEventArgs;
-        // args = (user_id, x = selectedCardInt, y = loadedCardInt)
-
-        // Find relative index in players[] of the player who made loader request.
-        int loaderIndex = -1;
-        for(int i = 0; i < numPlayers; i++) {
-            if(players[i].user_id == args.user_id) {
-                loaderIndex = i;
-            }
-        }
-
-        if(players[loaderIndex].holster.cardList[args.y].card.cardType == "Artifact")
-        {
-            Card placeholder = players[loaderIndex].holster.cardList[args.y].aPotion.card;
-            players[loaderIndex].holster.cardList[args.y].artifactSlot.transform.parent.gameObject.SetActive(true);
-            players[loaderIndex].holster.cardList[args.y].aPotion.card = players[loaderIndex].holster.cardList[args.x - 1].card;
-            players[loaderIndex].holster.cardList[args.y].aPotion.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
-            // Updates Holster card to be empty.
-            players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
-            players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
-        } 
-        else if(players[loaderIndex].holster.cardList[args.y].card.cardType == "Vessel")
-        {
-            players[loaderIndex].holster.cardList[args.y].vesselSlot1.transform.parent.gameObject.SetActive(true);
-            players[loaderIndex].holster.cardList[args.y].vesselSlot2.transform.parent.gameObject.SetActive(true);
-            if(players[loaderIndex].holster.cardList[args.y].vPotion1.card.cardName == "placeholder")
-            {
-                Card placeholder = players[loaderIndex].holster.cardList[args.y].vPotion1.card;
-                players[loaderIndex].holster.cardList[args.y].vPotion1.card = players[loaderIndex].holster.cardList[args.x - 1].card;
-                players[loaderIndex].holster.cardList[args.y].vPotion1.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
-                // Updates Holster card to be empty.
-                players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
-                players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
-            }
-            else if(players[loaderIndex].holster.cardList[args.y].vPotion2.card.cardName == "placeholder")
-            {
-                Card placeholder = players[loaderIndex].holster.cardList[args.y].vPotion2.card;
-                players[loaderIndex].holster.cardList[args.y].vPotion2.card = players[loaderIndex].holster.cardList[args.x - 1].card;
-                players[loaderIndex].holster.cardList[args.y].vPotion2.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
-                // Updates Holster card to be empty.
-                players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
-                players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
-            }
-        }
-
-        // TODO
-        // if(Constants.USER_ID != args.user_id)
-        // {
-        //     if(players[myPlayerIndex].holster.cardList[args.y].card.cardType == "Artifact")
-        //     {
-        //         players[myPlayerIndex].holster.cardList[args.y].artifactSlot.transform.parent.gameObject.SetActive(true);
-        //         players[myPlayerIndex].holster.cardList[args.y].aPotion.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
-        //         players[myPlayerIndex].holster.cardList[args.y].aPotion.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
-        //     } else if(players[myPlayerIndex].holster.cardList[args.y].card.cardType == "Vessel")
-        //     {
-        //         players[myPlayerIndex].holster.cardList[args.y].vesselSlot1.transform.parent.gameObject.SetActive(true);
-        //         players[myPlayerIndex].holster.cardList[args.y].vesselSlot2.transform.parent.gameObject.SetActive(true);
-        //         if(players[myPlayerIndex].holster.cardList[args.y].vPotion1.card.cardName != "placeholder")
-        //         {
-        //             players[myPlayerIndex].holster.cardList[args.y].vPotion1.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
-        //             players[myPlayerIndex].holster.cardList[args.y].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
-        //         }
-        //         else
-        //         {
-        //             players[myPlayerIndex].holster.cardList[args.y].vPotion2.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
-        //             players[myPlayerIndex].holster.cardList[args.y].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
-        //         }
-        //     }
-        // }
-    }
-
-    // CYCLE REQUEST
-    public void cycleCard()
-    {
-        Debug.Log("Cycle Card");
-        // Cycling a Potion (costs 0 pips to do)
-        if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
-        {
-            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
-            bool connected = networkManager.sendCycleRequest(selectedCardInt, 0);
-            sendSuccessMessage(7);
-            
-        }
-        // If Player has no pips to cycle an Artifact, Vessel, or Ring.
-        else if (players[myPlayerIndex].pips < 1)
-        {
-            // "You don't have enough Pips to cycle this!"
-            sendErrorMessage(5);
-        }
-        // Player has enough pips to cycle an Artifact, Vessel, or Ring.
-        else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact" ||
-                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel" ||
-                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Ring")
-        {
-            bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
-            sendSuccessMessage(7);
-        }
-        else
-        {
-            Debug.Log("ERROR: Card needs to be of type Potion, Artifact, Vessel, Ring");
-        }
-    }
-
-    // CYCLE RESPONSE
-    public void onResponseCycle(ExtendedEventArgs eventArgs)
-    {
-        // args = user_id, x = selectedCardInt or cardPosition, y = pips cost (0 or 1)
-        Debug.Log("Cycle Response");
-        ResponseCycleEventArgs args = eventArgs as ResponseCycleEventArgs;
-
-        int cardPosition = args.x - 1;
-
-        int cyclerIndex = -1;
-        for(int i = 0; i < numPlayers; i++)
-        {
-            if(args.user_id == players[i].user_id)
-            {
-                cyclerIndex = i;
-            }
-        }
-
-        Card placeholder = players[0].holster.card1.placeholder;
-
-        // Cycling a Potion (costs 0 pips to do)
-        if(players[cyclerIndex].holster.cardList[cardPosition].card.cardType == "Potion")
-        {
-            players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].card);
-            players[cyclerIndex].holster.cardList[cardPosition].card = placeholder;
-            players[cyclerIndex].holster.cardList[cardPosition].updateCard(placeholder);
-            
-        }
-
-        // Cycling an Artifact (costs 1 pip, also need to drop any loaded potion)
-        else if(players[cyclerIndex].holster.cardList[cardPosition].card.cardType == "Artifact")
-        {
-            // Subtracts a pip from the cycler.
-            players[cyclerIndex].subPips(1);
-
-            // Check if Artifact is loaded
-            // If loaded, Send card in artifact slot to bottom of deck, and update CardDisplay to placeholder
-            if(players[cyclerIndex].holster.cardList[cardPosition].aPotion.card.cardName != "placeholder")
-            {
-
-            }
-
-            // Cycle the artifact card itself (CHECK)
-            // Update the artifact card's position to have a placeholder card (CHECK)
-            players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].card);
-            players[cyclerIndex].holster.cardList[cardPosition].card = placeholder;
-            players[cyclerIndex].holster.cardList[cardPosition].updateCard(placeholder);
-
-            // If loaded, disable the artifact slot object - SetActive to false (CHECK)
-            players[cyclerIndex].holster.cardList[cardPosition].artifactSlot.transform.parent.gameObject.SetActive(false);
-        }
-
-        // Cycling an Vessel (costs 1 pip, also need to drop any loaded potions)
-        else if(players[cyclerIndex].holster.cardList[cardPosition].card.cardType == "Vessel")
-        {
-            // Subtracts a pip from the cycler.
-            players[cyclerIndex].subPips(1);
-
-            // If loaded with 1 or 2 potions, Send card(s) in vessel slot(s) to bottom of deck, and update CardDisplay(s) to placeholder (CHECK)
-            // If Vessel slot 1 is unloaded.
-            if(players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card.cardName != "placeholder")
-            {
-                // If Vessel's Slot 2 is loaded.
-                if(players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card.cardName != "placeholder")
-                {
-                    // Both Vessel slots are loaded.
-                    players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card);
-                    players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card);
-                    players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card = placeholder;
-                    players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card = placeholder;
-                    players[cyclerIndex].holster.cardList[cardPosition].vPotion1.updateCard(placeholder);
-                    players[cyclerIndex].holster.cardList[cardPosition].vPotion2.updateCard(placeholder);
-                }
-                else 
-                {
-                    // Only Vessel slot 1 is loaded.
-                    players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card);
-                    players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card = placeholder;
-                    players[cyclerIndex].holster.cardList[cardPosition].vPotion1.updateCard(placeholder);
-                }
-            }
-            // If Vessel slot 1 is unloaded.
-            else
-            {
-                // If Vessel's Slot 2 is loaded.
-                if(players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card.cardName != "placeholder")
-                {
-                    // Only Vessel slot 2 is loaded.
-                    players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card);
-                    players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card = placeholder;
-                    players[cyclerIndex].holster.cardList[cardPosition].vPotion2.updateCard(placeholder);
-                }
-                else 
-                {
-                    // No Vessel slots are loaded.
-                }
-            }
-            
-            // Cycle the Vessel card itself (CHECK)
-            // Update the Vessel card's position to have a placeholder card (CHECK)
-            players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].card);
-            players[cyclerIndex].holster.cardList[cardPosition].card = placeholder;
-            players[cyclerIndex].holster.cardList[cardPosition].updateCard(placeholder);
-
-            // If loaded, disable the vessel slot objects - SetActive to false (CHECK)
-            players[cyclerIndex].holster.cardList[cardPosition].vesselSlot1.transform.parent.gameObject.SetActive(false);
-            players[cyclerIndex].holster.cardList[cardPosition].vesselSlot2.transform.parent.gameObject.SetActive(false);
-        }
-
-        // Cycling a Ring (costs 1 pip to do)
-        else if(players[cyclerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Ring")
-        {
-            // Subtracts a pip from the cycler.
-            players[cyclerIndex].subPips(1);
-            players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].card);
-            players[cyclerIndex].holster.cardList[cardPosition].card = placeholder;
-            players[cyclerIndex].holster.cardList[cardPosition].updateCard(placeholder);
-        }
-
-        // if (Constants.USER_ID != args.user_id)
-        // {
-        //     players[myPlayerIndex].pips--;
-        //     players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[args.x - 1].card);
-        //     players[myPlayerIndex].holster.cardList[args.x - 1].updateCard(players[0].holster.card1.placeholder);
-        // }
-    }
-
-    // TRASH RESPONSE
-    public void onResponseTrash(ExtendedEventArgs eventArgs)
-    {
-        // args.x is cardInt
-        Debug.Log("Trash Response");
-        ResponseTrashEventArgs args = eventArgs as ResponseTrashEventArgs;
-
-        if(Constants.USER_ID != args.user_id)
-        {
-            td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
-        }
-    }
-
+    // THROW POTION REQUEST
     public void throwPotion()
     {
         // If this client isn't the current player, display error message.
@@ -1276,334 +931,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void setSCInt(int num)
-    {
-        selectedCardInt = num;
-    }
-
-    public void setOPInt(int num)
-    {
-        selectedOpponentInt = num;
-    }
-
-    public void setOPName(string characterName)
-    {
-        selectedOpponentCharName = characterName;
-    }
-
-    // find potions and display them in LoadItemMenu
-    // TODO: fix this to display properly
-    public void displayPotions()
-    {
-        int set = 0;
-        loadMenu.transform.Find("Card (Left)").gameObject.SetActive(true);
-        loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(true);
-        loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
-        CardDisplay left = loadMenu.transform.Find("Card (Left)").GetComponent<CardDisplay>();
-        CardDisplay middle = loadMenu.transform.Find("Card (Middle)").GetComponent<CardDisplay>();
-        CardDisplay right = loadMenu.transform.Find("Card (Right)").GetComponent<CardDisplay>();
-        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
-        {
-            // Debug.Log("CardName is: " + cd.card.cardName + ". CardType is: " + cd.card.cardType);
-            // if(cd.card.cardType.ToLower() == "potion")
-            if(cd.card.cardType.ToLower() == "artifact" || cd.card.cardType.ToLower() == "vessel")
-            {
-                Debug.Log("CardName is: " + cd.card.cardName);
-                switch (set)
-                {
-                    case 0:
-                        left.card = cd.card;
-                        Debug.Log("Left Card: " + left.card.cardName);
-                        left.updateCard(cd.card);
-                        set++;
-                        break;
-                    case 1:
-                        middle.card = cd.card;
-                        Debug.Log("Middle Card: " + middle.card.cardName);
-                        middle.updateCard(cd.card);
-                        set++;
-                        break;
-                    case 2:
-                        right.card = cd.card;
-                        Debug.Log("Right Card: " + right.card.cardName);
-                        right.updateCard(cd.card);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
-        if(set == 1)
-        {
-            // middle.updateCard(players[myPlayerIndex].deck.placeholder);
-            // right.updateCard(players[myPlayerIndex].deck.placeholder);
-            loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(false);
-            loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
-        }
-        if(set == 2)
-        {
-            // right.updateCard(players[myPlayerIndex].deck.placeholder);
-            loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
-        }
-    }
-
-    public void setLoadedInt(string cardName)
-    {
-        for(int i = 0; i < 4; i++)
-        {
-            if(players[myPlayerIndex].holster.cardList[i].card.cardName == cardName)
-            {
-                loadedCardInt = i;
-            }
-        }
-    }
-
-    // TODO: fix this to display properly
-    public void displayOpponents()
-    {
-        // Displaying opponents to attack for 2 player game.
-        if(numPlayers == 2) 
-        {
-            // For all players that are not this client's player, display their character in attackMenu.
-            for (int i = 0; i < numPlayers; i++)
-            {
-                if(players[i].user_id != Constants.USER_ID) 
-                {
-                    // Updates middle slot in attackMenu.
-                    opTop.updateCharacter(players[i].character.character);
-                }
-            }
-        }
-
-        // Displaying opponents to attack for 3 player game.
-        if(numPlayers == 3) 
-        {
-            int tracker = 0;
-            // For all players that are not this client's player, display their character in attackMenu.
-            for (int i = 0; i < numPlayers; i++)
-            {
-                if(players[i].user_id != Constants.USER_ID) 
-                {
-                    if(tracker == 0) 
-                    {
-                        // Updates left slot in attackMenu.
-                        opLeft.updateCharacter(players[i].character.character);
-                    }
-                    else if(tracker == 1)
-                    {
-                        opTop.updateCharacter(players[i].character.character);
-                    }
-                }
-            }
-        }
-
-        // Displaying opponents to attack for 4 player game.
-        if(numPlayers == 4) 
-        {
-            int tracker = 0;
-            // For all players that are not this client's player, display their character in attackMenu.
-            for (int i = 0; i < numPlayers; i++)
-            {
-                if(players[i].user_id != Constants.USER_ID) 
-                {
-                    if(tracker == 0) 
-                    {
-                        // Updates left slot in attackMenu.
-                        opLeft.updateCharacter(players[i].character.character);
-                    }
-                    else if(tracker == 1)
-                    {
-                        opTop.updateCharacter(players[i].character.character);
-                    }
-                    else if(tracker == 2)
-                    {
-                        opRight.updateCharacter(players[i].character.character);
-                    }
-                }
-            }
-        }
-        
-        /*
-        int set = 0;
-        foreach (Player player in players)
-        {
-            if(player.user_id != players[myPlayerIndex].user_id)
-            {
-                if(set == 0)
-                {
-                    foreach(Character character in characters)
-                    {
-                        if(player.charName == character.cardName)
-                        {
-                            opLeft.updateCharacter(character);
-                            set++;
-                        }
-                    }
-                }
-
-                if (set == 1)
-                {
-                    foreach (Character character in characters)
-                    {
-                        if (player.charName == character.cardName)
-                        {
-                            opTop.updateCharacter(character);
-                            set++;
-                        }
-                    }
-                }
-
-                if (set == 2)
-                {
-                    foreach (Character character in characters)
-                    {
-                        if (player.charName == character.cardName)
-                        {
-                            opRight.updateCharacter(character);
-                        }
-                    }
-                }
-            }
-        }
-        */
-    }
-
-// TOP MARKET REQUEST
-// subtract pips, update deck display and market display
-    public void topMarketBuy()
-    {
-        Debug.Log("Top Market Buy");
-
-        switch (md1.cardInt)
-        {
-            case 1:
-                if(players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice)
-                {
-                    // players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
-                    // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                    // Card card = md1.popCard();
-                    // md1.cardDisplay1.updateCard(card);
-                    sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
-                } else
-                {
-                    sendErrorMessage(6);
-                }
-                break;
-            case 2:
-                if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice)
-                {
-                    // players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
-                    // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                    // Card card = md1.popCard();
-                    // md1.cardDisplay2.updateCard(card);
-                    sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
-                }
-                else
-                {
-                    sendErrorMessage(6);
-                }
-                break;
-            case 3:
-                if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice)
-                {
-                    // players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
-                    // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                    // Card card = md1.popCard();
-                    // md1.cardDisplay3.updateCard(card);
-                    sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
-                }
-                else
-                {
-                    sendErrorMessage(6);
-                }
-                break;
-            default:
-                Debug.Log("MarketDeck Error!");
-                break;
-        }
-    }
-
-// BOTTOM MARKET REQUEST
-    public void bottomMarketBuy()
-    {
-        Debug.Log("Bottom Market Buy");
-
-        switch (md2.cardInt)
-        {
-            case 1:
-                if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice)
-                {
-                    // players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
-                    // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                    // Card card = md2.popCard();
-                    // md2.cardDisplay1.updateCard(card);
-                    sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
-                }
-                else
-                {
-                    sendErrorMessage(6);
-                }
-                break;
-            case 2:
-                if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice)
-                {
-                    // players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
-                    // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                    // Card card = md2.popCard();
-                    // md2.cardDisplay2.updateCard(card);
-                    sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
-                }
-                else
-                {
-                    sendErrorMessage(6);
-                }
-                break;
-            case 3:
-                if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice)
-                {
-                    // players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
-                    // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                    // Card card = md2.popCard();
-                    // md2.cardDisplay3.updateCard(card);
-                    sendSuccessMessage(1);
-                    bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
-                }
-                else
-                {
-                    sendErrorMessage(6);
-                }
-                break;
-            default:
-                Debug.Log("MarketDeck Error!");
-                break;
-        }
-    }
-
-    // SELL REQUEST
-    public void sellCard()
-    {
-        Debug.Log("Sell Card");
-        players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice;
-        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-        bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
-        sendSuccessMessage(8);
-    }
-
-    // TRASH REQUEST
-    public void trashCard()
-    {
-        Debug.Log("Trash Card");
-        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-        // SEND TRASH REQUEST
-        sendSuccessMessage(9);
-    }
-
-// THROW POTION RESPONSE
+    // THROW POTION RESPONSE
     public void onResponsePotionThrow(ExtendedEventArgs eventArgs)
     {
         ResponsePotionThrowEventArgs args = eventArgs as ResponsePotionThrowEventArgs;
@@ -1731,6 +1059,733 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    // LOAD REQUEST (DONE - 2 clients)
+    public void loadPotion()
+    {
+        Debug.Log("Load Potion");
+
+        // DONE?: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
+        // test for protocol, must replace parameters later
+        // bool connected = networkManager.sendLoadRequest(0, 0);
+
+        // If this client isn't the current player, display error message.
+        if(Constants.USER_ID != currentPlayerId) {
+            // "You are not the currentPlayer!"
+            sendErrorMessage(7);
+        }
+
+        // It is this player's turn.
+        else
+        {
+            // if it's an artifact or vessel
+            if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion") 
+            {
+                // Loading a Vessel:
+                if(players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Vessel")
+                {
+                    // Enable Vessel menu if it wasn't already enabled.
+                    Debug.Log("Vessel menu enabled.");
+                    // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
+
+                    // Check for existing loaded potion(s) if Vessel menu was already enabled.
+                    if(players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
+                    {
+                        // If Vessel slot 2 is filled.
+                        if(players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
+                        {
+                            Debug.Log("Vessel is fully loaded!");
+                            // DONE: Insert error that displays on screen.
+                            sendErrorMessage(9);
+                        }
+                        else 
+                        {
+                            // Fill Vessel slot 2 with loaded potion.
+                            // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
+                            // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                            // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+
+                            bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                            sendSuccessMessage(5);
+                            Debug.Log("Potion loaded in Vessel slot 2!");
+
+                            // // Updates Holster card to be empty.
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                        }
+                    }
+                    // Vessel slot 1 is unloaded.
+                    else
+                    {
+                        // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
+                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+
+                        bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        sendSuccessMessage(5);
+                        Debug.Log("Potion loaded in Vessel slot 1!");
+
+                        // // Updates Holster card to be empty.
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                    }
+                }
+                
+                // Loading an Artifact:
+                else if(players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Artifact")
+                {
+                    // Enable Artifact menu if it wasn't already enabled.
+                    Debug.Log("Artifact menu enabled.");
+                    // players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+
+                    // Check for existing loaded potion if Artifact menu was already enabled.
+                    if(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
+                    {
+                        Debug.Log("Artifact is fully loaded!");
+                        // DONE: Insert error that displays on screen.
+                        sendErrorMessage(8);
+                    }
+                    // Artifact slot is unloaded.
+                    else
+                    {
+                        // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
+                        // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                        // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                        bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        sendSuccessMessage(5);
+                        Debug.Log("Potion loaded in Artifact slot!");
+
+                        // // Updates Holster card to be empty.
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                    }
+                }
+            }
+        }
+    }
+
+    // LOAD RESPONSE (DONE - 2 clients)
+    public void onResponseLoad(ExtendedEventArgs eventArgs)
+    {
+        Debug.Log("Load Response");
+        ResponseLoadEventArgs args = eventArgs as ResponseLoadEventArgs;
+        // args = (user_id, x = selectedCardInt, y = loadedCardInt)
+
+        // Find relative index in players[] of the player who made loader request.
+        int loaderIndex = -1;
+        for(int i = 0; i < numPlayers; i++) {
+            if(players[i].user_id == args.user_id) {
+                loaderIndex = i;
+            }
+        }
+
+        if(players[loaderIndex].holster.cardList[args.y].card.cardType == "Artifact")
+        {
+            Card placeholder = players[loaderIndex].holster.cardList[args.y].aPotion.card;
+            players[loaderIndex].holster.cardList[args.y].artifactSlot.transform.parent.gameObject.SetActive(true);
+            players[loaderIndex].holster.cardList[args.y].aPotion.card = players[loaderIndex].holster.cardList[args.x - 1].card;
+            players[loaderIndex].holster.cardList[args.y].aPotion.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
+            // Updates Holster card to be empty.
+            players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
+            players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
+        } 
+        else if(players[loaderIndex].holster.cardList[args.y].card.cardType == "Vessel")
+        {
+            players[loaderIndex].holster.cardList[args.y].vesselSlot1.transform.parent.gameObject.SetActive(true);
+            players[loaderIndex].holster.cardList[args.y].vesselSlot2.transform.parent.gameObject.SetActive(true);
+            if(players[loaderIndex].holster.cardList[args.y].vPotion1.card.cardName == "placeholder")
+            {
+                Card placeholder = players[loaderIndex].holster.cardList[args.y].vPotion1.card;
+                players[loaderIndex].holster.cardList[args.y].vPotion1.card = players[loaderIndex].holster.cardList[args.x - 1].card;
+                players[loaderIndex].holster.cardList[args.y].vPotion1.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
+                // Updates Holster card to be empty.
+                players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
+                players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
+            }
+            else if(players[loaderIndex].holster.cardList[args.y].vPotion2.card.cardName == "placeholder")
+            {
+                Card placeholder = players[loaderIndex].holster.cardList[args.y].vPotion2.card;
+                players[loaderIndex].holster.cardList[args.y].vPotion2.card = players[loaderIndex].holster.cardList[args.x - 1].card;
+                players[loaderIndex].holster.cardList[args.y].vPotion2.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
+                // Updates Holster card to be empty.
+                players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
+                players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
+            }
+        }
+
+        // if(Constants.USER_ID != args.user_id)
+        // {
+        //     if(players[myPlayerIndex].holster.cardList[args.y].card.cardType == "Artifact")
+        //     {
+        //         players[myPlayerIndex].holster.cardList[args.y].artifactSlot.transform.parent.gameObject.SetActive(true);
+        //         players[myPlayerIndex].holster.cardList[args.y].aPotion.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
+        //         players[myPlayerIndex].holster.cardList[args.y].aPotion.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
+        //     } else if(players[myPlayerIndex].holster.cardList[args.y].card.cardType == "Vessel")
+        //     {
+        //         players[myPlayerIndex].holster.cardList[args.y].vesselSlot1.transform.parent.gameObject.SetActive(true);
+        //         players[myPlayerIndex].holster.cardList[args.y].vesselSlot2.transform.parent.gameObject.SetActive(true);
+        //         if(players[myPlayerIndex].holster.cardList[args.y].vPotion1.card.cardName != "placeholder")
+        //         {
+        //             players[myPlayerIndex].holster.cardList[args.y].vPotion1.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
+        //             players[myPlayerIndex].holster.cardList[args.y].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
+        //         }
+        //         else
+        //         {
+        //             players[myPlayerIndex].holster.cardList[args.y].vPotion2.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
+        //             players[myPlayerIndex].holster.cardList[args.y].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
+        //         }
+        //     }
+        // }
+    }
+
+    // CYCLE REQUEST (DONE - 2 clients)
+    public void cycleCard()
+    {
+        Debug.Log("Cycle Card");
+
+        // If this client isn't the current player, display error message.
+        if(Constants.USER_ID != currentPlayerId) {
+            // "You are not the currentPlayer!"
+            sendErrorMessage(7);
+        }
+
+        // It is this player's turn.
+        else
+        {
+            // Cycling a Potion (costs 0 pips to do)
+            if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+            {
+                // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
+                bool connected = networkManager.sendCycleRequest(selectedCardInt, 0);
+                sendSuccessMessage(7);
+                
+            }
+            // If Player has no pips to cycle an Artifact, Vessel, or Ring.
+            else if (players[myPlayerIndex].pips < 1)
+            {
+                // "You don't have enough Pips to cycle this!"
+                sendErrorMessage(5);
+            }
+            // Player has enough pips to cycle an Artifact, Vessel, or Ring.
+            else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact" ||
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel" ||
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Ring")
+            {
+                bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
+                sendSuccessMessage(7);
+            }
+            else
+            {
+                Debug.Log("ERROR: Card needs to be of type Potion, Artifact, Vessel, Ring");
+            }
+        }
+    }
+
+    // CYCLE RESPONSE (DONE - 2 clients)
+    public void onResponseCycle(ExtendedEventArgs eventArgs)
+    {
+        // args = user_id, x = selectedCardInt or cardPosition, y = pips cost (0 or 1)
+        Debug.Log("Cycle Response");
+        ResponseCycleEventArgs args = eventArgs as ResponseCycleEventArgs;
+
+        int cardPosition = args.x - 1;
+
+        int cyclerIndex = -1;
+        for(int i = 0; i < numPlayers; i++)
+        {
+            if(args.user_id == players[i].user_id)
+            {
+                cyclerIndex = i;
+            }
+        }
+
+        Card placeholder = players[0].holster.card1.placeholder;
+
+        // Cycling a Potion (costs 0 pips to do)
+        if(players[cyclerIndex].holster.cardList[cardPosition].card.cardType == "Potion")
+        {
+            players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].card);
+            players[cyclerIndex].holster.cardList[cardPosition].card = placeholder;
+            players[cyclerIndex].holster.cardList[cardPosition].updateCard(placeholder);
+            
+        }
+
+        // Cycling an Artifact (costs 1 pip, also need to drop any loaded potion)
+        else if(players[cyclerIndex].holster.cardList[cardPosition].card.cardType == "Artifact")
+        {
+            // Subtracts a pip from the cycler.
+            players[cyclerIndex].subPips(1);
+
+            // Check if Artifact is loaded
+            // If loaded, Send card in artifact slot to bottom of deck, and update CardDisplay to placeholder
+            if(players[cyclerIndex].holster.cardList[cardPosition].aPotion.card.cardName != "placeholder")
+            {
+
+            }
+
+            // Cycle the artifact card itself (CHECK)
+            // Update the artifact card's position to have a placeholder card (CHECK)
+            players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].card);
+            players[cyclerIndex].holster.cardList[cardPosition].card = placeholder;
+            players[cyclerIndex].holster.cardList[cardPosition].updateCard(placeholder);
+
+            // If loaded, disable the artifact slot object - SetActive to false (CHECK)
+            players[cyclerIndex].holster.cardList[cardPosition].artifactSlot.transform.parent.gameObject.SetActive(false);
+        }
+
+        // Cycling an Vessel (costs 1 pip, also need to drop any loaded potions)
+        else if(players[cyclerIndex].holster.cardList[cardPosition].card.cardType == "Vessel")
+        {
+            // Subtracts a pip from the cycler.
+            players[cyclerIndex].subPips(1);
+
+            // If loaded with 1 or 2 potions, Send card(s) in vessel slot(s) to bottom of deck, and update CardDisplay(s) to placeholder (CHECK)
+            // If Vessel slot 1 is unloaded.
+            if(players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card.cardName != "placeholder")
+            {
+                // If Vessel's Slot 2 is loaded.
+                if(players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card.cardName != "placeholder")
+                {
+                    // Both Vessel slots are loaded.
+                    players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card);
+                    players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card);
+                    players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card = placeholder;
+                    players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card = placeholder;
+                    players[cyclerIndex].holster.cardList[cardPosition].vPotion1.updateCard(placeholder);
+                    players[cyclerIndex].holster.cardList[cardPosition].vPotion2.updateCard(placeholder);
+                }
+                else 
+                {
+                    // Only Vessel slot 1 is loaded.
+                    players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card);
+                    players[cyclerIndex].holster.cardList[cardPosition].vPotion1.card = placeholder;
+                    players[cyclerIndex].holster.cardList[cardPosition].vPotion1.updateCard(placeholder);
+                }
+            }
+            // If Vessel slot 1 is unloaded.
+            else
+            {
+                // If Vessel's Slot 2 is loaded.
+                if(players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card.cardName != "placeholder")
+                {
+                    // Only Vessel slot 2 is loaded.
+                    players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card);
+                    players[cyclerIndex].holster.cardList[cardPosition].vPotion2.card = placeholder;
+                    players[cyclerIndex].holster.cardList[cardPosition].vPotion2.updateCard(placeholder);
+                }
+                else 
+                {
+                    // No Vessel slots are loaded.
+                }
+            }
+            
+            // Cycle the Vessel card itself (CHECK)
+            // Update the Vessel card's position to have a placeholder card (CHECK)
+            players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].card);
+            players[cyclerIndex].holster.cardList[cardPosition].card = placeholder;
+            players[cyclerIndex].holster.cardList[cardPosition].updateCard(placeholder);
+
+            // If loaded, disable the vessel slot objects - SetActive to false (CHECK)
+            players[cyclerIndex].holster.cardList[cardPosition].vesselSlot1.transform.parent.gameObject.SetActive(false);
+            players[cyclerIndex].holster.cardList[cardPosition].vesselSlot2.transform.parent.gameObject.SetActive(false);
+        }
+
+        // Cycling a Ring (costs 1 pip to do)
+        else if(players[cyclerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Ring")
+        {
+            // Subtracts a pip from the cycler.
+            players[cyclerIndex].subPips(1);
+            players[cyclerIndex].deck.putCardOnBottom(players[cyclerIndex].holster.cardList[cardPosition].card);
+            players[cyclerIndex].holster.cardList[cardPosition].card = placeholder;
+            players[cyclerIndex].holster.cardList[cardPosition].updateCard(placeholder);
+        }
+
+        // if (Constants.USER_ID != args.user_id)
+        // {
+        //     players[myPlayerIndex].pips--;
+        //     players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[args.x - 1].card);
+        //     players[myPlayerIndex].holster.cardList[args.x - 1].updateCard(players[0].holster.card1.placeholder);
+        // }
+    }
+
+    // SELL REQUEST
+    public void sellCard()
+    {
+        Debug.Log("Sell Card");
+        players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice;
+        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+        bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+        sendSuccessMessage(8);
+    }
+
+    // SELL RESPONSE
+    public void onResponseSell(ExtendedEventArgs eventArgs)
+    {
+        Debug.Log("ResponseSell");
+        ResponseSellEventArgs args = eventArgs as ResponseSellEventArgs;
+        Debug.Log("ID: " + args.user_id);
+        Debug.Log("cardInt: " + args.x);
+        Debug.Log("Sell Price: " + args.y);
+
+        if (Constants.USER_ID != args.user_id)
+        {
+            players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[args.x - 1].card.sellPrice;
+            td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
+
+        }
+    }
+
+// TOP MARKET REQUEST
+// subtract pips, update deck display and market display
+    public void topMarketBuy()
+    {
+        Debug.Log("Top Market Buy");
+
+        // If this client isn't the current player, display error message.
+        if(Constants.USER_ID != currentPlayerId) {
+            // "You are not the currentPlayer!"
+            sendErrorMessage(7);
+        }
+
+        // It is this player's turn.
+        else
+        {
+            // cardInt based on position of card in Top Market (position 1, 2, or 3)
+            switch (md1.cardInt)
+            {
+                case 1:
+                    if(players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice)
+                    {
+                        // players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
+                        // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                        // Card card = md1.popCard();
+                        // md1.cardDisplay1.updateCard(card);
+                        sendSuccessMessage(1);
+                        bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
+                    } else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                case 2:
+                    if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice)
+                    {
+                        // players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
+                        // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                        // Card card = md1.popCard();
+                        // md1.cardDisplay2.updateCard(card);
+                        sendSuccessMessage(1);
+                        bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                case 3:
+                    if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice)
+                    {
+                        // players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
+                        // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                        // Card card = md1.popCard();
+                        // md1.cardDisplay3.updateCard(card);
+                        sendSuccessMessage(1);
+                        bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                default:
+                    Debug.Log("MarketDeck Error!");
+                    break;
+            }
+        }
+    }
+
+// BOTTOM MARKET REQUEST
+    public void bottomMarketBuy()
+    {
+        Debug.Log("Bottom Market Buy");
+
+        // If this client isn't the current player, display error message.
+        if(Constants.USER_ID != currentPlayerId) {
+            // "You are not the currentPlayer!"
+            sendErrorMessage(7);
+        }
+
+        // It is this player's turn.
+        else
+        {
+            switch (md2.cardInt)
+            {
+                // cardInt based on position of card in Top Market (position 1, 2, or 3)
+                case 1:
+                    if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice)
+                    {
+                        // players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
+                        // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                        // Card card = md2.popCard();
+                        // md2.cardDisplay1.updateCard(card);
+                        sendSuccessMessage(1);
+                        bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                case 2:
+                    if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice)
+                    {
+                        // players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
+                        // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                        // Card card = md2.popCard();
+                        // md2.cardDisplay2.updateCard(card);
+                        sendSuccessMessage(1);
+                        bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                case 3:
+                    if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice)
+                    {
+                        // players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
+                        // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                        // Card card = md2.popCard();
+                        // md2.cardDisplay3.updateCard(card);
+                        sendSuccessMessage(1);
+                        bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                default:
+                    Debug.Log("MarketDeck Error!");
+                    break;
+            }
+        }
+    }
+
+    // BUY RESPONSE
+    public void onResponseBuy(ExtendedEventArgs eventArgs)
+    {
+        Debug.Log("ResponseBuy");
+        ResponseBuyEventArgs args = eventArgs as ResponseBuyEventArgs;
+        Debug.Log("ID: " + args.user_id); // User_id of player who made purchase
+        Debug.Log("cardInt: " + args.x); // Card position in market (1, 2, or 3)
+        Debug.Log("Price: " + args.y); // Int price of card purchased
+        Debug.Log("T or B: " + args.z); // Top (1) or Bottom (0) market that card was purchased from.
+
+        
+        for(int i = 0; i < numPlayers; i++)
+        {
+            // Find player who made the Buy request.
+            if(players[i].user_id == args.user_id)
+            {
+                // Subtracts pips from Player who made purchase (buy request)
+                players[i].subPips(args.y);
+
+                // If purchase was made from the top market
+                if(args.z == 1)
+                {
+                    // Update based on card position in the top market (1, 2, or 3)
+                    switch (args.x)
+                    {
+                        case 1:
+                            players[i].deck.putCardOnTop(md1.cardDisplay1.card);
+                            Card card = md1.popCard();
+                            md1.cardDisplay1.updateCard(card);
+                            break;
+                        case 2:
+                            players[i].deck.putCardOnTop(md1.cardDisplay2.card);
+                            Card card2 = md1.popCard();
+                            md1.cardDisplay2.updateCard(card2);
+                            break;
+                        case 3:
+                            players[i].deck.putCardOnTop(md1.cardDisplay3.card);
+                            Card card3 = md1.popCard();
+                            md1.cardDisplay3.updateCard(card3);
+                            break;
+                    }
+                }
+                // If purchase was made from the bottom market
+                else
+                {
+                    // Update based on card position in the bottom market (1, 2, or 3)
+                    switch (args.x)
+                    {
+                        case 1:
+                            players[i].deck.putCardOnTop(md2.cardDisplay1.card);
+                            Card card4 = md2.popCard();
+                            md2.cardDisplay1.updateCard(card4);
+                            break;
+                        case 2:
+                            players[i].deck.putCardOnTop(md2.cardDisplay2.card);
+                            Card card5 = md2.popCard();
+                            md2.cardDisplay2.updateCard(card5);
+                            break;
+                        case 3:
+                            players[i].deck.putCardOnTop(md2.cardDisplay3.card);
+                            Card card6 = md2.popCard();
+                            md2.cardDisplay3.updateCard(card6);
+                            break;
+                    }
+                }
+            }
+        }
+        
+        /*
+        if (Constants.USER_ID != args.user_id)
+        {
+            // request coming fom p1
+            if(args.user_id == 1)
+            {
+                // if top market
+                if(args.z == 1)
+                {
+                    switch (args.x)
+                    {
+                        case 1:
+                            players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
+                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                            Card card = md1.popCard();
+                            md1.cardDisplay1.updateCard(card);
+                            break;
+                        case 2:
+                            players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
+                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                            Card card2 = md1.popCard();
+                            md1.cardDisplay2.updateCard(card2);
+                            break;
+                        case 3:
+                            players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
+                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                            Card card3 = md1.popCard();
+                            md1.cardDisplay3.updateCard(card3);
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (args.x)
+                    {
+                        case 1:
+                            players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
+                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                            Card card4 = md2.popCard();
+                            md2.cardDisplay1.updateCard(card4);
+                            break;
+                        case 2:
+                            players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
+                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                            Card card5 = md2.popCard();
+                            md2.cardDisplay2.updateCard(card5);
+                            break;
+                        case 3:
+                            players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
+                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                            Card card6 = md2.popCard();
+                            md2.cardDisplay3.updateCard(card6);
+                            break;
+                    }
+                }
+            }
+        } 
+        else if(args.user_id == 2)
+        {
+            // if top market
+            if (args.z == 1)
+            {
+                switch (args.x)
+                {
+                    case 1:
+                        players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay1.updateCard(card);
+                        break;
+                    case 2:
+                        players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                        Card card2 = md1.popCard();
+                        md1.cardDisplay2.updateCard(card2);
+                        break;
+                    case 3:
+                        players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                        Card card3 = md1.popCard();
+                        md1.cardDisplay3.updateCard(card3);
+                        break;
+                }
+            }
+            else
+            {
+                switch (args.x)
+                {
+                    case 1:
+                        players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                        Card card4 = md2.popCard();
+                        md2.cardDisplay1.updateCard(card4);
+                        break;
+                    case 2:
+                        players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                        Card card5 = md2.popCard();
+                        md2.cardDisplay2.updateCard(card5);
+                        break;
+                    case 3:
+                        players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                        Card card6 = md2.popCard();
+                        md2.cardDisplay3.updateCard(card6);
+                        break;
+                }
+            }
+        }
+        */
+    }
+
+    // TRASH REQUEST
+    public void trashCard()
+    {
+        Debug.Log("Trash Card");
+
+        // If this client isn't the current player, display error message.
+        if(Constants.USER_ID != currentPlayerId) {
+            // "You are not the currentPlayer!"
+            sendErrorMessage(7);
+        }
+
+        // It is this player's turn.
+        else
+        {
+            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            // SEND TRASH REQUEST
+            sendSuccessMessage(9);
+        }
+    }
+
+    // TRASH RESPONSE
+    public void onResponseTrash(ExtendedEventArgs eventArgs)
+    {
+        // args.x is cardInt
+        Debug.Log("Trash Response");
+        ResponseTrashEventArgs args = eventArgs as ResponseTrashEventArgs;
+
+        if(Constants.USER_ID != args.user_id)
+        {
+            td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
+        }
+    }
+
     public void sendSuccessMessage(int notif)
     {
         GameObject message = successMessages[notif - 1];
@@ -1751,7 +1806,6 @@ public class GameManager : MonoBehaviour
         gameObj.SetActive(false);
     }
 
-    
 }
 
 public enum Gamestate {
