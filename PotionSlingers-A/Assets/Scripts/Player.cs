@@ -45,6 +45,7 @@ public class Player : MonoBehaviour
         if(playerHP != null && playerHPCubes != null) {
             playerHP.GetComponent<Text>().text = hp.ToString();
             playerHPCubes.GetComponent<Text>().text = hpCubes.ToString();
+            // playerHPCubes.GetComponent<Text>().text = "HP: "+hpCubes.ToString() + " /10";
         }
     }
 
