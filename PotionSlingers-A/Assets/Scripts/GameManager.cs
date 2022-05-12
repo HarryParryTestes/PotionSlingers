@@ -642,35 +642,79 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // (selectedCardInt, loadedCardInt)
+// LOAD RESPONSE
     public void onResponseLoad(ExtendedEventArgs eventArgs)
     {
         Debug.Log("Load Response");
         ResponseLoadEventArgs args = eventArgs as ResponseLoadEventArgs;
-        // TODO
-        if(Constants.USER_ID != args.user_id)
-        {
-            if(players[myPlayerIndex].holster.cardList[args.y].card.cardType == "Artifact")
-            {
-                players[myPlayerIndex].holster.cardList[args.y].artifactSlot.transform.parent.gameObject.SetActive(true);
-                players[myPlayerIndex].holster.cardList[args.y].aPotion.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
-                players[myPlayerIndex].holster.cardList[args.y].aPotion.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
-            } else if(players[myPlayerIndex].holster.cardList[args.y].card.cardType == "Vessel")
-            {
-                players[myPlayerIndex].holster.cardList[args.y].vesselSlot1.transform.parent.gameObject.SetActive(true);
-                players[myPlayerIndex].holster.cardList[args.y].vesselSlot2.transform.parent.gameObject.SetActive(true);
-                if(players[myPlayerIndex].holster.cardList[args.y].vPotion1.card.cardName != "placeholder")
-                {
-                    players[myPlayerIndex].holster.cardList[args.y].vPotion1.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
-                    players[myPlayerIndex].holster.cardList[args.y].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
-                }
-                else
-                {
-                    players[myPlayerIndex].holster.cardList[args.y].vPotion2.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
-                    players[myPlayerIndex].holster.cardList[args.y].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
-                }
+        // args = (user_id, x = selectedCardInt, y = loadedCardInt)
+
+        // Find relative index in players[] of the player who made loader request.
+        int loaderIndex = -1;
+        for(int i = 0; i < numPlayers; i++) {
+            if(players[i].user_id == args.user_id) {
+                loaderIndex = i;
             }
         }
+
+        if(players[loaderIndex].holster.cardList[args.y].card.cardType == "Artifact")
+        {
+            Card placeholder = players[loaderIndex].holster.cardList[args.y].aPotion.card;
+            players[loaderIndex].holster.cardList[args.y].artifactSlot.transform.parent.gameObject.SetActive(true);
+            players[loaderIndex].holster.cardList[args.y].aPotion.card = players[loaderIndex].holster.cardList[args.x - 1].card;
+            players[loaderIndex].holster.cardList[args.y].aPotion.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
+            // Updates Holster card to be empty.
+            players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
+            players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
+        } 
+        else if(players[loaderIndex].holster.cardList[args.y].card.cardType == "Vessel")
+        {
+            players[loaderIndex].holster.cardList[args.y].vesselSlot1.transform.parent.gameObject.SetActive(true);
+            players[loaderIndex].holster.cardList[args.y].vesselSlot2.transform.parent.gameObject.SetActive(true);
+            if(players[loaderIndex].holster.cardList[args.y].vPotion1.card.cardName == "placeholder")
+            {
+                Card placeholder = players[loaderIndex].holster.cardList[args.y].vPotion1.card;
+                players[loaderIndex].holster.cardList[args.y].vPotion1.card = players[loaderIndex].holster.cardList[args.x - 1].card;
+                players[loaderIndex].holster.cardList[args.y].vPotion1.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
+                // Updates Holster card to be empty.
+                players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
+                players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
+            }
+            else if(players[loaderIndex].holster.cardList[args.y].vPotion2.card.cardName == "placeholder")
+            {
+                Card placeholder = players[loaderIndex].holster.cardList[args.y].vPotion2.card;
+                players[loaderIndex].holster.cardList[args.y].vPotion2.card = players[loaderIndex].holster.cardList[args.x - 1].card;
+                players[loaderIndex].holster.cardList[args.y].vPotion2.updateCard(players[loaderIndex].holster.cardList[args.x - 1].card);
+                // Updates Holster card to be empty.
+                players[loaderIndex].holster.cardList[args.x - 1].card = placeholder;
+                players[loaderIndex].holster.cardList[args.x - 1].updateCard(placeholder);
+            }
+        }
+
+        // TODO
+        // if(Constants.USER_ID != args.user_id)
+        // {
+        //     if(players[myPlayerIndex].holster.cardList[args.y].card.cardType == "Artifact")
+        //     {
+        //         players[myPlayerIndex].holster.cardList[args.y].artifactSlot.transform.parent.gameObject.SetActive(true);
+        //         players[myPlayerIndex].holster.cardList[args.y].aPotion.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
+        //         players[myPlayerIndex].holster.cardList[args.y].aPotion.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
+        //     } else if(players[myPlayerIndex].holster.cardList[args.y].card.cardType == "Vessel")
+        //     {
+        //         players[myPlayerIndex].holster.cardList[args.y].vesselSlot1.transform.parent.gameObject.SetActive(true);
+        //         players[myPlayerIndex].holster.cardList[args.y].vesselSlot2.transform.parent.gameObject.SetActive(true);
+        //         if(players[myPlayerIndex].holster.cardList[args.y].vPotion1.card.cardName != "placeholder")
+        //         {
+        //             players[myPlayerIndex].holster.cardList[args.y].vPotion1.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
+        //             players[myPlayerIndex].holster.cardList[args.y].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
+        //         }
+        //         else
+        //         {
+        //             players[myPlayerIndex].holster.cardList[args.y].vPotion2.card = players[myPlayerIndex].holster.cardList[args.x - 1].card;
+        //             players[myPlayerIndex].holster.cardList[args.y].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[args.x - 1].card);
+        //         }
+        //     }
+        // }
     }
 
     public void throwPotion()
@@ -1061,6 +1105,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
+// LOAD REQUEST
     public void loadPotion()
     {
         Debug.Log("Load Potion");
@@ -1077,7 +1122,7 @@ public class GameManager : MonoBehaviour
             {
                 // Enable Vessel menu if it wasn't already enabled.
                 Debug.Log("Vessel menu enabled.");
-                players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
+                // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
 
                 // Check for existing loaded potion(s) if Vessel menu was already enabled.
                 if(players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
@@ -1087,36 +1132,38 @@ public class GameManager : MonoBehaviour
                     {
                         Debug.Log("Vessel is fully loaded!");
                         // TODO: Insert error that displays on screen.
+                        // sendErrorMessage(#);
                     }
                     else 
                     {
                         // Fill Vessel slot 2 with loaded potion.
-                        Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
-                        players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                        players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-                        sendSuccessMessage(5);
+                        // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
+                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
 
                         bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        sendSuccessMessage(5);
                         Debug.Log("Potion loaded in Vessel slot 2!");
 
-                        // Updates Holster card to be empty.
-                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                        // // Updates Holster card to be empty.
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                     }
                 }
                 // Vessel slot 1 is unloaded.
                 else
                 {
-                    Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
-                    players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                    players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-                    sendSuccessMessage(5);
+                    // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
+                    // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                    // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+
                     bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                    sendSuccessMessage(5);
                     Debug.Log("Potion loaded in Vessel slot 1!");
 
-                    // Updates Holster card to be empty.
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                    // // Updates Holster card to be empty.
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                 }
             }
             
@@ -1125,26 +1172,28 @@ public class GameManager : MonoBehaviour
             {
                 // Enable Artifact menu if it wasn't already enabled.
                 Debug.Log("Artifact menu enabled.");
-                players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+                // players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
 
                 // Check for existing loaded potion if Artifact menu was already enabled.
                 if(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
                 {
                     Debug.Log("Artifact is fully loaded!");
+                    // TODO: Insert error that displays on screen.
+                    // sendErrorMessage(#);
                 }
                 // Artifact slot is unloaded.
                 else
                 {
-                    Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
-                    players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                    players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-                    sendSuccessMessage(5);
+                    // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
+                    // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                    // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
                     bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                    sendSuccessMessage(5);
                     Debug.Log("Potion loaded in Artifact slot!");
 
-                    // Updates Holster card to be empty.
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                    // // Updates Holster card to be empty.
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                 }
             }
         }
