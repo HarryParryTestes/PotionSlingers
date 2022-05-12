@@ -1452,58 +1452,6 @@ public class GameManager : MonoBehaviour
         // }
     }
 
-    // SELL REQUEST
-    public void sellCard()
-    {
-        Debug.Log("Sell Card");
-
-        // If this client isn't the current player, display error message.
-        if(Constants.USER_ID != currentPlayerId) {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
-        }
-
-        // It is this player's turn.
-        else
-        {
-            // players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
-            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-            bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
-            sendSuccessMessage(8);
-            // MATTEO: Add sell SFX here.
-        }
-    }
-
-    // SELL RESPONSE
-    public void onResponseSell(ExtendedEventArgs eventArgs)
-    {
-        Debug.Log("ResponseSell");
-        ResponseSellEventArgs args = eventArgs as ResponseSellEventArgs;
-        Debug.Log("ID: " + args.user_id); // user_id of seller
-        Debug.Log("cardInt: " + args.x); // selectedCardInt or cardPosition
-        Debug.Log("Sell Price: " + args.y); // # of Pips the seller will get for selling the selected holster card.
-
-        int cardPosition = args.x - 1;
-        Card placeholder = players[0].holster.card1.placeholder;
-
-        for(int i = 0; i < numPlayers; i++) {
-            if(players[i].user_id == args.user_id)
-            {
-                players[i].addPips(players[i].holster.cardList[cardPosition].card.sellPrice);
-                td.addCard(players[i].holster.cardList[cardPosition]);
-                players[i].holster.cardList[cardPosition].card = placeholder;
-                players[i].holster.cardList[cardPosition].updateCard(placeholder);
-            }
-        }
-
-        // if (Constants.USER_ID != args.user_id)
-        // {
-        //     players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[args.x - 1].card.sellPrice;
-        //     td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
-
-        // }
-    }
-
 // TOP MARKET REQUEST
 // subtract pips, update deck display and market display
     public void topMarketBuy()
@@ -1822,6 +1770,58 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    // SELL REQUEST
+    public void sellCard()
+    {
+        Debug.Log("Sell Card");
+
+        // If this client isn't the current player, display error message.
+        if(Constants.USER_ID != currentPlayerId) {
+            // "You are not the currentPlayer!"
+            sendErrorMessage(7);
+        }
+
+        // It is this player's turn.
+        else
+        {
+            // players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+            sendSuccessMessage(8);
+            // MATTEO: Add sell SFX here.
+        }
+    }
+
+    // SELL RESPONSE
+    public void onResponseSell(ExtendedEventArgs eventArgs)
+    {
+        Debug.Log("ResponseSell");
+        ResponseSellEventArgs args = eventArgs as ResponseSellEventArgs;
+        Debug.Log("ID: " + args.user_id); // user_id of seller
+        Debug.Log("cardInt: " + args.x); // selectedCardInt or cardPosition
+        Debug.Log("Sell Price: " + args.y); // # of Pips the seller will get for selling the selected holster card.
+
+        int cardPosition = args.x - 1;
+        Card placeholder = players[0].holster.card1.placeholder;
+
+        for(int i = 0; i < numPlayers; i++) {
+            if(players[i].user_id == args.user_id)
+            {
+                players[i].addPips(players[i].holster.cardList[cardPosition].card.sellPrice);
+                td.addCard(players[i].holster.cardList[cardPosition]);
+                players[i].holster.cardList[cardPosition].card = placeholder;
+                players[i].holster.cardList[cardPosition].updateCard(placeholder);
+            }
+        }
+
+        // if (Constants.USER_ID != args.user_id)
+        // {
+        //     players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[args.x - 1].card.sellPrice;
+        //     td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
+
+        // }
+    }
+
     // TRASH REQUEST
     public void trashCard()
     {
@@ -1836,8 +1836,9 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
-            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-            // SEND TRASH REQUEST
+            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            // SEND TRASH REQUEST (int x, int y)
+            bool connected = networkManager.sendTrashRequest(selectedCardInt, 0);
             sendSuccessMessage(9);
         }
     }
@@ -1845,14 +1846,26 @@ public class GameManager : MonoBehaviour
     // TRASH RESPONSE
     public void onResponseTrash(ExtendedEventArgs eventArgs)
     {
-        // args.x is cardInt
+        // args.x is cardInt, args.y is 0
         Debug.Log("Trash Response");
         ResponseTrashEventArgs args = eventArgs as ResponseTrashEventArgs;
 
-        if(Constants.USER_ID != args.user_id)
-        {
-            td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
+        int cardPosition = args.x - 1;
+        Card placeholder = players[0].holster.card1.placeholder;
+
+        for(int i = 0; i < numPlayers; i++) {
+            if(players[i].user_id == args.user_id)
+            {
+                td.addCard(players[i].holster.cardList[cardPosition]);
+                players[i].holster.cardList[cardPosition].card = placeholder;
+                players[i].holster.cardList[cardPosition].updateCard(placeholder);
+            }
         }
+
+        // if(Constants.USER_ID != args.user_id)
+        // {
+        //     td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
+        // }
     }
 
     public void sendSuccessMessage(int notif)
