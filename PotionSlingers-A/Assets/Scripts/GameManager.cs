@@ -700,7 +700,7 @@ public class GameManager : MonoBehaviour
                         {
                             // "Can't throw an unloaded Vessel!"
                             //Debug.Log("Vessel Error");
-                            sendErrorMessage(1);
+                            sendErrorMessage(2);
                         }
                     }
                     else if (players[throwerIndex].holster.card1.card.cardType == "Artifact")
@@ -722,7 +722,7 @@ public class GameManager : MonoBehaviour
                         else
                         {
                             // "Can't use an unloaded Artifact!"
-                            sendErrorMessage(0);
+                            sendErrorMessage(1);
                         }
                     }
                     break;
@@ -780,7 +780,7 @@ public class GameManager : MonoBehaviour
                         else
                         {
                             Debug.Log("Vessel Error");
-                            sendErrorMessage(1);
+                            sendErrorMessage(2);
                         }
                     }
                     else if (players[throwerIndex].holster.card2.card.cardType == "Artifact")
@@ -799,7 +799,7 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            sendErrorMessage(0);
+                            sendErrorMessage(1);
                         }
                     }
                     break;
@@ -861,7 +861,7 @@ public class GameManager : MonoBehaviour
                         else
                         {
                             Debug.Log("Vessel Error");
-                            sendErrorMessage(1);
+                            sendErrorMessage(2);
                         }
                     }
                     else if (players[throwerIndex].holster.card3.card.cardType == "Artifact")
@@ -880,7 +880,7 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            sendErrorMessage(0);
+                            sendErrorMessage(1);
                         }
                     }
                     break;
@@ -937,7 +937,7 @@ public class GameManager : MonoBehaviour
                         else
                         {
                             Debug.Log("Vessel Error");
-                            sendErrorMessage(1);
+                            sendErrorMessage(2);
                         }
                     }
                     else if (players[throwerIndex].holster.card4.card.cardType == "Artifact")
@@ -957,7 +957,7 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            sendErrorMessage(0);
+                            sendErrorMessage(1);
                         }
                     }
                     break;
