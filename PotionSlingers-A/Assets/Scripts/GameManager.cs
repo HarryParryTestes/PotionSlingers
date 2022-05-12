@@ -540,6 +540,9 @@ public class GameManager : MonoBehaviour
             // Sends user_id of new current player based on index of new current player
             // in this client's players array.
             bool connected = networkManager.sendEndTurnRequest(newId);
+
+            // MATTEO: Add End Turn SFX here.
+
         }
 
         // myPlayerIndex++;
@@ -661,6 +664,8 @@ public class GameManager : MonoBehaviour
                         // Args Potion: throwerId, cardPosition, targetId, damage, isArtifact (T/F), isVessel (T/F)
                         bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
 
+                        // MATTEO: Add Potion throw SFX here.
+
                         // Update this on all clients?
                         // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                         // players[myPlayerIndex].potionsThrown++;
@@ -668,7 +673,8 @@ public class GameManager : MonoBehaviour
                         sendSuccessMessage(2); // Only display on thrower's client.
                         break;
                         //}
-                    } else if(players[throwerIndex].holster.card1.card.cardType == "Vessel")
+                    } 
+                    else if(players[throwerIndex].holster.card1.card.cardType == "Vessel")
                     {
                         // Check for two loaded potions in Veseel.
                         if(players[throwerIndex].holster.card1.vPotion1.card.cardName != "placeholder" &&
@@ -687,7 +693,10 @@ public class GameManager : MonoBehaviour
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
-                        } else
+                            // MATTEO: Add Vessel throw SFX here.
+
+                        } 
+                        else
                         {
                             // "Can't throw an unloaded Vessel!"
                             //Debug.Log("Vessel Error");
@@ -707,6 +716,8 @@ public class GameManager : MonoBehaviour
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
+                            // MATTEO: Add Artifact using SFX here.
+
                         }
                         else
                         {
@@ -727,6 +738,8 @@ public class GameManager : MonoBehaviour
 
                         bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
+                        // MATTEO: Add Potion throw SFX here.
+
                         break;
 
                         // send protocol to server
@@ -761,6 +774,8 @@ public class GameManager : MonoBehaviour
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
+                            // MATTEO: Add Vessel throw SFX here.
+
                         }
                         else
                         {
@@ -779,6 +794,8 @@ public class GameManager : MonoBehaviour
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
+                            // MATTEO: Add Artifact using SFX here.
+
                         }
                         else
                         {
@@ -797,6 +814,10 @@ public class GameManager : MonoBehaviour
 
                         bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
+
+                        // MATTEO: Add Potion throw SFX here.
+
+
                         break;
 
                         // send protocol to server
@@ -832,6 +853,9 @@ public class GameManager : MonoBehaviour
                             
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
+
+                            // MATTEO: Add Vessel throw SFX here.
+
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         }
                         else
@@ -849,6 +873,9 @@ public class GameManager : MonoBehaviour
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
+
+                            // MATTEO: Add Artifact throw SFX here.
+
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         }
                         else
@@ -867,6 +894,9 @@ public class GameManager : MonoBehaviour
                         }
                         bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
+
+                        // MATTEO: Add Potion throw SFX here.
+
                         break;
                         // send protocol to server
                         // also check if they're the current player
@@ -899,6 +929,9 @@ public class GameManager : MonoBehaviour
 
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
+
+                            // MATTEO: Add Vessel throw SFX here.
+
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         }
                         else
@@ -917,6 +950,9 @@ public class GameManager : MonoBehaviour
 
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
+
+                            // MATTEO: Add Artifact using SFX here.
+
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         }
                         else
@@ -1108,6 +1144,8 @@ public class GameManager : MonoBehaviour
                             sendSuccessMessage(5);
                             Debug.Log("Potion loaded in Vessel slot 2!");
 
+                            // MATTEO: Add Loading potion SFX here.
+
                             // // Updates Holster card to be empty.
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
@@ -1123,6 +1161,8 @@ public class GameManager : MonoBehaviour
                         bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         Debug.Log("Potion loaded in Vessel slot 1!");
+
+                        // MATTEO: Add Loading potion SFX here.
 
                         // // Updates Holster card to be empty.
                         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
@@ -1153,6 +1193,8 @@ public class GameManager : MonoBehaviour
                         bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         Debug.Log("Potion loaded in Artifact slot!");
+
+                        // MATTEO: Add Loading potion SFX here.
 
                         // // Updates Holster card to be empty.
                         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
@@ -1258,6 +1300,7 @@ public class GameManager : MonoBehaviour
                 // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
                 bool connected = networkManager.sendCycleRequest(selectedCardInt, 0);
                 sendSuccessMessage(7);
+                // MATTEO: Add Cycle SFX here.
                 
             }
             // If Player has no pips to cycle an Artifact, Vessel, or Ring.
@@ -1273,6 +1316,7 @@ public class GameManager : MonoBehaviour
             {
                 bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
                 sendSuccessMessage(7);
+                // MATTEO: Add Cycle SFX here.
             }
             else
             {
@@ -1412,10 +1456,22 @@ public class GameManager : MonoBehaviour
     public void sellCard()
     {
         Debug.Log("Sell Card");
-        players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice;
-        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-        bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
-        sendSuccessMessage(8);
+
+        // If this client isn't the current player, display error message.
+        if(Constants.USER_ID != currentPlayerId) {
+            // "You are not the currentPlayer!"
+            sendErrorMessage(7);
+        }
+
+        // It is this player's turn.
+        else
+        {
+            // players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+            sendSuccessMessage(8);
+            // MATTEO: Add sell SFX here.
+        }
     }
 
     // SELL RESPONSE
@@ -1423,16 +1479,29 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("ResponseSell");
         ResponseSellEventArgs args = eventArgs as ResponseSellEventArgs;
-        Debug.Log("ID: " + args.user_id);
-        Debug.Log("cardInt: " + args.x);
-        Debug.Log("Sell Price: " + args.y);
+        Debug.Log("ID: " + args.user_id); // user_id of seller
+        Debug.Log("cardInt: " + args.x); // selectedCardInt or cardPosition
+        Debug.Log("Sell Price: " + args.y); // # of Pips the seller will get for selling the selected holster card.
 
-        if (Constants.USER_ID != args.user_id)
-        {
-            players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[args.x - 1].card.sellPrice;
-            td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
+        int cardPosition = args.x - 1;
+        Card placeholder = players[0].holster.card1.placeholder;
 
+        for(int i = 0; i < numPlayers; i++) {
+            if(players[i].user_id == args.user_id)
+            {
+                players[i].addPips(players[i].holster.cardList[cardPosition].card.sellPrice);
+                td.addCard(players[i].holster.cardList[cardPosition]);
+                players[i].holster.cardList[cardPosition].card = placeholder;
+                players[i].holster.cardList[cardPosition].updateCard(placeholder);
+            }
         }
+
+        // if (Constants.USER_ID != args.user_id)
+        // {
+        //     players[myPlayerIndex].pips += players[myPlayerIndex].holster.cardList[args.x - 1].card.sellPrice;
+        //     td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
+
+        // }
     }
 
 // TOP MARKET REQUEST
