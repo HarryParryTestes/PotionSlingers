@@ -12,5 +12,5 @@
 1. Once you're playing the game in the TitleScene, press the Play button.
 2. Proceed to press Login, then once "logged in", press the Play button again to choose a character.
 3. Once a Character is chosen, you will end up in the lobby.
-4. Once all players (separate clients) are in the lobby (two clients/players for now) hit the Not Ready button to Ready up.
+4. Once all players (separate clients) are in the lobby, hit the Not Ready button to Ready up.
 5. After all players Ready up, the scene will transition into the GameScene, where the actual game begins!
