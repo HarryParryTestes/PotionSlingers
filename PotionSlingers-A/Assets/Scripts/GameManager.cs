@@ -651,11 +651,18 @@ public class GameManager : MonoBehaviour
                 case 1:
                     if (players[throwerIndex].holster.card1.card.cardType == "Potion")
                     {
+                        // I'm gonna move this logic into the Player class when I am checking the bonuses attached
+                        // to the player once they throw the potion
+
                         damage = players[throwerIndex].holster.card1.card.effectAmount;
+                        damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+                        /*
                         if (players[throwerIndex].ringBonus && players[throwerIndex].potionsThrown == 0)
                         {
                             damage++;
                         }
+                        */
+
                         // send protocol to server
                         // also check if they're the current player
                         //if(Constants.USER_ID - 1 == myPlayerIndex)
@@ -682,6 +689,7 @@ public class GameManager : MonoBehaviour
                             players[throwerIndex].holster.card1.vPotion2.card.cardName != "placeholder")
                         {
                             damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
+                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                             // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card1.vPotion1.card);
                             // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card1.vPotion2.card);
                             // players[myPlayerIndex].holster.card1.vPotion1.updateCard(players[0].deck.placeholder);
@@ -711,11 +719,12 @@ public class GameManager : MonoBehaviour
                         if (players[throwerIndex].holster.card1.aPotion.card.cardName != "placeholder")
                         {
                             damage = players[throwerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            
+                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+
                             // Update response to account for trashing loaded artifact's potion and not the artifact
                             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
-                            
+
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
@@ -735,10 +744,7 @@ public class GameManager : MonoBehaviour
                     if (players[throwerIndex].holster.card2.card.cardType == "Potion")
                     {
                         damage = players[throwerIndex].holster.card2.card.effectAmount;
-                        if (players[throwerIndex].ringBonus && players[throwerIndex].potionsThrown == 0)
-                        {
-                            damage++;
-                        }
+                        damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
 
                         bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
@@ -767,7 +773,8 @@ public class GameManager : MonoBehaviour
                             players[throwerIndex].holster.card2.vPotion2.card.cardName != "placeholder")
                         {
                             damage = players[throwerIndex].holster.card2.vPotion1.card.effectAmount + players[throwerIndex].holster.card2.vPotion2.card.effectAmount;
-                            
+                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+
                             // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card2.vPotion1.card);
                             // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card2.vPotion2.card);
                             // players[myPlayerIndex].holster.card2.vPotion1.updateCard(players[0].deck.placeholder);
@@ -795,6 +802,7 @@ public class GameManager : MonoBehaviour
                         if (players[throwerIndex].holster.card2.aPotion.card.cardName != "placeholder")
                         {
                             damage = players[throwerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
@@ -816,10 +824,7 @@ public class GameManager : MonoBehaviour
                     if (players[throwerIndex].holster.card3.card.cardType == "Potion")
                     {
                         damage = players[throwerIndex].holster.card3.card.effectAmount;
-                        if (players[throwerIndex].ringBonus && players[throwerIndex].potionsThrown == 0)
-                        {
-                            damage++;
-                        }
+                        damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
 
                         bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
@@ -853,6 +858,7 @@ public class GameManager : MonoBehaviour
                         {
                             Debug.Log("Reached cards");
                             damage = players[throwerIndex].holster.card3.vPotion1.card.effectAmount + players[throwerIndex].holster.card3.vPotion2.card.effectAmount;
+                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                             // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card3.vPotion1.card);
                             // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card3.vPotion2.card);
                             // players[myPlayerIndex].holster.card3.vPotion1.updateCard(players[0].deck.placeholder);
@@ -860,7 +866,7 @@ public class GameManager : MonoBehaviour
                             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
-                            
+
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
                             players[throwerIndex].holster.card3.gameObject.GetComponent<Hover_Card>().resetCard();
@@ -880,6 +886,7 @@ public class GameManager : MonoBehaviour
                         if (players[throwerIndex].holster.card1.aPotion.card.cardName != "placeholder")
                         {
                             damage = players[throwerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
                             bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
@@ -900,10 +907,7 @@ public class GameManager : MonoBehaviour
                     if (players[throwerIndex].holster.card4.card.cardType == "Potion")
                     {
                         damage = players[throwerIndex].holster.card4.card.effectAmount;
-                        if (players[throwerIndex].ringBonus && players[throwerIndex].potionsThrown == 0)
-                        {
-                            damage++;
-                        }
+                        damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                         bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
                         players[throwerIndex].holster.card4.gameObject.GetComponent<Hover_Card>().resetCard();
@@ -932,6 +936,7 @@ public class GameManager : MonoBehaviour
                             players[throwerIndex].holster.card4.vPotion2.card.cardName != "placeholder")
                         {
                             damage = players[throwerIndex].holster.card4.vPotion1.card.effectAmount + players[throwerIndex].holster.card4.vPotion2.card.effectAmount;
+                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                             // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card4.vPotion1.card);
                             // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card4.vPotion2.card);
                             // players[myPlayerIndex].holster.card4.vPotion1.updateCard(players[0].deck.placeholder);
@@ -959,6 +964,7 @@ public class GameManager : MonoBehaviour
                         if (players[throwerIndex].holster.card1.aPotion.card.cardName != "placeholder")
                         {
                             damage = players[throwerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 

@@ -29,6 +29,14 @@ public class Player : MonoBehaviour
     public GameObject healSign;
     public GameObject healAmount;
 
+    // possible bonuses
+    public bool throwBonus;
+    public bool vesselBonus;
+    public bool artifactBonus;
+    public bool isPluot = false;
+    // None, Hot, Cold, Wet, Dry
+    public string pluotBonusType = "None";
+
     public Player(int user_id, string name)
     {
         this.user_id = user_id;
@@ -81,6 +89,36 @@ public class Player : MonoBehaviour
 
     public void removeCurrentPlayer() {
         currentPlayerHighlight.SetActive(false);
+    }
+
+    public int checkBonus(int damage, int selectedCard)
+    {
+        // Pluot damage bonus
+        if (isPluot)
+        {
+            if(pluotBonusType == "Hot" && holster.cardList[selectedCard - 1].card.cardQuality == "Hot")
+            {
+                damage++;
+            }
+            else if (pluotBonusType == "Wet" && holster.cardList[selectedCard - 1].card.cardQuality == "Wet")
+            {
+                damage++;
+            }
+            else if (pluotBonusType == "Cold" && holster.cardList[selectedCard - 1].card.cardQuality == "Cold")
+            {
+                damage++;
+            }
+            else if(pluotBonusType == "Dry" && holster.cardList[selectedCard - 1].card.cardQuality == "Dry")
+            {
+                damage++;
+            }
+        }
+        // ring damage bonus
+        if(ringBonus && potionsThrown == 0)
+        {
+            damage++;
+        }
+        return damage;
     }
 
     /*
