@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
 {
 
     public static GameManager manager;
-    private NetworkManager networkManager;
+    //private OldNetworkManager networkManager;
 
     // Later change to be however many players joined when the GameScene loads in.
     // (Maybe transferring numPlayers from MainMenu script to here? Maybe get from server?)
@@ -55,8 +55,9 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        //menu = GameObject.Find("MainMenuScript").GetComponent<MainMenu>();
-        networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+        /*
+        menu = GameObject.Find("MainMenuScript").GetComponent<MainMenu>();
+        networkManager = GameObject.Find("OldNetworkManager").GetComponent<OldNetworkManager>();
         msgQueue = networkManager.GetComponent<MessageQueue>();
         msgQueue.AddCallback(Constants.SMSG_P_THROW, onResponsePotionThrow);
         msgQueue.AddCallback(Constants.SMSG_END_TURN, onResponseEndTurn);
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
         msgQueue.AddCallback(Constants.SMSG_CYCLE, onResponseCycle);
         msgQueue.AddCallback(Constants.SMSG_TRASH, onResponseTrash);
         msgQueue.AddCallback(Constants.SMSG_LOAD, onResponseLoad);
+        */
 
         mainMenu = GameObject.Find("MainMenuScript");
         mainMenuScript = mainMenu.GetComponent<MainMenu>();
@@ -539,7 +541,7 @@ public class GameManager : MonoBehaviour
             int newId = players[newIndex].user_id;
             // Sends user_id of new current player based on index of new current player
             // in this client's players array.
-            bool connected = networkManager.sendEndTurnRequest(newId);
+            //bool connected = networkManager.sendEndTurnRequest(newId);
 
             // MATTEO: Add End Turn SFX here.
 
@@ -669,7 +671,7 @@ public class GameManager : MonoBehaviour
 
                         // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         // Args Potion: throwerId, cardPosition, targetId, damage, isArtifact (T/F), isVessel (T/F)
-                        bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
+                        //bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
 
                         // MATTEO: Add Potion throw SFX here.
 
@@ -700,7 +702,7 @@ public class GameManager : MonoBehaviour
 
 
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
+                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
                             players[throwerIndex].holster.card1.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -726,7 +728,7 @@ public class GameManager : MonoBehaviour
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
                             players[throwerIndex].holster.card1.gameObject.GetComponent<Hover_Card>().resetCard();
                             // MATTEO: Add Artifact using SFX here.
@@ -746,7 +748,7 @@ public class GameManager : MonoBehaviour
                         damage = players[throwerIndex].holster.card2.card.effectAmount;
                         damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
 
-                        bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
+                        //bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
                         // MATTEO: Add Potion throw SFX here.
                         players[throwerIndex].holster.card2.gameObject.GetComponent<Hover_Card>().resetCard();
@@ -784,7 +786,7 @@ public class GameManager : MonoBehaviour
                             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
+                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
                             players[throwerIndex].holster.card2.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -807,7 +809,7 @@ public class GameManager : MonoBehaviour
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
                             // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
                             players[throwerIndex].holster.card2.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -826,7 +828,7 @@ public class GameManager : MonoBehaviour
                         damage = players[throwerIndex].holster.card3.card.effectAmount;
                         damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
 
-                        bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
+                        // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
                         players[throwerIndex].holster.card3.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -867,7 +869,7 @@ public class GameManager : MonoBehaviour
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
 
-                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
+                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
                             players[throwerIndex].holster.card3.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -889,7 +891,7 @@ public class GameManager : MonoBehaviour
                             damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
-                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
                             players[throwerIndex].holster.card3.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -908,7 +910,7 @@ public class GameManager : MonoBehaviour
                     {
                         damage = players[throwerIndex].holster.card4.card.effectAmount;
                         damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                        bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
+                        // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
                         sendSuccessMessage(2);
                         players[throwerIndex].holster.card4.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -945,7 +947,7 @@ public class GameManager : MonoBehaviour
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
 
-                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
+                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                             sendSuccessMessage(4);
                             players[throwerIndex].holster.card4.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -968,7 +970,7 @@ public class GameManager : MonoBehaviour
                             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
-                            bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                             sendSuccessMessage(3);
                             players[throwerIndex].holster.card4.gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -1161,7 +1163,7 @@ public class GameManager : MonoBehaviour
                             // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
                             // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
 
-                            bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                            // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             Debug.Log("Potion loaded in Vessel slot 2!");
@@ -1180,7 +1182,7 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
                         // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
 
-                        bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Potion loaded in Vessel slot 1!");
@@ -1213,7 +1215,7 @@ public class GameManager : MonoBehaviour
                         // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                         // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
                         // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-                        bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Potion loaded in Artifact slot!");
@@ -1322,7 +1324,7 @@ public class GameManager : MonoBehaviour
             {
                 // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
                 // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
-                bool connected = networkManager.sendCycleRequest(selectedCardInt, 0);
+                // bool connected = networkManager.sendCycleRequest(selectedCardInt, 0);
                 sendSuccessMessage(7);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 // MATTEO: Add Cycle SFX here.
@@ -1339,7 +1341,7 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel" ||
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Ring")
             {
-                bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
+                // bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
                 sendSuccessMessage(7);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 // MATTEO: Add Cycle SFX here.
@@ -1504,7 +1506,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md1.popCard();
                         // md1.cardDisplay1.updateCard(card);
                         sendSuccessMessage(1);
-                        bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
+                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                     } else
                     {
                         sendErrorMessage(6);
@@ -1518,7 +1520,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md1.popCard();
                         // md1.cardDisplay2.updateCard(card);
                         sendSuccessMessage(1);
-                        bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
+                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                     }
                     else
                     {
@@ -1533,7 +1535,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md1.popCard();
                         // md1.cardDisplay3.updateCard(card);
                         sendSuccessMessage(1);
-                        bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
+                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
                     else
                     {
@@ -1572,7 +1574,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md2.popCard();
                         // md2.cardDisplay1.updateCard(card);
                         sendSuccessMessage(1);
-                        bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
+                        // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                     }
                     else
                     {
@@ -1587,7 +1589,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md2.popCard();
                         // md2.cardDisplay2.updateCard(card);
                         sendSuccessMessage(1);
-                        bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
+                        // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                     }
                     else
                     {
@@ -1602,7 +1604,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md2.popCard();
                         // md2.cardDisplay3.updateCard(card);
                         sendSuccessMessage(1);
-                        bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
+                        // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }
                     else
                     {
@@ -1812,7 +1814,7 @@ public class GameManager : MonoBehaviour
         {
             // players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-            bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+            // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(8);
             // MATTEO: Add sell SFX here.
@@ -1865,7 +1867,7 @@ public class GameManager : MonoBehaviour
         {
             // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             // SEND TRASH REQUEST (int x, int y)
-            bool connected = networkManager.sendTrashRequest(selectedCardInt, 0);
+            // bool connected = networkManager.sendTrashRequest(selectedCardInt, 0);
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(9);
         }

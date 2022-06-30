@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Mirror;
+using Steamworks;
 
 public class MainMenu : MonoBehaviour
 {
@@ -12,7 +14,7 @@ public class MainMenu : MonoBehaviour
 	private GameObject registerButton;
 	private GameObject startGameButton;
 	private GameObject networkMenu;
-	private NetworkManager networkManager;
+	// private OldNetworkManager networkManager;
 	public GameManager gameManager;
 	private MessageQueue msgQueue;
 
@@ -57,6 +59,8 @@ public class MainMenu : MonoBehaviour
 	private TMPro.TMP_InputField playerInputField;
 	private TMPro.TMP_InputField opponentInputField;
 
+	public MyNetworkManager networkManager;
+
 	public TMPro.TextMeshProUGUI authUsername;
 
 	public GameObject p1ReadyButton;
@@ -86,7 +90,10 @@ public class MainMenu : MonoBehaviour
     {
 		numPlayers = 0;
 		playButton = GameObject.Find("PLAY");
-		networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+		networkManager = GetComponent<MyNetworkManager>();
+
+		/*
+		networkManager = GameObject.Find("OldNetworkManager").GetComponent<OldNetworkManager>();
 		msgQueue = networkManager.GetComponent<MessageQueue>();
 
 		// adding callbacks
@@ -94,6 +101,12 @@ public class MainMenu : MonoBehaviour
 		msgQueue.AddCallback(Constants.SMSG_CHARACTER, OnResponseCharacter);
 		msgQueue.AddCallback(Constants.SMSG_SETNAME, OnResponseSetName);
 		msgQueue.AddCallback(Constants.SMSG_READY, OnResponseReady);
+		*/
+	}
+
+	public void CreatePublicLobby()
+	{
+		SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, networkManager.maxConnections);
 	}
 
 	public int getNumPlayers() {
@@ -103,12 +116,14 @@ public class MainMenu : MonoBehaviour
 	public void onPlayClick()
 	{
 		Debug.Log("Send JoinReq");
+		/*
 		bool connected = networkManager.SendJoinRequest();
 		if (!connected)
 		{
-			//messageBoxMsg.text = "Unable to connect to server.";
-			//messageBox.SetActive(true);
+			messageBoxMsg.text = "Unable to connect to server.";
+			messageBox.SetActive(true);
 		}
+		*/
 	}
 
 	public void onCharacterClick(string character)
@@ -122,7 +137,7 @@ public class MainMenu : MonoBehaviour
 				//playerCharDisplay.updateCharacter(character);
 			}
 		}
-		bool connected = networkManager.SendCharacterRequest(character);
+		// bool connected = networkManager.SendCharacterRequest(character);
     }
 
 	public void OnResponseJoin(ExtendedEventArgs eventArgs)
@@ -182,7 +197,7 @@ public class MainMenu : MonoBehaviour
 		string name = playerUsernameInputField.text;
 		authUsername.text = name;
 		Debug.Log("Send SetNameReq: " + name);
-		networkManager.SendSetNameRequest(name);
+		// networkManager.SendSetNameRequest(name);
 		if (Constants.USER_ID == 1)
 		{
 			p1Name = name;
@@ -396,13 +411,13 @@ public class MainMenu : MonoBehaviour
 	public void OnReadyClick()
 	{
 		Debug.Log("Send ReadyReq");
-		networkManager.SendReadyRequest(1);
+		// networkManager.SendReadyRequest(1);
 	}
 
 	public void OnNotReadyClick()
 	{
 		Debug.Log("Send ReadyReq");
-		networkManager.SendReadyRequest(0);
+		// networkManager.SendReadyRequest(0);
 	}
 
 	public void OnResponseReady(ExtendedEventArgs eventArgs)

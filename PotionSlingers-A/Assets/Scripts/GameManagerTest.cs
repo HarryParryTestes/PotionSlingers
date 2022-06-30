@@ -21,7 +21,7 @@ public class GameManagerTest : MonoBehaviour
 	private GameObject rightButton;
 
 	private bool useNetwork;
-	private NetworkManager networkManager;
+	private OldNetworkManager networkManager;
 
 	void Awake()
 	{
@@ -32,7 +32,7 @@ public class GameManagerTest : MonoBehaviour
 	void Start()
 	{
 		DontDestroyOnLoad(gameObject);
-		networkManager = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
+		networkManager = GameObject.Find("NetworkManager").GetComponent<OldNetworkManager>();
 		MessageQueue msgQueue = networkManager.GetComponent<MessageQueue>();
 		//msgQueue.AddCallback(Constants.SMSG_MOVE, OnResponseMove);
 		//msgQueue.AddCallback(Constants.SMSG_INTERACT, OnResponseInteract);
