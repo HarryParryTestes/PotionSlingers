@@ -11,6 +11,8 @@ public class SteamLobby : MonoBehaviour
 {
     public static SteamLobby instance;
 
+    public TextMeshProUGUI greetingName;
+
     private List<GameObject> listOfLobbyListItems = new List<GameObject>();
 
     protected Callback<LobbyCreated_t> lobbyCreated;
@@ -52,6 +54,10 @@ public class SteamLobby : MonoBehaviour
 
         if (!SteamManager.Initialized) { return; }
         MakeInstance();
+
+        Debug.Log(SteamFriends.GetPersonaName());
+
+        greetingName.text = "Hello, " + SteamFriends.GetPersonaName();
 
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);

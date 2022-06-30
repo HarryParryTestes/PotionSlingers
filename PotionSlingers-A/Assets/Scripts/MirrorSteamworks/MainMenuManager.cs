@@ -9,6 +9,8 @@ using TMPro;
 public class MainMenuManager : MonoBehaviour
 {
     public static MainMenuManager instance;
+
+    public TextMeshProUGUI greetingName;
     [Header("UI Stuff")]
     [SerializeField] private GameObject buttons = null;
     [Header("Lobby List UI")]
@@ -36,7 +38,7 @@ public class MainMenuManager : MonoBehaviour
     }
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame

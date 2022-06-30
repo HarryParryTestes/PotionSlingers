@@ -2543,7 +2543,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -20, y: 15.480469}
+  m_AnchoredPosition: {x: -90, y: 15.480469}
   m_SizeDelta: {x: 600, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &222419085
@@ -3596,6 +3596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6a2e15b93101dd4e9f5d3fe9543c109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  greetingName: {fileID: 1848425905}
   buttons: {fileID: 0}
   LobbyListCanvas: {fileID: 0}
   LobbyListItemPrefab: {fileID: 0}
@@ -10127,7 +10128,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1021275037}
   m_Layer: 5
-  m_Name: LobbyMenu
+  m_Name: PlayMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11467,6 +11468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 930a561d32e729f46bb7481dc3581ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  greetingName: {fileID: 1848425905}
   current_lobbyID: 0
   lobbyIDS: []
   networkManager: {fileID: 0}
@@ -17165,7 +17167,7 @@ RectTransform:
   m_GameObject: {fileID: 1718625877}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1.1, z: 1.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1980985678}
@@ -18765,7 +18767,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 17
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -18774,7 +18776,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_enableWordWrapping: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -19686,7 +19688,7 @@ RectTransform:
   m_GameObject: {fileID: 1980985677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
+  m_LocalScale: {x: 1.5, y: 0.7, z: 1.05}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1718625878}
@@ -19694,8 +19696,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 15}
+  m_SizeDelta: {x: 0, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1980985679
 MonoBehaviour:
