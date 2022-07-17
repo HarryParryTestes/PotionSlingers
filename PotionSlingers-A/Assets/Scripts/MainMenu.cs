@@ -8,7 +8,7 @@ using Steamworks;
 public class MainMenu : MonoBehaviour
 {
     public static MainMenu menu;
-	private int numPlayers;
+	public int numPlayers;
 	private GameObject playButton;
 	private GameObject loginButton;
 	private GameObject registerButton;
@@ -88,7 +88,7 @@ public class MainMenu : MonoBehaviour
 
 	void Start()
     {
-		numPlayers = 0;
+		//numPlayers = 0;
 		playButton = GameObject.Find("PLAY");
 		networkManager = GetComponent<MyNetworkManager>();
 
@@ -531,6 +531,11 @@ public class MainMenu : MonoBehaviour
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 		gameManager.numPlayers = numPlayers;
 		gameManager.init();
+	}
+
+	public void StartTutorialGame()
+    {
+		SceneManager.LoadScene("GameScene");
 	}
 
 	public void PlayGame()

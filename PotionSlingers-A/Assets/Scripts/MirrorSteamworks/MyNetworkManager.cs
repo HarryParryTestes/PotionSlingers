@@ -41,11 +41,20 @@ public class MyNetworkManager : NetworkManager
         }
     }
     public void StartGame()
+    {  
+            ServerChangeScene("GameScene");
+            GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            gameManager.numPlayers = 2;
+            gameManager.init();
+    }
+
+    public void StartTutorial()
     {
-        if (CanStartGame() && SceneManager.GetActiveScene().name == "Scene_SteamworksLobby")
-        {
-            ServerChangeScene("Scene_SteamworksGame");
-        }
+        ServerChangeScene("GameScene");
+        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        gameManager.numPlayers = 2;
+        gameManager.initPlayersTutorial();
+        gameManager.initDecks();
     }
     private bool CanStartGame()
     {

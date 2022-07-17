@@ -312,7 +312,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5979564
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3256,7 +3256,7 @@ RectTransform:
   - {fileID: 301505644}
   - {fileID: 1737492489}
   m_Father: {fileID: 1899439223}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -9215,6 +9215,7 @@ GameObject:
   - component: {fileID: 189316756}
   - component: {fileID: 189316755}
   - component: {fileID: 189316754}
+  - component: {fileID: 189316758}
   m_Layer: 5
   m_Name: CharacterCard (Top)
   m_TagString: Untagged
@@ -9277,6 +9278,11 @@ MonoBehaviour:
   damageAmount: {fileID: 1181464431}
   healSign: {fileID: 1651675818}
   healAmount: {fileID: 974692135}
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  pluotBonusType: 
 --- !u!114 &189316755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9329,6 +9335,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189316751}
   m_CullTransparentMesh: 1
+--- !u!114 &189316758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189316751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 3987886062
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &189593839
 GameObject:
   m_ObjectHideFlags: 0
@@ -12666,7 +12689,7 @@ RectTransform:
   - {fileID: 2112033206}
   - {fileID: 2108213118}
   m_Father: {fileID: 1899439223}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -25404,7 +25427,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &543400064
 RectTransform:
   m_ObjectHideFlags: 0
@@ -53458,8 +53481,9 @@ RectTransform:
   m_Children:
   - {fileID: 1410432720}
   - {fileID: 573524215}
+  - {fileID: 1246341450}
   m_Father: {fileID: 1899439223}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -56820,18 +56844,18 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1246341449}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 861909481}
-  m_Father: {fileID: 1899439223}
+  m_Father: {fileID: 1157592093}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 160}
+  m_AnchoredPosition: {x: -618.75006, y: 59.269974}
   m_SizeDelta: {x: 925, y: 321.25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1246341451
@@ -59769,6 +59793,7 @@ GameObject:
   - component: {fileID: 1316039904}
   - component: {fileID: 1316039902}
   - component: {fileID: 1316039903}
+  - component: {fileID: 1316039906}
   m_Layer: 5
   m_Name: CharacterCard
   m_TagString: Untagged
@@ -59845,6 +59870,11 @@ MonoBehaviour:
   damageAmount: {fileID: 178160949}
   healSign: {fileID: 301505643}
   healAmount: {fileID: 1737492488}
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  pluotBonusType: 
 --- !u!114 &1316039904
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59883,6 +59913,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1316039900}
   m_CullTransparentMesh: 1
+--- !u!114 &1316039906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1316039900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 4079282291
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &1316842258
 GameObject:
   m_ObjectHideFlags: 0
@@ -59931,6 +59978,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1317657374}
   - component: {fileID: 1317657375}
+  - component: {fileID: 1317657376}
   m_Layer: 5
   m_Name: CharacterCard (Left)
   m_TagString: Untagged
@@ -59993,6 +60041,28 @@ MonoBehaviour:
   damageAmount: {fileID: 177182558}
   healSign: {fileID: 164053555}
   healAmount: {fileID: 48977211}
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  pluotBonusType: 
+--- !u!114 &1317657376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317657373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 4016303636
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &1319871941
 GameObject:
   m_ObjectHideFlags: 0
@@ -88139,7 +88209,6 @@ RectTransform:
   m_Children:
   - {fileID: 1307137418}
   - {fileID: 1316039901}
-  - {fileID: 1246341450}
   - {fileID: 1157592093}
   - {fileID: 276182457}
   - {fileID: 56767338}
@@ -92524,6 +92593,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1986209882}
   - component: {fileID: 1986209883}
+  - component: {fileID: 1986209884}
   m_Layer: 5
   m_Name: CharacterCard (Right)
   m_TagString: Untagged
@@ -92586,6 +92656,28 @@ MonoBehaviour:
   damageAmount: {fileID: 807864802}
   healSign: {fileID: 514978359}
   healAmount: {fileID: 1859431382}
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  pluotBonusType: 
+--- !u!114 &1986209884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1986209881}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2601044761
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &1986849682
 GameObject:
   m_ObjectHideFlags: 0
@@ -97087,6 +97179,8 @@ MonoBehaviour:
   - {fileID: 578320875}
   - {fileID: 1640251445}
   - {fileID: 1817138699}
+  p1: {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
+  p2: {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
   opLeft: {fileID: 1882729769}
   opTop: {fileID: 1094063418}
   opRight: {fileID: 1934230784}

@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Steamworks;
 
 public class GameManager : MonoBehaviour
 {
 
+    public static SteamLobby lobby;
     public static GameManager manager;
     //private OldNetworkManager networkManager;
 
@@ -31,6 +33,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> errorMessages;
     private MessageQueue msgQueue;
 
+    public Character p1;
+    public Character p2;
     public CharacterDisplay opLeft;
     public CharacterDisplay opTop;
     public CharacterDisplay opRight;
@@ -76,7 +80,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("P1 ID is: " + mainMenuScript.p1UserId);
         Debug.Log("P2 ID is: " + mainMenuScript.p2UserId);
 
-        init();
+        //init();
     }
 
     public void init()
@@ -85,7 +89,45 @@ public class GameManager : MonoBehaviour
         initDecks();
     }
 
-    void initPlayers()
+    public void initPlayersTutorial()
+    {
+        // Player1 = Client1 set up
+        ob = GameObject.Find("CharacterCard");
+        obTop = GameObject.Find("CharacterCard (Top)");
+        obLeft = GameObject.Find("CharacterCard (Left)");
+        obRight = GameObject.Find("CharacterCard (Right)");
+
+        Debug.Log(SteamFriends.GetPersonaName());
+
+        CharacterDisplay bottomCharacter = ob.GetComponent<CharacterDisplay>();
+        CharacterDisplay topCharacter = obTop.GetComponent<CharacterDisplay>();
+        CharacterDisplay leftCharacter = obLeft.GetComponent<CharacterDisplay>();
+        CharacterDisplay rightCharacter = obRight.GetComponent<CharacterDisplay>();
+
+        // Children objects of attackMenu
+        GameObject leftAttack = attackMenu.transform.Find("AttackCharacter (Left)").gameObject;
+        GameObject topAttack = attackMenu.transform.Find("AttackCharacter (Top)").gameObject;
+        GameObject rightAttack = attackMenu.transform.Find("AttackCharacter (Right)").gameObject;
+
+        
+        bottomCharacter.character = p1;
+        bottomCharacter.updateCharacter(bottomCharacter.character);
+
+        topCharacter.character = p2;
+        topCharacter.updateCharacter(topCharacter.character);
+
+        playerBottomName.text = "Denzill7";
+
+        playerTopName.text = "Bolo";
+
+
+        obLeft.transform.parent.gameObject.SetActive(false);
+        obRight.transform.parent.gameObject.SetActive(false);
+        leftAttack.SetActive(false);
+        rightAttack.SetActive(false);
+    }
+
+    public void initPlayers()
     {
         // Player1 = Client1 set up
         ob = GameObject.Find("CharacterCard");
@@ -287,7 +329,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void initDecks()
+    public void initDecks()
     {
         //td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
         md1 = GameObject.Find("PotionPile").GetComponent<MarketDeck>();
