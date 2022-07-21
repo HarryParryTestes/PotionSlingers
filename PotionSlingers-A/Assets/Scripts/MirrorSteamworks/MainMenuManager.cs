@@ -153,19 +153,4 @@ public class MainMenuManager : MonoBehaviour
             didPlayerSearchForLobbies = false;
         SteamLobby.instance.GetListOfLobbies();
     }
-    public void BackToMainMenu()
-    {
-        buttons.SetActive(true);
-        CreateLobbyCanvas.SetActive(false);
-        LobbyListCanvas.SetActive(false);
-
-        if (listOfLobbyListItems.Count > 0)
-            DestroyOldLobbyListItems();
-        lobbyName = null;
-        searchBox.text = "";
-        lobbyNameInputField.text = "";
-        didPlayerSearchForLobbies = false;
-        didPlayerNameTheLobby = false;
-        friendsOnlyToggle.isOn = false;
-    }
 }

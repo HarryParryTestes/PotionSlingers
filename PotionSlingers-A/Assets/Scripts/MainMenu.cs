@@ -9,6 +9,7 @@ public class MainMenu : MonoBehaviour
 {
     public static MainMenu menu;
 	public int numPlayers;
+    private bool privacy = false;
 	private GameObject playButton;
 	private GameObject loginButton;
 	private GameObject registerButton;
@@ -59,7 +60,9 @@ public class MainMenu : MonoBehaviour
 	private TMPro.TMP_InputField playerInputField;
 	private TMPro.TMP_InputField opponentInputField;
 
-	public MyNetworkManager networkManager;
+    public TMPro.TextMeshProUGUI publicButton;
+
+    public MyNetworkManager networkManager;
 
 	public TMPro.TextMeshProUGUI authUsername;
 
@@ -103,6 +106,23 @@ public class MainMenu : MonoBehaviour
 		msgQueue.AddCallback(Constants.SMSG_READY, OnResponseReady);
 		*/
 	}
+
+    public void changePrivacy()
+    {
+        privacy = !privacy;
+    }
+
+    public void changeButton()
+    {
+        if (!privacy)
+        {
+            publicButton.text = "PUBLIC";
+        }
+        else
+        {
+            publicButton.text = "FRIENDS ONLY";
+        }
+    }
 
 	public void CreatePublicLobby()
 	{

@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
     public string selectedOpponentCharName;
     public int loadedCardInt;
     public int myPlayerIndex = 0; // used to be currentPlayer
-    public int currentPlayerId;
+    public int currentPlayerId = 0;
     public Player[] players = new Player[4];
     public Character[] characters;
     GameObject ob;
@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
         msgQueue.AddCallback(Constants.SMSG_LOAD, onResponseLoad);
         */
 
+        /*
         mainMenu = GameObject.Find("MainMenuScript");
         mainMenuScript = mainMenu.GetComponent<MainMenu>();
 
@@ -79,6 +80,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("NumPlayers is: " + numPlayers);
         Debug.Log("P1 ID is: " + mainMenuScript.p1UserId);
         Debug.Log("P2 ID is: " + mainMenuScript.p2UserId);
+        */
 
         //init();
     }
@@ -93,7 +95,9 @@ public class GameManager : MonoBehaviour
     {
         // Player1 = Client1 set up
         ob = GameObject.Find("CharacterCard");
+        ob.SetActive(true);
         obTop = GameObject.Find("CharacterCard (Top)");
+        obTop.SetActive(true);
         obLeft = GameObject.Find("CharacterCard (Left)");
         obRight = GameObject.Find("CharacterCard (Right)");
 
@@ -113,8 +117,17 @@ public class GameManager : MonoBehaviour
         bottomCharacter.character = p1;
         bottomCharacter.updateCharacter(bottomCharacter.character);
 
+        players[0] = ob.GetComponent<Player>();
+        // Sets mainPlayer area belonging to this client's user.
+        players[0].user_id = 0;
+        players[0].name = "Player";
+
         topCharacter.character = p2;
         topCharacter.updateCharacter(topCharacter.character);
+
+        players[1] = obTop.GetComponent<Player>();
+        players[1].user_id = 1;
+        players[1].name = "Bolo";
 
         playerBottomName.text = "Denzill7";
 
@@ -664,7 +677,7 @@ public class GameManager : MonoBehaviour
     public void throwPotion()
     {
         // If this client isn't the current player, display error message.
-        if(Constants.USER_ID != currentPlayerId) {
+        if(players[myPlayerIndex].user_id != currentPlayerId) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -684,7 +697,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Attacking Player: "+players[i].name);
                     targetUserId = players[i].user_id;
                 }
-                else if(players[i].user_id == Constants.USER_ID) {
+                else if(players[i].user_id == currentPlayerId) {
                     throwerIndex = i;
                 }
             }
