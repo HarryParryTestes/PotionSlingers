@@ -40,9 +40,9 @@ public class LobbyManager : MonoBehaviour
     void Awake()
     {
         MakeInstance();
-        ReadyUpButton.gameObject.SetActive(true);
-        ReadyUpButton.GetComponentInChildren<Text>().text = "Ready Up";
-        StartGameButton.gameObject.SetActive(false);
+        // ReadyUpButton.gameObject.SetActive(true);
+        // ReadyUpButton.GetComponentInChildren<Text>().text = "Ready Up";
+        // StartGameButton.gameObject.SetActive(false);
     }
     // Update is called once per frame
     void Update()

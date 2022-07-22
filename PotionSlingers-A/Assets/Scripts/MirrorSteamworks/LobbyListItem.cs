@@ -9,10 +9,10 @@ public class LobbyListItem : MonoBehaviour
     public CSteamID lobbySteamId;
     public string lobbyName;
     public int numberOfPlayers;
-    public int maxNumberOfPlayers;
+    public int maxNumberOfPlayers = 4;
 
-    [SerializeField] private Text LobbyNameText;
-    [SerializeField] private Text NumerOfPlayersText;
+    [SerializeField] private TMPro.TextMeshProUGUI LobbyNameText;
+    [SerializeField] private TMPro.TextMeshProUGUI NumberOfPlayersText;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class LobbyListItem : MonoBehaviour
     public void SetLobbyItemValues()
     {
         LobbyNameText.text = lobbyName;
-        NumerOfPlayersText.text = "Number of Players: " + numberOfPlayers.ToString() + "/" + maxNumberOfPlayers.ToString();
+        NumberOfPlayersText.text = "Players: " + numberOfPlayers.ToString() + "/" + maxNumberOfPlayers.ToString();
     }
     public void JoinLobby()
     {

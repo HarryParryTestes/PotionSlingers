@@ -56,9 +56,7 @@ public class SteamLobby : MonoBehaviour
         if (!SteamManager.Initialized) { return; }
         MakeInstance();
 
-        Debug.Log(SteamFriends.GetPersonaName());
-
-        greetingName = SteamFriends.GetPersonaName();
+        greetingName = SteamLobby.instance.GetSteamName();
         greeting.text = "Hello, " + greetingName;
 
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
@@ -72,6 +70,12 @@ public class SteamLobby : MonoBehaviour
         if (instance == null)
             instance = this;
     }
+
+    public string GetSteamName()
+    {
+        return SteamFriends.GetPersonaName();
+    }
+
     public void HostLobby()
     {
 

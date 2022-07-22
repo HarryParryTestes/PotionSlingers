@@ -8,7 +8,11 @@ using Steamworks;
 public class MainMenu : MonoBehaviour
 {
     public static MainMenu menu;
-	public int numPlayers;
+
+    public TMPro.TextMeshProUGUI greeting;
+    public string greetingName;
+
+    public int numPlayers;
     private bool privacy = false;
 	private GameObject playButton;
 	private GameObject loginButton;
@@ -95,7 +99,11 @@ public class MainMenu : MonoBehaviour
 		playButton = GameObject.Find("PLAY");
 		networkManager = GetComponent<MyNetworkManager>();
 
-		/*
+        if (!SteamManager.Initialized) { return; }
+
+        //Debug.Log(SteamFriends.GetPersonaName());
+
+        /*
 		networkManager = GameObject.Find("OldNetworkManager").GetComponent<OldNetworkManager>();
 		msgQueue = networkManager.GetComponent<MessageQueue>();
 
@@ -105,7 +113,7 @@ public class MainMenu : MonoBehaviour
 		msgQueue.AddCallback(Constants.SMSG_SETNAME, OnResponseSetName);
 		msgQueue.AddCallback(Constants.SMSG_READY, OnResponseReady);
 		*/
-	}
+    }
 
     public void changePrivacy()
     {
@@ -129,7 +137,22 @@ public class MainMenu : MonoBehaviour
 		SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, networkManager.maxConnections);
 	}
 
-	public int getNumPlayers() {
+    public void CreateNewLobby()
+    {
+        ELobbyType newLobbyType;
+
+        Debug.Log("CreateNewLobby: friendsOnlyToggle is OFF. Making lobby public.");
+        newLobbyType = ELobbyType.k_ELobbyTypePublic;
+
+
+        //Debug.Log("CreateNewLobby: player created a lobby name of: " + lobbyNameInputField.text);
+        // didPlayerNameTheLobby = true;
+        //lobbyName = lobbyNameInputField.text;
+
+        SteamLobby.instance.CreateNewLobby(newLobbyType);
+    }
+
+    public int getNumPlayers() {
 		return numPlayers;
 	}
 
