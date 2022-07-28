@@ -76,6 +76,12 @@ public class SteamLobby : MonoBehaviour
         return SteamFriends.GetPersonaName();
     }
 
+    public void QuitGame()
+    {
+        SteamAPI.Shutdown();
+        Application.Quit();
+    }
+
     public void HostLobby()
     {
 

@@ -858,6 +858,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 42627925}
   m_CullTransparentMesh: 1
+--- !u!114 &51464120 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 819319329213308519, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+  m_PrefabInstance: {fileID: 819319328263976168}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &56141569
 GameObject:
   m_ObjectHideFlags: 0
@@ -2808,6 +2819,18 @@ MonoBehaviour:
           m_StringArgument: Sweetbitter
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &195506019
 GameObject:
   m_ObjectHideFlags: 0
@@ -3289,8 +3312,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 227625568}
-  - component: {fileID: 227625570}
-  - component: {fileID: 227625569}
   m_Layer: 0
   m_Name: Player4
   m_TagString: Untagged
@@ -3323,43 +3344,6 @@ RectTransform:
   m_AnchoredPosition: {x: 700, y: 0}
   m_SizeDelta: {x: 458.33337, y: 85.937515}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &227625569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227625567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c0de0e9df2c68a4cb61d2b0c199614f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  playerName: 
-  ConnectionId: 0
-  playerNumber: 0
-  IsGameLeader: 0
-  isPlayerReady: 0
-  playerSteamId: 0
---- !u!114 &227625570
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 227625567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 3725307107
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &261201091
 GameObject:
   m_ObjectHideFlags: 0
@@ -4588,6 +4572,18 @@ MonoBehaviour:
           m_StringArgument: Scarpetta
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &345246792
 GameObject:
   m_ObjectHideFlags: 0
@@ -5208,6 +5204,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Twins
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!1 &380438648
@@ -5954,8 +5962,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 403629375}
-  - component: {fileID: 403629377}
-  - component: {fileID: 403629376}
   m_Layer: 0
   m_Name: Player3
   m_TagString: Untagged
@@ -5988,43 +5994,6 @@ RectTransform:
   m_AnchoredPosition: {x: 237.5, y: 0}
   m_SizeDelta: {x: 458.33337, y: 85.937515}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &403629376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403629374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c0de0e9df2c68a4cb61d2b0c199614f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  playerName: 
-  ConnectionId: 0
-  playerNumber: 0
-  IsGameLeader: 0
-  isPlayerReady: 0
-  playerSteamId: 0
---- !u!114 &403629377
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 403629374}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 444324163
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &422491963
 GameObject:
   m_ObjectHideFlags: 0
@@ -6229,8 +6198,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 423851932}
-  - component: {fileID: 423851934}
-  - component: {fileID: 423851933}
   m_Layer: 0
   m_Name: Player2
   m_TagString: Untagged
@@ -6263,43 +6230,6 @@ RectTransform:
   m_AnchoredPosition: {x: -237.5, y: 0}
   m_SizeDelta: {x: 458.33337, y: 85.937515}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &423851933
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423851931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c0de0e9df2c68a4cb61d2b0c199614f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncMode: 0
-  syncInterval: 0.1
-  playerName: 
-  ConnectionId: 0
-  playerNumber: 0
-  IsGameLeader: 0
-  isPlayerReady: 0
-  playerSteamId: 0
---- !u!114 &423851934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423851931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 920250531
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &424025259
 GameObject:
   m_ObjectHideFlags: 0
@@ -9794,6 +9724,18 @@ MonoBehaviour:
           m_StringArgument: Saltimbocca
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &786619069
 GameObject:
   m_ObjectHideFlags: 0
@@ -11824,9 +11766,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935878}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: onCharacterClick
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119417}
+        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+        m_MethodName: ChooseCharacter
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -12847,7 +12801,7 @@ MonoBehaviour:
   autoCreatePlayer: 0
   playerSpawnMethod: 0
   spawnPrefabs: []
-  gamePlayerPrefab: {fileID: 819319328743518875, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+  gamePlayerPrefab: {fileID: 0}
   minPlayers: 2
 --- !u!1 &1194325629
 GameObject:
@@ -14217,9 +14171,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935878}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: onCharacterClick
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119417}
+        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+        m_MethodName: ChooseCharacter
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -15824,18 +15790,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935878}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: CreateNewLobby
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
 --- !u!114 &1352873516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17066,12 +17020,12 @@ GameObject:
   - component: {fileID: 1435172928}
   - component: {fileID: 1435172927}
   m_Layer: 5
-  m_Name: REGISTER
+  m_Name: STATS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1435172926
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17090,7 +17044,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 75}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1435172927
@@ -18965,9 +18919,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935878}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: onCharacterClick
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119417}
+        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+        m_MethodName: ChooseCharacter
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19989,9 +19955,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935878}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: onCharacterClick
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119417}
+        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+        m_MethodName: ChooseCharacter
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -20776,8 +20754,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 285935878}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+      - m_Target: {fileID: 1194078801}
+        m_TargetAssemblyTypeName: SteamLobby, Assembly-CSharp
         m_MethodName: QuitGame
         m_Mode: 1
         m_Arguments:
@@ -21312,6 +21290,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1783119416}
+  - component: {fileID: 1783119418}
+  - component: {fileID: 1783119417}
   m_Layer: 5
   m_Name: OldLobbyMenu
   m_TagString: Untagged
@@ -21341,6 +21321,47 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 35}
   m_SizeDelta: {x: 0, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1783119417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783119415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c0de0e9df2c68a4cb61d2b0c199614f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
+  playerName: 
+  ConnectionId: 0
+  playerNumber: 0
+  charName: 
+  IsGameLeader: 0
+  isPlayerReady: 0
+  playerSteamId: 0
+  charDisplay: {fileID: 1369240281}
+  usernameText: {fileID: 654741441}
+  readyUp: {fileID: 51464120}
+--- !u!114 &1783119418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1783119415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 1558155295
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &1785093098
 GameObject:
   m_ObjectHideFlags: 0
@@ -21486,9 +21507,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935878}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: onCharacterClick
+      - m_Target: {fileID: 285935880}
+        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
+        m_MethodName: CreateNewLobby
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119417}
+        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+        m_MethodName: ChooseCharacter
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -23354,7 +23387,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: REGISTER
+  m_text: STATS
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cac496df2b966644aa0013ac461a993c, type: 2}
   m_sharedMaterial: {fileID: 8557940270208330022, guid: cac496df2b966644aa0013ac461a993c, type: 2}
@@ -26120,13 +26153,43 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 819319328743518875, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+      propertyPath: readyUp
+      value: 
+      objectReference: {fileID: 51464120}
+    - target: {fileID: 819319328743518875, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+      propertyPath: charDisplay
+      value: 
+      objectReference: {fileID: 1369240281}
+    - target: {fileID: 819319328743518875, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+      propertyPath: usernameText
+      value: 
+      objectReference: {fileID: 654741441}
     - target: {fileID: 819319328743518876, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
       propertyPath: sceneId
       value: 1976056112
       objectReference: {fileID: 0}
     - target: {fileID: 819319329889547560, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 819319329889547560, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Target
       value: 
-      objectReference: {fileID: 285935878}
-    m_RemovedComponents: []
+      objectReference: {fileID: 0}
+    - target: {fileID: 819319329889547560, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_MethodName
+      value: ChangeReadyStatus
+      objectReference: {fileID: 0}
+    - target: {fileID: 819319329889547560, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: GamePlayer, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 819319329889547560, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 819319328743518875, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+    - {fileID: 819319328743518876, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}

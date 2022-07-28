@@ -19,6 +19,7 @@ public class LobbyManager : MonoBehaviour
 
     public bool havePlayerListItemsBeenCreated = false;
     private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
+    public List<GamePlayer> players = new List<GamePlayer>();
     public GameObject localGamePlayerObject;
     public GamePlayer localGamePlayerScript;
 
@@ -177,9 +178,9 @@ public class LobbyManager : MonoBehaviour
     void ChangeReadyUpButtonText()
     {
         if (localGamePlayerScript.isPlayerReady)
-            ReadyUpButton.GetComponentInChildren<Text>().text = "Unready";
+            ReadyUpButton.GetComponentInChildren<Text>().text = "Not ready";
         else
-            ReadyUpButton.GetComponentInChildren<Text>().text = "Ready Up";
+            ReadyUpButton.GetComponentInChildren<Text>().text = "Ready";
     }
     void CheckIfAllPlayersAreReady()
     {

@@ -13,10 +13,15 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar(hook = nameof(HandlePlayerNameUpdate))] public string playerName;
     [SyncVar] public int ConnectionId;
     [SyncVar] public int playerNumber;
+    [SyncVar] public string charName;
     [Header("Game Info")]
     [SyncVar] public bool IsGameLeader = false;
     [SyncVar(hook = nameof(HandlePlayerReadyStatusChange))] public bool isPlayerReady;
     [SyncVar] public ulong playerSteamId;
+
+    public CharacterDisplay charDisplay;
+    public TMPro.TextMeshProUGUI usernameText;
+    public TMPro.TextMeshProUGUI readyUp;
 
     private MyNetworkManager game;
     private MyNetworkManager Game
@@ -46,12 +51,13 @@ public class GamePlayer : NetworkBehaviour
     public override void OnStartClient()
     {
         Game.GamePlayers.Add(this);
-        LobbyManager.instance.UpdateLobbyName();
+        //LobbyManager.instance.UpdateLobbyName();
         LobbyManager.instance.UpdateUI();        
     }
     // Start is called before the first frame update
     void Start()
     {
+        usernameText.text = SteamLobby.instance.greetingName;
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -65,9 +71,11 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("Player name has been updated for: " + oldValue + " to new value: " + newValue);
         if (isServer)
             this.playerName = newValue;
+            this.usernameText.text = newValue;
         if (isClient)
         {
-            LobbyManager.instance.UpdateUI();
+            this.usernameText.text = newValue;
+            //LobbyManager.instance.UpdateUI();
         }
 
     }
@@ -129,5 +137,19 @@ public class GamePlayer : NetworkBehaviour
         Game.GamePlayers.Remove(this);
         Debug.Log("Removed player from the GamePlayer list: " + this.playerName);
         LobbyManager.instance.UpdateUI();
+    }
+
+    public void ChooseCharacter(string character)
+    {
+        //Debug.Log("Send CharReq");
+        foreach (Character character2 in MainMenu.menu.characters)
+        {
+            if (character2.cardName == character)
+            {
+                Debug.Log(character + " chosen");
+                charDisplay.updateCharacter(character2);
+            }
+        }
+        // bool connected = networkManager.SendCharacterRequest(character);
     }
 }
