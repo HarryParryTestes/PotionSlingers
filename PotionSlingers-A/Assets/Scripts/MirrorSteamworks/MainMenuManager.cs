@@ -11,30 +11,32 @@ public class MainMenuManager : MonoBehaviour
     public static MainMenuManager instance;
 
     public TextMeshProUGUI greetingName;
-    [Header("UI Stuff")]
-    [SerializeField] private GameObject buttons = null;
     [Header("Lobby List UI")]
-    [SerializeField] private GameObject LobbyListCanvas;
+    //[SerializeField] private GameObject LobbyListCanvas;
     [SerializeField] private GameObject LobbyListItemPrefab;
     [SerializeField] private GameObject ContentPanel;
     [SerializeField] private GameObject LobbyListScrollRect;
     [SerializeField] private TMP_InputField searchBox;
     public bool didPlayerSearchForLobbies = false;
     [Header("Create Lobby UI")]
-    [SerializeField] private GameObject CreateLobbyCanvas;
+    public GameObject CreateLobbyCanvas;
+    public GameObject CharMenu;
+    public GameObject availableLobbyText;
     [SerializeField] private TMP_InputField lobbyNameInputField;
-    [SerializeField] private Toggle friendsOnlyToggle;
+    //[SerializeField] private Toggle friendsOnlyToggle;
     public bool didPlayerNameTheLobby = false;
     public string lobbyName;
+    public bool privacy = false;
 
     public List<GameObject> listOfLobbyListItems = new List<GameObject>();
+    public TMPro.TextMeshProUGUI publicButton;
     // Start is called before the first frame update
     private void Awake()
     {
         MakeInstance();
-        buttons.SetActive(true);
-        LobbyListCanvas.SetActive(false);
-        CreateLobbyCanvas.SetActive(false);
+        //buttons.SetActive(true);
+        //LobbyListCanvas.SetActive(false);
+        //CreateLobbyCanvas.SetActive(false);
     }
     void Start()
     {
@@ -53,19 +55,36 @@ public class MainMenuManager : MonoBehaviour
     }
     public void CreateLobby()
     {
-        buttons.SetActive(false);
-        CreateLobbyCanvas.SetActive(true);
+        //buttons.SetActive(false);
+        //CreateLobbyCanvas.SetActive(true);
     }
+
+    public void SetLobbyName()
+    {
+        didPlayerNameTheLobby = true;
+        lobbyName = lobbyNameInputField.text;
+    }
+
     public void CreateNewLobby()
     {
         ELobbyType newLobbyType;
-        
+
+        if (!privacy)
+        {
             Debug.Log("CreateNewLobby: friendsOnlyToggle is OFF. Making lobby public.");
             newLobbyType = ELobbyType.k_ELobbyTypePublic;
+        } else
+        {
+            Debug.Log("CreateNewLobby: friendsOnlyToggle is ON. Making lobby friends only.");
+            newLobbyType = ELobbyType.k_ELobbyTypeFriendsOnly;
+        }
+            
 
         
-            //Debug.Log("CreateNewLobby: player created a lobby name of: " + lobbyNameInputField.text);
-            didPlayerNameTheLobby = true;
+            Debug.Log("CreateNewLobby: player created a lobby name of: " + lobbyNameInputField.text);
+
+            // putting this logic in another method
+            //didPlayerNameTheLobby = true;
             //lobbyName = lobbyNameInputField.text;
 
         SteamLobby.instance.CreateNewLobby(newLobbyType);
@@ -73,8 +92,8 @@ public class MainMenuManager : MonoBehaviour
     public void GetListOfLobbies()
     {
         Debug.Log("Trying to get list of available lobbies ...");
-        buttons.SetActive(false);
-        LobbyListCanvas.SetActive(true);
+        //buttons.SetActive(false);
+        //LobbyListCanvas.SetActive(true);
 
         SteamLobby.instance.GetListOfLobbies();
     }
@@ -117,7 +136,8 @@ public class MainMenuManager : MonoBehaviour
                     newLobbyListItemScript.lobbySteamId = (CSteamID)lobbyIDS[i].m_SteamID;
                     newLobbyListItemScript.lobbyName = SteamMatchmaking.GetLobbyData((CSteamID)lobbyIDS[i].m_SteamID, "name");
                     newLobbyListItemScript.numberOfPlayers = SteamMatchmaking.GetNumLobbyMembers((CSteamID)lobbyIDS[i].m_SteamID);
-                    newLobbyListItemScript.maxNumberOfPlayers = SteamMatchmaking.GetLobbyMemberLimit((CSteamID)lobbyIDS[i].m_SteamID);
+                    //newLobbyListItemScript.maxNumberOfPlayers = SteamMatchmaking.GetLobbyMemberLimit((CSteamID)lobbyIDS[i].m_SteamID);
+                    newLobbyListItemScript.maxNumberOfPlayers = 4;
                     newLobbyListItemScript.SetLobbyItemValues();
 
 
@@ -133,6 +153,17 @@ public class MainMenuManager : MonoBehaviour
         if (didPlayerSearchForLobbies)
             didPlayerSearchForLobbies = false;
     }
+
+    public void changeBrowsing()
+    {
+        //browsing = !browsing;
+    }
+
+    public void Browse()
+    {
+            SteamLobby.instance.GetListOfLobbies();
+    }
+
     public void DestroyOldLobbyListItems()
     {
         Debug.Log("DestroyOldLobbyListItems");
@@ -153,5 +184,22 @@ public class MainMenuManager : MonoBehaviour
         else
             didPlayerSearchForLobbies = false;
         SteamLobby.instance.GetListOfLobbies();
+    }
+
+    public void changePrivacy()
+    {
+        privacy = !privacy;
+    }
+
+    public void changeButton()
+    {
+        if (!privacy)
+        {
+            publicButton.text = "PUBLIC";
+        }
+        else
+        {
+            publicButton.text = "FRIENDS ONLY";
+        }
     }
 }

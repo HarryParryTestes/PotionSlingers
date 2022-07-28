@@ -33,6 +33,7 @@ public class LobbyListItem : MonoBehaviour
     public void JoinLobby()
     {
         Debug.Log("JoinLobby: Player selected to join lobby with steam id of: " + lobbySteamId.ToString());
+        numberOfPlayers += 1;
         SteamLobby.instance.JoinLobby(lobbySteamId);
     }
 }

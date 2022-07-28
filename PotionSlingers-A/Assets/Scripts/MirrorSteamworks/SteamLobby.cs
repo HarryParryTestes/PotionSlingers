@@ -84,6 +84,9 @@ public class SteamLobby : MonoBehaviour
     {
         Debug.Log("JoinLobby: Will try to join lobby with steam id: " + lobbyId.ToString());
         SteamMatchmaking.JoinLobby(lobbyId);
+        MainMenuManager.instance.CreateLobbyCanvas.SetActive(false);
+        MainMenuManager.instance.availableLobbyText.SetActive(false);
+        MainMenuManager.instance.CharMenu.SetActive(true);
     }
     public void GetListOfLobbies()
     {
@@ -148,11 +151,8 @@ public class SteamLobby : MonoBehaviour
         networkManager.networkAddress = hostAddress;
         networkManager.StartClient();
         lobbyIDS.Clear();
-        if (GameObject.Find("MainMenuManager"))
-        {
-            if (MainMenuManager.instance.listOfLobbyListItems.Count > 0)
-                MainMenuManager.instance.DestroyOldLobbyListItems();
-        }
+        if (MainMenuManager.instance.listOfLobbyListItems.Count > 0)
+            MainMenuManager.instance.DestroyOldLobbyListItems();
     }
     void OnGetLobbiesList(LobbyMatchList_t result)
     {

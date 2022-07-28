@@ -177,7 +177,7 @@ public class MainMenu : MonoBehaviour
 			if (character2.cardName == character)
 			{
 				Debug.Log(character + " chosen");
-				//playerCharDisplay.updateCharacter(character);
+				//playerCharDisplay.updateCharacter(character2);
 			}
 		}
 		// bool connected = networkManager.SendCharacterRequest(character);
