@@ -175,7 +175,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &819319328521235006
@@ -296,9 +296,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerListItem, Assembly-CSharp
-        m_MethodName: UpdatePlayerItemReadyStatus
+      - m_Target: {fileID: 819319328743518875}
+        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+        m_MethodName: ReadyUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -404,7 +404,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 40}
   m_SizeDelta: {x: 800, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &819319328717388586
@@ -586,9 +586,9 @@ MonoBehaviour:
   IsGameLeader: 0
   isPlayerReady: 0
   playerSteamId: 0
+  item: {fileID: 6515335681367900375}
   charDisplay: {fileID: 819319329615365681}
   usernameText: {fileID: 819319328717388585}
-  readyUp: {fileID: 819319329213308519}
 --- !u!114 &6515335681367900375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -605,6 +605,7 @@ MonoBehaviour:
   ConnectionId: 0
   isPlayerReady: 0
   playerSteamId: 0
+  player: {fileID: 819319328743518875}
   PlayerNameText: {fileID: 819319328717388585}
   PlayerReadyStatus: {fileID: 819319329213308519}
 --- !u!1 &819319329213308517
@@ -1008,7 +1009,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -100}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 500, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &819319329889547562
@@ -1105,10 +1106,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 6515335681367900375}
-        m_TargetAssemblyTypeName: PlayerListItem, Assembly-CSharp
-        m_MethodName: UpdatePlayerItemReadyStatus
-        m_Mode: 0
+      - m_Target: {fileID: 819319328521234983}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 819319329889547607}
+        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 819319328743518875}
+        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+        m_MethodName: ReadyUp
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

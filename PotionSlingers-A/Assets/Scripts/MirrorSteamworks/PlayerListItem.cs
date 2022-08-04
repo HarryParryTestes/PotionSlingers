@@ -11,8 +11,10 @@ public class PlayerListItem : MonoBehaviour
 {
     public string playerName;
     public int ConnectionId;
-    public bool isPlayerReady;
+    public bool isPlayerReady = false;
     public ulong playerSteamId;
+
+    public GamePlayer player;
 
     [SerializeField] private TMPro.TextMeshProUGUI PlayerNameText;
     [SerializeField] private TMPro.TextMeshProUGUI PlayerReadyStatus;
@@ -33,21 +35,27 @@ public class PlayerListItem : MonoBehaviour
     public void SetPlayerListItemValues()
     {
         PlayerNameText.text = playerName;
-        UpdatePlayerItemReadyStatus();
+        player.playerName = playerName;
+        player.playerSteamId = playerSteamId;
+        player.ConnectionId = ConnectionId;
+        //UpdatePlayerItemReadyStatus();
     }
     public void UpdatePlayerItemReadyStatus()
     {
         isPlayerReady = !isPlayerReady;
+        player.CmdChangePlayerReadyStatus();
+        /*
         if (isPlayerReady)
         {
-            PlayerReadyStatus.text = "Ready";
-            PlayerReadyStatus.color = Color.green;
+            //PlayerReadyStatus.text = "READY";
+            //PlayerReadyStatus.color = Color.green;
         }
         else
         {
-            PlayerReadyStatus.text = "Not Ready";
-            PlayerReadyStatus.color = Color.red;
+            //PlayerReadyStatus.text = "NOT READY";
+            //PlayerReadyStatus.color = Color.red;
         }
+        */
     }
     
 }

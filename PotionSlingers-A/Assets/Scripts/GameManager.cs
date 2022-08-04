@@ -51,6 +51,19 @@ public class GameManager : MonoBehaviour
     GameObject player1Area;
     GameObject player2Area;
 
+    private MyNetworkManager game;
+    private MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     void Awake()
     {
         manager = this;
@@ -169,7 +182,7 @@ public class GameManager : MonoBehaviour
             // Sets mainPlayer area belonging to this client's user.
             players[0].user_id = Constants.USER_ID;
 
-            players[0].name = mainMenuScript.p1Name;
+            players[0].name = game.GamePlayers[0].playerName;
             players[0].charName = mainMenuScript.p1CharCard.character.cardName;
             playerBottomName.text = players[0].name;
 

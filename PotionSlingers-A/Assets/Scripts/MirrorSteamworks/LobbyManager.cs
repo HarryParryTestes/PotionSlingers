@@ -19,11 +19,12 @@ public class LobbyManager : MonoBehaviour
     [SerializeField] private Button ReadyUpButton;
     [SerializeField] private Button NotReadyUpButton;
     [SerializeField] private Button StartGameButton;
+    public string characterName;
 
     public bool havePlayerListItemsBeenCreated = false;
     private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
     public List<GamePlayer> players = new List<GamePlayer>();
-    public GameObject localGamePlayerObject;
+    //public GameObject localGamePlayerObject;
     public GamePlayer localGamePlayerScript;
 
 
@@ -58,12 +59,12 @@ public class LobbyManager : MonoBehaviour
         if (instance == null)
             instance = this;
     }
-    public void FindLocalGamePlayer()
+
+    public void changeCharName(string name)
     {
-        localGamePlayerObject = GameObject.Find("LocalGamePlayer");
-        //localGamePlayerScript = localGamePlayerObject.GetComponent<GamePlayer>();
-        localGamePlayerScript = players[game.GamePlayers.Count - 1];
+        characterName = name;
     }
+    
     public void UpdateLobbyName()
     {
         Debug.Log("UpdateLobbyName");
@@ -100,7 +101,9 @@ public class LobbyManager : MonoBehaviour
             newPlayerListItemScript.SetPlayerListItemValues();
 
 
-            newPlayerListItem.transform.SetParent(ContentPanel.transform);
+            newPlayerListItem.transform.SetParent(gameObject.transform);
+            Debug.Log("GamePlayers: " + Game.GamePlayers.Count);
+            newPlayerListItem.transform.localPosition = new Vector3(-950 + (Game.GamePlayers.Count * 300), -350, 0);
             newPlayerListItem.transform.localScale = Vector3.one;
 
             playerListItems.Add(newPlayerListItemScript);
@@ -126,6 +129,7 @@ public class LobbyManager : MonoBehaviour
 
 
                 newPlayerListItem.transform.SetParent(ContentPanel.transform);
+                newPlayerListItem.transform.localPosition = new Vector3(-950 + (Game.GamePlayers.Count * 300), -350, 0);
                 newPlayerListItem.transform.localScale = Vector3.one;
 
                 playerListItems.Add(newPlayerListItemScript);
@@ -182,11 +186,11 @@ public class LobbyManager : MonoBehaviour
     void ChangeReadyUpButtonText()
     {
         if (localGamePlayerScript.isPlayerReady)
-            ReadyUpButton.GetComponentInChildren<Text>().text = "Not ready";
+            ReadyUpButton.GetComponentInChildren<Text>().text = "NOT READY";
         else
-            ReadyUpButton.GetComponentInChildren<Text>().text = "Ready";
+            ReadyUpButton.GetComponentInChildren<Text>().text = "READY";
     }
-    void CheckIfAllPlayersAreReady()
+    public void CheckIfAllPlayersAreReady()
     {
         Debug.Log("Executing CheckIfAllPlayersAreReady");
         bool areAllPlayersReady = false;

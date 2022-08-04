@@ -8,13 +8,13 @@ using UnityEngine.SceneManagement;
 public class MyNetworkManager : NetworkManager
 {
     [SerializeField] private GamePlayer gamePlayerPrefab;
-    [SerializeField] public int minPlayers = 1;
+    [SerializeField] public int minPlayers = 2;
     public List<GamePlayer> GamePlayers { get; } = new List<GamePlayer>();
+    [SerializeField] private PlayerListItem playerListPrefab;
     // Start is called before the first frame update
     public void OnStartServer()
     {
         Debug.Log("Starting Server");
-        //ServerChangeScene("Scene_SteamworksLobby");
     }
     public void OnClientConnect(NetworkConnectionToClient conn)
     {
@@ -26,9 +26,9 @@ public class MyNetworkManager : NetworkManager
         Debug.Log("Checking if player is in correct scene. Player's scene name is: " + SceneManager.GetActiveScene().name.ToString() + ". Correct scene name is: TitleScreen");
         if (SceneManager.GetActiveScene().name == "TitleScreen")
         {
-            bool isGameLeader = GamePlayers.Count == 0; // isLeader is true if the player count is 0, aka when you are the first player to be added to a server/room
+            bool isGameLeader = GamePlayers.Count == 1; // isLeader is true if the player count is 0, aka when you are the first player to be added to a server/room
 
-            GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab);
+            GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
             GamePlayerInstance.IsGameLeader = isGameLeader;
             GamePlayerInstance.ConnectionId = conn.connectionId;
@@ -52,7 +52,7 @@ public class MyNetworkManager : NetworkManager
     {
         ServerChangeScene("GameScene");
         GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameManager.numPlayers = 2;
+        gameManager.numPlayers = GamePlayers.Count;
         gameManager.initPlayersTutorial();
         gameManager.initDecks();
     }

@@ -19,9 +19,11 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar(hook = nameof(HandlePlayerReadyStatusChange))] public bool isPlayerReady;
     [SyncVar] public ulong playerSteamId;
 
+    public PlayerListItem item;
+
     public CharacterDisplay charDisplay;
     public TMPro.TextMeshProUGUI usernameText;
-    public TMPro.TextMeshProUGUI readyUp;
+    //public TMPro.TextMeshProUGUI readyUp;
 
     private MyNetworkManager game;
     private MyNetworkManager Game
@@ -40,7 +42,11 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("I want to see if this triggers");
         CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
         gameObject.name = "LocalGamePlayer";
-        LobbyManager.instance.FindLocalGamePlayer();
+        usernameText.text = item.playerName;
+        item.playerName = playerName;
+        charName = LobbyManager.instance.characterName;
+        DontDestroyOnLoad(this.gameObject);
+        //LobbyManager.instance.FindLocalGamePlayer();
         //LobbyManager.instance.UpdateLobbyName();
     }
     [Command]
@@ -56,6 +62,11 @@ public class GamePlayer : NetworkBehaviour
         onCharacterClick(character);
     }
 
+    public void ReadyUp()
+    {
+        isPlayerReady = !isPlayerReady;
+    }
+
     public override void OnStartClient()
     {
         Game.GamePlayers.Add(this);
@@ -65,7 +76,10 @@ public class GamePlayer : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        usernameText.text = SteamLobby.instance.greetingName;
+        //usernameText.text = SteamLobby.instance.greetingName;
+        usernameText.text = item.playerName;
+        item.playerName = playerName;
+        charName = LobbyManager.instance.characterName;
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -118,18 +132,17 @@ public class GamePlayer : NetworkBehaviour
         if (isClient)
         {
             this.usernameText.text = newValue;
-            //LobbyManager.instance.UpdateUI();
+            LobbyManager.instance.UpdateUI();
         }
 
     }
     public void ChangeReadyStatus()
     {
         Debug.Log("Executing ChangeReadyStatus for player: " + this.playerName);
-        if (hasAuthority)
-            CmdChangePlayerReadyStatus();
+        CmdChangePlayerReadyStatus();
     }
-    [Command]
-    void CmdChangePlayerReadyStatus()
+    [Command(requiresAuthority = false)]
+    public void CmdChangePlayerReadyStatus()
     {
         Debug.Log("Executing CmdChangePlayerReadyStatus on the server for player: " + this.playerName);
         this.HandlePlayerReadyStatusChange(this.isPlayerReady, !this.isPlayerReady);
