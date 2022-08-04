@@ -297,8 +297,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnNotReadyClick
+        m_TargetAssemblyTypeName: PlayerListItem, Assembly-CSharp
+        m_MethodName: UpdatePlayerItemReadyStatus
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -462,8 +462,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 82.5
-  m_fontSizeBase: 82.5
+  m_fontSize: 90
+  m_fontSizeBase: 90
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -515,6 +515,7 @@ GameObject:
   - component: {fileID: 819319328743518874}
   - component: {fileID: 819319328743518876}
   - component: {fileID: 819319328743518875}
+  - component: {fileID: 6515335681367900375}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -562,7 +563,7 @@ MonoBehaviour:
   sceneId: 0
   serverOnly: 0
   visible: 0
-  m_AssetId: 
+  m_AssetId: ac00fb6b2fceb35408f2847adf62f2ee
   hasSpawned: 0
 --- !u!114 &819319328743518875
 MonoBehaviour:
@@ -581,9 +582,31 @@ MonoBehaviour:
   playerName: 
   ConnectionId: 0
   playerNumber: 0
+  charName: 
   IsGameLeader: 0
   isPlayerReady: 0
   playerSteamId: 0
+  charDisplay: {fileID: 819319329615365681}
+  usernameText: {fileID: 819319328717388585}
+  readyUp: {fileID: 819319329213308519}
+--- !u!114 &6515335681367900375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 819319328743518873}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f08890dc3bd35944aaa17475c2454b67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerName: 
+  ConnectionId: 0
+  isPlayerReady: 0
+  playerSteamId: 0
+  PlayerNameText: {fileID: 819319328717388585}
+  PlayerReadyStatus: {fileID: 819319329213308519}
 --- !u!1 &819319329213308517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1082,10 +1105,10 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 819319328521234983}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
+      - m_Target: {fileID: 6515335681367900375}
+        m_TargetAssemblyTypeName: PlayerListItem, Assembly-CSharp
+        m_MethodName: UpdatePlayerItemReadyStatus
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1093,30 +1116,6 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 819319329889547607}
-        m_TargetAssemblyTypeName: FMODUnity.StudioEventEmitter, FMODUnity
-        m_MethodName: Play
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OnReadyClick
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &819319329889547607
 MonoBehaviour:

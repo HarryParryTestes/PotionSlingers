@@ -24,7 +24,7 @@ public class MyNetworkManager : NetworkManager
     public void OnServerAddPlayer(NetworkConnectionToClient conn)
     {
         Debug.Log("Checking if player is in correct scene. Player's scene name is: " + SceneManager.GetActiveScene().name.ToString() + ". Correct scene name is: TitleScreen");
-        if (SceneManager.GetActiveScene().name == "Scene_SteamworksLobby")
+        if (SceneManager.GetActiveScene().name == "TitleScreen")
         {
             bool isGameLeader = GamePlayers.Count == 0; // isLeader is true if the player count is 0, aka when you are the first player to be added to a server/room
 

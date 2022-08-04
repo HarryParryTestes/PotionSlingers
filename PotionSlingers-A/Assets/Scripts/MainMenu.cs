@@ -172,7 +172,7 @@ public class MainMenu : MonoBehaviour
 	public void onCharacterClick(string character)
     {
 		Debug.Log("Send CharReq");
-		foreach (Character character2 in characters)
+		foreach (Character character2 in MainMenu.menu.characters)
 		{
 			if (character2.cardName == character)
 			{

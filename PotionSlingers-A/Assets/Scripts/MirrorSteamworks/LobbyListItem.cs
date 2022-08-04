@@ -13,11 +13,12 @@ public class LobbyListItem : MonoBehaviour
 
     [SerializeField] private TMPro.TextMeshProUGUI LobbyNameText;
     [SerializeField] private TMPro.TextMeshProUGUI NumberOfPlayersText;
+    public GameObject charMenu;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        charMenu = GameObject.Find("JoinLobbyCharacterMenu");
     }
 
     // Update is called once per frame
@@ -35,5 +36,10 @@ public class LobbyListItem : MonoBehaviour
         Debug.Log("JoinLobby: Player selected to join lobby with steam id of: " + lobbySteamId.ToString());
         numberOfPlayers += 1;
         SteamLobby.instance.JoinLobby(lobbySteamId);
+    }
+
+    public void setCharMenuActive()
+    {
+        charMenu.SetActive(true);
     }
 }

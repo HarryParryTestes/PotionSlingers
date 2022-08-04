@@ -10,11 +10,14 @@ public class LobbyManager : MonoBehaviour
 {
     public static LobbyManager instance;
 
+    public int numPlayers = 1;
+
     [Header("UI Elements")]
     [SerializeField] private Text LobbyNameText;
     [SerializeField] private GameObject ContentPanel;
     [SerializeField] private GameObject PlayerListItemPrefab;
     [SerializeField] private Button ReadyUpButton;
+    [SerializeField] private Button NotReadyUpButton;
     [SerializeField] private Button StartGameButton;
 
     public bool havePlayerListItemsBeenCreated = false;
@@ -58,7 +61,8 @@ public class LobbyManager : MonoBehaviour
     public void FindLocalGamePlayer()
     {
         localGamePlayerObject = GameObject.Find("LocalGamePlayer");
-        localGamePlayerScript = localGamePlayerObject.GetComponent<GamePlayer>();
+        //localGamePlayerScript = localGamePlayerObject.GetComponent<GamePlayer>();
+        localGamePlayerScript = players[game.GamePlayers.Count - 1];
     }
     public void UpdateLobbyName()
     {
@@ -103,7 +107,7 @@ public class LobbyManager : MonoBehaviour
         }
         havePlayerListItemsBeenCreated = true;
     }
-    private void CreateNewPlayerListItems()
+    public void CreateNewPlayerListItems()
     {
         Debug.Log("Executing CreateNewPlayerListItems");
         foreach (GamePlayer player in Game.GamePlayers)

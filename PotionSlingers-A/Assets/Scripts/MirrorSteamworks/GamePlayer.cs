@@ -13,7 +13,7 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar(hook = nameof(HandlePlayerNameUpdate))] public string playerName;
     [SyncVar] public int ConnectionId;
     [SyncVar] public int playerNumber;
-    [SyncVar] public string charName;
+    [SyncVar(hook = nameof(HandleCharNameUpdate))] public string charName;
     [Header("Game Info")]
     [SyncVar] public bool IsGameLeader = false;
     [SyncVar(hook = nameof(HandlePlayerReadyStatusChange))] public bool isPlayerReady;
@@ -37,10 +37,11 @@ public class GamePlayer : NetworkBehaviour
     }
     public override void OnStartAuthority()
     {
+        Debug.Log("I want to see if this triggers");
         CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
         gameObject.name = "LocalGamePlayer";
         LobbyManager.instance.FindLocalGamePlayer();
-        LobbyManager.instance.UpdateLobbyName();
+        //LobbyManager.instance.UpdateLobbyName();
     }
     [Command]
     private void CmdSetPlayerName(string playerName)
@@ -48,6 +49,13 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("CmdSetPlayerName: Setting player name to: " + playerName);
         this.HandlePlayerNameUpdate(this.playerName, playerName);
     }
+
+    public void changeCharName(string character)
+    {
+        charName = character;
+        onCharacterClick(character);
+    }
+
     public override void OnStartClient()
     {
         Game.GamePlayers.Add(this);
@@ -66,6 +74,41 @@ public class GamePlayer : NetworkBehaviour
     {
         
     }
+
+    [Command]
+    public void CmdChangeCharacter(string character)
+    {
+        Debug.Log("Changing character to: " + character);
+        this.HandleCharNameUpdate(this.charName, character);
+    }
+
+    public void onCharacterClick(string character)
+    {
+        Debug.Log("Send CharReq");
+        foreach (Character character2 in MainMenu.menu.characters)
+        {
+            if (character2.cardName == character)
+            {
+                Debug.Log(character + " chosen");
+                charDisplay.updateCharacter(character2);
+            }
+        }
+    }
+
+    public void HandleCharNameUpdate(string oldValue, string newValue)
+    {
+        Debug.Log("Player name has been updated for: " + oldValue + " to new value: " + newValue);
+        if (isServer)
+            this.charName = newValue;
+            onCharacterClick(newValue);
+        if (isClient)
+        {
+            this.charName = newValue;
+            onCharacterClick(newValue);
+        }
+
+    }
+
     public void HandlePlayerNameUpdate(string oldValue, string newValue)
     {
         Debug.Log("Player name has been updated for: " + oldValue + " to new value: " + newValue);
