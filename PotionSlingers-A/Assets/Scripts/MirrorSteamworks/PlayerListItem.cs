@@ -12,8 +12,9 @@ public class PlayerListItem : MonoBehaviour
     public string playerName;
     public int ConnectionId;
     public bool isPlayerReady = false;
-    public ulong playerSteamId;
+    public CSteamID playerSteamId;
 
+    public string charName = "blank";
     public GamePlayer player;
 
     [SerializeField] private TMPro.TextMeshProUGUI PlayerNameText;
@@ -38,6 +39,7 @@ public class PlayerListItem : MonoBehaviour
         player.playerName = playerName;
         player.playerSteamId = playerSteamId;
         player.ConnectionId = ConnectionId;
+        player.charName = charName;
         //UpdatePlayerItemReadyStatus();
     }
     public void UpdatePlayerItemReadyStatus()

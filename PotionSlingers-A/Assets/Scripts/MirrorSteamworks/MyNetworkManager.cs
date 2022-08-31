@@ -9,6 +9,7 @@ public class MyNetworkManager : NetworkManager
 {
     [SerializeField] private GamePlayer gamePlayerPrefab;
     [SerializeField] public int minPlayers = 2;
+    public LobbyManager lobbyManager;
     public List<GamePlayer> GamePlayers { get; } = new List<GamePlayer>();
     [SerializeField] private PlayerListItem playerListPrefab;
     // Start is called before the first frame update
@@ -28,13 +29,18 @@ public class MyNetworkManager : NetworkManager
         {
             bool isGameLeader = GamePlayers.Count == 1; // isLeader is true if the player count is 0, aka when you are the first player to be added to a server/room
 
+            Debug.Log("Instantiating player?");
             GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+
+            lobbyManager.localGamePlayerScript = GamePlayerInstance;
+
+
 
             GamePlayerInstance.IsGameLeader = isGameLeader;
             GamePlayerInstance.ConnectionId = conn.connectionId;
             GamePlayerInstance.playerNumber = GamePlayers.Count + 1;
 
-            GamePlayerInstance.playerSteamId = (ulong)SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.current_lobbyID, GamePlayers.Count);
+            GamePlayerInstance.playerSteamId = SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.current_lobbyID, GamePlayers.Count);
 
             NetworkServer.AddPlayerForConnection(conn, GamePlayerInstance.gameObject);
             Debug.Log("Player added. Player name: " + GamePlayerInstance.playerName + ". Player connection id: " + GamePlayerInstance.ConnectionId.ToString());

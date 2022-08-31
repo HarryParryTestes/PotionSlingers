@@ -24,7 +24,7 @@ public class LobbyManager : MonoBehaviour
     public bool havePlayerListItemsBeenCreated = false;
     private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
     public List<GamePlayer> players = new List<GamePlayer>();
-    //public GameObject localGamePlayerObject;
+    public GameObject localGamePlayerObject;
     public GamePlayer localGamePlayerScript;
 
 
@@ -60,9 +60,17 @@ public class LobbyManager : MonoBehaviour
             instance = this;
     }
 
+    public void FindLocalPlayer()
+    {
+        localGamePlayerObject = GameObject.Find("LocalGamePlayer");
+        localGamePlayerScript = localGamePlayerObject.GetComponent<GamePlayer>();
+    }
+
     public void changeCharName(string name)
     {
         characterName = name;
+        if (localGamePlayerScript != null)
+        localGamePlayerScript.charName = name;
     }
     
     public void UpdateLobbyName()
@@ -76,6 +84,8 @@ public class LobbyManager : MonoBehaviour
     public void UpdateUI()
     {
         Debug.Log("Executing UpdateUI");
+        Debug.Log("players in lobby: " + playerListItems.Count);
+        Debug.Log("players on network: " + Game.GamePlayers.Count);
         if (!havePlayerListItemsBeenCreated)
             CreatePlayerListItems();
         if (playerListItems.Count < Game.GamePlayers.Count)
@@ -98,11 +108,12 @@ public class LobbyManager : MonoBehaviour
             newPlayerListItemScript.ConnectionId = player.ConnectionId;
             newPlayerListItemScript.isPlayerReady = player.isPlayerReady;
             newPlayerListItemScript.playerSteamId = player.playerSteamId;
+            newPlayerListItemScript.charName = player.charName;
             newPlayerListItemScript.SetPlayerListItemValues();
 
 
             newPlayerListItem.transform.SetParent(gameObject.transform);
-            Debug.Log("GamePlayers: " + Game.GamePlayers.Count);
+            Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
             newPlayerListItem.transform.localPosition = new Vector3(-950 + (Game.GamePlayers.Count * 300), -350, 0);
             newPlayerListItem.transform.localScale = Vector3.one;
 
@@ -129,6 +140,7 @@ public class LobbyManager : MonoBehaviour
 
 
                 newPlayerListItem.transform.SetParent(ContentPanel.transform);
+                Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
                 newPlayerListItem.transform.localPosition = new Vector3(-950 + (Game.GamePlayers.Count * 300), -350, 0);
                 newPlayerListItem.transform.localScale = Vector3.one;
 
@@ -172,7 +184,9 @@ public class LobbyManager : MonoBehaviour
                     playerListItemScript.isPlayerReady = player.isPlayerReady;
                     playerListItemScript.SetPlayerListItemValues();
                     if (player == localGamePlayerScript)
-                        ChangeReadyUpButtonText();
+                    {
+                        //ChangeReadyUpButtonText();
+                    }
                 }
             }
         }

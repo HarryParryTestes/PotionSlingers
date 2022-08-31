@@ -17,7 +17,7 @@ public class GamePlayer : NetworkBehaviour
     [Header("Game Info")]
     [SyncVar] public bool IsGameLeader = false;
     [SyncVar(hook = nameof(HandlePlayerReadyStatusChange))] public bool isPlayerReady;
-    [SyncVar] public ulong playerSteamId;
+    [SyncVar] public CSteamID playerSteamId;
 
     public PlayerListItem item;
 
@@ -40,14 +40,19 @@ public class GamePlayer : NetworkBehaviour
     public override void OnStartAuthority()
     {
         Debug.Log("I want to see if this triggers");
+        gameObject.name = "LocalGamePlayer";
+        LobbyManager.instance.FindLocalPlayer();
+        if(Game.GamePlayers.Count == 0)
+        {
+            IsGameLeader = true;
+        }
         CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
+        playerSteamId = SteamUser.GetSteamID();
         gameObject.name = "LocalGamePlayer";
         usernameText.text = item.playerName;
         item.playerName = playerName;
         charName = LobbyManager.instance.characterName;
         DontDestroyOnLoad(this.gameObject);
-        //LobbyManager.instance.FindLocalGamePlayer();
-        //LobbyManager.instance.UpdateLobbyName();
     }
     [Command]
     private void CmdSetPlayerName(string playerName)
@@ -59,12 +64,14 @@ public class GamePlayer : NetworkBehaviour
     public void changeCharName(string character)
     {
         charName = character;
-        onCharacterClick(character);
+        //onCharacterClick(character);
     }
 
     public void ReadyUp()
     {
         isPlayerReady = !isPlayerReady;
+        LobbyManager.instance.localGamePlayerScript.isPlayerReady = !LobbyManager.instance.localGamePlayerScript.isPlayerReady;
+        LobbyManager.instance.CheckIfAllPlayersAreReady();
     }
 
     public override void OnStartClient()

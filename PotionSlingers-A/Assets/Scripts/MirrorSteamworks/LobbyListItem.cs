@@ -14,6 +14,19 @@ public class LobbyListItem : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI LobbyNameText;
     [SerializeField] private TMPro.TextMeshProUGUI NumberOfPlayersText;
 
+    private MyNetworkManager game;
+    private MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,6 +47,7 @@ public class LobbyListItem : MonoBehaviour
     {
         Debug.Log("JoinLobby: Player selected to join lobby with steam id of: " + lobbySteamId.ToString());
         numberOfPlayers += 1;
+        Game.StartClient();
         SteamLobby.instance.JoinLobby(lobbySteamId);
     }
 }

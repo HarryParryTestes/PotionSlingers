@@ -521,9 +521,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935880}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateNewLobby
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -533,8 +533,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -543,6 +543,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Sweetbitter
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &39571189
@@ -825,9 +837,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935880}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateNewLobby
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -837,8 +849,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -847,6 +859,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Bolo
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &72516350
@@ -1815,7 +1839,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1034.586, y: 158.29732}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &144499062
@@ -3368,6 +3392,7 @@ GameObject:
   - component: {fileID: 285935879}
   - component: {fileID: 285935878}
   - component: {fileID: 285935880}
+  - component: {fileID: 285935881}
   m_Layer: 0
   m_Name: MainMenuScript
   m_TagString: Untagged
@@ -3390,7 +3415,7 @@ MonoBehaviour:
   greeting: {fileID: 1848425905}
   greetingName: 
   numPlayers: 0
-  gameManager: {fileID: 0}
+  gameManager: {fileID: 285935881}
   characters:
   - {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
   - {fileID: 11400000, guid: 6f37677945eff4915957fbaf9b104512, type: 2}
@@ -3475,6 +3500,45 @@ MonoBehaviour:
   privacy: 0
   listOfLobbyListItems: []
   publicButton: {fileID: 563156585}
+--- !u!114 &285935881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 285935877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec02e686fb6112544b87d9a21aaba410, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  numPlayers: 0
+  selectedCardInt: 0
+  selectedOpponentInt: 0
+  selectedOpponentCharName: 
+  loadedCardInt: 0
+  myPlayerIndex: 0
+  currentPlayerId: 0
+  players:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  characters: []
+  td: {fileID: 0}
+  successMessages: []
+  errorMessages: []
+  p1: {fileID: 0}
+  p2: {fileID: 0}
+  opLeft: {fileID: 0}
+  opTop: {fileID: 0}
+  opRight: {fileID: 0}
+  playerBottomName: {fileID: 0}
+  playerLeftName: {fileID: 0}
+  playerTopName: {fileID: 0}
+  playerRightName: {fileID: 0}
+  attackMenu: {fileID: 0}
+  loadMenu: {fileID: 0}
 --- !u!1 &287916040
 GameObject:
   m_ObjectHideFlags: 0
@@ -4049,9 +4113,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935880}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateNewLobby
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4061,8 +4125,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -4071,6 +4135,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Reets
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &334230760
@@ -5585,9 +5661,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935880}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateNewLobby
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5597,8 +5673,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -5607,6 +5683,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Scarpetta
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &423549356
@@ -6597,9 +6685,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935880}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateNewLobby
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6609,8 +6697,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -6619,6 +6707,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Nickles
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &537391106
@@ -11441,6 +11541,7 @@ MonoBehaviour:
   spawnPrefabs: []
   gamePlayerPrefab: {fileID: 819319328743518875, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
   minPlayers: 2
+  lobbyManager: {fileID: 1783119419}
   playerListPrefab: {fileID: 6515335681367900375, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
 --- !u!1 &1194325629
 GameObject:
@@ -12018,8 +12119,20 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -12028,6 +12141,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Isadore
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1221725147
@@ -13003,6 +13128,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1254139279
 GameObject:
   m_ObjectHideFlags: 0
@@ -13786,9 +13923,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935880}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateNewLobby
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13798,8 +13935,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -13808,6 +13945,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Pluot
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1335596087
@@ -16805,9 +16954,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935880}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateNewLobby
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16817,8 +16966,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -16827,6 +16976,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Saltimbocca
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1482038637
@@ -18191,9 +18352,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 285935880}
-        m_TargetAssemblyTypeName: MainMenuManager, Assembly-CSharp
-        m_MethodName: CreateNewLobby
+      - m_Target: {fileID: 1194078802}
+        m_TargetAssemblyTypeName: Mirror.NetworkManager, Mirror
+        m_MethodName: StartClient
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18203,8 +18364,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GamePlayer, Assembly-CSharp
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
         m_MethodName: changeCharName
         m_Mode: 5
         m_Arguments:
@@ -18213,6 +18374,18 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: Twins
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &1536298116
@@ -19201,6 +19374,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1783119419}
+        m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
+        m_MethodName: UpdateUI
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
