@@ -13,6 +13,7 @@ public class PlayerListItem : MonoBehaviour
     public int ConnectionId;
     public bool isPlayerReady = false;
     public CSteamID playerSteamId;
+    public int playerNumber;
 
     public string charName = "blank";
     public GamePlayer player;

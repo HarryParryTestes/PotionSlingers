@@ -47,10 +47,10 @@ public class GamePlayer : NetworkBehaviour
             IsGameLeader = true;
         }
         CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
+        playerNumber = 1;
         playerSteamId = SteamUser.GetSteamID();
-        gameObject.name = "LocalGamePlayer";
-        usernameText.text = item.playerName;
-        item.playerName = playerName;
+        //usernameText.text = item.playerName;
+        //item.playerName = playerName;
         charName = LobbyManager.instance.characterName;
         DontDestroyOnLoad(this.gameObject);
     }

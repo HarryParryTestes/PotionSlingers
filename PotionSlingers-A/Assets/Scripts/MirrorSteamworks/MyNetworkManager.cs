@@ -27,12 +27,12 @@ public class MyNetworkManager : NetworkManager
         Debug.Log("Checking if player is in correct scene. Player's scene name is: " + SceneManager.GetActiveScene().name.ToString() + ". Correct scene name is: TitleScreen");
         if (SceneManager.GetActiveScene().name == "TitleScreen")
         {
-            bool isGameLeader = GamePlayers.Count == 1; // isLeader is true if the player count is 0, aka when you are the first player to be added to a server/room
+            bool isGameLeader = GamePlayers.Count == 0; // isLeader is true if the player count is 0, aka when you are the first player to be added to a server/room
 
             Debug.Log("Instantiating player?");
             GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
-            lobbyManager.localGamePlayerScript = GamePlayerInstance;
+            //lobbyManager.localGamePlayerScript = GamePlayerInstance;
 
 
 

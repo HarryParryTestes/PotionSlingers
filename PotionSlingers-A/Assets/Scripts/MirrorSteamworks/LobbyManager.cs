@@ -98,6 +98,30 @@ public class LobbyManager : MonoBehaviour
     private void CreatePlayerListItems()
     {
         Debug.Log("Executing CreatePlayerListItems. This many players to create: " + Game.GamePlayers.Count.ToString());
+
+        for (int i = 0; i < Game.GamePlayers.Count; i++)
+        {
+            Debug.Log("CreatePlayerListItems: Creating playerlistitem for player: " + Game.GamePlayers[i].playerName);
+            GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab) as GameObject;
+            PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
+
+            newPlayerListItemScript.playerName = Game.GamePlayers[i].playerName;
+            newPlayerListItemScript.ConnectionId = Game.GamePlayers[i].ConnectionId;
+            newPlayerListItemScript.isPlayerReady = Game.GamePlayers[i].isPlayerReady;
+            newPlayerListItemScript.playerSteamId = Game.GamePlayers[i].playerSteamId;
+            newPlayerListItemScript.charName = Game.GamePlayers[i].charName;
+            //newPlayerListItemScript.playerNumber = i + 1;
+            newPlayerListItemScript.SetPlayerListItemValues();
+
+
+            newPlayerListItem.transform.SetParent(gameObject.transform);
+            Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
+            newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 300), -350, 0);
+            newPlayerListItem.transform.localScale = Vector3.one;
+
+            playerListItems.Add(newPlayerListItemScript);
+        }
+        /*
         foreach (GamePlayer player in Game.GamePlayers)
         {
             Debug.Log("CreatePlayerListItems: Creating playerlistitem for player: " + player.playerName);
@@ -114,16 +138,45 @@ public class LobbyManager : MonoBehaviour
 
             newPlayerListItem.transform.SetParent(gameObject.transform);
             Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
-            newPlayerListItem.transform.localPosition = new Vector3(-950 + (Game.GamePlayers.Count * 300), -350, 0);
+            newPlayerListItem.transform.localPosition = new Vector3(-950 + (player.playerNumber * 300), -350, 0);
             newPlayerListItem.transform.localScale = Vector3.one;
 
             playerListItems.Add(newPlayerListItemScript);
         }
+        */
+
         havePlayerListItemsBeenCreated = true;
     }
     public void CreateNewPlayerListItems()
     {
         Debug.Log("Executing CreateNewPlayerListItems");
+
+        for (int i = 0; i < Game.GamePlayers.Count; i++)
+        {
+            if (!playerListItems.Any(b => b.ConnectionId == Game.GamePlayers[i].ConnectionId))
+            {
+                Debug.Log("CreateNewPlayerListItems: Player not found in playerListItems: " + Game.GamePlayers[i].playerName);
+                GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab) as GameObject;
+                PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
+
+                newPlayerListItemScript.playerName = Game.GamePlayers[i].playerName;
+                newPlayerListItemScript.ConnectionId = Game.GamePlayers[i].ConnectionId;
+                newPlayerListItemScript.isPlayerReady = Game.GamePlayers[i].isPlayerReady;
+                newPlayerListItemScript.playerSteamId = Game.GamePlayers[i].playerSteamId;
+                newPlayerListItemScript.charName = Game.GamePlayers[i].charName;
+                newPlayerListItemScript.SetPlayerListItemValues();
+
+
+                newPlayerListItem.transform.SetParent(ContentPanel.transform);
+                Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
+                newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 300), -350, 0);
+                newPlayerListItem.transform.localScale = Vector3.one;
+
+                playerListItems.Add(newPlayerListItemScript);
+            }
+        }
+
+        /*
         foreach (GamePlayer player in Game.GamePlayers)
         {
             if (!playerListItems.Any(b => b.ConnectionId == player.ConnectionId))
@@ -136,17 +189,19 @@ public class LobbyManager : MonoBehaviour
                 newPlayerListItemScript.ConnectionId = player.ConnectionId;
                 newPlayerListItemScript.isPlayerReady = player.isPlayerReady;
                 newPlayerListItemScript.playerSteamId = player.playerSteamId;
+                newPlayerListItemScript.charName = player.charName;
                 newPlayerListItemScript.SetPlayerListItemValues();
 
 
                 newPlayerListItem.transform.SetParent(ContentPanel.transform);
                 Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
-                newPlayerListItem.transform.localPosition = new Vector3(-950 + (Game.GamePlayers.Count * 300), -350, 0);
+                newPlayerListItem.transform.localPosition = new Vector3(-950 + (player.playerNumber * 300), -350, 0);
                 newPlayerListItem.transform.localScale = Vector3.one;
 
                 playerListItems.Add(newPlayerListItemScript);
             }
         }
+        */
 
     }
     private void RemovePlayerListItems()
