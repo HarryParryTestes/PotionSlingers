@@ -170,7 +170,7 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("Executing ChangeReadyStatus for player: " + this.playerName);
         CmdChangePlayerReadyStatus();
     }
-    [Command(requiresAuthority = false)]
+    [Command]
     public void CmdChangePlayerReadyStatus()
     {
         Debug.Log("Executing CmdChangePlayerReadyStatus on the server for player: " + this.playerName);
