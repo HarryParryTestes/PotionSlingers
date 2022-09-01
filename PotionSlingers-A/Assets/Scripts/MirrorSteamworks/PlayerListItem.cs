@@ -46,7 +46,7 @@ public class PlayerListItem : MonoBehaviour
     public void UpdatePlayerItemReadyStatus()
     {
         isPlayerReady = !isPlayerReady;
-        player.CmdChangePlayerReadyStatus();
+        player.ChangeReadyStatus();
         /*
         if (isPlayerReady)
         {

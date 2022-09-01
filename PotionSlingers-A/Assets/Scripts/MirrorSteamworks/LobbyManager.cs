@@ -240,14 +240,16 @@ public class LobbyManager : MonoBehaviour
         {
             foreach (PlayerListItem playerListItemScript in playerListItems)
             {
-                if (playerListItemScript.ConnectionId == player.ConnectionId)
+                // also changing this to check steam ids for the same reason as the other problem
+                if (playerListItemScript.playerSteamId == player.playerSteamId)
                 {
-                    playerListItemScript.playerName = player.playerName;
-                    playerListItemScript.isPlayerReady = player.isPlayerReady;
-                    playerListItemScript.SetPlayerListItemValues();
+                    //playerListItemScript.playerName = player.playerName;
+                    //playerListItemScript.isPlayerReady = player.isPlayerReady;
+                    //playerListItemScript.SetPlayerListItemValues();
                     if (player == localGamePlayerScript)
                     {
-                        //ChangeReadyUpButtonText();
+                        playerListItemScript.playerName = player.playerName;
+                        playerListItemScript.isPlayerReady = player.isPlayerReady;
                     }
                 }
             }
