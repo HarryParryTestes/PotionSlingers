@@ -70,8 +70,8 @@ public class LobbyManager : MonoBehaviour
     public void changeCharName(string name)
     {
         characterName = name;
-        if (localGamePlayerScript != null)
-        localGamePlayerScript.charName = name;
+        //if (localGamePlayerScript != null)
+        //localGamePlayerScript.charName = name;
     }
     
     public void UpdateLobbyName()
@@ -118,8 +118,9 @@ public class LobbyManager : MonoBehaviour
 
             newPlayerListItem.transform.SetParent(gameObject.transform);
             Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
-            newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 300), -350, 0);
-            newPlayerListItem.transform.localScale = Vector3.one;
+            newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 450), -350, 0);
+            //newPlayerListItem.transform.localScale = Vector3.one;
+            newPlayerListItem.transform.localScale = new Vector3(.8f, .8f, .8f);
 
             playerListItems.Add(newPlayerListItemScript);
         }
@@ -174,7 +175,9 @@ public class LobbyManager : MonoBehaviour
                 newPlayerListItem.transform.SetParent(ContentPanel.transform);
                 Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
                 newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 300), -350, 0);
-                newPlayerListItem.transform.localScale = Vector3.one;
+                //newPlayerListItem.transform.localScale = Vector3.one;
+                newPlayerListItem.transform.localScale = new Vector3(.8f, .8f, .8f);
+                
 
                 playerListItems.Add(newPlayerListItemScript);
             }

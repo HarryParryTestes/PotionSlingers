@@ -13,6 +13,7 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar(hook = nameof(HandlePlayerNameUpdate))] public string playerName;
     [SyncVar] public int ConnectionId;
     [SyncVar] public int playerNumber;
+    public int charIndex = 0;
     [SyncVar(hook = nameof(HandleCharNameUpdate))] public string charName;
     [Header("Game Info")]
     [SyncVar] public bool IsGameLeader = false;
@@ -66,6 +67,26 @@ public class GamePlayer : NetworkBehaviour
     {
         charName = character;
         //onCharacterClick(character);
+    }
+
+    public void selectCharNameRight()
+    {
+        charIndex += 1;
+        if (charIndex > 8)
+        {
+            charIndex = 0;
+        }
+        charName = MainMenu.menu.characters[charIndex].cardName;
+    }
+
+    public void selectCharNameLeft()
+    {
+        charIndex -= 1;
+        if (charIndex < 0)
+        {
+            charIndex = 8;
+        }
+        charName = MainMenu.menu.characters[charIndex].cardName;
     }
 
     public void ReadyUp()
