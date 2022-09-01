@@ -39,7 +39,7 @@ public class PlayerListItem : MonoBehaviour
         PlayerNameText.text = playerName;
         player.playerName = playerName;
         player.playerSteamId = playerSteamId;
-        player.ConnectionId = ConnectionId;
+        //player.ConnectionId = ConnectionId;
         player.charName = charName;
         //UpdatePlayerItemReadyStatus();
     }

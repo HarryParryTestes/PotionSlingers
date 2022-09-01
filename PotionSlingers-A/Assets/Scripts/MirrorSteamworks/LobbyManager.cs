@@ -26,6 +26,7 @@ public class LobbyManager : MonoBehaviour
     public List<GamePlayer> players = new List<GamePlayer>();
     public GameObject localGamePlayerObject;
     public GamePlayer localGamePlayerScript;
+    public int playerConnId;
 
 
     public ulong currentLobbyId;
@@ -106,11 +107,12 @@ public class LobbyManager : MonoBehaviour
             PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
 
             newPlayerListItemScript.playerName = Game.GamePlayers[i].playerName;
-            newPlayerListItemScript.ConnectionId = Game.GamePlayers[i].ConnectionId;
+            //newPlayerListItemScript.ConnectionId = Game.GamePlayers[i].ConnectionId;
+            newPlayerListItemScript.ConnectionId = i + 1;
             newPlayerListItemScript.isPlayerReady = Game.GamePlayers[i].isPlayerReady;
             newPlayerListItemScript.playerSteamId = Game.GamePlayers[i].playerSteamId;
             newPlayerListItemScript.charName = Game.GamePlayers[i].charName;
-            //newPlayerListItemScript.playerNumber = i + 1;
+            newPlayerListItemScript.playerNumber = i + 1;
             newPlayerListItemScript.SetPlayerListItemValues();
 
 
@@ -153,8 +155,10 @@ public class LobbyManager : MonoBehaviour
 
         for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
-            if (!playerListItems.Any(b => b.ConnectionId == Game.GamePlayers[i].ConnectionId))
+            // changing this if statement from checking the connection id to checking for unique steam ids
+            if (!playerListItems.Any(b => b.playerSteamId == Game.GamePlayers[i].playerSteamId))
             {
+                Debug.Log("Unique Steam ID found, creating UI for player");
                 Debug.Log("CreateNewPlayerListItems: Player not found in playerListItems: " + Game.GamePlayers[i].playerName);
                 GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab) as GameObject;
                 PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();

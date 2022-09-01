@@ -33,11 +33,14 @@ public class MyNetworkManager : NetworkManager
             GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
 
             //lobbyManager.localGamePlayerScript = GamePlayerInstance;
+            Debug.Log("Connection ID: " + conn.connectionId);
+            LobbyManager.instance.playerConnId = conn.connectionId;
 
 
 
             GamePlayerInstance.IsGameLeader = isGameLeader;
             GamePlayerInstance.ConnectionId = conn.connectionId;
+            //GamePlayerInstance.ConnectionId = GamePlayers.Count + 1;
             GamePlayerInstance.playerNumber = GamePlayers.Count + 1;
 
             GamePlayerInstance.playerSteamId = SteamMatchmaking.GetLobbyMemberByIndex((CSteamID)SteamLobby.instance.current_lobbyID, GamePlayers.Count);

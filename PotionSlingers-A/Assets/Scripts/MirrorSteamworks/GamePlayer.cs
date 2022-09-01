@@ -42,6 +42,7 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("I want to see if this triggers");
         gameObject.name = "LocalGamePlayer";
         LobbyManager.instance.FindLocalPlayer();
+        ConnectionId = LobbyManager.instance.playerConnId;
         if(Game.GamePlayers.Count == 0)
         {
             IsGameLeader = true;
