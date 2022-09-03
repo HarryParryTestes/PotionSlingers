@@ -98,6 +98,7 @@ public class GamePlayer : NetworkBehaviour
 
     public override void OnStartClient()
     {
+        Debug.Log("Starting client");
         Game.GamePlayers.Add(this);
         //LobbyManager.instance.UpdateLobbyName();
         LobbyManager.instance.UpdateUI();        
@@ -143,11 +144,17 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("Player name has been updated for: " + oldValue + " to new value: " + newValue);
         if (isServer)
             this.charName = newValue;
+            Debug.Log("I am a server");
             onCharacterClick(newValue);
+            LobbyManager.instance.UpdateUI();
+            
         if (isClient)
         {
+            Debug.Log("I am a client");
             this.charName = newValue;
             onCharacterClick(newValue);
+            LobbyManager.instance.UpdateUI();
+            
         }
 
     }
@@ -160,6 +167,7 @@ public class GamePlayer : NetworkBehaviour
             this.usernameText.text = newValue;
         if (isClient)
         {
+            this.playerName = newValue;
             this.usernameText.text = newValue;
             LobbyManager.instance.UpdateUI();
         }

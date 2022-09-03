@@ -174,7 +174,7 @@ public class LobbyManager : MonoBehaviour
 
                 newPlayerListItem.transform.SetParent(ContentPanel.transform);
                 Debug.Log("Number of GamePlayers in NetworkManager: " + Game.GamePlayers.Count);
-                newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 300), -350, 0);
+                newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 450), -350, 0);
                 //newPlayerListItem.transform.localScale = Vector3.one;
                 newPlayerListItem.transform.localScale = new Vector3(.8f, .8f, .8f);
                 

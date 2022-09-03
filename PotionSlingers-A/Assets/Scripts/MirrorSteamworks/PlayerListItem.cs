@@ -39,10 +39,13 @@ public class PlayerListItem : MonoBehaviour
         PlayerNameText.text = playerName;
         player.playerName = playerName;
         player.playerSteamId = playerSteamId;
-        //player.ConnectionId = ConnectionId;
+        player.ConnectionId = ConnectionId;
         player.charName = charName;
-        //UpdatePlayerItemReadyStatus();
+        UpdatePlayerItemReadyStatus();
     }
+
+    // TODO: Make references to the GameObjects used for the Ready and Not Ready buttons and
+    // use SetActive() depending on the isPlayerReady boolean
     public void UpdatePlayerItemReadyStatus()
     {
         isPlayerReady = !isPlayerReady;
