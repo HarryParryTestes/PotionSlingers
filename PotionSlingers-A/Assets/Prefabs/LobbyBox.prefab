@@ -193,9 +193,10 @@ MonoBehaviour:
   lobbyName: 
   numberOfPlayers: 0
   maxNumberOfPlayers: 0
+  ob: {fileID: 0}
+  ob2: {fileID: 0}
   LobbyNameText: {fileID: 8222084822218744134}
   NumberOfPlayersText: {fileID: 8222084821046339368}
-  charMenu: {fileID: 0}
 --- !u!1 &8222084821771104574
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,18 +682,6 @@ MonoBehaviour:
       - m_Target: {fileID: 6079556000559945355}
         m_TargetAssemblyTypeName: LobbyListItem, Assembly-CSharp
         m_MethodName: JoinLobby
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 6079556000559945355}
-        m_TargetAssemblyTypeName: LobbyListItem, Assembly-CSharp
-        m_MethodName: setCharMenuActive
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

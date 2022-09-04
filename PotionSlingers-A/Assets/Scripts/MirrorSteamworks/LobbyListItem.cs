@@ -11,6 +11,9 @@ public class LobbyListItem : MonoBehaviour
     public int numberOfPlayers;
     public int maxNumberOfPlayers = 4;
 
+    public GameObject ob;
+    public GameObject ob2;
+
     [SerializeField] private TMPro.TextMeshProUGUI LobbyNameText;
     [SerializeField] private TMPro.TextMeshProUGUI NumberOfPlayersText;
 
@@ -30,7 +33,8 @@ public class LobbyListItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        ob = GameObject.Find("OldLobbyMenu");
+        ob2 = GameObject.Find("Scroll View");
     }
 
     // Update is called once per frame
@@ -46,6 +50,9 @@ public class LobbyListItem : MonoBehaviour
     public void JoinLobby()
     {
         Debug.Log("JoinLobby: Player selected to join lobby with steam id of: " + lobbySteamId.ToString());
+        Debug.Log("Going to the lobby");
+        ob2.SetActive(false);
+        ob.SetActive(true);
         numberOfPlayers += 1;
         Game.StartClient();
         SteamLobby.instance.JoinLobby(lobbySteamId);
