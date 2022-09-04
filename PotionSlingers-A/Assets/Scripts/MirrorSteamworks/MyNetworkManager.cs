@@ -52,9 +52,9 @@ public class MyNetworkManager : NetworkManager
     public void StartGame()
     {  
             ServerChangeScene("GameScene");
-            GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-            gameManager.numPlayers = 2;
-            gameManager.init();
+            //GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+            //gameManager.numPlayers = 2;
+            //gameManager.init();
     }
 
     public void StartTutorial()

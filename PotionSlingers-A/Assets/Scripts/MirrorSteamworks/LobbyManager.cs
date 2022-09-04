@@ -43,6 +43,12 @@ public class LobbyManager : MonoBehaviour
             return game = MyNetworkManager.singleton as MyNetworkManager;
         }
     }
+
+    void Start()
+    {
+        DontDestroyOnLoad(this.gameObject);
+    }
+
     void Awake()
     {
         MakeInstance();
@@ -243,11 +249,12 @@ public class LobbyManager : MonoBehaviour
                 // also changing this to check steam ids for the same reason as the other problem
                 if (playerListItemScript.playerSteamId == player.playerSteamId)
                 {
-                    //playerListItemScript.playerName = player.playerName;
-                    //playerListItemScript.isPlayerReady = player.isPlayerReady;
-                    //playerListItemScript.SetPlayerListItemValues();
+                    playerListItemScript.playerName = player.playerName;
+                    playerListItemScript.isPlayerReady = player.isPlayerReady;
+                    playerListItemScript.SetPlayerListItemValues();
                     if (player == localGamePlayerScript)
                     {
+                        Debug.Log(player.playerName + " is the local player...");
                         playerListItemScript.playerName = player.playerName;
                         playerListItemScript.isPlayerReady = player.isPlayerReady;
                     }

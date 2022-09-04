@@ -72,6 +72,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("GameManager started!!!");
+        ob = GameObject.Find("CharacterCard");
+        Player playerOb = ob.GetComponent<Player>();
+        Debug.Log("Player 1's character is... " + playerOb.charName);
+        for (int i = 0; i < Game.GamePlayers.Count; i++)
+        {
+            if(i == 0)
+            {
+                playerOb.onCharacterClick(Game.GamePlayers[i].charName);
+            }
+        }
         /*
         menu = GameObject.Find("MainMenuScript").GetComponent<MainMenu>();
         networkManager = GameObject.Find("OldNetworkManager").GetComponent<OldNetworkManager>();
@@ -108,6 +119,8 @@ public class GameManager : MonoBehaviour
     {
         // Player1 = Client1 set up
         ob = GameObject.Find("CharacterCard");
+        Player playerOb = ob.GetComponent<Player>();
+        Debug.Log("Player's character is... " + playerOb.charName);
         ob.SetActive(true);
         obTop = GameObject.Find("CharacterCard (Top)");
         obTop.SetActive(true);

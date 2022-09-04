@@ -43,6 +43,19 @@ public class Player : MonoBehaviour
         this.name = name;
     }
 
+    public void onCharacterClick(string character)
+    {
+        Debug.Log("Send CharReq");
+        foreach (Character character2 in MainMenu.menu.characters)
+        {
+            if (character2.cardName == character)
+            {
+                Debug.Log(character + " chosen");
+                this.character.updateCharacter(character2);
+            }
+        }
+    }
+
     public void initHealth() {
         hp = 10;
         hpCubes = 3;

@@ -18,6 +18,9 @@ public class PlayerListItem : MonoBehaviour
     public string charName = "blank";
     public GamePlayer player;
 
+    public GameObject ReadyButton;
+    public GameObject NotReadyButton;
+
     [SerializeField] private TMPro.TextMeshProUGUI PlayerNameText;
     [SerializeField] private TMPro.TextMeshProUGUI PlayerReadyStatus;
 
@@ -41,14 +44,14 @@ public class PlayerListItem : MonoBehaviour
         player.playerSteamId = playerSteamId;
         player.ConnectionId = ConnectionId;
         player.charName = charName;
-        UpdatePlayerItemReadyStatus();
+        //UpdatePlayerItemReadyStatus();
     }
 
     // TODO: Make references to the GameObjects used for the Ready and Not Ready buttons and
     // use SetActive() depending on the isPlayerReady boolean
     public void UpdatePlayerItemReadyStatus()
     {
-        isPlayerReady = !isPlayerReady;
+        //isPlayerReady = !isPlayerReady;
         player.ChangeReadyStatus();
         /*
         if (isPlayerReady)

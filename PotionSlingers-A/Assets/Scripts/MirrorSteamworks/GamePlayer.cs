@@ -14,7 +14,7 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar] public int ConnectionId;
     [SyncVar] public int playerNumber;
     public int charIndex = 0;
-    [SyncVar(hook = nameof(HandleCharNameUpdate))] public string charName;
+    [SyncVar(hook = nameof(HandleCharNameUpdate))] public string charName = "Bolo";
     [Header("Game Info")]
     [SyncVar] public bool IsGameLeader = false;
     [SyncVar(hook = nameof(HandlePlayerReadyStatusChange))] public bool isPlayerReady;
@@ -77,6 +77,9 @@ public class GamePlayer : NetworkBehaviour
             charIndex = 0;
         }
         charName = MainMenu.menu.characters[charIndex].cardName;
+        LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
+        LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
+        //LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
     }
 
     public void selectCharNameLeft()
@@ -87,12 +90,25 @@ public class GamePlayer : NetworkBehaviour
             charIndex = 8;
         }
         charName = MainMenu.menu.characters[charIndex].cardName;
+        LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
+        LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
+        //LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
     }
 
     public void ReadyUp()
     {
-        isPlayerReady = !isPlayerReady;
+        //isPlayerReady = !isPlayerReady;
         LobbyManager.instance.localGamePlayerScript.isPlayerReady = !LobbyManager.instance.localGamePlayerScript.isPlayerReady;
+        if (LobbyManager.instance.localGamePlayerScript.isPlayerReady)
+        {
+            item.NotReadyButton.SetActive(false);
+            item.ReadyButton.SetActive(true);
+        } else
+        {
+            item.NotReadyButton.SetActive(true);
+            item.ReadyButton.SetActive(false);
+        }
+        
         LobbyManager.instance.CheckIfAllPlayersAreReady();
     }
 
@@ -100,6 +116,7 @@ public class GamePlayer : NetworkBehaviour
     {
         Debug.Log("Starting client");
         Game.GamePlayers.Add(this);
+        CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
         //LobbyManager.instance.UpdateLobbyName();
         LobbyManager.instance.UpdateUI();        
     }
@@ -144,15 +161,16 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("Player name has been updated for: " + oldValue + " to new value: " + newValue);
         if (isServer)
             this.charName = newValue;
+            //LobbyManager.instance.localGamePlayerScript.charName = newValue;
             Debug.Log("I am a server");
             onCharacterClick(newValue);
-            LobbyManager.instance.UpdateUI();
+            //LobbyManager.instance.UpdateUI();
             
         if (isClient)
         {
             Debug.Log("I am a client");
-            this.charName = newValue;
-            onCharacterClick(newValue);
+            //this.charName = newValue;
+            //onCharacterClick(newValue);
             LobbyManager.instance.UpdateUI();
             
         }
@@ -167,8 +185,8 @@ public class GamePlayer : NetworkBehaviour
             this.usernameText.text = newValue;
         if (isClient)
         {
-            this.playerName = newValue;
-            this.usernameText.text = newValue;
+            //this.playerName = newValue;
+            //this.usernameText.text = newValue;
             LobbyManager.instance.UpdateUI();
         }
 
