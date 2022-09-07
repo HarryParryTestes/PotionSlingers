@@ -24,6 +24,19 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
         this.artworkImage.sprite = character.image;
     }
 
+    public void onCharacterClick(string character)
+    {
+        Debug.Log("Send CharReq");
+        foreach (Character character2 in MainMenu.menu.characters)
+        {
+            if (character2.cardName == character)
+            {
+                Debug.Log(character + " chosen");
+                updateCharacter(character2);
+            }
+        }
+    }
+
     //A placeholder for code that will allow the character cards to flip
     //after completing the flip criteria
     //For now, clicking the card allows it to flip

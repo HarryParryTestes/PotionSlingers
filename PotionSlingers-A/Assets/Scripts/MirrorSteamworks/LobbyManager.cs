@@ -283,6 +283,8 @@ public class LobbyManager : MonoBehaviour
 
         for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
+            // add code in here to change lobby UI's charDisplay
+            LobbyManager.instance.playerListItems[i].charDisplay.onCharacterClick(Game.GamePlayers[i].charName);
             if (Game.GamePlayers[i].isPlayerReady)
             {
                 LobbyManager.instance.playerListItems[i].NotReadyButton.SetActive(false);

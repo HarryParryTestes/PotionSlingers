@@ -25,6 +25,8 @@ public class MainMenu : MonoBehaviour
 
 	public List<Character> characters;
 
+	public GameObject lobbyMenu;
+
 	public TMPro.TextMeshProUGUI player1Name;
 	public TMPro.TextMeshProUGUI player2Name;
 	public TMPro.TextMeshProUGUI player3Name;

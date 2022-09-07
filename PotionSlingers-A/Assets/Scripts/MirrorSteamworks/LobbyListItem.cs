@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Steamworks;
+using Mirror;
 
 public class LobbyListItem : MonoBehaviour
 {
@@ -33,7 +34,7 @@ public class LobbyListItem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        ob = GameObject.Find("OldLobbyMenu");
+        ob = MainMenu.menu.lobbyMenu;
         ob2 = GameObject.Find("Scroll View");
     }
 

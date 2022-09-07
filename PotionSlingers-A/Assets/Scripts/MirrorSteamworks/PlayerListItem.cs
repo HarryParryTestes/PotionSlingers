@@ -21,6 +21,8 @@ public class PlayerListItem : MonoBehaviour
     public GameObject ReadyButton;
     public GameObject NotReadyButton;
 
+    public CharacterDisplay charDisplay;
+
     [SerializeField] private TMPro.TextMeshProUGUI PlayerNameText;
     [SerializeField] private TMPro.TextMeshProUGUI PlayerReadyStatus;
 

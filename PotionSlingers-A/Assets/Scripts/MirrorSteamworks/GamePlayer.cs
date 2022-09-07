@@ -96,6 +96,7 @@ public class GamePlayer : NetworkBehaviour
         LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
     }
 
+    // BAD! Don't use!
     public void ReadyUp()
     {
         //isPlayerReady = !isPlayerReady;
@@ -170,8 +171,8 @@ public class GamePlayer : NetworkBehaviour
         if (isClient)
         {
             Debug.Log("I am a client");
-            //this.charName = newValue;
-            //onCharacterClick(newValue);
+            this.charName = newValue;
+            onCharacterClick(newValue);
             LobbyManager.instance.UpdateUI();
             
         }

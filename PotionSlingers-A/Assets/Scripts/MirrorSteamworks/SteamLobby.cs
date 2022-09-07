@@ -90,9 +90,9 @@ public class SteamLobby : MonoBehaviour
     {
         Debug.Log("JoinLobby: Will try to join lobby with steam id: " + lobbyId.ToString());
         SteamMatchmaking.JoinLobby(lobbyId);
-        MainMenuManager.instance.CreateLobbyCanvas.SetActive(false);
+        //MainMenuManager.instance.CreateLobbyCanvas.SetActive(false);
         MainMenuManager.instance.availableLobbyText.SetActive(false);
-        MainMenuManager.instance.CharMenu.SetActive(true);
+        //MainMenuManager.instance.CharMenu.SetActive(true);
     }
     public void GetListOfLobbies()
     {
