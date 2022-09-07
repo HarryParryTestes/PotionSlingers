@@ -81,6 +81,7 @@ public class GamePlayer : NetworkBehaviour
         LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
         LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
+        LobbyManager.instance.UpdateUI();
     }
 
     public void selectCharNameLeft()
@@ -94,6 +95,7 @@ public class GamePlayer : NetworkBehaviour
         LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
         LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
+        LobbyManager.instance.UpdateUI();
     }
 
     // BAD! Don't use!
