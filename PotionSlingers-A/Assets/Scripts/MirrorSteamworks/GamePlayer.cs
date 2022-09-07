@@ -48,7 +48,8 @@ public class GamePlayer : NetworkBehaviour
         {
             IsGameLeader = true;
         }
-        CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
+        //CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
+        LobbyManager.instance.localGamePlayerScript.CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
         playerNumber = 1;
         playerSteamId = SteamUser.GetSteamID();
         //usernameText.text = item.playerName;
@@ -79,7 +80,7 @@ public class GamePlayer : NetworkBehaviour
         charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
         LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
-        //LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
+        LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
     }
 
     public void selectCharNameLeft()
@@ -92,7 +93,7 @@ public class GamePlayer : NetworkBehaviour
         charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
         LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
-        //LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
+        LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
     }
 
     public void ReadyUp()
@@ -194,7 +195,8 @@ public class GamePlayer : NetworkBehaviour
     public void ChangeReadyStatus()
     {
         Debug.Log("Executing ChangeReadyStatus for player: " + this.playerName);
-        CmdChangePlayerReadyStatus();
+        //CmdChangePlayerReadyStatus();
+        LobbyManager.instance.localGamePlayerScript.CmdChangePlayerReadyStatus();
     }
     [Command]
     public void CmdChangePlayerReadyStatus()

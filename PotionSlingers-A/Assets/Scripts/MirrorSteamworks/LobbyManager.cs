@@ -279,6 +279,24 @@ public class LobbyManager : MonoBehaviour
     {
         Debug.Log("Executing CheckIfAllPlayersAreReady");
         bool areAllPlayersReady = false;
+        // changing this to ensure that the proper fields are changed for UI in lobby manager
+
+        for (int i = 0; i < Game.GamePlayers.Count; i++)
+        {
+            if (Game.GamePlayers[i].isPlayerReady)
+            {
+                LobbyManager.instance.playerListItems[i].NotReadyButton.SetActive(false);
+                LobbyManager.instance.playerListItems[i].ReadyButton.SetActive(true);
+                areAllPlayersReady = true;
+            } else
+            {
+                LobbyManager.instance.playerListItems[i].NotReadyButton.SetActive(true);
+                LobbyManager.instance.playerListItems[i].ReadyButton.SetActive(false);
+                areAllPlayersReady = false;
+            }
+        }
+
+        /*
         foreach (GamePlayer player in Game.GamePlayers)
         {
             if (player.isPlayerReady)
@@ -292,6 +310,8 @@ public class LobbyManager : MonoBehaviour
                 break;
             }
         }
+        */
+
         if (areAllPlayersReady)
         {
             Debug.Log("CheckIfAllPlayersAreReady: All players are ready!");
