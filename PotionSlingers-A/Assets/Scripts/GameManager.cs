@@ -33,8 +33,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> errorMessages;
     private MessageQueue msgQueue;
 
-    public Character p1;
-    public Character p2;
+    public GameObject p1;
+    public GameObject p2;
+    public GameObject p3;
+    public GameObject p4;
     public CharacterDisplay opLeft;
     public CharacterDisplay opTop;
     public CharacterDisplay opRight;
@@ -73,14 +75,34 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Debug.Log("GameManager started!!!");
-        ob = GameObject.Find("CharacterCard");
-        Player playerOb = ob.GetComponent<Player>();
-        Debug.Log("Player 1's character is... " + playerOb.charName);
+
+        // dummy players for tutorial
+        if (Game.tutorial)
+        {
+            Debug.Log("Starting tutorial");
+            playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+            playerTopName.text = "BOLO";
+            p3.SetActive(false);
+            p4.SetActive(false);
+            //players[0] = new Player(1, SteamFriends.GetPersonaName().ToString());
+            //players[1] = new Player(2, "Bolo");
+        }
+
+        if (Game.GamePlayers.Count == 2)
+        {
+            p3.SetActive(false);
+            p4.SetActive(false);
+        } 
+        
+        //ob = GameObject.Find("CharacterCard");
+        //Player playerOb = ob.GetComponent<Player>();
+        //Debug.Log("Player 1's character is... " + playerOb.charName);
         for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
             if(i == 0)
             {
-                playerOb.onCharacterClick(Game.GamePlayers[i].charName);
+                playerBottomName.text = Game.GamePlayers[i].playerName;
+                //playerOb.onCharacterClick(Game.GamePlayers[i].charName);
             }
         }
         /*
@@ -140,7 +162,7 @@ public class GameManager : MonoBehaviour
         GameObject rightAttack = attackMenu.transform.Find("AttackCharacter (Right)").gameObject;
 
         
-        bottomCharacter.character = p1;
+        //bottomCharacter.character = p1;
         bottomCharacter.updateCharacter(bottomCharacter.character);
 
         players[0] = ob.GetComponent<Player>();
@@ -148,7 +170,7 @@ public class GameManager : MonoBehaviour
         players[0].user_id = 0;
         players[0].name = "Player";
 
-        topCharacter.character = p2;
+        //topCharacter.character = p2;
         topCharacter.updateCharacter(topCharacter.character);
 
         players[1] = obTop.GetComponent<Player>();

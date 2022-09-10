@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
 {
@@ -42,6 +43,11 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     //For now, clicking the card allows it to flip
     public void OnPointerDown(PointerEventData pointerEventData) 
     {
+        if(SceneManager.GetActiveScene().name == "TitleMenu")
+        {
+            return;
+        }
+
         character.flipped = !character.flipped;
         
         if(character.flipped)

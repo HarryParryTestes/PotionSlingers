@@ -9,6 +9,7 @@ public class MyNetworkManager : NetworkManager
 {
     [SerializeField] private GamePlayer gamePlayerPrefab;
     [SerializeField] public int minPlayers = 2;
+    public bool tutorial = false;
     public LobbyManager lobbyManager;
     public List<GamePlayer> GamePlayers { get; } = new List<GamePlayer>();
     [SerializeField] private PlayerListItem playerListPrefab;
@@ -59,11 +60,13 @@ public class MyNetworkManager : NetworkManager
 
     public void StartTutorial()
     {
-        ServerChangeScene("GameScene");
-        GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        gameManager.numPlayers = GamePlayers.Count;
-        gameManager.initPlayersTutorial();
-        gameManager.initDecks();
+        //StartClient();
+        tutorial = true;
+        SceneManager.LoadScene("GameScene");
+        //GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //gameManager.numPlayers = GamePlayers.Count;
+        //gameManager.initPlayersTutorial();
+        //gameManager.initDecks();
     }
     private bool CanStartGame()
     {

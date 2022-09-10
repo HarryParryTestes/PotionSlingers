@@ -5589,8 +5589,6 @@ GameObject:
   - component: {fileID: 189316757}
   - component: {fileID: 189316756}
   - component: {fileID: 189316755}
-  - component: {fileID: 189316754}
-  - component: {fileID: 189316758}
   m_Layer: 5
   m_Name: CharacterCard (Top)
   m_TagString: Untagged
@@ -5619,45 +5617,6 @@ RectTransform:
   m_AnchoredPosition: {x: 55, y: -50}
   m_SizeDelta: {x: 124.04999, y: 212.625}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &189316754
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189316751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 10
-  name: 
-  charName: 
-  user_id: 0
-  hpCubes: 0
-  takenHPCubes: 0
-  deck: {fileID: 1885509569}
-  holster: {fileID: 81936594}
-  pips: 0
-  dead: 0
-  potionsThrown: 0
-  character: {fileID: 543400067}
-  ringBonus: 0
-  bonusAmount: 0
-  playerHP: {fileID: 691912460}
-  playerHPCubes: {fileID: 169650269}
-  playerPips: {fileID: 2001424105}
-  currentPlayerHighlight: {fileID: 1916230032}
-  damageSign: {fileID: 2068996101}
-  damageAmount: {fileID: 1181464431}
-  healSign: {fileID: 1651675818}
-  healAmount: {fileID: 974692135}
-  throwBonus: 0
-  vesselBonus: 0
-  artifactBonus: 0
-  isPluot: 0
-  pluotBonusType: 
 --- !u!114 &189316755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5710,23 +5669,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189316751}
   m_CullTransparentMesh: 1
---- !u!114 &189316758
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 189316751}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 3987886062
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &189593839
 GameObject:
   m_ObjectHideFlags: 0
@@ -35875,17 +35817,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311416934}
   m_CullTransparentMesh: 1
---- !u!114 &1316039903 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3975660437273336508, guid: 53989111815513c41a3163993b3810a5, type: 3}
-  m_PrefabInstance: {fileID: 3975660438111221347}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1316842258
 GameObject:
   m_ObjectHideFlags: 0
@@ -35933,8 +35864,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1317657374}
-  - component: {fileID: 1317657375}
-  - component: {fileID: 1317657376}
   m_Layer: 5
   m_Name: CharacterCard (Left)
   m_TagString: Untagged
@@ -35963,62 +35892,6 @@ RectTransform:
   m_AnchoredPosition: {x: 70, y: -150}
   m_SizeDelta: {x: 124.04999, y: 212.625}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1317657375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317657373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 10
-  name: 
-  charName: 
-  user_id: 0
-  hpCubes: 0
-  takenHPCubes: 0
-  deck: {fileID: 1595608073}
-  holster: {fileID: 286011420}
-  pips: 0
-  dead: 0
-  potionsThrown: 0
-  character: {fileID: 1714507737}
-  ringBonus: 0
-  bonusAmount: 0
-  playerHP: {fileID: 1165648472}
-  playerHPCubes: {fileID: 1825471942}
-  playerPips: {fileID: 0}
-  currentPlayerHighlight: {fileID: 629886734}
-  damageSign: {fileID: 550185180}
-  damageAmount: {fileID: 177182558}
-  healSign: {fileID: 164053555}
-  healAmount: {fileID: 48977211}
-  throwBonus: 0
-  vesselBonus: 0
-  artifactBonus: 0
-  isPluot: 0
-  pluotBonusType: 
---- !u!114 &1317657376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317657373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 4016303636
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1319871941
 GameObject:
   m_ObjectHideFlags: 0
@@ -55622,8 +55495,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1986209882}
-  - component: {fileID: 1986209883}
-  - component: {fileID: 1986209884}
   m_Layer: 5
   m_Name: CharacterCard (Right)
   m_TagString: Untagged
@@ -55652,62 +55523,6 @@ RectTransform:
   m_AnchoredPosition: {x: -70, y: -150}
   m_SizeDelta: {x: 124.05, y: 212.625}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1986209883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986209881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc4517049521db743adf710d06b96c9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 10
-  name: 
-  charName: 
-  user_id: 0
-  hpCubes: 0
-  takenHPCubes: 0
-  deck: {fileID: 1271437216}
-  holster: {fileID: 4964658479611669281}
-  pips: 0
-  dead: 0
-  potionsThrown: 0
-  character: {fileID: 1624123902}
-  ringBonus: 0
-  bonusAmount: 0
-  playerHP: {fileID: 379185777}
-  playerHPCubes: {fileID: 1046238518}
-  playerPips: {fileID: 0}
-  currentPlayerHighlight: {fileID: 1413486416}
-  damageSign: {fileID: 554961664}
-  damageAmount: {fileID: 807864802}
-  healSign: {fileID: 514978359}
-  healAmount: {fileID: 1859431382}
-  throwBonus: 0
-  vesselBonus: 0
-  artifactBonus: 0
-  isPluot: 0
-  pluotBonusType: 
---- !u!114 &1986209884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1986209881}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  sceneId: 2601044761
-  serverOnly: 0
-  visible: 0
-  m_AssetId: 
-  hasSpawned: 0
 --- !u!1 &1996741005
 GameObject:
   m_ObjectHideFlags: 0
@@ -58800,10 +58615,10 @@ MonoBehaviour:
   myPlayerIndex: 0
   currentPlayerId: 0
   players:
-  - {fileID: 1316039903}
-  - {fileID: 189316754}
-  - {fileID: 1317657375}
-  - {fileID: 1986209883}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   characters:
   - {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
   - {fileID: 11400000, guid: 6f37677945eff4915957fbaf9b104512, type: 2}
@@ -58835,8 +58650,10 @@ MonoBehaviour:
   - {fileID: 578320875}
   - {fileID: 1640251445}
   - {fileID: 1817138699}
-  p1: {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
-  p2: {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
+  p1: {fileID: 3975660438111221348}
+  p2: {fileID: 905353793}
+  p3: {fileID: 2032181730}
+  p4: {fileID: 1901167827723679904}
   opLeft: {fileID: 1882729769}
   opTop: {fileID: 1094063418}
   opRight: {fileID: 1934230784}
@@ -61935,8 +61752,32 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
-    m_RemovedComponents: []
+    - target: {fileID: 6853967675471511707, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: sceneId
+      value: 3435647648
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976122513269563581, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: sceneId
+      value: 4174360939
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976122513269563581, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: visible
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8976122513269563581, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: serverOnly
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6853967675471511707, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 8976122513269563581, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660437273336508, guid: 53989111815513c41a3163993b3810a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53989111815513c41a3163993b3810a5, type: 3}
+--- !u!1 &3975660438111221348 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660437823181333, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &3989618277103094452
 RectTransform:
   m_ObjectHideFlags: 0
