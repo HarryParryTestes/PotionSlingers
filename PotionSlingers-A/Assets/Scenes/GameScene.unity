@@ -24807,6 +24807,7 @@ GameObject:
   - component: {fileID: 905353794}
   - component: {fileID: 905353796}
   - component: {fileID: 905353795}
+  - component: {fileID: 905353797}
   m_Layer: 5
   m_Name: EnemyArea (Top)
   m_TagString: Untagged
@@ -24878,6 +24879,45 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 905353793}
   m_CullTransparentMesh: 1
+--- !u!114 &905353797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 905353793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2117502d86049049ac549d4dbe83664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: 
+  charName: 
+  user_id: 0
+  hpCubes: 2
+  takenHPCubes: 0
+  deck: {fileID: 1885509569}
+  holster: {fileID: 81936594}
+  pips: 6
+  dead: 0
+  potionsThrown: 0
+  character: {fileID: 189316755}
+  ringBonus: 0
+  bonusAmount: 0
+  playerHP: {fileID: 691912460}
+  playerHPCubes: {fileID: 169650269}
+  playerPips: {fileID: 0}
+  currentPlayerHighlight: {fileID: 1916230032}
+  damageSign: {fileID: 2068996101}
+  damageAmount: {fileID: 1181464431}
+  healSign: {fileID: 1651675818}
+  healAmount: {fileID: 974692135}
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  pluotBonusType: 
 --- !u!1 &908084157
 GameObject:
   m_ObjectHideFlags: 0
@@ -35197,7 +35237,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -6.9, y: -0.5}
+  m_AnchoredPosition: {x: -6.9, y: -2}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1292678684
@@ -35233,7 +35273,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0
+  m_Text: 10
 --- !u!222 &1292678685
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -54666,6 +54706,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Market1Buy: {fileID: 11400000, guid: b3c85780854712742b10eb69859126e7, type: 2}
   manager: {fileID: 2083794569}
+--- !u!1 &1956192404 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660437665578603, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1956192405 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660438372870664, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1956192406 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660438287283030, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1956192407 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660437661942828, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1956192408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660439104267784, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1959101110
 GameObject:
   m_ObjectHideFlags: 0
@@ -58650,6 +58715,8 @@ MonoBehaviour:
   - {fileID: 578320875}
   - {fileID: 1640251445}
   - {fileID: 1817138699}
+  playerHolster: {fileID: 3975660438111221349}
+  bolo: {fileID: 905353797}
   p1: {fileID: 3975660438111221348}
   p2: {fileID: 905353793}
   p3: {fileID: 2032181730}
@@ -61532,6 +61599,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660438114946001, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
     - target: {fileID: 3975660438155704002, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -61756,21 +61827,8 @@ PrefabInstance:
       propertyPath: sceneId
       value: 3435647648
       objectReference: {fileID: 0}
-    - target: {fileID: 8976122513269563581, guid: 53989111815513c41a3163993b3810a5, type: 3}
-      propertyPath: sceneId
-      value: 4174360939
-      objectReference: {fileID: 0}
-    - target: {fileID: 8976122513269563581, guid: 53989111815513c41a3163993b3810a5, type: 3}
-      propertyPath: visible
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8976122513269563581, guid: 53989111815513c41a3163993b3810a5, type: 3}
-      propertyPath: serverOnly
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6853967675471511707, guid: 53989111815513c41a3163993b3810a5, type: 3}
-    - {fileID: 8976122513269563581, guid: 53989111815513c41a3163993b3810a5, type: 3}
     - {fileID: 3975660437273336508, guid: 53989111815513c41a3163993b3810a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53989111815513c41a3163993b3810a5, type: 3}
 --- !u!1 &3975660438111221348 stripped
@@ -61778,6 +61836,78 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3975660437823181333, guid: 53989111815513c41a3163993b3810a5, type: 3}
   m_PrefabInstance: {fileID: 3975660438111221347}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3975660438111221349 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3975660438937323401, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3657a840136c9dc4ba40c28f16b5e0eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3975660438111221350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3975660438111221348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2117502d86049049ac549d4dbe83664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: 
+  charName: 
+  user_id: 0
+  hpCubes: 2
+  takenHPCubes: 0
+  deck: {fileID: 3975660438111221352}
+  holster: {fileID: 3975660438111221349}
+  pips: 6
+  dead: 0
+  potionsThrown: 0
+  character: {fileID: 3975660438111221351}
+  ringBonus: 0
+  bonusAmount: 0
+  playerHP: {fileID: 1292678682}
+  playerHPCubes: {fileID: 396140709}
+  playerPips: {fileID: 1309516603}
+  currentPlayerHighlight: {fileID: 1956192408}
+  damageSign: {fileID: 1956192407}
+  damageAmount: {fileID: 1956192406}
+  healSign: {fileID: 1956192405}
+  healAmount: {fileID: 1956192404}
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  pluotBonusType: 
+--- !u!114 &3975660438111221351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3975660437273336509, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d824e6e0e650e479ba06f0c1a6b10cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3975660438111221352 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3975660438680387225, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0986346dcd3ede4681d1ae62a25fd50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3989618277103094452
 RectTransform:
   m_ObjectHideFlags: 0

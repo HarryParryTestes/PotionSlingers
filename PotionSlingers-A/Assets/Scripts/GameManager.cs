@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public int loadedCardInt;
     public int myPlayerIndex = 0; // used to be currentPlayer
     public int currentPlayerId = 0;
-    public Player[] players = new Player[4];
+    public CardPlayer[] players = new CardPlayer[4];
     public Character[] characters;
     GameObject ob;
     GameObject obTop;
@@ -32,6 +32,10 @@ public class GameManager : MonoBehaviour
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
     private MessageQueue msgQueue;
+
+    public Holster playerHolster;
+
+    public CardPlayer bolo;
 
     public GameObject p1;
     public GameObject p2;
@@ -84,6 +88,9 @@ public class GameManager : MonoBehaviour
             playerTopName.text = "BOLO";
             p3.SetActive(false);
             p4.SetActive(false);
+            Debug.Log("Shuffling market decks for tutorial");
+            md1.shuffle();
+            md2.shuffle();
             //players[0] = new Player(1, SteamFriends.GetPersonaName().ToString());
             //players[1] = new Player(2, "Bolo");
         }
@@ -165,7 +172,7 @@ public class GameManager : MonoBehaviour
         //bottomCharacter.character = p1;
         bottomCharacter.updateCharacter(bottomCharacter.character);
 
-        players[0] = ob.GetComponent<Player>();
+        players[0] = ob.GetComponent<CardPlayer>();
         // Sets mainPlayer area belonging to this client's user.
         players[0].user_id = 0;
         players[0].name = "Player";
@@ -173,7 +180,7 @@ public class GameManager : MonoBehaviour
         //topCharacter.character = p2;
         topCharacter.updateCharacter(topCharacter.character);
 
-        players[1] = obTop.GetComponent<Player>();
+        players[1] = obTop.GetComponent<CardPlayer>();
         players[1].user_id = 1;
         players[1].name = "Bolo";
 
@@ -213,7 +220,7 @@ public class GameManager : MonoBehaviour
         // Player 1 setup (attempt to be less hard coded)
         if (Constants.USER_ID == mainMenuScript.p1UserId)
         {
-            players[0] = ob.GetComponent<Player>();
+            players[0] = ob.GetComponent<CardPlayer>();
             // Sets mainPlayer area belonging to this client's user.
             players[0].user_id = Constants.USER_ID;
 
@@ -228,7 +235,7 @@ public class GameManager : MonoBehaviour
 
             switch(numPlayers) {
                 case 2: 
-                    players[1] = obTop.GetComponent<Player>();
+                    players[1] = obTop.GetComponent<CardPlayer>();
                     players[1].user_id = mainMenuScript.p2UserId;
                     players[1].name = mainMenuScript.p2Name;
                     players[1].charName = mainMenuScript.p2CharCard.character.cardName;
@@ -267,7 +274,7 @@ public class GameManager : MonoBehaviour
         else if(Constants.USER_ID == mainMenuScript.p2UserId)
         {
             // myPlayerIndex = 1;
-            players[0] = ob.GetComponent<Player>();
+            players[0] = ob.GetComponent<CardPlayer>();
             // Sets mainPlayer area belonging to this client's user.
             players[0].user_id = Constants.USER_ID;
 
@@ -282,7 +289,7 @@ public class GameManager : MonoBehaviour
 
             switch(numPlayers) {
                 case 2: 
-                    players[1] = obTop.GetComponent<Player>();
+                    players[1] = obTop.GetComponent<CardPlayer>();
                     players[1].user_id = mainMenuScript.p1UserId;
                     players[1].name = mainMenuScript.p1Name;
                     players[1].charName = mainMenuScript.p1CharCard.character.cardName;
@@ -400,7 +407,7 @@ public class GameManager : MonoBehaviour
     }
 
     // if there are open spots in the holster, move cards from deck to holster
-    public void onStartTurn(Player player)
+    public void onStartTurn(CardPlayer player)
     {
         foreach(CardDisplay cd in player.holster.cardList)
         {
@@ -432,6 +439,19 @@ public class GameManager : MonoBehaviour
 
     public void setLoadedInt(string cardName)
     {
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (playerHolster.cardList[i].card.cardName == cardName)
+                {
+                    loadedCardInt = i;
+                }
+            }
+            return;
+        }
+
         for(int i = 0; i < 4; i++)
         {
             if(players[myPlayerIndex].holster.cardList[i].card.cardName == cardName)
@@ -445,6 +465,16 @@ public class GameManager : MonoBehaviour
     // DISPLAY OPPONENTS
     public void displayOpponents()
     {
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            opLeft.gameObject.SetActive(false);
+            opRight.gameObject.SetActive(false);
+            opTop.onCharacterClick("Bolo");
+            return;
+        }
+
+
         // Displaying opponents to attack for 2 player game.
         if(numPlayers == 2) 
         {
@@ -506,50 +536,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        
-        /*
-        int set = 0;
-        foreach (Player player in players)
-        {
-            if(player.user_id != players[myPlayerIndex].user_id)
-            {
-                if(set == 0)
-                {
-                    foreach(Character character in characters)
-                    {
-                        if(player.charName == character.cardName)
-                        {
-                            opLeft.updateCharacter(character);
-                            set++;
-                        }
-                    }
-                }
-
-                if (set == 1)
-                {
-                    foreach (Character character in characters)
-                    {
-                        if (player.charName == character.cardName)
-                        {
-                            opTop.updateCharacter(character);
-                            set++;
-                        }
-                    }
-                }
-
-                if (set == 2)
-                {
-                    foreach (Character character in characters)
-                    {
-                        if (player.charName == character.cardName)
-                        {
-                            opRight.updateCharacter(character);
-                        }
-                    }
-                }
-            }
-        }
-        */
     }
 
     // find potions and display them in LoadItemMenu
@@ -563,6 +549,55 @@ public class GameManager : MonoBehaviour
         CardDisplay left = loadMenu.transform.Find("Card (Left)").GetComponent<CardDisplay>();
         CardDisplay middle = loadMenu.transform.Find("Card (Middle)").GetComponent<CardDisplay>();
         CardDisplay right = loadMenu.transform.Find("Card (Right)").GetComponent<CardDisplay>();
+
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            foreach (CardDisplay cd in playerHolster.cardList)
+            {
+                if (cd.card.cardType.ToLower() == "artifact" || cd.card.cardType.ToLower() == "vessel")
+                {
+                    Debug.Log("CardName is: " + cd.card.cardName);
+                    switch (set)
+                    {
+                        case 0:
+                            left.card = cd.card;
+                            Debug.Log("Left Card: " + left.card.cardName);
+                            left.updateCard(cd.card);
+                            set++;
+                            break;
+                        case 1:
+                            middle.card = cd.card;
+                            Debug.Log("Middle Card: " + middle.card.cardName);
+                            middle.updateCard(cd.card);
+                            set++;
+                            break;
+                        case 2:
+                            right.card = cd.card;
+                            Debug.Log("Right Card: " + right.card.cardName);
+                            right.updateCard(cd.card);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            if (set == 1)
+            {
+                // middle.updateCard(players[myPlayerIndex].deck.placeholder);
+                // right.updateCard(players[myPlayerIndex].deck.placeholder);
+                loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(false);
+                loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+            }
+            if (set == 2)
+            {
+                // right.updateCard(players[myPlayerIndex].deck.placeholder);
+                loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+            }
+            return;
+        }
+
+
         foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
             // Debug.Log("CardName is: " + cd.card.cardName + ". CardType is: " + cd.card.cardType);
@@ -724,8 +759,24 @@ public class GameManager : MonoBehaviour
     // THROW POTION REQUEST
     public void throwPotion()
     {
+        
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+            {
+                int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
+                sendSuccessMessage(2); // Only display on thrower's client.
+                playerHolster.cardList[selectedCardInt - 1].updateCard(bolo.deck.placeholder);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                bolo.subHealth(damage);
+            }
+            return;
+        }
+
+
         // If this client isn't the current player, display error message.
-        if(players[myPlayerIndex].user_id != currentPlayerId) {
+        if (players[myPlayerIndex].user_id != currentPlayerId) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -939,20 +990,6 @@ public class GameManager : MonoBehaviour
 
 
                         break;
-
-                        // send protocol to server
-                        // also check if they're the current player
-                        // if (Constants.USER_ID - 1 == myPlayerIndex)
-                        // {
-                        //     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        //     // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                        //     // players[myPlayerIndex].potionsThrown++;
-
-                        //     bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
-                        //     sendSuccessMessage(2);
-                        //     break;
-                        // }
-                        // break;
                     }
                     else if (players[throwerIndex].holster.card3.card.cardType == "Vessel")
                     {
@@ -1226,12 +1263,111 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Load Potion");
 
-        // DONE?: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
-        // test for protocol, must replace parameters later
-        // bool connected = networkManager.sendLoadRequest(0, 0);
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+            {
+                // Loading a Vessel:
+                if (playerHolster.cardList[loadedCardInt].card.cardType == "Vessel")
+                {
+                    // Enable Vessel menu if it wasn't already enabled.
+                    Debug.Log("Vessel menu enabled.");
+                    playerHolster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
 
-        // If this client isn't the current player, display error message.
-        if(Constants.USER_ID != currentPlayerId) {
+                    // Check for existing loaded potion(s) if Vessel menu was already enabled.
+                    if (playerHolster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
+                    {
+                        // If Vessel slot 2 is filled.
+                        if (playerHolster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
+                        {
+                            Debug.Log("Vessel is fully loaded!");
+                            // DONE: Insert error that displays on screen.
+                            sendErrorMessage(9);
+                        }
+                        else
+                        {
+                            // Fill Vessel slot 2 with loaded potion.
+                            Card placeholder = playerHolster.cardList[loadedCardInt].vPotion2.card;
+                            playerHolster.cardList[loadedCardInt].vPotion2.card = playerHolster.cardList[selectedCardInt - 1].card;
+                            playerHolster.cardList[loadedCardInt].vPotion2.updateCard(playerHolster.cardList[selectedCardInt - 1].card);
+
+                            // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                            sendSuccessMessage(5);
+                            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            Debug.Log("Potion loaded in Vessel slot 2!");
+
+                            // MATTEO: Add Loading potion SFX here.
+
+                            // // Updates Holster card to be empty.
+                            playerHolster.cardList[selectedCardInt - 1].card = placeholder;
+                            playerHolster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                        }
+                    }
+                    // Vessel slot 1 is unloaded.
+                    else
+                    {
+                        Card placeholder = playerHolster.cardList[loadedCardInt].vPotion1.card;
+                        playerHolster.cardList[loadedCardInt].vPotion1.card = playerHolster.cardList[selectedCardInt - 1].card;
+                        playerHolster.cardList[loadedCardInt].vPotion1.updateCard(playerHolster.cardList[selectedCardInt - 1].card);
+
+                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        sendSuccessMessage(5);
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        Debug.Log("Potion loaded in Vessel slot 1!");
+
+                        // MATTEO: Add Loading potion SFX here.
+
+                        // // Updates Holster card to be empty.
+                        playerHolster.cardList[selectedCardInt - 1].card = placeholder;
+                        playerHolster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                    }
+                }
+
+                // Loading an Artifact:
+                else if (playerHolster.cardList[loadedCardInt].card.cardType == "Artifact")
+                {
+                    // Enable Artifact menu if it wasn't already enabled.
+                    Debug.Log("Artifact menu enabled.");
+                    playerHolster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+
+                    // Check for existing loaded potion if Artifact menu was already enabled.
+                    if (playerHolster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
+                    {
+                        Debug.Log("Artifact is fully loaded!");
+                        // DONE: Insert error that displays on screen.
+                        sendErrorMessage(8);
+                    }
+                    // Artifact slot is unloaded.
+                    else
+                    {
+                        Card placeholder = playerHolster.cardList[loadedCardInt].aPotion.card;
+                        playerHolster.cardList[loadedCardInt].aPotion.card = playerHolster.cardList[selectedCardInt - 1].card;
+                        playerHolster.cardList[loadedCardInt].aPotion.updateCard(playerHolster.cardList[selectedCardInt - 1].card);
+                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        sendSuccessMessage(5);
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        Debug.Log("Potion loaded in Artifact slot!");
+
+                        // MATTEO: Add Loading potion SFX here.
+
+                        // // Updates Holster card to be empty.
+                        playerHolster.cardList[selectedCardInt - 1].card = placeholder;
+                        playerHolster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                    }
+                }
+            }
+            return;
+        }
+
+
+
+            // DONE?: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
+            // test for protocol, must replace parameters later
+            // bool connected = networkManager.sendLoadRequest(0, 0);
+
+            // If this client isn't the current player, display error message.
+            if (Constants.USER_ID != currentPlayerId) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
