@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public int currentPlayerId = 0;
     public CardPlayer[] players = new CardPlayer[4];
     public Character[] characters;
+    public GameObject dialogBox;
     GameObject ob;
     GameObject obTop;
     GameObject obLeft;
@@ -84,6 +85,7 @@ public class GameManager : MonoBehaviour
         if (Game.tutorial)
         {
             Debug.Log("Starting tutorial");
+            dialogBox.SetActive(true);
             playerBottomName.text = SteamFriends.GetPersonaName().ToString();
             playerTopName.text = "BOLO";
             p3.SetActive(false);
