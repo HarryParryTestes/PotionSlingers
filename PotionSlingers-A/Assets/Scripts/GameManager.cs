@@ -28,8 +28,8 @@ public class GameManager : MonoBehaviour
     GameObject obLeft;
     GameObject obRight;
     public TrashDeck td;
-    MarketDeck md1;
-    MarketDeck md2;
+    public MarketDeck md1;
+    public MarketDeck md2;
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
     private MessageQueue msgQueue;

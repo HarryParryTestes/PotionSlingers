@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
     public string greetingName;
 
     public int numPlayers;
+	public bool flippable = false;
     private bool privacy = false;
 	private GameObject playButton;
 	private GameObject loginButton;
@@ -294,6 +295,11 @@ public class MainMenu : MonoBehaviour
 		}
 		*/
 	}
+
+	public void changeFlip()
+    {
+		flippable = !flippable;
+    }
 
 	public void onCharacterClick(string character)
     {

@@ -43,7 +43,7 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     //For now, clicking the card allows it to flip
     public void OnPointerDown(PointerEventData pointerEventData) 
     {
-        if(SceneManager.GetActiveScene().name == "TitleMenu")
+        if(SceneManager.GetActiveScene().name == "TitleMenu" && !MainMenu.menu.flippable)
         {
             return;
         }
