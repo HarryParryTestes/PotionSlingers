@@ -24,6 +24,7 @@ public class MainMenu : MonoBehaviour
 	private MessageQueue msgQueue;
 
 	public List<Character> characters;
+	public int charSelectIndex = 0;
 
 	public GameObject lobbyMenu;
 
@@ -89,6 +90,15 @@ public class MainMenu : MonoBehaviour
 	private bool p3Ready = false;
 	private bool p4Ready = false;
 
+	public CharacterDisplay charSelectChar;
+	public CardDisplay uniqueCard;
+	public TMPro.TextMeshProUGUI infoText;
+	public TMPro.TextMeshProUGUI nameText;
+	public TMPro.TextMeshProUGUI uniqueCardText;
+	public List<string> infoQuotes;
+	public List<UniqueCard> uniqueCards;
+
+
     void Awake()
     {
         menu = this;
@@ -117,7 +127,121 @@ public class MainMenu : MonoBehaviour
 		*/
     }
 
-    public void changePrivacy()
+	public void selectCharNameRight()
+	{
+		charSelectIndex += 1;
+		if (charSelectIndex > 8)
+		{
+			charSelectIndex = 0;
+		}
+
+		if(charSelectIndex == 1)
+        {
+			// Isadore's item
+			uniqueCard.gameObject.SetActive(true);
+			uniqueCard.updateUniqueCard(uniqueCards[1]);
+			uniqueCardText.gameObject.SetActive(true);
+			uniqueCardText.text = "Special Item:\nThe CherryBomb\nBadge";
+        }
+		else if (charSelectIndex == 2)
+        {
+			uniqueCard.gameObject.SetActive(true);
+			uniqueCard.updateUniqueCard(uniqueCards[0]);
+			uniqueCardText.gameObject.SetActive(true);
+			uniqueCardText.text = "Special Item:\nThe Blacksnake\nPip Sling";
+		}
+		else if (charSelectIndex == 3)
+		{
+			// Pluot's item
+			uniqueCard.gameObject.SetActive(true);
+			uniqueCard.updateUniqueCard(uniqueCards[2]);
+			uniqueCardText.gameObject.SetActive(true);
+			uniqueCardText.text = "Special Item:\nThe Extra\nInventory";
+		}
+		else if (charSelectIndex == 7)
+		{
+			// Sweetbitter's item
+			uniqueCard.gameObject.SetActive(true);
+			uniqueCard.updateUniqueCard(uniqueCards[3]);
+			uniqueCardText.gameObject.SetActive(true);
+			uniqueCardText.text = "Special Item:\nThe Phlactery";
+		}
+		else
+        {
+			uniqueCard.gameObject.SetActive(false);
+			uniqueCardText.gameObject.SetActive(false);
+		}
+		charSelectChar.onCharacterClick(characters[charSelectIndex].cardName);
+		nameText.text = characters[charSelectIndex].cardName;
+		infoText.text = infoQuotes[charSelectIndex];
+		
+		/*
+		charName = MainMenu.menu.characters[charIndex].cardName;
+		LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
+		LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
+		LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
+		LobbyManager.instance.UpdateUI();
+		*/
+	}
+
+	public void selectCharNameLeft()
+	{
+		charSelectIndex -= 1;
+		if (charSelectIndex < 0)
+		{
+			charSelectIndex = 8;
+		}
+
+		if (charSelectIndex == 1)
+		{
+			// Isadore's item
+			uniqueCard.gameObject.SetActive(true);
+			uniqueCard.updateUniqueCard(uniqueCards[1]);
+			uniqueCardText.gameObject.SetActive(true);
+		}
+		else if (charSelectIndex == 2)
+		{
+			// Nickel's item
+			uniqueCard.gameObject.SetActive(true);
+			uniqueCard.updateUniqueCard(uniqueCards[0]);
+			uniqueCardText.gameObject.SetActive(true);
+			uniqueCardText.text = "Special Item:\nThe Blacksnake\nPip Sling";
+		}
+		else if (charSelectIndex == 3)
+		{
+			// Pluot's item
+			uniqueCard.gameObject.SetActive(true);
+			uniqueCard.updateUniqueCard(uniqueCards[2]);
+			uniqueCardText.gameObject.SetActive(true);
+			uniqueCardText.text = "Special Item:\nThe Extra\nInventory";
+		}
+		else if (charSelectIndex == 7)
+		{
+			// Sweetbitter's item
+			uniqueCard.gameObject.SetActive(true);
+			uniqueCard.updateUniqueCard(uniqueCards[3]);
+			uniqueCardText.gameObject.SetActive(true);
+			uniqueCardText.text = "Special Item:\nThe Phylactery";
+		}
+		else
+		{
+			uniqueCardText.gameObject.SetActive(false);
+			uniqueCard.gameObject.SetActive(false);
+		}
+		charSelectChar.onCharacterClick(characters[charSelectIndex].cardName);
+		nameText.text = characters[charSelectIndex].cardName;
+		infoText.text = infoQuotes[charSelectIndex];
+		
+		/*
+		charName = MainMenu.menu.characters[charIndex].cardName;
+		LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
+		LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
+		LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
+		LobbyManager.instance.UpdateUI();
+		*/
+	}
+
+	public void changePrivacy()
     {
         privacy = !privacy;
     }

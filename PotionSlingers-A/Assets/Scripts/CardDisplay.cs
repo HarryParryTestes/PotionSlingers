@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CardDisplay : MonoBehaviour
 {
     public Card card;
+    public UniqueCard uniqueCard;
     public Image artworkImage;
     public Card placeholder;
 
@@ -23,6 +24,12 @@ public class CardDisplay : MonoBehaviour
     void Start()
     {
         artworkImage = this.GetComponent<Image>();
+        if (uniqueCard != null)
+        {
+            artworkImage.sprite = uniqueCard.cardSprite;
+            return;
+        }
+        //artworkImage = this.GetComponent<Image>();
         artworkImage.sprite = card.cardSprite;
     }
 
@@ -41,6 +48,13 @@ public class CardDisplay : MonoBehaviour
     {
         artworkImage = this.GetComponent<Image>();
         this.card = card;
+        artworkImage.sprite = card.cardSprite;
+    }
+
+    public void updateUniqueCard(UniqueCard card)
+    {
+        artworkImage = this.GetComponent<Image>();
+        this.uniqueCard = card;
         artworkImage.sprite = card.cardSprite;
     }
 
