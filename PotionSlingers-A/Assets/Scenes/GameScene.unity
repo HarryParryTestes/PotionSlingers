@@ -19510,6 +19510,7 @@ GameObject:
   m_Component:
   - component: {fileID: 692710817}
   - component: {fileID: 692710818}
+  - component: {fileID: 692710819}
   m_Layer: 5
   m_Name: DialogTextbox
   m_TagString: Untagged
@@ -19547,6 +19548,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 692710816}
   m_CullTransparentMesh: 1
+--- !u!114 &692710819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692710816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ad95cf0a1ab50a4ebe0ee527592053e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogBox: {fileID: 1855939484}
+  directionBox: {fileID: 1886045656}
+  nameTag: {fileID: 1946046020}
+  directions: {fileID: 2043997229}
+  textBoxCounter: 0
 --- !u!1 &693405041
 GameObject:
   m_ObjectHideFlags: 0
@@ -30241,7 +30259,6 @@ GameObject:
   - component: {fileID: 1107336639}
   - component: {fileID: 1107336641}
   - component: {fileID: 1107336640}
-  - component: {fileID: 1107336642}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -30308,23 +30325,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1107336638}
   m_CullTransparentMesh: 1
---- !u!114 &1107336642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1107336638}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ad95cf0a1ab50a4ebe0ee527592053e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dialogBox: {fileID: 1855939484}
-  directionBox: {fileID: 0}
-  nameTag: {fileID: 1946046020}
-  directions: {fileID: 2043997229}
-  textBoxCounter: 0
 --- !u!1 &1107925948
 GameObject:
   m_ObjectHideFlags: 0
@@ -51527,10 +51527,12 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Hello, and welcome to the world of Potion Slingers!
 
-    The text should
-    stay like this as I type more stuff!
 
-    This is an example just checking things...'
+    This tutorial
+    should teach the basics of all the potion-
+
+    slinging action this game has
+    to offer!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cac496df2b966644aa0013ac461a993c, type: 2}
   m_sharedMaterial: {fileID: 8557940270208330022, guid: cac496df2b966644aa0013ac461a993c, type: 2}
@@ -53145,7 +53147,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click on a potion card and click THROW!
+  m_text: 'Click on a potion card and click THROW!
+
+    Then click on your opponent!'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cac496df2b966644aa0013ac461a993c, type: 2}
   m_sharedMaterial: {fileID: 8557940270208330022, guid: cac496df2b966644aa0013ac461a993c, type: 2}
@@ -57503,7 +57507,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogBox: {fileID: 1855939484}
   directionBox: {fileID: 1886045656}
-  nameTag: {fileID: 0}
+  nameTag: {fileID: 1946046020}
   directions: {fileID: 2043997229}
   textBoxCounter: 0
 --- !u!114 &2043997232
@@ -59468,6 +59472,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a3977bdfbf9ec43c185c71fb055d0234, type: 2}
   - {fileID: 11400000, guid: 51f610b86ef694a9ca5e7d96bb09e025, type: 2}
   - {fileID: 11400000, guid: e126101c9d11f44b18e0b4b27d14054a, type: 2}
+  dialog: {fileID: 692710819}
   dialogBox: {fileID: 692710816}
   td: {fileID: 1356589444}
   md1: {fileID: 1168455953}
@@ -59493,7 +59498,9 @@ MonoBehaviour:
   - {fileID: 1640251445}
   - {fileID: 1817138699}
   playerHolster: {fileID: 3975660438111221349}
+  playerDeck: {fileID: 3975660438111221352}
   bolo: {fileID: 905353797}
+  cardPlayer: {fileID: 3975660438111221350}
   p1: {fileID: 3975660438111221348}
   p2: {fileID: 905353793}
   p3: {fileID: 2032181730}
@@ -62604,10 +62611,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 5957729140650514987, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: placeholder
+      value: 
+      objectReference: {fileID: 11400000, guid: 77f27c8f7299af440bdd8cc35765936f, type: 2}
     - target: {fileID: 6853967675471511707, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: sceneId
       value: 3435647648
       objectReference: {fileID: 0}
+    - target: {fileID: 8121002707518335949, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: placeholder
+      value: 
+      objectReference: {fileID: 11400000, guid: 77f27c8f7299af440bdd8cc35765936f, type: 2}
     m_RemovedComponents:
     - {fileID: 6853967675471511707, guid: 53989111815513c41a3163993b3810a5, type: 3}
     - {fileID: 3975660437273336508, guid: 53989111815513c41a3163993b3810a5, type: 3}

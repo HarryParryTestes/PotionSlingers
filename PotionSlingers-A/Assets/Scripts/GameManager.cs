@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public int currentPlayerId = 0;
     public CardPlayer[] players = new CardPlayer[4];
     public Character[] characters;
+    public Dialog dialog;
     public GameObject dialogBox;
     GameObject ob;
     GameObject obTop;
@@ -35,8 +36,10 @@ public class GameManager : MonoBehaviour
     private MessageQueue msgQueue;
 
     public Holster playerHolster;
+    public Deck playerDeck;
 
     public CardPlayer bolo;
+    public CardPlayer cardPlayer;
 
     public GameObject p1;
     public GameObject p2;
@@ -648,6 +651,17 @@ public class GameManager : MonoBehaviour
     // END TURN REQUEST
     public void endTurn()
     {
+
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            Debug.Log("Tutorial turn ended");
+            onStartTurn(cardPlayer);
+            StartCoroutine(waitThreeSeconds(dialog));
+            return;
+        }
+
+
         // If this client isn't the current player, display error message.
         // Player can't end turn if it isn't their turn.
         // (to change this to maybe disable endTurn button or grey it out?? turn it from button to image when not currentPlayer?)
@@ -758,6 +772,62 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    IEnumerator waitThreeSeconds(Dialog dialog)
+    {
+        yield return new WaitForSeconds(3);
+        dialog.textBoxCounter++;
+        if(dialog.textBoxCounter == 3)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.dialogBox.text = "Potions are the lifeblood of this game, and you will be seeing\nthem a lot!\n\nNot only are they cheap ammunition, but they fuel " +
+                "your more\npowerful artifacts and vessels!";
+        } else if(dialog.textBoxCounter == 6)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.dialogBox.text = "Artifacts are powerful items that only require one potion\nin order to use." +
+                "\n\nTry using that artifact on me!\n\n" +
+                "Click THROW on the artifact card and choose your foe!";
+        }
+        else if (dialog.textBoxCounter == 8)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.dialogBox.text = "Artifacts can be used as many times as you want per turn!\n\n" +
+                "Whenever an artifact is used, the potion loaded into it is trashed!";
+        }
+        else if (dialog.textBoxCounter == 12)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.dialogBox.text = "Cards bought from the market appear face-up on top of\n" +
+                "your deck! The order in which you buy things is important!\n\n" +
+                "Keep in mind that any unspent Pips do not get saved,\n" +
+                "so use 'em or lose 'em!";
+        }
+        else if (dialog.textBoxCounter == 15)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.dialogBox.text = "Upon the start of your next turn, empty spots in your holster\n" +
+                "will be replaced by the cards on top of your deck!\n\n" +
+                "You also get 6 new Pips to start your turn with.";
+        }
+        else if (dialog.textBoxCounter == 20)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.dialogBox.text = "Good job! Test";
+        }
+    }
+
     // THROW POTION REQUEST
     public void throwPotion()
     {
@@ -772,6 +842,63 @@ public class GameManager : MonoBehaviour
                 playerHolster.cardList[selectedCardInt - 1].updateCard(bolo.deck.placeholder);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 bolo.subHealth(damage);
+                StartCoroutine(waitThreeSeconds(dialog));
+            } else if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
+            {
+                if (playerHolster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
+                {
+                    int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
+                    //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+
+                    // Update response to account for trashing loaded artifact's potion and not the artifact
+                    td.addCard(playerHolster.cardList[selectedCardInt - 1].aPotion);
+                    playerHolster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+
+                    // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                    // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                    bolo.subHealth(damage);
+                    sendSuccessMessage(3);
+                    StartCoroutine(waitThreeSeconds(dialog));
+                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // MATTEO: Add Artifact using SFX here.
+
+                }
+                else
+                {
+                    // "Can't use an unloaded Artifact!"
+                    sendErrorMessage(1);
+                }
+            } else if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
+            {
+                if (playerHolster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
+                            playerHolster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
+                {
+                    //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
+                    int damage = playerHolster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + playerHolster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
+                    //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+                    playerDeck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].vPotion1.card);
+                    playerDeck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].vPotion2.card);
+                    playerHolster.card1.vPotion1.updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);
+                    playerHolster.card1.vPotion2.updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);
+                    td.addCard(playerHolster.cardList[selectedCardInt - 1]);
+                    playerHolster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                    playerHolster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                    // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                    // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
+                    bolo.subHealth(damage);
+                    sendSuccessMessage(4);
+                    StartCoroutine(waitThreeSeconds(dialog));
+                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+
+                    // MATTEO: Add Vessel throw SFX here.
+
+                }
+                else
+                {
+                    // "Can't throw an unloaded Vessel!"
+                    //Debug.Log("Vessel Error");
+                    sendErrorMessage(2);
+                }
             }
             return;
         }
@@ -832,7 +959,7 @@ public class GameManager : MonoBehaviour
                         // MATTEO: Add Potion throw SFX here.
 
                         // Update this on all clients?
-                        // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                        td.addCard(playerHolster.cardList[selectedCardInt - 1]);
                         // players[myPlayerIndex].potionsThrown++;
 
                         sendSuccessMessage(2); // Only display on thrower's client.
@@ -1296,6 +1423,7 @@ public class GameManager : MonoBehaviour
 
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
+                            StartCoroutine(waitThreeSeconds(dialog));
                             playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             Debug.Log("Potion loaded in Vessel slot 2!");
 
@@ -1315,6 +1443,7 @@ public class GameManager : MonoBehaviour
 
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
+                        StartCoroutine(waitThreeSeconds(dialog));
                         playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Potion loaded in Vessel slot 1!");
 
@@ -1348,6 +1477,7 @@ public class GameManager : MonoBehaviour
                         playerHolster.cardList[loadedCardInt].aPotion.updateCard(playerHolster.cardList[selectedCardInt - 1].card);
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
+                        StartCoroutine(waitThreeSeconds(dialog));
                         playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Potion loaded in Artifact slot!");
 
@@ -1726,6 +1856,66 @@ public class GameManager : MonoBehaviour
     public void topMarketBuy()
     {
         Debug.Log("Top Market Buy");
+
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            switch (md1.cardInt)
+            {
+                case 1:
+                    if (cardPlayer.pips >= md1.cardDisplay1.card.buyPrice)
+                    {
+                        // players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
+                        cardPlayer.subPips(md1.cardDisplay1.card.buyPrice);
+                        playerDeck.putCardOnTop(md1.cardDisplay1.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay1.updateCard(card);
+                        StartCoroutine(waitThreeSeconds(dialog));
+                        sendSuccessMessage(1);
+                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                case 2:
+                    if (cardPlayer.pips >= md1.cardDisplay2.card.buyPrice)
+                    {
+                        cardPlayer.subPips(md1.cardDisplay2.card.buyPrice);
+                        playerDeck.putCardOnTop(md1.cardDisplay2.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay2.updateCard(card);
+                        StartCoroutine(waitThreeSeconds(dialog));
+                        sendSuccessMessage(1);
+                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                case 3:
+                    if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice)
+                    {
+                        // players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
+                        // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                        // Card card = md1.popCard();
+                        // md1.cardDisplay3.updateCard(card);
+                        sendSuccessMessage(1);
+                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                    }
+                    break;
+                default:
+                    Debug.Log("MarketDeck Error!");
+                    break;
+            }
+            return;
+        }
 
         // If this client isn't the current player, display error message.
         if(Constants.USER_ID != currentPlayerId) {
