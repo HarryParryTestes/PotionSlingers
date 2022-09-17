@@ -298,8 +298,87 @@ public class MainMenu : MonoBehaviour
 
 	public void changeFlip()
     {
+		/*
+		Pluot		Playstyle: Aggressive
+		Difficulty: *  	Proficiency: Potions
+		Pluot’s strategy is simple;  collect potions
+		and throw them for a lot of damage! Her
+		item allows you to be even more efficient! 
+
+		Reets		Playstyle: Technical  
+		Difficulty: * * *  	Proficiency: Inventory
+		Reets always has the right tools on hand!
+		He can cycle through his items in his
+		Holster and Deck much faster than the
+
+		rest.
+		
+		Saltimbocca
+		Playstyle: Strategic 
+		Difficulty: * * 
+		Proficiency: Thrifting
+
+
+		With intimidation and an eye for quality,
+		Bocca wants the best items and wants them
+		cheap. Preferably also sharp,  heavy, and 
+		aerodynamic.
+
+		Scarpetta
+Playstyle:  ? ? ?     
+Difficulty: ? ? ?  
+Proficiency: Trash
+
+
+Scarpetta loves trash. When others may
+scoff at as useless junk, he revels in an 
+ever-increasing pile of treasures. Refuse,
+reuse, recycle!
+
+		 */
+
 		flippable = !flippable;
-    }
+		charSelectChar.onCharacterClick(characters[0].cardName);
+		nameText.text = "Bolo";
+		// Bolo
+		infoQuotes[0] = "Bolo\nPlaystyle: Strategic\nDifficulty: * * *\nProficiency: Sales\n\n\n" +
+			"Bolo is an adept salesman. He will always\nbe able to upsell his items, and can even\ntrade useless baubles for powerful\ntreasure!";
+
+		// Isadore
+		infoQuotes[1] = "Isadore\t\tPlaystyle: Aggressive\nDifficulty: * *\tProficiency: Artifacts\nIsadore is a master of artifacts, and is\nextremely" +
+			" versatile with them.\nFlip her to equip her badge, and punish\n\nher foes\neven further!";
+
+		//Nickles
+		infoQuotes[2] = "Nickles\t\tPlaystyle: Flexible\nDifficulty: * *\tProficiency: Pips\nNickles can use " +
+            "leftover pips as an extra\nresource. Use his unique item to rustle\nup a couple extra pips to sling or even\n\nto spend!";
+
+		// Pluot
+		infoQuotes[3] = "Pluot\t\t\tPlaystyle: Aggressive\nDifficulty: *\t\tProficiency: Potions\nPluot's strategy is simple; collect potions\n" +
+			"and throw them for a lot of damage! Her\nitem allows you to be even more efficient!";
+
+		// Reets
+		infoQuotes[4] = "Reets\nPlaystyle: Technical\nDifficulty: * * *\nProficiency: Inventory\n\n\nReets always has the right tools on hand!\n" +
+            "He can cycle through his items in his\nHolster and Deck much faster than the\nrest.";
+
+		// Saltimbocca
+		infoQuotes[5] = "Saltimbocca\nPlaystyle: Strategic\nDifficulty: * *\nProficiency: Thrifting\n\n\n" +
+			"With intimidation and an eye for quality,\nBocca wants the best items and wants them\ncheap. Preferably also sharp, heavy, and\naerodynamic.";
+
+		// Scarpetta
+		infoQuotes[6] = "Scarpetta\nPlaystyle:  ? ? ?\nDifficulty: ? ? ?\nProficiency: Trash\n\n\nScarpetta loves trash. When others may\n" +
+            "scoff at as useless junk, he revels in an\never-increasing pile of treasures. Refuse,\nreuse, recycle!";
+
+		// Sweetbitter
+		infoQuotes[7] = "Sweetbitter\t\tPlaystyle: Technical\nDifficulty: * * * *  Proficiency: Resilience\nSweetbitter has a strange object that\n" +
+            "prevents her from dying. She also has a\nnefarious plan. She just has to collect a\n\nfew things...";
+
+        // Twins
+        infoQuotes[8] = "Twins\nPlaystyle: Flexible\nDifficulty: *\nProficiency: Self Healing\n\n\n" +
+            "The Twins focus on keeping their HP\nhigh, at the expense of everyone else! Flip\nthem over to have their vessels heal too!";
+
+		infoText.text = "Bolo\nPlaystyle: Strategic\nDifficulty: * * *\nProficiency: Sales\n\n\n" +
+			"Bolo is an adept salesman. He will always\nbe able to upsell his items, and can even\ntrade useless baubles for powerful\ntreasure!";
+	}
 
 	public void onCharacterClick(string character)
     {
