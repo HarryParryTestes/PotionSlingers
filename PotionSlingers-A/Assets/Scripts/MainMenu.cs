@@ -346,11 +346,11 @@ reuse, recycle!
 
 		// Isadore
 		infoQuotes[1] = "Isadore\t\tPlaystyle: Aggressive\nDifficulty: * *\tProficiency: Artifacts\nIsadore is a master of artifacts, and is\nextremely" +
-			" versatile with them.\nFlip her to equip her badge, and punish\n\nher foes\neven further!";
+			" versatile with them.\nFlip her to equip her badge, and punish\n     her foes\n     even further!";
 
 		//Nickles
 		infoQuotes[2] = "Nickles\t\tPlaystyle: Flexible\nDifficulty: * *\tProficiency: Pips\nNickles can use " +
-            "leftover pips as an extra\nresource. Use his unique item to rustle\nup a couple extra pips to sling or even\n\nto spend!";
+            "leftover pips as an extra\nresource. Use his unique item to rustle\nup a couple extra pips to sling or even\n    to spend!";
 
 		// Pluot
 		infoQuotes[3] = "Pluot\t\t\tPlaystyle: Aggressive\nDifficulty: *\t\tProficiency: Potions\nPluot's strategy is simple; collect potions\n" +
@@ -370,7 +370,7 @@ reuse, recycle!
 
 		// Sweetbitter
 		infoQuotes[7] = "Sweetbitter\t\tPlaystyle: Technical\nDifficulty: * * * *  Proficiency: Resilience\nSweetbitter has a strange object that\n" +
-            "prevents her from dying. She also has a\nnefarious plan. She just has to collect a\n\nfew things...";
+            "prevents her from dying. She also has a\nnefarious plan. She just has to collect a\n    few things...";
 
         // Twins
         infoQuotes[8] = "Twins\nPlaystyle: Flexible\nDifficulty: *\nProficiency: Self Healing\n\n\n" +
