@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
@@ -59,6 +60,12 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // On mouse hovering over object: 
     // (aka when mouse cursor enters GameObject's X/Y/Z boundaries)
     public void OnPointerEnter(PointerEventData eventData) {
+
+        if (SceneManager.GetActiveScene().name == "TitleMenu")
+        {
+            return;
+        }
+
         if(this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
             if(canHover) {
