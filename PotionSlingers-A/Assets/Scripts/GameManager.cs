@@ -781,50 +781,56 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.dialogBox.text = "Potions are the lifeblood of this game, and you will be seeing\nthem a lot!\n\nNot only are they cheap ammunition, but they fuel " +
+            dialog.textInfo = "Potions are the lifeblood of this game, and you will be seeing\nthem a lot!\n\nNot only are they cheap ammunition, but they fuel " +
                 "your more\npowerful artifacts and vessels!";
+            dialog.ActivateText(dialog.dialogBox);
         } else if(dialog.textBoxCounter == 6)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.dialogBox.text = "Artifacts are powerful items that only require one potion\nin order to use." +
+            dialog.textInfo = "Artifacts are powerful items that only require one potion\nin order to use." +
                 "\n\nTry using that artifact on me!\n\n" +
                 "Click THROW on the artifact card and choose your foe!";
+            dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 8)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.dialogBox.text = "Artifacts can be used as many times as you want per turn!\n\n" +
+            dialog.textInfo = "Artifacts can be used as many times as you want per turn!\n\n" +
                 "Whenever an artifact is used, the potion loaded into it is trashed!";
+            dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 12)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.dialogBox.text = "Cards bought from the market appear face-up on top of\n" +
+            dialog.textInfo = "Cards bought from the market appear face-up on top of\n" +
                 "your deck! The order in which you buy things is important!\n\n" +
                 "Keep in mind that any unspent Pips do not get saved,\n" +
                 "so use 'em or lose 'em!";
+            dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 15)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.dialogBox.text = "Upon the start of your next turn, empty spots in your holster\n" +
+            dialog.textInfo = "Upon the start of your next turn, empty spots in your holster\n" +
                 "will be replaced by the cards on top of your deck!\n\n" +
                 "You also get 6 new Pips to start your turn with.";
+            dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 20)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.dialogBox.text = "Good job! Test";
+            dialog.textInfo = "Good job! Test";
+            dialog.ActivateText(dialog.dialogBox);
         }
     }
 

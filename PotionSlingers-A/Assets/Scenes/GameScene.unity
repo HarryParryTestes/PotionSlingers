@@ -19696,11 +19696,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad95cf0a1ab50a4ebe0ee527592053e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textInfo: 
+  textSpeed: 0.03
   dialogBox: {fileID: 1855939484}
   directionBox: {fileID: 1886045656}
   nameTag: {fileID: 1946046020}
   directions: {fileID: 2043997229}
   textBoxCounter: 0
+  textIndex: 0
 --- !u!1 &693405041
 GameObject:
   m_ObjectHideFlags: 0
@@ -57910,11 +57913,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ad95cf0a1ab50a4ebe0ee527592053e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  textInfo: 
+  textSpeed: 0.02
   dialogBox: {fileID: 1855939484}
   directionBox: {fileID: 1886045656}
   nameTag: {fileID: 1946046020}
   directions: {fileID: 2043997229}
   textBoxCounter: 0
+  textIndex: 0
 --- !u!114 &2043997232
 MonoBehaviour:
   m_ObjectHideFlags: 0

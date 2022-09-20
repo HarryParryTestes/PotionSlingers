@@ -6,12 +6,34 @@ public class CardGalleryController : MonoBehaviour
 {
     public List<CardDisplay> cardDisplays;
     public List<Card> cards;
+    public List<Card> searchableCards;
     public int cardIndex = 0;
     // Start is called before the first frame update
 
+    public void searchCards(string category)
+    {
+        searchableCards.Clear();
+        foreach(Card card in cards)
+        {
+            if (card.cardQuality.Contains(category))
+            {
+                //Debug.Log("Match found, adding card...");
+                searchableCards.Add(card);
+            }
+        }
+        cardIndex = 0;
+        changeCardDisplays();
+    }
+
     public void initDisplays()
     {
+        searchableCards.Clear();
         cardIndex = 0;
+        //searchableCards = cards;
+        foreach (Card card in cards)
+        {
+            searchableCards.Add(card);
+        }
         changeCardDisplays();
     }
 
@@ -29,7 +51,7 @@ public class CardGalleryController : MonoBehaviour
         cardIndex = cardIndex - 12;
         if(cardIndex < 0)
         {
-            cardIndex = 12;
+            cardIndex = searchableCards.Count - 1;
         }
         Debug.Log("Card index: " + cardIndex);
         changeCardDisplays();
@@ -39,10 +61,10 @@ public class CardGalleryController : MonoBehaviour
     {
         foreach(CardDisplay cd in cardDisplays)
         {
-            Card temp = cards[cardIndex];
+            Card temp = searchableCards[cardIndex];
             cd.updateCard(temp);
             cardIndex++;
-            if(cardIndex > 18)
+            if(cardIndex > searchableCards.Count - 1)
             {
                 cardIndex = 0;
             }
