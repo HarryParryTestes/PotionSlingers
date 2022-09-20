@@ -50,6 +50,11 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     }
 
     void Update() {
+        if(this.gameObject.name == "CharacterCard")
+        {
+            return;
+        }
+
         if(this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
         {
             transform.localScale = cachedScale;
@@ -66,7 +71,22 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             return;
         }
 
-        if(this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+        // for character card
+        if (this.gameObject.name == "CharacterCard")
+        {
+            float width = rt.sizeDelta.x * rt.localScale.x;
+            float height = rt.sizeDelta.y * rt.localScale.y;
+            this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+            //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
+            transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+            // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
+
+            // Card Hover sound effect:
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
+            return;
+        }
+
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
             if(canHover) {
                 float width = rt.sizeDelta.x * rt.localScale.x;
@@ -86,7 +106,8 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // (any click, a boolean tracks whether the click is to activate or deactivate something)
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        if(this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
             if (!clicked) {
                 if(!viewingCard) {
@@ -123,7 +144,14 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // When mouse stops hovering over object:
     // (aka when mouse cursor exits GameObject's X/Y/Z boundaries)
     public void OnPointerExit(PointerEventData eventData) {
-        if(this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+
+        if (this.gameObject.name == "CharacterCard")
+        {
+            transform.localScale = cachedScale;
+            gameObject.transform.position = originalPos;
+            return;
+        }
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
             if(canHover) {
                 transform.localScale = cachedScale;
