@@ -183,7 +183,16 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             this.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             this.transform.SetParent(viewingCardObject.transform);
             this.transform.localRotation = Quaternion.identity;
-            this.transform.localScale = new Vector3(5f, 5f, 5f);
+            if (SceneManager.GetActiveScene().name != "TitleMenu")
+            {
+                // for game scene
+                highlighted.gameObject.SetActive(false);
+                this.transform.localScale = new Vector3(3f, 3f, 3f);
+            } else
+            {
+                // for title menu
+                this.transform.localScale = new Vector3(5f, 5f, 5f);
+            }
             this.transform.position = new Vector3 (Screen.width * 0.5f, Screen.height * 0.5f, 0);
             viewCardMenu.gameObject.SetActive(true);
             this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);

@@ -829,7 +829,17 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "Good job! Test";
+            dialog.textInfo = "Good job! When a vessel is thrown, the vessel is trashed, and\n" +
+                "the potions are cycled into the bottom of your deck!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 20)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.textInfo = "Excellent! Now let's buy more cards from the market.\n" +
+                "Test test test";
             dialog.ActivateText(dialog.dialogBox);
         }
     }
@@ -1902,12 +1912,17 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 3:
-                    if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice)
+                    if (cardPlayer.pips >= md1.cardDisplay3.card.buyPrice)
                     {
                         // players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
                         // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
                         // Card card = md1.popCard();
                         // md1.cardDisplay3.updateCard(card);
+                        cardPlayer.subPips(md1.cardDisplay3.card.buyPrice);
+                        playerDeck.putCardOnTop(md1.cardDisplay3.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay3.updateCard(card);
+                        StartCoroutine(waitThreeSeconds(dialog));
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
@@ -2240,6 +2255,17 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Sell Card");
 
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            cardPlayer.addPips(playerHolster.cardList[selectedCardInt - 1].card.sellPrice);
+            td.addCard(playerHolster.cardList[selectedCardInt - 1]);
+            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            StartCoroutine(waitThreeSeconds(dialog));
+            sendSuccessMessage(8);
+            return;
+        }
+
         // If this client isn't the current player, display error message.
         if(Constants.USER_ID != currentPlayerId) {
             // "You are not the currentPlayer!"
@@ -2292,6 +2318,15 @@ public class GameManager : MonoBehaviour
     public void trashCard()
     {
         Debug.Log("Trash Card");
+
+        if (Game.tutorial)
+        {
+            td.addCard(playerHolster.cardList[selectedCardInt - 1]);
+            StartCoroutine(waitThreeSeconds(dialog));
+            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            sendSuccessMessage(9);
+            return;
+        }
 
         // If this client isn't the current player, display error message.
         if(Constants.USER_ID != currentPlayerId) {

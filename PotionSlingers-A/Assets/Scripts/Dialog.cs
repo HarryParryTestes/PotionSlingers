@@ -140,5 +140,19 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
+        else if (textBoxCounter == 21)
+        {
+            textInfo = "Now what do we do when we're faced with junk? We get rid\nof it!\n\n" +
+                "Try putting your artifact card in the trash!\n\n" +
+                "Click on the artifact card and click TRASH!";
+            ActivateText(dialogBox);
+        }
+        else if (textBoxCounter == 22)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Click on the artifact card\nand click TRASH!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
     }             
 }
