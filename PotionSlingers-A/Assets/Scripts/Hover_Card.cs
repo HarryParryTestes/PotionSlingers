@@ -195,7 +195,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             transform.localScale = cachedScale;
             gameObject.transform.position = originalPos;
             canHover = true;
-            highlighted.gameObject.SetActive(false);
+            //highlighted.gameObject.SetActive(false);
         }
     }
 

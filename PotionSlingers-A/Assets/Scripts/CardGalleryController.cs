@@ -48,7 +48,15 @@ public class CardGalleryController : MonoBehaviour
     public void leftSix()
     {
         // Also lol this was dumb
+        //Debug.Log("Card index before it's -12: " + cardIndex);
         cardIndex = cardIndex - 12;
+        /*
+        if (cardIndex < 12)
+        {
+            cardIndex = searchableCards.Count - cardIndex - 1;
+        }
+        */
+        
         if(cardIndex < 0)
         {
             cardIndex = searchableCards.Count - 1;
