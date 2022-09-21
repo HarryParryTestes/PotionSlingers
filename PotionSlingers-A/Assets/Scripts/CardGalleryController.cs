@@ -15,7 +15,7 @@ public class CardGalleryController : MonoBehaviour
         searchableCards.Clear();
         foreach(Card card in cards)
         {
-            if (card.cardQuality.Contains(category))
+            if (card.cardQuality.Contains(category) || card.cardType.Contains(category))
             {
                 //Debug.Log("Match found, adding card...");
                 searchableCards.Add(card);
