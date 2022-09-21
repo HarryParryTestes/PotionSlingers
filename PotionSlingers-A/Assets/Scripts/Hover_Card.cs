@@ -126,7 +126,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                         transform.localScale = cachedScale;
                         gameObject.transform.position = originalPos;
                         cardMenu.gameObject.SetActive(true);
-                        //highlighted.gameObject.SetActive(true);
+                        if (SceneManager.GetActiveScene().name != "TitleMenu")
+                        {
+                            highlighted.gameObject.SetActive(true);
+                        }
                     }
                     // else if (!cardSelected) {
                     //     clicked = false;
@@ -143,7 +146,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 canHover = true;
                 transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 cardMenu.gameObject.SetActive(false);
-                //highlighted.gameObject.SetActive(false);
+                if (SceneManager.GetActiveScene().name != "TitleMenu")
+                {
+                    highlighted.gameObject.SetActive(false);
+                }
                 //viewCardMenu.gameObject.SetActive(false);
                 //exitMenu.SetActive(false);
             }
@@ -195,6 +201,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             transform.localScale = cachedScale;
             gameObject.transform.position = originalPos;
             canHover = true;
+            if (SceneManager.GetActiveScene().name != "TitleMenu")
+            {
+                highlighted.gameObject.SetActive(false);
+            }
             //highlighted.gameObject.SetActive(false);
         }
     }

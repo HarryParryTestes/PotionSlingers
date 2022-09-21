@@ -6,13 +6,15 @@ using UnityEngine.EventSystems;
 public class Dialog : MonoBehaviour, IPointerDownHandler
 {
     public string textInfo;
-    public float textSpeed = 0.02f;
+    public float textSpeed = 0.03f;
     public TMPro.TextMeshProUGUI dialogBox;
     public TMPro.TextMeshProUGUI directionBox;
     public GameObject nameTag;
     public GameObject directions;
     public int textBoxCounter = 0;
     public int textIndex = 0;
+    public bool scrolling = false;
+    public GameObject arrow;
 
     
 
@@ -37,15 +39,26 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
 
     public IEnumerator AnimateText(TMPro.TextMeshProUGUI textBox)
     {
+        arrow.SetActive(false);
+        scrolling = true;
         for(int i = 0; i < textInfo.Length + 1; i++)
         {
             textBox.text = textInfo.Substring(0, i);
             yield return new WaitForSeconds(textSpeed);
         }
+        arrow.SetActive(true);
+        textSpeed = 0.03f;
+        scrolling = false;
     }
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
+        arrow.SetActive(false);
+        if (scrolling)
+        {
+            textSpeed = 0.01f;
+            return;
+        }
         textBoxCounter++;
         if(textBoxCounter == 1)
         {
