@@ -657,6 +657,10 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Tutorial turn ended");
             onStartTurn(cardPlayer);
+            if(dialog.textBoxCounter == 24)
+            {
+                dialog.textBoxCounter++;
+            }
             StartCoroutine(waitThreeSeconds(dialog));
             return;
         }
@@ -772,11 +776,15 @@ public class GameManager : MonoBehaviour
         */
     }
 
-    IEnumerator waitThreeSeconds(Dialog dialog)
+    public IEnumerator waitThreeSeconds(Dialog dialog)
     {
+        if (dialog.textBoxCounter == 24)
+        {
+            yield break;
+        }
         yield return new WaitForSeconds(3);
         dialog.textBoxCounter++;
-        if(dialog.textBoxCounter == 3)
+        if (dialog.textBoxCounter == 3)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
@@ -784,7 +792,8 @@ public class GameManager : MonoBehaviour
             dialog.textInfo = "Potions are the lifeblood of this game, and you will be seeing\nthem a lot!\n\nNot only are they cheap ammunition, but they fuel " +
                 "your more\npowerful artifacts and vessels!";
             dialog.ActivateText(dialog.dialogBox);
-        } else if(dialog.textBoxCounter == 6)
+        }
+        else if (dialog.textBoxCounter == 6)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
@@ -833,13 +842,57 @@ public class GameManager : MonoBehaviour
                 "the potions are cycled into the bottom of your deck!";
             dialog.ActivateText(dialog.dialogBox);
         }
-        else if (dialog.textBoxCounter == 20)
+        else if (dialog.textBoxCounter == 23)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "Excellent! Now let's buy more cards from the market.\n" +
-                "Test test test";
+            dialog.textInfo = "Excellent! Now let's buy more cards from the market.\n\n" +
+                "Buy some more cards from the market and then end your turn!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 26)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.textInfo = "While buying cards is all fun and games, selling is where you\n" +
+                "really make the dough!\n\n" +
+                "Selling items allows you to increase your Pip total beyond\n" +
+                "6 Pips, allowing you to buy more powerful and\n" +
+                "expensive items!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 29)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.textInfo = "If you don't want to sell a card but you don't want it in your\n" +
+                "holster, you can cycle it to the bottom of your deck as well!\n\n" +
+                "Be aware that cycling non-potion cards costs 1 Pip!\n\n" +
+                "Try cycling a card from your holster!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 31)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.textInfo = "Now let's talk about you! Your character that is...\n\n" +
+                "Every character has a special ability detailed on the front of\n" +
+                "their character card!\n\n" +
+                "Additionally, the card can be flipped to reveal an upgraded\n" +
+                "version of your character!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 34)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.textInfo = "Try using your character's upgraded ability!\n\n" +
+                "Click on your character card and click ACTION to use it!";
             dialog.ActivateText(dialog.dialogBox);
         }
     }
@@ -1697,6 +1750,31 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Cycle Card");
 
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+            {
+                cardPlayer.deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].card);
+                playerHolster.cardList[selectedCardInt - 1].updateCard(playerHolster.card1.placeholder);
+                sendSuccessMessage(7);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                StartCoroutine(waitThreeSeconds(dialog));
+            } else if(cardPlayer.pips < 1)
+            {
+                sendErrorMessage(5);
+            }
+            else if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Artifact" ||
+                    playerHolster.cardList[selectedCardInt - 1].card.cardType == "Vessel" ||
+                    playerHolster.cardList[selectedCardInt - 1].card.cardType == "Ring")
+            {
+                cardPlayer.deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].card);
+                sendSuccessMessage(7);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            }
+            return;
+        }
+
         // If this client isn't the current player, display error message.
         if(Constants.USER_ID != currentPlayerId) {
             // "You are not the currentPlayer!"
@@ -1729,6 +1807,7 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Ring")
             {
                 // bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
+                players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
                 sendSuccessMessage(7);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 // MATTEO: Add Cycle SFX here.
@@ -1887,6 +1966,8 @@ public class GameManager : MonoBehaviour
                         Card card = md1.popCard();
                         md1.cardDisplay1.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
+                        // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay1.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                     }
@@ -1903,6 +1984,8 @@ public class GameManager : MonoBehaviour
                         Card card = md1.popCard();
                         md1.cardDisplay2.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
+                        // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay2.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                     }
@@ -1923,6 +2006,8 @@ public class GameManager : MonoBehaviour
                         Card card = md1.popCard();
                         md1.cardDisplay3.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
+                        // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay3.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
@@ -1957,6 +2042,8 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
                         // Card card = md1.popCard();
                         // md1.cardDisplay1.updateCard(card);
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay1.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                     } else
@@ -1971,6 +2058,8 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
                         // Card card = md1.popCard();
                         // md1.cardDisplay2.updateCard(card);
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay2.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                     }
@@ -1986,6 +2075,8 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
                         // Card card = md1.popCard();
                         // md1.cardDisplay3.updateCard(card);
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay3.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
@@ -2025,6 +2116,7 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
                         // Card card = md2.popCard();
                         // md2.cardDisplay1.updateCard(card);
+                        md2.cardDisplay1.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                     }
@@ -2040,6 +2132,7 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
                         // Card card = md2.popCard();
                         // md2.cardDisplay2.updateCard(card);
+                        md2.cardDisplay2.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                     }
@@ -2055,6 +2148,7 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
                         // Card card = md2.popCard();
                         // md2.cardDisplay3.updateCard(card);
+                        md2.cardDisplay3.gameObject.GetComponent<Hover_Card>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }

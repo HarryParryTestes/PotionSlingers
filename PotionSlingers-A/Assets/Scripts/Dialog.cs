@@ -27,6 +27,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         slinging action this game has to offer!
         */
 
+        textBoxCounter = 0;
         textInfo = "Hello, and welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion-\n" +
             "slinging action this game has to offer!";
         ActivateText(dialogBox);
@@ -151,6 +152,60 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         {
             directions.SetActive(true);
             directionBox.text = "Click on the artifact card\nand click TRASH!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 24)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Buy more potions from the\nmarket! Then click END TURN!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 27)
+        {
+            textInfo = "Some items sell for more than what you can buy them for!\n\n" +
+                "Try selling an item in your holster! Click on a card\n" +
+                "you want to sell and click SELL!";
+            ActivateText(dialogBox);
+        }
+        else if (textBoxCounter == 28)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Click on a card in your holster\n" +
+                "and click SELL!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 30)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Click on a card in your holster\n" +
+                "and click CYCLE!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 32)
+        {
+            textInfo = "Usually flipping your character requires certain conditions\n" +
+                "to be met, but just this once, I'll let you flip for free!\n\n" +
+                "Try flipping your character! Click on the character card\n" +
+                "and click FLIP!";
+            ActivateText(dialogBox);
+        }
+        else if (textBoxCounter == 33)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Click on the character card\n" +
+                "and click FLIP!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 35)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Click on the character card\n" +
+                "and click ACTION!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }

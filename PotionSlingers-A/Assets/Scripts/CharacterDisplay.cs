@@ -22,6 +22,19 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     public GameObject menu;
     bool clicked = false;
 
+    private MyNetworkManager game;
+    private MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -72,6 +85,15 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
 
     public void flipCard()
     {
+        if (Game.tutorial)
+        {
+            if(GameManager.manager.dialog.textBoxCounter != 33)
+            {
+                clicked = false;
+                return;
+            }
+            GameManager.manager.StartCoroutine(GameManager.manager.waitThreeSeconds(GameManager.manager.dialog));
+        }
         clicked = false;
         character.flipped = !character.flipped;
         
@@ -104,8 +126,9 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     public void resetView()
     {
         viewCardMenu.gameObject.SetActive(false);
-        
+
         //this.transform.SetParent(parentObject.transform);
+        this.transform.SetParent(GameManager.manager.md1.transform);
         this.transform.localRotation = Quaternion.identity;
         transform.localScale = cachedScale;
         gameObject.transform.position = originalPos;
@@ -118,8 +141,22 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     //For now, clicking the card allows it to flip
     public void OnPointerDown(PointerEventData pointerEventData) 
     {
-        if(SceneManager.GetActiveScene().name == "TitleMenu" && !MainMenu.menu.flippable)
+        if(SceneManager.GetActiveScene().name == "TitleMenu" && MainMenu.menu.flippable)
         {
+            character.flipped = !character.flipped;
+            
+            if (character.flipped)
+            {
+                Debug.Log("You just flipped the card!");
+                artworkImage.sprite = character.flippedImage;
+                FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Character_Flip");
+            } else 
+            {
+                Debug.Log("You just flipped the card back over!");
+                artworkImage.sprite = character.image;
+                FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Character_Flip");
+            }
+            
             return;
         }
 
