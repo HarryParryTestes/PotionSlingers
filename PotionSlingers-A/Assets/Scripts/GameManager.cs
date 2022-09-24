@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Steamworks;
+using Mirror;
 
 public class GameManager : MonoBehaviour
 {
@@ -54,6 +56,9 @@ public class GameManager : MonoBehaviour
     public TMPro.TextMeshProUGUI playerRightName;
     public GameObject attackMenu;
     public GameObject loadMenu;
+    public GameObject pauseUI;
+
+    bool paused = false;
 
     GameObject mainMenu;
     MainMenu mainMenuScript;
@@ -80,6 +85,31 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Debug.Log("Escape key was pressed");
+            paused = !paused;
+            if (paused)
+            {
+                pauseUI.SetActive(true);
+            } else
+            {
+                pauseUI.SetActive(false);
+            }
+            
+        }
+    }
+
+    public void ohFuckGoBack()
+    {
+        Debug.Log("Going back to title menu");
+        Game.tutorial = false;
+        SceneManager.LoadScene("TitleMenu");
+        //Game.ServerChangeScene("TitleMenu");
+    }
+
     void Start()
     {
         Debug.Log("GameManager started!!!");
@@ -96,8 +126,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("Shuffling market decks for tutorial");
             md1.shuffle();
             md2.shuffle();
-            //players[0] = new Player(1, SteamFriends.GetPersonaName().ToString());
-            //players[1] = new Player(2, "Bolo");
         }
 
         if (Game.GamePlayers.Count == 2)

@@ -62,7 +62,9 @@ public class MyNetworkManager : NetworkManager
     {
         //StartClient();
         tutorial = true;
-        SceneManager.LoadScene("GameScene");
+        //SceneManager.LoadScene("GameScene");
+        //NetworkManager.singleton.ServerChangeScene("GameScene");
+        ServerChangeScene("GameScene");
         //GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         //gameManager.numPlayers = GamePlayers.Count;
         //gameManager.initPlayersTutorial();
