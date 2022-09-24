@@ -776,6 +776,12 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    /* If you're wondering why there's two of these
+     * it's because one takes in a GameObject and the
+     * other is overloaded to take in a Dialog to handle
+     * the tutorial text
+     */
+
     public IEnumerator waitThreeSeconds(Dialog dialog)
     {
         if (dialog.textBoxCounter == 24)
@@ -2477,6 +2483,12 @@ public class GameManager : MonoBehaviour
         message.SetActive(true);
         StartCoroutine(waitThreeSeconds(message));
     }
+
+    /* If you're wondering why there's two of these
+     * it's because one takes in a GameObject and the
+     * other is overloaded to take in a Dialog to handle
+     * the tutorial text
+     */
 
     IEnumerator waitThreeSeconds(GameObject gameObj)
     {
