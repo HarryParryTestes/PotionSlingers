@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> errorMessages;
     private MessageQueue msgQueue;
 
+    public GameObject pluotPotionMenu;
+
     public Holster playerHolster;
     public Deck playerDeck;
 
@@ -439,6 +441,15 @@ public class GameManager : MonoBehaviour
         md2.init();
     }
 
+    public void SetPluotBonus(string bonus)
+    {
+        if (Game.tutorial)
+        {
+            cardPlayer.pluotBonusType = bonus;
+            return;
+        }
+    }
+
     // if there are open spots in the holster, move cards from deck to holster
     public void onStartTurn(CardPlayer player)
     {
@@ -451,6 +462,10 @@ public class GameManager : MonoBehaviour
                     cd.updateCard(player.deck.popCard());
                 }
             }
+        }
+        if (player.isPluot)
+        {
+            pluotPotionMenu.SetActive(true);
         }
         player.setDefaultTurn();
     }
@@ -804,6 +819,24 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    public void checkPlayerAction()
+    {
+        // TUTORIAL LOGIC
+        if (Game.tutorial)
+        {
+            if (cardPlayer.character.character.flipped)
+            {
+                // do Pluot action (I'll code this in later)
+
+            } else
+            {
+                // display error message
+                sendErrorMessage(10);
+            }
+            return;
+        }
+    }
+
     /* If you're wondering why there's two of these
      * it's because one takes in a GameObject and the
      * other is overloaded to take in a Dialog to handle
@@ -941,6 +974,7 @@ public class GameManager : MonoBehaviour
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
                 int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
+                damage = cardPlayer.checkBonus(damage, selectedCardInt);
                 sendSuccessMessage(2); // Only display on thrower's client.
                 playerHolster.cardList[selectedCardInt - 1].updateCard(bolo.deck.placeholder);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();

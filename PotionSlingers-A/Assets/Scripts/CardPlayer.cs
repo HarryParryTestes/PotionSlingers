@@ -43,6 +43,15 @@ public class CardPlayer : MonoBehaviour
         this.name = name;
     }
 
+    void Start()
+    {
+        if(character.character.cardName == "Pluot")
+        {
+            Debug.Log("I AM PLUOT");
+            isPluot = true;
+        }
+    }
+
     public void onCharacterClick(string character)
     {
         Debug.Log("Send CharReq");
@@ -116,6 +125,12 @@ public class CardPlayer : MonoBehaviour
         // Pluot damage bonus
         if (isPluot)
         {
+            if(pluotBonusType == holster.cardList[selectedCard - 1].card.cardQuality)
+            {
+                damage++;
+            }
+
+            /*
             if (pluotBonusType == "Hot" && holster.cardList[selectedCard - 1].card.cardQuality == "Hot")
             {
                 damage++;
@@ -132,6 +147,7 @@ public class CardPlayer : MonoBehaviour
             {
                 damage++;
             }
+            */
         }
         // ring damage bonus
         if (ringBonus && potionsThrown == 0)
