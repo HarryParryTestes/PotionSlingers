@@ -20,7 +20,8 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     Transform viewCardMenu;
     GameObject viewingCardObject;
     public GameObject menu;
-    bool clicked = false;
+    public bool clicked = false;
+    public bool canBeFlipped = false;
 
     private MyNetworkManager game;
     private MyNetworkManager Game
@@ -87,14 +88,14 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     {
         if (Game.tutorial)
         {
-            if(GameManager.manager.dialog.textBoxCounter != 33)
-            {
-                clicked = false;
-                return;
-            }
             GameManager.manager.StartCoroutine(GameManager.manager.waitThreeSeconds(GameManager.manager.dialog));
         }
         clicked = false;
+
+        if (!canBeFlipped)
+        {
+            return;
+        }
         character.flipped = !character.flipped;
         
         if (character.flipped)

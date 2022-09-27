@@ -17,7 +17,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     public static bool canHover = true; // Determines if cards can be hovered over.
     // bool attached = false; // Determines if a card has been clicked and attached to the mouse cursor.
 
-    Transform cardMenu = null;
+    public Transform cardMenu;
     Transform viewCardMenu = null;
     Transform highlighted = null;
     GameObject parentObject = null;
@@ -33,7 +33,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         originalRotation = this.transform.localRotation;
 
         parentObject = this.transform.parent.gameObject;
-        cardMenu = this.transform.Find("CardMenu");
+        //cardMenu = this.transform.Find("CardMenu");
         viewCardMenu = this.transform.Find("ViewCardMenu");
         viewingCardObject = GameObject.Find("ViewingCard");
 
@@ -114,10 +114,11 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         }
     }
 
-    public void resetView() {
+    public void resetCard() {
         viewingCard = false;
         viewCardMenu.gameObject.SetActive(false);
-        if(cardSelected) {
+        cardMenu.gameObject.SetActive(false);
+        if (cardSelected) {
             cardSelected = false;
             this.transform.SetParent(parentObject.transform);
             this.transform.localRotation = Quaternion.identity;

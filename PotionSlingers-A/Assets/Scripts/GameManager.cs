@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     private MessageQueue msgQueue;
 
     public GameObject pluotPotionMenu;
+    public GameObject ExtraInventoryMenu;
+    public GameObject nicklesUI;
 
     public Holster playerHolster;
     public Deck playerDeck;
@@ -116,6 +118,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager started!!!");
 
+        Debug.Log("Number of players on network: " + Game.GamePlayers.Count);
+
+        initDecks();
+
+        foreach(GamePlayer gp in Game.GamePlayers)
+        {
+            Debug.Log(gp.playerName);
+        }
+
         // dummy players for tutorial
         if (Game.tutorial)
         {
@@ -125,26 +136,33 @@ public class GameManager : MonoBehaviour
             playerTopName.text = "BOLO";
             p3.SetActive(false);
             p4.SetActive(false);
-            Debug.Log("Shuffling market decks for tutorial");
-            md1.shuffle();
-            md2.shuffle();
+            //Debug.Log("Shuffling market decks for tutorial");
         }
 
         if (Game.GamePlayers.Count == 2)
         {
             p3.SetActive(false);
             p4.SetActive(false);
-        } 
-        
+        }
+
+        // shuffle market decks
+        md1.shuffle();
+        md2.shuffle();
+
         //ob = GameObject.Find("CharacterCard");
         //Player playerOb = ob.GetComponent<Player>();
         //Debug.Log("Player 1's character is... " + playerOb.charName);
         for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
-            if(i == 0)
+            if (Game.GamePlayers[i].isLocalPlayer)
             {
+                Debug.Log("Found local player");
                 playerBottomName.text = Game.GamePlayers[i].playerName;
-                //playerOb.onCharacterClick(Game.GamePlayers[i].charName);
+                players[0].name = Game.GamePlayers[i].playerName;
+                players[0].charName = Game.GamePlayers[i].charName;
+                players[0].character.onCharacterClick(Game.GamePlayers[i].charName);
+                players[0].checkCharacter();
+                
             }
         }
         /*
@@ -177,57 +195,6 @@ public class GameManager : MonoBehaviour
     {
         initPlayers();
         initDecks();
-    }
-
-    public void initPlayersTutorial()
-    {
-        // Player1 = Client1 set up
-        ob = GameObject.Find("CharacterCard");
-        Player playerOb = ob.GetComponent<Player>();
-        Debug.Log("Player's character is... " + playerOb.charName);
-        ob.SetActive(true);
-        obTop = GameObject.Find("CharacterCard (Top)");
-        obTop.SetActive(true);
-        obLeft = GameObject.Find("CharacterCard (Left)");
-        obRight = GameObject.Find("CharacterCard (Right)");
-
-        Debug.Log(SteamFriends.GetPersonaName());
-
-        CharacterDisplay bottomCharacter = ob.GetComponent<CharacterDisplay>();
-        CharacterDisplay topCharacter = obTop.GetComponent<CharacterDisplay>();
-        CharacterDisplay leftCharacter = obLeft.GetComponent<CharacterDisplay>();
-        CharacterDisplay rightCharacter = obRight.GetComponent<CharacterDisplay>();
-
-        // Children objects of attackMenu
-        GameObject leftAttack = attackMenu.transform.Find("AttackCharacter (Left)").gameObject;
-        GameObject topAttack = attackMenu.transform.Find("AttackCharacter (Top)").gameObject;
-        GameObject rightAttack = attackMenu.transform.Find("AttackCharacter (Right)").gameObject;
-
-        
-        //bottomCharacter.character = p1;
-        bottomCharacter.updateCharacter(bottomCharacter.character);
-
-        players[0] = ob.GetComponent<CardPlayer>();
-        // Sets mainPlayer area belonging to this client's user.
-        players[0].user_id = 0;
-        players[0].name = "Player";
-
-        //topCharacter.character = p2;
-        topCharacter.updateCharacter(topCharacter.character);
-
-        players[1] = obTop.GetComponent<CardPlayer>();
-        players[1].user_id = 1;
-        players[1].name = "Bolo";
-
-        playerBottomName.text = "Denzill7";
-
-        playerTopName.text = "Bolo";
-
-
-        obLeft.transform.parent.gameObject.SetActive(false);
-        obRight.transform.parent.gameObject.SetActive(false);
-        leftAttack.SetActive(false);
-        rightAttack.SetActive(false);
     }
 
     public void initPlayers()
@@ -347,45 +314,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        /*
-        if(numPlayers == 2)
-        {
-            // gotta fix this
-            /*
-            GameObject obj = GameObject.Find("EnemyArea (Right Side)");
-            GameObject obj2 = GameObject.Find("EnemyArea (Left Side)");
-            obj.SetActive(false);
-            obj2.SetActive(false);
-            /
-
-            // player 1 setup
-            if (Constants.USER_ID == 1)
-            {
-                // we're good
-                playerBottomName.text = mainMenuScript.p1Name;
-                playerTopName.text = mainMenuScript.p2Name;
-            }
-            // Player 2 = Client2 setup
-            else if(Constants.USER_ID == 2)
-            {
-                // switching players around for p2 to be at bottom
-
-                // this could be wrong so I'm scrapping it for now
-                /*
-                players[3] = players[0];
-                players[0] = players[1];
-                players[1] = players[3];
-                /
-
-                // myPlayerIndex = 1;
-                playerBottomName.text = mainMenuScript.p2Name;
-                playerTopName.text = mainMenuScript.p1Name;
-                players[0] = obTop.GetComponent<Player>();
-                players[1] = ob.GetComponent<Player>();
-            }
-        }
-        */
-
         else if (numPlayers == 3)
         {
             // TODO
@@ -441,6 +369,31 @@ public class GameManager : MonoBehaviour
         md2.init();
     }
 
+    public void checkFlip()
+    {
+        // TUTORIAL LOGIC
+        if(Game.tutorial)
+        {
+            if(dialog.textBoxCounter != 33)
+            {
+                cardPlayer.character.canBeFlipped = false;
+                sendErrorMessage(11);
+            } 
+            else
+            {
+                cardPlayer.character.canBeFlipped = true;
+                cardPlayer.character.flipCard();
+                sendSuccessMessage(11);
+            }
+            return;
+        }
+
+        if (players[myPlayerIndex].character.canBeFlipped)
+        {
+            players[myPlayerIndex].character.flipCard();
+        }
+    }
+
     public void SetPluotBonus(string bonus)
     {
         if (Game.tutorial)
@@ -448,6 +401,7 @@ public class GameManager : MonoBehaviour
             cardPlayer.pluotBonusType = bonus;
             return;
         }
+        players[myPlayerIndex].pluotBonusType = bonus;
     }
 
     // if there are open spots in the holster, move cards from deck to holster
@@ -819,6 +773,17 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    public void addEI()
+    {
+        if (Game.tutorial)
+        {
+            cardPlayer.addExtraInventory();
+            return;
+        }
+
+        players[myPlayerIndex].addExtraInventory();
+    }
+
     public void checkPlayerAction()
     {
         // TUTORIAL LOGIC
@@ -827,6 +792,7 @@ public class GameManager : MonoBehaviour
             if (cardPlayer.character.character.flipped)
             {
                 // do Pluot action (I'll code this in later)
+                ExtraInventoryMenu.SetActive(true);
 
             } else
             {
@@ -834,6 +800,26 @@ public class GameManager : MonoBehaviour
                 sendErrorMessage(10);
             }
             return;
+        }
+
+        if (players[myPlayerIndex].isPluot && players[myPlayerIndex].character.character.flipped)
+        {
+            // prompt ui for adding Extra Inventory into holster
+            ExtraInventoryMenu.SetActive(true);
+        }
+
+        if (players[myPlayerIndex].isNickles)
+        {
+            if (!players[myPlayerIndex].character.character.flipped)
+            {
+                // unflipped Nickles UI
+                nicklesUI.SetActive(true);
+            }
+            else
+            {
+                // flipped Nickles UI
+
+            }
         }
     }
 
@@ -1042,7 +1028,7 @@ public class GameManager : MonoBehaviour
 
 
         // If this client isn't the current player, display error message.
-        if (players[myPlayerIndex].user_id != currentPlayerId) {
+        if (players[myPlayerIndex].user_id != 0) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -1051,11 +1037,14 @@ public class GameManager : MonoBehaviour
         else 
         {
             int damage = 0;
-            int targetUserId = 0;
-            int throwerIndex = -1;
+            //int targetUserId = 0;
+            string targetUser = "";
+            //int throwerIndex = -1;
+            int throwerIndex = myPlayerIndex;
             Debug.Log("GameManager Throw Potion");
 
-            for (int i = 0; i < numPlayers; i++) 
+            /*
+            for (int i = 0; i < Game.GamePlayers.Count; i++) 
             {
                 if(players[i].charName == selectedOpponentCharName) 
                 {
@@ -1064,6 +1053,19 @@ public class GameManager : MonoBehaviour
                 }
                 else if(players[i].user_id == currentPlayerId) {
                     throwerIndex = i;
+                }
+            }
+            */
+
+            for(int i = 0; i < Game.GamePlayers.Count; i++)
+            {
+                if (Game.GamePlayers[i].charName == selectedOpponentCharName)
+                {
+                    Debug.Log("Name matched");
+                    targetUser = Game.GamePlayers[i].playerName;
+                } else
+                {
+                    Debug.Log("Name did not match opponents");
                 }
             }
 
@@ -1078,12 +1080,12 @@ public class GameManager : MonoBehaviour
 
                         damage = players[throwerIndex].holster.card1.card.effectAmount;
                         damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                        /*
+                        
                         if (players[throwerIndex].ringBonus && players[throwerIndex].potionsThrown == 0)
                         {
                             damage++;
                         }
-                        */
+                        
 
                         // send protocol to server
                         // also check if they're the current player
@@ -1096,8 +1098,9 @@ public class GameManager : MonoBehaviour
                         // MATTEO: Add Potion throw SFX here.
 
                         // Update this on all clients?
-                        td.addCard(playerHolster.cardList[selectedCardInt - 1]);
-                        // players[myPlayerIndex].potionsThrown++;
+                        //td.addCard(playerHolster.cardList[selectedCardInt - 1]);
+                        td.addCard(players[throwerIndex].holster.cardList[selectedCardInt - 1]);
+                        players[myPlayerIndex].potionsThrown++;
 
                         sendSuccessMessage(2); // Only display on thrower's client.
                         players[throwerIndex].holster.card1.gameObject.GetComponent<Hover_Card>().resetCard();
@@ -2035,7 +2038,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay1.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
                         // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        md1.cardDisplay1.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                     }
@@ -2053,7 +2056,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay2.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
                         // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        md1.cardDisplay2.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                     }
@@ -2075,7 +2078,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay3.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
                         // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        md1.cardDisplay3.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
@@ -2111,7 +2114,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md1.popCard();
                         // md1.cardDisplay1.updateCard(card);
                         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        md1.cardDisplay1.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                     } else
@@ -2127,7 +2130,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md1.popCard();
                         // md1.cardDisplay2.updateCard(card);
                         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        md1.cardDisplay2.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                     }
@@ -2144,7 +2147,7 @@ public class GameManager : MonoBehaviour
                         // Card card = md1.popCard();
                         // md1.cardDisplay3.updateCard(card);
                         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        md1.cardDisplay3.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
@@ -2184,7 +2187,7 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
                         // Card card = md2.popCard();
                         // md2.cardDisplay1.updateCard(card);
-                        md2.cardDisplay1.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                     }
@@ -2200,7 +2203,7 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
                         // Card card = md2.popCard();
                         // md2.cardDisplay2.updateCard(card);
-                        md2.cardDisplay2.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                     }
@@ -2216,7 +2219,7 @@ public class GameManager : MonoBehaviour
                         // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
                         // Card card = md2.popCard();
                         // md2.cardDisplay3.updateCard(card);
-                        md2.cardDisplay3.gameObject.GetComponent<Hover_Card>().resetCard();
+                        md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }

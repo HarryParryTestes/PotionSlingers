@@ -51,6 +51,13 @@ public class CardDisplay : MonoBehaviour
         artworkImage.sprite = card.cardSprite;
     }
 
+    public void updateCard(UniqueCard card)
+    {
+        artworkImage = this.GetComponent<Image>();
+        this.uniqueCard = card;
+        artworkImage.sprite = uniqueCard.cardSprite;
+    }
+
     public void updateUniqueCard(UniqueCard card)
     {
         artworkImage = this.GetComponent<Image>();

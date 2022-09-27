@@ -29,11 +29,21 @@ public class CardPlayer : MonoBehaviour
     public GameObject healSign;
     public GameObject healAmount;
 
+    public List<UniqueCard> uniqueCards;
+
     // possible bonuses
     public bool throwBonus;
     public bool vesselBonus;
     public bool artifactBonus;
     public bool isPluot = false;
+    public bool isBolo = false;
+    public bool isNickles = false;
+    public bool isIsadore = false;
+    public bool isReets = false;
+    public bool isSaltimbocca = false;
+    public bool isScarpetta = false;
+    public bool isSweetbitter = false;
+    public bool isTwins = false;
     // None, Hot, Cold, Wet, Dry
     public string pluotBonusType = "None";
 
@@ -45,10 +55,52 @@ public class CardPlayer : MonoBehaviour
 
     void Start()
     {
-        if(character.character.cardName == "Pluot")
+        
+    }
+
+    public void checkCharacter()
+    {
+        switch (character.character.cardName)
         {
-            Debug.Log("I AM PLUOT");
-            isPluot = true;
+            case "Pluot":
+                Debug.Log("I AM PLUOT");
+                isPluot = true;
+                break;
+            case "Bolo":
+                Debug.Log("I AM BOLO");
+                isBolo = true;
+                break;
+            case "Nickles":
+                Debug.Log("I AM NICKLES");
+                isNickles = true;
+                break;
+            case "Isadore":
+                Debug.Log("I AM ISADORE");
+                isIsadore = true;
+                break;
+            case "Reets":
+                Debug.Log("I AM REETS");
+                isReets = true;
+                break;
+            case "Saltimbocca":
+                Debug.Log("I AM SALTIMBOCCA");
+                isSaltimbocca = true;
+                break;
+            case "Scarpetta":
+                Debug.Log("I AM SCARPETTA");
+                isScarpetta = true;
+                break;
+            case "Sweetbitter":
+                Debug.Log("I AM SWEETBITTER");
+                isSweetbitter = true;
+                break;
+            case "Twins":
+                Debug.Log("I AM TWINS");
+                isTwins = true;
+                break;
+
+            default:
+                break;
         }
     }
 
@@ -108,6 +160,18 @@ public class CardPlayer : MonoBehaviour
         }
 
         updatePipsUI();
+    }
+
+    public void addExtraInventory()
+    {
+        foreach(CardDisplay card in holster.cardList)
+        {
+            if(card.card.cardName == "placeholder")
+            {
+                card.updateCard(uniqueCards[2]);
+                return;
+            }
+        }
     }
 
     public void setCurrentPlayer()
