@@ -162,6 +162,22 @@ public class CardPlayer : MonoBehaviour
         updatePipsUI();
     }
 
+    public void addReetsCard()
+    {
+        if (deck.deckList.Count >= 1)
+        {
+            foreach (CardDisplay card in holster.cardList)
+            {
+                if (card.card.cardName == "placeholder")
+                {
+                    Card temp = deck.popCard();
+                    card.updateCard(temp);
+                    return;
+                }
+            }
+        }
+    }
+
     public void addExtraInventory()
     {
         foreach(CardDisplay card in holster.cardList)
@@ -169,6 +185,18 @@ public class CardPlayer : MonoBehaviour
             if(card.card.cardName == "placeholder")
             {
                 card.updateCard(uniqueCards[2]);
+                return;
+            }
+        }
+    }
+
+    public void addPipSling()
+    {
+        foreach (CardDisplay card in holster.cardList)
+        {
+            if (card.card.cardName == "placeholder")
+            {
+                card.updateCard(uniqueCards[0]);
                 return;
             }
         }

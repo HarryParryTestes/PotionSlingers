@@ -57,7 +57,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         arrow.SetActive(false);
         if (scrolling)
         {
-            textSpeed = 0.01f;
+            textSpeed = 0.001f;
             return;
         }
         textBoxCounter++;

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public int loadedCardInt;
     public int myPlayerIndex = 0; // used to be currentPlayer
     public int currentPlayerId = 0;
+    public int nicklesDamage = 0;
     public CardPlayer[] players = new CardPlayer[4];
     public Character[] characters;
     public Dialog dialog;
@@ -40,12 +41,16 @@ public class GameManager : MonoBehaviour
     public GameObject pluotPotionMenu;
     public GameObject ExtraInventoryMenu;
     public GameObject nicklesUI;
+    public GameObject flippedNicklesUI;
+    public GameObject flippedPipMenu;
+    public GameObject reetsMenu;
 
     public Holster playerHolster;
     public Deck playerDeck;
 
     public CardPlayer bolo;
     public CardPlayer cardPlayer;
+    public CardPlayer tempPlayer;
 
     public GameObject p1;
     public GameObject p2;
@@ -118,6 +123,9 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager started!!!");
 
+        p3.SetActive(true);
+        p4.SetActive(true);
+
         Debug.Log("Number of players on network: " + Game.GamePlayers.Count);
 
         initDecks();
@@ -126,6 +134,8 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(gp.playerName);
         }
+
+        numPlayers = Game.GamePlayers.Count;
 
         // dummy players for tutorial
         if (Game.tutorial)
@@ -136,12 +146,19 @@ public class GameManager : MonoBehaviour
             playerTopName.text = "BOLO";
             p3.SetActive(false);
             p4.SetActive(false);
+            return;
             //Debug.Log("Shuffling market decks for tutorial");
         }
 
         if (Game.GamePlayers.Count == 2)
         {
             p3.SetActive(false);
+            p4.SetActive(false);
+        }
+
+        if (Game.GamePlayers.Count == 3)
+        {
+            //p3.SetActive(false);
             p4.SetActive(false);
         }
 
@@ -154,6 +171,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Player 1's character is... " + playerOb.charName);
         for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
+            int tracker = 0;
             if (Game.GamePlayers[i].isLocalPlayer)
             {
                 Debug.Log("Found local player");
@@ -163,6 +181,36 @@ public class GameManager : MonoBehaviour
                 players[0].character.onCharacterClick(Game.GamePlayers[i].charName);
                 players[0].checkCharacter();
                 
+            }
+            else
+            {
+                if (tracker == 0)
+                {
+                    playerLeftName.text = Game.GamePlayers[i].playerName;
+                    players[1].name = Game.GamePlayers[i].playerName;
+                    players[1].charName = Game.GamePlayers[i].charName;
+                    players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
+                    players[1].checkCharacter();
+                    tracker++;
+                }
+                if (tracker == 1)
+                {
+                    playerTopName.text = Game.GamePlayers[i].playerName;
+                    players[2].name = Game.GamePlayers[i].playerName;
+                    players[2].charName = Game.GamePlayers[i].charName;
+                    players[2].character.onCharacterClick(Game.GamePlayers[i].charName);
+                    players[2].checkCharacter();
+                    tracker++;
+                }
+                if (tracker == 2)
+                {
+                    playerRightName.text = Game.GamePlayers[i].playerName;
+                    players[3].name = Game.GamePlayers[i].playerName;
+                    players[3].charName = Game.GamePlayers[i].charName;
+                    players[3].character.onCharacterClick(Game.GamePlayers[i].charName);
+                    players[3].checkCharacter();
+                }
+
             }
         }
         /*
@@ -193,171 +241,7 @@ public class GameManager : MonoBehaviour
 
     public void init()
     {
-        initPlayers();
         initDecks();
-    }
-
-    public void initPlayers()
-    {
-        // Player1 = Client1 set up
-        ob = GameObject.Find("CharacterCard");
-        obTop = GameObject.Find("CharacterCard (Top)");
-        obLeft = GameObject.Find("CharacterCard (Left)");
-        obRight = GameObject.Find("CharacterCard (Right)");
-
-        CharacterDisplay bottomCharacter = ob.GetComponent<CharacterDisplay>();
-        CharacterDisplay topCharacter = obTop.GetComponent<CharacterDisplay>();
-        CharacterDisplay leftCharacter = obLeft.GetComponent<CharacterDisplay>();
-        CharacterDisplay rightCharacter = obRight.GetComponent<CharacterDisplay>();
-
-        // Children objects of attackMenu
-        GameObject leftAttack = attackMenu.transform.Find("AttackCharacter (Left)").gameObject;
-        GameObject topAttack = attackMenu.transform.Find("AttackCharacter (Top)").gameObject;
-        GameObject rightAttack = attackMenu.transform.Find("AttackCharacter (Right)").gameObject;
-
-        // Took this if + else if statements out of if(numPlayers == 2) check
-        // because it wasn't running for some reason.
-        // TO FIX: Need to fix to act differently depending on number of players!
-
-        // Player 1 setup (attempt to be less hard coded)
-        if (Constants.USER_ID == mainMenuScript.p1UserId)
-        {
-            players[0] = ob.GetComponent<CardPlayer>();
-            // Sets mainPlayer area belonging to this client's user.
-            players[0].user_id = Constants.USER_ID;
-
-            players[0].name = game.GamePlayers[0].playerName;
-            players[0].charName = mainMenuScript.p1CharCard.character.cardName;
-            playerBottomName.text = players[0].name;
-
-            // Updating PlayerArea CharacterDisplay to belong to P1's chosen character
-            bottomCharacter.character = mainMenuScript.p1CharCard.character;
-            bottomCharacter.updateCharacter(bottomCharacter.character);
-            players[0].character = bottomCharacter;
-
-            switch(numPlayers) {
-                case 2: 
-                    players[1] = obTop.GetComponent<CardPlayer>();
-                    players[1].user_id = mainMenuScript.p2UserId;
-                    players[1].name = mainMenuScript.p2Name;
-                    players[1].charName = mainMenuScript.p2CharCard.character.cardName;
-                    playerTopName.text = mainMenuScript.p2Name;
-                    topCharacter.character = mainMenuScript.p2CharCard.character;
-                    topCharacter.updateCharacter(topCharacter.character);
-                    players[1].character = topCharacter;
-                    obLeft.transform.parent.gameObject.SetActive(false);
-                    obRight.transform.parent.gameObject.SetActive(false);
-                    leftAttack.SetActive(false);
-                    rightAttack.SetActive(false);
-                    break;
-                case 3:
-                    // TO DO: Finish configuring 
-                    // players[1] = obLeft.GetComponent<Player>();
-                    // players[2] = obRight.GetComponent<Player>();
-                    // players[1].user_id = mainMenuScript.p2UserId;
-                    // players[2].user_id = mainMenuScript.p3UserId;
-                    // playerLeftName.text = mainMenuScript.p2Name;
-                    // playerRightName.text = mainMenuScript.p3Name;
-                    break;
-                case 4:
-                    // TO DO: Finish configuring 
-                    // players[1] = obLeft.GetComponent<Player>();
-                    // players[2] = obTop.GetComponent<Player>();
-                    // players[3] = obRight.GetComponent<Player>();
-                    // players[1].user_id = mainMenuScript.p2UserId;
-                    // players[2].user_id = mainMenuScript.p3UserId;
-                    // players[3].user_id = mainMenuScript.p3UserId;
-                    break;
-                default: Debug.Log("ERROR in initPlayers()"); break;
-            }
-            
-        }
-        // Player 2 = Client 2 setup
-        else if(Constants.USER_ID == mainMenuScript.p2UserId)
-        {
-            // myPlayerIndex = 1;
-            players[0] = ob.GetComponent<CardPlayer>();
-            // Sets mainPlayer area belonging to this client's user.
-            players[0].user_id = Constants.USER_ID;
-
-            players[0].name = mainMenuScript.p2Name;
-            players[0].charName = mainMenuScript.p2CharCard.character.cardName;
-            playerBottomName.text = players[0].name;
-
-            // Updating PlayerArea CharacterDisplay to belong to P2's chosen character
-            bottomCharacter.character = mainMenuScript.p2CharCard.character;
-            bottomCharacter.updateCharacter(bottomCharacter.character);
-            players[0].character = bottomCharacter;
-
-            switch(numPlayers) {
-                case 2: 
-                    players[1] = obTop.GetComponent<CardPlayer>();
-                    players[1].user_id = mainMenuScript.p1UserId;
-                    players[1].name = mainMenuScript.p1Name;
-                    players[1].charName = mainMenuScript.p1CharCard.character.cardName;
-                    playerTopName.text = mainMenuScript.p1Name;
-                    topCharacter.character = mainMenuScript.p1CharCard.character;
-                    topCharacter.updateCharacter(topCharacter.character);
-                    players[1].character = topCharacter;
-                    obLeft.transform.parent.gameObject.SetActive(false);
-                    obRight.transform.parent.gameObject.SetActive(false);
-                    leftAttack.SetActive(false);
-                    rightAttack.SetActive(false);
-                    break;
-                case 3:
-                    // TO DO: Finish configuring 
-                    break;
-                case 4:
-                    // TO DO: Finish configuring 
-                    break;
-                default: Debug.Log("ERROR in initPlayers()"); break;
-            }
-        }
-
-        else if (numPlayers == 3)
-        {
-            // TODO
-
-        } else if(numPlayers == 4)
-        {
-            // TODO
-        }
-
-        //ob = GameObject.Find("CharacterCard");
-        //players[0] = ob.GetComponent<Player>();
-        //ob2 = GameObject.Find("CharacterCard (Top)");
-        //players[1] = ob2.GetComponent<Player>();
-
-        /*
-        foreach (CardDisplay cd in players[2].holster.cardList)
-        {
-            cd.updateCard(players[0].deck.placeholder);
-        }
-
-        foreach (CardDisplay cd in players[3].holster.cardList)
-        {
-            cd.updateCard(players[0].deck.placeholder);
-        }
-        */
-
-        // Inits all player's health and essence (HP) cubes.
-        for(int i = 0; i < numPlayers; i++) {
-            players[i].initHealth();
-            // Sets first joined player to be the first current player.
-            if(players[i].user_id == mainMenuScript.p1UserId) {
-                currentPlayerId = players[i].user_id;
-                Debug.Log("CurrentPlayerID is: " + currentPlayerId);
-                players[i].setCurrentPlayer();
-            }
-            else
-            {
-                players[i].removeCurrentPlayer();
-            }
-            if(players[i].user_id == Constants.USER_ID)
-            {
-                myPlayerIndex = i;
-            }
-        }
     }
 
     public void initDecks()
@@ -480,63 +364,35 @@ public class GameManager : MonoBehaviour
         // Displaying opponents to attack for 2 player game.
         if(numPlayers == 2) 
         {
+            opLeft.gameObject.SetActive(false);
+            opRight.gameObject.SetActive(false);
             // For all players that are not this client's player, display their character in attackMenu.
-            for (int i = 0; i < numPlayers; i++)
-            {
-                if(players[i].user_id != Constants.USER_ID) 
-                {
-                    // Updates middle slot in attackMenu.
-                    opTop.updateCharacter(players[i].character.character);
-                }
-            }
+                    opTop.updateCharacter(players[2].character.character);
         }
 
         // Displaying opponents to attack for 3 player game.
         if(numPlayers == 3) 
         {
+            opLeft.gameObject.SetActive(true);
+            opTop.gameObject.SetActive(true);
+            opRight.gameObject.SetActive(false);
             int tracker = 0;
-            // For all players that are not this client's player, display their character in attackMenu.
-            for (int i = 0; i < numPlayers; i++)
-            {
-                if(players[i].user_id != Constants.USER_ID) 
-                {
-                    if(tracker == 0) 
-                    {
-                        // Updates left slot in attackMenu.
-                        opLeft.updateCharacter(players[i].character.character);
-                    }
-                    else if(tracker == 1)
-                    {
-                        opTop.updateCharacter(players[i].character.character);
-                    }
-                }
-            }
+
+            opLeft.updateCharacter(players[1].character.character);
+            opTop.updateCharacter(players[2].character.character);
+
         }
 
         // Displaying opponents to attack for 4 player game.
         if(numPlayers == 4) 
         {
+            opLeft.gameObject.SetActive(true);
+            opRight.gameObject.SetActive(true);
             int tracker = 0;
-            // For all players that are not this client's player, display their character in attackMenu.
-            for (int i = 0; i < numPlayers; i++)
-            {
-                if(players[i].user_id != Constants.USER_ID) 
-                {
-                    if(tracker == 0) 
-                    {
-                        // Updates left slot in attackMenu.
-                        opLeft.updateCharacter(players[i].character.character);
-                    }
-                    else if(tracker == 1)
-                    {
-                        opTop.updateCharacter(players[i].character.character);
-                    }
-                    else if(tracker == 2)
-                    {
-                        opRight.updateCharacter(players[i].character.character);
-                    }
-                }
-            }
+
+            opLeft.updateCharacter(players[1].character.character);
+            opTop.updateCharacter(players[2].character.character);
+            opRight.updateCharacter(players[3].character.character);           
         }
     }
 
@@ -666,7 +522,7 @@ public class GameManager : MonoBehaviour
         // If this client isn't the current player, display error message.
         // Player can't end turn if it isn't their turn.
         // (to change this to maybe disable endTurn button or grey it out?? turn it from button to image when not currentPlayer?)
-        if(Constants.USER_ID != currentPlayerId) 
+        if (players[myPlayerIndex].user_id != myPlayerIndex) 
         {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
@@ -674,6 +530,19 @@ public class GameManager : MonoBehaviour
 
         else
         {
+            myPlayerIndex++;
+            if(myPlayerIndex == numPlayers)
+            {
+                myPlayerIndex = 0;
+            }
+            onStartTurn(players[myPlayerIndex]);
+            Debug.Log("Request End Turn");
+
+            // ADD IN NETWORKING LATER!
+
+            //bool connected = networkManager.sendEndTurnRequest(myPlayerIndex);
+
+            /*
             bool currentFound = false;
             int currentIndex = -1;
             for(int i = 0; i < numPlayers; i++)
@@ -694,6 +563,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Request: Ending turn for PlayerID: " + players[currentIndex].user_id);
             Debug.Log("Request: Starting turn for PlayerID: " + players[newIndex].user_id);
             int newId = players[newIndex].user_id;
+            */
             // Sends user_id of new current player based on index of new current player
             // in this client's players array.
             //bool connected = networkManager.sendEndTurnRequest(newId);
@@ -784,6 +654,54 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].addExtraInventory();
     }
 
+    public void addPS()
+    {
+        // send an error message if they don't have enough pips
+        if (players[myPlayerIndex].pips < 3)
+        {
+            sendErrorMessage(6);
+        }
+        players[myPlayerIndex].subPips(3);
+        players[myPlayerIndex].addPipSling();
+    }
+
+    public void addReetsCard()
+    {
+        if (players[myPlayerIndex].character.character.flipped)
+        {
+            if (players[myPlayerIndex].pips > 1)
+            {
+                players[myPlayerIndex].subPips(1);
+                players[myPlayerIndex].addReetsCard();
+            } else
+            {
+                sendErrorMessage(6);
+            }
+        }
+        else
+        {
+            if (players[myPlayerIndex].pips > 2)
+            {
+                players[myPlayerIndex].subPips(2);
+                players[myPlayerIndex].addReetsCard();
+            }
+            else
+            {
+                sendErrorMessage(6);
+            }
+        }
+        
+    }
+
+    public void setNicklesAttack(int damage)
+    {
+        nicklesDamage = damage;
+        displayOpponents();
+    }
+
+    // any time ACTION is pressed on the player in the game scene
+    // it will go through the logic in this method
+
     public void checkPlayerAction()
     {
         // TUTORIAL LOGIC
@@ -808,6 +726,11 @@ public class GameManager : MonoBehaviour
             ExtraInventoryMenu.SetActive(true);
         }
 
+        if (players[myPlayerIndex].isReets)
+        {
+            reetsMenu.SetActive(true);
+        }
+
         if (players[myPlayerIndex].isNickles)
         {
             if (!players[myPlayerIndex].character.character.flipped)
@@ -818,7 +741,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 // flipped Nickles UI
-
+                flippedNicklesUI.SetActive(true);
             }
         }
     }
@@ -963,6 +886,7 @@ public class GameManager : MonoBehaviour
                 damage = cardPlayer.checkBonus(damage, selectedCardInt);
                 sendSuccessMessage(2); // Only display on thrower's client.
                 playerHolster.cardList[selectedCardInt - 1].updateCard(bolo.deck.placeholder);
+                td.addCard(playerHolster.cardList[selectedCardInt - 1]);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 bolo.subHealth(damage);
                 StartCoroutine(waitThreeSeconds(dialog));
@@ -1026,9 +950,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if(nicklesDamage > 0)
+        {
+            foreach (CardPlayer cp in players)
+            {
+                if(cp.character.character.cardName == selectedOpponentCharName)
+                {
+                    players[myPlayerIndex].subPips(nicklesDamage);
+                    cp.subHealth(nicklesDamage);
+                    nicklesDamage = 0;
+                    return;
+                }
+            }
+            return;
+        }
+
 
         // If this client isn't the current player, display error message.
-        if (players[myPlayerIndex].user_id != 0) {
+        if (players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -1057,345 +996,38 @@ public class GameManager : MonoBehaviour
             }
             */
 
-            for(int i = 0; i < Game.GamePlayers.Count; i++)
+            foreach (CardPlayer cp in players)
             {
-                if (Game.GamePlayers[i].charName == selectedOpponentCharName)
+                if (cp.character.character.cardName == selectedOpponentCharName)
                 {
                     Debug.Log("Name matched");
-                    targetUser = Game.GamePlayers[i].playerName;
-                } else
-                {
-                    Debug.Log("Name did not match opponents");
+                    targetUser = cp.charName;
+                    tempPlayer = cp;
+                    // idiot, don't put this here
+                    // return;
                 }
             }
 
-            // check card type
-            switch (selectedCardInt)
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
-                case 1:
-                    if (players[throwerIndex].holster.card1.card.cardType == "Potion")
-                    {
-                        // I'm gonna move this logic into the Player class when I am checking the bonuses attached
-                        // to the player once they throw the potion
+                Debug.Log("POTION");
+                damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                damage = players[myPlayerIndex].checkBonus(damage, selectedCardInt);
+                sendSuccessMessage(2); // Only display on thrower's client.
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                tempPlayer.subHealth(damage);
 
-                        damage = players[throwerIndex].holster.card1.card.effectAmount;
-                        damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                        
-                        if (players[throwerIndex].ringBonus && players[throwerIndex].potionsThrown == 0)
-                        {
-                            damage++;
-                        }
-                        
+            } else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
+            {
 
-                        // send protocol to server
-                        // also check if they're the current player
-                        //if(Constants.USER_ID - 1 == myPlayerIndex)
+            } else if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
+            {
 
-                        // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        // Args Potion: throwerId, cardPosition, targetId, damage, isArtifact (T/F), isVessel (T/F)
-                        //bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
-
-                        // MATTEO: Add Potion throw SFX here.
-
-                        // Update this on all clients?
-                        //td.addCard(playerHolster.cardList[selectedCardInt - 1]);
-                        td.addCard(players[throwerIndex].holster.cardList[selectedCardInt - 1]);
-                        players[myPlayerIndex].potionsThrown++;
-
-                        sendSuccessMessage(2); // Only display on thrower's client.
-                        players[throwerIndex].holster.card1.gameObject.GetComponent<Hover_Card>().resetCard();
-                        break;
-                        //}
-                    } 
-                    else if(players[throwerIndex].holster.card1.card.cardType == "Vessel")
-                    {
-                        // Check for two loaded potions in Veseel.
-                        if(players[throwerIndex].holster.card1.vPotion1.card.cardName != "placeholder" &&
-                            players[throwerIndex].holster.card1.vPotion2.card.cardName != "placeholder")
-                        {
-                            damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
-                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card1.vPotion1.card);
-                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card1.vPotion2.card);
-                            // players[myPlayerIndex].holster.card1.vPotion1.updateCard(players[0].deck.placeholder);
-                            // players[myPlayerIndex].holster.card1.vPotion2.updateCard(players[0].deck.placeholder);
-                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
-
-
-                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
-                            sendSuccessMessage(4);
-                            players[throwerIndex].holster.card1.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                            // MATTEO: Add Vessel throw SFX here.
-
-                        } 
-                        else
-                        {
-                            // "Can't throw an unloaded Vessel!"
-                            //Debug.Log("Vessel Error");
-                            sendErrorMessage(2);
-                        }
-                    }
-                    else if (players[throwerIndex].holster.card1.card.cardType == "Artifact")
-                    {
-                        if (players[throwerIndex].holster.card1.aPotion.card.cardName != "placeholder")
-                        {
-                            damage = players[throwerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-
-                            // Update response to account for trashing loaded artifact's potion and not the artifact
-                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
-
-                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
-                            sendSuccessMessage(3);
-                            players[throwerIndex].holster.card1.gameObject.GetComponent<Hover_Card>().resetCard();
-                            // MATTEO: Add Artifact using SFX here.
-
-                        }
-                        else
-                        {
-                            // "Can't use an unloaded Artifact!"
-                            sendErrorMessage(1);
-                        }
-                    }
-                    break;
-
-                case 2:
-                    if (players[throwerIndex].holster.card2.card.cardType == "Potion")
-                    {
-                        damage = players[throwerIndex].holster.card2.card.effectAmount;
-                        damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-
-                        //bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
-                        sendSuccessMessage(2);
-                        // MATTEO: Add Potion throw SFX here.
-                        players[throwerIndex].holster.card2.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                        break;
-
-                        // send protocol to server
-                        // also check if they're the current player
-                        // if (Constants.USER_ID - 1 == myPlayerIndex)
-                        // {
-                        //     bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
-                        //     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        //     // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                        //     // players[myPlayerIndex].potionsThrown++;
-                        //     sendSuccessMessage(2);
-                        //     break;
-                        // }
-                        // break;
-                    }
-                    else if (players[throwerIndex].holster.card2.card.cardType == "Vessel")
-                    {
-                        // check for loaded potions
-                        if (players[throwerIndex].holster.card2.vPotion1.card.cardName != "placeholder" &&
-                            players[throwerIndex].holster.card2.vPotion2.card.cardName != "placeholder")
-                        {
-                            damage = players[throwerIndex].holster.card2.vPotion1.card.effectAmount + players[throwerIndex].holster.card2.vPotion2.card.effectAmount;
-                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-
-                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card2.vPotion1.card);
-                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card2.vPotion2.card);
-                            // players[myPlayerIndex].holster.card2.vPotion1.updateCard(players[0].deck.placeholder);
-                            // players[myPlayerIndex].holster.card2.vPotion2.updateCard(players[0].deck.placeholder);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
-                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-
-                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
-                            sendSuccessMessage(4);
-                            players[throwerIndex].holster.card2.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                            // MATTEO: Add Vessel throw SFX here.
-
-                        }
-                        else
-                        {
-                            Debug.Log("Vessel Error");
-                            sendErrorMessage(2);
-                        }
-                    }
-                    else if (players[throwerIndex].holster.card2.card.cardType == "Artifact")
-                    {
-                        if (players[throwerIndex].holster.card2.aPotion.card.cardName != "placeholder")
-                        {
-                            damage = players[throwerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
-
-                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
-                            sendSuccessMessage(3);
-                            players[throwerIndex].holster.card2.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                            // MATTEO: Add Artifact using SFX here.
-
-                        }
-                        else
-                        {
-                            sendErrorMessage(1);
-                        }
-                    }
-                    break;
-                case 3:
-                    if (players[throwerIndex].holster.card3.card.cardType == "Potion")
-                    {
-                        damage = players[throwerIndex].holster.card3.card.effectAmount;
-                        damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-
-                        // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
-                        sendSuccessMessage(2);
-                        players[throwerIndex].holster.card3.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                        // MATTEO: Add Potion throw SFX here.
-
-
-                        break;
-                    }
-                    else if (players[throwerIndex].holster.card3.card.cardType == "Vessel")
-                    {
-                        Debug.Log("Reached vessel");
-                        // check for loaded potions
-                        if (players[throwerIndex].holster.card3.vPotion1.card.cardName != "placeholder" &&
-                            players[throwerIndex].holster.card3.vPotion2.card.cardName != "placeholder")
-                        {
-                            Debug.Log("Reached cards");
-                            damage = players[throwerIndex].holster.card3.vPotion1.card.effectAmount + players[throwerIndex].holster.card3.vPotion2.card.effectAmount;
-                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card3.vPotion1.card);
-                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card3.vPotion2.card);
-                            // players[myPlayerIndex].holster.card3.vPotion1.updateCard(players[0].deck.placeholder);
-                            // players[myPlayerIndex].holster.card3.vPotion2.updateCard(players[0].deck.placeholder);
-                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
-
-                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
-                            sendSuccessMessage(4);
-                            players[throwerIndex].holster.card3.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                            // MATTEO: Add Vessel throw SFX here.
-
-                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        }
-                        else
-                        {
-                            Debug.Log("Vessel Error");
-                            sendErrorMessage(2);
-                        }
-                    }
-                    else if (players[throwerIndex].holster.card3.card.cardType == "Artifact")
-                    {
-                        if (players[throwerIndex].holster.card1.aPotion.card.cardName != "placeholder")
-                        {
-                            damage = players[throwerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
-                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
-                            sendSuccessMessage(3);
-                            players[throwerIndex].holster.card3.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                            // MATTEO: Add Artifact throw SFX here.
-
-                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        }
-                        else
-                        {
-                            sendErrorMessage(1);
-                        }
-                    }
-                    break;
-                case 4:
-                    if (players[throwerIndex].holster.card4.card.cardType == "Potion")
-                    {
-                        damage = players[throwerIndex].holster.card4.card.effectAmount;
-                        damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                        // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
-                        sendSuccessMessage(2);
-                        players[throwerIndex].holster.card4.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                        // MATTEO: Add Potion throw SFX here.
-
-                        break;
-                        // send protocol to server
-                        // also check if they're the current player
-                        // if (Constants.USER_ID - 1 == myPlayerIndex)
-                        // {
-                        //     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        //     // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                        //     // players[myPlayerIndex].potionsThrown++;
-
-                        //     bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, false);
-                        //     sendSuccessMessage(2);
-                        //     break;
-                        // }
-                        // break;
-                    }
-                    else if (players[throwerIndex].holster.card4.card.cardType == "Vessel")
-                    {
-                        // check for loaded potions
-                        if (players[throwerIndex].holster.card4.vPotion1.card.cardName != "placeholder" &&
-                            players[throwerIndex].holster.card4.vPotion2.card.cardName != "placeholder")
-                        {
-                            damage = players[throwerIndex].holster.card4.vPotion1.card.effectAmount + players[throwerIndex].holster.card4.vPotion2.card.effectAmount;
-                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card4.vPotion1.card);
-                            // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.card4.vPotion2.card);
-                            // players[myPlayerIndex].holster.card4.vPotion1.updateCard(players[0].deck.placeholder);
-                            // players[myPlayerIndex].holster.card4.vPotion2.updateCard(players[0].deck.placeholder);
-                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
-
-                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
-                            sendSuccessMessage(4);
-                            players[throwerIndex].holster.card4.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                            // MATTEO: Add Vessel throw SFX here.
-
-                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        }
-                        else
-                        {
-                            Debug.Log("Vessel Error");
-                            sendErrorMessage(2);
-                        }
-                    }
-                    else if (players[throwerIndex].holster.card4.card.cardType == "Artifact")
-                    {
-                        if (players[throwerIndex].holster.card1.aPotion.card.cardName != "placeholder")
-                        {
-                            damage = players[throwerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                            damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
-
-                            // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
-                            sendSuccessMessage(3);
-                            players[throwerIndex].holster.card4.gameObject.GetComponent<Hover_Card>().resetCard();
-
-                            // MATTEO: Add Artifact using SFX here.
-
-                            // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        }
-                        else
-                        {
-                            sendErrorMessage(1);
-                        }
-                    }
-                    break;
-                default: damage = 0;
-                    break;
             }
+
         }
     }
 
@@ -1639,7 +1271,7 @@ public class GameManager : MonoBehaviour
             // bool connected = networkManager.sendLoadRequest(0, 0);
 
             // If this client isn't the current player, display error message.
-            if (Constants.USER_ID != currentPlayerId) {
+            if (players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -1847,7 +1479,7 @@ public class GameManager : MonoBehaviour
         }
 
         // If this client isn't the current player, display error message.
-        if(Constants.USER_ID != currentPlayerId) {
+        if(players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -2095,7 +1727,7 @@ public class GameManager : MonoBehaviour
         }
 
         // If this client isn't the current player, display error message.
-        if(Constants.USER_ID != currentPlayerId) {
+        if (players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -2109,11 +1741,11 @@ public class GameManager : MonoBehaviour
                 case 1:
                     if(players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice)
                     {
-                        // players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
-                        // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                        // Card card = md1.popCard();
-                        // md1.cardDisplay1.updateCard(card);
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay1.updateCard(card);
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
@@ -2125,11 +1757,11 @@ public class GameManager : MonoBehaviour
                 case 2:
                     if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice)
                     {
-                        // players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
-                        // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                        // Card card = md1.popCard();
-                        // md1.cardDisplay2.updateCard(card);
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay2.updateCard(card);
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
@@ -2142,11 +1774,11 @@ public class GameManager : MonoBehaviour
                 case 3:
                     if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice)
                     {
-                        // players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
-                        // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                        // Card card = md1.popCard();
-                        // md1.cardDisplay3.updateCard(card);
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay3.updateCard(card);
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
@@ -2169,7 +1801,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Bottom Market Buy");
 
         // If this client isn't the current player, display error message.
-        if(Constants.USER_ID != currentPlayerId) {
+        if(players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -2183,10 +1815,10 @@ public class GameManager : MonoBehaviour
                 case 1:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice)
                     {
-                        // players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
-                        // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                        // Card card = md2.popCard();
-                        // md2.cardDisplay1.updateCard(card);
+                        players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                        Card card = md2.popCard();
+                        md2.cardDisplay1.updateCard(card);
                         md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
@@ -2199,10 +1831,10 @@ public class GameManager : MonoBehaviour
                 case 2:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice)
                     {
-                        // players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
-                        // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                        // Card card = md2.popCard();
-                        // md2.cardDisplay2.updateCard(card);
+                        players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                        Card card = md2.popCard();
+                        md2.cardDisplay2.updateCard(card);
                         md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
@@ -2215,10 +1847,10 @@ public class GameManager : MonoBehaviour
                 case 3:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice)
                     {
-                        // players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
-                        // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                        // Card card = md2.popCard();
-                        // md2.cardDisplay3.updateCard(card);
+                        players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                        Card card = md2.popCard();
+                        md2.cardDisplay3.updateCard(card);
                         md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
@@ -2432,7 +2064,7 @@ public class GameManager : MonoBehaviour
         }
 
         // If this client isn't the current player, display error message.
-        if(Constants.USER_ID != currentPlayerId) {
+        if(players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -2440,8 +2072,8 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
-            // players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
-            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(8);
@@ -2494,7 +2126,7 @@ public class GameManager : MonoBehaviour
         }
 
         // If this client isn't the current player, display error message.
-        if(Constants.USER_ID != currentPlayerId) {
+        if(players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
@@ -2502,7 +2134,7 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
-            // td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             // SEND TRASH REQUEST (int x, int y)
             // bool connected = networkManager.sendTrashRequest(selectedCardInt, 0);
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
