@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     public GameObject flippedNicklesUI;
     public GameObject flippedPipMenu;
     public GameObject reetsMenu;
+    public GameObject isadoreMenu;
 
     public Holster playerHolster;
     public Deck playerDeck;
@@ -51,6 +52,8 @@ public class GameManager : MonoBehaviour
     public CardPlayer bolo;
     public CardPlayer cardPlayer;
     public CardPlayer tempPlayer;
+
+    public CardDisplay starterPotionDisplay;
 
     public GameObject p1;
     public GameObject p2;
@@ -68,6 +71,9 @@ public class GameManager : MonoBehaviour
     public GameObject pauseUI;
 
     bool paused = false;
+    bool starterPotion = false;
+    bool usedStarterPotion = false;
+    bool isadoreAction = true;
 
     GameObject mainMenu;
     MainMenu mainMenuScript;
@@ -291,6 +297,7 @@ public class GameManager : MonoBehaviour
     // if there are open spots in the holster, move cards from deck to holster
     public void onStartTurn(CardPlayer player)
     {
+        usedStarterPotion = false;
         foreach(CardDisplay cd in player.holster.cardList)
         {
             if(player.deck.deckList.Count >= 1)
@@ -665,6 +672,16 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].addPipSling();
     }
 
+    public void addCBB()
+    {
+        if (players[myPlayerIndex].pips < 3)
+        {
+            sendErrorMessage(6);
+        }
+        players[myPlayerIndex].subPips(3);
+        players[myPlayerIndex].addCherryBombBadge();
+    }
+
     public void addReetsCard()
     {
         if (players[myPlayerIndex].character.character.flipped)
@@ -718,6 +735,12 @@ public class GameManager : MonoBehaviour
                 sendErrorMessage(10);
             }
             return;
+        }
+
+        // change this to flipped and not !flipped after you test this
+        if (players[myPlayerIndex].isIsadore && !players[myPlayerIndex].character.character.flipped)
+        {
+            isadoreMenu.SetActive(true);
         }
 
         if (players[myPlayerIndex].isPluot && players[myPlayerIndex].character.character.flipped)
@@ -1159,6 +1182,11 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    public void setStarterPotion()
+    {
+        starterPotion = true;
+    }
+
     // LOAD REQUEST (DONE - 2 clients)
     public void loadPotion()
     {
@@ -1279,6 +1307,53 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            if (starterPotion && !usedStarterPotion)
+            {
+                // Loading a Vessel:
+                if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Vessel")
+                {
+                    // TODO: Make another error message
+                    sendErrorMessage(12);
+                }
+                else if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Artifact")
+                {
+                    // Enable Artifact menu if it wasn't already enabled.
+                    Debug.Log("Artifact menu enabled.");
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+
+                    // Check for existing loaded potion if Artifact menu was already enabled.
+                    if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
+                    {
+                        Debug.Log("Artifact is fully loaded!");
+                        // DONE: Insert error that displays on screen.
+                        sendErrorMessage(8);
+                    }
+                    // Artifact slot is unloaded.
+                    else
+                    {
+                        // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionDisplay.card;
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionDisplay.card);
+                        usedStarterPotion = true;
+                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        sendSuccessMessage(5);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        Debug.Log("Starter potion loaded in Artifact slot!");
+
+                        // MATTEO: Add Loading potion SFX here.
+
+                        // // Updates Holster card to be empty.
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                    }
+                }
+                starterPotion = false;
+                return;
+            } else
+            {
+                // add error message
+                sendErrorMessage(12);
+            }
             // if it's an artifact or vessel
             if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion") 
             {
@@ -2072,7 +2147,20 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
-            players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+            // LOGIC FOR BOLO SELLING ABILITY
+            // Bolo not flipped and he's selling something that's not a potion
+            if (players[myPlayerIndex].isBolo && !players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
+            {
+                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+                // Bolo flipped selling anything
+            } else if(players[myPlayerIndex].isBolo && players[myPlayerIndex].character.character.flipped)
+            {
+                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+            } else
+            {
+                // everyone else
+                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+            }
             td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();

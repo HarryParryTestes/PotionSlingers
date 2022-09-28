@@ -29,6 +29,9 @@ public class CardPlayer : MonoBehaviour
     public GameObject healSign;
     public GameObject healAmount;
 
+
+    // TODO: Refactor methods that use UniqueCard and replace them all with Card
+    // also, make ScriptableObjects that are regular Cards and not UniqueCards
     public List<UniqueCard> uniqueCards;
 
     // possible bonuses
@@ -174,6 +177,18 @@ public class CardPlayer : MonoBehaviour
                     card.updateCard(temp);
                     return;
                 }
+            }
+        }
+    }
+
+    public void addCherryBombBadge()
+    {
+        foreach (CardDisplay card in holster.cardList)
+        {
+            if (card.card.cardName == "placeholder")
+            {
+                card.updateCard(uniqueCards[1]);
+                return;
             }
         }
     }
