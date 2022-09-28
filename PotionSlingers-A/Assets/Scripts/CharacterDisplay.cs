@@ -22,6 +22,7 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     public GameObject menu;
     public bool clicked = false;
     public bool canBeFlipped = false;
+    public bool uniqueCardUsed = false;
 
     private MyNetworkManager game;
     private MyNetworkManager Game
@@ -90,7 +91,8 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
         {
             GameManager.manager.StartCoroutine(GameManager.manager.waitThreeSeconds(GameManager.manager.dialog));
         }
-        clicked = false;
+        clicked = true;
+        menu.SetActive(false);
 
         if (!canBeFlipped)
         {

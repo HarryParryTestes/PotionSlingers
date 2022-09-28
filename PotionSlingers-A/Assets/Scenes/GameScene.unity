@@ -246,7 +246,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 690513025}
         m_TargetAssemblyTypeName: Market_Hover, Assembly-CSharp
-        m_MethodName: resetView
+        m_MethodName: resetCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -687,7 +687,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 908084163}
         m_TargetAssemblyTypeName: Market_Hover, Assembly-CSharp
-        m_MethodName: resetView
+        m_MethodName: resetCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6325,6 +6325,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   clicked: 0
   canBeFlipped: 0
+  uniqueCardUsed: 0
 --- !u!114 &189316756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15275,6 +15276,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardMenu: {fileID: 843396355}
+--- !u!1 &494417289 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4669177692932267975, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &498051351
 GameObject:
   m_ObjectHideFlags: 0
@@ -34344,6 +34350,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   clicked: 0
   canBeFlipped: 0
+  uniqueCardUsed: 0
 --- !u!114 &1094063419
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50533,6 +50540,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545343407}
   m_CullTransparentMesh: 1
+--- !u!1 &1546215104 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4287067321107436392, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1549341605
 GameObject:
   m_ObjectHideFlags: 0
@@ -53368,6 +53380,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   clicked: 0
   canBeFlipped: 0
+  uniqueCardUsed: 0
 --- !u!1 &1627310747
 GameObject:
   m_ObjectHideFlags: 0
@@ -56670,6 +56683,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   clicked: 0
   canBeFlipped: 0
+  uniqueCardUsed: 0
 --- !u!1 &1718607798
 GameObject:
   m_ObjectHideFlags: 0
@@ -62763,6 +62777,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   clicked: 0
   canBeFlipped: 0
+  uniqueCardUsed: 0
 --- !u!114 &1882729770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -64868,6 +64883,7 @@ MonoBehaviour:
   menu: {fileID: 0}
   clicked: 0
   canBeFlipped: 0
+  uniqueCardUsed: 0
 --- !u!114 &1934230785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70542,7 +70558,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1831950245}
         m_TargetAssemblyTypeName: Market_Hover, Assembly-CSharp
-        m_MethodName: resetView
+        m_MethodName: resetCard
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -71020,6 +71036,8 @@ MonoBehaviour:
   - {fileID: 2121368780}
   - {fileID: 887568540}
   - {fileID: 1992758986}
+  - {fileID: 494417289}
+  - {fileID: 1546215104}
   pluotPotionMenu: {fileID: 1137251200}
   ExtraInventoryMenu: {fileID: 1868661981}
   nicklesUI: {fileID: 2124408736}
@@ -71047,6 +71065,7 @@ MonoBehaviour:
   attackMenu: {fileID: 2017186513}
   loadMenu: {fileID: 1081830690}
   pauseUI: {fileID: 1846390483}
+  reetsMenuText: {fileID: 1959007244}
 --- !u!4 &2083794570
 Transform:
   m_ObjectHideFlags: 0
@@ -75111,10 +75130,10 @@ MonoBehaviour:
   healSign: {fileID: 1956192405}
   healAmount: {fileID: 1956192404}
   uniqueCards:
-  - {fileID: 11400000, guid: ebab098ec90be42648879556d0e86d2c, type: 2}
-  - {fileID: 11400000, guid: a047ac4bfbbd14a7988ace78b392fdfa, type: 2}
-  - {fileID: 11400000, guid: 5ee8f0e1378e34b27b7585f904f01ea0, type: 2}
-  - {fileID: 11400000, guid: 48d12764855284fb78c1437390267fd5, type: 2}
+  - {fileID: 11400000, guid: 6d36c253bc7ef54408c9f37bd8a20111, type: 2}
+  - {fileID: 11400000, guid: b9421360ef617be49a2f8c9684ae2a2b, type: 2}
+  - {fileID: 11400000, guid: 7129f0eb76e55f146a5fe0eadfc5237a, type: 2}
+  - {fileID: 11400000, guid: 60a2c63f17a98154ba277c3c00c5ea1e, type: 2}
   throwBonus: 0
   vesselBonus: 0
   artifactBonus: 0

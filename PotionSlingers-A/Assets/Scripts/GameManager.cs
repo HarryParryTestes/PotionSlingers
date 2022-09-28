@@ -75,6 +75,8 @@ public class GameManager : MonoBehaviour
     bool usedStarterPotion = false;
     bool isadoreAction = true;
 
+    public TMPro.TextMeshProUGUI reetsMenuText;
+
     GameObject mainMenu;
     MainMenu mainMenuScript;
 
@@ -281,6 +283,12 @@ public class GameManager : MonoBehaviour
         if (players[myPlayerIndex].character.canBeFlipped)
         {
             players[myPlayerIndex].character.flipCard();
+            players[myPlayerIndex].character.menu.SetActive(false);
+        } else
+        {
+            // character card flip error
+            sendErrorMessage(11);
+            players[myPlayerIndex].character.menu.SetActive(false);
         }
     }
 
@@ -297,6 +305,7 @@ public class GameManager : MonoBehaviour
     // if there are open spots in the holster, move cards from deck to holster
     public void onStartTurn(CardPlayer player)
     {
+        Debug.Log(player.name + "'s turn!");
         usedStarterPotion = false;
         foreach(CardDisplay cd in player.holster.cardList)
         {
@@ -658,28 +667,61 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (players[myPlayerIndex].character.uniqueCardUsed)
+        {
+            // add error message
+            sendErrorMessage(6);
+            return;
+        }
+
         players[myPlayerIndex].addExtraInventory();
+
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            if (cd.card.cardName == "Extra Inventory")
+            {
+                players[myPlayerIndex].character.uniqueCardUsed = true;
+            }
+        }
     }
 
     public void addPS()
     {
         // send an error message if they don't have enough pips
-        if (players[myPlayerIndex].pips < 3)
+        if (players[myPlayerIndex].pips < 3 || players[myPlayerIndex].character.uniqueCardUsed)
         {
             sendErrorMessage(6);
+            return;
         }
         players[myPlayerIndex].subPips(3);
         players[myPlayerIndex].addPipSling();
+
+        foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            if(cd.card.cardName == "Blacksnake Pip Sling")
+            {
+                players[myPlayerIndex].character.uniqueCardUsed = true;
+            }
+        }
     }
 
     public void addCBB()
     {
-        if (players[myPlayerIndex].pips < 3)
+        if (players[myPlayerIndex].pips < 3 || players[myPlayerIndex].character.uniqueCardUsed)
         {
             sendErrorMessage(6);
+            return;
         }
         players[myPlayerIndex].subPips(3);
         players[myPlayerIndex].addCherryBombBadge();
+
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            if (cd.card.cardName == "Cherrybomb Badge")
+            {
+                players[myPlayerIndex].character.uniqueCardUsed = true;
+            }
+        }
     }
 
     public void addReetsCard()
@@ -692,10 +734,12 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].addReetsCard();
             } else
             {
+                Debug.Log("Did this fire?");
                 sendErrorMessage(6);
             }
         }
         else
+        // not flipped
         {
             if (players[myPlayerIndex].pips > 2)
             {
@@ -704,6 +748,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                Debug.Log("Did this fire?");
                 sendErrorMessage(6);
             }
         }
@@ -738,9 +783,14 @@ public class GameManager : MonoBehaviour
         }
 
         // change this to flipped and not !flipped after you test this
-        if (players[myPlayerIndex].isIsadore && !players[myPlayerIndex].character.character.flipped)
+        if (players[myPlayerIndex].isIsadore && !players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].character.uniqueCardUsed)
         {
             isadoreMenu.SetActive(true);
+        } else
+        {
+            // not able to do action
+            // fix this later
+            //sendErrorMessage(13);
         }
 
         if (players[myPlayerIndex].isPluot && players[myPlayerIndex].character.character.flipped)
@@ -748,10 +798,22 @@ public class GameManager : MonoBehaviour
             // prompt ui for adding Extra Inventory into holster
             ExtraInventoryMenu.SetActive(true);
         }
+        else
+        {
+            // not able to do action
+            //sendErrorMessage(13);
+        }
 
         if (players[myPlayerIndex].isReets)
         {
             reetsMenu.SetActive(true);
+            if (players[myPlayerIndex].character.character.flipped)
+            {
+                reetsMenuText.text = "Pay 1P to add top card of deck to Holster?";
+            } else
+            {
+                reetsMenuText.text = "Pay 2P to add top card of deck to Holster?";
+            }
         }
 
         if (players[myPlayerIndex].isNickles)
@@ -918,7 +980,7 @@ public class GameManager : MonoBehaviour
                 if (playerHolster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
                 {
                     int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
-                    //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+                    damage = cardPlayer.checkBonus(damage, selectedCardInt);
 
                     // Update response to account for trashing loaded artifact's potion and not the artifact
                     td.addCard(playerHolster.cardList[selectedCardInt - 1].aPotion);
@@ -1035,6 +1097,16 @@ public class GameManager : MonoBehaviour
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
                 Debug.Log("POTION");
+                if (players[myPlayerIndex].isTwins)
+                {
+                    if (!players[myPlayerIndex].character.character.flipped)
+                    {
+                        players[myPlayerIndex].addHealth(1);
+                    } else
+                    {
+                        players[myPlayerIndex].addHealth(2);
+                    }
+                }
                 damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
                 damage = players[myPlayerIndex].checkBonus(damage, selectedCardInt);
                 sendSuccessMessage(2); // Only display on thrower's client.
@@ -1045,10 +1117,65 @@ public class GameManager : MonoBehaviour
 
             } else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
             {
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
+                {
+                    damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                    //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+
+                    // Update response to account for trashing loaded artifact's potion and not the artifact
+                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+
+                    // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                    // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                    tempPlayer.subHealth(damage);
+                    sendSuccessMessage(3);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // MATTEO: Add Artifact using SFX here.
+
+                }
+                else
+                {
+                    // "Can't use an unloaded Artifact!"
+                    sendErrorMessage(1);
+                }
 
             } else if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
             {
+                if (playerHolster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
+                            playerHolster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
+                {
+                    if (players[myPlayerIndex].isTwins && players[myPlayerIndex].character.character.flipped)
+                    {
+                        players[myPlayerIndex].addHealth(4);
+                    }
+                    //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
+                    damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
 
+                    // TODO: fix bonus damage
+                    //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+                    players[myPlayerIndex].deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].vPotion1.card);
+                    players[myPlayerIndex].deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].vPotion2.card);
+                    players[myPlayerIndex].holster.card1.vPotion1.updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].holster.card1.vPotion2.updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);
+                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                    // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                    // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
+                    tempPlayer.subHealth(damage);
+                    sendSuccessMessage(4);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+
+                    // MATTEO: Add Vessel throw SFX here.
+
+                }
+                else
+                {
+                    // "Can't throw an unloaded Vessel!"
+                    //Debug.Log("Vessel Error");
+                    sendErrorMessage(2);
+                }
             }
 
         }
@@ -1307,12 +1434,14 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            // Isadore logic
             if (starterPotion && !usedStarterPotion)
             {
                 // Loading a Vessel:
                 if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Vessel")
                 {
                     // TODO: Make another error message
+                    Debug.Log("This error message???");
                     sendErrorMessage(12);
                 }
                 else if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Artifact")
@@ -1331,7 +1460,7 @@ public class GameManager : MonoBehaviour
                     // Artifact slot is unloaded.
                     else
                     {
-                        // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
+                        Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionDisplay.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionDisplay.card);
                         usedStarterPotion = true;
@@ -1343,107 +1472,110 @@ public class GameManager : MonoBehaviour
                         // MATTEO: Add Loading potion SFX here.
 
                         // // Updates Holster card to be empty.
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                     }
                 }
                 starterPotion = false;
                 return;
             } else
             {
-                // add error message
-                sendErrorMessage(12);
-            }
-            // if it's an artifact or vessel
-            if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion") 
-            {
-                // Loading a Vessel:
-                if(players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Vessel")
+                // if it's an artifact or vessel
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
                 {
-                    // Enable Vessel menu if it wasn't already enabled.
-                    Debug.Log("Vessel menu enabled.");
-                    // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
-
-                    // Check for existing loaded potion(s) if Vessel menu was already enabled.
-                    if(players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
+                    // Loading a Vessel:
+                    if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Vessel")
                     {
-                        // If Vessel slot 2 is filled.
-                        if(players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
+                        // Enable Vessel menu if it wasn't already enabled.
+                        Debug.Log("Vessel menu enabled.");
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
+
+                        // Check for existing loaded potion(s) if Vessel menu was already enabled.
+                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
                         {
-                            Debug.Log("Vessel is fully loaded!");
-                            // DONE: Insert error that displays on screen.
-                            sendErrorMessage(9);
+                            // If Vessel slot 2 is filled.
+                            if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
+                            {
+                                Debug.Log("Vessel is fully loaded!");
+                                // DONE: Insert error that displays on screen.
+                                sendErrorMessage(9);
+                            }
+                            else
+                            {
+                                // Fill Vessel slot 2 with loaded potion.
+                                Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
+                                players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                                players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+
+                                // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                sendSuccessMessage(5);
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                Debug.Log("Potion loaded in Vessel slot 2!");
+
+                                // MATTEO: Add Loading potion SFX here.
+
+                                // // Updates Holster card to be empty.
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                            }
                         }
-                        else 
+                        // Vessel slot 1 is unloaded.
+                        else
                         {
-                            // Fill Vessel slot 2 with loaded potion.
-                            // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
-                            // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                            // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                            Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
 
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                            Debug.Log("Potion loaded in Vessel slot 2!");
+                            Debug.Log("Potion loaded in Vessel slot 1!");
 
                             // MATTEO: Add Loading potion SFX here.
 
                             // // Updates Holster card to be empty.
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                         }
                     }
-                    // Vessel slot 1 is unloaded.
-                    else
+
+                    // Loading an Artifact:
+                    else if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Artifact")
                     {
-                        // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
-                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                        // Enable Artifact menu if it wasn't already enabled.
+                        Debug.Log("Artifact menu enabled.");
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
 
-                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
-                        sendSuccessMessage(5);
-                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        Debug.Log("Potion loaded in Vessel slot 1!");
+                        // Check for existing loaded potion if Artifact menu was already enabled.
+                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
+                        {
+                            Debug.Log("Artifact is fully loaded!");
+                            // DONE: Insert error that displays on screen.
+                            sendErrorMessage(8);
+                        }
+                        // Artifact slot is unloaded.
+                        else
+                        {
+                            Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                            // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                            sendSuccessMessage(5);
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            Debug.Log("Potion loaded in Artifact slot!");
 
-                        // MATTEO: Add Loading potion SFX here.
+                            // MATTEO: Add Loading potion SFX here.
 
-                        // // Updates Holster card to be empty.
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                            // // Updates Holster card to be empty.
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                        }
                     }
-                }
-                
-                // Loading an Artifact:
-                else if(players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Artifact")
+                } else
                 {
-                    // Enable Artifact menu if it wasn't already enabled.
-                    Debug.Log("Artifact menu enabled.");
-                    // players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
-
-                    // Check for existing loaded potion if Artifact menu was already enabled.
-                    if(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
-                    {
-                        Debug.Log("Artifact is fully loaded!");
-                        // DONE: Insert error that displays on screen.
-                        sendErrorMessage(8);
-                    }
-                    // Artifact slot is unloaded.
-                    else
-                    {
-                        // Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
-                        // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
-                        // players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
-                        sendSuccessMessage(5);
-                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        Debug.Log("Potion loaded in Artifact slot!");
-
-                        // MATTEO: Add Loading potion SFX here.
-
-                        // // Updates Holster card to be empty.
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
-                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
-                    }
+                    // add error message
+                    Debug.Log("That error message...");
+                    sendErrorMessage(12);
                 }
             }
         }
@@ -1814,32 +1946,67 @@ public class GameManager : MonoBehaviour
             switch (md1.cardInt)
             {
                 case 1:
-                    if(players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice)
+                    if(players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
                         players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
                         Card card = md1.popCard();
                         md1.cardDisplay1.updateCard(card);
-                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
-                    } else
+                        // SALTIMBOCCA LOGIC
+                    } else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay1.card.buyPrice - 1))
+                    {
+                        if (md1.cardDisplay1.card.buyPrice - 1 == 0)
+                        {
+                            players[myPlayerIndex].subPips(md1.cardDisplay1.card.buyPrice);
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].subPips(md1.cardDisplay1.card.buyPrice - 1);
+                        }
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay1.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                        sendSuccessMessage(1);
+                    }
+                    else
                     {
                         sendErrorMessage(6);
                     }
                     break;
                 case 2:
-                    if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice)
+                    if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
                         players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
                         Card card = md1.popCard();
                         md1.cardDisplay2.updateCard(card);
-                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
+                    }
+                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay2.card.buyPrice - 1))
+                    {
+                        if (md1.cardDisplay2.card.buyPrice - 1 == 0)
+                        {
+                            players[myPlayerIndex].subPips(md1.cardDisplay2.card.buyPrice);
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].subPips(md1.cardDisplay2.card.buyPrice - 1);
+                        }
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay2.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                        sendSuccessMessage(1);
                     }
                     else
                     {
@@ -1847,16 +2014,33 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 3:
-                    if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice)
+                    if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
                         players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
                         Card card = md1.popCard();
                         md1.cardDisplay3.updateCard(card);
-                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
+                    }
+                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay3.card.buyPrice - 1))
+                    {
+                        if (md1.cardDisplay3.card.buyPrice - 1 == 0)
+                        {
+                            players[myPlayerIndex].subPips(md1.cardDisplay3.card.buyPrice);
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].subPips(md1.cardDisplay3.card.buyPrice - 1);
+                        }
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay3.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        sendSuccessMessage(1);
                     }
                     else
                     {
@@ -1888,7 +2072,7 @@ public class GameManager : MonoBehaviour
             {
                 // cardInt based on position of card in Top Market (position 1, 2, or 3)
                 case 1:
-                    if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice)
+                    if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
                         players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
@@ -1898,13 +2082,29 @@ public class GameManager : MonoBehaviour
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                     }
+                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay1.card.buyPrice - 1))
+                    {
+                        if(md2.cardDisplay1.card.buyPrice - 1 == 0)
+                        {
+                            players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
+                        } else
+                        {
+                            players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice - 1);
+                        }  
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                        Card card = md2.popCard();
+                        md2.cardDisplay1.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                        sendSuccessMessage(1);
+                    }
                     else
                     {
                         sendErrorMessage(6);
                     }
                     break;
                 case 2:
-                    if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice)
+                    if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
                         players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
@@ -1914,13 +2114,30 @@ public class GameManager : MonoBehaviour
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                     }
+                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay2.card.buyPrice - 1))
+                    {
+                        if (md2.cardDisplay2.card.buyPrice - 1 == 0)
+                        {
+                            players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice - 1);
+                        }
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                        Card card = md2.popCard();
+                        md2.cardDisplay2.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                        sendSuccessMessage(1);
+                    }
                     else
                     {
                         sendErrorMessage(6);
                     }
                     break;
                 case 3:
-                    if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice)
+                    if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
                         players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
@@ -1929,6 +2146,23 @@ public class GameManager : MonoBehaviour
                         md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
+                    }
+                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay3.card.buyPrice - 1))
+                    {
+                        if (md2.cardDisplay3.card.buyPrice - 1 == 0)
+                        {
+                            players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice - 1);
+                        }
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                        Card card = md2.popCard();
+                        md2.cardDisplay3.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        sendSuccessMessage(1);
                     }
                     else
                     {

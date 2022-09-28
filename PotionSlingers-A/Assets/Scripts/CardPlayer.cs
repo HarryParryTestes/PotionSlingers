@@ -32,7 +32,7 @@ public class CardPlayer : MonoBehaviour
 
     // TODO: Refactor methods that use UniqueCard and replace them all with Card
     // also, make ScriptableObjects that are regular Cards and not UniqueCards
-    public List<UniqueCard> uniqueCards;
+    public List<Card> uniqueCards;
 
     // possible bonuses
     public bool throwBonus;
@@ -178,6 +178,15 @@ public class CardPlayer : MonoBehaviour
                     return;
                 }
             }
+            Debug.Log("Reets error");
+            GameManager.manager.sendErrorMessage(14);
+            if (!character.character.flipped)
+            {
+                addPips(2);
+            } else
+            {
+                addPips(1);
+            }
         }
     }
 
@@ -191,6 +200,7 @@ public class CardPlayer : MonoBehaviour
                 return;
             }
         }
+        GameManager.manager.sendErrorMessage(13);
     }
 
     public void addExtraInventory()
@@ -203,6 +213,7 @@ public class CardPlayer : MonoBehaviour
                 return;
             }
         }
+        GameManager.manager.sendErrorMessage(13);
     }
 
     public void addPipSling()
@@ -215,6 +226,7 @@ public class CardPlayer : MonoBehaviour
                 return;
             }
         }
+        GameManager.manager.sendErrorMessage(13);
     }
 
     public void setCurrentPlayer()
@@ -283,14 +295,15 @@ public class CardPlayer : MonoBehaviour
     }
     */
 
-    // public void addHealth(int health) {
-    //     hp += health;
+    public void addHealth(int health) {
+        hp += health;
 
-    //     //Make sure that hp cannot go above 10
-    //     if(hp > 10) {
-    //         hp = 10;
-    //     }
-    // }
+        //Make sure that hp cannot go above 10
+        if(hp > 10) {
+            hp = 10;
+        }
+        updateHealthUI();
+    }
 
     public void subHealth(int damage)
     {
