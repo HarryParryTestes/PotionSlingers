@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public GameObject flippedPipMenu;
     public GameObject reetsMenu;
     public GameObject isadoreMenu;
+    public GameObject sweetbitterMenu;
 
     public Holster playerHolster;
     public Deck playerDeck;
@@ -76,6 +77,10 @@ public class GameManager : MonoBehaviour
     bool isadoreAction = true;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
+    public GameObject reetsCard;
+
+    public Sprite sprite1;
+    public Sprite sprite2;
 
     GameObject mainMenu;
     MainMenu mainMenuScript;
@@ -659,6 +664,20 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    public void addTP()
+    {
+        if (players[myPlayerIndex].pips >= 6 && !players[myPlayerIndex].character.uniqueCardUsed)
+        {
+            players[myPlayerIndex].addThePhylactery();
+            players[myPlayerIndex].character.uniqueCardUsed = true;
+        } else
+        {
+            // you are too poor or you did it already
+            Debug.Log("You are poor!");
+            sendErrorMessage(6);
+        }
+    }
+
     public void addEI()
     {
         if (Game.tutorial)
@@ -782,6 +801,17 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (players[myPlayerIndex].isSweetbitter)
+        {
+            if (players[myPlayerIndex].character.character.flipped)
+            {
+                sendErrorMessage(10);
+            } else
+            {
+                sweetbitterMenu.SetActive(true);
+            }
+        }
+
         // change this to flipped and not !flipped after you test this
         if (players[myPlayerIndex].isIsadore && !players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].character.uniqueCardUsed)
         {
@@ -806,17 +836,20 @@ public class GameManager : MonoBehaviour
 
         if (players[myPlayerIndex].isReets)
         {
+            //Image image = reetsMenu.GetComponent<Image>();
             reetsMenu.SetActive(true);
             if (players[myPlayerIndex].character.character.flipped)
             {
                 reetsMenuText.text = "Pay 1P to add top card of deck to Holster?";
+                reetsCard.GetComponent<Image>().sprite = sprite1;
             } else
             {
                 reetsMenuText.text = "Pay 2P to add top card of deck to Holster?";
+                reetsCard.GetComponent<Image>().sprite = sprite2;
             }
         }
 
-        if (players[myPlayerIndex].isNickles)
+        if (players[myPlayerIndex].isNickles && !players[myPlayerIndex].nicklesAction)
         {
             if (!players[myPlayerIndex].character.character.flipped)
             {
@@ -828,6 +861,10 @@ public class GameManager : MonoBehaviour
                 // flipped Nickles UI
                 flippedNicklesUI.SetActive(true);
             }
+        } else if(players[myPlayerIndex].isNickles && players[myPlayerIndex].nicklesAction)
+        {
+            // error message because you already did it once this turn
+            sendErrorMessage(15);
         }
     }
 

@@ -47,6 +47,8 @@ public class CardPlayer : MonoBehaviour
     public bool isScarpetta = false;
     public bool isSweetbitter = false;
     public bool isTwins = false;
+
+    public bool nicklesAction = false;
     // None, Hot, Cold, Wet, Dry
     public string pluotBonusType = "None";
 
@@ -146,11 +148,21 @@ public class CardPlayer : MonoBehaviour
         }
     }
 
+    public void nicklesActionTrue()
+    {
+        nicklesAction = true;
+    }
+
     public void setDefaultTurn()
     {
         pips = 6;
         potionsThrown = 0;
         ringBonus = false;
+
+        if (isNickles)
+        {
+            nicklesAction = false;
+        }
 
         foreach (CardDisplay cd in holster.cardList)
         {
@@ -163,6 +175,13 @@ public class CardPlayer : MonoBehaviour
         }
 
         updatePipsUI();
+    }
+
+    public void addThePhylactery()
+    {
+        subPips(6);
+        GameManager.manager.sendSuccessMessage(12);
+        deck.putCardOnTop(uniqueCards[3]);
     }
 
     public void addReetsCard()
