@@ -14,11 +14,14 @@ public class CardPlayer : MonoBehaviour
     public Deck deck;
     public Holster holster;
     public int pips;
+    public int pipsUsedThisTurn = 0;
     public bool dead;           //Does the player still have health left?
     public int potionsThrown;
+    public int artifactsUsed = 0;
     public CharacterDisplay character;
     public bool ringBonus;
     public int bonusAmount;
+    public int cardsTrashed = 0;
     //public HealthController health;
     public GameObject playerHP;
     public GameObject playerHPCubes;
@@ -51,6 +54,12 @@ public class CardPlayer : MonoBehaviour
     public bool nicklesAction = false;
     // None, Hot, Cold, Wet, Dry
     public string pluotBonusType = "None";
+    public bool pluotHot = false;
+    public bool pluotCold = false;
+    public bool pluotWet = false;
+    public bool pluotDry = false;
+    public bool bottleRocketBonus = false;
+    public bool blackRainBonus = false;
 
     public CardPlayer(int user_id, string name)
     {
@@ -156,8 +165,12 @@ public class CardPlayer : MonoBehaviour
     public void setDefaultTurn()
     {
         pips = 6;
+        pipsUsedThisTurn = 0;
         potionsThrown = 0;
+        artifactsUsed = 0;
         ringBonus = false;
+        bottleRocketBonus = false;
+        blackRainBonus = false;
 
         if (isNickles)
         {
@@ -258,6 +271,45 @@ public class CardPlayer : MonoBehaviour
         currentPlayerHighlight.SetActive(false);
     }
 
+    public int checkArtifactBonus(int damage, CardDisplay selectedCard)
+    {
+        // probably depends on what card it is and what bonus it has, might have to implement logic for certain pools of cards this way
+
+        // The Rapid Fire Caltrop Hand Cannon
+        if(selectedCard.card.cardName == "RapidFireCaltrop")
+        {
+            // Dry Bonus: +2 Damage
+            if(selectedCard.aPotion.card.cardQuality == "Dry")
+            {
+                damage += 2;
+            }
+        }
+
+        // The Bottle Rocket
+        if(selectedCard.card.cardName == "BottleRocket")
+        {
+            // Wet Bonus: +2 Damage
+            // 3 P: Double the damage of this artifact this turn. You may only do this once per turn.
+            if(selectedCard.aPotion.card.cardQuality == "Wet")
+            {
+                damage += 2;
+                if (bottleRocketBonus)
+                {
+                    damage = damage * 2;
+                }
+            }
+        }
+
+        return damage;
+    }
+
+    public int checkVesselBonus(int damage, CardDisplay selectedCard)
+    {
+        // TODO: Vessel bonuses
+        return 0;
+    }
+
+    // this will get messy quickly so actually comment things
     public int checkBonus(int damage, int selectedCard)
     {
         // Pluot damage bonus
@@ -268,30 +320,90 @@ public class CardPlayer : MonoBehaviour
                 damage++;
             }
 
-            /*
-            if (pluotBonusType == "Hot" && holster.cardList[selectedCard - 1].card.cardQuality == "Hot")
+            
+            if (holster.cardList[selectedCard - 1].card.cardQuality == "Hot")
             {
-                damage++;
+                pluotHot = true;
             }
-            else if (pluotBonusType == "Wet" && holster.cardList[selectedCard - 1].card.cardQuality == "Wet")
+
+            if (holster.cardList[selectedCard - 1].card.cardQuality == "Wet")
             {
-                damage++;
+                pluotWet = true;
             }
-            else if (pluotBonusType == "Cold" && holster.cardList[selectedCard - 1].card.cardQuality == "Cold")
+
+            if (holster.cardList[selectedCard - 1].card.cardQuality == "Cold")
             {
-                damage++;
+                pluotCold = true;
             }
-            else if (pluotBonusType == "Dry" && holster.cardList[selectedCard - 1].card.cardQuality == "Dry")
+
+            if (holster.cardList[selectedCard - 1].card.cardQuality == "Dry")
             {
-                damage++;
+                pluotDry = true;
             }
-            */
+
+            // PLUOT FLIP LOGIC
+            if(pluotHot && pluotWet && pluotCold && pluotDry)
+            {
+                character.canBeFlipped = true;
+                GameManager.manager.sendSuccessMessage(13);
+            }
+            
         }
+
+        // CARDS WITH THROW BONUSES GO HERE!
+
+        // Throw Bonus: Heal +3 HP
+        if (holster.cardList[selectedCard - 1].card.cardName == "QuartOfLemonade" ||
+            holster.cardList[selectedCard - 1].card.cardName == "ThimbleOfHoney" ||
+            holster.cardList[selectedCard - 1].card.cardName == "KissFromTheLipsOfAnAncientLove" ||
+            holster.cardList[selectedCard - 1].card.cardName == "TallDrinkOfWater")
+        {
+            addHealth(3);
+        }
+
+        // Throw Bonus: +1 Pip
+        if (holster.cardList[selectedCard - 1].card.cardName == "VintageAromaticKate" ||
+            holster.cardList[selectedCard - 1].card.cardName == "JarFullOfGlitter" ||
+            holster.cardList[selectedCard - 1].card.cardName == "BowlOfExtremelyHotSoup" ||
+            holster.cardList[selectedCard - 1].card.cardName == "HumblingGlimpse")
+        {
+            addPips(1);
+        }
+
+        // You may create a starter potion on top of your deck
+        if(holster.cardList[selectedCard - 1].card.cardName == "AMaliciousThought" ||
+            holster.cardList[selectedCard - 1].card.cardName == "IntenseThirstForKnowledge" ||
+            holster.cardList[selectedCard - 1].card.cardName == "VioletFireling" ||
+            holster.cardList[selectedCard - 1].card.cardName == "InnocentLayerCake")
+        {
+            GameManager.manager.starterPotionMenu.SetActive(true);
+        }
+
         // ring damage bonus
         if (ringBonus && potionsThrown == 0)
         {
             damage++;
         }
+
+        // Throw Bonus: If your Holster is empty, place the top 4 cards of the Potion Market Deck into your Holster
+        if (holster.cardList[selectedCard - 1].card.cardName == "ATearofBlackRain")
+        {
+            Debug.Log("Tear of Black Rain Bonus");
+
+            for(int i = 0; i < holster.cardList.Count; i++)
+            {
+                if(i != (selectedCard - 1))
+                {
+                    if (holster.cardList[i].card.cardName != "placeholder")
+                    {
+                        return damage;
+                    }
+                }
+            }
+            //GameManager.manager.put4CardsInHolster();
+            blackRainBonus = true;
+        }
+
         return damage;
     }
 
@@ -373,7 +485,15 @@ public class CardPlayer : MonoBehaviour
     public void subPips(int lessPips)
     {
         pips -= lessPips;
+        pipsUsedThisTurn += lessPips;
         updatePipsUI();
+
+        // NICKLES FLIP LOGIC
+        if(isNickles && pipsUsedThisTurn >= 10)
+        {
+            character.canBeFlipped = true;
+            GameManager.manager.sendSuccessMessage(13);
+        }
     }
 
     //function to call when checking on if the player is dead

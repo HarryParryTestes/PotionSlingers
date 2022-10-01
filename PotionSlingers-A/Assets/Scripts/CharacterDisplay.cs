@@ -19,6 +19,7 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     public Image artworkImage;
     Transform viewCardMenu;
     GameObject viewingCardObject;
+    public GameObject parentObject;
     public GameObject menu;
     public bool clicked = false;
     public bool canBeFlipped = false;
@@ -40,6 +41,7 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     // Start is called before the first frame update
     void Start()
     {
+        parentObject = this.transform.parent.gameObject;
         rt = transform.GetComponent<RectTransform>();
         cachedScale = transform.localScale;
         originalPos = gameObject.transform.position;
@@ -130,8 +132,8 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
     {
         viewCardMenu.gameObject.SetActive(false);
 
-        //this.transform.SetParent(parentObject.transform);
-        this.transform.SetParent(GameManager.manager.md1.transform);
+        this.transform.SetParent(parentObject.transform);
+        //this.transform.SetParent(GameManager.manager.md1.transform);
         this.transform.localRotation = Quaternion.identity;
         transform.localScale = cachedScale;
         gameObject.transform.position = originalPos;

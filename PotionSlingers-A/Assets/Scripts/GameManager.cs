@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     public GameObject attackMenu;
     public GameObject loadMenu;
     public GameObject pauseUI;
+    public GameObject starterPotionMenu;
 
     bool paused = false;
     bool starterPotion = false;
@@ -81,6 +82,8 @@ public class GameManager : MonoBehaviour
 
     public Sprite sprite1;
     public Sprite sprite2;
+
+    public Card starterPotionCard;
 
     GameObject mainMenu;
     MainMenu mainMenuScript;
@@ -285,6 +288,33 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // characters that can flip back for free
+        if (players[myPlayerIndex].character.character.flipped)
+        {
+            if (players[myPlayerIndex].isSaltimbocca)
+            {
+                players[myPlayerIndex].character.flipCard();
+                players[myPlayerIndex].character.menu.SetActive(false);
+            }
+            else
+            {
+                sendErrorMessage(11);
+                players[myPlayerIndex].character.menu.SetActive(false);
+            }
+
+            // pay 2 pips to flip sweetbitter back to front
+            if (players[myPlayerIndex].isSweetbitter && players[myPlayerIndex].pips > 2)
+            {
+                players[myPlayerIndex].subPips(2);
+                players[myPlayerIndex].character.flipCard();
+                players[myPlayerIndex].character.menu.SetActive(false);
+            } else
+            {
+                sendErrorMessage(11);
+                players[myPlayerIndex].character.menu.SetActive(false);
+            }
+        }
+
         if (players[myPlayerIndex].character.canBeFlipped)
         {
             players[myPlayerIndex].character.flipCard();
@@ -292,7 +322,7 @@ public class GameManager : MonoBehaviour
         } else
         {
             // character card flip error
-            sendErrorMessage(11);
+            //sendErrorMessage(11);
             players[myPlayerIndex].character.menu.SetActive(false);
         }
     }
@@ -868,6 +898,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void put4CardsInHolster()
+    {
+        foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            cd.updateCard(md1.popCard());
+        }
+    }
+
     /* If you're wondering why there's two of these
      * it's because one takes in a GameObject and the
      * other is overloaded to take in a Dialog to handle
@@ -1072,6 +1110,24 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // if you're saltimbocca and you're flipped
+        if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.character.flipped)
+        {
+            int damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.buyPrice;
+
+            foreach (CardPlayer cp in players)
+            {
+                if (cp.character.character.cardName == selectedOpponentCharName)
+                {
+                    cp.subHealth(damage);
+                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                    // maybe add a notif idk
+                    sendSuccessMessage(2);
+                    return;
+                }
+            }
+        }
+
         if(nicklesDamage > 0)
         {
             foreach (CardPlayer cp in players)
@@ -1081,6 +1137,8 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].subPips(nicklesDamage);
                     cp.subHealth(nicklesDamage);
                     nicklesDamage = 0;
+                    // add a notification here??? up to you future denzill
+                    
                     return;
                 }
             }
@@ -1146,9 +1204,16 @@ public class GameManager : MonoBehaviour
                 }
                 damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
                 damage = players[myPlayerIndex].checkBonus(damage, selectedCardInt);
+
                 sendSuccessMessage(2); // Only display on thrower's client.
+                players[myPlayerIndex].potionsThrown++;
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
                 td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                if (players[myPlayerIndex].blackRainBonus)
+                {
+                    put4CardsInHolster();
+                    players[myPlayerIndex].blackRainBonus = false;
+                }
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 tempPlayer.subHealth(damage);
 
@@ -1160,13 +1225,26 @@ public class GameManager : MonoBehaviour
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
 
                     // Update response to account for trashing loaded artifact's potion and not the artifact
+                    players[myPlayerIndex].artifactsUsed++;
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                     tempPlayer.subHealth(damage);
-                    sendSuccessMessage(3);
+
+                    // ISADORE LOGIC
+                    if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].artifactsUsed == 2)
+                    {
+                        players[myPlayerIndex].character.canBeFlipped = true;
+                        // add success message for "You can now flip your card!" or something
+                        sendSuccessMessage(13);
+
+                    } else
+                    {
+                        sendSuccessMessage(3);
+                    }
+                    
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     // MATTEO: Add Artifact using SFX here.
 
@@ -1216,6 +1294,11 @@ public class GameManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void addStarterPotion()
+    {
+        players[myPlayerIndex].deck.putCardOnTop(starterPotionCard);
     }
 
     // THROW POTION RESPONSE
@@ -1291,59 +1374,6 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        
-
-        /*
-        // If the request didn't come from this Client
-        if (Constants.USER_ID != args.user_id)
-        {
-            // p1 request
-            if (args.user_id == 1)
-            {
-                // player 2
-                // this is for two players only cause it's the middle CharacterDisplay
-                if (args.z == 2 && numPlayers == 2)
-                {
-                    if(players[myPlayerIndex].holster.cardList[args.y - 1].card.cardName == "Potion")
-                    {
-                        Debug.Log("Damaged by potion");
-                        td.addCard(players[myPlayerIndex].holster.cardList[args.y - 1]);
-                        players[0].subHealth(args.w);
-                    } else if (players[myPlayerIndex].holster.cardList[args.y - 1].card.cardName == "Artifact")
-                    {
-                        Debug.Log("Damaged by artifact");
-                    }
-                    else if (players[myPlayerIndex].holster.cardList[args.y - 1].card.cardName == "Vessel")
-                    {
-                        Debug.Log("Damaged by vessel");
-                    }
-                }
-            }
-            // p2 request
-            else if (args.user_id == 2)
-            {
-                // player 1
-                // this is for two players only cause it's the middle CharacterDisplay
-                if (args.z == 2 && numPlayers == 2)
-                {
-                    if (players[myPlayerIndex].holster.cardList[args.y - 1].card.cardName == "Potion")
-                    {
-                        Debug.Log("Damaged by potion");
-                        td.addCard(players[myPlayerIndex].holster.cardList[args.y - 1]);
-                        players[1].subHealth(args.w);
-                    }
-                    else if (players[myPlayerIndex].holster.cardList[args.y - 1].card.cardName == "Artifact")
-                    {
-                        Debug.Log("Damaged by artifact");
-                    }
-                    else if (players[myPlayerIndex].holster.cardList[args.y - 1].card.cardName == "Vessel")
-                    {
-                        Debug.Log("Damaged by vessel");
-                    }
-                }
-            }
-        }
-        */
     }
 
     public void setStarterPotion()
@@ -1985,7 +2015,7 @@ public class GameManager : MonoBehaviour
                 case 1:
                     if(players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
-                        players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
+                        players[myPlayerIndex].subPips(md1.cardDisplay1.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
                         Card card = md1.popCard();
                         md1.cardDisplay1.updateCard(card);
@@ -2019,7 +2049,7 @@ public class GameManager : MonoBehaviour
                 case 2:
                     if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
-                        players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
+                        players[myPlayerIndex].subPips(md1.cardDisplay2.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
                         Card card = md1.popCard();
                         md1.cardDisplay2.updateCard(card);
@@ -2053,7 +2083,7 @@ public class GameManager : MonoBehaviour
                 case 3:
                     if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
-                        players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
+                        players[myPlayerIndex].subPips(md1.cardDisplay3.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
                         Card card = md1.popCard();
                         md1.cardDisplay3.updateCard(card);
@@ -2111,7 +2141,7 @@ public class GameManager : MonoBehaviour
                 case 1:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
-                        players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
+                        players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
                         Card card = md2.popCard();
                         md2.cardDisplay1.updateCard(card);
@@ -2143,7 +2173,7 @@ public class GameManager : MonoBehaviour
                 case 2:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
-                        players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
+                        players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
                         Card card = md2.popCard();
                         md2.cardDisplay2.updateCard(card);
@@ -2176,7 +2206,7 @@ public class GameManager : MonoBehaviour
                 case 3:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
-                        players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
+                        players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
                         Card card = md2.popCard();
                         md2.cardDisplay3.updateCard(card);
@@ -2496,6 +2526,12 @@ public class GameManager : MonoBehaviour
             td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             // SEND TRASH REQUEST (int x, int y)
             // bool connected = networkManager.sendTrashRequest(selectedCardInt, 0);
+            players[myPlayerIndex].cardsTrashed++;
+            if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].cardsTrashed == 4)
+            {
+                sendSuccessMessage(4);
+                players[myPlayerIndex].character.canBeFlipped = true;
+            }
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(9);
         }

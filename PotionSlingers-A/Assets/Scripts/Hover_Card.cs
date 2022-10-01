@@ -18,12 +18,12 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public static bool canHover = true; // Determines if cards can be hovered over.
     public static bool clicked = false; // Determines if cards can be clicked.
 
-    Transform cardMenu = null;
-    Transform viewCardMenu = null;
-    Transform highlighted = null;
-    GameObject parentObject = null;
-    GameObject attackMenu = null;
-    GameObject viewingCardObject = null;
+    Transform cardMenu;
+    Transform viewCardMenu;
+    Transform highlighted;
+    GameObject parentObject;
+    GameObject attackMenu;
+    GameObject viewingCardObject;
     bool cardSelected = false;
     public static bool viewingCard = false;
     //public GameObject exitMenu;
