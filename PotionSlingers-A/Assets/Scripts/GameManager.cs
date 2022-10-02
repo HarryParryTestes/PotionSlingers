@@ -2310,117 +2310,17 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        
-        /*
-        if (Constants.USER_ID != args.user_id)
+    }
+
+    public void deal3ToAll()
+    {
+        for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
-            // request coming fom p1
-            if(args.user_id == 1)
+            if(i != myPlayerIndex)
             {
-                // if top market
-                if(args.z == 1)
-                {
-                    switch (args.x)
-                    {
-                        case 1:
-                            players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                            Card card = md1.popCard();
-                            md1.cardDisplay1.updateCard(card);
-                            break;
-                        case 2:
-                            players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                            Card card2 = md1.popCard();
-                            md1.cardDisplay2.updateCard(card2);
-                            break;
-                        case 3:
-                            players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                            Card card3 = md1.popCard();
-                            md1.cardDisplay3.updateCard(card3);
-                            break;
-                    }
-                }
-                else
-                {
-                    switch (args.x)
-                    {
-                        case 1:
-                            players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                            Card card4 = md2.popCard();
-                            md2.cardDisplay1.updateCard(card4);
-                            break;
-                        case 2:
-                            players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                            Card card5 = md2.popCard();
-                            md2.cardDisplay2.updateCard(card5);
-                            break;
-                        case 3:
-                            players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
-                            players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                            Card card6 = md2.popCard();
-                            md2.cardDisplay3.updateCard(card6);
-                            break;
-                    }
-                }
-            }
-        } 
-        else if(args.user_id == 2)
-        {
-            // if top market
-            if (args.z == 1)
-            {
-                switch (args.x)
-                {
-                    case 1:
-                        players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay1.updateCard(card);
-                        break;
-                    case 2:
-                        players[myPlayerIndex].pips -= md1.cardDisplay2.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                        Card card2 = md1.popCard();
-                        md1.cardDisplay2.updateCard(card2);
-                        break;
-                    case 3:
-                        players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                        Card card3 = md1.popCard();
-                        md1.cardDisplay3.updateCard(card3);
-                        break;
-                }
-            }
-            else
-            {
-                switch (args.x)
-                {
-                    case 1:
-                        players[myPlayerIndex].pips -= md2.cardDisplay1.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                        Card card4 = md2.popCard();
-                        md2.cardDisplay1.updateCard(card4);
-                        break;
-                    case 2:
-                        players[myPlayerIndex].pips -= md2.cardDisplay2.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                        Card card5 = md2.popCard();
-                        md2.cardDisplay2.updateCard(card5);
-                        break;
-                    case 3:
-                        players[myPlayerIndex].pips -= md2.cardDisplay3.card.buyPrice;
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                        Card card6 = md2.popCard();
-                        md2.cardDisplay3.updateCard(card6);
-                        break;
-                }
+                players[i].subHealth(3);
             }
         }
-        */
     }
 
     // SELL REQUEST

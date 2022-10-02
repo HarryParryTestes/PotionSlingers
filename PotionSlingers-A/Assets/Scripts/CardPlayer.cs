@@ -285,6 +285,18 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Wooden Dryad's Kiss
+        if(selectedCard.card.cardName == "WoodenDryadsKiss")
+        {
+            addHealth(2);
+            // Wet Bonus: +2 HP
+            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            {
+                addHealth(2);
+            }
+            return 0;
+        }
+
         // The Bottle Rocket
         if(selectedCard.card.cardName == "BottleRocket")
         {
@@ -305,8 +317,159 @@ public class CardPlayer : MonoBehaviour
 
     public int checkVesselBonus(int damage, CardDisplay selectedCard)
     {
-        // TODO: Vessel bonuses
-        return 0;
+        // Fragile Glass Ornament
+        // Does +1 Damage. Ignores loaded potion effects in this Vessel
+        if (selectedCard.card.cardName == "Fragile Glass Ornament")
+        {
+            // this card ignores all potion effects, so i'm returning damage + 1
+            return damage + 1;
+        }
+
+        // Hollowed Out Skull of Higyoude
+        if(selectedCard.card.cardName == "HollowedOutSkull")
+        {
+            // does 6 damage, ignores all potion effects
+            return 6;
+        }
+
+        // Vessel Bonus: +2 Damage
+        if((selectedCard.vPotion1.card.cardName == "RefectionOfOnesGnarledEmotionalSelf" || selectedCard.vPotion2.card.cardName == "RefectionOfOnesGnarledEmotionalSelf") ||
+            (selectedCard.vPotion1.card.cardName == "SoupMadeOfGunpowder" || selectedCard.vPotion2.card.cardName == "SoupMadeOfGunpowder") ||
+            (selectedCard.vPotion1.card.cardName == "PourOfReallyAngryAcid" || selectedCard.vPotion2.card.cardName == "PourOfReallyAngryAcid"))
+        {
+            damage += 2;
+        }
+
+        // Vessel Bonus: Put any potion from the trash to the top of your deck
+        if ((selectedCard.vPotion1.card.cardName == "A Freshly Caught and Distilled Sickness" || selectedCard.vPotion2.card.cardName == "A Freshly Caught and Distilled Sickness") ||
+            (selectedCard.vPotion1.card.cardName == "TinctureOfMeltedMarble" || selectedCard.vPotion2.card.cardName == "TinctureOfMeltedMarble") ||
+            (selectedCard.vPotion1.card.cardName == "A Swig of Regained Burning Appetite" || selectedCard.vPotion2.card.cardName == "A Swig of Regained Burning Appetite") ||
+            (selectedCard.vPotion1.card.cardName == "A Squeeze of Wheezyfish" || selectedCard.vPotion2.card.cardName == "A Squeeze of Wheezyfish"))
+        {
+            // TODO: Implement this
+
+        }
+
+        // Vessel Card Text Logic
+
+        // Hot + Dry Bonus
+        if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
+            (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Dry"))
+        {
+            // Filthy Urn Holding the Ashes of 60k
+            // Hot + Dry Bonus: +4 Damage
+            if (selectedCard.card.cardName == "FilthyUrn")
+            {
+                damage += 4;
+
+            }
+
+            // The Vinyl Demijohn of Tunes and Libation
+            // Hot + Dry Bonus: Replace all the market cards. You get +3 Pips
+            if (selectedCard.card.cardName == "VinylDemijohnofTunesandLibation")
+            {
+                // TODO: make replaceMarketCards() method in GameManager to replace all ther market cards
+
+                addPips(3);
+            }
+        }
+
+        // Cold + Dry Bonus
+        if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
+            (selectedCard.vPotion2.card.cardQuality == "Cold" && selectedCard.vPotion1.card.cardQuality == "Dry"))
+        {
+            // The Boxing Flask of the Fist Wizard
+            // Deal +3 damage to all other opponents
+            if(selectedCard.card.cardName == "Boxing Flask of the Fist Wizard")
+            {
+                // TODO: make deal3ToAll() method inside GameManager to deal 3 damage to every CardPlayer except yourself
+                GameManager.manager.deal3ToAll();
+            }
+
+            // The Vinyl Demijohn of Tunes and Libation
+            // Put a market card on the top of your deck
+            if (selectedCard.card.cardName == "VinylDemijohnofTunesandLibation")
+            {
+                // TODO: make this method in GameManager
+
+            }
+        }
+
+        // Shining Reliquary of Bleeding Liquid Gold
+        if (selectedCard.card.cardName == "ShiningReliquary")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                addPips(2);
+            }
+            if (selectedCard.vPotion1.card.cardQuality == "Dry" || selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                addPips(2);
+            }
+        }
+
+        // A Curious Assortment of Apothecary Pills
+        if (selectedCard.card.cardName == "CuriousAssortmentOfPills")
+        {
+            // this card ignores all potion damage, so I'm returning 0 on purpose
+            addHealth(4);
+            return 0;
+        }
+
+        // Canteen Carved from a Living Meteorite
+        if (selectedCard.card.cardName == "CanteenCarvedFromMeteorite")
+        {
+            if(selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                addHealth(3);
+            }
+            if (selectedCard.vPotion1.card.cardQuality == "Dry" || selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                addHealth(3);
+            }
+        }
+
+        // Silken Hanky with a Cool Delicate Heartbeat
+        if (selectedCard.card.cardName == "SilkenHanky")
+        {
+            // Hot Bonus: +3 Damage
+            if (selectedCard.vPotion1.card.cardQuality == "Hot" || selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                damage += 3;
+            }
+        }
+
+        // Sandpaper Gunnysack with a Wire Drawstring
+        if (selectedCard.card.cardName == "SandpaperGunnysack")
+        {
+            // Dry Bonus: +3 Damage
+            if (selectedCard.vPotion1.card.cardQuality == "Dry" || selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                damage += 3;
+            }
+        }
+
+        // Cooled Carafe for the Shipwrecked Spirit
+        if (selectedCard.card.cardName == "CooledCarafe")
+        {
+            // Cold Bonus: +3 Damage
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                damage += 3;
+            }
+        }
+
+        // Drawstring Pouch of a Broken Umbrella
+        if (selectedCard.card.cardName == "DrawstringPouch")
+        {
+            // Wet Bonus: +3 Damage
+            if(selectedCard.vPotion1.card.cardQuality == "Wet" || selectedCard.vPotion2.card.cardQuality == "Wet")
+            {
+                damage += 3;
+            }
+        }
+
+        return damage;
     }
 
     // this will get messy quickly so actually comment things
