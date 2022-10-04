@@ -46,6 +46,7 @@ public class GameManager : MonoBehaviour
     public GameObject reetsMenu;
     public GameObject isadoreMenu;
     public GameObject sweetbitterMenu;
+    public GameObject bottleRocketMenu;
 
     public Holster playerHolster;
     public Deck playerDeck;
@@ -1223,6 +1224,7 @@ public class GameManager : MonoBehaviour
                 {
                     damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+                    damage = players[myPlayerIndex].checkArtifactBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
                     // Update response to account for trashing loaded artifact's potion and not the artifact
                     players[myPlayerIndex].artifactsUsed++;
@@ -1266,6 +1268,7 @@ public class GameManager : MonoBehaviour
                     }
                     //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
                     damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
+                    damage = players[myPlayerIndex].checkVesselBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
                     // TODO: fix bonus damage
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
@@ -2243,6 +2246,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // this method is for cards with special text like paying pips to do something with the card or putting the hat card on your character
+    public void checkCardAction()
+    {
+        // Bottle Rocket UI Logic
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "BottleRocket")
+        {
+            // SetActive the UI
+            bottleRocketMenu.SetActive(true);
+        }
+    }
+
+    public void setBottleRocketBonus()
+    {
+        if (players[myPlayerIndex].pips >= 3 || players[myPlayerIndex].bottleRocketBonus)
+        {
+            players[myPlayerIndex].bottleRocketBonus = true;
+            // add some success message but change what you initially put here lol
+            sendSuccessMessage(14);
+            // reset card
+            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+        } else
+        {
+            sendErrorMessage(6);
+            // reset card
+            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+        }
+    }
+
     // BUY RESPONSE
     public void onResponseBuy(ExtendedEventArgs eventArgs)
     {
@@ -2319,6 +2350,17 @@ public class GameManager : MonoBehaviour
             if(i != myPlayerIndex)
             {
                 players[i].subHealth(3);
+            }
+        }
+    }
+
+    public void deal1ToAll()
+    {
+        for (int i = 0; i < Game.GamePlayers.Count; i++)
+        {
+            if (i != myPlayerIndex)
+            {
+                players[i].subHealth(1);
             }
         }
     }

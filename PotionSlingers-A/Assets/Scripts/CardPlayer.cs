@@ -177,6 +177,8 @@ public class CardPlayer : MonoBehaviour
             nicklesAction = false;
         }
 
+        // putting this logic somewhere else
+        /*
         foreach (CardDisplay cd in holster.cardList)
         {
             // if there's a starter ring
@@ -186,6 +188,7 @@ public class CardPlayer : MonoBehaviour
                 ringBonus = true;
             }
         }
+        */
 
         updatePipsUI();
     }
@@ -271,9 +274,116 @@ public class CardPlayer : MonoBehaviour
         currentPlayerHighlight.SetActive(false);
     }
 
+    public int checkRings()
+    {
+        int rings = 0;
+        foreach(CardDisplay cd in holster.cardList)
+        {
+            if(cd.card.cardType == "Ring")
+            {
+                rings++;
+            }
+        }
+        return rings;
+    }
+
+    public int checkOneRing()
+    {
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if (cd.card.cardType == "Ring")
+            {
+                return 1;
+            }
+        }
+        return 0;
+    }
+
     public int checkArtifactBonus(int damage, CardDisplay selectedCard)
     {
         // probably depends on what card it is and what bonus it has, might have to implement logic for certain pools of cards this way
+
+        // Hammer of Engagement
+        if (selectedCard.card.cardName == "HammerOfEnagagment")
+        {
+            /*
+             * Hot Bonus: +2 Damage.
+               Holster Bonus: +1 Damage if a ring is in your Holster.
+             */
+            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            {
+                damage += 2;
+            }
+            damage += checkOneRing();
+        }
+
+        // Paperweight of Bauble Collector
+        // very similar to hammer of engagement
+        if (selectedCard.card.cardName == "PaperweightOfTheBaubleCollector")
+        {
+            /*
+             * Hot Bonus: +1 Damage.
+               Holster Bonus: +1 Damage for each Ring in your Holster.
+             */
+            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            {
+                damage++;
+            }
+            damage += checkRings();
+        }
+
+        // Gauntlet Mounted Trebuchet
+        // this card text is definitely bad lol sorry i don't make the rules
+        if (selectedCard.card.cardName == "GauntletMountedTrebuchet")
+        {
+            // Dry Bonus: Double potion damage
+            // what they meant was "double the loaded potion's damage and add it to the artifact damage"
+            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            {
+                damage += (2 * selectedCard.aPotion.card.effectAmount);
+            }
+        }
+
+        // Spigot of Endless Coinage
+        // Add Pips equal to the loaded potions' buy cost, +1 additional Pip
+        if (selectedCard.card.cardName == "SpigotOfEndless")
+        {
+            // this card doesn't deal damage, but it gives you lots of money
+            addPips(selectedCard.aPotion.card.buyPrice + 1);
+            return 0;
+        }
+
+        // Tablet Containing All Knowledge
+        if(selectedCard.card.cardName == "Tablet Containing All Knowledge")
+        {
+            // Dry Bonus: +2 Damage
+            if (selectedCard.aPotion.card.cardQuality == "Dry" || selectedCard.aPotion.card.cardQuality == "Hot")
+            {
+                addPips(1);
+                return 3;
+            }
+            else if (selectedCard.aPotion.card.cardQuality == "Wet" || selectedCard.aPotion.card.cardQuality == "Cold")
+            {
+                addPips(1);
+                addHealth(3);
+                return 0;
+            } else
+            // if cardQuality == "None"
+            {
+                addPips(3);
+                GameManager.manager.deal1ToAll();
+            }
+        }
+
+        // The Daggerheels
+        if(selectedCard.card.cardName == "Daggerheels")
+        {
+            // Cold Bonus: +1 Damage
+            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            {
+                damage++;
+            }
+        }
 
         // The Rapid Fire Caltrop Hand Cannon
         if(selectedCard.card.cardName == "RapidFireCaltrop")
@@ -285,8 +395,21 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Pewter Heart Necklace
+        if(selectedCard.card.cardName == "PewterHeartNecklace")
+        {
+            addHealth(2);
+            // Wet Bonus: +2 HP
+            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            {
+                addHealth(2);
+            }
+            // this card doesn't damage anyone
+            return 0;
+        }
+
         // Wooden Dryad's Kiss
-        if(selectedCard.card.cardName == "WoodenDryadsKiss")
+        if (selectedCard.card.cardName == "WoodenDryadsKiss")
         {
             addHealth(2);
             // Wet Bonus: +2 HP
@@ -294,11 +417,12 @@ public class CardPlayer : MonoBehaviour
             {
                 addHealth(2);
             }
+            // this card doesn't damage anyone
             return 0;
         }
 
         // The Bottle Rocket
-        if(selectedCard.card.cardName == "BottleRocket")
+        if (selectedCard.card.cardName == "BottleRocket")
         {
             // Wet Bonus: +2 Damage
             // 3 P: Double the damage of this artifact this turn. You may only do this once per turn.
@@ -307,6 +431,7 @@ public class CardPlayer : MonoBehaviour
                 damage += 2;
                 if (bottleRocketBonus)
                 {
+                    // double this bitch
                     damage = damage * 2;
                 }
             }
@@ -364,9 +489,9 @@ public class CardPlayer : MonoBehaviour
 
             }
 
-            // The Vinyl Demijohn of Tunes and Libation
+            // The Dual Rhyton of Phobos and Deimos
             // Hot + Dry Bonus: Replace all the market cards. You get +3 Pips
-            if (selectedCard.card.cardName == "VinylDemijohnofTunesandLibation")
+            if (selectedCard.card.cardName == "DualRhyton")
             {
                 // TODO: make replaceMarketCards() method in GameManager to replace all ther market cards
 
@@ -384,6 +509,7 @@ public class CardPlayer : MonoBehaviour
             {
                 // TODO: make deal3ToAll() method inside GameManager to deal 3 damage to every CardPlayer except yourself
                 GameManager.manager.deal3ToAll();
+                return 0;
             }
 
             // The Vinyl Demijohn of Tunes and Libation
@@ -511,6 +637,17 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.sendSuccessMessage(13);
             }
             
+        }
+
+        // starter ring +1 damage logic
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // if there's a starter ring
+            if ((cd.card.cardType == "Ring" &&
+                cd.card.cardQuality == "Starter") && potionsThrown == 0)
+            {
+                damage++;
+            }
         }
 
         // CARDS WITH THROW BONUSES GO HERE!

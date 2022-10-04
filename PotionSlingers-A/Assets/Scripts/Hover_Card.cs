@@ -20,6 +20,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     Transform cardMenu;
     Transform viewCardMenu;
+    Transform specialCardMenu;
     Transform highlighted;
     GameObject parentObject;
     GameObject attackMenu;
@@ -39,6 +40,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         parentObject = this.transform.parent.gameObject;
         cardMenu = this.transform.Find("CardMenu");
         viewCardMenu = this.transform.Find("ViewCardMenu");
+        specialCardMenu = this.transform.Find("SpecialCardMenu");
         highlighted = parentObject.transform.Find("Highlighted");
         attackMenu = GameObject.Find("ChooseAttackPlayer");
         viewingCardObject = GameObject.Find("ViewingCard");
@@ -54,6 +56,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         viewCardMenu.gameObject.SetActive(false);
         attackMenu.gameObject.SetActive(false);
         highlighted.gameObject.SetActive(false);
+        specialCardMenu.gameObject.SetActive(false);
     }
 
     void Update() {
@@ -121,15 +124,30 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                     // cardSelected = !cardSelected;
                     cardSelected = true;
                     if(cardSelected) {
-                        canHover = false;
-                        clicked = true;
-                        transform.localScale = cachedScale;
-                        gameObject.transform.position = originalPos;
-                        cardMenu.gameObject.SetActive(true);
-                        if (SceneManager.GetActiveScene().name != "TitleMenu")
+                        if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "BottleRocket")
                         {
-                            highlighted.gameObject.SetActive(true);
-                        }
+                            Debug.Log("Bottle Rocket Menu");
+                            canHover = false;
+                            clicked = true;
+                            transform.localScale = cachedScale;
+                            gameObject.transform.position = originalPos;
+                            specialCardMenu.gameObject.SetActive(true);
+                            if (SceneManager.GetActiveScene().name != "TitleMenu")
+                            {
+                                highlighted.gameObject.SetActive(true);
+                            }
+                        } else
+                        {
+                            canHover = false;
+                            clicked = true;
+                            transform.localScale = cachedScale;
+                            gameObject.transform.position = originalPos;
+                            cardMenu.gameObject.SetActive(true);
+                            if (SceneManager.GetActiveScene().name != "TitleMenu")
+                            {
+                                highlighted.gameObject.SetActive(true);
+                            }
+                        } 
                     }
                     // else if (!cardSelected) {
                     //     clicked = false;
@@ -146,6 +164,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 canHover = true;
                 transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 cardMenu.gameObject.SetActive(false);
+                specialCardMenu.gameObject.SetActive(false);
                 if (SceneManager.GetActiveScene().name != "TitleMenu")
                 {
                     highlighted.gameObject.SetActive(false);
@@ -179,6 +198,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         viewingCard = true;
         if(cardSelected) {
             cardMenu.gameObject.SetActive(false);
+            specialCardMenu.gameObject.SetActive(false);
             // let's try this
             this.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             this.transform.SetParent(viewingCardObject.transform);
@@ -220,6 +240,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void resetCard() {
         canHover = true;
+        specialCardMenu.gameObject.SetActive(false);
         transform.localScale = cachedScale;
         gameObject.transform.position = originalPos;
         clicked = false;
