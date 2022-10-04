@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
     public GameObject isadoreMenu;
     public GameObject sweetbitterMenu;
     public GameObject bottleRocketMenu;
+    public GameObject trashMarketUI;
 
     public Holster playerHolster;
     public Deck playerDeck;
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
     bool starterPotion = false;
     bool usedStarterPotion = false;
     bool isadoreAction = true;
+    public bool earlyBirdSpecial = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -91,6 +93,13 @@ public class GameManager : MonoBehaviour
 
     GameObject player1Area;
     GameObject player2Area;
+
+    public CardDisplay tm1;
+    public CardDisplay tm2;
+    public CardDisplay tm3;
+    public CardDisplay tm4;
+    public CardDisplay tm5;
+    public CardDisplay tm6;
 
     private MyNetworkManager game;
     private MyNetworkManager Game
@@ -270,6 +279,16 @@ public class GameManager : MonoBehaviour
         md2.init();
     }
 
+    public void updateTrashMarketMenu()
+    {
+        tm1.updateCard(md1.cardDisplay1.card);
+        tm2.updateCard(md1.cardDisplay2.card);
+        tm3.updateCard(md1.cardDisplay3.card);
+        tm4.updateCard(md2.cardDisplay1.card);
+        tm5.updateCard(md2.cardDisplay2.card);
+        tm6.updateCard(md2.cardDisplay3.card);
+    }
+
     public void checkFlip()
     {
         // TUTORIAL LOGIC
@@ -342,6 +361,7 @@ public class GameManager : MonoBehaviour
     public void onStartTurn(CardPlayer player)
     {
         Debug.Log(player.name + "'s turn!");
+        earlyBirdSpecial = false;
         usedStarterPotion = false;
         foreach(CardDisplay cd in player.holster.cardList)
         {
@@ -1299,6 +1319,52 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void trashMarket(int marketCard)
+    {
+        switch (marketCard)
+        {
+            case 1:
+                td.addCard(md1.cardDisplay1);
+                Card card1 = md1.popCard();
+                md1.cardDisplay1.updateCard(card1);
+                sendSuccessMessage(9);
+                break;
+            case 2:
+                td.addCard(md1.cardDisplay2);
+                Card card2 = md1.popCard();
+                md1.cardDisplay2.updateCard(card2);
+                sendSuccessMessage(9);
+                break;
+            case 3:
+                td.addCard(md1.cardDisplay3);
+                Card card3 = md1.popCard();
+                md1.cardDisplay3.updateCard(card3);
+                sendSuccessMessage(9);
+                break;
+            case 4:
+                td.addCard(md2.cardDisplay1);
+                Card card4 = md2.popCard();
+                md2.cardDisplay1.updateCard(card4);
+                sendSuccessMessage(9);
+                break;
+            case 5:
+                td.addCard(md2.cardDisplay2);
+                Card card5 = md2.popCard();
+                md2.cardDisplay2.updateCard(card5);
+                sendSuccessMessage(9);
+                break;
+            case 6:
+                td.addCard(md2.cardDisplay3);
+                Card card6 = md2.popCard();
+                md2.cardDisplay3.updateCard(card6);
+                sendSuccessMessage(9);
+                break;
+            default:
+                break;
+        }
+            
+    }
+
     public void addStarterPotion()
     {
         players[myPlayerIndex].deck.putCardOnTop(starterPotionCard);
@@ -2018,6 +2084,12 @@ public class GameManager : MonoBehaviour
                 case 1:
                     if(players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md1.cardDisplay1.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md1.cardDisplay1.card.buyPrice = 3;
+                        }
                         players[myPlayerIndex].subPips(md1.cardDisplay1.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
                         Card card = md1.popCard();
@@ -2029,7 +2101,14 @@ public class GameManager : MonoBehaviour
                         // SALTIMBOCCA LOGIC
                     } else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay1.card.buyPrice - 1))
                     {
-                        if (md1.cardDisplay1.card.buyPrice - 1 == 0)
+                        // if The Early Bird Special was drawn this turn
+                        if (md1.cardDisplay1.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md1.cardDisplay1.card.buyPrice = 3;
+                        }
+
+                        if (md1.cardDisplay1.card.buyPrice == 1)
                         {
                             players[myPlayerIndex].subPips(md1.cardDisplay1.card.buyPrice);
                         }
@@ -2052,6 +2131,12 @@ public class GameManager : MonoBehaviour
                 case 2:
                     if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md1.cardDisplay2.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md1.cardDisplay2.card.buyPrice = 3;
+                        }
                         players[myPlayerIndex].subPips(md1.cardDisplay2.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
                         Card card = md1.popCard();
@@ -2063,6 +2148,13 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay2.card.buyPrice - 1))
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md1.cardDisplay2.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md1.cardDisplay2.card.buyPrice = 3;
+                        }
+
                         if (md1.cardDisplay2.card.buyPrice - 1 == 0)
                         {
                             players[myPlayerIndex].subPips(md1.cardDisplay2.card.buyPrice);
@@ -2086,6 +2178,12 @@ public class GameManager : MonoBehaviour
                 case 3:
                     if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md1.cardDisplay3.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md1.cardDisplay3.card.buyPrice = 3;
+                        }
                         players[myPlayerIndex].subPips(md1.cardDisplay3.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
                         Card card = md1.popCard();
@@ -2097,6 +2195,13 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay3.card.buyPrice - 1))
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md1.cardDisplay3.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md1.cardDisplay3.card.buyPrice = 3;
+                        }
+
                         if (md1.cardDisplay3.card.buyPrice - 1 == 0)
                         {
                             players[myPlayerIndex].subPips(md1.cardDisplay3.card.buyPrice);
@@ -2144,6 +2249,12 @@ public class GameManager : MonoBehaviour
                 case 1:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md2.cardDisplay1.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md2.cardDisplay1.card.buyPrice = 3;
+                        }
                         players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
                         Card card = md2.popCard();
@@ -2154,7 +2265,14 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay1.card.buyPrice - 1))
                     {
-                        if(md2.cardDisplay1.card.buyPrice - 1 == 0)
+                        // if The Early Bird Special was drawn this turn
+                        if (md2.cardDisplay1.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md2.cardDisplay1.card.buyPrice = 3;
+                        }
+
+                        if (md2.cardDisplay1.card.buyPrice - 1 == 0)
                         {
                             players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
                         } else
@@ -2176,6 +2294,12 @@ public class GameManager : MonoBehaviour
                 case 2:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md2.cardDisplay2.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md2.cardDisplay2.card.buyPrice = 3;
+                        }
                         players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
                         Card card = md2.popCard();
@@ -2186,6 +2310,13 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay2.card.buyPrice - 1))
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md2.cardDisplay2.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md2.cardDisplay2.card.buyPrice = 3;
+                        }
+
                         if (md2.cardDisplay2.card.buyPrice - 1 == 0)
                         {
                             players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
@@ -2209,6 +2340,12 @@ public class GameManager : MonoBehaviour
                 case 3:
                     if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md2.cardDisplay3.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md2.cardDisplay3.card.buyPrice = 3;
+                        }
                         players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
                         Card card = md2.popCard();
@@ -2219,6 +2356,13 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay3.card.buyPrice - 1))
                     {
+                        // if The Early Bird Special was drawn this turn
+                        if (md2.cardDisplay3.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md2.cardDisplay3.card.buyPrice = 3;
+                        }
+
                         if (md2.cardDisplay3.card.buyPrice - 1 == 0)
                         {
                             players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
@@ -2465,6 +2609,12 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            // Savory Layer Cake logic
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SavoryLayerCake")
+            {
+                // Heals for +3 HP if trashed
+                players[myPlayerIndex].addHealth(3);
+            }
             td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             // SEND TRASH REQUEST (int x, int y)
             // bool connected = networkManager.sendTrashRequest(selectedCardInt, 0);

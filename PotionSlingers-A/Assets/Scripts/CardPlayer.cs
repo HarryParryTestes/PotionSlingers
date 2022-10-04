@@ -353,8 +353,16 @@ public class CardPlayer : MonoBehaviour
             return 0;
         }
 
+        // The Pocket Counterfeiter
+        // Add Pips equal to the loaded potions' damage
+        if (selectedCard.card.cardName == "PocketCounterfeiter")
+        {
+            addPips(selectedCard.aPotion.card.effectAmount);
+            return 0;
+        }
+
         // Tablet Containing All Knowledge
-        if(selectedCard.card.cardName == "Tablet Containing All Knowledge")
+        if (selectedCard.card.cardName == "Tablet Containing All Knowledge")
         {
             // Dry Bonus: +2 Damage
             if (selectedCard.aPotion.card.cardQuality == "Dry" || selectedCard.aPotion.card.cardQuality == "Hot")
@@ -474,8 +482,6 @@ public class CardPlayer : MonoBehaviour
             // TODO: Implement this
 
         }
-
-        // Vessel Card Text Logic
 
         // Hot + Dry Bonus
         if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
@@ -648,6 +654,14 @@ public class CardPlayer : MonoBehaviour
             {
                 damage++;
             }
+        }
+
+        // you may trash 1 card in the market
+        if(holster.cardList[selectedCard - 1].card.cardName == "EssenceOfDifficultManualLabor")
+        {
+            // GameManager method
+            GameManager.manager.trashMarketUI.SetActive(true);
+            GameManager.manager.updateTrashMarketMenu();
         }
 
         // CARDS WITH THROW BONUSES GO HERE!

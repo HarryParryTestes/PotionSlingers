@@ -22,6 +22,11 @@ public class MarketDeck : MonoBehaviour
             Card temp = deckList[0];
             deckList.RemoveAt(0);
             //Debug.Log("Card popped: ");
+            // Early Bird Special logic
+            if(temp.cardName == "EarlyBirdSpecial")
+            {
+                GameManager.manager.earlyBirdSpecial = true;
+            }
             return temp;
         }
         Debug.Log("ERROR: Card not returned!");

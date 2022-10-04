@@ -42,6 +42,11 @@ public class Deck : MonoBehaviour
         {
             Card temp = deckList[0];
             deckList.RemoveAt(0);
+            if (temp.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+            {
+                // +1 damage if put in holster this turn
+                temp.effectAmount = 4;
+            }
             //Debug.Log("Card popped: ");
             updateCardSprite();
             return temp;
