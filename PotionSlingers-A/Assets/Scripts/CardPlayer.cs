@@ -20,8 +20,10 @@ public class CardPlayer : MonoBehaviour
     public int artifactsUsed = 0;
     public CharacterDisplay character;
     public bool ringBonus;
+    public bool doubleRingBonus = false;
     public int bonusAmount;
     public int cardsTrashed = 0;
+    public int tricks = 0;
     //public HealthController health;
     public GameObject playerHP;
     public GameObject playerHPCubes;
@@ -188,7 +190,34 @@ public class CardPlayer : MonoBehaviour
 
     public void setDefaultTurn()
     {
+        doubleRingBonus = false;
         pips = 6;
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // Tiny Ring of Extra Coin Purse
+            // Start your turn with +2 pips
+            if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
+            {
+                doubleRingBonus = true;
+            }
+        }
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // Tiny Ring of Extra Coin Purse
+            // Start your turn with +2 pips
+            if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
+            {
+                if (doubleRingBonus)
+                {
+                    pips = 10;
+                } else
+                {
+                    pips = 8;
+                }
+            }
+        }
         pipsUsedThisTurn = 0;
         potionsThrown = 0;
         artifactsUsed = 0;
@@ -326,6 +355,25 @@ public class CardPlayer : MonoBehaviour
     public int checkArtifactBonus(int damage, CardDisplay selectedCard)
     {
         // probably depends on what card it is and what bonus it has, might have to implement logic for certain pools of cards this way
+
+        // The Skateboard
+        if(selectedCard.card.cardName == "Skateboard")
+        {
+            // if a loaded potion has an additional effect, do a trick instead of damage
+            // ask matteo and figure out exactly what that means lol
+
+            // if the loaded potion does not have any card text
+            // i'm just gonna list the cards because i'm lazy
+            if (selectedCard.aPotion.card.cardName != "NorthernOquinox" && selectedCard.aPotion.card.cardName != "PotionThatMakesHatsUglier" &&
+                selectedCard.aPotion.card.cardName != "SeriesOfPoisonousWords" && selectedCard.aPotion.card.cardName != "VerySeriousThreat" &&
+                selectedCard.aPotion.card.cardName != "BottleOfLeastAmountOfSpiders" && selectedCard.aPotion.card.cardName != "ContainerFilledWithAngryBees" &&
+                selectedCard.aPotion.card.cardName != "CupOfNoodles" && selectedCard.aPotion.card.cardName != "VerySeriousThreat" &&
+                selectedCard.aPotion.card.cardName != "SeriesOfPoisonousWords" && selectedCard.aPotion.card.cardName != "VerySeriousThreat")
+            {
+                tricks++;
+                return 0;
+            }
+        }
 
         // Hammer of Engagement
         if (selectedCard.card.cardName == "HammerOfEnagagment")
@@ -637,6 +685,74 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        return damage;
+    }
+
+    public int checkRingBonus(int damage, CardDisplay selectedCard)
+    {
+        // ring bonuses obviously, but only the ones that relate to damage
+        // all defensive stuff is going in its own separate method
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if(cd.card.cardType == "Ring")
+            {
+                // Sharpened Ring of Bauble Collector
+                if(cd.card.cardName == "Sharpened Ring of the Bauble Collector")
+                {
+                    if(selectedCard.card.cardType == "Artifact")
+                    {
+                        // if the card is an artifact that does damage, +1 damage
+                        if (selectedCard.card.cardName != "BubbleWand" && selectedCard.card.cardName != "PewterHeartNecklace" &&
+                            selectedCard.card.cardName != "Shield of the Mouth of Truth" && selectedCard.card.cardName != "PocketCounterfeiter" &&
+                            selectedCard.card.cardName != "SpigotOfEndless" && selectedCard.card.cardName != "Treasure Cloak Map" &&
+                            selectedCard.card.cardName != "WoodenDryadsKiss")
+                        {
+                            if (doubleRingBonus)
+                            {
+                                damage += 2;
+                            } else
+                            {
+                                damage++;
+                            }
+                        }
+                    }
+                }
+
+                // Finger Ring of Additional Pinkie
+                if(cd.card.cardName == "FingerRingoftheAdditionalPinkie")
+                {
+                    // Thrown potions deal +1 damage
+                    if(selectedCard.card.cardType == "Potion")
+                    {
+                        if (doubleRingBonus)
+                        {
+                            damage += 2;
+                        } else
+                        {
+                            damage++;
+                        }
+                    }
+                }
+
+                // Glass Ring of Things That Contain Things
+                if(cd.card.cardName == "GlassRingofThingsThatContainThings")
+                {
+                    // All of your thrown vessels deal +3 damage
+                    if (selectedCard.card.cardType == "Vessel")
+                    {
+                        if (doubleRingBonus)
+                        {
+                            damage += 6;
+                        }
+                        else
+                        {
+                            damage += 3;
+                        }
+                    }
+                }
+            }
+        }
         return damage;
     }
 
