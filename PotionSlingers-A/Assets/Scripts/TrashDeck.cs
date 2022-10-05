@@ -10,6 +10,8 @@ public class TrashDeck : MonoBehaviour
     public Slider slider;
     public bool trash = false;
 
+    public GameObject menuUI;
+
     public List<CardDisplay> cdList;
 
     public int cardIndex = 0;
@@ -28,6 +30,11 @@ public class TrashDeck : MonoBehaviour
             cardIndex = (int)v;
             displayCards();
         });
+    }
+
+    public void changeTrashBool()
+    {
+        trash = !trash;
     }
 
     public void addCard(CardDisplay cd)
@@ -73,8 +80,10 @@ public class TrashDeck : MonoBehaviour
 
         if (trash)
         {
+            menuUI.SetActive(true);
             if (deckList.Count < 3)
             {
+                slider.gameObject.SetActive(false);
                 foreach (CardDisplay cd in cdList)
                 {
                     cd.gameObject.SetActive(true);
@@ -111,11 +120,14 @@ public class TrashDeck : MonoBehaviour
         }
         else
         {
-            slider.gameObject.SetActive(false);
+            menuUI.SetActive(false);
+            //slider.gameObject.SetActive(false);
+            /*
             foreach (CardDisplay cd in cdList)
             {
                 cd.gameObject.SetActive(false);
             }
+            */
         }
     }
 }

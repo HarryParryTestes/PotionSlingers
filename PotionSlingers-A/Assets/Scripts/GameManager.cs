@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public int myPlayerIndex = 0; // used to be currentPlayer
     public int currentPlayerId = 0;
     public int nicklesDamage = 0;
+    public int numTrashed = 0;
     public CardPlayer[] players = new CardPlayer[4];
     public Character[] characters;
     public Dialog dialog;
@@ -48,6 +49,7 @@ public class GameManager : MonoBehaviour
     public GameObject sweetbitterMenu;
     public GameObject bottleRocketMenu;
     public GameObject trashMarketUI;
+    public GameObject trashorDamageMenu;
 
     public Holster playerHolster;
     public Deck playerDeck;
@@ -79,6 +81,9 @@ public class GameManager : MonoBehaviour
     bool usedStarterPotion = false;
     bool isadoreAction = true;
     public bool earlyBirdSpecial = false;
+    //public bool trashOrDamage = false;
+    public bool trash = false;
+    public bool damage = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -289,6 +294,16 @@ public class GameManager : MonoBehaviour
         tm6.updateCard(md2.cardDisplay3.card);
     }
 
+    public void setTrashBool()
+    {
+        trash = true;
+    }
+
+    public void setDamageBool()
+    {
+        damage = true;
+    }
+
     public void checkFlip()
     {
         // TUTORIAL LOGIC
@@ -363,6 +378,8 @@ public class GameManager : MonoBehaviour
         Debug.Log(player.name + "'s turn!");
         earlyBirdSpecial = false;
         usedStarterPotion = false;
+        trash = false;
+        damage = false;
         foreach(CardDisplay cd in player.holster.cardList)
         {
             if(player.deck.deckList.Count >= 1)
@@ -1361,6 +1378,17 @@ public class GameManager : MonoBehaviour
                 break;
             default:
                 break;
+        }
+
+        numTrashed--;
+
+        if(numTrashed != 0)
+        {
+            trashMarketUI.SetActive(true);
+            updateTrashMarketMenu();
+        } else
+        {
+            trashMarketUI.SetActive(false);
         }
             
     }

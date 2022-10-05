@@ -198,7 +198,11 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         viewingCard = true;
         if(cardSelected) {
             cardMenu.gameObject.SetActive(false);
-            specialCardMenu.gameObject.SetActive(false);
+            if(specialCardMenu != null)
+            {
+                // solves null reference exception
+                specialCardMenu.gameObject.SetActive(false);
+            }
             // let's try this
             this.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             this.transform.SetParent(viewingCardObject.transform);

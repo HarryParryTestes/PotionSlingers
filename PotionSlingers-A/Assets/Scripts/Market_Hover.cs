@@ -58,11 +58,23 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // On mouse hovering over object: 
     // (aka when mouse cursor enters GameObject's X/Y/Z boundaries)
     public void OnPointerEnter(PointerEventData eventData) {
-        if(canHover) {
+        // never had to deal with this until i used these with the trash deck lol
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
+        {
+            return;
+        }
+            if (canHover) {
             float width = rt.sizeDelta.x * rt.localScale.x;
             float height = rt.sizeDelta.y * rt.localScale.y;
             transform.SetSiblingIndex(this.transform.parent.transform.childCount - 1);
             //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
+            if (this.gameObject.name == "TrashCardDisplay1" ||
+                this.gameObject.name == "TrashCardDisplay2" ||
+                this.gameObject.name == "TrashCardDisplay3")
+            {
+                FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
+                return;
+            }
             transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
 
             // Card Hover sound effect:
@@ -84,6 +96,15 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 highlighted.gameObject.SetActive(true);
             }
             else if (!cardSelected) {
+                if (this.gameObject.name == "TrashCardDisplay1" ||
+                this.gameObject.name == "TrashCardDisplay2" ||
+                this.gameObject.name == "TrashCardDisplay3")
+                {
+                    canHover = true;
+                    cardMenu.gameObject.SetActive(false);
+                    highlighted.gameObject.SetActive(false);
+                    return;
+                }
                 transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 canHover = true;
                 cardMenu.gameObject.SetActive(false);

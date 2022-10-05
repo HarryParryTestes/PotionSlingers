@@ -72,6 +72,30 @@ public class CardPlayer : MonoBehaviour
         
     }
 
+    void Update()
+    {
+        // yes damage
+        if (GameManager.manager.damage)
+        {
+            foreach(CardPlayer player in GameManager.manager.players)
+            {
+                if(player.character.character.cardName == GameManager.manager.selectedOpponentCharName)
+                {
+                    player.subHealth(2);
+                    GameManager.manager.damage = false;
+                }
+            }
+        }
+        
+        // no damage
+        if (GameManager.manager.trash)
+        {
+            GameManager.manager.trashMarketUI.SetActive(true);
+            GameManager.manager.trash = false;
+
+        }
+    }
+
     public void checkCharacter()
     {
         switch (character.character.cardName)
@@ -656,10 +680,44 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // you may trash up to 2 market cards instead of doing damage
+        // i'm gonna do some weird while loop to prevent it from returning damage until the player has selected an option
+        if (holster.cardList[selectedCard - 1].card.cardName == "A Quizzical Look And a Rummage of Pockets" ||
+            holster.cardList[selectedCard - 1].card.cardName == "An Example of What Not to Do" ||
+            holster.cardList[selectedCard - 1].card.cardName == "A Confident Throw Into the Garbage")
+        {
+            //GameManager.manager.trashOrDamage = true;
+            GameManager.manager.numTrashed = 2;
+            GameManager.manager.trashorDamageMenu.SetActive(true);
+            GameManager.manager.updateTrashMarketMenu();
+            return 0;
+            
+            // don't do this, this created an infinite loop
+            /*
+            while (GameManager.manager.trashOrDamage)
+            {
+                if (!GameManager.manager.trashOrDamage)
+                {
+                    return 2;
+                }
+
+                if (GameManager.manager.trash)
+                {
+                    return 0;
+                }
+            }
+            */
+        }
+
         // you may trash 1 card in the market
-        if(holster.cardList[selectedCard - 1].card.cardName == "EssenceOfDifficultManualLabor")
+        // add all the cards that have this text here
+        if (holster.cardList[selectedCard - 1].card.cardName == "EssenceOfDifficultManualLabor" ||
+            holster.cardList[selectedCard - 1].card.cardName == "LiquidPileOfHorrid" ||
+            holster.cardList[selectedCard - 1].card.cardName == "Chocolatiers Delicate Pride" ||
+            holster.cardList[selectedCard - 1].card.cardName == "ANaggingFeeling")
         {
             // GameManager method
+            GameManager.manager.numTrashed = 1;
             GameManager.manager.trashMarketUI.SetActive(true);
             GameManager.manager.updateTrashMarketMenu();
         }
@@ -685,7 +743,7 @@ public class CardPlayer : MonoBehaviour
         }
 
         // You may create a starter potion on top of your deck
-        if(holster.cardList[selectedCard - 1].card.cardName == "AMaliciousThought" ||
+        if (holster.cardList[selectedCard - 1].card.cardName == "AMaliciousThought" ||
             holster.cardList[selectedCard - 1].card.cardName == "IntenseThirstForKnowledge" ||
             holster.cardList[selectedCard - 1].card.cardName == "VioletFireling" ||
             holster.cardList[selectedCard - 1].card.cardName == "InnocentLayerCake")
