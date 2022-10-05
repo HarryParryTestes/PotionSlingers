@@ -474,6 +474,18 @@ public class CardPlayer : MonoBehaviour
 
     public int checkVesselBonus(int damage, CardDisplay selectedCard)
     {
+        // Vessel Bonus: Put any potion from the trash to the top of your deck
+        if ((selectedCard.vPotion1.card.cardName == "A Squeeze of Wheezyfish" || selectedCard.vPotion2.card.cardName == "A Squeeze of Wheezyfish") ||
+            (selectedCard.vPotion1.card.cardName == "A Swig of Regained Burning Appetite" || selectedCard.vPotion2.card.cardName == "A Swig of Regained Burning Appetite") ||
+            (selectedCard.vPotion1.card.cardName == "TinctureOfMeltedMarble" || selectedCard.vPotion2.card.cardName == "TinctureOfMeltedMarble") ||
+            (selectedCard.vPotion1.card.cardName == "A Freshly Caught and Distilled Sickness" || selectedCard.vPotion2.card.cardName == "A Freshly Caught and Distilled Sickness"))
+        {
+            GameManager.manager.trashDeckBonus = true;
+            GameManager.manager.trashDeckMenu.SetActive(true);
+            GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+            GameManager.manager.td.displayTrash();
+        }
+
         // Fragile Glass Ornament
         // Does +1 Damage. Ignores loaded potion effects in this Vessel
         if (selectedCard.card.cardName == "Fragile Glass Ornament")

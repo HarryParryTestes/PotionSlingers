@@ -18,6 +18,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // bool attached = false; // Determines if a card has been clicked and attached to the mouse cursor.
 
     public Transform cardMenu;
+    public Transform onlyViewCardMenu;
     Transform viewCardMenu = null;
     Transform highlighted = null;
     GameObject parentObject = null;
@@ -86,14 +87,49 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     // (any click, a boolean tracks whether the click is to activate or deactivate something)
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        if(!viewingCard) {
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
+        {
+            return;
+        }
+            if (!viewingCard) {
             cardSelected = !cardSelected;
             if(cardSelected) {
+                if (this.gameObject.name == "TrashCardDisplay1" ||
+                this.gameObject.name == "TrashCardDisplay2" ||
+                this.gameObject.name == "TrashCardDisplay3")
+                {
+                    if (GameManager.manager.trashDeckBonus)
+                    {
+                        canHover = true;
+                        cardMenu.gameObject.SetActive(true);
+                        if (highlighted != null)
+                        {
+                            highlighted.gameObject.SetActive(true);
+                        }
+                        return;
+                    } else
+                    {
+                        // add other menu in the trash displays that only allows them to view the card
+                        if (onlyViewCardMenu != null)
+                        {
+                            onlyViewCardMenu.gameObject.SetActive(true);
+                            canHover = true;
+                            if (highlighted != null)
+                            {
+                                highlighted.gameObject.SetActive(true);
+                            }
+                        }
+                    }
+                    return;
+                }
                 canHover = false;
                 transform.localScale = cachedScale;
                 gameObject.transform.position = originalPos;
                 cardMenu.gameObject.SetActive(true);
-                highlighted.gameObject.SetActive(true);
+                if(highlighted != null)
+                {
+                    highlighted.gameObject.SetActive(true);
+                }  
             }
             else if (!cardSelected) {
                 if (this.gameObject.name == "TrashCardDisplay1" ||
@@ -102,13 +138,23 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 {
                     canHover = true;
                     cardMenu.gameObject.SetActive(false);
-                    highlighted.gameObject.SetActive(false);
+                    if (highlighted != null)
+                    {
+                        highlighted.gameObject.SetActive(false);
+                    }
                     return;
                 }
                 transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 canHover = true;
                 cardMenu.gameObject.SetActive(false);
-                highlighted.gameObject.SetActive(false);
+                if (onlyViewCardMenu != null)
+                {
+                    onlyViewCardMenu.gameObject.SetActive(false);
+                }
+                    if (highlighted != null)
+                {
+                    highlighted.gameObject.SetActive(false);
+                }
             }
         }
     }
@@ -126,6 +172,10 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         viewingCard = true;
         if(cardSelected) {
             cardMenu.gameObject.SetActive(false);
+            if(onlyViewCardMenu != null)
+            {
+                onlyViewCardMenu.gameObject.SetActive(false);
+            }
             this.transform.SetParent(viewingCardObject.transform);
             this.transform.localRotation = Quaternion.identity;
             this.transform.localScale = new Vector3(5f, 5f, 5f);

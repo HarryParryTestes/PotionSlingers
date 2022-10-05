@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     public GameObject bottleRocketMenu;
     public GameObject trashMarketUI;
     public GameObject trashorDamageMenu;
+    public GameObject trashDeckMenu;
+
+    public TMPro.TextMeshProUGUI trashText;
 
     public Holster playerHolster;
     public Deck playerDeck;
@@ -84,6 +87,7 @@ public class GameManager : MonoBehaviour
     //public bool trashOrDamage = false;
     public bool trash = false;
     public bool damage = false;
+    public bool trashDeckBonus = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -380,6 +384,7 @@ public class GameManager : MonoBehaviour
         usedStarterPotion = false;
         trash = false;
         damage = false;
+        trashDeckBonus = false;
         foreach(CardDisplay cd in player.holster.cardList)
         {
             if(player.deck.deckList.Count >= 1)
@@ -846,6 +851,12 @@ public class GameManager : MonoBehaviour
     {
         nicklesDamage = damage;
         displayOpponents();
+    }
+
+    public void takeTrashCard(CardDisplay cd)
+    {
+        players[myPlayerIndex].deck.putCardOnTop(cd.card);
+        cd.updateCard(td.card);
     }
 
     // any time ACTION is pressed on the player in the game scene
