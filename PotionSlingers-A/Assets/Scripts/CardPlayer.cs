@@ -352,6 +352,10 @@ public class CardPlayer : MonoBehaviour
         return 0;
     }
 
+    /***************************
+        CHECK ARTIFACT BONUS
+    ***************************/
+
     public int checkArtifactBonus(int damage, CardDisplay selectedCard)
     {
         // probably depends on what card it is and what bonus it has, might have to implement logic for certain pools of cards this way
@@ -520,6 +524,10 @@ public class CardPlayer : MonoBehaviour
         return damage;
     }
 
+    /*************************
+        CHECK VESSEL BONUS
+    *************************/
+
     public int checkVesselBonus(int damage, CardDisplay selectedCard)
     {
         // Vessel Bonus: Put any potion from the trash to the top of your deck
@@ -687,6 +695,10 @@ public class CardPlayer : MonoBehaviour
 
         return damage;
     }
+
+    /***********************
+        CHECK RING BONUS
+    ***********************/
 
     public int checkRingBonus(int damage, CardDisplay selectedCard)
     {
@@ -926,7 +938,67 @@ public class CardPlayer : MonoBehaviour
     }
     */
 
-    public void addHealth(int health) {
+    // TODO: Check to see if opponent thrown card is Artifact.
+    // TODO: Prompt targetedPlayer to trash loaded potion in Artifact with defense bonus.
+    public int checkDefensiveBonus(int damage) 
+    {
+        // Artifact: BubbleWand = May trash 1 loaded potion to prevent 2 damage.
+        // Artifact: ShieldOfMouthOfTruth = May trash 1 loaded potion to prevent 3 damage.
+        // Ring: CrustyRingOfCryingRustyTears = Opponent's ARTIFACTS prevent 2 damage.
+        // Ring: FoggyRingOfNearsightedOldCrone = All items thrown at you prevent 1 damage.
+        // Ring: ThickRingOfFurrowedBrowDolt = During each opponent turn, prevent 2 damage to your HP.
+
+        // TAKE INTO ACCOUNT -> Ring: RingOfRings = Doubles all of your Ring Effects. (Check boolean doubleRingBonus == true)
+        int preventedDamage = 0;
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if(cd.card.cardType == "Artifact") 
+            {
+                // BubbleWand
+                if(cd.card.cardName == "BubbleWand")
+                {
+                    // May trash 1 loaded potion to prevent 2 damage.
+                }
+                // Shield of the Mouth of Truth
+                else if(cd.card.cardName == "Shield of the Mouth of Truth")
+                {
+                    // May trash 1 loaded potion to prevent 3 damage.
+                }
+            }
+            
+            else if(cd.card.cardType == "Ring")
+            {
+                // Crusty Ring of the Crying Rusty Tears
+                if(cd.card.cardName == "Crusty Ring of the Crying Rusty Tears")
+                {
+                    // Opponent's ARTIFACTS prevent 2 damage.
+                    // (prevents 4 damage with Ring of Rings in Holster)
+                }
+                // Foggy Ring of the Nearsighted Old Crone
+                else if(cd.card.cardName == "Foggy Ring of the Nearsighted Old Crone")
+                {
+                    // All items thrown at you prevent 1 damage.
+                    // (prevents 2 damage with Ring of Rings in Holster)
+                    preventedDamage += doubleRingBonus ? 2 : 1;
+                }
+                // Thick Ring of the Furrowed Brow Dolt
+                else if(cd.card.cardName == "Thick Ring of the Furrowed Brow Dolt")
+                {
+                    // During each opponent turn, prevent 2 damage to your HP.
+                    // (prevents 4 damage with Ring of Rings in Holster)
+                    preventedDamage += doubleRingBonus ? 4 : 2;
+                }
+            }
+        }
+
+        // Calculates new damage amount to be taken by targeted player.
+        // If damage taken is negative (below 0), return 0 damage taken.
+        int newDamage = damage - preventedDamage;
+        return newDamage >= 0 ? newDamage : 0;
+    }
+
+    public void addHealth(int health) 
+    {
         hp += health;
 
         //Make sure that hp cannot go above 10
