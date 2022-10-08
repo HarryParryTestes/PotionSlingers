@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> errorMessages;
     private MessageQueue msgQueue;
 
+    public List<Card> starterCards;
+
     public GameObject pluotPotionMenu;
     public GameObject ExtraInventoryMenu;
     public GameObject nicklesUI;
@@ -51,6 +53,8 @@ public class GameManager : MonoBehaviour
     public GameObject trashMarketUI;
     public GameObject trashorDamageMenu;
     public GameObject trashDeckMenu;
+    public GameObject takeMarketMenu;
+    public GameObject opponentHolsterMenu;
 
     public TMPro.TextMeshProUGUI trashText;
 
@@ -88,6 +92,7 @@ public class GameManager : MonoBehaviour
     public bool trash = false;
     public bool damage = false;
     public bool trashDeckBonus = false;
+    public bool replaceStarter = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -109,6 +114,18 @@ public class GameManager : MonoBehaviour
     public CardDisplay tm4;
     public CardDisplay tm5;
     public CardDisplay tm6;
+
+    public CardDisplay takem1;
+    public CardDisplay takem2;
+    public CardDisplay takem3;
+    public CardDisplay takem4;
+    public CardDisplay takem5;
+    public CardDisplay takem6;
+
+    public CardDisplay opponentCard1;
+    public CardDisplay opponentCard2;
+    public CardDisplay opponentCard3;
+    public CardDisplay opponentCard4;
 
     private MyNetworkManager game;
     private MyNetworkManager Game
@@ -296,6 +313,16 @@ public class GameManager : MonoBehaviour
         tm4.updateCard(md2.cardDisplay1.card);
         tm5.updateCard(md2.cardDisplay2.card);
         tm6.updateCard(md2.cardDisplay3.card);
+    }
+
+    public void updateTakeMarketMenu()
+    {
+        takem1.updateCard(md1.cardDisplay1.card);
+        takem2.updateCard(md1.cardDisplay2.card);
+        takem3.updateCard(md1.cardDisplay3.card);
+        takem4.updateCard(md2.cardDisplay1.card);
+        takem5.updateCard(md2.cardDisplay2.card);
+        takem6.updateCard(md2.cardDisplay3.card);
     }
 
     public void setTrashBool()
@@ -488,6 +515,45 @@ public class GameManager : MonoBehaviour
             opTop.updateCharacter(players[2].character.character);
             opRight.updateCharacter(players[3].character.character);           
         }
+    }
+
+    public void displayOpponentHolster()
+    {
+        opponentCard1.updateCard(tempPlayer.holster.cardList[0].card);
+        opponentCard2.updateCard(tempPlayer.holster.cardList[1].card);
+        opponentCard3.updateCard(tempPlayer.holster.cardList[2].card);
+        opponentCard4.updateCard(tempPlayer.holster.cardList[3].card);
+    }
+
+    public void replaceOpponentCardWithStarter(int selectedCard)
+    {
+        if (replaceStarter)
+        {
+            if (tempPlayer.holster.cardList[selectedCard - 1].card.cardType == "Potion")
+            {
+                tempPlayer.holster.cardList[selectedCard - 1].updateCard(starterCards[2]);
+            }
+
+            if (tempPlayer.holster.cardList[selectedCard - 1].card.cardType == "Artifact")
+            {
+                tempPlayer.holster.cardList[selectedCard - 1].updateCard(starterCards[0]);
+            }
+
+            if (tempPlayer.holster.cardList[selectedCard - 1].card.cardType == "Vessel")
+            {
+                tempPlayer.holster.cardList[selectedCard - 1].updateCard(starterCards[1]);
+            }
+
+            if (tempPlayer.holster.cardList[selectedCard - 1].card.cardType == "Ring")
+            {
+                tempPlayer.holster.cardList[selectedCard - 1].updateCard(starterCards[3]);
+            }
+        } else
+        {
+            td.addCard(tempPlayer.holster.cardList[selectedCard - 1]);
+        }
+        replaceStarter = false;
+        opponentHolsterMenu.SetActive(false);
     }
 
     // find potions and display them in LoadItemMenu
@@ -1347,6 +1413,34 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void popAllMarketCards()
+    {
+        td.addCard(md1.cardDisplay1);
+        Card card1 = md1.popCard();
+        md1.cardDisplay1.updateCard(card1);
+
+        td.addCard(md1.cardDisplay2);
+        Card card2 = md1.popCard();
+        md1.cardDisplay2.updateCard(card2);
+        
+        td.addCard(md1.cardDisplay3);
+        Card card3 = md1.popCard();
+        md1.cardDisplay3.updateCard(card3);
+        
+        td.addCard(md2.cardDisplay1);
+        Card card4 = md2.popCard();
+        md2.cardDisplay1.updateCard(card4);
+        
+        td.addCard(md2.cardDisplay2);
+        Card card5 = md2.popCard();
+        md2.cardDisplay2.updateCard(card5);
+        
+        td.addCard(md2.cardDisplay3);
+        Card card6 = md2.popCard();
+        md2.cardDisplay3.updateCard(card6);
+        
+    }
+
     public void trashMarket(int marketCard)
     {
         switch (marketCard)
@@ -1402,6 +1496,54 @@ public class GameManager : MonoBehaviour
             trashMarketUI.SetActive(false);
         }
             
+    }
+
+    public void takeMarket(int marketCard)
+    {
+        switch (marketCard)
+        {
+            case 1:
+                players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                Card card1 = md1.popCard();
+                md1.cardDisplay1.updateCard(card1);
+                sendSuccessMessage(17);
+                break;
+            case 2:
+                players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                Card card2 = md1.popCard();
+                md1.cardDisplay2.updateCard(card2);
+                sendSuccessMessage(17);
+                break;
+            case 3:
+                players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                Card card3 = md1.popCard();
+                md1.cardDisplay3.updateCard(card3);
+                sendSuccessMessage(17);
+                break;
+            case 4:
+                players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                Card card4 = md2.popCard();
+                md2.cardDisplay1.updateCard(card4);
+                sendSuccessMessage(17);
+                break;
+            case 5:
+                players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                Card card5 = md2.popCard();
+                md2.cardDisplay2.updateCard(card5);
+                sendSuccessMessage(17);
+                break;
+            case 6:
+                players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                Card card6 = md2.popCard();
+                md2.cardDisplay3.updateCard(card6);
+                sendSuccessMessage(17);
+                break;
+            default:
+                break;
+        }
+
+        takeMarketMenu.SetActive(false);
+
     }
 
     public void addStarterPotion()

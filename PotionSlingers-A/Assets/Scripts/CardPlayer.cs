@@ -18,6 +18,7 @@ public class CardPlayer : MonoBehaviour
     public bool dead;           //Does the player still have health left?
     public int potionsThrown;
     public int artifactsUsed = 0;
+    public int tricks = 0;
     public CharacterDisplay character;
     public bool ringBonus;
     public int bonusAmount;
@@ -188,6 +189,14 @@ public class CardPlayer : MonoBehaviour
 
     public void setDefaultTurn()
     {
+        if (isPluot)
+        {
+            pluotCold = false;
+            pluotDry = false;
+            pluotHot = false;
+            pluotWet = false;
+        }
+
         pips = 6;
         pipsUsedThisTurn = 0;
         potionsThrown = 0;
@@ -326,6 +335,51 @@ public class CardPlayer : MonoBehaviour
     public int checkArtifactBonus(int damage, CardDisplay selectedCard)
     {
         // probably depends on what card it is and what bonus it has, might have to implement logic for certain pools of cards this way
+
+        // Treasure Cloak Map
+        // put a potion from the trash to the top of your deck
+        if(selectedCard.card.cardName == "Treasure Cloak Map")
+        {
+            GameManager.manager.numTrashed = 1;
+            GameManager.manager.trashDeckBonus = true;
+            GameManager.manager.trashDeckMenu.SetActive(true);
+            GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+            GameManager.manager.td.displayTrash();
+            return 0;
+        }
+
+        // The Skateboard
+        if(selectedCard.card.cardName == "Skateboard")
+        {
+            // if a loaded potion has an additional effect, do a trick instead of damage
+            // ask matteo and figure out exactly what that means lol
+
+            // if the loaded potion does not have any card text
+            // i'm just gonna list the cards because i'm lazy
+            // this might not actually be accurate to how the card should work but i'm drunk and i'm taking a shortcut
+            if (selectedCard.aPotion.card.cardName != "NorthernOquinox" && selectedCard.aPotion.card.cardName != "PotionThatMakesHatsUglier" &&
+                selectedCard.aPotion.card.cardName != "SeriesOfPoisonousWords" && selectedCard.aPotion.card.cardName != "VerySeriousThreat" &&
+                selectedCard.aPotion.card.cardName != "BottleOfLeastAmountOfSpiders" && selectedCard.aPotion.card.cardName != "ContainerFilledWithAngryBees" &&
+                selectedCard.aPotion.card.cardName != "CupOfNoodles" && selectedCard.aPotion.card.cardName != "PassiveAggressiveSlurry" &&
+                selectedCard.aPotion.card.cardName != "ClassicFireball" && selectedCard.aPotion.card.cardName != "ElectronicTonic" &&
+                selectedCard.aPotion.card.cardName != "LossOfOnesIntimatePossesions" && selectedCard.aPotion.card.cardName != "ShotOfWillOWisp" &&
+                selectedCard.aPotion.card.cardName != "BoldBundleOfLightning" && selectedCard.aPotion.card.cardName != "CupfulOfRealm" &&
+                selectedCard.aPotion.card.cardName != "GoopGasAttack" && selectedCard.aPotion.card.cardName != "ScreechingCry" &&
+                selectedCard.aPotion.card.cardName != "ATearofBlackRain" && selectedCard.aPotion.card.cardName != "QuartOfLemonade" &&
+                selectedCard.aPotion.card.cardName != "VintageAromaticKate" && selectedCard.aPotion.card.cardName != "JarFullOfGlitter" &&
+                selectedCard.aPotion.card.cardName != "KissFromTheLipsOfAnAncientLove" && selectedCard.aPotion.card.cardName != "HumblingGlimpse")
+            {
+                GameManager.manager.sendSuccessMessage(16);
+                tricks++;
+                // after 4 tricks, add an essence cube to their collection
+                if(tricks == 4)
+                {
+                    tricks = 0;
+                    hpCubes++;
+                }
+                return 0;
+            }
+        }
 
         // Hammer of Engagement
         if (selectedCard.card.cardName == "HammerOfEnagagment")
@@ -474,6 +528,19 @@ public class CardPlayer : MonoBehaviour
 
     public int checkVesselBonus(int damage, CardDisplay selectedCard)
     {
+        // First Place Volcano at the Alchemy Faire
+        // Put up to 1 card from the Market onto the top of your deck.
+        if(selectedCard.card.cardName == "First Place Volcano in the Alchemy Faire")
+        {
+            // this should follow the similar logic of the trash a card from the market UI
+            // GameManager.manager.trashorDamageMenu.SetActive(true);
+            // GameManager.manager.updateTrashMarketMenu();
+
+            GameManager.manager.takeMarketMenu.SetActive(true);
+            GameManager.manager.updateTakeMarketMenu();
+
+        }
+
         // Vessel Bonus: Put any potion from the trash to the top of your deck
         if ((selectedCard.vPotion1.card.cardName == "A Squeeze of Wheezyfish" || selectedCard.vPotion2.card.cardName == "A Squeeze of Wheezyfish") ||
             (selectedCard.vPotion1.card.cardName == "A Swig of Regained Burning Appetite" || selectedCard.vPotion2.card.cardName == "A Swig of Regained Burning Appetite") ||
@@ -509,13 +576,20 @@ public class CardPlayer : MonoBehaviour
             damage += 2;
         }
 
-        // Vessel Bonus: Put any potion from the trash to the top of your deck
-        if ((selectedCard.vPotion1.card.cardName == "A Freshly Caught and Distilled Sickness" || selectedCard.vPotion2.card.cardName == "A Freshly Caught and Distilled Sickness") ||
-            (selectedCard.vPotion1.card.cardName == "TinctureOfMeltedMarble" || selectedCard.vPotion2.card.cardName == "TinctureOfMeltedMarble") ||
-            (selectedCard.vPotion1.card.cardName == "A Swig of Regained Burning Appetite" || selectedCard.vPotion2.card.cardName == "A Swig of Regained Burning Appetite") ||
-            (selectedCard.vPotion1.card.cardName == "A Squeeze of Wheezyfish" || selectedCard.vPotion2.card.cardName == "A Squeeze of Wheezyfish"))
+        // Hot + Wet Bonus
+        // It's only two cards
+        if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
+           (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Wet"))
         {
-            // TODO: Implement this
+            // Furry Flagon Made from the Hide of Hairy Leeches
+            // Hot + Wet Bonus: Put 1 card from the trash to the top of your deck
+            if (selectedCard.card.cardName == "Furry Flagon fromthe Hide of Hairy Leeches")
+            {
+                GameManager.manager.trashDeckBonus = true;
+                GameManager.manager.trashDeckMenu.SetActive(true);
+                GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+                GameManager.manager.td.displayTrash();
+            }
 
         }
 
@@ -535,8 +609,8 @@ public class CardPlayer : MonoBehaviour
             // Hot + Dry Bonus: Replace all the market cards. You get +3 Pips
             if (selectedCard.card.cardName == "DualRhyton")
             {
-                // TODO: make replaceMarketCards() method in GameManager to replace all ther market cards
-
+                // TODO: make replaceMarketCards() method in GameManager to replace all the market cards
+                GameManager.manager.popAllMarketCards();
                 addPips(3);
             }
         }
@@ -559,7 +633,8 @@ public class CardPlayer : MonoBehaviour
             if (selectedCard.card.cardName == "VinylDemijohnofTunesandLibation")
             {
                 // TODO: make this method in GameManager
-
+                GameManager.manager.takeMarketMenu.SetActive(true);
+                GameManager.manager.updateTakeMarketMenu();
             }
         }
 
@@ -692,6 +767,27 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Choose 1 card in an opponent's Holster and trash it
+        if(holster.cardList[selectedCard - 1].card.cardName == "A Kind But Ultimately Thoughtless Gesture" ||
+            holster.cardList[selectedCard - 1].card.cardName == "A Probably Dangerous Brew With A Hole In It" ||
+            holster.cardList[selectedCard - 1].card.cardName == "PlasticwareContainerOfDadJokes" ||
+            holster.cardList[selectedCard - 1].card.cardName == "A Totally in NO WAY Suspicious Clear Liquid")
+        {
+            GameManager.manager.opponentHolsterMenu.SetActive(true);
+            GameManager.manager.displayOpponentHolster();
+        }
+
+        // Goldbricker
+        // Replace a card in an opponents holster with a Starter card of the same type. Any loaded potions remain loaded
+        if (holster.cardList[selectedCard - 1].card.cardName == "Goldbricker")
+        {
+            // make menu in UI with opponent's holster, we're gonna need this for multiple cards anyways
+            GameManager.manager.replaceStarter = true;
+            GameManager.manager.opponentHolsterMenu.SetActive(true);
+            GameManager.manager.displayOpponentHolster();
+        }
+
+
         // you may trash up to 2 market cards instead of doing damage
         // i'm gonna do some weird while loop to prevent it from returning damage until the player has selected an option
         if (holster.cardList[selectedCard - 1].card.cardName == "A Quizzical Look And a Rummage of Pockets" ||
@@ -719,6 +815,15 @@ public class CardPlayer : MonoBehaviour
                 }
             }
             */
+        }
+
+        // You may create a starter potion on top of your deck
+        if (holster.cardList[selectedCard - 1].card.cardName == "AMaliciousThought" ||
+            holster.cardList[selectedCard - 1].card.cardName == "IntenseThirstForKnowledge" ||
+            holster.cardList[selectedCard - 1].card.cardName == "VioletFireling" ||
+            holster.cardList[selectedCard - 1].card.cardName == "InnocentLayerCake")
+        {
+            GameManager.manager.starterPotionMenu.SetActive(true);
         }
 
         // you may trash 1 card in the market
@@ -752,15 +857,6 @@ public class CardPlayer : MonoBehaviour
             holster.cardList[selectedCard - 1].card.cardName == "HumblingGlimpse")
         {
             addPips(1);
-        }
-
-        // You may create a starter potion on top of your deck
-        if (holster.cardList[selectedCard - 1].card.cardName == "AMaliciousThought" ||
-            holster.cardList[selectedCard - 1].card.cardName == "IntenseThirstForKnowledge" ||
-            holster.cardList[selectedCard - 1].card.cardName == "VioletFireling" ||
-            holster.cardList[selectedCard - 1].card.cardName == "InnocentLayerCake")
-        {
-            GameManager.manager.starterPotionMenu.SetActive(true);
         }
 
         // ring damage bonus
