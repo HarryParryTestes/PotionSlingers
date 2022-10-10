@@ -19,6 +19,8 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar] public bool IsGameLeader = false;
     [SyncVar(hook = nameof(HandlePlayerReadyStatusChange))] public bool isPlayerReady;
     [SyncVar] public CSteamID playerSteamId;
+    [SyncVar] public int hp;
+    [SyncVar] public int essenceCubes;
 
     public PlayerListItem item;
 
@@ -195,12 +197,37 @@ public class GamePlayer : NetworkBehaviour
         }
 
     }
+
+    [Command]
+    public void CmdSubHealth(int damage)
+    {
+        Debug.Log("Executing CmdSubHealth on the server for player: " + this.playerName);
+        this.HandleSubHealth(hp, damage);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == playerName)
+            {
+                cp.subHealth(damage);
+            }
+        }
+    }
+
+    public void HandleSubHealth(int oldValue, int newValue)
+    {
+        if (isServer)
+            hp -= newValue;
+
+        if (isClient)
+            hp -= newValue;
+    }
+
     public void ChangeReadyStatus()
     {
         Debug.Log("Executing ChangeReadyStatus for player: " + this.playerName);
         //CmdChangePlayerReadyStatus();
         LobbyManager.instance.localGamePlayerScript.CmdChangePlayerReadyStatus();
     }
+
     [Command]
     public void CmdChangePlayerReadyStatus()
     {

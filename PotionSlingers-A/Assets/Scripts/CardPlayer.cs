@@ -21,6 +21,7 @@ public class CardPlayer : MonoBehaviour
     public int tricks = 0;
     public CharacterDisplay character;
     public bool ringBonus;
+    public bool doubleRingBonus = false;
     public int bonusAmount;
     public int cardsTrashed = 0;
     //public HealthController health;
@@ -198,6 +199,32 @@ public class CardPlayer : MonoBehaviour
         }
 
         pips = 6;
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // Tiny Ring of Extra Coin Purse
+            // Start your turn with +2 pips
+            if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
+            {
+                doubleRingBonus = true;
+            }
+        }
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // Tiny Ring of Extra Coin Purse
+            // Start your turn with +2 pips
+            if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
+            {
+                if (doubleRingBonus)
+                {
+                    pips = 10;
+                } else
+                {
+                    pips = 8;
+                }
+            }
+        }
         pipsUsedThisTurn = 0;
         potionsThrown = 0;
         artifactsUsed = 0;
@@ -331,6 +358,10 @@ public class CardPlayer : MonoBehaviour
         }
         return 0;
     }
+
+    /***************************
+        CHECK ARTIFACT BONUS
+    ***************************/
 
     public int checkArtifactBonus(int damage, CardDisplay selectedCard)
     {
@@ -526,6 +557,10 @@ public class CardPlayer : MonoBehaviour
         return damage;
     }
 
+    /*************************
+        CHECK VESSEL BONUS
+    *************************/
+
     public int checkVesselBonus(int damage, CardDisplay selectedCard)
     {
         // First Place Volcano at the Alchemy Faire
@@ -712,6 +747,78 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        return damage;
+    }
+
+    /***********************
+        CHECK RING BONUS
+    ***********************/
+
+    public int checkRingBonus(int damage, CardDisplay selectedCard)
+    {
+        // ring bonuses obviously, but only the ones that relate to damage
+        // all defensive stuff is going in its own separate method
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if(cd.card.cardType == "Ring")
+            {
+                // Sharpened Ring of Bauble Collector
+                if(cd.card.cardName == "Sharpened Ring of the Bauble Collector")
+                {
+                    if(selectedCard.card.cardType == "Artifact")
+                    {
+                        // if the card is an artifact that does damage, +1 damage
+                        if (selectedCard.card.cardName != "BubbleWand" && selectedCard.card.cardName != "PewterHeartNecklace" &&
+                            selectedCard.card.cardName != "Shield of the Mouth of Truth" && selectedCard.card.cardName != "PocketCounterfeiter" &&
+                            selectedCard.card.cardName != "SpigotOfEndless" && selectedCard.card.cardName != "Treasure Cloak Map" &&
+                            selectedCard.card.cardName != "WoodenDryadsKiss")
+                        {
+                            if (doubleRingBonus)
+                            {
+                                damage += 2;
+                            } else
+                            {
+                                damage++;
+                            }
+                        }
+                    }
+                }
+
+                // Finger Ring of Additional Pinkie
+                if(cd.card.cardName == "FingerRingoftheAdditionalPinkie")
+                {
+                    // Thrown potions deal +1 damage
+                    if(selectedCard.card.cardType == "Potion")
+                    {
+                        if (doubleRingBonus)
+                        {
+                            damage += 2;
+                        } else
+                        {
+                            damage++;
+                        }
+                    }
+                }
+
+                // Glass Ring of Things That Contain Things
+                if(cd.card.cardName == "GlassRingofThingsThatContainThings")
+                {
+                    // All of your thrown vessels deal +3 damage
+                    if (selectedCard.card.cardType == "Vessel")
+                    {
+                        if (doubleRingBonus)
+                        {
+                            damage += 6;
+                        }
+                        else
+                        {
+                            damage += 3;
+                        }
+                    }
+                }
+            }
+        }
         return damage;
     }
 
@@ -906,7 +1013,67 @@ public class CardPlayer : MonoBehaviour
     }
     */
 
-    public void addHealth(int health) {
+    // TODO: Check to see if opponent thrown card is Artifact.
+    // TODO: Prompt targetedPlayer to trash loaded potion in Artifact with defense bonus.
+    public int checkDefensiveBonus(int damage) 
+    {
+        // Artifact: BubbleWand = May trash 1 loaded potion to prevent 2 damage.
+        // Artifact: ShieldOfMouthOfTruth = May trash 1 loaded potion to prevent 3 damage.
+        // Ring: CrustyRingOfCryingRustyTears = Opponent's ARTIFACTS prevent 2 damage.
+        // Ring: FoggyRingOfNearsightedOldCrone = All items thrown at you prevent 1 damage.
+        // Ring: ThickRingOfFurrowedBrowDolt = During each opponent turn, prevent 2 damage to your HP.
+
+        // TAKE INTO ACCOUNT -> Ring: RingOfRings = Doubles all of your Ring Effects. (Check boolean doubleRingBonus == true)
+        int preventedDamage = 0;
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if(cd.card.cardType == "Artifact") 
+            {
+                // BubbleWand
+                if(cd.card.cardName == "BubbleWand")
+                {
+                    // May trash 1 loaded potion to prevent 2 damage.
+                }
+                // Shield of the Mouth of Truth
+                else if(cd.card.cardName == "Shield of the Mouth of Truth")
+                {
+                    // May trash 1 loaded potion to prevent 3 damage.
+                }
+            }
+            
+            else if(cd.card.cardType == "Ring")
+            {
+                // Crusty Ring of the Crying Rusty Tears
+                if(cd.card.cardName == "Crusty Ring of the Crying Rusty Tears")
+                {
+                    // Opponent's ARTIFACTS prevent 2 damage.
+                    // (prevents 4 damage with Ring of Rings in Holster)
+                }
+                // Foggy Ring of the Nearsighted Old Crone
+                else if(cd.card.cardName == "Foggy Ring of the Nearsighted Old Crone")
+                {
+                    // All items thrown at you prevent 1 damage.
+                    // (prevents 2 damage with Ring of Rings in Holster)
+                    preventedDamage += doubleRingBonus ? 2 : 1;
+                }
+                // Thick Ring of the Furrowed Brow Dolt
+                else if(cd.card.cardName == "Thick Ring of the Furrowed Brow Dolt")
+                {
+                    // During each opponent turn, prevent 2 damage to your HP.
+                    // (prevents 4 damage with Ring of Rings in Holster)
+                    preventedDamage += doubleRingBonus ? 4 : 2;
+                }
+            }
+        }
+
+        // Calculates new damage amount to be taken by targeted player.
+        // If damage taken is negative (below 0), return 0 damage taken.
+        int newDamage = damage - preventedDamage;
+        return newDamage >= 0 ? newDamage : 0;
+    }
+
+    public void addHealth(int health) 
+    {
         hp += health;
 
         //Make sure that hp cannot go above 10
