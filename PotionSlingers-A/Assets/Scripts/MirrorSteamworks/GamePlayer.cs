@@ -162,6 +162,14 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
+    [Command(requiresAuthority = false)]
+    public void CmdEndTurn()
+    {
+        Debug.Log("Executing CmdEndTurn on the server for player: " + playerName);
+        // change GameManager's myPlayerIndex
+        GameManager.manager.myPlayerIndex++;
+    }
+
     public void HandleCharNameUpdate(string oldValue, string newValue)
     {
         Debug.Log("Player name has been updated for: " + oldValue + " to new value: " + newValue);
@@ -198,7 +206,7 @@ public class GamePlayer : NetworkBehaviour
 
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdSubHealth(int damage)
     {
         Debug.Log("Executing CmdSubHealth on the server for player: " + playerName);
@@ -210,7 +218,7 @@ public class GamePlayer : NetworkBehaviour
             GameManager.manager.tempPlayer.updateHealthUI();
     }
 
-    [TargetRpc]
+    [ClientRpc]
     public void RpcSubHealth(int newValue)
     {
         Debug.Log("Subtracting health for: " + playerName);

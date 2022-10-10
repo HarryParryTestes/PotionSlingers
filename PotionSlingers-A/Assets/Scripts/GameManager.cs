@@ -705,7 +705,8 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            myPlayerIndex++;
+            //myPlayerIndex++;
+            Game.GamePlayers[0].CmdEndTurn();
             if(myPlayerIndex == numPlayers)
             {
                 myPlayerIndex = 0;
