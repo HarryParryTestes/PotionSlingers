@@ -680,7 +680,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
         // If this client isn't the current player, display error message.
         // Player can't end turn if it isn't their turn.
         // (to change this to maybe disable endTurn button or grey it out?? turn it from button to image when not currentPlayer?)

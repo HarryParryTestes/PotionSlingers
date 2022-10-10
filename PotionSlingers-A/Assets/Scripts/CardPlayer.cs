@@ -62,6 +62,7 @@ public class CardPlayer : MonoBehaviour
     public bool pluotDry = false;
     public bool bottleRocketBonus = false;
     public bool blackRainBonus = false;
+    public bool opponentPreventedDamage = false;
 
     public CardPlayer(int user_id, string name)
     {
@@ -231,6 +232,7 @@ public class CardPlayer : MonoBehaviour
         ringBonus = false;
         bottleRocketBonus = false;
         blackRainBonus = false;
+        opponentPreventedDamage = false;
 
         if (isNickles)
         {
@@ -1048,6 +1050,11 @@ public class CardPlayer : MonoBehaviour
                 {
                     // Opponent's ARTIFACTS prevent 2 damage.
                     // (prevents 4 damage with Ring of Rings in Holster)
+                    // checks throwers hand for the artifact, to my knowledge the card is not mutated yet
+                    if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1].card.cardType == "Artifact")
+                    {
+                        preventedDamage += doubleRingBonus ? 4 : 2;
+                    }
                 }
                 // Foggy Ring of the Nearsighted Old Crone
                 else if(cd.card.cardName == "Foggy Ring of the Nearsighted Old Crone")
@@ -1061,7 +1068,11 @@ public class CardPlayer : MonoBehaviour
                 {
                     // During each opponent turn, prevent 2 damage to your HP.
                     // (prevents 4 damage with Ring of Rings in Holster)
-                    preventedDamage += doubleRingBonus ? 4 : 2;
+                    if (!opponentPreventedDamage)
+                    {
+                        preventedDamage += doubleRingBonus ? 4 : 2;
+                        opponentPreventedDamage = true;
+                    } 
                 }
             }
         }

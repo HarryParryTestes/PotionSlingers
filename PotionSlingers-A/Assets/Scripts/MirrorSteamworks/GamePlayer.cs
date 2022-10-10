@@ -201,24 +201,26 @@ public class GamePlayer : NetworkBehaviour
     [Command]
     public void CmdSubHealth(int damage)
     {
-        Debug.Log("Executing CmdSubHealth on the server for player: " + this.playerName);
-        this.HandleSubHealth(hp, damage);
+        Debug.Log("Executing CmdSubHealth on the server for player: " + playerName);
+        // call the ClientRPC in isServer
+        if (isServer)
+            RpcSubHealth(damage);
+
+        if (isClient)
+            GameManager.manager.tempPlayer.updateHealthUI();
+    }
+
+    [TargetRpc]
+    public void RpcSubHealth(int newValue)
+    {
+        Debug.Log("Subtracting health for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if (cp.name == playerName)
             {
-                cp.subHealth(damage);
+                cp.subHealth(newValue);
             }
         }
-    }
-
-    public void HandleSubHealth(int oldValue, int newValue)
-    {
-        if (isServer)
-            hp -= newValue;
-
-        if (isClient)
-            hp -= newValue;
     }
 
     public void ChangeReadyStatus()
