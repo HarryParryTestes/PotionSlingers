@@ -19,8 +19,6 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar] public bool IsGameLeader = false;
     [SyncVar(hook = nameof(HandlePlayerReadyStatusChange))] public bool isPlayerReady;
     [SyncVar] public CSteamID playerSteamId;
-    [SyncVar] public int hp;
-    [SyncVar] public int essenceCubes;
 
     public PlayerListItem item;
 
@@ -159,6 +157,59 @@ public class GamePlayer : NetworkBehaviour
                 Debug.Log(character + " chosen");
                 charDisplay.updateCharacter(character2);
             }
+        }
+    }
+
+    [Command]
+    public void CmdShuffleDecks()
+    {
+        // shuffle market decks
+        Debug.Log("Executing CmdShuffleDecks on the server for player: " + playerName);
+        GameManager.manager.md1.shuffle();
+        GameManager.manager.md2.shuffle();
+    }
+
+    [Command]
+    public void CmdSellCard(int selectedCardInt)
+    {
+        // shuffle market decks
+        Debug.Log("Executing CmdSellCard on the server for player: " + playerName);
+        GameManager.manager.selectedCardInt = selectedCardInt;
+        GameManager.manager.sellCard();
+    }
+
+    [Command]
+    public void CmdBuyCard(int marketCard)
+    {
+        switch (marketCard)
+        {
+            case 1:
+                GameManager.manager.md1.cardInt = 1;
+                GameManager.manager.topMarketBuy();
+                break;
+            case 2:
+                GameManager.manager.md1.cardInt = 2;
+                GameManager.manager.topMarketBuy();
+                break;
+            case 3:
+                GameManager.manager.md1.cardInt = 3;
+                GameManager.manager.topMarketBuy();
+                break;
+            case 4:
+                GameManager.manager.md2.cardInt = 1;
+                GameManager.manager.bottomMarketBuy();
+                break;
+            case 5:
+                GameManager.manager.md2.cardInt = 2;
+                GameManager.manager.bottomMarketBuy();
+                break;
+            case 6:
+                GameManager.manager.md2.cardInt = 3;
+                GameManager.manager.bottomMarketBuy();
+                break;
+            default:
+                break;
+
         }
     }
 

@@ -214,9 +214,8 @@ public class GameManager : MonoBehaviour
             p4.SetActive(false);
         }
 
-        // shuffle market decks
-        md1.shuffle();
-        md2.shuffle();
+        // add in Mirror shuffle command
+        Game.GamePlayers[0].CmdShuffleDecks();
 
         //ob = GameObject.Find("CharacterCard");
         //Player playerOb = ob.GetComponent<Player>();
@@ -230,9 +229,8 @@ public class GameManager : MonoBehaviour
                 playerBottomName.text = Game.GamePlayers[i].playerName;
                 players[0].name = Game.GamePlayers[i].playerName;
                 players[0].charName = Game.GamePlayers[i].charName;
+                players[0].user_id = i;
                 players[0].character.onCharacterClick(Game.GamePlayers[i].charName);
-                Game.GamePlayers[i].hp = players[0].hp;
-                Game.GamePlayers[i].essenceCubes = players[0].hpCubes;
                 players[0].checkCharacter();
                 
             }
@@ -243,26 +241,32 @@ public class GameManager : MonoBehaviour
                     playerLeftName.text = Game.GamePlayers[i].playerName;
                     players[1].name = Game.GamePlayers[i].playerName;
                     players[1].charName = Game.GamePlayers[i].charName;
+                    players[1].user_id = i;
                     players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[1].checkCharacter();
                     tracker++;
+                    numPlayers = 2;
                 }
                 if (tracker == 1)
                 {
                     playerTopName.text = Game.GamePlayers[i].playerName;
                     players[2].name = Game.GamePlayers[i].playerName;
                     players[2].charName = Game.GamePlayers[i].charName;
+                    players[2].user_id = i;
                     players[2].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[2].checkCharacter();
                     tracker++;
+                    numPlayers = 3;
                 }
                 if (tracker == 2)
                 {
                     playerRightName.text = Game.GamePlayers[i].playerName;
                     players[3].name = Game.GamePlayers[i].playerName;
                     players[3].charName = Game.GamePlayers[i].charName;
+                    players[3].user_id = i;
                     players[3].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[3].checkCharacter();
+                    numPlayers = 4;
                 }
 
             }
@@ -425,7 +429,8 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        if (player.isPluot)
+        // this should make it not trigger every turn
+        if (player.isPluot && player.user_id == myPlayerIndex)
         {
             pluotPotionMenu.SetActive(true);
         }
@@ -719,7 +724,7 @@ public class GameManager : MonoBehaviour
             myPlayerIndex++;
 
             sendSuccessMessage(18);
-            if(myPlayerIndex == numPlayers)
+            if(myPlayerIndex >= numPlayers)
             {
                 myPlayerIndex = 0;
             }
@@ -2226,6 +2231,20 @@ public class GameManager : MonoBehaviour
         // }
     }
 
+    public void marketBuyCommand(int marketCard)
+    {
+        foreach (GamePlayer gp in Game.GamePlayers)
+        {
+            // if the steam usernames match
+            if (gp.playerName == players[myPlayerIndex].name)
+            {
+                Debug.Log("Starting Mirror CmdBuyCard");
+                // do the Mirror Command
+                gp.CmdBuyCard(marketCard);
+            }
+        }
+    }
+
 // TOP MARKET REQUEST
 // subtract pips, update deck display and market display
     public void topMarketBuy()
@@ -2820,6 +2839,20 @@ public class GameManager : MonoBehaviour
             if (i != myPlayerIndex)
             {
                 players[i].subHealth(damage);
+            }
+        }
+    }
+
+    public void sellCardCommand()
+    {
+        foreach (GamePlayer gp in Game.GamePlayers)
+        {
+            // if the steam usernames match
+            if (gp.playerName == players[myPlayerIndex].name)
+            {
+                Debug.Log("Starting Mirror CmdSellCard");
+                // do the Mirror Command
+                gp.CmdSellCard(selectedCardInt);
             }
         }
     }
