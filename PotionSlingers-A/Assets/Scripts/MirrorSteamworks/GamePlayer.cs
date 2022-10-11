@@ -167,7 +167,18 @@ public class GamePlayer : NetworkBehaviour
     {
         Debug.Log("Executing CmdEndTurn on the server for player: " + playerName);
         // change GameManager's myPlayerIndex
-        GameManager.manager.myPlayerIndex++;
+        //GameManager.manager.myPlayerIndex++;
+        GameManager.manager.endTurn();
+    }
+
+    [Command]
+    public void CmdTrashCard()
+    {
+        Debug.Log("Executing CmdEndTurn on the server for player: " + playerName);
+
+        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+        //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+        GameManager.manager.td.addCard(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1]);
     }
 
     public void HandleCharNameUpdate(string oldValue, string newValue)

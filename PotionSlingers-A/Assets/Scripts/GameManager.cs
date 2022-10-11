@@ -409,6 +409,7 @@ public class GameManager : MonoBehaviour
     public void onStartTurn(CardPlayer player)
     {
         Debug.Log(player.name + "'s turn!");
+        sendSuccessMessage(18, player.name);
         earlyBirdSpecial = false;
         usedStarterPotion = false;
         trash = false;
@@ -663,6 +664,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void endTurnCommand()
+    {
+        if (Game.tutorial)
+        {
+            endTurn();
+            return;
+        }
+        Game.GamePlayers[0].CmdEndTurn();
+    }
+
     // END TURN REQUEST
     public void endTurn()
     {
@@ -705,14 +716,15 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
-            //myPlayerIndex++;
-            Game.GamePlayers[0].CmdEndTurn();
+            myPlayerIndex++;
+
+            sendSuccessMessage(18);
             if(myPlayerIndex == numPlayers)
             {
                 myPlayerIndex = 0;
             }
             onStartTurn(players[myPlayerIndex]);
-            Debug.Log("Request End Turn");
+            // Debug.Log("Request End Turn");
 
             // ADD IN NETWORKING LATER!
 
@@ -1338,8 +1350,19 @@ public class GameManager : MonoBehaviour
 
                 sendSuccessMessage(2); // Only display on thrower's client.
                 players[myPlayerIndex].potionsThrown++;
-                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
-                td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                foreach (GamePlayer gp in Game.GamePlayers)
+                {
+                    // if the steam usernames match
+                    if (gp.playerName == players[myPlayerIndex].name)
+                    {
+                        Debug.Log("Starting Mirror CmdTrashCard");
+                        // do the Mirror Command
+                        gp.CmdTrashCard();
+                    }
+                }
+
+                //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                 if (players[myPlayerIndex].blackRainBonus)
                 {
                     put4CardsInHolster();
@@ -2907,9 +2930,18 @@ public class GameManager : MonoBehaviour
                 // Heals for +3 HP if trashed
                 players[myPlayerIndex].addHealth(3);
             }
-            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-            // SEND TRASH REQUEST (int x, int y)
-            // bool connected = networkManager.sendTrashRequest(selectedCardInt, 0);
+            //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == players[myPlayerIndex].name)
+                {
+                    Debug.Log("Starting Mirror CmdTrashCard");
+                    // do the Mirror Command
+                    gp.CmdTrashCard();
+                }
+            }
+
             players[myPlayerIndex].cardsTrashed++;
             if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].cardsTrashed == 4)
             {
@@ -2949,6 +2981,25 @@ public class GameManager : MonoBehaviour
     public void sendSuccessMessage(int notif)
     {
         GameObject message = successMessages[notif - 1];
+        if (notif == 18)
+        {
+            Debug.Log("Player name: " + players[myPlayerIndex].name);
+            string thing = players[myPlayerIndex].name + "'s Turn!";
+            message.GetComponent<TMPro.TextMeshProUGUI>().text = thing;
+        }
+        message.SetActive(true);
+        StartCoroutine(waitThreeSeconds(message));
+    }
+
+    public void sendSuccessMessage(int notif, string name)
+    {
+        GameObject message = successMessages[notif - 1];
+        if (notif == 18)
+        {
+            Debug.Log("Player name: " + name);
+            string thing = name + "'s Turn!";
+            message.GetComponent<TMPro.TextMeshProUGUI>().text = thing;
+        }
         message.SetActive(true);
         StartCoroutine(waitThreeSeconds(message));
     }
