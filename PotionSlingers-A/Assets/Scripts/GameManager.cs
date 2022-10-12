@@ -1363,7 +1363,7 @@ public class GameManager : MonoBehaviour
                     {
                         Debug.Log("Starting Mirror CmdTrashCard");
                         // do the Mirror Command
-                        gp.CmdTrashCard();
+                        gp.CmdTrashCard(gp.playerName, selectedCardInt);
                     }
                 }
 
@@ -2240,7 +2240,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Starting Mirror CmdBuyCard");
                 // do the Mirror Command
-                gp.CmdBuyCard(marketCard);
+                gp.CmdBuyCard(gp.playerName, marketCard);
             }
         }
     }
@@ -2852,7 +2852,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Starting Mirror CmdSellCard");
                 // do the Mirror Command
-                gp.CmdSellCard(selectedCardInt);
+                gp.CmdSellCard(gp.playerName, selectedCardInt);
             }
         }
     }
@@ -2886,17 +2886,27 @@ public class GameManager : MonoBehaviour
             // Bolo not flipped and he's selling something that's not a potion
             if (players[myPlayerIndex].isBolo && !players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
             {
-                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+                //players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
                 // Bolo flipped selling anything
             } else if(players[myPlayerIndex].isBolo && players[myPlayerIndex].character.character.flipped)
             {
-                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+                //players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
             } else
             {
                 // everyone else
-                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+                //players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             }
-            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == players[myPlayerIndex].name)
+                {
+                    Debug.Log("Starting Mirror CmdSellCard");
+                    // do the Mirror Command
+                    gp.CmdSellCard(gp.playerName, selectedCardInt);
+                }
+            }
             // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(8);
@@ -2971,7 +2981,7 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log("Starting Mirror CmdTrashCard");
                     // do the Mirror Command
-                    gp.CmdTrashCard();
+                    gp.CmdTrashCard(gp.playerName, selectedCardInt);
                 }
             }
 
