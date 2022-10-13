@@ -216,7 +216,7 @@ public class GameManager : MonoBehaviour
         }
 
         // add in Mirror shuffle command
-        Game.GamePlayers[0].CmdShuffleDecks();
+        //Game.GamePlayers[0].CmdShuffleDecks();
 
         //ob = GameObject.Find("CharacterCard");
         //Player playerOb = ob.GetComponent<Player>();
@@ -1691,6 +1691,26 @@ public class GameManager : MonoBehaviour
         starterPotion = true;
     }
 
+    public void loadPotionCommand()
+    {
+        if (Game.tutorial)
+        {
+            loadPotion();
+        } else
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (currentPlayerName == gp.playerName)
+                {
+                    Debug.Log("Starting Mirror CmdBuyCard");
+                    // do the Mirror Command
+                    gp.CmdLoadCard(currentPlayerName, selectedCardInt, loadedCardInt);
+                }
+            }
+        }
+    }
+
     // LOAD REQUEST (DONE - 2 clients)
     public void loadPotion()
     {
@@ -2032,6 +2052,26 @@ public class GameManager : MonoBehaviour
         // }
     }
 
+    public void cycleCardCommand()
+    {
+        if (Game.tutorial)
+        {
+            cycleCard();
+        } else
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (currentPlayerName == gp.playerName)
+                {
+                    Debug.Log("Starting Mirror CmdCycleCard");
+                    // do the Mirror Command
+                    gp.CmdCycleCard(currentPlayerName, selectedCardInt);
+                }
+            }
+        }
+    }
+
     // CYCLE REQUEST (DONE - 2 clients)
     public void cycleCard()
     {
@@ -2055,6 +2095,7 @@ public class GameManager : MonoBehaviour
                     playerHolster.cardList[selectedCardInt - 1].card.cardType == "Vessel" ||
                     playerHolster.cardList[selectedCardInt - 1].card.cardType == "Ring")
             {
+                cardPlayer.subPips(1);
                 cardPlayer.deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].card);
                 sendSuccessMessage(7);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -2074,8 +2115,8 @@ public class GameManager : MonoBehaviour
             // Cycling a Potion (costs 0 pips to do)
             if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
-                // players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
-                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
+                players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
                 // bool connected = networkManager.sendCycleRequest(selectedCardInt, 0);
                 sendSuccessMessage(7);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -2094,7 +2135,9 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Ring")
             {
                 // bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
+                players[myPlayerIndex].subPips(1);
                 players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
                 sendSuccessMessage(7);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 // MATTEO: Add Cycle SFX here.
@@ -2856,14 +2899,20 @@ public class GameManager : MonoBehaviour
 
     public void sellCardCommand()
     {
-        foreach (GamePlayer gp in Game.GamePlayers)
+        if (Game.tutorial)
         {
-            // if the steam usernames match
-            if (gp.playerName == players[myPlayerIndex].name)
+            sellCard();
+        } else
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
             {
-                Debug.Log("Starting Mirror CmdSellCard");
-                // do the Mirror Command
-                gp.CmdSellCard(gp.playerName, selectedCardInt);
+                // if the steam usernames match
+                if (gp.playerName == players[myPlayerIndex].name)
+                {
+                    Debug.Log("Starting Mirror CmdSellCard");
+                    // do the Mirror Command
+                    gp.CmdSellCard(gp.playerName, selectedCardInt);
+                }
             }
         }
     }

@@ -169,11 +169,102 @@ public class GamePlayer : NetworkBehaviour
         GameManager.manager.md2.shuffle();
     }
 
+    [ClientRpc]
+    public void RpcSellCard(string name, int selectedCard)
+    {
+        Debug.Log("Selling card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == name)
+            {
+                cp.addPips(cp.holster.cardList[selectedCard - 1].card.sellPrice);
+                GameManager.manager.td.addCard(cp.holster.cardList[selectedCard - 1]);
+                return;
+            }
+        }
+    }
+
     [Command]
     public void CmdSellCard(string throwerName, int selectedCard)
     {
         Debug.Log("Executing CmdSellCard on the server for player: " + playerName);
         RpcSellCard(throwerName, selectedCard);
+    }
+
+    [ClientRpc]
+    public void RpcCycleCard(string name, int selectedCard)
+    {
+        Debug.Log("Cycling card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == name)
+            {
+                // Cycling a Potion (costs 0 pips to do)
+                if (cp.holster.cardList[selectedCard - 1].card.cardType == "Potion")
+                {
+                    cp.deck.putCardOnBottom(cp.holster.cardList[selectedCard - 1].card);
+                    cp.holster.cardList[selectedCard - 1].updateCard(GameManager.manager.players[0].holster.card1.placeholder);
+                    GameManager.manager.sendSuccessMessage(7);
+                    cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // MATTEO: Add Cycle SFX here.
+
+                }
+                // If Player has no pips to cycle an Artifact, Vessel, or Ring.
+                else if (cp.pips < 1)
+                {
+                    // "You don't have enough Pips to cycle this!"
+                    GameManager.manager.sendErrorMessage(5);
+                }
+                // Player has enough pips to cycle an Artifact, Vessel, or Ring.
+                else if (cp.holster.cardList[selectedCard - 1].card.cardType == "Artifact" ||
+                        cp.holster.cardList[selectedCard - 1].card.cardType == "Vessel" ||
+                        cp.holster.cardList[selectedCard - 1].card.cardType == "Ring")
+                {
+                    // bool connected = networkManager.sendCycleRequest(selectedCardInt, 1);
+                    cp.subPips(1);
+                    cp.deck.putCardOnBottom(cp.holster.cardList[selectedCard - 1].card);
+                    cp.holster.cardList[selectedCard - 1].updateCard(GameManager.manager.players[0].holster.card1.placeholder);
+                    GameManager.manager.sendSuccessMessage(7);
+                    cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // MATTEO: Add Cycle SFX here.
+                }
+                else
+                {
+                    Debug.Log("ERROR: Card needs to be of type Potion, Artifact, Vessel, Ring");
+                }
+                return;
+            }
+        }
+    }
+
+    [Command]
+    public void CmdCycleCard(string throwerName, int selectedCard)
+    {
+        Debug.Log("Executing CmdCycleCard on the server for player: " + playerName);
+        RpcCycleCard(throwerName, selectedCard);
+    }
+
+    [ClientRpc]
+    public void RpcLoadCard(string name, int selectedCard, int loadedCard)
+    {
+        Debug.Log("Loading card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == name)
+            {
+                GameManager.manager.selectedCardInt = selectedCard;
+                GameManager.manager.loadedCardInt = loadedCard;
+                GameManager.manager.loadPotion();
+                return;
+            }
+        }
+    }
+
+    [Command]
+    public void CmdLoadCard(string throwerName, int selectedCard, int loadedCard)
+    {
+        Debug.Log("Executing CmdSellCard on the server for player: " + playerName);
+        RpcLoadCard(throwerName, selectedCard, loadedCard);
     }
 
     [ClientRpc]
@@ -189,8 +280,8 @@ public class GamePlayer : NetworkBehaviour
                 {
                     case 1:
                         /*
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].subPips(GameManager.manager.md1.cardDisplay1.card.buyPrice);
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnTop(GameManager.manager.md1.cardDisplay1.card);
+                        cp.subPips(GameManager.manager.md1.cardDisplay1.card.buyPrice);
+                        cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay1.card);
                         card = GameManager.manager.md1.popCard();
                         GameManager.manager.md1.cardDisplay1.updateCard(card);
                         GameManager.manager.sendSuccessMessage(1);
@@ -269,6 +360,7 @@ public class GamePlayer : NetworkBehaviour
     public void RpcTrashCard(string name, int selectedCard)
     {
         Debug.Log("Trashing card for: " + playerName);
+        GameManager.manager.selectedCardInt = selectedCard;
         GameManager.manager.trashCard();
     }
 
@@ -340,21 +432,6 @@ public class GamePlayer : NetworkBehaviour
             if (cp.name == playerName)
             {
                 cp.subHealth(newValue);
-            }
-        }
-    }
-
-    [ClientRpc]
-    public void RpcSellCard(string name, int selectedCard)
-    {
-        Debug.Log("Trashing card for: " + playerName);
-        foreach (CardPlayer cp in GameManager.manager.players)
-        {
-            if (cp.name == name)
-            {
-                GameManager.manager.players[GameManager.manager.myPlayerIndex].addPips(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].card.sellPrice);
-                GameManager.manager.td.addCard(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1]);
-                return;
             }
         }
     }
