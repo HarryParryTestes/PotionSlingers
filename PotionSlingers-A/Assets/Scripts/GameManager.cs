@@ -1305,7 +1305,7 @@ public class GameManager : MonoBehaviour
             }
             return;
         }
-
+   
         // If this client isn't the current player, display error message.
         if (players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
@@ -1368,36 +1368,49 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].potionsThrown++;
                 //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
 
-                //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                if(!Game.multiplayer)
+                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+
                 if (players[myPlayerIndex].blackRainBonus)
                 {
                     put4CardsInHolster();
                     players[myPlayerIndex].blackRainBonus = false;
                 }
+
+                if (!Game.multiplayer)
+                {
+                    tempPlayer.subHealth(damage);
+                }
+
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
                 // this is my attempt at making a Command that will manipulate the health of the players
-                foreach(GamePlayer gp in Game.GamePlayers)
-                {
-                    // if the steam usernames match
-                    if(gp.playerName == tempPlayer.name)
-                    {
-                        Debug.Log("Starting Mirror CmdSubHealth");
-                        // do the Mirror Command
-                        gp.CmdSubHealth(damage);
-                    }
-                }
 
-                foreach (GamePlayer gp in Game.GamePlayers)
+                if (Game.multiplayer)
                 {
-                    // if the steam usernames match
-                    if (gp.playerName == currentPlayerName)
+                    foreach (GamePlayer gp in Game.GamePlayers)
                     {
-                        Debug.Log("Starting Mirror CmdTrashCard");
-                        // do the Mirror Command
-                        gp.CmdTrashCard(currentPlayerName, selectedCardInt);
+                        // if the steam usernames match
+                        if (gp.playerName == tempPlayer.name)
+                        {
+                            Debug.Log("Starting Mirror CmdSubHealth");
+                            // do the Mirror Command
+                            gp.CmdSubHealth(damage);
+                        }
+                    }
+
+                    foreach (GamePlayer gp in Game.GamePlayers)
+                    {
+                        // if the steam usernames match
+                        if (gp.playerName == currentPlayerName)
+                        {
+                            Debug.Log("Starting Mirror CmdTrashCard");
+                            // do the Mirror Command
+                            gp.CmdTrashCard(currentPlayerName, selectedCardInt);
+                        }
                     }
                 }
+                
 
                 // may need to add this back in
                 //tempPlayer.subHealth(damage);
@@ -3053,19 +3066,6 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].cardsTrashed++;
             }    
             td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-            /*
-            foreach (GamePlayer gp in Game.GamePlayers)
-            {
-                // if the steam usernames match
-                if (gp.playerName == players[myPlayerIndex].name)
-                {
-                    Debug.Log("Starting Mirror CmdTrashCard");
-                    // do the Mirror Command
-                    gp.CmdTrashCard(gp.playerName, selectedCardInt);
-                }
-            }
-            */
-
             
             if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].cardsTrashed == 4)
             {

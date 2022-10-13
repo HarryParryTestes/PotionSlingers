@@ -10,6 +10,7 @@ public class MyNetworkManager : NetworkManager
     [SerializeField] private GamePlayer gamePlayerPrefab;
     [SerializeField] public int minPlayers = 2;
     public bool tutorial = false;
+    public bool multiplayer = false;
     public LobbyManager lobbyManager;
     public List<GamePlayer> GamePlayers { get; } = new List<GamePlayer>();
     [SerializeField] private PlayerListItem playerListPrefab;
@@ -51,11 +52,12 @@ public class MyNetworkManager : NetworkManager
         }
     }
     public void StartGame()
-    {  
-            ServerChangeScene("GameScene");
-            //GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-            //gameManager.numPlayers = 2;
-            //gameManager.init();
+    {
+        multiplayer = true;
+        ServerChangeScene("GameScene");
+        //GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        //gameManager.numPlayers = 2;
+        //gameManager.init();
     }
 
     public void StartTutorial()

@@ -364,8 +364,25 @@ public class GamePlayer : NetworkBehaviour
     public void RpcTrashCard(string name, int selectedCard)
     {
         Debug.Log("Trashing card for: " + playerName);
-        GameManager.manager.selectedCardInt = selectedCard;
-        GameManager.manager.trashCard();
+        // Savory Layer Cake logic
+        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].card.cardName == "SavoryLayerCake")
+        {
+            // Heals for +3 HP if trashed
+            GameManager.manager.players[GameManager.manager.myPlayerIndex].addHealth(3);
+        }
+        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].card.cardQuality != "Starter")
+        {
+            GameManager.manager.players[GameManager.manager.myPlayerIndex].cardsTrashed++;
+        }
+        GameManager.manager.td.addCard(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1]);
+
+        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].isSaltimbocca && GameManager.manager.players[GameManager.manager.myPlayerIndex].cardsTrashed == 4)
+        {
+            GameManager.manager.sendSuccessMessage(15);
+            GameManager.manager.players[GameManager.manager.myPlayerIndex].character.canBeFlipped = true;
+        }
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+        GameManager.manager.sendSuccessMessage(9);
     }
 
     [Command]

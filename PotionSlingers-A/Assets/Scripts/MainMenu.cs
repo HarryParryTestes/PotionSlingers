@@ -783,8 +783,6 @@ reuse, recycle!
 		Debug.Log("Start the game!");
 		SceneManager.LoadScene("GameScene");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-		gameManager.numPlayers = numPlayers;
-		gameManager.init();
 	}
 
 	public void StartTutorialGame()
