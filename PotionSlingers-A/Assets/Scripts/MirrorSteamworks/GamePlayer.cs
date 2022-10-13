@@ -188,46 +188,29 @@ public class GamePlayer : NetworkBehaviour
                 switch (marketCard)
                 {
                     case 1:
+                        /*
                         GameManager.manager.players[GameManager.manager.myPlayerIndex].subPips(GameManager.manager.md1.cardDisplay1.card.buyPrice);
                         GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnTop(GameManager.manager.md1.cardDisplay1.card);
                         card = GameManager.manager.md1.popCard();
                         GameManager.manager.md1.cardDisplay1.updateCard(card);
                         GameManager.manager.sendSuccessMessage(1);
+                        */
+                        GameManager.manager.topMarketBuy();
                         break;
                     case 2:
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].subPips(GameManager.manager.md1.cardDisplay2.card.buyPrice);
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnTop(GameManager.manager.md1.cardDisplay2.card);
-                        card = GameManager.manager.md1.popCard();
-                        GameManager.manager.md1.cardDisplay2.updateCard(card);
-                        GameManager.manager.sendSuccessMessage(1);
+                        GameManager.manager.topMarketBuy();
                         break;
                     case 3:
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].subPips(GameManager.manager.md1.cardDisplay3.card.buyPrice);
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnTop(GameManager.manager.md1.cardDisplay3.card);
-                        card = GameManager.manager.md1.popCard();
-                        GameManager.manager.md1.cardDisplay3.updateCard(card);
-                        GameManager.manager.sendSuccessMessage(1);
+                        GameManager.manager.topMarketBuy();
                         break;
                     case 4:
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].subPips(GameManager.manager.md2.cardDisplay1.card.buyPrice);
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnTop(GameManager.manager.md2.cardDisplay1.card);
-                        card = GameManager.manager.md2.popCard();
-                        GameManager.manager.md2.cardDisplay1.updateCard(card);
-                        GameManager.manager.sendSuccessMessage(1);
+                        GameManager.manager.bottomMarketBuy();
                         break;
                     case 5:
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].subPips(GameManager.manager.md2.cardDisplay2.card.buyPrice);
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnTop(GameManager.manager.md2.cardDisplay2.card);
-                        card = GameManager.manager.md2.popCard();
-                        GameManager.manager.md2.cardDisplay2.updateCard(card);
-                        GameManager.manager.sendSuccessMessage(1);
+                        GameManager.manager.bottomMarketBuy();
                         break;
                     case 6:
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].subPips(GameManager.manager.md2.cardDisplay3.card.buyPrice);
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnTop(GameManager.manager.md2.cardDisplay3.card);
-                        card = GameManager.manager.md2.popCard();
-                        GameManager.manager.md1.cardDisplay3.updateCard(card);
-                        GameManager.manager.sendSuccessMessage(1);
+                        GameManager.manager.bottomMarketBuy();
                         break;
                     default:
                         break;
@@ -280,6 +263,13 @@ public class GamePlayer : NetworkBehaviour
         // change GameManager's myPlayerIndex
         //GameManager.manager.myPlayerIndex++;
         GameManager.manager.endTurn();
+    }
+
+    [ClientRpc]
+    public void RpcTrashCard(string name, int selectedCard)
+    {
+        Debug.Log("Trashing card for: " + playerName);
+        GameManager.manager.trashCard();
     }
 
     [Command]
@@ -350,20 +340,6 @@ public class GamePlayer : NetworkBehaviour
             if (cp.name == playerName)
             {
                 cp.subHealth(newValue);
-            }
-        }
-    }
-
-    [ClientRpc]
-    public void RpcTrashCard(string name, int selectedCard)
-    {
-        Debug.Log("Trashing card for: " + playerName);
-        foreach (CardPlayer cp in GameManager.manager.players)
-        {
-            if (cp.name == name)
-            {
-                GameManager.manager.td.addCard(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1]);
-                return;
             }
         }
     }

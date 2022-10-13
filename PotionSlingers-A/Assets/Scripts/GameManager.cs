@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public int selectedCardInt;
     public int selectedOpponentInt;
     public string selectedOpponentCharName;
+    public string currentPlayerName;
     public int loadedCardInt;
     public int myPlayerIndex = 0; // used to be currentPlayer
     public int currentPlayerId = 0;
@@ -220,6 +221,8 @@ public class GameManager : MonoBehaviour
         //ob = GameObject.Find("CharacterCard");
         //Player playerOb = ob.GetComponent<Player>();
         //Debug.Log("Player 1's character is... " + playerOb.charName);
+
+        currentPlayerName = Game.GamePlayers[0].playerName;
         for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
             int tracker = 0;
@@ -245,7 +248,6 @@ public class GameManager : MonoBehaviour
                     players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[1].checkCharacter();
                     tracker++;
-                    numPlayers = 2;
                 }
                 if (tracker == 1)
                 {
@@ -256,7 +258,6 @@ public class GameManager : MonoBehaviour
                     players[2].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[2].checkCharacter();
                     tracker++;
-                    numPlayers = 3;
                 }
                 if (tracker == 2)
                 {
@@ -266,7 +267,6 @@ public class GameManager : MonoBehaviour
                     players[3].user_id = i;
                     players[3].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[3].checkCharacter();
-                    numPlayers = 4;
                 }
 
             }
@@ -722,12 +722,14 @@ public class GameManager : MonoBehaviour
                 }
             }
             myPlayerIndex++;
+            
 
             sendSuccessMessage(18);
             if(myPlayerIndex >= numPlayers)
             {
                 myPlayerIndex = 0;
             }
+            Game.GamePlayers[myPlayerIndex].playerName = currentPlayerName;
             onStartTurn(players[myPlayerIndex]);
             // Debug.Log("Request End Turn");
 
@@ -2233,14 +2235,27 @@ public class GameManager : MonoBehaviour
 
     public void marketBuyCommand(int marketCard)
     {
+        if (Game.tutorial)
+        {
+            if(marketCard < 4)
+            {
+                md1.cardInt = marketCard;
+                topMarketBuy();
+            } else
+            {
+                md2.cardInt = marketCard;
+                bottomMarketBuy();
+            }
+        }
+
         foreach (GamePlayer gp in Game.GamePlayers)
         {
             // if the steam usernames match
-            if (gp.playerName == players[myPlayerIndex].name)
+            if (currentPlayerName == gp.playerName)
             {
                 Debug.Log("Starting Mirror CmdBuyCard");
                 // do the Mirror Command
-                gp.CmdBuyCard(gp.playerName, marketCard);
+                gp.CmdBuyCard(currentPlayerName, marketCard);
             }
         }
     }
@@ -2296,10 +2311,6 @@ public class GameManager : MonoBehaviour
                 case 3:
                     if (cardPlayer.pips >= md1.cardDisplay3.card.buyPrice)
                     {
-                        // players[myPlayerIndex].pips -= md1.cardDisplay3.card.buyPrice;
-                        // players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                        // Card card = md1.popCard();
-                        // md1.cardDisplay3.updateCard(card);
                         cardPlayer.subPips(md1.cardDisplay3.card.buyPrice);
                         playerDeck.putCardOnTop(md1.cardDisplay3.card);
                         Card card = md1.popCard();
@@ -2944,6 +2955,11 @@ public class GameManager : MonoBehaviour
         // }
     }
 
+    public void trashCardCommand()
+    {
+        Game.GamePlayers[myPlayerIndex].CmdTrashCard(currentPlayerName, selectedCardInt);
+    }
+
     // TRASH REQUEST
     public void trashCard()
     {
@@ -2973,7 +2989,12 @@ public class GameManager : MonoBehaviour
                 // Heals for +3 HP if trashed
                 players[myPlayerIndex].addHealth(3);
             }
-            //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality != "Starter")
+            {
+                players[myPlayerIndex].cardsTrashed++;
+            }    
+            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            /*
             foreach (GamePlayer gp in Game.GamePlayers)
             {
                 // if the steam usernames match
@@ -2984,11 +3005,12 @@ public class GameManager : MonoBehaviour
                     gp.CmdTrashCard(gp.playerName, selectedCardInt);
                 }
             }
+            */
 
-            players[myPlayerIndex].cardsTrashed++;
+            
             if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].cardsTrashed == 4)
             {
-                sendSuccessMessage(4);
+                sendSuccessMessage(15);
                 players[myPlayerIndex].character.canBeFlipped = true;
             }
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
