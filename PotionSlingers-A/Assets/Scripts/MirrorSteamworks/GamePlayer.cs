@@ -19,6 +19,8 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar] public bool IsGameLeader = false;
     [SyncVar(hook = nameof(HandlePlayerReadyStatusChange))] public bool isPlayerReady;
     [SyncVar] public CSteamID playerSteamId;
+    [SyncVar] public int hp;
+    [SyncVar] public int essenceCubes;
 
     public PlayerListItem item;
 
@@ -416,6 +418,7 @@ public class GamePlayer : NetworkBehaviour
     {
         Debug.Log("Executing CmdSubHealth on the server for player: " + playerName);
         // call the ClientRPC in isServer
+        
         if (isServer)
             RpcSubHealth(damage);
 

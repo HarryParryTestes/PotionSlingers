@@ -233,6 +233,8 @@ public class GameManager : MonoBehaviour
                 players[0].name = Game.GamePlayers[i].playerName;
                 players[0].charName = Game.GamePlayers[i].charName;
                 players[0].user_id = i;
+                Game.GamePlayers[i].hp = players[0].hp;
+                Game.GamePlayers[i].essenceCubes = players[0].hpCubes;
                 players[0].character.onCharacterClick(Game.GamePlayers[i].charName);
                 players[0].checkCharacter();
                 
@@ -245,6 +247,8 @@ public class GameManager : MonoBehaviour
                     players[1].name = Game.GamePlayers[i].playerName;
                     players[1].charName = Game.GamePlayers[i].charName;
                     players[1].user_id = i;
+                    Game.GamePlayers[i].hp = players[1].hp;
+                    Game.GamePlayers[i].essenceCubes = players[1].hpCubes;
                     players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[1].checkCharacter();
                     tracker++;
@@ -255,6 +259,8 @@ public class GameManager : MonoBehaviour
                     players[2].name = Game.GamePlayers[i].playerName;
                     players[2].charName = Game.GamePlayers[i].charName;
                     players[2].user_id = i;
+                    Game.GamePlayers[i].hp = players[2].hp;
+                    Game.GamePlayers[i].essenceCubes = players[2].hpCubes;
                     players[2].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[2].checkCharacter();
                     tracker++;
@@ -265,6 +271,8 @@ public class GameManager : MonoBehaviour
                     players[3].name = Game.GamePlayers[i].playerName;
                     players[3].charName = Game.GamePlayers[i].charName;
                     players[3].user_id = i;
+                    Game.GamePlayers[i].hp = players[3].hp;
+                    Game.GamePlayers[i].essenceCubes = players[3].hpCubes;
                     players[3].character.onCharacterClick(Game.GamePlayers[i].charName);
                     players[3].checkCharacter();
                 }
@@ -1358,16 +1366,6 @@ public class GameManager : MonoBehaviour
                 sendSuccessMessage(2); // Only display on thrower's client.
                 players[myPlayerIndex].potionsThrown++;
                 //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
-                foreach (GamePlayer gp in Game.GamePlayers)
-                {
-                    // if the steam usernames match
-                    if (gp.playerName == players[myPlayerIndex].name)
-                    {
-                        Debug.Log("Starting Mirror CmdTrashCard");
-                        // do the Mirror Command
-                        gp.CmdTrashCard(gp.playerName, selectedCardInt);
-                    }
-                }
 
                 //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                 if (players[myPlayerIndex].blackRainBonus)
