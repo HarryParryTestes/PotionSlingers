@@ -174,6 +174,7 @@ public class GamePlayer : NetworkBehaviour
     [ClientRpc]
     public void RpcSellCard(string name, int selectedCard)
     {
+        GameManager.manager.mirrorCommand = true;
         Debug.Log("Selling card for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
@@ -196,6 +197,7 @@ public class GamePlayer : NetworkBehaviour
     [ClientRpc]
     public void RpcCycleCard(string name, int selectedCard)
     {
+        GameManager.manager.mirrorCommand = true;
         Debug.Log("Cycling card for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {

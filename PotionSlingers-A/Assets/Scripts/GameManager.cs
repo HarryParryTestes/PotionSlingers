@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
     public bool damage = false;
     public bool trashDeckBonus = false;
     public bool replaceStarter = false;
+    public bool mirrorCommand = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -207,6 +208,9 @@ public class GameManager : MonoBehaviour
         {
             p3.SetActive(false);
             p4.SetActive(false);
+
+            // top player becomes p2;
+            players[1] = players[2];
         }
 
         if (Game.GamePlayers.Count == 3)
@@ -1303,13 +1307,17 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
+        /*
         // If this client isn't the current player, display error message.
         if (players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
         }
-
+        */
+        if (myPlayerIndex == -1)
+        {
+            Debug.Log("Whatever");
+        }
         // This client is the current player.
         else 
         {

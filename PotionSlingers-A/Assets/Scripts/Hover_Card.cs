@@ -244,7 +244,8 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     public void resetCard() {
         canHover = true;
-        specialCardMenu.gameObject.SetActive(false);
+        if(specialCardMenu != null)
+            specialCardMenu.gameObject.SetActive(false);
         transform.localScale = cachedScale;
         gameObject.transform.position = originalPos;
         clicked = false;
