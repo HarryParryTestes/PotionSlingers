@@ -231,6 +231,10 @@ public class GameManager : MonoBehaviour
             int tracker = 0;
             if (Game.GamePlayers[i].isLocalPlayer)
             {
+                if(numPlayers == 2 && i == 0)
+                {
+                    myPlayerIndex = 1;
+                }
                 Debug.Log("Found local player");
                 playerBottomName.text = Game.GamePlayers[i].playerName;
                 players[0].name = Game.GamePlayers[i].playerName;
