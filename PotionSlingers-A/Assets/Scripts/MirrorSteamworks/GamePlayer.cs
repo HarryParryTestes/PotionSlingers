@@ -437,6 +437,7 @@ public class GamePlayer : NetworkBehaviour
             if (cp.name == playerName)
             {
                 cp.subHealth(newValue);
+                //cp.holster.cardList[0].updateCard(cp.holster.cardList[0].placeholder);
             }
         }
     }

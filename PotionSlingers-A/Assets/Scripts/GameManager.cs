@@ -206,11 +206,10 @@ public class GameManager : MonoBehaviour
 
         if (Game.GamePlayers.Count == 2)
         {
-            p3.SetActive(false);
-            p4.SetActive(false);
-
             // top player becomes p2;
             players[1] = players[2];
+            p3.SetActive(false);
+            p4.SetActive(false);
         }
 
         if (Game.GamePlayers.Count == 3)
@@ -1307,16 +1306,10 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        /*
         // If this client isn't the current player, display error message.
         if (players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
-        }
-        */
-        if (myPlayerIndex == -1)
-        {
-            Debug.Log("Whatever");
         }
         // This client is the current player.
         else 
@@ -1392,6 +1385,17 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Starting Mirror CmdSubHealth");
                         // do the Mirror Command
                         gp.CmdSubHealth(damage);
+                    }
+                }
+
+                foreach (GamePlayer gp in Game.GamePlayers)
+                {
+                    // if the steam usernames match
+                    if (gp.playerName == currentPlayerName)
+                    {
+                        Debug.Log("Starting Mirror CmdTrashCard");
+                        // do the Mirror Command
+                        gp.CmdTrashCard(currentPlayerName, selectedCardInt);
                     }
                 }
 
