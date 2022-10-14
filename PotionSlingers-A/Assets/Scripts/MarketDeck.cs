@@ -62,7 +62,7 @@ public class MarketDeck : MonoBehaviour
     {
         // bye bye shuffle :(
 
-        deckList = shuffle();
+        //deckList = shuffle();
         //for(int i = 0; i < deckList.Count; i++)
         //{
         //    Debug.Log("Card " + i + ": " + deckList[i]);

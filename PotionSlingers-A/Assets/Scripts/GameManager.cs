@@ -222,11 +222,10 @@ public class GameManager : MonoBehaviour
         //ob = GameObject.Find("CharacterCard");
         //Player playerOb = ob.GetComponent<Player>();
         //Debug.Log("Player 1's character is... " + playerOb.charName);
-
+        int tracker = 0;
         currentPlayerName = Game.GamePlayers[0].playerName;
         for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
-            int tracker = 0;
             if (Game.GamePlayers[i].isLocalPlayer)
             {
                 Debug.Log("Found local player");
@@ -234,6 +233,10 @@ public class GameManager : MonoBehaviour
                 players[0].name = Game.GamePlayers[i].playerName;
                 players[0].charName = Game.GamePlayers[i].charName;
                 players[0].user_id = i;
+                if (numPlayers == 2 && i == 1)
+                {
+                    players[0].user_id = 2;
+                }
                 Game.GamePlayers[i].hp = players[0].hp;
                 Game.GamePlayers[i].essenceCubes = players[0].hpCubes;
                 players[0].character.onCharacterClick(Game.GamePlayers[i].charName);
