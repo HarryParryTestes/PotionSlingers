@@ -1702,17 +1702,6 @@ public class GameManager : MonoBehaviour
         starterPotion = true;
     }
 
-    public void loadPotionCommand()
-    {
-        if (Game.tutorial)
-        {
-            loadPotion();
-        } else
-        {
-            
-        }
-    }
-
     // LOAD REQUEST (DONE - 2 clients)
     public void loadPotion()
     {

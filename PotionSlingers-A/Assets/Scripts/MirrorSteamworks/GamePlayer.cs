@@ -1057,7 +1057,7 @@ public class GamePlayer : NetworkBehaviour
                 {
                     GameManager.manager.myPlayerIndex = 2;
                     GameManager.manager.sendSuccessMessage(18);
-                    GameManager.manager.currentPlayerName = Game.GamePlayers[GameManager.manager.myPlayerIndex].playerName;
+                    GameManager.manager.currentPlayerName = GameManager.manager.players[GameManager.manager.myPlayerIndex].name;
                     GameManager.manager.onStartTurn(GameManager.manager.players[GameManager.manager.myPlayerIndex]);
                     return;
                 }
@@ -1065,7 +1065,7 @@ public class GamePlayer : NetworkBehaviour
                 {
                     GameManager.manager.myPlayerIndex = 0;
                     GameManager.manager.sendSuccessMessage(18);
-                    GameManager.manager.currentPlayerName = Game.GamePlayers[GameManager.manager.myPlayerIndex].playerName;
+                    GameManager.manager.currentPlayerName = GameManager.manager.players[GameManager.manager.myPlayerIndex].name;
                     GameManager.manager.onStartTurn(GameManager.manager.players[GameManager.manager.myPlayerIndex]);
                     return;
                 }
