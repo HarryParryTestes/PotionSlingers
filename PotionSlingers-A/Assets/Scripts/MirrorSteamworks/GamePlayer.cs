@@ -1035,7 +1035,7 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("Ending turn for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
-            if (cp.name == playerName)
+            if (cp.name == name)
             {
                 // Logic to check for end of turn effect ring
                 foreach (CardDisplay cd in cp.holster.cardList)
