@@ -1122,8 +1122,9 @@ public class CardPlayer : MonoBehaviour
         damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
         damageSign.SetActive(true);
         damageAmount.SetActive(true);
-        StartCoroutine(waitThreeSeconds(damageSign));
-        StartCoroutine(waitThreeSeconds(damageAmount));
+        if(damageSign.activeInHierarchy)
+            StartCoroutine(waitThreeSeconds(damageSign));
+            StartCoroutine(waitThreeSeconds(damageAmount));
     }
 
     // public void giveCube(Player player) {

@@ -206,6 +206,8 @@ public class GameManager : MonoBehaviour
 
         if (Game.GamePlayers.Count == 2)
         {
+            players[1] = players[2];
+            players[1] = players[3];
             p3.SetActive(false);
             p4.SetActive(false);
         }
@@ -229,14 +231,11 @@ public class GameManager : MonoBehaviour
             if (Game.GamePlayers[i].isLocalPlayer)
             {
                 Debug.Log("Found local player");
+                players[0].currentPlayerHighlight.SetActive(true);
                 playerBottomName.text = Game.GamePlayers[i].playerName;
                 players[0].name = Game.GamePlayers[i].playerName;
                 players[0].charName = Game.GamePlayers[i].charName;
-                players[0].user_id = i;
-                if (numPlayers == 2 && i == 1)
-                {
-                    players[0].user_id = 2;
-                }
+                players[0].user_id = 0;
                 Game.GamePlayers[i].hp = players[0].hp;
                 Game.GamePlayers[i].essenceCubes = players[0].hpCubes;
                 players[0].character.onCharacterClick(Game.GamePlayers[i].charName);
@@ -249,6 +248,7 @@ public class GameManager : MonoBehaviour
                 {
                     if(numPlayers == 2)
                     {
+                        players[2].currentPlayerHighlight.SetActive(false);
                         playerTopName.text = Game.GamePlayers[i].playerName;
                         players[2].name = Game.GamePlayers[i].playerName;
                         players[2].charName = Game.GamePlayers[i].charName;
@@ -264,6 +264,7 @@ public class GameManager : MonoBehaviour
                         players[1].name = Game.GamePlayers[i].playerName;
                         players[1].charName = Game.GamePlayers[i].charName;
                         players[1].user_id = i;
+                        players[1].currentPlayerHighlight.SetActive(false);
                         Game.GamePlayers[i].hp = players[1].hp;
                         Game.GamePlayers[i].essenceCubes = players[1].hpCubes;
                         players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
@@ -273,6 +274,7 @@ public class GameManager : MonoBehaviour
                 }
                 if (tracker == 1)
                 {
+                    players[2].currentPlayerHighlight.SetActive(false);
                     playerTopName.text = Game.GamePlayers[i].playerName;
                     players[2].name = Game.GamePlayers[i].playerName;
                     players[2].charName = Game.GamePlayers[i].charName;
@@ -285,6 +287,7 @@ public class GameManager : MonoBehaviour
                 }
                 if (tracker == 2)
                 {
+                    players[3].currentPlayerHighlight.SetActive(false);
                     playerRightName.text = Game.GamePlayers[i].playerName;
                     players[3].name = Game.GamePlayers[i].playerName;
                     players[3].charName = Game.GamePlayers[i].charName;
@@ -715,7 +718,16 @@ public class GameManager : MonoBehaviour
         // If this client isn't the current player, display error message.
         // Player can't end turn if it isn't their turn.
         // (to change this to maybe disable endTurn button or grey it out?? turn it from button to image when not currentPlayer?)
+        /*
         if (players[myPlayerIndex].user_id != myPlayerIndex) 
+        {
+            // "You are not the currentPlayer!"
+            sendErrorMessage(7);
+            return;
+        }
+        */
+
+        if (players[myPlayerIndex].name != currentPlayerName)
         {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
@@ -1326,9 +1338,10 @@ public class GameManager : MonoBehaviour
             }
             return;
         }
-   
+
         // If this client isn't the current player, display error message.
-        if (players[myPlayerIndex].user_id != myPlayerIndex) {
+        if (players[myPlayerIndex].name != currentPlayerName)
+        {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
             return;
@@ -1809,12 +1822,13 @@ public class GameManager : MonoBehaviour
 
 
 
-            // DONE?: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
-            // test for protocol, must replace parameters later
-            // bool connected = networkManager.sendLoadRequest(0, 0);
+        // DONE?: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
+        // test for protocol, must replace parameters later
+        // bool connected = networkManager.sendLoadRequest(0, 0);
 
-            // If this client isn't the current player, display error message.
-            if (players[myPlayerIndex].user_id != myPlayerIndex) {
+        // If this client isn't the current player, display error message.
+        if (players[myPlayerIndex].name != currentPlayerName)
+        {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
             return;
