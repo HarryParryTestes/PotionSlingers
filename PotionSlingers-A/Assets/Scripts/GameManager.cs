@@ -232,6 +232,10 @@ public class GameManager : MonoBehaviour
             if (Game.GamePlayers[i].isLocalPlayer)
             {
                 Debug.Log("Found local player");
+                if(numPlayers == 2)
+                {
+                    myPlayerIndex = i;
+                }
                 playerBottomName.text = Game.GamePlayers[i].playerName;
                 players[0].name = Game.GamePlayers[i].playerName;
                 players[0].charName = Game.GamePlayers[i].charName;
@@ -746,7 +750,7 @@ public class GameManager : MonoBehaviour
             {
                 myPlayerIndex = 0;
             }
-            players[myPlayerIndex].name = currentPlayerName;
+            currentPlayerName = players[myPlayerIndex].name;
             onStartTurn(players[myPlayerIndex]);
             // Debug.Log("Request End Turn");
 
@@ -1364,8 +1368,11 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                Debug.Log("Original damage: " + damage);
                 damage = players[myPlayerIndex].checkBonus(damage, selectedCardInt);
+                Debug.Log("Damage after thrower bonuses: " + damage);
                 damage = tempPlayer.checkDefensiveBonus(damage);
+                Debug.Log("Damage after defensive bonuses: " + damage);
 
                 sendSuccessMessage(2); // Only display on thrower's client.
                 players[myPlayerIndex].potionsThrown++;

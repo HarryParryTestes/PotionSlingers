@@ -181,16 +181,6 @@ public class GamePlayer : NetworkBehaviour
     [ClientRpc]
     public void RpcThrowCard(string throwerName, string opponentName, int selectedCardInt)
     {
-        foreach (CardPlayer cp in GameManager.manager.players)
-        {
-            if(cp.name == opponentName)
-            {
-                Debug.Log("Opponent is: " + opponentName);
-                GameManager.manager.tempPlayer = cp;
-                return;
-            }
-        }
-
         Debug.Log("Throwing card for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
@@ -214,8 +204,11 @@ public class GamePlayer : NetworkBehaviour
                         }
                     }
                     damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
-                    damage = cp.checkBonus(damage, selectedCardInt);
+                    Debug.Log("Original damage: " + damage);
+                    damage = cp.checkArtifactBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                    Debug.Log("Damage after thrower bonuses: " + damage);
                     damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+                    Debug.Log("Damage after defensive bonuses: " + damage);
 
                     GameManager.manager.sendSuccessMessage(2); // Only display on thrower's client.
                     cp.potionsThrown++;
@@ -232,7 +225,15 @@ public class GamePlayer : NetworkBehaviour
                     cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
                     // may need to add this back in
-                    GameManager.manager.tempPlayer.subHealth(damage);
+                    foreach (CardPlayer cp2 in GameManager.manager.players)
+                    {
+                        if (cp2.name == opponentName)
+                        {
+                            Debug.Log("Damaging player: "+ opponentName);
+                            cp2.subHealth(damage);
+                        }
+                    }
+                    //GameManager.manager.tempPlayer.subHealth(damage);
 
                 }
                 else if (cp.holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
@@ -240,8 +241,11 @@ public class GamePlayer : NetworkBehaviour
                     if (cp.holster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
                     {
                         damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
+                        Debug.Log("Original damage: " + damage);
                         damage = cp.checkArtifactBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                        Debug.Log("Damage after thrower bonuses: " + damage);
                         damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+                        Debug.Log("Damage after defensive bonuses: " + damage);
 
                         // Update response to account for trashing loaded artifact's potion and not the artifact
                         cp.artifactsUsed++;
@@ -250,7 +254,15 @@ public class GamePlayer : NetworkBehaviour
 
                         // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
-                        GameManager.manager.tempPlayer.subHealth(damage);
+                        foreach (CardPlayer cp2 in GameManager.manager.players)
+                        {
+                            if (cp2.name == opponentName)
+                            {
+                                Debug.Log("Damaging player: " + opponentName);
+                                cp2.subHealth(damage);
+                            }
+                        }
+                        //GameManager.manager.tempPlayer.subHealth(damage);
 
                         // ISADORE LOGIC
                         if (cp.isIsadore && cp.artifactsUsed == 2)
@@ -286,9 +298,12 @@ public class GamePlayer : NetworkBehaviour
                             cp.addHealth(4);
                         }
                         //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
-                        damage = cp.holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + cp.holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
-                        damage = cp.checkVesselBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                        damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
+                        Debug.Log("Original damage: " + damage);
+                        damage = cp.checkArtifactBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                        Debug.Log("Damage after thrower bonuses: " + damage);
                         damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+                        Debug.Log("Damage after defensive bonuses: " + damage);
 
                         // TODO: fix bonus damage
                         //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
@@ -301,7 +316,15 @@ public class GamePlayer : NetworkBehaviour
                         cp.holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                         // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                         // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
-                        GameManager.manager.tempPlayer.subHealth(damage);
+                        foreach (CardPlayer cp2 in GameManager.manager.players)
+                        {
+                            if (cp2.name == opponentName)
+                            {
+                                Debug.Log("Damaging player: " + opponentName);
+                                cp2.subHealth(damage);
+                            }
+                        }
+                        //GameManager.manager.tempPlayer.subHealth(damage);
                         GameManager.manager.sendSuccessMessage(4);
                         cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
@@ -1036,7 +1059,7 @@ public class GamePlayer : NetworkBehaviour
                     GameManager.manager.myPlayerIndex = 0;
                 }
                 GameManager.manager.sendSuccessMessage(18);
-                Game.GamePlayers[GameManager.manager.myPlayerIndex].playerName = GameManager.manager.currentPlayerName;
+                GameManager.manager.currentPlayerName = Game.GamePlayers[GameManager.manager.myPlayerIndex].playerName;
                 GameManager.manager.onStartTurn(GameManager.manager.players[GameManager.manager.myPlayerIndex]);
                 return;
             }
