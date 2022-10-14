@@ -13887,14 +13887,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2083794569}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: marketBuyCommand
+      - m_Target: {fileID: 1168455953}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: topMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -28062,14 +28074,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2083794569}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: marketBuyCommand
+      - m_Target: {fileID: 628987351}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: bottomMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -37696,14 +37720,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2083794569}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: marketBuyCommand
+      - m_Target: {fileID: 628987351}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 6
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: bottomMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -56200,7 +56236,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2083794569}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: endTurnCommand
+        m_MethodName: endTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -58570,14 +58606,26 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2083794569}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: marketBuyCommand
+      - m_Target: {fileID: 628987351}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 5
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2083794569}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: bottomMarketBuy
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -63069,10 +63117,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1168455953}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 2
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2083794569}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: marketBuyCommand
-        m_Mode: 3
+        m_MethodName: topMarketBuy
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -78017,10 +78077,22 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1168455953}
+        m_TargetAssemblyTypeName: MarketDeck, Assembly-CSharp
+        m_MethodName: setCardInt
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2083794569}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: marketBuyCommand
-        m_Mode: 3
+        m_MethodName: topMarketBuy
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -84226,6 +84298,7 @@ MonoBehaviour:
   damage: 0
   trashDeckBonus: 0
   replaceStarter: 0
+  mirrorCommand: 0
   reetsMenuText: {fileID: 1959007244}
   reetsCard: {fileID: 1728242607}
   sprite1: {fileID: 21300000, guid: 6cc2da1c051a46e4eac60e4cf60724ce, type: 3}
@@ -84368,7 +84441,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2083794569}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: loadPotionCommand
+        m_MethodName: loadPotion
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -88136,7 +88209,7 @@ PrefabInstance:
       objectReference: {fileID: 2083794569}
     - target: {fileID: 3975660437744006369, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: cycleCardCommand
+      value: cycleCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660437823181332, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_Pivot.x
@@ -88236,7 +88309,7 @@ PrefabInstance:
       objectReference: {fileID: 2083794569}
     - target: {fileID: 3975660437829354729, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: trashCardCommand
+      value: trashCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660437867710628, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -88268,7 +88341,7 @@ PrefabInstance:
       objectReference: {fileID: 2083794569}
     - target: {fileID: 3975660437923223764, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: cycleCardCommand
+      value: cycleCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660437947662785, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -88308,7 +88381,7 @@ PrefabInstance:
       objectReference: {fileID: 2083794569}
     - target: {fileID: 3975660438097686537, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: cycleCardCommand
+      value: cycleCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438114946001, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: character
@@ -88376,7 +88449,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438189205524, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: sellCardCommand
+      value: sellCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438189205524, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -88460,7 +88533,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438368056707, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: sellCardCommand
+      value: sellCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438368056707, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -88504,7 +88577,7 @@ PrefabInstance:
       objectReference: {fileID: 2083794569}
     - target: {fileID: 3975660438476101078, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: trashCardCommand
+      value: trashCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438483147995, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -88548,7 +88621,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438540239787, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: sellCardCommand
+      value: sellCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438540239787, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -88664,7 +88737,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438790154818, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: sellCardCommand
+      value: sellCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438790154818, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
@@ -88700,7 +88773,7 @@ PrefabInstance:
       objectReference: {fileID: 2083794569}
     - target: {fileID: 3975660438833815039, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: trashCardCommand
+      value: trashCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438890436602, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -88712,7 +88785,7 @@ PrefabInstance:
       objectReference: {fileID: 2083794569}
     - target: {fileID: 3975660438890436602, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: trashCardCommand
+      value: trashCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438890436602, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
@@ -88768,7 +88841,7 @@ PrefabInstance:
       objectReference: {fileID: 2083794569}
     - target: {fileID: 3975660439079440646, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: cycleCardCommand
+      value: cycleCard
       objectReference: {fileID: 0}
     - target: {fileID: 3975660439162571591, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target

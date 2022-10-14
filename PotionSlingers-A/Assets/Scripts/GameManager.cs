@@ -84,10 +84,10 @@ public class GameManager : MonoBehaviour
     public GameObject pauseUI;
     public GameObject starterPotionMenu;
 
-    bool paused = false;
-    bool starterPotion = false;
-    bool usedStarterPotion = false;
-    bool isadoreAction = true;
+    public bool paused = false;
+    public bool starterPotion = false;
+    public bool usedStarterPotion = false;
+    public bool isadoreAction = true;
     public bool earlyBirdSpecial = false;
     //public bool trashOrDamage = false;
     public bool trash = false;
@@ -231,10 +231,6 @@ public class GameManager : MonoBehaviour
             int tracker = 0;
             if (Game.GamePlayers[i].isLocalPlayer)
             {
-                if(numPlayers == 2)
-                {
-                    myPlayerIndex = i;
-                }
                 Debug.Log("Found local player");
                 playerBottomName.text = Game.GamePlayers[i].playerName;
                 players[0].name = Game.GamePlayers[i].playerName;
@@ -684,16 +680,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void endTurnCommand()
-    {
-        if (Game.tutorial)
-        {
-            endTurn();
-            return;
-        }
-        Game.GamePlayers[0].CmdEndTurn();
-    }
-
     // END TURN REQUEST
     public void endTurn()
     {
@@ -718,8 +704,23 @@ public class GameManager : MonoBehaviour
         {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
+            return;
         }
 
+        if (Game.multiplayer)
+        {
+            // end turn mirror command
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdEndTurn");
+                    // do the Mirror Command
+                    gp.CmdEndTurn(currentPlayerName);
+                }
+            }
+        }
         else
         {
             // Logic to check for end of turn effect ring
@@ -736,6 +737,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+            players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
             myPlayerIndex++;
             
 
@@ -744,7 +746,7 @@ public class GameManager : MonoBehaviour
             {
                 myPlayerIndex = 0;
             }
-            Game.GamePlayers[myPlayerIndex].playerName = currentPlayerName;
+            players[myPlayerIndex].name = currentPlayerName;
             onStartTurn(players[myPlayerIndex]);
             // Debug.Log("Request End Turn");
 
@@ -1314,43 +1316,39 @@ public class GameManager : MonoBehaviour
         if (players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
+            return;
+        }
+
+        foreach (CardPlayer cp in players)
+        {
+            if (cp.character.character.cardName == selectedOpponentCharName)
+            {
+                Debug.Log("Name matched");
+                tempPlayer = cp;
+                // idiot, don't put this here
+                // return;
+            }
+        }
+
+        if (Game.multiplayer)
+        {
+
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdThrowCard");
+                    // do the Mirror Command
+                    gp.CmdThrowCard(currentPlayerName, tempPlayer.name, selectedCardInt);
+                }
+            }
         }
         // This client is the current player.
         else 
         {
             int damage = 0;
-            //int targetUserId = 0;
-            string targetUser = "";
-            //int throwerIndex = -1;
-            int throwerIndex = myPlayerIndex;
             Debug.Log("GameManager Throw Potion");
-
-            /*
-            for (int i = 0; i < Game.GamePlayers.Count; i++) 
-            {
-                if(players[i].charName == selectedOpponentCharName) 
-                {
-                    Debug.Log("Attacking Player: "+players[i].name);
-                    targetUserId = players[i].user_id;
-                }
-                else if(players[i].user_id == currentPlayerId) {
-                    throwerIndex = i;
-                }
-            }
-            */
-
-            foreach (CardPlayer cp in players)
-            {
-                if (cp.character.character.cardName == selectedOpponentCharName)
-                {
-                    Debug.Log("Name matched");
-                    targetUser = cp.charName;
-                    tempPlayer = cp;
-                    // idiot, don't put this here
-                    // return;
-                }
-            }
-
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
@@ -1367,13 +1365,13 @@ public class GameManager : MonoBehaviour
                 }
                 damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
                 damage = players[myPlayerIndex].checkBonus(damage, selectedCardInt);
+                damage = tempPlayer.checkDefensiveBonus(damage);
 
                 sendSuccessMessage(2); // Only display on thrower's client.
                 players[myPlayerIndex].potionsThrown++;
                 //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
 
-                if(!Game.multiplayer)
-                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
                 if (players[myPlayerIndex].blackRainBonus)
                 {
@@ -1381,51 +1379,18 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].blackRainBonus = false;
                 }
 
-                if (!Game.multiplayer)
-                {
-                    tempPlayer.subHealth(damage);
-                }
-
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
-                // this is my attempt at making a Command that will manipulate the health of the players
-
-                if (Game.multiplayer)
-                {
-                    foreach (GamePlayer gp in Game.GamePlayers)
-                    {
-                        // if the steam usernames match
-                        if (gp.playerName == tempPlayer.name)
-                        {
-                            Debug.Log("Starting Mirror CmdSubHealth");
-                            // do the Mirror Command
-                            gp.CmdSubHealth(damage);
-                        }
-                    }
-
-                    foreach (GamePlayer gp in Game.GamePlayers)
-                    {
-                        // if the steam usernames match
-                        if (gp.playerName == currentPlayerName)
-                        {
-                            Debug.Log("Starting Mirror CmdTrashCard");
-                            // do the Mirror Command
-                            gp.CmdTrashCard(currentPlayerName, selectedCardInt);
-                        }
-                    }
-                }
-                
-
                 // may need to add this back in
-                //tempPlayer.subHealth(damage);
+                tempPlayer.subHealth(damage);
 
             } else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
             {
                 if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
                 {
                     damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
-                    //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                     damage = players[myPlayerIndex].checkArtifactBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                    damage = tempPlayer.checkDefensiveBonus(damage);
 
                     // Update response to account for trashing loaded artifact's potion and not the artifact
                     players[myPlayerIndex].artifactsUsed++;
@@ -1460,8 +1425,8 @@ public class GameManager : MonoBehaviour
 
             } else if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
             {
-                if (playerHolster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
-                            playerHolster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
                 {
                     if (players[myPlayerIndex].isTwins && players[myPlayerIndex].character.character.flipped)
                     {
@@ -1470,13 +1435,14 @@ public class GameManager : MonoBehaviour
                     //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
                     damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
                     damage = players[myPlayerIndex].checkVesselBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                    damage = tempPlayer.checkDefensiveBonus(damage);
 
                     // TODO: fix bonus damage
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                    players[myPlayerIndex].deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].vPotion1.card);
-                    players[myPlayerIndex].deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].vPotion2.card);
-                    players[myPlayerIndex].holster.card1.vPotion1.updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);
-                    players[myPlayerIndex].holster.card1.vPotion2.updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
+                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                    players[myPlayerIndex].holster.card1.vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].holster.card1.vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
@@ -1725,16 +1691,7 @@ public class GameManager : MonoBehaviour
             loadPotion();
         } else
         {
-            foreach (GamePlayer gp in Game.GamePlayers)
-            {
-                // if the steam usernames match
-                if (currentPlayerName == gp.playerName)
-                {
-                    Debug.Log("Starting Mirror CmdBuyCard");
-                    // do the Mirror Command
-                    gp.CmdLoadCard(currentPlayerName, selectedCardInt, loadedCardInt);
-                }
-            }
+            
         }
     }
 
@@ -1853,8 +1810,22 @@ public class GameManager : MonoBehaviour
             if (players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
+            return;
         }
 
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (currentPlayerName == gp.playerName)
+                {
+                    Debug.Log("Starting Mirror CmdLoadCard");
+                    // do the Mirror Command
+                    gp.CmdLoadCard(currentPlayerName, selectedCardInt, loadedCardInt);
+                }
+            }
+        }
         // It is this player's turn.
         else
         {
@@ -2079,26 +2050,6 @@ public class GameManager : MonoBehaviour
         // }
     }
 
-    public void cycleCardCommand()
-    {
-        if (Game.tutorial)
-        {
-            cycleCard();
-        } else
-        {
-            foreach (GamePlayer gp in Game.GamePlayers)
-            {
-                // if the steam usernames match
-                if (currentPlayerName == gp.playerName)
-                {
-                    Debug.Log("Starting Mirror CmdCycleCard");
-                    // do the Mirror Command
-                    gp.CmdCycleCard(currentPlayerName, selectedCardInt);
-                }
-            }
-        }
-    }
-
     // CYCLE REQUEST (DONE - 2 clients)
     public void cycleCard()
     {
@@ -2134,8 +2085,22 @@ public class GameManager : MonoBehaviour
         if(players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
+            return;
         }
 
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (currentPlayerName == gp.playerName)
+                {
+                    Debug.Log("Starting Mirror CmdCycleCard");
+                    // do the Mirror Command
+                    gp.CmdCycleCard(currentPlayerName, selectedCardInt);
+                }
+            }
+        }
         // It is this player's turn.
         else
         {
@@ -2303,33 +2268,6 @@ public class GameManager : MonoBehaviour
         // }
     }
 
-    public void marketBuyCommand(int marketCard)
-    {
-        if (Game.tutorial)
-        {
-            if(marketCard < 4)
-            {
-                md1.cardInt = marketCard;
-                topMarketBuy();
-            } else
-            {
-                md2.cardInt = marketCard;
-                bottomMarketBuy();
-            }
-        }
-
-        foreach (GamePlayer gp in Game.GamePlayers)
-        {
-            // if the steam usernames match
-            if (currentPlayerName == gp.playerName)
-            {
-                Debug.Log("Starting Mirror CmdBuyCard");
-                // do the Mirror Command
-                gp.CmdBuyCard(currentPlayerName, marketCard);
-            }
-        }
-    }
-
 // TOP MARKET REQUEST
 // subtract pips, update deck display and market display
     public void topMarketBuy()
@@ -2412,6 +2350,20 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            if (Game.multiplayer)
+            {
+                foreach (GamePlayer gp in Game.GamePlayers)
+                {
+                    // if the steam usernames match
+                    if (gp.playerName == currentPlayerName)
+                    {
+                        Debug.Log("Starting Mirror CmdBuyTopCard");
+                        // do the Mirror Command
+                        gp.CmdBuyTopCard(gp.playerName, md1.cardInt);
+                    }
+                }
+                return;
+            }
             // cardInt based on position of card in Top Market (position 1, 2, or 3)
             switch (md1.cardInt)
             {
@@ -2613,6 +2565,20 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            if (Game.multiplayer)
+            {
+                foreach (GamePlayer gp in Game.GamePlayers)
+                {
+                    // if the steam usernames match
+                    if (gp.playerName == currentPlayerName)
+                    {
+                        Debug.Log("Starting Mirror CmdBuyBottomCard");
+                        // do the Mirror Command
+                        gp.CmdBuyBottomCard(gp.playerName, md2.cardInt);
+                    }
+                }
+                return;
+            }
             switch (md2.cardInt)
             {
                 // cardInt based on position of card in Top Market (position 1, 2, or 3)
@@ -2969,31 +2935,36 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            if (Game.multiplayer)
+            {
+                foreach (GamePlayer gp in Game.GamePlayers)
+                {
+                    // if the steam usernames match
+                    if (gp.playerName == currentPlayerName)
+                    {
+                        Debug.Log("Starting Mirror CmdSellCard");
+                        // do the Mirror Command
+                        gp.CmdSellCard(gp.playerName, selectedCardInt);
+                    }
+                }
+                return;
+            }
             // LOGIC FOR BOLO SELLING ABILITY
             // Bolo not flipped and he's selling something that's not a potion
             if (players[myPlayerIndex].isBolo && !players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
             {
-                //players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
                 // Bolo flipped selling anything
             } else if(players[myPlayerIndex].isBolo && players[myPlayerIndex].character.character.flipped)
             {
-                //players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
             } else
             {
                 // everyone else
-                //players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             }
-            //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-            foreach (GamePlayer gp in Game.GamePlayers)
-            {
-                // if the steam usernames match
-                if (gp.playerName == players[myPlayerIndex].name)
-                {
-                    Debug.Log("Starting Mirror CmdSellCard");
-                    // do the Mirror Command
-                    gp.CmdSellCard(gp.playerName, selectedCardInt);
-                }
-            }
+            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            
             // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(8);
@@ -3031,11 +3002,6 @@ public class GameManager : MonoBehaviour
         // }
     }
 
-    public void trashCardCommand()
-    {
-        Game.GamePlayers[myPlayerIndex].CmdTrashCard(currentPlayerName, selectedCardInt);
-    }
-
     // TRASH REQUEST
     public void trashCard()
     {
@@ -3054,8 +3020,21 @@ public class GameManager : MonoBehaviour
         if(players[myPlayerIndex].user_id != myPlayerIndex) {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
+            return;
         }
-
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdTrashCard");
+                    // do the Mirror Command
+                    gp.CmdTrashCard(currentPlayerName, selectedCardInt);
+                }
+            }
+        }
         // It is this player's turn.
         else
         {

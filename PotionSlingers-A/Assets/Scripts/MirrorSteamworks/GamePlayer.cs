@@ -171,8 +171,157 @@ public class GamePlayer : NetworkBehaviour
         GameManager.manager.md2.shuffle();
     }
 
+    [Command]
+    public void CmdThrowCard(string throwerName, string opponentName, int selectedCard)
+    {
+        Debug.Log("Executing CmdThrowCard on the server for player: " + playerName);
+        RpcThrowCard(throwerName, opponentName, selectedCard);
+    }
+
     [ClientRpc]
-    public void RpcSellCard(string name, int selectedCard)
+    public void RpcThrowCard(string throwerName, string opponentName, int selectedCardInt)
+    {
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if(cp.name == opponentName)
+            {
+                Debug.Log("Opponent is: " + opponentName);
+                GameManager.manager.tempPlayer = cp;
+                return;
+            }
+        }
+
+        Debug.Log("Throwing card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                int damage = 0;
+                Debug.Log("GameManager Throw Potion");
+
+                if (cp.holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+                {
+                    Debug.Log("POTION");
+                    if (cp.isTwins)
+                    {
+                        if (!cp.character.character.flipped)
+                        {
+                            cp.addHealth(1);
+                        }
+                        else
+                        {
+                            cp.addHealth(2);
+                        }
+                    }
+                    damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
+                    damage = cp.checkBonus(damage, selectedCardInt);
+                    damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+
+                    GameManager.manager.sendSuccessMessage(2); // Only display on thrower's client.
+                    cp.potionsThrown++;
+                    //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+
+                    GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1]);
+
+                    if (cp.blackRainBonus)
+                    {
+                        GameManager.manager.put4CardsInHolster();
+                        cp.blackRainBonus = false;
+                    }
+
+                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+
+                    // may need to add this back in
+                    GameManager.manager.tempPlayer.subHealth(damage);
+
+                }
+                else if (cp.holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
+                {
+                    if (cp.holster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
+                    {
+                        damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
+                        damage = cp.checkArtifactBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                        damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+
+                        // Update response to account for trashing loaded artifact's potion and not the artifact
+                        cp.artifactsUsed++;
+                        GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1].aPotion);
+                        cp.holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+
+                        // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                        // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                        GameManager.manager.tempPlayer.subHealth(damage);
+
+                        // ISADORE LOGIC
+                        if (cp.isIsadore && cp.artifactsUsed == 2)
+                        {
+                            cp.character.canBeFlipped = true;
+                            // add success message for "You can now flip your card!" or something
+                            GameManager.manager.sendSuccessMessage(13);
+
+                        }
+                        else
+                        {
+                            GameManager.manager.sendSuccessMessage(3);
+                        }
+
+                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // MATTEO: Add Artifact using SFX here.
+
+                    }
+                    else
+                    {
+                        // "Can't use an unloaded Artifact!"
+                        GameManager.manager.sendErrorMessage(1);
+                    }
+
+                }
+                else if (cp.holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
+                {
+                    if (cp.holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
+                                cp.holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
+                    {
+                        if (cp.isTwins && cp.character.character.flipped)
+                        {
+                            cp.addHealth(4);
+                        }
+                        //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
+                        damage = cp.holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + cp.holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
+                        damage = cp.checkVesselBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                        damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+
+                        // TODO: fix bonus damage
+                        //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
+                        cp.deck.putCardOnBottom(cp.holster.cardList[selectedCardInt - 1].vPotion1.card);
+                        cp.deck.putCardOnBottom(cp.holster.cardList[selectedCardInt - 1].vPotion2.card);
+                        cp.holster.card1.vPotion1.updateCard(cp.holster.cardList[selectedCardInt - 1].placeholder);
+                        cp.holster.card1.vPotion2.updateCard(cp.holster.cardList[selectedCardInt - 1].placeholder);
+                        GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1]);
+                        cp.holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                        cp.holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                        // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
+                        // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
+                        GameManager.manager.tempPlayer.subHealth(damage);
+                        GameManager.manager.sendSuccessMessage(4);
+                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+
+                        // MATTEO: Add Vessel throw SFX here.
+
+                    }
+                    else
+                    {
+                        // "Can't throw an unloaded Vessel!"
+                        //Debug.Log("Vessel Error");
+                        GameManager.manager.sendErrorMessage(2);
+                    }
+                }
+                return;
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcSellCard(string name, int selectedCardInt)
     {
         GameManager.manager.mirrorCommand = true;
         Debug.Log("Selling card for: " + playerName);
@@ -180,8 +329,27 @@ public class GamePlayer : NetworkBehaviour
         {
             if (cp.name == name)
             {
-                cp.addPips(cp.holster.cardList[selectedCard - 1].card.sellPrice);
-                GameManager.manager.td.addCard(cp.holster.cardList[selectedCard - 1]);
+                // LOGIC FOR BOLO SELLING ABILITY
+                // Bolo not flipped and he's selling something that's not a potion
+                if (cp.isBolo && !cp.character.character.flipped && cp.holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
+                {
+                    cp.addPips(cp.holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+                    // Bolo flipped selling anything
+                }
+                else if (cp.isBolo && cp.character.character.flipped)
+                {
+                    cp.addPips(cp.holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+                }
+                else
+                {
+                    // everyone else
+                    cp.addPips(cp.holster.cardList[selectedCardInt - 1].card.sellPrice);
+                }
+                GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1]);
+
+                // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+                cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                GameManager.manager.sendSuccessMessage(8);
                 return;
             }
         }
@@ -249,16 +417,158 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcLoadCard(string name, int selectedCard, int loadedCard)
+    public void RpcLoadCard(string name, int selectedCardInt, int loadedCardInt)
     {
         Debug.Log("Loading card for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if (cp.name == name)
             {
-                GameManager.manager.selectedCardInt = selectedCard;
-                GameManager.manager.loadedCardInt = loadedCard;
-                GameManager.manager.loadPotion();
+                if (GameManager.manager.starterPotion && !GameManager.manager.usedStarterPotion)
+                {
+                    // Loading a Vessel:
+                    if (cp.holster.cardList[loadedCardInt].card.cardType == "Vessel")
+                    {
+                        // TODO: Make another error message
+                        Debug.Log("This error message???");
+                        GameManager.manager.sendErrorMessage(12);
+                    }
+                    else if (cp.holster.cardList[loadedCardInt].card.cardType == "Artifact")
+                    {
+                        // Enable Artifact menu if it wasn't already enabled.
+                        Debug.Log("Artifact menu enabled.");
+                        cp.holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+
+                        // Check for existing loaded potion if Artifact menu was already enabled.
+                        if (cp.holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
+                        {
+                            Debug.Log("Artifact is fully loaded!");
+                            // DONE: Insert error that displays on screen.
+                            GameManager.manager.sendErrorMessage(8);
+                        }
+                        // Artifact slot is unloaded.
+                        else
+                        {
+                            Card placeholder = cp.holster.cardList[loadedCardInt].aPotion.card;
+                            cp.holster.cardList[loadedCardInt].aPotion.card = GameManager.manager.starterPotionDisplay.card;
+                            cp.holster.cardList[loadedCardInt].aPotion.updateCard(GameManager.manager.starterPotionDisplay.card);
+                            GameManager.manager.usedStarterPotion = true;
+                            // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                            GameManager.manager.sendSuccessMessage(5);
+                            //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            Debug.Log("Starter potion loaded in Artifact slot!");
+
+                            // MATTEO: Add Loading potion SFX here.
+
+                            // // Updates Holster card to be empty.
+                            cp.holster.cardList[selectedCardInt - 1].card = placeholder;
+                            cp.holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                        }
+                    }
+                    GameManager.manager.starterPotion = false;
+                    return;
+                }
+                else
+                {
+                    // if it's an artifact or vessel
+                    if (cp.holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+                    {
+                        // Loading a Vessel:
+                        if (cp.holster.cardList[loadedCardInt].card.cardType == "Vessel")
+                        {
+                            // Enable Vessel menu if it wasn't already enabled.
+                            Debug.Log("Vessel menu enabled.");
+                            cp.holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
+
+                            // Check for existing loaded potion(s) if Vessel menu was already enabled.
+                            if (cp.holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
+                            {
+                                // If Vessel slot 2 is filled.
+                                if (cp.holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
+                                {
+                                    Debug.Log("Vessel is fully loaded!");
+                                    // DONE: Insert error that displays on screen.
+                                    GameManager.manager.sendErrorMessage(9);
+                                }
+                                else
+                                {
+                                    // Fill Vessel slot 2 with loaded potion.
+                                    Card placeholder = cp.holster.cardList[loadedCardInt].vPotion2.card;
+                                    cp.holster.cardList[loadedCardInt].vPotion2.card = cp.holster.cardList[selectedCardInt - 1].card;
+                                    cp.holster.cardList[loadedCardInt].vPotion2.updateCard(cp.holster.cardList[selectedCardInt - 1].card);
+
+                                    // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                    GameManager.manager.sendSuccessMessage(5);
+                                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                    Debug.Log("Potion loaded in Vessel slot 2!");
+
+                                    // MATTEO: Add Loading potion SFX here.
+
+                                    // // Updates Holster card to be empty.
+                                    cp.holster.cardList[selectedCardInt - 1].card = placeholder;
+                                    cp.holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                }
+                            }
+                            // Vessel slot 1 is unloaded.
+                            else
+                            {
+                                Card placeholder = cp.holster.cardList[loadedCardInt].vPotion1.card;
+                                cp.holster.cardList[loadedCardInt].vPotion1.card = cp.holster.cardList[selectedCardInt - 1].card;
+                                cp.holster.cardList[loadedCardInt].vPotion1.updateCard(cp.holster.cardList[selectedCardInt - 1].card);
+
+                                // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                GameManager.manager.sendSuccessMessage(5);
+                                cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                Debug.Log("Potion loaded in Vessel slot 1!");
+
+                                // MATTEO: Add Loading potion SFX here.
+
+                                // // Updates Holster card to be empty.
+                                cp.holster.cardList[selectedCardInt - 1].card = placeholder;
+                                cp.holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                            }
+                        }
+
+                        // Loading an Artifact:
+                        else if (cp.holster.cardList[loadedCardInt].card.cardType == "Artifact")
+                        {
+                            // Enable Artifact menu if it wasn't already enabled.
+                            Debug.Log("Artifact menu enabled.");
+                            cp.holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+
+                            // Check for existing loaded potion if Artifact menu was already enabled.
+                            if (cp.holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
+                            {
+                                Debug.Log("Artifact is fully loaded!");
+                                // DONE: Insert error that displays on screen.
+                                GameManager.manager.sendErrorMessage(8);
+                            }
+                            // Artifact slot is unloaded.
+                            else
+                            {
+                                Card placeholder = cp.holster.cardList[loadedCardInt].aPotion.card;
+                                cp.holster.cardList[loadedCardInt].aPotion.card = cp.holster.cardList[selectedCardInt - 1].card;
+                                cp.holster.cardList[loadedCardInt].aPotion.updateCard(cp.holster.cardList[selectedCardInt - 1].card);
+                                // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                GameManager.manager.sendSuccessMessage(5);
+                                cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                Debug.Log("Potion loaded in Artifact slot!");
+
+                                // MATTEO: Add Loading potion SFX here.
+
+                                // // Updates Holster card to be empty.
+                                cp.holster.cardList[selectedCardInt - 1].card = placeholder;
+                                cp.holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // add error message
+                        Debug.Log("That error message...");
+                        GameManager.manager.sendErrorMessage(12);
+                    }
+                }
                 return;
             }
         }
@@ -272,44 +582,384 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcBuyCard(string name, int marketCard)
+    public void RpcBuyTopCard(string name, int marketCard)
     {
         Card card;
-        Debug.Log("Buying card for: " + playerName);
+        Debug.Log("Buying potion card for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if (cp.name == name)
             {
+                // add in logic
                 switch (marketCard)
                 {
                     case 1:
-                        /*
-                        cp.subPips(GameManager.manager.md1.cardDisplay1.card.buyPrice);
-                        cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay1.card);
-                        card = GameManager.manager.md1.popCard();
-                        GameManager.manager.md1.cardDisplay1.updateCard(card);
-                        GameManager.manager.sendSuccessMessage(1);
-                        */
-                        GameManager.manager.topMarketBuy();
+                        if (cp.pips >= GameManager.manager.md1.cardDisplay1.card.buyPrice && !cp.isSaltimbocca)
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md1.cardDisplay1.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md1.cardDisplay1.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md1.cardDisplay1.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md1.cardDisplay1.card.buyPrice = 3;
+                            }
+                            cp.subPips(GameManager.manager.md1.cardDisplay1.card.buyPrice);
+                            cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay1.card);
+                            card = GameManager.manager.md1.popCard();
+                            GameManager.manager.md1.cardDisplay1.updateCard(card);
+                            GameManager.manager.md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                            // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
+                            // SALTIMBOCCA LOGIC
+                        }
+                        else if (cp.isSaltimbocca && cp.pips >= (GameManager.manager.md1.cardDisplay1.card.buyPrice - 1))
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md1.cardDisplay1.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md1.cardDisplay1.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md1.cardDisplay1.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md1.cardDisplay1.card.buyPrice = 3;
+                            }
+
+                            if (GameManager.manager.md1.cardDisplay1.card.buyPrice == 1)
+                            {
+                                cp.subPips(GameManager.manager.md1.cardDisplay1.card.buyPrice);
+                            }
+                            else
+                            {
+                                cp.subPips(GameManager.manager.md1.cardDisplay1.card.buyPrice - 1);
+                            }
+                            cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay1.card);
+                            card = GameManager.manager.md1.popCard();
+                            GameManager.manager.md1.cardDisplay1.updateCard(card);
+                            //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            GameManager.manager.md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                        }
+                        else
+                        {
+                            GameManager.manager.sendErrorMessage(6);
+                        }
                         break;
                     case 2:
-                        GameManager.manager.topMarketBuy();
+                        if (cp.pips >= GameManager.manager.md1.cardDisplay2.card.buyPrice && !cp.isSaltimbocca)
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md1.cardDisplay2.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md1.cardDisplay2.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md1.cardDisplay2.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md1.cardDisplay2.card.buyPrice = 3;
+                            }
+                            cp.subPips(GameManager.manager.md1.cardDisplay2.card.buyPrice);
+                            cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay2.card);
+                            card = GameManager.manager.md1.popCard();
+                            GameManager.manager.md1.cardDisplay2.updateCard(card);
+                            GameManager.manager.md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                        }
+                        else if (cp.isSaltimbocca && cp.pips >= (GameManager.manager.md1.cardDisplay2.card.buyPrice - 1))
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md1.cardDisplay2.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md1.cardDisplay2.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md1.cardDisplay2.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md1.cardDisplay2.card.buyPrice = 3;
+                            }
+
+                            if (GameManager.manager.md1.cardDisplay2.card.buyPrice - 1 == 0)
+                            {
+                                cp.subPips(GameManager.manager.md1.cardDisplay2.card.buyPrice);
+                            }
+                            else
+                            {
+                                cp.subPips(GameManager.manager.md1.cardDisplay2.card.buyPrice - 1);
+                            }
+                            cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay2.card);
+                            card = GameManager.manager.md1.popCard();
+                            GameManager.manager.md1.cardDisplay2.updateCard(card);
+                            GameManager.manager.md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                        }
+                        else
+                        {
+                            GameManager.manager.sendErrorMessage(6);
+                        }
                         break;
                     case 3:
-                        GameManager.manager.topMarketBuy();
-                        break;
-                    case 4:
-                        GameManager.manager.bottomMarketBuy();
-                        break;
-                    case 5:
-                        GameManager.manager.bottomMarketBuy();
-                        break;
-                    case 6:
-                        GameManager.manager.bottomMarketBuy();
+                        if (cp.pips >= GameManager.manager.md1.cardDisplay3.card.buyPrice && cp.isSaltimbocca)
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md1.cardDisplay3.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md1.cardDisplay3.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md1.cardDisplay3.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md1.cardDisplay3.card.buyPrice = 3;
+                            }
+                            cp.subPips(GameManager.manager.md1.cardDisplay3.card.buyPrice);
+                            cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay3.card);
+                            card = GameManager.manager.md1.popCard();
+                            GameManager.manager.md1.cardDisplay3.updateCard(card);
+                            GameManager.manager.md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                            // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
+                        }
+                        else if (cp.isSaltimbocca && cp.pips >= (GameManager.manager.md1.cardDisplay3.card.buyPrice - 1))
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md1.cardDisplay3.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md1.cardDisplay3.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md1.cardDisplay3.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md1.cardDisplay3.card.buyPrice = 3;
+                            }
+
+                            if (GameManager.manager.md1.cardDisplay3.card.buyPrice - 1 == 0)
+                            {
+                                cp.subPips(GameManager.manager.md1.cardDisplay3.card.buyPrice);
+                            }
+                            else
+                            {
+                                cp.subPips(GameManager.manager.md1.cardDisplay3.card.buyPrice - 1);
+                            }
+                            cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay3.card);
+                            card = GameManager.manager.md1.popCard();
+                            GameManager.manager.md1.cardDisplay3.updateCard(card);
+                            GameManager.manager.md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                        }
+                        else
+                        {
+                            GameManager.manager.sendErrorMessage(6);
+                        }
                         break;
                     default:
+                        Debug.Log("MarketDeck Error!");
                         break;
+                }
+                return;
+            }
+        }
+    }
 
+    [ClientRpc]
+    public void RpcBuyBottomCard(string name, int marketCard)
+    {
+        Card card;
+        Debug.Log("Buying bottom card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == name)
+            {
+                // add in logic
+                switch (marketCard)
+                {
+                    case 1:
+                        if (cp.pips >= GameManager.manager.md2.cardDisplay1.card.buyPrice && !cp.isSaltimbocca)
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md2.cardDisplay1.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md2.cardDisplay1.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md2.cardDisplay1.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md2.cardDisplay1.card.buyPrice = 3;
+                            }
+                            cp.subPips(GameManager.manager.md2.cardDisplay1.card.buyPrice);
+                            cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay1.card);
+                            card = GameManager.manager.md2.popCard();
+                            GameManager.manager.md2.cardDisplay1.updateCard(card);
+                            GameManager.manager.md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                            // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
+                            // SALTIMBOCCA LOGIC
+                        }
+                        else if (cp.isSaltimbocca && cp.pips >= (GameManager.manager.md2.cardDisplay1.card.buyPrice - 1))
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md2.cardDisplay1.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md2.cardDisplay1.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md2.cardDisplay1.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md2.cardDisplay1.card.buyPrice = 3;
+                            }
+
+                            if (GameManager.manager.md2.cardDisplay1.card.buyPrice == 1)
+                            {
+                                cp.subPips(GameManager.manager.md2.cardDisplay1.card.buyPrice);
+                            }
+                            else
+                            {
+                                cp.subPips(GameManager.manager.md2.cardDisplay1.card.buyPrice - 1);
+                            }
+                            cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay1.card);
+                            card = GameManager.manager.md2.popCard();
+                            GameManager.manager.md2.cardDisplay1.updateCard(card);
+                            GameManager.manager.md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                        }
+                        else
+                        {
+                            GameManager.manager.sendErrorMessage(6);
+                        }
+                        break;
+                    case 2:
+                        if (cp.pips >= GameManager.manager.md2.cardDisplay2.card.buyPrice && !cp.isSaltimbocca)
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md2.cardDisplay2.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md2.cardDisplay2.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md2.cardDisplay2.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md2.cardDisplay2.card.buyPrice = 3;
+                            }
+                            cp.subPips(GameManager.manager.md2.cardDisplay2.card.buyPrice);
+                            cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay2.card);
+                            card = GameManager.manager.md2.popCard();
+                            GameManager.manager.md2.cardDisplay2.updateCard(card);
+                            GameManager.manager.md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                        }
+                        else if (cp.isSaltimbocca && cp.pips >= (GameManager.manager.md2.cardDisplay2.card.buyPrice - 1))
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md2.cardDisplay2.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md2.cardDisplay2.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md2.cardDisplay2.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md2.cardDisplay2.card.buyPrice = 3;
+                            }
+
+                            if (GameManager.manager.md2.cardDisplay2.card.buyPrice - 1 == 0)
+                            {
+                                cp.subPips(GameManager.manager.md2.cardDisplay2.card.buyPrice);
+                            }
+                            else
+                            {
+                                cp.subPips(GameManager.manager.md2.cardDisplay2.card.buyPrice - 1);
+                            }
+                            cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay2.card);
+                            card = GameManager.manager.md2.popCard();
+                            GameManager.manager.md2.cardDisplay2.updateCard(card);
+                            GameManager.manager.md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                        }
+                        else
+                        {
+                            GameManager.manager.sendErrorMessage(6);
+                        }
+                        break;
+                    case 3:
+                        if (cp.pips >= GameManager.manager.md2.cardDisplay3.card.buyPrice && cp.isSaltimbocca)
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md2.cardDisplay3.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md2.cardDisplay3.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md2.cardDisplay3.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md2.cardDisplay3.card.buyPrice = 3;
+                            }
+                            cp.subPips(GameManager.manager.md2.cardDisplay3.card.buyPrice);
+                            cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay3.card);
+                            card = GameManager.manager.md2.popCard();
+                            GameManager.manager.md2.cardDisplay3.updateCard(card);
+                            GameManager.manager.md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                            // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
+                        }
+                        else if (cp.isSaltimbocca && cp.pips >= (GameManager.manager.md2.cardDisplay3.card.buyPrice - 1))
+                        {
+                            // All rings cost 4 logic
+                            if (GameManager.manager.md2.cardDisplay3.card.cardType == "Ring" && cp.doubleRingBonus)
+                            {
+                                GameManager.manager.md2.cardDisplay3.card.buyPrice = 4;
+                            }
+
+                            // if The Early Bird Special was drawn this turn
+                            if (GameManager.manager.md2.cardDisplay3.card.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+                            {
+                                // it buys for 3 pips
+                                GameManager.manager.md2.cardDisplay3.card.buyPrice = 3;
+                            }
+
+                            if (GameManager.manager.md2.cardDisplay3.card.buyPrice - 1 == 0)
+                            {
+                                cp.subPips(GameManager.manager.md2.cardDisplay3.card.buyPrice);
+                            }
+                            else
+                            {
+                                cp.subPips(GameManager.manager.md2.cardDisplay3.card.buyPrice - 1);
+                            }
+                            cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay3.card);
+                            card = GameManager.manager.md2.popCard();
+                            GameManager.manager.md2.cardDisplay3.updateCard(card);
+                            GameManager.manager.md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                            GameManager.manager.sendSuccessMessage(1);
+                        }
+                        else
+                        {
+                            GameManager.manager.sendErrorMessage(6);
+                        }
+                        break;
+                    default:
+                        Debug.Log("MarketDeck Error!");
+                        break;
                 }
                 return;
             }
@@ -317,33 +967,18 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [Command]
-    public void CmdBuyCard(string throwerName, int marketCard)
+    public void CmdBuyTopCard(string throwerName, int marketCard)
     {
         switch (marketCard)
         {
             case 1:
-                GameManager.manager.md1.cardInt = 1;
-                RpcBuyCard(throwerName, marketCard);
+                RpcBuyTopCard(throwerName, marketCard);
                 break;
             case 2:
-                GameManager.manager.md1.cardInt = 2;
-                RpcBuyCard(throwerName, marketCard);
+                RpcBuyTopCard(throwerName, marketCard);
                 break;
             case 3:
-                GameManager.manager.md1.cardInt = 3;
-                RpcBuyCard(throwerName, marketCard);
-                break;
-            case 4:
-                GameManager.manager.md2.cardInt = 1;
-                RpcBuyCard(throwerName, marketCard);
-                break;
-            case 5:
-                GameManager.manager.md2.cardInt = 2;
-                RpcBuyCard(throwerName, marketCard);
-                break;
-            case 6:
-                GameManager.manager.md2.cardInt = 3;
-                RpcBuyCard(throwerName, marketCard);
+                RpcBuyTopCard(throwerName, marketCard);
                 break;
             default:
                 break;
@@ -351,38 +986,101 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
+    [Command]
+    public void CmdBuyBottomCard(string throwerName, int marketCard)
+    {
+        switch (marketCard)
+        {
+            case 1:
+                RpcBuyBottomCard(throwerName, marketCard);
+                break;
+            case 2:
+                RpcBuyBottomCard(throwerName, marketCard);
+                break;
+            case 3:
+                RpcBuyBottomCard(throwerName, marketCard);
+                break;
+            default:
+                break;
+
+        }
+    }
+
+    [ClientRpc]
+    public void RpcEndTurn(string name)
+    {
+        Debug.Log("Ending turn for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == playerName)
+            {
+                // Logic to check for end of turn effect ring
+                foreach (CardDisplay cd in cp.holster.cardList)
+                {
+                    if (cd.card.cardName == "Vengeful Ring of the Cursed Mutterings")
+                    {
+                        if (cp.doubleRingBonus)
+                        {
+                            GameManager.manager.dealDamageToAll(4);
+                        }
+                        else
+                        {
+                            GameManager.manager.dealDamageToAll(2);
+                        }
+                    }
+                }
+                cp.currentPlayerHighlight.SetActive(false);
+                GameManager.manager.myPlayerIndex++;
+                if (GameManager.manager.myPlayerIndex >= GameManager.manager.numPlayers)
+                {
+                    GameManager.manager.myPlayerIndex = 0;
+                }
+                GameManager.manager.sendSuccessMessage(18);
+                Game.GamePlayers[GameManager.manager.myPlayerIndex].playerName = GameManager.manager.currentPlayerName;
+                GameManager.manager.onStartTurn(GameManager.manager.players[GameManager.manager.myPlayerIndex]);
+                return;
+            }
+        }
+    }
+
     [Command(requiresAuthority = false)]
-    public void CmdEndTurn()
+    public void CmdEndTurn(string name)
     {
         Debug.Log("Executing CmdEndTurn on the server for player: " + playerName);
-        // change GameManager's myPlayerIndex
-        //GameManager.manager.myPlayerIndex++;
-        GameManager.manager.endTurn();
+        RpcEndTurn(name);
     }
 
     [ClientRpc]
     public void RpcTrashCard(string name, int selectedCard)
     {
         Debug.Log("Trashing card for: " + playerName);
-        // Savory Layer Cake logic
-        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].card.cardName == "SavoryLayerCake")
-        {
-            // Heals for +3 HP if trashed
-            GameManager.manager.players[GameManager.manager.myPlayerIndex].addHealth(3);
-        }
-        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].card.cardQuality != "Starter")
-        {
-            GameManager.manager.players[GameManager.manager.myPlayerIndex].cardsTrashed++;
-        }
-        GameManager.manager.td.addCard(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1]);
 
-        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].isSaltimbocca && GameManager.manager.players[GameManager.manager.myPlayerIndex].cardsTrashed == 4)
+        foreach (CardPlayer cp in GameManager.manager.players)
         {
-            GameManager.manager.sendSuccessMessage(15);
-            GameManager.manager.players[GameManager.manager.myPlayerIndex].character.canBeFlipped = true;
+            if (cp.name == playerName)
+            {
+                // Savory Layer Cake logic
+                if (cp.holster.cardList[selectedCard - 1].card.cardName == "SavoryLayerCake")
+                {
+                    // Heals for +3 HP if trashed
+                    cp.addHealth(3);
+                }
+                if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].card.cardQuality != "Starter")
+                {
+                    cp.cardsTrashed++;
+                }
+               GameManager.manager.td.addCard(cp.holster.cardList[selectedCard - 1]);
+
+                if (cp.isSaltimbocca && cp.cardsTrashed == 4)
+                {
+                    GameManager.manager.sendSuccessMessage(15);
+                    cp.character.canBeFlipped = true;
+                }
+                cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // GameManager.manager.sendSuccessMessage(9);
+                return;
+            }
         }
-        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-        GameManager.manager.sendSuccessMessage(9);
     }
 
     [Command]
@@ -454,7 +1152,6 @@ public class GamePlayer : NetworkBehaviour
             if (cp.name == playerName)
             {
                 cp.subHealth(newValue);
-                //cp.holster.cardList[0].updateCard(cp.holster.cardList[0].placeholder);
             }
         }
     }

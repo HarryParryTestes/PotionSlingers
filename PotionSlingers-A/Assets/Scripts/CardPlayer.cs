@@ -191,6 +191,7 @@ public class CardPlayer : MonoBehaviour
 
     public void setDefaultTurn()
     {
+        currentPlayerHighlight.SetActive(true);
         if (isPluot)
         {
             pluotCold = false;
