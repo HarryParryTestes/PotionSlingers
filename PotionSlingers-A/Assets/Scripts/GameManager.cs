@@ -206,8 +206,6 @@ public class GameManager : MonoBehaviour
 
         if (Game.GamePlayers.Count == 2)
         {
-            // top player becomes p2;
-            players[1] = players[2];
             p3.SetActive(false);
             p4.SetActive(false);
         }
@@ -232,10 +230,6 @@ public class GameManager : MonoBehaviour
             if (Game.GamePlayers[i].isLocalPlayer)
             {
                 Debug.Log("Found local player");
-                if(numPlayers == 2)
-                {
-                    myPlayerIndex = i;
-                }
                 playerBottomName.text = Game.GamePlayers[i].playerName;
                 players[0].name = Game.GamePlayers[i].playerName;
                 players[0].charName = Game.GamePlayers[i].charName;
@@ -250,15 +244,29 @@ public class GameManager : MonoBehaviour
             {
                 if (tracker == 0)
                 {
-                    playerLeftName.text = Game.GamePlayers[i].playerName;
-                    players[1].name = Game.GamePlayers[i].playerName;
-                    players[1].charName = Game.GamePlayers[i].charName;
-                    players[1].user_id = i;
-                    Game.GamePlayers[i].hp = players[1].hp;
-                    Game.GamePlayers[i].essenceCubes = players[1].hpCubes;
-                    players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
-                    players[1].checkCharacter();
-                    tracker++;
+                    if(numPlayers == 2)
+                    {
+                        playerTopName.text = Game.GamePlayers[i].playerName;
+                        players[2].name = Game.GamePlayers[i].playerName;
+                        players[2].charName = Game.GamePlayers[i].charName;
+                        players[2].user_id = 2;
+                        Game.GamePlayers[i].hp = players[2].hp;
+                        Game.GamePlayers[i].essenceCubes = players[2].hpCubes;
+                        players[2].character.onCharacterClick(Game.GamePlayers[i].charName);
+                        players[2].checkCharacter();
+                        tracker++;
+                    } else
+                    {
+                        playerLeftName.text = Game.GamePlayers[i].playerName;
+                        players[1].name = Game.GamePlayers[i].playerName;
+                        players[1].charName = Game.GamePlayers[i].charName;
+                        players[1].user_id = i;
+                        Game.GamePlayers[i].hp = players[1].hp;
+                        Game.GamePlayers[i].essenceCubes = players[1].hpCubes;
+                        players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
+                        players[1].checkCharacter();
+                        tracker++;
+                    }  
                 }
                 if (tracker == 1)
                 {

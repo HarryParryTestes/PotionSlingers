@@ -1053,6 +1053,23 @@ public class GamePlayer : NetworkBehaviour
                     }
                 }
                 cp.currentPlayerHighlight.SetActive(false);
+                if(GameManager.manager.numPlayers == 2 && GameManager.manager.myPlayerIndex == 0)
+                {
+                    GameManager.manager.myPlayerIndex = 2;
+                    GameManager.manager.sendSuccessMessage(18);
+                    GameManager.manager.currentPlayerName = Game.GamePlayers[GameManager.manager.myPlayerIndex].playerName;
+                    GameManager.manager.onStartTurn(GameManager.manager.players[GameManager.manager.myPlayerIndex]);
+                    return;
+                }
+                if (GameManager.manager.numPlayers == 2 && GameManager.manager.myPlayerIndex == 2)
+                {
+                    GameManager.manager.myPlayerIndex = 0;
+                    GameManager.manager.sendSuccessMessage(18);
+                    GameManager.manager.currentPlayerName = Game.GamePlayers[GameManager.manager.myPlayerIndex].playerName;
+                    GameManager.manager.onStartTurn(GameManager.manager.players[GameManager.manager.myPlayerIndex]);
+                    return;
+                }
+
                 GameManager.manager.myPlayerIndex++;
                 if (GameManager.manager.myPlayerIndex >= GameManager.manager.numPlayers)
                 {
