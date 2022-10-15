@@ -1082,7 +1082,7 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
-    [Command(requiresAuthority = false)]
+    [Command]
     public void CmdEndTurn(string name)
     {
         Debug.Log("Executing CmdEndTurn on the server for player: " + playerName);

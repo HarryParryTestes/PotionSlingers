@@ -1366,13 +1366,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // If this client isn't the current player, display error message.
-        if (players[myPlayerIndex].user_id != myPlayerIndex)
-        {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
-            return;
-        }
+        
 
         foreach (CardPlayer cp in players)
         {
@@ -1402,6 +1396,13 @@ public class GameManager : MonoBehaviour
         // This client is the current player.
         else 
         {
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
             int damage = 0;
             Debug.Log("GameManager Throw Potion");
 
@@ -1853,14 +1854,6 @@ public class GameManager : MonoBehaviour
         // test for protocol, must replace parameters later
         // bool connected = networkManager.sendLoadRequest(0, 0);
 
-        // If this client isn't the current player, display error message.
-        if (players[myPlayerIndex].user_id != myPlayerIndex)
-        {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
-            return;
-        }
-
         if (Game.multiplayer)
         {
             foreach (GamePlayer gp in Game.GamePlayers)
@@ -1877,6 +1870,14 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
+
             // Isadore logic
             if (starterPotion && !usedStarterPotion)
             {
@@ -2129,13 +2130,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // If this client isn't the current player, display error message.
-        if(players[myPlayerIndex].user_id != myPlayerIndex) {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
-            return;
-        }
-
         if (Game.multiplayer)
         {
             foreach (GamePlayer gp in Game.GamePlayers)
@@ -2152,8 +2146,16 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
+
             // Cycling a Potion (costs 0 pips to do)
-            if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
                 players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
@@ -2389,11 +2391,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // If this client isn't the current player, display error message.
-        if (players[myPlayerIndex].user_id != myPlayerIndex) {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
-        }
 
         // It is this player's turn.
         else
@@ -2411,6 +2408,12 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 return;
+            }
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
             }
             // cardInt based on position of card in Top Market (position 1, 2, or 3)
             switch (md1.cardInt)
@@ -2973,13 +2976,6 @@ public class GameManager : MonoBehaviour
             sendSuccessMessage(8);
             return;
         }
-
-        // If this client isn't the current player, display error message.
-        if(players[myPlayerIndex].user_id != myPlayerIndex) {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
-        }
-
         // It is this player's turn.
         else
         {
@@ -2995,6 +2991,13 @@ public class GameManager : MonoBehaviour
                         gp.CmdSellCard(gp.playerName, selectedCardInt);
                     }
                 }
+                return;
+            }
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
                 return;
             }
             // LOGIC FOR BOLO SELLING ABILITY
@@ -3063,13 +3066,7 @@ public class GameManager : MonoBehaviour
             sendSuccessMessage(9);
             return;
         }
-
-        // If this client isn't the current player, display error message.
-        if(players[myPlayerIndex].user_id != myPlayerIndex) {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
-            return;
-        }
+        
         if (Game.multiplayer)
         {
             foreach (GamePlayer gp in Game.GamePlayers)
@@ -3086,6 +3083,14 @@ public class GameManager : MonoBehaviour
         // It is this player's turn.
         else
         {
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
+
             // Savory Layer Cake logic
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SavoryLayerCake")
             {
