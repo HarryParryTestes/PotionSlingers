@@ -212,7 +212,8 @@ public class GamePlayer : NetworkBehaviour
                     }
                     damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
                     Debug.Log("Original damage: " + damage);
-                    damage = cp.checkArtifactBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                    damage = cp.checkRingBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                    damage = cp.checkBonus(damage, selectedCardInt);
                     Debug.Log("Damage after thrower bonuses: " + damage);
                     damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
                     Debug.Log("Damage after defensive bonuses: " + damage);
@@ -249,6 +250,7 @@ public class GamePlayer : NetworkBehaviour
                     {
                         damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
                         Debug.Log("Original damage: " + damage);
+                        damage = cp.checkRingBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
                         damage = cp.checkArtifactBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
                         Debug.Log("Damage after thrower bonuses: " + damage);
                         damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
@@ -390,6 +392,65 @@ public class GamePlayer : NetworkBehaviour
     {
         Debug.Log("Executing CmdSellCard on the server for player: " + playerName);
         RpcSellCard(throwerName, selectedCard);
+    }
+
+    [ClientRpc]
+    public void RpcCheckFlip(string throwerName)
+    {
+        Debug.Log("Checking flip for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                // insert logic here
+                // characters that can flip back for free
+                if (cp.character.character.flipped)
+                {
+                    if (cp.isSaltimbocca)
+                    {
+                        cp.character.flipCard();
+                        cp.character.menu.SetActive(false);
+                    }
+                    else
+                    {
+                        GameManager.manager.sendErrorMessage(11);
+                        cp.character.menu.SetActive(false);
+                    }
+
+                    // pay 2 pips to flip sweetbitter back to front
+                    if (cp.isSweetbitter && cp.pips > 2)
+                    {
+                        cp.subPips(2);
+                        cp.character.flipCard();
+                        cp.character.menu.SetActive(false);
+                    }
+                    else
+                    {
+                        GameManager.manager.sendErrorMessage(11);
+                        cp.character.menu.SetActive(false);
+                    }
+                }
+
+                if (cp.character.canBeFlipped)
+                {
+                    cp.character.flipCard();
+                    cp.character.menu.SetActive(false);
+                }
+                else
+                {
+                    // character card flip error
+                    //sendErrorMessage(11);
+                    cp.character.menu.SetActive(false);
+                }
+            }
+        }
+    }
+
+    [Command]
+    public void CmdCheckFlip(string throwerName)
+    {
+        Debug.Log("Executing CmdCheckFlip on the server for player: " + playerName);
+        RpcCheckFlip(throwerName);
     }
 
     [ClientRpc]
@@ -607,7 +668,7 @@ public class GamePlayer : NetworkBehaviour
     [Command]
     public void CmdLoadCard(string throwerName, int selectedCard, int loadedCard)
     {
-        Debug.Log("Executing CmdSellCard on the server for player: " + playerName);
+        Debug.Log("Executing CmdLoadCard on the server for player: " + playerName);
         RpcLoadCard(throwerName, selectedCard, loadedCard);
     }
 

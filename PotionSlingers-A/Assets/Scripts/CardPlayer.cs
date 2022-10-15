@@ -154,7 +154,11 @@ public class CardPlayer : MonoBehaviour
             {
                 Debug.Log(character + " chosen");
                 this.character.updateCharacter(character2);
-            }
+            }  
+        }
+        if (character == "")
+        {
+            this.character.onCharacterClick("Bolo");
         }
     }
 

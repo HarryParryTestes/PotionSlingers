@@ -258,6 +258,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Found local player");
                 players[0].currentPlayerHighlight.SetActive(true);
                 playerBottomName.text = Game.GamePlayers[i].playerName;
+                Debug.Log("Player name before becoming cardPlayer name: " + Game.GamePlayers[i].playerName);
                 players[0].name = Game.GamePlayers[i].playerName;
                 players[0].charName = Game.GamePlayers[i].charName;
                 players[0].user_id = i;
@@ -396,6 +397,21 @@ public class GameManager : MonoBehaviour
                 cardPlayer.character.canBeFlipped = true;
                 cardPlayer.character.flipCard();
                 sendSuccessMessage(11);
+            }
+            return;
+        }
+
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdCheckFlip");
+                    // do the Mirror Command
+                    gp.CmdCheckFlip(currentPlayerName);
+                }
             }
             return;
         }
@@ -743,6 +759,7 @@ public class GameManager : MonoBehaviour
 
         if (Game.multiplayer)
         {
+            /*
             if (numPlayers == 2 && Game.GamePlayers[0].playerName == currentPlayerName && players[myPlayerIndex].user_id != myPlayerIndex)
             {
                 // "You are not the currentPlayer!"
@@ -756,6 +773,7 @@ public class GameManager : MonoBehaviour
                 sendErrorMessage(7);
                 return;
             }
+            */
             // end turn mirror command
             foreach (GamePlayer gp in Game.GamePlayers)
             {
@@ -1421,6 +1439,7 @@ public class GameManager : MonoBehaviour
                 }
                 damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
                 Debug.Log("Original damage: " + damage);
+                damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                 damage = players[myPlayerIndex].checkBonus(damage, selectedCardInt);
                 Debug.Log("Damage after thrower bonuses: " + damage);
                 damage = tempPlayer.checkDefensiveBonus(damage);
@@ -1448,6 +1467,7 @@ public class GameManager : MonoBehaviour
                 if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
                 {
                     damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
+                    damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = players[myPlayerIndex].checkArtifactBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = tempPlayer.checkDefensiveBonus(damage);
 
@@ -1493,6 +1513,7 @@ public class GameManager : MonoBehaviour
                     }
                     //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
                     damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
+                    damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = players[myPlayerIndex].checkVesselBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = tempPlayer.checkDefensiveBonus(damage);
 
