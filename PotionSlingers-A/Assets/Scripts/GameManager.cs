@@ -750,16 +750,17 @@ public class GameManager : MonoBehaviour
             foreach (GamePlayer gp in Game.GamePlayers)
             {
                 // if the steam usernames match
-                if (gp.playerName == currentPlayerName)
+                if (gp.playerName == currentPlayerName && gp.isLocalPlayer)
                 {
                     Debug.Log("Starting Mirror CmdEndTurn");
                     // do the Mirror Command
-                    gp.CmdEndTurn(currentPlayerName);
+                    gp.CmdEndTurn(gp.playerName);
                 }
             }
         }
         else
         {
+            Debug.Log("Local command");
             // Logic to check for end of turn effect ring
             foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
             {

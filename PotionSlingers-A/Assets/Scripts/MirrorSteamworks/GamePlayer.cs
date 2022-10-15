@@ -1033,16 +1033,17 @@ public class GamePlayer : NetworkBehaviour
     public void RpcEndTurn(string name)
     {
         Debug.Log("Ending turn for: " + playerName);
-        foreach (CardPlayer cp in GameManager.manager.players)
+        for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
-            if (cp.name == name)
+            if (Game.GamePlayers[i].playerName == name)
             {
+                Debug.Log("Found them");
                 // Logic to check for end of turn effect ring
-                foreach (CardDisplay cd in cp.holster.cardList)
+                foreach (CardDisplay cd in GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList)
                 {
                     if (cd.card.cardName == "Vengeful Ring of the Cursed Mutterings")
                     {
-                        if (cp.doubleRingBonus)
+                        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].doubleRingBonus)
                         {
                             GameManager.manager.dealDamageToAll(4);
                         }
@@ -1052,16 +1053,23 @@ public class GamePlayer : NetworkBehaviour
                         }
                     }
                 }
-                cp.currentPlayerHighlight.SetActive(false);
+                GameManager.manager.players[GameManager.manager.myPlayerIndex].currentPlayerHighlight.SetActive(false);
 
-                GameManager.manager.myPlayerIndex++;
+                GameManager.manager.myPlayerIndex = i + 1;
                 if (GameManager.manager.myPlayerIndex >= GameManager.manager.numPlayers)
                 {
                     GameManager.manager.myPlayerIndex = 0;
                 }
                 GameManager.manager.sendSuccessMessage(18);
-                GameManager.manager.currentPlayerName = GameManager.manager.players[GameManager.manager.myPlayerIndex].name;
-                GameManager.manager.onStartTurn(GameManager.manager.players[GameManager.manager.myPlayerIndex]);
+                GameManager.manager.currentPlayerName = Game.GamePlayers[GameManager.manager.myPlayerIndex].playerName;
+                foreach (CardPlayer cp in GameManager.manager.players)
+                {
+                    if(cp.name == GameManager.manager.currentPlayerName)
+                    {
+                        GameManager.manager.onStartTurn(cp);
+                    }
+                }
+                //GameManager.manager.onStartTurn(GameManager.manager.players[GameManager.manager.myPlayerIndex]);
                 return;
             }
         }
