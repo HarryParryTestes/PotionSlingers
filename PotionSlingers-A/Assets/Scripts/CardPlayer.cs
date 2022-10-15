@@ -1119,12 +1119,15 @@ public class CardPlayer : MonoBehaviour
         updateHealthUI();
 
         // Flashes damage sign
-        damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
-        damageSign.SetActive(true);
-        damageAmount.SetActive(true);
-        if(damageSign.activeInHierarchy)
+
+        if (damageSign.activeInHierarchy)
+        {
+            damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
+            damageSign.SetActive(true);
+            damageAmount.SetActive(true);
             StartCoroutine(waitThreeSeconds(damageSign));
             StartCoroutine(waitThreeSeconds(damageAmount));
+        }
     }
 
     // public void giveCube(Player player) {

@@ -206,8 +206,7 @@ public class GameManager : MonoBehaviour
 
         if (Game.GamePlayers.Count == 2)
         {
-            players[1] = players[2];
-            players[1] = players[3];
+            //players[1] = players[2];
             p3.SetActive(false);
             p4.SetActive(false);
         }
@@ -230,12 +229,37 @@ public class GameManager : MonoBehaviour
         {
             if (Game.GamePlayers[i].isLocalPlayer)
             {
+                /*
+                if(numPlayers == 2)
+                {
+                    if(tracker == 0)
+                    {
+                        players[0].user_id = 1;
+                        players[1].user_id = 0;
+                    }
+                    if (tracker == 1)
+                    {
+                        players[0].user_id = 1;
+                        players[1].user_id = 0;
+                    }
+                }
+
+                if(numPlayers == 3)
+                {
+
+                }
+
+                if(numPlayers == 4)
+                {
+
+                }
+                */
                 Debug.Log("Found local player");
                 players[0].currentPlayerHighlight.SetActive(true);
                 playerBottomName.text = Game.GamePlayers[i].playerName;
                 players[0].name = Game.GamePlayers[i].playerName;
                 players[0].charName = Game.GamePlayers[i].charName;
-                players[0].user_id = 0;
+                players[0].user_id = i;
                 Game.GamePlayers[i].hp = players[0].hp;
                 Game.GamePlayers[i].essenceCubes = players[0].hpCubes;
                 players[0].character.onCharacterClick(Game.GamePlayers[i].charName);
@@ -246,31 +270,17 @@ public class GameManager : MonoBehaviour
             {
                 if (tracker == 0)
                 {
-                    if(numPlayers == 2)
-                    {
-                        players[2].currentPlayerHighlight.SetActive(false);
-                        playerTopName.text = Game.GamePlayers[i].playerName;
-                        players[2].name = Game.GamePlayers[i].playerName;
-                        players[2].charName = Game.GamePlayers[i].charName;
-                        players[2].user_id = 2;
-                        Game.GamePlayers[i].hp = players[2].hp;
-                        Game.GamePlayers[i].essenceCubes = players[2].hpCubes;
-                        players[2].character.onCharacterClick(Game.GamePlayers[i].charName);
-                        players[2].checkCharacter();
-                        tracker++;
-                    } else
-                    {
-                        playerLeftName.text = Game.GamePlayers[i].playerName;
-                        players[1].name = Game.GamePlayers[i].playerName;
-                        players[1].charName = Game.GamePlayers[i].charName;
-                        players[1].user_id = i;
-                        players[1].currentPlayerHighlight.SetActive(false);
-                        Game.GamePlayers[i].hp = players[1].hp;
-                        Game.GamePlayers[i].essenceCubes = players[1].hpCubes;
-                        players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
-                        players[1].checkCharacter();
-                        tracker++;
-                    }  
+                 playerLeftName.text = Game.GamePlayers[i].playerName;
+                 players[1].name = Game.GamePlayers[i].playerName;
+                 players[1].charName = Game.GamePlayers[i].charName;
+                 players[1].user_id = i;
+                 players[1].currentPlayerHighlight.SetActive(false);
+                 Game.GamePlayers[i].hp = players[1].hp;
+                 Game.GamePlayers[i].essenceCubes = players[1].hpCubes;
+                 players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
+                 players[1].checkCharacter();
+                 tracker++;
+                    
                 }
                 if (tracker == 1)
                 {
@@ -727,7 +737,7 @@ public class GameManager : MonoBehaviour
         }
         */
 
-        if (players[myPlayerIndex].name != currentPlayerName)
+        if (players[myPlayerIndex].user_id != myPlayerIndex)
         {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
@@ -1340,7 +1350,7 @@ public class GameManager : MonoBehaviour
         }
 
         // If this client isn't the current player, display error message.
-        if (players[myPlayerIndex].name != currentPlayerName)
+        if (players[myPlayerIndex].user_id != myPlayerIndex)
         {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
@@ -1827,7 +1837,7 @@ public class GameManager : MonoBehaviour
         // bool connected = networkManager.sendLoadRequest(0, 0);
 
         // If this client isn't the current player, display error message.
-        if (players[myPlayerIndex].name != currentPlayerName)
+        if (players[myPlayerIndex].user_id != myPlayerIndex)
         {
             // "You are not the currentPlayer!"
             sendErrorMessage(7);
