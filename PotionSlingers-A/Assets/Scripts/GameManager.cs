@@ -206,7 +206,8 @@ public class GameManager : MonoBehaviour
 
         if (Game.GamePlayers.Count == 2)
         {
-            //players[1] = players[2];
+            players[1] = players[2];
+            players[2] = players[3];
             p3.SetActive(false);
             p4.SetActive(false);
         }
@@ -737,20 +738,29 @@ public class GameManager : MonoBehaviour
         }
         */
 
-        if (players[myPlayerIndex].user_id != myPlayerIndex)
-        {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
-            return;
-        }
+        Debug.Log("Player's user_id: " + players[myPlayerIndex].user_id);
+        Debug.Log("myPlayerIndex: " + myPlayerIndex);
 
         if (Game.multiplayer)
         {
+            if (numPlayers == 2 && Game.GamePlayers[0].playerName == currentPlayerName && players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
+
+            if (numPlayers == 2 && Game.GamePlayers[1].playerName == currentPlayerName && players[myPlayerIndex].user_id == myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
             // end turn mirror command
             foreach (GamePlayer gp in Game.GamePlayers)
             {
                 // if the steam usernames match
-                if (gp.playerName == currentPlayerName && gp.isLocalPlayer)
+                if (gp.playerName == currentPlayerName)
                 {
                     Debug.Log("Starting Mirror CmdEndTurn");
                     // do the Mirror Command
@@ -761,6 +771,12 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Local command");
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
             // Logic to check for end of turn effect ring
             foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
             {

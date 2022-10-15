@@ -290,6 +290,7 @@ public class LobbyManager : MonoBehaviour
                 LobbyManager.instance.playerListItems[i].NotReadyButton.SetActive(false);
                 LobbyManager.instance.playerListItems[i].ReadyButton.SetActive(true);
                 areAllPlayersReady = true;
+                Game.multiplayer = true;
             } else
             {
                 LobbyManager.instance.playerListItems[i].NotReadyButton.SetActive(true);
@@ -345,6 +346,7 @@ public class LobbyManager : MonoBehaviour
     }
     public void PlayerQuitLobby()
     {
+        Game.multiplayer = false;
         localGamePlayerScript.QuitLobby();
     }
 

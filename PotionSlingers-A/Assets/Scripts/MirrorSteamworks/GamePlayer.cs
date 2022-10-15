@@ -181,6 +181,13 @@ public class GamePlayer : NetworkBehaviour
     [ClientRpc]
     public void RpcThrowCard(string throwerName, string opponentName, int selectedCardInt)
     {
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if(cp.name == opponentName)
+            {
+                GameManager.manager.tempPlayer = cp;
+            }
+        }
         Debug.Log("Throwing card for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
