@@ -56,6 +56,9 @@ public class GameManager : MonoBehaviour
     public GameObject trashDeckMenu;
     public GameObject takeMarketMenu;
     public GameObject opponentHolsterMenu;
+    public GameObject trashBonusMenu;
+    public GameObject trashPlayerMenu;
+    public GameObject faisalMenu;
 
     public TMPro.TextMeshProUGUI trashText;
 
@@ -75,6 +78,9 @@ public class GameManager : MonoBehaviour
     public CharacterDisplay opLeft;
     public CharacterDisplay opTop;
     public CharacterDisplay opRight;
+    public CharacterDisplay opTrashLeft;
+    public CharacterDisplay opTrashTop;
+    public CharacterDisplay opTrashRight;
     public TMPro.TextMeshProUGUI playerBottomName;
     public TMPro.TextMeshProUGUI playerLeftName;
     public TMPro.TextMeshProUGUI playerTopName;
@@ -532,6 +538,39 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void opponentTrashesHolster(CharacterDisplay cd)
+    {
+        if (Game.multiplayer)
+        {
+            foreach(GamePlayer gp in Game.GamePlayers)
+            {
+                if(gp.name == cd.character.cardName)
+                {
+                    // TargetRpc
+                    Debug.Log("Trash Holster ClientRpc");
+                    gp.RpcTrashHolster(gp.name);
+                }
+            }
+            return;
+        }
+        // local singleplayer logic goes here 
+
+    }
+
+    public void everyoneTrashesOneCard()
+    {
+        if (Game.multiplayer)
+        {
+            foreach(GamePlayer gp in Game.GamePlayers)
+            {
+                if(gp.playerName == currentPlayerName)
+                {
+                    gp.CmdEverybodyTrashOneCard(currentPlayerName);
+                }
+            }
+        }
+    }
+
     // DONE: fix this to display properly
     // DISPLAY OPPONENTS
     public void displayOpponents()
@@ -545,6 +584,54 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (trashPlayerMenu.activeInHierarchy)
+        {
+            Debug.Log("Trash Player Menu");
+            // Displaying opponents to attack for 2 player game.
+            if (numPlayers == 2)
+            {
+                if (Game.multiplayer)
+                {
+                    opTrashTop.updateCharacter(players[1].character.character);
+                    opTrashLeft.gameObject.SetActive(false);
+                    opTrashRight.gameObject.SetActive(false);
+                }
+                else
+                {
+                    opTrashTop.updateCharacter(players[2].character.character);
+                    opTrashLeft.gameObject.SetActive(false);
+                    opTrashRight.gameObject.SetActive(false);
+                }
+
+                // For all players that are not this client's player, display their character in attackMenu.
+            }
+
+            // Displaying opponents to attack for 3 player game.
+            if (numPlayers == 3)
+            {
+                opTrashLeft.gameObject.SetActive(true);
+                opTrashTop.gameObject.SetActive(true);
+                opTrashRight.gameObject.SetActive(false);
+                int tracker = 0;
+
+                opTrashLeft.updateCharacter(players[1].character.character);
+                opTrashTop.updateCharacter(players[2].character.character);
+
+            }
+
+            // Displaying opponents to attack for 4 player game.
+            if (numPlayers == 4)
+            {
+                opTrashLeft.gameObject.SetActive(true);
+                opTrashRight.gameObject.SetActive(true);
+                int tracker = 0;
+
+                opTrashLeft.updateCharacter(players[1].character.character);
+                opTrashTop.updateCharacter(players[2].character.character);
+                opTrashRight.updateCharacter(players[3].character.character);
+            }
+            return;
+        }
 
         // Displaying opponents to attack for 2 player game.
         if(numPlayers == 2) 
@@ -624,6 +711,20 @@ public class GameManager : MonoBehaviour
             }
         } else
         {
+            if (Game.multiplayer)
+            {
+                foreach (GamePlayer gp in Game.GamePlayers)
+                {
+                    // if the steam usernames match
+                    if (gp.playerName == tempPlayer.name)
+                    {
+                        Debug.Log("Starting Mirror CmdTrashCard");
+                        // do the Mirror Command
+                        gp.CmdTrashCard(tempPlayer.name, selectedCard);
+                    }
+                }
+                return;
+            }
             td.addCard(tempPlayer.holster.cardList[selectedCard - 1]);
         }
         replaceStarter = false;

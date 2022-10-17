@@ -394,7 +394,7 @@ public class CardPlayer : MonoBehaviour
 
             // if the loaded potion does not have any card text
             // i'm just gonna list the cards because i'm lazy
-            // this might not actually be accurate to how the card should work but i'm drunk and i'm taking a shortcut
+            // this might not actually be accurate to how the card should work but i'm taking a shortcut
             if (selectedCard.aPotion.card.cardName != "NorthernOquinox" && selectedCard.aPotion.card.cardName != "PotionThatMakesHatsUglier" &&
                 selectedCard.aPotion.card.cardName != "SeriesOfPoisonousWords" && selectedCard.aPotion.card.cardName != "VerySeriousThreat" &&
                 selectedCard.aPotion.card.cardName != "BottleOfLeastAmountOfSpiders" && selectedCard.aPotion.card.cardName != "ContainerFilledWithAngryBees" &&
@@ -570,9 +570,51 @@ public class CardPlayer : MonoBehaviour
 
     public int checkVesselBonus(int damage, CardDisplay selectedCard)
     {
+        // Pluot damage bonus
+        if (isPluot)
+        {
+            if (pluotBonusType == selectedCard.vPotion1.card.cardQuality ||
+                pluotBonusType == selectedCard.vPotion2.card.cardQuality )
+            {
+                damage++;
+            }
+
+
+            if (selectedCard.vPotion1.card.cardQuality == "Hot" ||
+                selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                pluotHot = true;
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Wet" ||
+                selectedCard.vPotion2.card.cardQuality == "Wet")
+            {
+                pluotWet = true;
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" ||
+                selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                pluotCold = true;
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Dry" ||
+                selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                pluotDry = true;
+            }
+
+            // PLUOT FLIP LOGIC
+            if (pluotHot && pluotWet && pluotCold && pluotDry)
+            {
+                character.canBeFlipped = true;
+                GameManager.manager.sendSuccessMessage(13);
+            }
+        }
+
         // First Place Volcano at the Alchemy Faire
         // Put up to 1 card from the Market onto the top of your deck.
-        if(selectedCard.card.cardName == "First Place Volcano in the Alchemy Faire")
+        if (selectedCard.card.cardName == "First Place Volcano in the Alchemy Faire")
         {
             // this should follow the similar logic of the trash a card from the market UI
             Debug.Log("Take Market Bonus");
@@ -678,6 +720,23 @@ public class CardPlayer : MonoBehaviour
                 // TODO: make replaceMarketCards() method in GameManager to replace all the market cards
                 GameManager.manager.popAllMarketCards();
                 addPips(3);
+            }
+        }
+
+        
+        // Cold + Wet Bonus
+        if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
+            (selectedCard.vPotion2.card.cardQuality == "Cold" && selectedCard.vPotion1.card.cardQuality == "Wet"))
+        {
+            // Philty Phlegmbic Alembic of Philters Polemic
+            //  1 opponent trashes all cards in their holster, or all opponents trash 1 card 
+            if (selectedCard.card.cardName == "PhiltyPhlegmbicAlembic")
+            {
+                // first they'll need to pick their bonus
+                GameManager.manager.trashBonusMenu.SetActive(true);
+                
+                //GameManager.manager.opponentHolsterMenu.SetActive(true);
+                //GameManager.manager.displayOpponentHolster();
             }
         }
 
@@ -891,7 +950,6 @@ public class CardPlayer : MonoBehaviour
                 character.canBeFlipped = true;
                 GameManager.manager.sendSuccessMessage(13);
             }
-            
         }
 
         // starter ring +1 damage logic
@@ -905,8 +963,35 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Opponent trashes 1 card in their Holster
+        if (holster.cardList[selectedCard - 1].card.cardName == "ParticularlyFrighteningShadeofPurple" ||
+            holster.cardList[selectedCard - 1].card.cardName == "PhilterOfMalaise" ||
+            holster.cardList[selectedCard - 1].card.cardName == "MouthfulOfHair" ||
+            holster.cardList[selectedCard - 1].card.cardName == "PowderOfLaughingFits" ||
+            holster.cardList[selectedCard - 1].card.cardName == "A Jar of Mummy Finger Butter" ||
+            holster.cardList[selectedCard - 1].card.cardName == "A Pile of Sweat from Several Humid Days" ||
+            holster.cardList[selectedCard - 1].card.cardName == "A Loss of Dexterity" ||
+            holster.cardList[selectedCard - 1].card.cardName == "A Severe Draught That Melts Only Brains")
+        {
+            if (GameManager.manager.Game.multiplayer)
+            {
+                Debug.Log("Command check starting");
+                foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                {
+                    if (gp.playerName == GameManager.manager.tempPlayer.name)
+                    {
+                        Debug.Log("Target RPC, Trash Deck Menu Active");
+                        gp.RpcTrashOneCard(gp.playerName);
+                    }
+                }
+                return damage;
+            }
+            GameManager.manager.opponentHolsterMenu.SetActive(true);
+            GameManager.manager.displayOpponentHolster();
+        }
+
         // Choose 1 card in an opponent's Holster and trash it
-        if(holster.cardList[selectedCard - 1].card.cardName == "A Kind But Ultimately Thoughtless Gesture" ||
+        if (holster.cardList[selectedCard - 1].card.cardName == "A Kind But Ultimately Thoughtless Gesture" ||
             holster.cardList[selectedCard - 1].card.cardName == "A Probably Dangerous Brew With A Hole In It" ||
             holster.cardList[selectedCard - 1].card.cardName == "PlasticwareContainerOfDadJokes" ||
             holster.cardList[selectedCard - 1].card.cardName == "A Totally in NO WAY Suspicious Clear Liquid")
@@ -1068,7 +1153,20 @@ public class CardPlayer : MonoBehaviour
                 // Shield of the Mouth of Truth
                 else if(cd.card.cardName == "Shield of the Mouth of Truth")
                 {
-                    // May trash 1 loaded potion to prevent 3 damage.
+                    if (cd.aPotion.card != cd.placeholder) {
+                        // May trash 1 loaded potion to prevent 3 damage.
+                        if (GameManager.manager.Game.multiplayer)
+                        {
+                            foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                            {
+                                if (gp.playerName == GameManager.manager.tempPlayer.name)
+                                {
+                                    Debug.Log("Target RPC, Trash Potion Menu Active");
+                                    gp.RpcShieldMenu(gp.playerName);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             

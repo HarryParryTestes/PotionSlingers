@@ -171,6 +171,51 @@ public class GamePlayer : NetworkBehaviour
         GameManager.manager.md2.shuffle();
     }
 
+    [TargetRpc]
+    public void RpcEverybodyTrashOneCard(string throwerName)
+    {
+        Debug.Log("Pulling up Opponent Holster Menu for: " + playerName);
+        foreach(CardPlayer cp in GameManager.manager.players)
+        {
+            if(cp.name == throwerName)
+            {
+                GameManager.manager.tempPlayer = cp;
+                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.displayOpponentHolster();
+            }
+        }
+    }
+
+    [TargetRpc]
+    public void RpcTrashOneCard(string throwerName)
+    {
+        Debug.Log("Pulling up Opponent Holster Menu for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if(cp.name == throwerName)
+            {
+                GameManager.manager.tempPlayer = cp;
+                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.displayOpponentHolster();
+            }
+        }
+    }
+
+    [Command]
+    public void CmdEverybodyTrashOneCard(string throwerName)
+    {
+        // shuffle market decks
+        Debug.Log("Executing CmdEverybodyTrashOneCard on the server for everyone except player: " + playerName);
+        foreach (GamePlayer gp in Game.GamePlayers)
+        {
+            if(gp.playerName != throwerName)
+            {
+                gp.RpcEverybodyTrashOneCard(gp.playerName);
+            }
+        }
+        
+    }
+
     [Command]
     public void CmdThrowCard(string throwerName, string opponentName, int selectedCard)
     {
@@ -239,6 +284,22 @@ public class GamePlayer : NetworkBehaviour
     {
         Debug.Log("Executing CmdTakeMarketCard on the server for player: " + playerName);
         RpcTakeMarketCard(throwerName, marketCard);
+    }
+
+    [ClientRpc]
+    public void RpcTrashHolster(string throwerName)
+    {
+        Debug.Log("Trashing holster for: " + playerName);
+        foreach(CardPlayer cp in GameManager.manager.players)
+        {
+            if(cp.name == throwerName)
+            {
+                foreach(CardDisplay cd in cp.holster.cardList)
+                {
+                    GameManager.manager.td.addCard(cd);
+                }
+            }
+        }
     }
 
     [ClientRpc]
@@ -1264,6 +1325,19 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
+    [TargetRpc]
+    public void RpcShieldMenu(string throwerName)
+    {
+        Debug.Log("Pulling up Sheild Menu for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                GameManager.manager.faisalMenu.SetActive(true);
+            }
+        }
+    }
+
     [ClientRpc]
     public void RpcEndTurn(string name)
     {
@@ -1332,7 +1406,7 @@ public class GamePlayer : NetworkBehaviour
                     // Heals for +3 HP if trashed
                     cp.addHealth(3);
                 }
-                if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCard - 1].card.cardQuality != "Starter")
+                if (cp.holster.cardList[selectedCard - 1].card.cardQuality != "Starter")
                 {
                     cp.cardsTrashed++;
                 }
@@ -1350,7 +1424,7 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
-    [Command]
+    [Command(requiresAuthority = false)]
     public void CmdTrashCard(string throwerName, int selectedCard)
     {
         Debug.Log("Executing CmdTrashCard on the server for player: " + playerName);
