@@ -129,8 +129,8 @@ public class GameManager : MonoBehaviour
     public CardDisplay opponentCard3;
     public CardDisplay opponentCard4;
 
-    private MyNetworkManager game;
-    private MyNetworkManager Game
+    public MyNetworkManager game;
+    public MyNetworkManager Game
     {
         get
         {
@@ -549,10 +549,20 @@ public class GameManager : MonoBehaviour
         // Displaying opponents to attack for 2 player game.
         if(numPlayers == 2) 
         {
-            opLeft.gameObject.SetActive(false);
-            opRight.gameObject.SetActive(false);
+            if (Game.multiplayer)
+            {
+                opTop.updateCharacter(players[1].character.character);
+                opLeft.gameObject.SetActive(false);
+                opRight.gameObject.SetActive(false);
+            }
+            else
+            {
+                opTop.updateCharacter(players[2].character.character);
+                opLeft.gameObject.SetActive(false);
+                opRight.gameObject.SetActive(false);
+            }
+            
             // For all players that are not this client's player, display their character in attackMenu.
-                    opTop.updateCharacter(players[2].character.character);
         }
 
         // Displaying opponents to attack for 3 player game.
@@ -1045,8 +1055,32 @@ public class GameManager : MonoBehaviour
 
     public void takeTrashCard(CardDisplay cd)
     {
-        players[myPlayerIndex].deck.putCardOnTop(cd.card);
-        cd.updateCard(td.card);
+        int i;
+        for (i = 0; i < td.deckList.Count; i++)
+        {
+            if (td.deckList[i].cardName == cd.card.cardName)
+            {
+                Debug.Log("Card found in trash");
+                break;
+            }
+        }
+
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdTakeTrashCard");
+                    // do the Mirror Command
+                    gp.CmdTakeTrashCard(currentPlayerName, i);
+                }
+            }
+            return;
+        }
+        players[myPlayerIndex].deck.putCardOnTop(td.deckList[i]);
+        td.deckList.RemoveAt(i);
     }
 
     // any time ACTION is pressed on the player in the game scene
@@ -1633,6 +1667,21 @@ public class GameManager : MonoBehaviour
 
     public void takeMarket(int marketCard)
     {
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdTakeMarketCard");
+                    // do the Mirror Command
+                    gp.CmdTakeMarketCard(gp.playerName, marketCard);
+                }
+            }
+            return;
+        }
+
         switch (marketCard)
         {
             case 1:
@@ -2627,30 +2676,31 @@ public class GameManager : MonoBehaviour
     public void bottomMarketBuy()
     {
         Debug.Log("Bottom Market Buy");
-
-        // If this client isn't the current player, display error message.
-        if(players[myPlayerIndex].user_id != myPlayerIndex) {
-            // "You are not the currentPlayer!"
-            sendErrorMessage(7);
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdBuyBottomCard");
+                    // do the Mirror Command
+                    gp.CmdBuyBottomCard(gp.playerName, md2.cardInt);
+                }
+            }
+            return;
         }
 
         // It is this player's turn.
         else
         {
-            if (Game.multiplayer)
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
             {
-                foreach (GamePlayer gp in Game.GamePlayers)
-                {
-                    // if the steam usernames match
-                    if (gp.playerName == currentPlayerName)
-                    {
-                        Debug.Log("Starting Mirror CmdBuyBottomCard");
-                        // do the Mirror Command
-                        gp.CmdBuyBottomCard(gp.playerName, md2.cardInt);
-                    }
-                }
-                return;
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
             }
+
             switch (md2.cardInt)
             {
                 // cardInt based on position of card in Top Market (position 1, 2, or 3)
@@ -2835,6 +2885,21 @@ public class GameManager : MonoBehaviour
     // this method is for cards with special text like paying pips to do something with the card or putting the hat card on your character
     public void checkCardAction()
     {
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdCheckCardAction");
+                    // do the Mirror Command
+                    gp.CmdCheckCardAction(gp.playerName, selectedCardInt);
+                }
+            }
+            return;
+        }
+
         // Bottle Rocket UI Logic
         if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "BottleRocket")
         {
@@ -2845,18 +2910,33 @@ public class GameManager : MonoBehaviour
 
     public void setBottleRocketBonus()
     {
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdBottleRocketBonus");
+                    // do the Mirror Command
+                    gp.CmdBottleRocketBonus(gp.playerName, selectedCardInt);
+                }
+            }
+            return;
+        }
+
         if (players[myPlayerIndex].pips >= 3 || players[myPlayerIndex].bottleRocketBonus)
         {
             players[myPlayerIndex].bottleRocketBonus = true;
             // add some success message but change what you initially put here lol
             sendSuccessMessage(14);
             // reset card
-            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
         } else
         {
             sendErrorMessage(6);
             // reset card
-            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
         }
     }
 

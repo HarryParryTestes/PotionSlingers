@@ -575,12 +575,23 @@ public class CardPlayer : MonoBehaviour
         if(selectedCard.card.cardName == "First Place Volcano in the Alchemy Faire")
         {
             // this should follow the similar logic of the trash a card from the market UI
-            // GameManager.manager.trashorDamageMenu.SetActive(true);
-            // GameManager.manager.updateTrashMarketMenu();
-
-            GameManager.manager.takeMarketMenu.SetActive(true);
-            GameManager.manager.updateTakeMarketMenu();
-
+            Debug.Log("Take Market Bonus");
+            if (GameManager.manager.Game.multiplayer)
+            {
+                foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                {
+                    if (gp.playerName == GameManager.manager.currentPlayerName)
+                    {
+                        Debug.Log("Target RPC, Trash Menu Active");
+                        gp.RpcTMMenuActive();
+                    }
+                }
+            }
+            else
+            {
+                GameManager.manager.takeMarketMenu.SetActive(true);
+                GameManager.manager.updateTakeMarketMenu();
+            }
         }
 
         // Vessel Bonus: Put any potion from the trash to the top of your deck
@@ -589,10 +600,23 @@ public class CardPlayer : MonoBehaviour
             (selectedCard.vPotion1.card.cardName == "TinctureOfMeltedMarble" || selectedCard.vPotion2.card.cardName == "TinctureOfMeltedMarble") ||
             (selectedCard.vPotion1.card.cardName == "A Freshly Caught and Distilled Sickness" || selectedCard.vPotion2.card.cardName == "A Freshly Caught and Distilled Sickness"))
         {
-            GameManager.manager.trashDeckBonus = true;
-            GameManager.manager.trashDeckMenu.SetActive(true);
-            GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
-            GameManager.manager.td.displayTrash();
+            if (GameManager.manager.Game.multiplayer)
+            {
+                foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                {
+                    if (gp.playerName == GameManager.manager.currentPlayerName)
+                    {
+                        Debug.Log("Target RPC, Trash Deck Menu Active");
+                        gp.RpcTDMenuActive();
+                    }
+                }
+            } else
+            {
+                GameManager.manager.trashDeckBonus = true;
+                GameManager.manager.trashDeckMenu.SetActive(true);
+                GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+                GameManager.manager.td.displayTrash();
+            }  
         }
 
         // Fragile Glass Ornament

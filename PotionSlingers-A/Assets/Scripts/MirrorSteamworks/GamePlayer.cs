@@ -179,6 +179,69 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [ClientRpc]
+    public void RpcTakeMarketCard(string throwerName, int marketCard)
+    {
+        Debug.Log("Throwing card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                switch (marketCard)
+                {
+                    case 1:
+                        cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay1.card);
+                        Card card1 = GameManager.manager.md1.popCard();
+                        GameManager.manager.md1.cardDisplay1.updateCard(card1);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 2:
+                        cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay2.card);
+                        Card card2 = GameManager.manager.md1.popCard();
+                        GameManager.manager.md1.cardDisplay2.updateCard(card2);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 3:
+                        cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay3.card);
+                        Card card3 = GameManager.manager.md1.popCard();
+                        GameManager.manager.md1.cardDisplay3.updateCard(card3);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 4:
+                        cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay1.card);
+                        Card card4 = GameManager.manager.md2.popCard();
+                        GameManager.manager.md2.cardDisplay1.updateCard(card4);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 5:
+                        cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay2.card);
+                        Card card5 = GameManager.manager.md2.popCard();
+                        GameManager.manager.md2.cardDisplay2.updateCard(card5);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 6:
+                        cp.deck.putCardOnTop(GameManager.manager.md2.cardDisplay3.card);
+                        Card card6 = GameManager.manager.md2.popCard();
+                        GameManager.manager.md2.cardDisplay3.updateCard(card6);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    default:
+                        break;
+                }
+
+                GameManager.manager.takeMarketMenu.SetActive(false);
+                return;
+            }
+        }
+    }
+
+    [Command]
+    public void CmdTakeMarketCard(string throwerName, int marketCard)
+    {
+        Debug.Log("Executing CmdTakeMarketCard on the server for player: " + playerName);
+        RpcTakeMarketCard(throwerName, marketCard);
+    }
+
+    [ClientRpc]
     public void RpcThrowCard(string throwerName, string opponentName, int selectedCardInt)
     {
         foreach (CardPlayer cp in GameManager.manager.players)
@@ -248,6 +311,7 @@ public class GamePlayer : NetworkBehaviour
                 {
                     if (cp.holster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
                     {
+                        Debug.Log("ARTIFACT");
                         damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
                         Debug.Log("Original damage: " + damage);
                         damage = cp.checkRingBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
@@ -261,8 +325,6 @@ public class GamePlayer : NetworkBehaviour
                         GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1].aPotion);
                         cp.holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
-                        // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                         foreach (CardPlayer cp2 in GameManager.manager.players)
                         {
                             if (cp2.name == opponentName)
@@ -302,14 +364,15 @@ public class GamePlayer : NetworkBehaviour
                     if (cp.holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
                                 cp.holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
                     {
+                        Debug.Log("VESSEL");
                         if (cp.isTwins && cp.character.character.flipped)
                         {
                             cp.addHealth(4);
                         }
                         //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
-                        damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
+                        damage = cp.holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + cp.holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
                         Debug.Log("Original damage: " + damage);
-                        damage = cp.checkArtifactBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
+                        damage = cp.checkVesselBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
                         Debug.Log("Damage after thrower bonuses: " + damage);
                         damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
                         Debug.Log("Damage after defensive bonuses: " + damage);
@@ -323,8 +386,6 @@ public class GamePlayer : NetworkBehaviour
                         GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1]);
                         cp.holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                         cp.holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
-                        // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                        // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                         foreach (CardPlayer cp2 in GameManager.manager.players)
                         {
                             if (cp2.name == opponentName)
@@ -446,11 +507,116 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
+    [TargetRpc]
+    public void RpcBRMenuActive()
+    {
+        GameManager.manager.bottleRocketMenu.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcCheckCardAction(string throwerName, int selectedCardInt)
+    {
+        Debug.Log("Checking card action for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                // Bottle Rocket UI Logic
+                if (cp.holster.cardList[selectedCardInt - 1].card.cardName == "BottleRocket")
+                {
+                    // SetActive the UI
+                    //bottleRocketMenu.SetActive(true);
+                    Debug.Log("Target RPC, BottleRocket Menu Active");
+                    RpcBRMenuActive();
+                }
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBottleRocketBonus(string throwerName, int selectedCardInt)
+    {
+        Debug.Log("Checking Bottle Rocket bonus for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                if (cp.pips >= 3 || cp.bottleRocketBonus)
+                {
+                    cp.bottleRocketBonus = true;
+                    // add some success message but change what you initially put here lol
+                    GameManager.manager.sendSuccessMessage(14);
+                    // reset card
+                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
+                else
+                {
+                    GameManager.manager.sendErrorMessage(6);
+                    // reset card
+                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
+            }
+        }
+    }
+
+    [Command]
+    public void CmdBottleRocketBonus(string throwerName, int selectedCardInt)
+    {
+        Debug.Log("Executing CmdBottleRocketBonus on the server for player: " + playerName);
+        RpcBottleRocketBonus(throwerName, selectedCardInt);
+    }
+
+    [Command]
+    public void CmdCheckCardAction(string throwerName, int selectedCardInt)
+    {
+        Debug.Log("Executing CmdCheckCardAction on the server for player: " + playerName);
+        RpcCheckCardAction(throwerName, selectedCardInt);
+    }
+
     [Command]
     public void CmdCheckFlip(string throwerName)
     {
         Debug.Log("Executing CmdCheckFlip on the server for player: " + playerName);
         RpcCheckFlip(throwerName);
+    }
+
+    [Command]
+    public void CmdTakeTrashCard(string throwerName, int cardInt)
+    {
+        Debug.Log("Executing CmdCheckFlip on the server for player: " + playerName);
+        RpcTakeTrashCard(throwerName, cardInt);
+    }
+
+    [ClientRpc]
+    public void RpcTakeTrashCard(string throwerName, int cardInt)
+    {
+        Debug.Log("Taking trash card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                cp.deck.putCardOnTop(GameManager.manager.td.deckList[cardInt]);
+                GameManager.manager.td.deckList.RemoveAt(cardInt);
+            }
+        }
+    }
+
+    [TargetRpc]
+    public void RpcTMMenuActive()
+    {
+        // this hopefully should trigger on only the character who got the bonus
+        // it does, otherwise mirror is gaslighting me
+        GameManager.manager.takeMarketMenu.SetActive(true);
+        GameManager.manager.updateTakeMarketMenu();
+    }
+
+    [TargetRpc]
+    public void RpcTDMenuActive()
+    {
+        GameManager.manager.trashDeckBonus = true;
+        GameManager.manager.trashDeckMenu.SetActive(true);
+        GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+        GameManager.manager.td.displayTrash();
     }
 
     [ClientRpc]
@@ -800,7 +966,7 @@ public class GamePlayer : NetworkBehaviour
                         }
                         break;
                     case 3:
-                        if (cp.pips >= GameManager.manager.md1.cardDisplay3.card.buyPrice && cp.isSaltimbocca)
+                        if (cp.pips >= GameManager.manager.md1.cardDisplay3.card.buyPrice && !cp.isSaltimbocca)
                         {
                             // All rings cost 4 logic
                             if (GameManager.manager.md1.cardDisplay3.card.cardType == "Ring" && cp.doubleRingBonus)
@@ -853,6 +1019,7 @@ public class GamePlayer : NetworkBehaviour
                         }
                         else
                         {
+                            Debug.Log("Nothing above this triggered");
                             GameManager.manager.sendErrorMessage(6);
                         }
                         break;

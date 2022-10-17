@@ -84293,6 +84293,10 @@ MonoBehaviour:
   loadMenu: {fileID: 1081830690}
   pauseUI: {fileID: 1846390483}
   starterPotionMenu: {fileID: 2062314121}
+  paused: 0
+  starterPotion: 0
+  usedStarterPotion: 0
+  isadoreAction: 1
   earlyBirdSpecial: 0
   trash: 0
   damage: 0
@@ -84320,6 +84324,7 @@ MonoBehaviour:
   opponentCard2: {fileID: 980813217}
   opponentCard3: {fileID: 612039237}
   opponentCard4: {fileID: 374695418}
+  game: {fileID: 0}
 --- !u!4 &2083794570
 Transform:
   m_ObjectHideFlags: 0
