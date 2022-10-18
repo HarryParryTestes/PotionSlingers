@@ -515,7 +515,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (gp.playerName == currentPlayerName)
                     {
-                        gp.RpcPluotMenu(currentPlayerName);
+                        gp.RpcPluotPotionMenu(currentPlayerName);
                     }
                 }
                 return;
@@ -1068,6 +1068,22 @@ public class GameManager : MonoBehaviour
 
     public void addTP()
     {
+        if (Game.multiplayer)
+        {
+
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdCheckPlayerAction");
+                    // do the Mirror Command
+                    gp.CmdAddTP(currentPlayerName);
+                }
+            }
+            return;
+        }
+
         if (players[myPlayerIndex].pips >= 6 && !players[myPlayerIndex].character.uniqueCardUsed)
         {
             players[myPlayerIndex].addThePhylactery();
@@ -1082,6 +1098,22 @@ public class GameManager : MonoBehaviour
 
     public void addEI()
     {
+        if (Game.multiplayer)
+        {
+
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdAddCBB");
+                    // do the Mirror Command
+                    gp.CmdAddEI(currentPlayerName);
+                }
+            }
+            return;
+        }
+
         if (Game.tutorial)
         {
             cardPlayer.addExtraInventory();
@@ -1108,6 +1140,22 @@ public class GameManager : MonoBehaviour
 
     public void addPS()
     {
+        if (Game.multiplayer)
+        {
+
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdAddPS");
+                    // do the Mirror Command
+                    gp.CmdAddPS(currentPlayerName);
+                }
+            }
+            return;
+        }
+
         // send an error message if they don't have enough pips
         if (players[myPlayerIndex].pips < 3 || players[myPlayerIndex].character.uniqueCardUsed)
         {
@@ -1128,6 +1176,22 @@ public class GameManager : MonoBehaviour
 
     public void addCBB()
     {
+        if (Game.multiplayer)
+        {
+
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdAddCBB");
+                    // do the Mirror Command
+                    gp.CmdAddCBB(currentPlayerName);
+                }
+            }
+            return;
+        }
+
         if (players[myPlayerIndex].pips < 3 || players[myPlayerIndex].character.uniqueCardUsed)
         {
             sendErrorMessage(6);
@@ -1147,6 +1211,22 @@ public class GameManager : MonoBehaviour
 
     public void addReetsCard()
     {
+        if (Game.multiplayer)
+        {
+
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdAddReetsCard");
+                    // do the Mirror Command
+                    gp.CmdAddReetsCard(currentPlayerName);
+                }
+            }
+            return;
+        }
+
         if (players[myPlayerIndex].character.character.flipped)
         {
             if (players[myPlayerIndex].pips > 1)
@@ -1229,6 +1309,22 @@ public class GameManager : MonoBehaviour
             {
                 // display error message
                 sendErrorMessage(10);
+            }
+            return;
+        }
+
+        if (Game.multiplayer)
+        {
+
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdCheckPlayerAction");
+                    // do the Mirror Command
+                    gp.CmdCheckPlayerAction(currentPlayerName);
+                }
             }
             return;
         }

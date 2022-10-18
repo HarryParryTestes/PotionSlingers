@@ -215,7 +215,7 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [TargetRpc]
-    public void RpcPluotMenu(string throwerName)
+    public void RpcPluotPotionMenu(string throwerName)
     {
         Debug.Log("Pulling up Opponent Holster Menu for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
@@ -583,7 +583,349 @@ public class GamePlayer : NetworkBehaviour
         RpcSellCard(throwerName, selectedCard);
     }
 
+    [TargetRpc]
+    public void RpcSweetbitterMenu(string throwerName)
+    {
+        Debug.Log("Enabling Sweetbitter menu for: " + playerName);
+        GameManager.manager.sweetbitterMenu.SetActive(true);
+    }
+
+    [Command]
+    public void CmdCheckPlayerAction(string throwerName)
+    {
+        Debug.Log("Executing CmdSellCard on the server for player: " + playerName);
+        RpcCheckPlayerAction(throwerName);
+    }
+
+    [Command]
+    public void CmdAddTP(string throwerName)
+    {
+        Debug.Log("Executing CmdSellCard on the server for player: " + playerName);
+        RpcAddTP(throwerName);
+    }
+
+    [Command]
+    public void CmdAddCBB(string throwerName)
+    {
+        Debug.Log("Executing CmdAddCBB on the server for player: " + playerName);
+        RpcAddCBB(throwerName);
+    }
+
+    [Command]
+    public void CmdAddEI(string throwerName)
+    {
+        Debug.Log("Executing CmdAddEI on the server for player: " + playerName);
+        RpcAddEI(throwerName);
+    }
+
+    [Command]
+    public void CmdAddPS(string throwerName)
+    {
+        Debug.Log("Executing CmdAddPS on the server for player: " + playerName);
+        RpcAddPS(throwerName);
+    }
+
+    [Command]
+    public void CmdAddReetsCard(string throwerName)
+    {
+        Debug.Log("Executing CmdAddPS on the server for player: " + playerName);
+        RpcAddReetsCard(throwerName);
+    }
+
     [ClientRpc]
+    public void RpcAddPS(string throwerName)
+    {
+        Debug.Log("Adding The Blacksnake Pip Sling in holster for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                if (cp.character.character.flipped)
+                {
+                    if (cp.pips > 1)
+                    {
+                        cp.subPips(1);
+                        cp.addReetsCard();
+                    }
+                    else
+                    {
+                        Debug.Log("Did this fire?");
+                        GameManager.manager.sendErrorMessage(6);
+                    }
+                }
+                else
+                // not flipped
+                {
+                    if (cp.pips > 2)
+                    {
+                        cp.subPips(2);
+                        cp.addReetsCard();
+                    }
+                    else
+                    {
+                        Debug.Log("Did this fire?");
+                        GameManager.manager.sendErrorMessage(6);
+                    }
+                }
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcAddPS(string throwerName)
+    {
+        Debug.Log("Adding The Blacksnake Pip Sling in holster for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                // send an error message if they don't have enough pips
+                if (cp.pips < 3 || cp.character.uniqueCardUsed)
+                {
+                    GameManager.manager.sendErrorMessage(6);
+                    return;
+                }
+                cp.subPips(3);
+                cp.addPipSling();
+
+                foreach (CardDisplay cd in cp.holster.cardList)
+                {
+                    if (cd.card.cardName == "Blacksnake Pip Sling")
+                    {
+                        cp.character.uniqueCardUsed = true;
+                    }
+                }
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcAddEI(string throwerName)
+    {
+        Debug.Log("Adding The Extra Inventory in holster for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                if (cp.character.uniqueCardUsed)
+                {
+                    // add error message
+                    GameManager.manager.sendErrorMessage(6);
+                    return;
+                }
+
+                cp.addExtraInventory();
+
+                foreach (CardDisplay cd in cp.holster.cardList)
+                {
+                    if (cd.card.cardName == "Extra Inventory")
+                    {
+                        cp.character.uniqueCardUsed = true;
+                    }
+                }
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcAddCBB(string throwerName)
+    {
+        Debug.Log("Adding The Cherrybomb Badge in holster for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                if (players[myPlayerIndex].pips < 3 || players[myPlayerIndex].character.uniqueCardUsed)
+                {
+                    sendErrorMessage(6);
+                    return;
+                }
+                cp.subPips(3);
+                cp.addCherryBombBadge();
+
+                foreach (CardDisplay cd in cp.holster.cardList)
+                {
+                    if (cd.card.cardName == "Cherrybomb Badge")
+                    {
+                        cp.character.uniqueCardUsed = true;
+                    }
+                }
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcAddTP(string throwerName)
+    {
+        Debug.Log("Adding The Phylactery in holster for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if(cp.name == throwerName)
+            {
+                if (cp.pips >= 6 && !cp.character.uniqueCardUsed)
+                {
+                    cp.addThePhylactery();
+                    cp.character.uniqueCardUsed = true;
+                }
+                else
+                {
+                    // you are too poor or you did it already
+                    Debug.Log("You are poor!");
+                    GameManager.manager.sendErrorMessage(6);
+                }
+            }
+        }
+    }
+
+    [TargetRpc]
+    public void RpcIsadoreMenu(string throwerName)
+    {
+        Debug.Log("Enabling Isadore menu for: " + playerName);
+        GameManager.manager.isadoreMenu.SetActive(true);
+    }
+
+    [TargetRpc]
+    public void RpcPluotMenu(string throwerName)
+    {
+        Debug.Log("Enabling Pluot menu for: " + playerName);
+        GameManager.manager.ExtraInventoryMenu.SetActive(true);
+    }
+
+    [TargetRpc]
+    public void RpcReetsMenu(string throwerName)
+    {
+        Debug.Log("Enabling Reets menu for: " + playerName);
+        GameManager.manager.reetsMenu.SetActive(true);
+
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if(cp.name == throwerName)
+            {
+                if (cp.character.character.flipped)
+                {
+                    GameManager.manager.reetsMenuText.text = "Pay 1P to add top card of deck to Holster?";
+                    GameManager.manager.reetsCard.GetComponent<Image>().sprite = GameManager.manager.sprite1;
+                }
+                else
+                {
+                    GameManager.manager.reetsMenuText.text = "Pay 2P to add top card of deck to Holster?";
+                    GameManager.manager.reetsCard.GetComponent<Image>().sprite = GameManager.manager.sprite2;
+                }
+            }
+        }
+    }
+
+    [TargetRpc]
+    public void RpcNicklesMenu(string throwerName)
+    {
+        Debug.Log("Enabling Nickles menu for: " + playerName);
+        GameManager.manager.nicklesUI.SetActive(true);
+    }
+
+    [TargetRpc]
+    public void RpcFlippedNicklesMenu(string throwerName)
+    {
+        Debug.Log("Enabling flipped Nickles menu for: " + playerName);
+        GameManager.manager.flippedNicklesUI.SetActive(true);
+    }
+
+    [ClientRpc]
+    public void RpcCheckPlayerAction(string throwerName)
+    {
+        Debug.Log("Checking player action for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                if (cp.isSweetbitter)
+                {
+                    if (cp.character.character.flipped)
+                    {
+                        GameManager.manager.sendErrorMessage(10);
+                    }
+                    else
+                    {
+                        // Target RPC for Sweetbitter Menu
+                        RpcSweetbitterMenu(throwerName);
+                        //sweetbitterMenu.SetActive(true);
+                    }
+                }
+
+                // change this to flipped and not !flipped after you test this
+                if (cp.isIsadore && !cp.character.character.flipped && cp.character.uniqueCardUsed)
+                {
+                    // Target RPC for Isadore Menu
+                    RpcIsadoreMenu(throwerName);
+                    //isadoreMenu.SetActive(true);
+                }
+                else
+                {
+                    // not able to do action
+                    // fix this later
+                    //sendErrorMessage(13);
+                }
+
+                if (cp.isPluot && cp.character.character.flipped)
+                {
+                    // prompt ui for adding Extra Inventory into holster
+                    // Target RPC for Pluot Menu
+                    RpcPluotMenu(throwerName);
+                    //ExtraInventoryMenu.SetActive(true);
+                }
+                else
+                {
+                    // not able to do action
+                    //sendErrorMessage(13);
+                }
+
+                if (cp.isReets)
+                {
+                    // Target RPC for Reets Menu
+                    RpcReetsMenu(throwerName);
+                    /*
+                    reetsMenu.SetActive(true);
+                    if (players[myPlayerIndex].character.character.flipped)
+                    {
+                        reetsMenuText.text = "Pay 1P to add top card of deck to Holster?";
+                        reetsCard.GetComponent<Image>().sprite = sprite1;
+                    }
+                    else
+                    {
+                        reetsMenuText.text = "Pay 2P to add top card of deck to Holster?";
+                        reetsCard.GetComponent<Image>().sprite = sprite2;
+                    }
+                    */
+                }
+
+                if (cp.isNickles && !cp.nicklesAction)
+                {
+                    if (!cp.character.character.flipped)
+                    {
+                        // Target RPC for Nickles Menu
+                        RpcNicklesMenu(throwerName);
+
+                        // unflipped Nickles UI
+                        //nicklesUI.SetActive(true);
+                    }
+                    else
+                    {
+                        // Target RPC for flipped Nickles Menu
+                        RpcFlippedNicklesMenu(throwerName);
+
+                        // flipped Nickles UI
+                        //flippedNicklesUI.SetActive(true);
+                    }
+                }
+                else if (cp.isNickles && cp.nicklesAction)
+                {
+                    // error message because you already did it once this turn
+                    GameManager.manager.sendErrorMessage(15);
+                }
+            }
+        }
+    }
+
+                [ClientRpc]
     public void RpcCheckFlip(string throwerName)
     {
         Debug.Log("Checking flip for: " + playerName);
@@ -711,7 +1053,7 @@ public class GamePlayer : NetworkBehaviour
     [Command]
     public void CmdTakeTrashCard(string throwerName, int cardInt)
     {
-        Debug.Log("Executing CmdCheckFlip on the server for player: " + playerName);
+        Debug.Log("Executing CmdTakeTrashCard on the server for player: " + playerName);
         RpcTakeTrashCard(throwerName, cardInt);
     }
 
