@@ -189,7 +189,7 @@ public class GamePlayer : NetworkBehaviour
     [TargetRpc]
     public void RpcTrashOneCard(string throwerName)
     {
-        Debug.Log("Pulling up Opponent Holster Menu for: " + playerName);
+        Debug.Log("Pulling up Opponent Trash Menu for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if(cp.name == throwerName)
@@ -199,6 +199,53 @@ public class GamePlayer : NetworkBehaviour
                 GameManager.manager.displayOpponentHolster();
             }
         }
+    }
+
+    [TargetRpc]
+    public void RpcStarterPotionMenu(string throwerName)
+    {
+        Debug.Log("Pulling up Opponent Holster Menu for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                GameManager.manager.starterPotionMenu.SetActive(true);
+            }
+        }
+    }
+
+    [TargetRpc]
+    public void RpcPluotMenu(string throwerName)
+    {
+        Debug.Log("Pulling up Opponent Holster Menu for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                GameManager.manager.pluotPotionMenu.SetActive(true);
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcSetPluotBonus(string throwerName, string bonus)
+    {
+        Debug.Log("Setting Pluot bonus for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                cp.pluotBonusType = bonus;
+            }
+        }
+    }
+
+    [Command]
+    public void CmdSetPluotBonus(string throwerName, string bonus)
+    {
+        // shuffle market decks
+        Debug.Log("Executing CmdSetPluotBonus on the server for player: " + playerName);
+        RpcSetPluotBonus(throwerName, bonus);
     }
 
     [Command]
@@ -214,6 +261,26 @@ public class GamePlayer : NetworkBehaviour
             }
         }
         
+    }
+
+    [Command]
+    public void CmdAddStarterPotion(string throwerName)
+    {
+        Debug.Log("Executing CmdThrowCard on the server for player: " + playerName);
+        RpcAddStarterPotion(throwerName);
+    }
+
+    [ClientRpc]
+    public void RpcAddStarterPotion(string throwerName)
+    {
+        Debug.Log("Adding starter potion for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == name)
+            {
+                cp.deck.putCardOnTop(GameManager.manager.starterPotionCard);
+            }
+        }
     }
 
     [Command]
@@ -339,7 +406,7 @@ public class GamePlayer : NetworkBehaviour
                     damage = cp.checkRingBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
                     damage = cp.checkBonus(damage, selectedCardInt);
                     Debug.Log("Damage after thrower bonuses: " + damage);
-                    damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+                    damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                     Debug.Log("Damage after defensive bonuses: " + damage);
 
                     GameManager.manager.sendSuccessMessage(2); // Only display on thrower's client.
@@ -378,7 +445,7 @@ public class GamePlayer : NetworkBehaviour
                         damage = cp.checkRingBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
                         damage = cp.checkArtifactBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
                         Debug.Log("Damage after thrower bonuses: " + damage);
-                        damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+                        damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                         Debug.Log("Damage after defensive bonuses: " + damage);
 
                         // Update response to account for trashing loaded artifact's potion and not the artifact
@@ -435,7 +502,7 @@ public class GamePlayer : NetworkBehaviour
                         Debug.Log("Original damage: " + damage);
                         damage = cp.checkVesselBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
                         Debug.Log("Damage after thrower bonuses: " + damage);
-                        damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage);
+                        damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                         Debug.Log("Damage after defensive bonuses: " + damage);
 
                         // TODO: fix bonus damage

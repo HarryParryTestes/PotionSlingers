@@ -374,6 +374,15 @@ public class CardPlayer : MonoBehaviour
     {
         // probably depends on what card it is and what bonus it has, might have to implement logic for certain pools of cards this way
 
+        foreach(CardPlayer cd in GameManager.manager.players)
+        {
+            if(cd.name == GameManager.manager.currentPlayerName && cd.isIsadore)
+            {
+                damage++;
+                break;
+            }
+        }
+
         // Treasure Cloak Map
         // put a potion from the trash to the top of your deck
         if(selectedCard.card.cardName == "Treasure Cloak Map")
@@ -415,7 +424,7 @@ public class CardPlayer : MonoBehaviour
                     tricks = 0;
                     hpCubes++;
                 }
-                return 0;
+                return damage;
             }
         }
 
@@ -611,6 +620,8 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.sendSuccessMessage(13);
             }
         }
+
+        // Drinking Horn of a Sea Unicorn's Tooth
 
         // First Place Volcano at the Alchemy Faire
         // Put up to 1 card from the Market onto the top of your deck.
@@ -853,6 +864,11 @@ public class CardPlayer : MonoBehaviour
         {
             if(cd.card.cardType == "Ring")
             {
+                if(cd.card.cardQuality == "Starter" && potionsThrown == 0)
+                {
+                    Debug.Log("Starter ring bonus");
+                    damage++;
+                }
                 // Sharpened Ring of Bauble Collector
                 if(cd.card.cardName == "Sharpened Ring of the Bauble Collector")
                 {
@@ -952,17 +968,6 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
-        // starter ring +1 damage logic
-        foreach (CardDisplay cd in holster.cardList)
-        {
-            // if there's a starter ring
-            if ((cd.card.cardType == "Ring" &&
-                cd.card.cardQuality == "Starter") && potionsThrown == 0)
-            {
-                damage++;
-            }
-        }
-
         // Opponent trashes 1 card in their Holster
         if (holster.cardList[selectedCard - 1].card.cardName == "ParticularlyFrighteningShadeofPurple" ||
             holster.cardList[selectedCard - 1].card.cardName == "PhilterOfMalaise" ||
@@ -996,6 +1001,19 @@ public class CardPlayer : MonoBehaviour
             holster.cardList[selectedCard - 1].card.cardName == "PlasticwareContainerOfDadJokes" ||
             holster.cardList[selectedCard - 1].card.cardName == "A Totally in NO WAY Suspicious Clear Liquid")
         {
+            // Command check starting
+            if (GameManager.manager.Game.multiplayer)
+            {
+                foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                {
+                    if (gp.playerName == GameManager.manager.currentPlayerName)
+                    {
+                        Debug.Log("Target RPC, StarterPotionMenu Active");
+                        gp.RpcTMMenuActive();
+                    }
+                }
+                return damage;
+            }
             GameManager.manager.opponentHolsterMenu.SetActive(true);
             GameManager.manager.displayOpponentHolster();
         }
@@ -1046,6 +1064,19 @@ public class CardPlayer : MonoBehaviour
             holster.cardList[selectedCard - 1].card.cardName == "VioletFireling" ||
             holster.cardList[selectedCard - 1].card.cardName == "InnocentLayerCake")
         {
+            // Command check starting
+            if (GameManager.manager.Game.multiplayer)
+            {
+                foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                {
+                    if (gp.playerName == GameManager.manager.currentPlayerName)
+                    {
+                        Debug.Log("Target RPC, StarterPotionMenu Active");
+                        gp.RpcStarterPotionMenu(gp.playerName);
+                    }
+                }
+                return damage;
+            }
             GameManager.manager.starterPotionMenu.SetActive(true);
         }
 
@@ -1131,7 +1162,7 @@ public class CardPlayer : MonoBehaviour
 
     // TODO: Check to see if opponent thrown card is Artifact.
     // TODO: Prompt targetedPlayer to trash loaded potion in Artifact with defense bonus.
-    public int checkDefensiveBonus(int damage) 
+    public int checkDefensiveBonus(int damage, int selectedCardInt) 
     {
         // Artifact: BubbleWand = May trash 1 loaded potion to prevent 2 damage.
         // Artifact: ShieldOfMouthOfTruth = May trash 1 loaded potion to prevent 3 damage.
@@ -1178,9 +1209,14 @@ public class CardPlayer : MonoBehaviour
                     // Opponent's ARTIFACTS prevent 2 damage.
                     // (prevents 4 damage with Ring of Rings in Holster)
                     // checks throwers hand for the artifact, to my knowledge the card is not mutated yet
-                    if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1].card.cardType == "Artifact")
-                    {
-                        preventedDamage += doubleRingBonus ? 4 : 2;
+                    foreach (CardPlayer cd2 in GameManager.manager.players) {
+                        if (cd2.name == GameManager.manager.currentPlayerName)
+                        {
+                            if (cd2.holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
+                            {
+                                preventedDamage += doubleRingBonus ? 4 : 2;
+                            }
+                        }
                     }
                 }
                 // Foggy Ring of the Nearsighted Old Crone

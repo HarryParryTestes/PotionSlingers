@@ -468,6 +468,21 @@ public class GameManager : MonoBehaviour
             cardPlayer.pluotBonusType = bonus;
             return;
         }
+
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdSetPluotBonus");
+                    // do the Mirror Command
+                    gp.CmdSetPluotBonus(currentPlayerName, bonus);
+                }
+            }
+            return;
+        }
         players[myPlayerIndex].pluotBonusType = bonus;
     }
 
@@ -492,8 +507,19 @@ public class GameManager : MonoBehaviour
             }
         }
         // this should make it not trigger every turn
-        if (player.isPluot && player.user_id == myPlayerIndex)
+        if (player.isPluot && player.name == currentPlayerName)
         {
+            if (Game.multiplayer)
+            {
+                foreach (GamePlayer gp in Game.GamePlayers)
+                {
+                    if (gp.playerName == currentPlayerName)
+                    {
+                        gp.RpcPluotMenu(currentPlayerName);
+                    }
+                }
+                return;
+            }
             pluotPotionMenu.SetActive(true);
         }
         player.setDefaultTurn();
@@ -568,7 +594,9 @@ public class GameManager : MonoBehaviour
                     gp.CmdEverybodyTrashOneCard(currentPlayerName);
                 }
             }
+            return;
         }
+        // single player logic goes here
     }
 
     // DONE: fix this to display properly
@@ -1577,7 +1605,7 @@ public class GameManager : MonoBehaviour
                 damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                 damage = players[myPlayerIndex].checkBonus(damage, selectedCardInt);
                 Debug.Log("Damage after thrower bonuses: " + damage);
-                damage = tempPlayer.checkDefensiveBonus(damage);
+                damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                 Debug.Log("Damage after defensive bonuses: " + damage);
 
                 sendSuccessMessage(2); // Only display on thrower's client.
@@ -1604,7 +1632,7 @@ public class GameManager : MonoBehaviour
                     damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
                     damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = players[myPlayerIndex].checkArtifactBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                    damage = tempPlayer.checkDefensiveBonus(damage);
+                    damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
 
                     // Update response to account for trashing loaded artifact's potion and not the artifact
                     players[myPlayerIndex].artifactsUsed++;
@@ -1650,7 +1678,7 @@ public class GameManager : MonoBehaviour
                     damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
                     damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = players[myPlayerIndex].checkVesselBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                    damage = tempPlayer.checkDefensiveBonus(damage);
+                    damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
 
                     // TODO: fix bonus damage
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
@@ -1831,6 +1859,20 @@ public class GameManager : MonoBehaviour
 
     public void addStarterPotion()
     {
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (currentPlayerName == gp.playerName)
+                {
+                    Debug.Log("Starting Mirror CmdAddStarterPotion");
+                    // do the Mirror Command
+                    gp.CmdAddStarterPotion(currentPlayerName);
+                }
+            }
+            return;
+        }
         players[myPlayerIndex].deck.putCardOnTop(starterPotionCard);
     }
 
