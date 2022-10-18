@@ -1269,6 +1269,11 @@ public class CardPlayer : MonoBehaviour
             {
                 hp = 10;
                 hpCubes--;
+
+                if(isSweetbitter && hpCubes == 1)
+                {
+                    character.canBeFlipped = true;
+                }
             }
             else
             {
@@ -1314,11 +1319,16 @@ public class CardPlayer : MonoBehaviour
         updatePipsUI();
 
         // NICKLES FLIP LOGIC
-        if(isNickles && pipsUsedThisTurn >= 10)
-        {
-            character.canBeFlipped = true;
-            GameManager.manager.sendSuccessMessage(13);
-        }
+            foreach (CardPlayer cp in GameManager.manager.players)
+            {
+                if(cp.isNickles && cp.pipsUsedThisTurn >= 10)
+                {
+                    cp.character.canBeFlipped = true;
+                    GameManager.manager.sendSuccessMessage(13);
+                }
+            }
+            //character.canBeFlipped = true;
+            //GameManager.manager.sendSuccessMessage(13);
     }
 
     //function to call when checking on if the player is dead

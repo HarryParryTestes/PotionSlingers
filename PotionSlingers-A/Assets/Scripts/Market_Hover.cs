@@ -19,6 +19,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public Transform cardMenu;
     public Transform onlyViewCardMenu;
+    public Transform scarpettaMenu;
     Transform viewCardMenu = null;
     Transform highlighted = null;
     GameObject parentObject = null;
@@ -109,6 +110,43 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                         return;
                     } else
                     {
+                        if (GameManager.manager.Game.multiplayer)
+                        {
+                            Debug.Log("Reached here");
+                            foreach (CardPlayer cp in GameManager.manager.players)
+                            {
+                                if(cp.isScarpetta && GameManager.manager.currentPlayerName == cp.name)
+                                {
+                                    Debug.Log("Scarpetta online");
+                                    if (scarpettaMenu != null)
+                                    {
+                                        scarpettaMenu.gameObject.SetActive(true);
+                                        canHover = true;
+                                        if (highlighted != null)
+                                        {
+                                            highlighted.gameObject.SetActive(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if (GameManager.manager.players[GameManager.manager.myPlayerIndex].isScarpetta)
+                            {
+                                Debug.Log("Scarpetta offline");
+                                if (scarpettaMenu != null)
+                                {
+                                    scarpettaMenu.gameObject.SetActive(true);
+                                    canHover = true;
+                                    if (highlighted != null)
+                                    {
+                                        highlighted.gameObject.SetActive(true);
+                                    }
+                                }
+                                return;
+                            }
+                        }
                         // add other menu in the trash displays that only allows them to view the card
                         if (onlyViewCardMenu != null)
                         {

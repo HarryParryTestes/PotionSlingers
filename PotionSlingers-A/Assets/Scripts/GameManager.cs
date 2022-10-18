@@ -59,6 +59,7 @@ public class GameManager : MonoBehaviour
     public GameObject trashBonusMenu;
     public GameObject trashPlayerMenu;
     public GameObject faisalMenu;
+    public GameObject scarpettaMenu;
 
     public TMPro.TextMeshProUGUI trashText;
 
@@ -447,6 +448,13 @@ public class GameManager : MonoBehaviour
                 sendErrorMessage(11);
                 players[myPlayerIndex].character.menu.SetActive(false);
             }
+        }
+
+        if (players[myPlayerIndex].isScarpetta && players[myPlayerIndex].pipsUsedThisTurn == 0 && players[myPlayerIndex].potionsThrown == 0 && players[myPlayerIndex].artifactsUsed == 0)
+        {
+            players[myPlayerIndex].character.canBeFlipped = true;
+            players[myPlayerIndex].character.flipCard();
+            players[myPlayerIndex].character.menu.SetActive(false);
         }
 
         if (players[myPlayerIndex].character.canBeFlipped)
@@ -1076,7 +1084,7 @@ public class GameManager : MonoBehaviour
                 // if the steam usernames match
                 if (gp.playerName == currentPlayerName)
                 {
-                    Debug.Log("Starting Mirror CmdCheckPlayerAction");
+                    Debug.Log("Starting Mirror CmdAddTP");
                     // do the Mirror Command
                     gp.CmdAddTP(currentPlayerName);
                 }
@@ -1106,7 +1114,7 @@ public class GameManager : MonoBehaviour
                 // if the steam usernames match
                 if (gp.playerName == currentPlayerName)
                 {
-                    Debug.Log("Starting Mirror CmdAddCBB");
+                    Debug.Log("Starting Mirror CmdAddEI");
                     // do the Mirror Command
                     gp.CmdAddEI(currentPlayerName);
                 }
@@ -1292,6 +1300,44 @@ public class GameManager : MonoBehaviour
         td.deckList.RemoveAt(i);
     }
 
+    public void buyTrashCard(CardDisplay cd)
+    {
+        int i;
+        int price = 99;
+        for (i = 0; i < td.deckList.Count; i++)
+        {
+            if (td.deckList[i].cardName == cd.card.cardName)
+            {
+                Debug.Log("Card found in trash");
+                price = cd.card.buyPrice;
+                break;
+            }
+        }
+
+        if(price > players[myPlayerIndex].pips || !players[myPlayerIndex].isScarpetta)
+        {
+            sendErrorMessage(6);
+        }
+
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdBuyTrashCard");
+                    // do the Mirror Command
+                    gp.CmdBuyTrashCard(currentPlayerName, i);
+                }
+            }
+            return;
+        }
+        players[myPlayerIndex].subPips(price);
+        players[myPlayerIndex].deck.putCardOnTop(td.deckList[i]);
+        td.deckList.RemoveAt(i);
+    }
+
     // any time ACTION is pressed on the player in the game scene
     // it will go through the logic in this method
 
@@ -1327,6 +1373,19 @@ public class GameManager : MonoBehaviour
                 }
             }
             return;
+        }
+
+        if(players[myPlayerIndex].isScarpetta)
+        {
+            if (players[myPlayerIndex].character.character.flipped)
+            {
+                sendErrorMessage(10);
+            }
+            else if (players[myPlayerIndex].pips >= 2)
+            {
+                players[myPlayerIndex].subPips(2);
+                scarpettaMenu.SetActive(true);
+            }
         }
 
         if (players[myPlayerIndex].isSweetbitter)
@@ -1608,25 +1667,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // if you're saltimbocca and you're flipped
-        if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.character.flipped)
-        {
-            int damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.buyPrice;
-
-            foreach (CardPlayer cp in players)
-            {
-                if (cp.character.character.cardName == selectedOpponentCharName)
-                {
-                    cp.subHealth(damage);
-                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                    // maybe add a notif idk
-                    sendSuccessMessage(2);
-                    return;
-                }
-            }
-        }
-
-        if(nicklesDamage > 0)
+        if (nicklesDamage > 0 && !Game.multiplayer)
         {
             foreach (CardPlayer cp in players)
             {
@@ -1653,6 +1694,24 @@ public class GameManager : MonoBehaviour
                 tempPlayer = cp;
                 // idiot, don't put this here
                 // return;
+            }
+        }
+
+        // if you're saltimbocca and you're flipped
+        if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.character.flipped && !Game.multiplayer)
+        {
+            int damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.buyPrice;
+
+            foreach (CardPlayer cp in players)
+            {
+                if (cp.character.character.cardName == selectedOpponentCharName)
+                {
+                    cp.subHealth(damage);
+                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                    // maybe add a notif idk
+                    sendSuccessMessage(2);
+                    return;
+                }
             }
         }
 
@@ -1835,6 +1894,21 @@ public class GameManager : MonoBehaviour
 
     public void trashMarket(int marketCard)
     {
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdTrashMarketCard");
+                    // do the Mirror Command
+                    gp.CmdTrashMarketCard(gp.playerName, marketCard);
+                }
+            }
+            return;
+        }
+
         switch (marketCard)
         {
             case 1:
@@ -1879,7 +1953,7 @@ public class GameManager : MonoBehaviour
 
         numTrashed--;
 
-        if(numTrashed != 0)
+        if(numTrashed > 0)
         {
             trashMarketUI.SetActive(true);
             updateTrashMarketMenu();
@@ -2726,10 +2800,11 @@ public class GameManager : MonoBehaviour
                 return;
             }
             // If this client isn't the current player, display error message.
-            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            if (players[myPlayerIndex].user_id != myPlayerIndex || (players[myPlayerIndex].isScarpetta && players[myPlayerIndex].character.character.flipped))
             {
                 // "You are not the currentPlayer!"
                 sendErrorMessage(7);
+                return;
             }
             // cardInt based on position of card in Top Market (position 1, 2, or 3)
             switch (md1.cardInt)
@@ -2941,10 +3016,11 @@ public class GameManager : MonoBehaviour
         else
         {
             // If this client isn't the current player, display error message.
-            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            if (players[myPlayerIndex].user_id != myPlayerIndex || players[myPlayerIndex].isScarpetta)
             {
                 // "You are not the currentPlayer!"
                 sendErrorMessage(7);
+                return;
             }
 
             switch (md2.cardInt)

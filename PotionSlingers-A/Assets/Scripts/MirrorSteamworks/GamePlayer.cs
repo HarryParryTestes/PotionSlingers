@@ -291,9 +291,75 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [ClientRpc]
+    public void RpcTrashMarketCard(string throwerName, int marketCard)
+    {
+        Debug.Log("Trashing market card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                switch (marketCard)
+                {
+                    case 1:
+                        GameManager.manager.td.addCard(GameManager.manager.md1.cardDisplay1);
+                        Card card1 = GameManager.manager.md1.popCard();
+                        GameManager.manager.md1.cardDisplay1.updateCard(card1);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 2:
+                        GameManager.manager.td.addCard(GameManager.manager.md1.cardDisplay2);
+                        Card card2 = GameManager.manager.md1.popCard();
+                        GameManager.manager.md1.cardDisplay2.updateCard(card2);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 3:
+                        GameManager.manager.td.addCard(GameManager.manager.md1.cardDisplay3);
+                        Card card3 = GameManager.manager.md1.popCard();
+                        GameManager.manager.md1.cardDisplay3.updateCard(card3);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 4:
+                        GameManager.manager.td.addCard(GameManager.manager.md2.cardDisplay1);
+                        Card card4 = GameManager.manager.md2.popCard();
+                        GameManager.manager.md2.cardDisplay1.updateCard(card4);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 5:
+                        GameManager.manager.td.addCard(GameManager.manager.md2.cardDisplay2);
+                        Card card5 = GameManager.manager.md2.popCard();
+                        GameManager.manager.md2.cardDisplay2.updateCard(card5);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    case 6:
+                        GameManager.manager.td.addCard(GameManager.manager.md2.cardDisplay3);
+                        Card card6 = GameManager.manager.md2.popCard();
+                        GameManager.manager.md2.cardDisplay3.updateCard(card6);
+                        GameManager.manager.sendSuccessMessage(17);
+                        break;
+                    default:
+                        break;
+                }
+
+                GameManager.manager.numTrashed--;
+
+                if (GameManager.manager.numTrashed > 0)
+                {
+                    //GameManager.manager.trashMarketUI.SetActive(true);
+                    GameManager.manager.updateTrashMarketMenu();
+                }
+                else
+                {
+                    GameManager.manager.trashMarketUI.SetActive(false);
+                }
+                return;
+            }
+        }
+    }
+
+    [ClientRpc]
     public void RpcTakeMarketCard(string throwerName, int marketCard)
     {
-        Debug.Log("Throwing card for: " + playerName);
+        Debug.Log("Taking market card for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if (cp.name == throwerName)
@@ -351,6 +417,13 @@ public class GamePlayer : NetworkBehaviour
     {
         Debug.Log("Executing CmdTakeMarketCard on the server for player: " + playerName);
         RpcTakeMarketCard(throwerName, marketCard);
+    }
+
+    [Command]
+    public void CmdTrashMarketCard(string throwerName, int marketCard)
+    {
+        Debug.Log("Executing CmdTrashMarketCard on the server for player: " + playerName);
+        RpcTrashMarketCard(throwerName, marketCard);
     }
 
     [ClientRpc]
@@ -593,7 +666,7 @@ public class GamePlayer : NetworkBehaviour
     [Command]
     public void CmdCheckPlayerAction(string throwerName)
     {
-        Debug.Log("Executing CmdSellCard on the server for player: " + playerName);
+        Debug.Log("Executing CmdCheckPlayerAction on the server for player: " + playerName);
         RpcCheckPlayerAction(throwerName);
     }
 
@@ -633,9 +706,9 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [ClientRpc]
-    public void RpcAddPS(string throwerName)
+    public void RpcAddReetsCard(string throwerName)
     {
-        Debug.Log("Adding The Blacksnake Pip Sling in holster for: " + playerName);
+        Debug.Log("Cycling card into holster for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if (cp.name == throwerName)
@@ -735,9 +808,9 @@ public class GamePlayer : NetworkBehaviour
         {
             if (cp.name == throwerName)
             {
-                if (players[myPlayerIndex].pips < 3 || players[myPlayerIndex].character.uniqueCardUsed)
+                if (cp.pips < 3 || cp.character.uniqueCardUsed)
                 {
-                    sendErrorMessage(6);
+                    GameManager.manager.sendErrorMessage(6);
                     return;
                 }
                 cp.subPips(3);
@@ -851,6 +924,19 @@ public class GamePlayer : NetworkBehaviour
                     }
                 }
 
+                if (cp.isScarpetta)
+                {
+                    if (cp.character.character.flipped)
+                    {
+                        GameManager.manager.sendErrorMessage(10);
+                    }
+                    else if(cp.pips >= 2)
+                    {
+                        cp.subPips(2);
+                        GameManager.manager.scarpettaMenu.SetActive(true);
+                    }
+                }
+
                 // change this to flipped and not !flipped after you test this
                 if (cp.isIsadore && !cp.character.character.flipped && cp.character.uniqueCardUsed)
                 {
@@ -925,7 +1011,7 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
-                [ClientRpc]
+    [ClientRpc]
     public void RpcCheckFlip(string throwerName)
     {
         Debug.Log("Checking flip for: " + playerName);
@@ -960,6 +1046,14 @@ public class GamePlayer : NetworkBehaviour
                         GameManager.manager.sendErrorMessage(11);
                         cp.character.menu.SetActive(false);
                     }
+                }
+
+                if (cp.isScarpetta && cp.pipsUsedThisTurn == 0 && cp.potionsThrown == 0 && cp.artifactsUsed == 0)
+                {
+                    cp.character.canBeFlipped = true;
+                    cp.character.flipCard();
+                    cp.character.menu.SetActive(false);
+                    return;
                 }
 
                 if (cp.character.canBeFlipped)
@@ -1057,6 +1151,13 @@ public class GamePlayer : NetworkBehaviour
         RpcTakeTrashCard(throwerName, cardInt);
     }
 
+    [Command]
+    public void CmdBuyTrashCard(string throwerName, int cardInt)
+    {
+        Debug.Log("Executing CmdBuyTrashCard on the server for player: " + playerName);
+        RpcBuyTrashCard(throwerName, cardInt);
+    }
+
     [ClientRpc]
     public void RpcTakeTrashCard(string throwerName, int cardInt)
     {
@@ -1065,6 +1166,21 @@ public class GamePlayer : NetworkBehaviour
         {
             if (cp.name == throwerName)
             {
+                cp.deck.putCardOnTop(GameManager.manager.td.deckList[cardInt]);
+                GameManager.manager.td.deckList.RemoveAt(cardInt);
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcBuyTrashCard(string throwerName, int cardInt)
+    {
+        Debug.Log("Buying trash card for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                cp.subPips(GameManager.manager.td.deckList[cardInt].buyPrice);
                 cp.deck.putCardOnTop(GameManager.manager.td.deckList[cardInt]);
                 GameManager.manager.td.deckList.RemoveAt(cardInt);
             }
@@ -1317,6 +1433,11 @@ public class GamePlayer : NetworkBehaviour
         {
             if (cp.name == name)
             {
+                if(cp.isScarpetta && cp.character.character.flipped)
+                {
+                    GameManager.manager.sendErrorMessage(6);
+                    return;
+                }
                 // add in logic
                 switch (marketCard)
                 {
@@ -1511,6 +1632,11 @@ public class GamePlayer : NetworkBehaviour
         {
             if (cp.name == name)
             {
+                if (cp.isScarpetta)
+                {
+                    GameManager.manager.sendErrorMessage(6);
+                    return;
+                }
                 // add in logic
                 switch (marketCard)
                 {
