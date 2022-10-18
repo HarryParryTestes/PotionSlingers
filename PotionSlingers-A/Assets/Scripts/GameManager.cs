@@ -1873,7 +1873,14 @@ public class GameManager : MonoBehaviour
             }
             return;
         }
-        players[myPlayerIndex].deck.putCardOnTop(starterPotionCard);
+        foreach (CardPlayer cp in players)
+        {
+            if(cp.name == currentPlayerName)
+            {
+                cp.deck.putCardOnTop(starterPotionCard);
+            }
+        }
+        //players[myPlayerIndex].deck.putCardOnTop(starterPotionCard);
     }
 
     // THROW POTION RESPONSE

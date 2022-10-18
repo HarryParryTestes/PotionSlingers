@@ -276,7 +276,7 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("Adding starter potion for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
-            if (cp.name == name)
+            if (cp.name == throwerName)
             {
                 cp.deck.putCardOnTop(GameManager.manager.starterPotionCard);
             }
