@@ -30,7 +30,12 @@ public class CardDisplay : MonoBehaviour
             return;
         }
         //artworkImage = this.GetComponent<Image>();
-        artworkImage.sprite = card.cardSprite;
+        if (card != null)
+        {
+            artworkImage.sprite = card.cardSprite;
+            return;
+        }
+        
     }
 
     // public void OnPointerDown(PointerEventData pointerEventData)

@@ -15,10 +15,12 @@ public class CardGalleryController : MonoBehaviour
         searchableCards.Clear();
         foreach(Card card in cards)
         {
-            if (card.cardQuality.Contains(category) || card.cardType.Contains(category))
-            {
-                //Debug.Log("Match found, adding card...");
-                searchableCards.Add(card);
+            if (card != null) {
+                if (card.cardQuality.Contains(category) || card.cardType.Contains(category))
+                {
+                    //Debug.Log("Match found, adding card...");
+                    searchableCards.Add(card);
+                }
             }
         }
         cardIndex = 0;

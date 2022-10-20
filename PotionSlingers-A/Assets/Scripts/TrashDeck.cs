@@ -40,6 +40,35 @@ public class TrashDeck : MonoBehaviour
     public void addCard(CardDisplay cd)
     {
         deckList.Add(cd.card);
+        if (cd.card.cardType == "Artifact")
+        {
+            if (cd.aPotion != null && cd.aPotion.card.cardName != "placeholder"){
+                deckList.Add(cd.aPotion.card);
+                cd.aPotion.updateCard(card);
+                cd.aPotion.gameObject.SetActive(false);
+            }
+        }
+
+        if (cd.card.cardType == "Vessel")
+        {
+            if (cd.vPotion1 != null && cd.vPotion1.card.cardName != "placeholder")
+            {
+                deckList.Add(cd.vPotion1.card);
+                cd.vPotion1.updateCard(card);
+                cd.vPotion1.gameObject.SetActive(false);
+                cd.vPotion2.gameObject.SetActive(false);
+
+            }
+
+            if (cd.vPotion2 != null && cd.vPotion2.card.cardName != "placeholder")
+            {
+                deckList.Add(cd.vPotion2.card);
+                cd.vPotion2.updateCard(card);
+                cd.vPotion1.gameObject.SetActive(false);
+                cd.vPotion2.gameObject.SetActive(false);
+
+            }
+        }
         cd.updateCard(card);
     }
 

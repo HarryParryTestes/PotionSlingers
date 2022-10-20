@@ -204,6 +204,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("Starting tutorial");
             dialogBox.SetActive(true);
             playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+            cardPlayer.name = SteamFriends.GetPersonaName().ToString();
+            currentPlayerName = playerBottomName.text;
             playerTopName.text = "BOLO";
             p3.SetActive(false);
             p4.SetActive(false);
@@ -826,6 +828,59 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (Game.multiplayer)
+        {
+            Debug.Log("Reached this part in displayPotions");
+            foreach (CardPlayer cp in players)
+            {
+                if(cp.name == currentPlayerName)
+                {
+                    foreach (CardDisplay cd in cp.holster.cardList)
+                    {
+                        if (cd.card.cardType.ToLower() == "artifact" || cd.card.cardType.ToLower() == "vessel")
+                        {
+                            Debug.Log("CardName is: " + cd.card.cardName);
+                            switch (set)
+                            {
+                                case 0:
+                                    left.card = cd.card;
+                                    Debug.Log("Left Card: " + left.card.cardName);
+                                    left.updateCard(cd.card);
+                                    set++;
+                                    break;
+                                case 1:
+                                    middle.card = cd.card;
+                                    Debug.Log("Middle Card: " + middle.card.cardName);
+                                    middle.updateCard(cd.card);
+                                    set++;
+                                    break;
+                                case 2:
+                                    right.card = cd.card;
+                                    Debug.Log("Right Card: " + right.card.cardName);
+                                    right.updateCard(cd.card);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                    if (set == 1)
+                    {
+                        // middle.updateCard(players[myPlayerIndex].deck.placeholder);
+                        // right.updateCard(players[myPlayerIndex].deck.placeholder);
+                        loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(false);
+                        loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+                    }
+                    if (set == 2)
+                    {
+                        // right.updateCard(players[myPlayerIndex].deck.placeholder);
+                        loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+                    }
+                }
+            }
+            return;
+        }
+
 
         foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
@@ -1043,67 +1098,6 @@ public class GameManager : MonoBehaviour
         // onStartTurn(players[myPlayerIndex]);
         // Debug.Log("Request End Turn");
         // bool connected = networkManager.sendEndTurnRequest(myPlayerIndex);
-    }
-
-    public void onResponseEndTurn(ExtendedEventArgs eventArgs)
-    {
-        Debug.Log("End Turn!");
-        ResponseEndTurnEventArgs args = eventArgs as ResponseEndTurnEventArgs;
-        Debug.Log("New Current Player: " + args.newCurrentPlayerId);
-        Debug.Log("Previous player: " + args.user_id);
-
-        if(args.user_id == args.newCurrentPlayerId) {
-            Debug.Log("ERROR: Current player hasn't been set to the next player!");
-        }
-
-        for(int i = 0; i < numPlayers; i++) {
-            // Remove currentPlayer highlight from previous player.
-            if(players[i].user_id == args.user_id)
-            {
-                Debug.Log("Response: Ending turn for PlayerName: " + players[i].name);
-                players[i].removeCurrentPlayer();
-            }
-            else if(players[i].user_id == args.newCurrentPlayerId)
-            {
-                Debug.Log("Request: Starting turn for PlayerName: " + players[i].name);
-                currentPlayerId = args.newCurrentPlayerId;
-                players[i].setCurrentPlayer();
-                onStartTurn(players[i]);
-            }
-        }
-
-        /*
-        // if it didn't come from your own client, change the player
-        if (Constants.USER_ID != args.user_id)
-        {
-            // player 1 just ended turn in 2p game
-            if(args.user_id == 1)
-            {
-                myPlayerIndex = 1;
-                // player 2 just ended turn in 2p game
-            } else if(args.user_id == 2)
-            {
-                if(numPlayers > 2)
-                {
-                    myPlayerIndex = 2;
-                }
-                else
-                {
-                    myPlayerIndex = 0;
-                }
-            } else if (args.user_id == 3)
-            {
-                if(numPlayers > 3)
-                {
-                    myPlayerIndex = 3;
-                } else
-                {
-                    myPlayerIndex = 0;
-                }
-            }
-            onStartTurn(players[myPlayerIndex]);
-        }
-        */
     }
 
     public void addTP()

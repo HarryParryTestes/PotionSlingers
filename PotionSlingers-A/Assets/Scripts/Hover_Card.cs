@@ -54,9 +54,18 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         viewingCard = false;
         cardMenu.gameObject.SetActive(false);
         viewCardMenu.gameObject.SetActive(false);
-        attackMenu.gameObject.SetActive(false);
-        highlighted.gameObject.SetActive(false);
-        specialCardMenu.gameObject.SetActive(false);
+        if (attackMenu != null)
+        {
+            attackMenu.gameObject.SetActive(false);
+        }
+        if (highlighted != null)
+        {
+            highlighted.gameObject.SetActive(false);
+        }
+        if(specialCardMenu != null)
+        {
+            specialCardMenu.gameObject.SetActive(false);
+        }   
     }
 
     void Update() {
