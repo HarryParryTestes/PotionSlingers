@@ -957,6 +957,38 @@ public class GameManager : MonoBehaviour
                 }
             }
             players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
+
+            int potions;
+            int artifacts;
+            int pips;
+            SteamUserStats.GetStat("potions_thrown", out potions);
+            SteamUserStats.GetStat("artifacts_used", out artifacts);
+            SteamUserStats.GetStat("pips_spent", out pips);
+            potions += players[myPlayerIndex].potionsThrown;
+            artifacts += players[myPlayerIndex].artifactsUsed;
+            pips += players[myPlayerIndex].pipsUsedThisTurn;
+
+            if (potions >= 10)
+            {
+                SteamUserStats.SetAchievement("THROW_10_POTIONS");
+            }
+
+            if (artifacts >= 10)
+            {
+                SteamUserStats.SetAchievement("USE_10_ARTIFACTS");
+            }
+
+            if (pips >= 100)
+            {
+                SteamUserStats.SetAchievement("SPEND_100_PIPS");
+            }
+
+            SteamUserStats.SetStat("potions_thrown", potions);
+            SteamUserStats.SetStat("artifacts_used", artifacts);
+            SteamUserStats.SetStat("pips_spent", pips);
+
+            SteamUserStats.StoreStats();
+
             myPlayerIndex++;
             
 

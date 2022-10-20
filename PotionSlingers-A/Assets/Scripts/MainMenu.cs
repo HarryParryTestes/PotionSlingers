@@ -29,7 +29,11 @@ public class MainMenu : MonoBehaviour
 
 	public GameObject lobbyMenu;
 
-	public TMPro.TextMeshProUGUI player1Name;
+    public TMPro.TextMeshProUGUI stat1;
+    public TMPro.TextMeshProUGUI stat2;
+    public TMPro.TextMeshProUGUI stat3;
+
+    public TMPro.TextMeshProUGUI player1Name;
 	public TMPro.TextMeshProUGUI player2Name;
 	public TMPro.TextMeshProUGUI player3Name;
 	public TMPro.TextMeshProUGUI player4Name;
@@ -108,24 +112,26 @@ public class MainMenu : MonoBehaviour
 
 	void Start()
     {
-		//numPlayers = 0;
-		playButton = GameObject.Find("PLAY");
+        //numPlayers = 0;
+        playButton = GameObject.Find("PLAY");
 		networkManager = GetComponent<MyNetworkManager>();
 
         if (!SteamManager.Initialized) { return; }
 
-        //Debug.Log(SteamFriends.GetPersonaName());
+        
+    }
 
-        /*
-		networkManager = GameObject.Find("OldNetworkManager").GetComponent<OldNetworkManager>();
-		msgQueue = networkManager.GetComponent<MessageQueue>();
-
-		// adding callbacks
-		msgQueue.AddCallback(Constants.SMSG_JOIN, OnResponseJoin);
-		msgQueue.AddCallback(Constants.SMSG_CHARACTER, OnResponseCharacter);
-		msgQueue.AddCallback(Constants.SMSG_SETNAME, OnResponseSetName);
-		msgQueue.AddCallback(Constants.SMSG_READY, OnResponseReady);
-		*/
+    public void checkStats()
+    {
+        int potions;
+        int artifacts;
+        int pips;
+        SteamUserStats.GetStat("potions_thrown", out potions);
+        SteamUserStats.GetStat("artifacts_used", out artifacts);
+        SteamUserStats.GetStat("pips_spent", out pips);
+        stat1.text = "Potions thrown:  " + potions;
+        stat2.text = "Artifacts used:  " + artifacts;
+        stat3.text = "Pips spent:  " + pips;
     }
 
 	public void selectCharNameRight()

@@ -1919,11 +1919,68 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
+    int potionsThrown = 0;
+    int artifactsUsed = 0;
+    int pipsSpent = 0;
+    bool tenPotions = false;
+    bool tenArtifactsUsed = false;
+    bool hundredPips = false;
+
     [Command]
     public void CmdEndTurn(string name)
     {
+        SteamUserStats.RequestUserStats(playerSteamId);
         Debug.Log("Executing CmdEndTurn on the server for player: " + playerName);
-        RpcEndTurn(name);
+        foreach (GamePlayer gp in Game.GamePlayers)
+        {
+            if (gp.playerName == name && gp.isLocalPlayer)
+            {
+                foreach (CardPlayer cp in GameManager.manager.players)
+                {
+                    if(cp.name == name)
+                    {
+                        Debug.Log("Names matched");
+                        SteamUserStats.GetUserStat(playerSteamId, "potions_thrown", out potionsThrown);
+                        SteamUserStats.GetUserStat(playerSteamId, "artifacts_used", out artifactsUsed);
+                        SteamUserStats.GetUserStat(playerSteamId, "pips_spent", out pipsSpent);
+                        SteamUserStats.GetUserAchievement(playerSteamId, "THROW_10_POTIONS", out tenPotions);
+                        Debug.Log("Potions Thrown: " + potionsThrown);
+                        potionsThrown += cp.potionsThrown;
+                        if(potionsThrown >= 10)
+                        {
+                            SteamUserStats.SetAchievement("THROW_10_POTIONS");
+                        }
+                        Debug.Log("Potions Thrown after adding: " + potionsThrown);
+                        SteamUserStats.SetStat("potions_thrown", potionsThrown);
+
+                        
+                        SteamUserStats.GetUserAchievement(playerSteamId, "USE_10_ARTIFACTS", out tenArtifactsUsed);
+                        Debug.Log("Artifacts Used: " + artifactsUsed);
+                        artifactsUsed += cp.artifactsUsed;
+                        if (artifactsUsed >= 10)
+                        {
+                            SteamUserStats.SetAchievement("USE_10_ARTIFACTS");
+                        }
+                        Debug.Log("Artifacts Used after adding: " + artifactsUsed);
+                        SteamUserStats.SetStat("artifactsUsed", artifactsUsed);
+
+                        SteamUserStats.GetUserAchievement(playerSteamId, "SPEND_100_PIPS", out hundredPips);
+                        Debug.Log("Pips Spent: " + pipsSpent);
+                        pipsSpent += cp.pipsUsedThisTurn;
+                        if (pipsSpent >= 100)
+                        {
+                            SteamUserStats.SetAchievement("SPEND_100_PIPS");
+                        }
+                        Debug.Log("Pips Spent after adding: " + pipsSpent);
+                        SteamUserStats.SetStat("pips_spent", pipsSpent);
+                        SteamUserStats.StoreStats();
+                    }
+                }
+                break;
+            }
+        }
+
+                RpcEndTurn(name);
     }
 
     [ClientRpc]

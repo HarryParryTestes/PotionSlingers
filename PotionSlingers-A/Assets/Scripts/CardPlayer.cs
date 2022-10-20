@@ -16,7 +16,7 @@ public class CardPlayer : MonoBehaviour
     public int pips;
     public int pipsUsedThisTurn = 0;
     public bool dead;           //Does the player still have health left?
-    public int potionsThrown;
+    public int potionsThrown = 0;
     public int artifactsUsed = 0;
     public int tricks = 0;
     public CharacterDisplay character;
