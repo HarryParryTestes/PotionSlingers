@@ -209,5 +209,27 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
+        else if (textBoxCounter == 37)
+        {
+            textInfo = "The object of the game is to beat your opponents down\n" +
+                "to 0 health and take all of their Essence Cubes!\n\n" +
+                "The last person standing is declared the winner!";
+            ActivateText(dialogBox);
+        }
+        else if (textBoxCounter == 38)
+        {
+            textInfo = "Once a player's health is reduced to 0, one of their Essence\n" +
+                "Cubes will be awarded to the player that deals the killing blow!/n/n" +
+                "Try finishing me off and getting me to 0 health!";
+            ActivateText(dialogBox);
+        }
+        else if (textBoxCounter == 39)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Use cards to reduce Bolo's\n" +
+                "health down to 0!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
     }             
 }

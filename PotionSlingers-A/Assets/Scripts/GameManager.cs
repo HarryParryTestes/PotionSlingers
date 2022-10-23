@@ -207,6 +207,8 @@ public class GameManager : MonoBehaviour
             cardPlayer.name = SteamFriends.GetPersonaName().ToString();
             currentPlayerName = playerBottomName.text;
             playerTopName.text = "BOLO";
+            players[2].hpCubes = 1;
+            players[2].updateHealthUI();
             p3.SetActive(false);
             p4.SetActive(false);
             return;
@@ -1151,6 +1153,7 @@ public class GameManager : MonoBehaviour
         if (Game.tutorial)
         {
             cardPlayer.addExtraInventory();
+            StartCoroutine(waitThreeSeconds(dialog));
             return;
         }
 
@@ -1372,7 +1375,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if (cardPlayer.character.character.flipped)
+            if (cardPlayer.character.character.flipped && dialog.textBoxCounter == 35)
             {
                 // do Pluot action (I'll code this in later)
                 ExtraInventoryMenu.SetActive(true);
@@ -1558,7 +1561,7 @@ public class GameManager : MonoBehaviour
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
             dialog.textInfo = "Good job! When a vessel is thrown, the vessel is trashed, and\n" +
-                "the potions are cycled into the bottom of your deck!";
+                "the potions are dropped into the bottom of your deck!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 23)
@@ -1610,8 +1613,18 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "Try using your character's upgraded ability!\n\n" +
+            dialog.textInfo = "Try using your character's upgraded action!\n\n" +
                 "Click on your character card and click ACTION to use it!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 36)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.nameTag.SetActive(true);
+            dialog.textInfo = "Some characters have unique items that can be obtained\n" +
+                "by using the character's flipped action!\n\n" +
+                "Try getting them all with each specific character!";
             dialog.ActivateText(dialog.dialogBox);
         }
     }
@@ -2743,6 +2756,13 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
+            if ((dialog.textBoxCounter != 10 && dialog.textBoxCounter != 11 &&
+                dialog.textBoxCounter != 24) && dialog.textBoxCounter < 38)
+            {
+                Debug.Log("You weren't supposed to do that, add UI for tutorial error");
+                sendErrorMessage(1);
+                return;
+            }
             switch (md1.cardInt)
             {
                 case 1:

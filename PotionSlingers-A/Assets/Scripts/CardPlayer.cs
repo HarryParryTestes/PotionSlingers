@@ -1263,7 +1263,7 @@ public class CardPlayer : MonoBehaviour
 
         //Make sure that hp doesn't go below 0
         //If hp goes below 0, set it to 10 and subtract a health cube
-        if (hp < 0)
+        if (hp <= 0)
         {
             if (hpCubes > 0)
             {
@@ -1273,11 +1273,17 @@ public class CardPlayer : MonoBehaviour
                 if(isSweetbitter && hpCubes == 1)
                 {
                     character.canBeFlipped = true;
+                    Debug.Log("Make UI message for this");
                 }
             }
             else
             {
                 dead = true;
+                if (GameManager.manager.Game.tutorial)
+                {
+                    // do achievement check in here
+                    GameManager.manager.pauseUI.SetActive(true);
+                }
             }
         }
 
@@ -1296,15 +1302,6 @@ public class CardPlayer : MonoBehaviour
             StartCoroutine(waitThreeSeconds(damageAmount));
         }
     }
-
-    // public void giveCube(Player player) {
-    //     player.getCube();
-    //     hpCubes--;
-    // }
-
-    // public void getCube() {
-    //     takenHPCubes++;
-    // }
 
     public void addPips(int morePips)
     {
