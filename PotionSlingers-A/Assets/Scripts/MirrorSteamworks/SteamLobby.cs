@@ -56,8 +56,8 @@ public class SteamLobby : MonoBehaviour
         if (!SteamManager.Initialized) { return; }
         MakeInstance();
 
-        greetingName = SteamLobby.instance.GetSteamName();
-        greeting.text = "Hello, " + greetingName;
+        //greetingName = SteamLobby.instance.GetSteamName();
+        //greeting.text = "Hello, " + greetingName;
 
         lobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         gameLobbyJoinRequested = Callback<GameLobbyJoinRequested_t>.Create(OnGameLobbyJoinRequested);

@@ -26,7 +26,16 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         This tutorial should teach the basics of all the potion-
         slinging action this game has to offer!
         */
+        /*
+        textBoxCounter = 0;
+        textInfo = "Hello, and welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion-\n" +
+            "slinging action this game has to offer!";
+        ActivateText(dialogBox);
+        */
+    }
 
+    public void initDialog()
+    {
         textBoxCounter = 0;
         textInfo = "Hello, and welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion-\n" +
             "slinging action this game has to offer!";
@@ -219,7 +228,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 38)
         {
             textInfo = "Once a player's health is reduced to 0, one of their Essence\n" +
-                "Cubes will be awarded to the player that deals the killing blow!/n/n" +
+                "Cubes will be awarded to the player that deals the killing blow!\n\n" +
                 "Try finishing me off and getting me to 0 health!";
             ActivateText(dialogBox);
         }

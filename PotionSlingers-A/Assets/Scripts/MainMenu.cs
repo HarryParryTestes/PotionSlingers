@@ -108,6 +108,9 @@ public class MainMenu : MonoBehaviour
     {
         menu = this;
         DontDestroyOnLoad(gameObject);
+        if (!SteamManager.Initialized) { return; }
+        greetingName = SteamFriends.GetPersonaName().ToString();
+        greeting.text = "HELLO, "+ greetingName;
     }
 
 	void Start()
@@ -117,8 +120,6 @@ public class MainMenu : MonoBehaviour
 		networkManager = GetComponent<MyNetworkManager>();
 
         if (!SteamManager.Initialized) { return; }
-
-        
     }
 
     public void checkStats()

@@ -1265,10 +1265,10 @@ public class CardPlayer : MonoBehaviour
         //If hp goes below 0, set it to 10 and subtract a health cube
         if (hp <= 0)
         {
+            hpCubes--;
             if (hpCubes > 0)
             {
                 hp = 10;
-                hpCubes--;
 
                 if(isSweetbitter && hpCubes == 1)
                 {
@@ -1278,10 +1278,13 @@ public class CardPlayer : MonoBehaviour
             }
             else
             {
+                hp = 0;
+                Debug.Log("Somebody is dead!");
                 dead = true;
                 if (GameManager.manager.Game.tutorial)
                 {
                     // do achievement check in here
+                    // you probably want to make new UI for this so this is placeholder stuff
                     GameManager.manager.pauseUI.SetActive(true);
                 }
             }

@@ -153,6 +153,13 @@ public class GameManager : MonoBehaviour
     {
         manager = this;
         DontDestroyOnLoad(gameObject);
+
+        if (Game.tutorial)
+        {
+            Debug.Log("Happened in Awake");
+            dialogBox.SetActive(true);
+            dialog.initDialog();
+        }
     }
 
     void Update()
@@ -202,7 +209,9 @@ public class GameManager : MonoBehaviour
         if (Game.tutorial)
         {
             Debug.Log("Starting tutorial");
+            Debug.Log("Happened in Start");
             dialogBox.SetActive(true);
+            dialog.initDialog();
             playerBottomName.text = SteamFriends.GetPersonaName().ToString();
             cardPlayer.name = SteamFriends.GetPersonaName().ToString();
             currentPlayerName = playerBottomName.text;
