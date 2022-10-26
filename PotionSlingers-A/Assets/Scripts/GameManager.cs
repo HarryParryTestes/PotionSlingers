@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         manager = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         if (Game.tutorial)
         {

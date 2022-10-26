@@ -107,7 +107,7 @@ public class MainMenu : MonoBehaviour
     void Awake()
     {
         menu = this;
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
         if (!SteamManager.Initialized) { return; }
         greetingName = SteamFriends.GetPersonaName().ToString();
         greeting.text = "HELLO, "+ greetingName;
@@ -117,9 +117,18 @@ public class MainMenu : MonoBehaviour
     {
         //numPlayers = 0;
         playButton = GameObject.Find("PLAY");
-		networkManager = GetComponent<MyNetworkManager>();
+		//networkManager = GetComponent<MyNetworkManager>();
 
         if (!SteamManager.Initialized) { return; }
+    }
+
+	void Update()
+    {
+        if (networkManager == null)
+        {
+			Debug.Log("Missing network manager");
+			networkManager = GameObject.Find("NetworkManager").GetComponent<MyNetworkManager>();
+        }
     }
 
     public void checkStats()
@@ -286,7 +295,19 @@ public class MainMenu : MonoBehaviour
         SteamLobby.instance.CreateNewLobby(newLobbyType);
     }
 
-    public int getNumPlayers() {
+	public void StartTutorial()
+	{
+		networkManager.tutorial = true;
+		networkManager.ServerChangeScene("GameScene");
+	}
+
+	public void StartGame()
+	{
+		networkManager.multiplayer = true;
+		networkManager.ServerChangeScene("GameScene");
+	}
+
+	public int getNumPlayers() {
 		return numPlayers;
 	}
 

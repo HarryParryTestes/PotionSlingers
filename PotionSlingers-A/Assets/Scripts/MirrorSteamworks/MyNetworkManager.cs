@@ -51,27 +51,19 @@ public class MyNetworkManager : NetworkManager
             Debug.Log("Player added. Player name: " + GamePlayerInstance.playerName + ". Player connection id: " + GamePlayerInstance.ConnectionId.ToString());
         }
     }
+
     public void StartGame()
     {
         multiplayer = true;
         ServerChangeScene("GameScene");
-        //GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        //gameManager.numPlayers = 2;
-        //gameManager.init();
     }
 
     public void StartTutorial()
     {
-        //StartClient();
         tutorial = true;
-        //SceneManager.LoadScene("GameScene");
-        //NetworkManager.singleton.ServerChangeScene("GameScene");
         ServerChangeScene("GameScene");
-        //GameManager gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-        //gameManager.numPlayers = GamePlayers.Count;
-        //gameManager.initPlayersTutorial();
-        //gameManager.initDecks();
     }
+
     private bool CanStartGame()
     {
         if (numPlayers < minPlayers)
