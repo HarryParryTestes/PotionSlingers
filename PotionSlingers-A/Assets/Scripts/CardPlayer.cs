@@ -621,6 +621,17 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Hollowed Out Skull of Higyoude
+        if (selectedCard.card.cardName == "HollowedOutSkull")
+        {
+            // does 6 damage, ignores all potion effects
+            return 6;
+        }
+
+        // checking the potions for throw bonuses
+        damage = checkBonus(damage, selectedCard.vPotion1);
+        damage = checkBonus(damage, selectedCard.vPotion2);
+
         // Drinking Horn of a Sea Unicorn's Tooth
 
         // First Place Volcano at the Alchemy Faire
@@ -678,13 +689,6 @@ public class CardPlayer : MonoBehaviour
         {
             // this card ignores all potion effects, so i'm returning damage + 1
             return damage + 1;
-        }
-
-        // Hollowed Out Skull of Higyoude
-        if(selectedCard.card.cardName == "HollowedOutSkull")
-        {
-            // does 6 damage, ignores all potion effects
-            return 6;
         }
 
         // Vessel Bonus: +2 Damage
@@ -929,33 +933,33 @@ public class CardPlayer : MonoBehaviour
     }
 
     // this will get messy quickly so actually comment things
-    public int checkBonus(int damage, int selectedCard)
+    public int checkBonus(int damage, CardDisplay selectedCard)
     {
         // Pluot damage bonus
         if (isPluot)
         {
-            if(pluotBonusType == holster.cardList[selectedCard - 1].card.cardQuality)
+            if(pluotBonusType == selectedCard.card.cardQuality)
             {
                 damage++;
             }
 
             
-            if (holster.cardList[selectedCard - 1].card.cardQuality == "Hot")
+            if (selectedCard.card.cardQuality == "Hot")
             {
                 pluotHot = true;
             }
 
-            if (holster.cardList[selectedCard - 1].card.cardQuality == "Wet")
+            if (selectedCard.card.cardQuality == "Wet")
             {
                 pluotWet = true;
             }
 
-            if (holster.cardList[selectedCard - 1].card.cardQuality == "Cold")
+            if (selectedCard.card.cardQuality == "Cold")
             {
                 pluotCold = true;
             }
 
-            if (holster.cardList[selectedCard - 1].card.cardQuality == "Dry")
+            if (selectedCard.card.cardQuality == "Dry")
             {
                 pluotDry = true;
             }
@@ -969,14 +973,14 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Opponent trashes 1 card in their Holster
-        if (holster.cardList[selectedCard - 1].card.cardName == "ParticularlyFrighteningShadeofPurple" ||
-            holster.cardList[selectedCard - 1].card.cardName == "PhilterOfMalaise" ||
-            holster.cardList[selectedCard - 1].card.cardName == "MouthfulOfHair" ||
-            holster.cardList[selectedCard - 1].card.cardName == "PowderOfLaughingFits" ||
-            holster.cardList[selectedCard - 1].card.cardName == "A Jar of Mummy Finger Butter" ||
-            holster.cardList[selectedCard - 1].card.cardName == "A Pile of Sweat from Several Humid Days" ||
-            holster.cardList[selectedCard - 1].card.cardName == "A Loss of Dexterity" ||
-            holster.cardList[selectedCard - 1].card.cardName == "A Severe Draught That Melts Only Brains")
+        if (selectedCard.card.cardName == "ParticularlyFrighteningShadeofPurple" ||
+            selectedCard.card.cardName == "PhilterOfMalaise" ||
+            selectedCard.card.cardName == "MouthfulOfHair" ||
+            selectedCard.card.cardName == "PowderOfLaughingFits" ||
+            selectedCard.card.cardName == "A Jar of Mummy Finger Butter" ||
+            selectedCard.card.cardName == "A Pile of Sweat from Several Humid Days" ||
+            selectedCard.card.cardName == "A Loss of Dexterity" ||
+            selectedCard.card.cardName == "A Severe Draught That Melts Only Brains")
         {
             if (GameManager.manager.Game.multiplayer)
             {
@@ -996,10 +1000,10 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Choose 1 card in an opponent's Holster and trash it
-        if (holster.cardList[selectedCard - 1].card.cardName == "A Kind But Ultimately Thoughtless Gesture" ||
-            holster.cardList[selectedCard - 1].card.cardName == "A Probably Dangerous Brew With A Hole In It" ||
-            holster.cardList[selectedCard - 1].card.cardName == "PlasticwareContainerOfDadJokes" ||
-            holster.cardList[selectedCard - 1].card.cardName == "A Totally in NO WAY Suspicious Clear Liquid")
+        if (selectedCard.card.cardName == "A Kind But Ultimately Thoughtless Gesture" ||
+            selectedCard.card.cardName == "A Probably Dangerous Brew With A Hole In It" ||
+            selectedCard.card.cardName == "PlasticwareContainerOfDadJokes" ||
+            selectedCard.card.cardName == "A Totally in NO WAY Suspicious Clear Liquid")
         {
             // Command check starting
             if (GameManager.manager.Game.multiplayer)
@@ -1020,7 +1024,7 @@ public class CardPlayer : MonoBehaviour
 
         // Goldbricker
         // Replace a card in an opponents holster with a Starter card of the same type. Any loaded potions remain loaded
-        if (holster.cardList[selectedCard - 1].card.cardName == "Goldbricker")
+        if (selectedCard.card.cardName == "Goldbricker")
         {
             // make menu in UI with opponent's holster, we're gonna need this for multiple cards anyways
             GameManager.manager.replaceStarter = true;
@@ -1031,9 +1035,9 @@ public class CardPlayer : MonoBehaviour
 
         // you may trash up to 2 market cards instead of doing damage
         // i'm gonna do some weird while loop to prevent it from returning damage until the player has selected an option
-        if (holster.cardList[selectedCard - 1].card.cardName == "A Quizzical Look And a Rummage of Pockets" ||
-            holster.cardList[selectedCard - 1].card.cardName == "An Example of What Not to Do" ||
-            holster.cardList[selectedCard - 1].card.cardName == "A Confident Throw Into the Garbage")
+        if (selectedCard.card.cardName == "A Quizzical Look And a Rummage of Pockets" ||
+            selectedCard.card.cardName == "An Example of What Not to Do" ||
+            selectedCard.card.cardName == "A Confident Throw Into the Garbage")
         {
             //GameManager.manager.trashOrDamage = true;
             GameManager.manager.numTrashed = 2;
@@ -1059,10 +1063,10 @@ public class CardPlayer : MonoBehaviour
         }
 
         // You may create a starter potion on top of your deck
-        if (holster.cardList[selectedCard - 1].card.cardName == "AMaliciousThought" ||
-            holster.cardList[selectedCard - 1].card.cardName == "IntenseThirstForKnowledge" ||
-            holster.cardList[selectedCard - 1].card.cardName == "VioletFireling" ||
-            holster.cardList[selectedCard - 1].card.cardName == "InnocentLayerCake")
+        if (selectedCard.card.cardName == "AMaliciousThought" ||
+            selectedCard.card.cardName == "IntenseThirstForKnowledge" ||
+            selectedCard.card.cardName == "VioletFireling" ||
+            selectedCard.card.cardName == "InnocentLayerCake")
         {
             // Command check starting
             if (GameManager.manager.Game.multiplayer)
@@ -1082,10 +1086,10 @@ public class CardPlayer : MonoBehaviour
 
         // you may trash 1 card in the market
         // add all the cards that have this text here
-        if (holster.cardList[selectedCard - 1].card.cardName == "EssenceOfDifficultManualLabor" ||
-            holster.cardList[selectedCard - 1].card.cardName == "LiquidPileOfHorrid" ||
-            holster.cardList[selectedCard - 1].card.cardName == "Chocolatiers Delicate Pride" ||
-            holster.cardList[selectedCard - 1].card.cardName == "ANaggingFeeling")
+        if (selectedCard.card.cardName == "EssenceOfDifficultManualLabor" ||
+            selectedCard.card.cardName == "LiquidPileOfHorrid" ||
+            selectedCard.card.cardName == "Chocolatiers Delicate Pride" ||
+            selectedCard.card.cardName == "ANaggingFeeling")
         {
             // GameManager method
             GameManager.manager.numTrashed = 1;
@@ -1096,19 +1100,19 @@ public class CardPlayer : MonoBehaviour
         // CARDS WITH THROW BONUSES GO HERE!
 
         // Throw Bonus: Heal +3 HP
-        if (holster.cardList[selectedCard - 1].card.cardName == "QuartOfLemonade" ||
-            holster.cardList[selectedCard - 1].card.cardName == "ThimbleOfHoney" ||
-            holster.cardList[selectedCard - 1].card.cardName == "KissFromTheLipsOfAnAncientLove" ||
-            holster.cardList[selectedCard - 1].card.cardName == "TallDrinkOfWater")
+        if (selectedCard.card.cardName == "QuartOfLemonade" ||
+            selectedCard.card.cardName == "ThimbleOfHoney" ||
+            selectedCard.card.cardName == "KissFromTheLipsOfAnAncientLove" ||
+            selectedCard.card.cardName == "TallDrinkOfWater")
         {
             addHealth(3);
         }
 
         // Throw Bonus: +1 Pip
-        if (holster.cardList[selectedCard - 1].card.cardName == "VintageAromaticKate" ||
-            holster.cardList[selectedCard - 1].card.cardName == "JarFullOfGlitter" ||
-            holster.cardList[selectedCard - 1].card.cardName == "BowlOfExtremelyHotSoup" ||
-            holster.cardList[selectedCard - 1].card.cardName == "HumblingGlimpse")
+        if (selectedCard.card.cardName == "VintageAromaticKate" ||
+            selectedCard.card.cardName == "JarFullOfGlitter" ||
+            selectedCard.card.cardName == "BowlOfExtremelyHotSoup" ||
+            selectedCard.card.cardName == "HumblingGlimpse")
         {
             addPips(1);
         }
@@ -1120,15 +1124,15 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Throw Bonus: If your Holster is empty, place the top 4 cards of the Potion Market Deck into your Holster
-        if (holster.cardList[selectedCard - 1].card.cardName == "ATearofBlackRain")
+        if (selectedCard.card.cardName == "ATearofBlackRain")
         {
             Debug.Log("Tear of Black Rain Bonus");
 
-            for(int i = 0; i < holster.cardList.Count; i++)
+            foreach(CardDisplay cd in holster.cardList)
             {
-                if(i != (selectedCard - 1))
+                if(cd.card.cardName != "ATearofBlackRain")
                 {
-                    if (holster.cardList[i].card.cardName != "placeholder")
+                    if (cd.card.cardName != "placeholder")
                     {
                         return damage;
                     }

@@ -1648,7 +1648,7 @@ public class GameManager : MonoBehaviour
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
                 int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
-                damage = cardPlayer.checkBonus(damage, selectedCardInt);
+                damage = cardPlayer.checkBonus(damage, playerHolster.cardList[selectedCardInt - 1]);
                 sendSuccessMessage(2); // Only display on thrower's client.
                 playerHolster.cardList[selectedCardInt - 1].updateCard(bolo.deck.placeholder);
                 td.addCard(playerHolster.cardList[selectedCardInt - 1]);
@@ -1660,7 +1660,7 @@ public class GameManager : MonoBehaviour
                 if (playerHolster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
                 {
                     int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
-                    damage = cardPlayer.checkBonus(damage, selectedCardInt);
+                    damage = cardPlayer.checkArtifactBonus(damage, playerHolster.cardList[selectedCardInt - 1]);
 
                     // Update response to account for trashing loaded artifact's potion and not the artifact
                     td.addCard(playerHolster.cardList[selectedCardInt - 1].aPotion);
@@ -1806,7 +1806,7 @@ public class GameManager : MonoBehaviour
                 damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
                 Debug.Log("Original damage: " + damage);
                 damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                damage = players[myPlayerIndex].checkBonus(damage, selectedCardInt);
+                damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                 Debug.Log("Damage after thrower bonuses: " + damage);
                 damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                 Debug.Log("Damage after defensive bonuses: " + damage);

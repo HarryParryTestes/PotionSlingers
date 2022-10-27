@@ -477,7 +477,7 @@ public class GamePlayer : NetworkBehaviour
                     damage = cp.holster.cardList[selectedCardInt - 1].card.effectAmount;
                     Debug.Log("Original damage: " + damage);
                     damage = cp.checkRingBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
-                    damage = cp.checkBonus(damage, selectedCardInt);
+                    damage = cp.checkBonus(damage, cp.holster.cardList[selectedCardInt - 1]);
                     Debug.Log("Damage after thrower bonuses: " + damage);
                     damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                     Debug.Log("Damage after defensive bonuses: " + damage);
