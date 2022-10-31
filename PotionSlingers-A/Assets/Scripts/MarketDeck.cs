@@ -9,6 +9,7 @@ public class MarketDeck : MonoBehaviour
 {
     // the deck is uninitialized to begin with
     public List<Card> deckList;
+    public List<Card> tempDeckList;
     public int cardInt;
     public CardDisplay cardDisplay1;
     public CardDisplay cardDisplay2;

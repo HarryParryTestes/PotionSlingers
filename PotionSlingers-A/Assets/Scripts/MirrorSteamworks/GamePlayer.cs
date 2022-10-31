@@ -21,6 +21,8 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar] public CSteamID playerSteamId;
     [SyncVar] public int hp;
     [SyncVar] public int essenceCubes;
+    public List<string> shufflingDeck1 = new List<string>();
+    public List<string> shufflingDeck2 = new List<string>();
 
     public PlayerListItem item;
 
@@ -169,6 +171,48 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("Executing CmdShuffleDecks on the server for player: " + playerName);
         GameManager.manager.md1.shuffle();
         GameManager.manager.md2.shuffle();
+        foreach(Card card in GameManager.manager.md1.deckList)
+        {
+            shufflingDeck1.Add(card.cardName);
+        }
+        foreach (Card card in GameManager.manager.md2.deckList)
+        {
+            shufflingDeck2.Add(card.cardName);
+        }
+
+        RpcShuffleDeck(shufflingDeck1, shufflingDeck2);
+    }
+
+    [ClientRpc]
+    public void RpcShuffleDeck(List<string> deck1, List<string> deck2)
+    {
+        Debug.Log("Shuffling deck for client");
+        foreach(string cardString in deck1)
+        {
+            foreach(Card card in GameManager.manager.md1.deckList)
+            {
+                if(cardString == card.cardName)
+                {
+                    GameManager.manager.md1.tempDeckList.Add(card);
+                    break;
+                }
+            }
+        }
+        foreach (string cardString in deck2)
+        {
+            foreach (Card card in GameManager.manager.md2.deckList)
+            {
+                if (cardString == card.cardName)
+                {
+                    GameManager.manager.md2.tempDeckList.Add(card);
+                    break;
+                }
+            }
+        }
+        GameManager.manager.md1.deckList = GameManager.manager.md1.tempDeckList;
+        GameManager.manager.md2.deckList = GameManager.manager.md2.tempDeckList;
+        GameManager.manager.md1.initCardDisplays();
+        GameManager.manager.md2.initCardDisplays();
     }
 
     [TargetRpc]

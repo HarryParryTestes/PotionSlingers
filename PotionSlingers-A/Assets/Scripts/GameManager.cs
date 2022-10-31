@@ -191,6 +191,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager started!!!");
 
+        StartCoroutine(shuffleDecks());
+
         p3.SetActive(true);
         p4.SetActive(true);
 
@@ -1507,7 +1509,13 @@ public class GameManager : MonoBehaviour
      * the tutorial text
      */
 
-    public IEnumerator waitThreeSeconds(Dialog dialog)
+    public IEnumerator shuffleDecks()
+    {
+        yield return new WaitForSeconds(1);
+        Game.GamePlayers[0].CmdShuffleDecks();
+    }
+
+        public IEnumerator waitThreeSeconds(Dialog dialog)
     {
         if (dialog.textBoxCounter == 24)
         {
