@@ -34056,7 +34056,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -960, y: -225}
+  m_AnchoredPosition: {x: -1000, y: -225}
   m_SizeDelta: {x: 440, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &841860839
@@ -36135,6 +36135,7 @@ MonoBehaviour:
   deck: {fileID: 1885509569}
   holster: {fileID: 81936594}
   pips: 6
+  pipCount: 0
   pipsUsedThisTurn: 0
   dead: 0
   potionsThrown: 0
@@ -36175,6 +36176,7 @@ MonoBehaviour:
   bottleRocketBonus: 0
   blackRainBonus: 0
   opponentPreventedDamage: 0
+  healBonus: 0
 --- !u!1 &906331845
 GameObject:
   m_ObjectHideFlags: 0
@@ -73803,7 +73805,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -625, y: -350}
+  m_AnchoredPosition: {x: -650, y: -350}
   m_SizeDelta: {x: 75, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1776357141
@@ -86479,6 +86481,7 @@ MonoBehaviour:
   deck: {fileID: 1595608073}
   holster: {fileID: 286011420}
   pips: 0
+  pipCount: 0
   pipsUsedThisTurn: 0
   dead: 0
   potionsThrown: 0
@@ -86519,6 +86522,7 @@ MonoBehaviour:
   bottleRocketBonus: 0
   blackRainBonus: 0
   opponentPreventedDamage: 0
+  healBonus: 0
 --- !u!1 &2032555036
 GameObject:
   m_ObjectHideFlags: 0
@@ -89388,6 +89392,7 @@ MonoBehaviour:
   selectedCardInt: 0
   selectedOpponentInt: 0
   opponentCardInt: 0
+  previousDamage: 0
   selectedOpponentCharName: 
   currentPlayerName: 
   loadedCardInt: 0
@@ -93092,6 +93097,7 @@ MonoBehaviour:
   deck: {fileID: 1271437216}
   holster: {fileID: 4964658479611669281}
   pips: 0
+  pipCount: 0
   pipsUsedThisTurn: 0
   dead: 0
   potionsThrown: 0
@@ -93132,6 +93138,7 @@ MonoBehaviour:
   bottleRocketBonus: 0
   blackRainBonus: 0
   opponentPreventedDamage: 0
+  healBonus: 0
 --- !u!1 &2203842972192241850
 GameObject:
   m_ObjectHideFlags: 0
@@ -94622,6 +94629,7 @@ MonoBehaviour:
   deck: {fileID: 3975660438111221352}
   holster: {fileID: 3975660438111221349}
   pips: 6
+  pipCount: 0
   pipsUsedThisTurn: 0
   dead: 0
   potionsThrown: 0
@@ -94666,6 +94674,7 @@ MonoBehaviour:
   bottleRocketBonus: 0
   blackRainBonus: 0
   opponentPreventedDamage: 0
+  healBonus: 0
 --- !u!114 &3975660438111221351 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3975660437273336509, guid: 53989111815513c41a3163993b3810a5, type: 3}

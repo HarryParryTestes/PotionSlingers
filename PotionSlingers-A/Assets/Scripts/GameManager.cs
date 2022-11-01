@@ -616,9 +616,9 @@ public class GameManager : MonoBehaviour
         {
             foreach(GamePlayer gp in Game.GamePlayers)
             {
-                if(gp.playerName == currentPlayerName)
+                if(gp.playerName != currentPlayerName)
                 {
-                    gp.CmdEverybodyTrashOneCard(currentPlayerName);
+                    gp.CmdEverybodyTrashOneCard(gp.playerName);
                 }
             }
             return;
@@ -1026,6 +1026,13 @@ public class GameManager : MonoBehaviour
                     {
                         dealDamageToAll(2);
                     }
+                }
+
+                // check for Blacksnake Pip Sling
+                if (cd.card.cardName == "Blacksnake Pip Sling")
+                {
+                    players[myPlayerIndex].deck.putCardOnBottom(cd.card);
+                    cd.updateCard(cd.placeholder);
                 }
             }
             players[myPlayerIndex].currentPlayerHighlight.SetActive(false);

@@ -14,6 +14,7 @@ public class CardPlayer : MonoBehaviour
     public Deck deck;
     public Holster holster;
     public int pips;
+    public int pipCount = 6;
     public int pipsUsedThisTurn = 0;
     public bool dead;           //Does the player still have health left?
     public int potionsThrown = 0;
@@ -79,7 +80,7 @@ public class CardPlayer : MonoBehaviour
     void Update()
     {
         // yes damage
-        if (GameManager.manager.damage)
+        if (GameManager.manager.damage && name == GameManager.manager.currentPlayerName)
         {
             foreach(CardPlayer player in GameManager.manager.players)
             {
@@ -92,9 +93,10 @@ public class CardPlayer : MonoBehaviour
         }
         
         // no damage
-        if (GameManager.manager.trash)
+        if (GameManager.manager.trash && name == GameManager.manager.currentPlayerName)
         {
             GameManager.manager.trashMarketUI.SetActive(true);
+            GameManager.manager.updateTrashMarketMenu();
             GameManager.manager.trash = false;
 
         }
@@ -205,7 +207,7 @@ public class CardPlayer : MonoBehaviour
             pluotWet = false;
         }
 
-        pips = 6;
+        pips = pipCount;
 
         foreach (CardDisplay cd in holster.cardList)
         {
@@ -225,11 +227,16 @@ public class CardPlayer : MonoBehaviour
             {
                 if (doubleRingBonus)
                 {
-                    pips = 10;
+                    pips += 4;
                 } else
                 {
-                    pips = 8;
+                    pips += 2;
                 }
+            }
+
+            if (cd.card.cardName == "Blacksnake Pip Sling")
+            {
+                pips += 2;    
             }
         }
         pipsUsedThisTurn = 0;
@@ -631,7 +638,7 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Squeezebox
-        if(selectedCard.card.cardName == "Squeezebox")
+        if (selectedCard.card.cardName == "Squeezebox")
         {
             healBonus = true;
         }
@@ -641,6 +648,51 @@ public class CardPlayer : MonoBehaviour
         damage = checkBonus(damage, selectedCard.vPotion2);
 
         // Drinking Horn of a Sea Unicorn's Tooth
+        if (selectedCard.card.cardName == "Drinking Horn of a Sea Unicorn's Tooth")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" ||
+                selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                if (GameManager.manager.Game.multiplayer)
+                {
+                    foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                    {
+                        if (gp.playerName == GameManager.manager.currentPlayerName)
+                        {
+                            Debug.Log("Target RPC, Trash Menu Active");
+                            gp.RpcTrashMenuActive();
+                        }
+                    }
+                } else
+                {
+                    GameManager.manager.numTrashed += 2;
+                    GameManager.manager.trashMarketUI.SetActive(true);
+                    GameManager.manager.updateTrashMarketMenu();
+                }      
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Dry" ||
+                selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                if (GameManager.manager.Game.multiplayer)
+                {
+                    foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                    {
+                        if (gp.playerName == GameManager.manager.currentPlayerName)
+                        {
+                            Debug.Log("Target RPC, Trash Menu Active");
+                            gp.RpcTrashMenuActive();
+                        }
+                    }
+                }
+                else
+                {
+                    GameManager.manager.numTrashed += 2;
+                    GameManager.manager.trashMarketUI.SetActive(true);
+                    GameManager.manager.updateTrashMarketMenu();
+                }
+            }
+        }
 
         // First Place Volcano at the Alchemy Faire
         // Put up to 1 card from the Market onto the top of your deck.
@@ -654,7 +706,7 @@ public class CardPlayer : MonoBehaviour
                 {
                     if (gp.playerName == GameManager.manager.currentPlayerName)
                     {
-                        Debug.Log("Target RPC, Trash Menu Active");
+                        Debug.Log("Target RPC, Take Menu Active");
                         gp.RpcTMMenuActive();
                     }
                 }
@@ -741,7 +793,52 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
                 GameManager.manager.displayOpponentHolster();
             }
+        }
 
+        // Cursed Cucumella of Clumsy Acidic Coffee
+        // Hot Bonus: Opponent trashes 1 card. Wet Bonus: Opponent trashes 1 card.
+        if (selectedCard.card.cardName == "CursedCucumella")
+        {
+            if(selectedCard.vPotion1.card.cardQuality == "Hot" || selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                if (GameManager.manager.Game.multiplayer)
+                {
+                    Debug.Log("Command check starting");
+                    foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                    {
+                        if (gp.playerName == GameManager.manager.tempPlayer.name)
+                        {
+                            Debug.Log("Target RPC, Trash Deck Menu Active");
+                            gp.RpcTrashOneCard(gp.playerName);
+                        }
+                    }
+                } else
+                {
+                    GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    GameManager.manager.displayOpponentHolster();
+                }
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Wet" || selectedCard.vPotion2.card.cardQuality == "Wet")
+            {
+                if (GameManager.manager.Game.multiplayer)
+                {
+                    Debug.Log("Command check starting");
+                    foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                    {
+                        if (gp.playerName == GameManager.manager.tempPlayer.name)
+                        {
+                            Debug.Log("Target RPC, Trash Deck Menu Active");
+                            gp.RpcTrashOneCard(gp.playerName);
+                        }
+                    }
+                }
+                else
+                {
+                    GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    GameManager.manager.displayOpponentHolster();
+                }
+            }
         }
 
         // Hot + Dry Bonus
@@ -1136,6 +1233,7 @@ public class CardPlayer : MonoBehaviour
             if (healBonus)
             {
                 addHealth(6);
+                healBonus = false;
                 return damage;
             }
             addHealth(3);
@@ -1162,7 +1260,9 @@ public class CardPlayer : MonoBehaviour
             if (healBonus)
             {
                 addHealth(4);
-            }else
+                healBonus = false;
+            }
+            else
             {
                 addHealth(2);
             }

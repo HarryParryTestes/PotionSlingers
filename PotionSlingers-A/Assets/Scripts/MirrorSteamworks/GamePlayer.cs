@@ -1323,6 +1323,16 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [TargetRpc]
+    public void RpcTrashMenuActive()
+    {
+        // this hopefully should trigger on only the character who got the bonus
+        // it does, otherwise mirror is gaslighting me
+        GameManager.manager.numTrashed += 2;
+        GameManager.manager.trashMarketUI.SetActive(true);
+        GameManager.manager.updateTrashMarketMenu();
+    }
+
+    [TargetRpc]
     public void RpcTDMenuActive()
     {
         GameManager.manager.trashDeckBonus = true;
@@ -2016,6 +2026,9 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
+    // I may refactor this to search for the specific CardPlayer instead of
+    // using GameManager.manager.myPlayerIndex because I think that desyncs things
+
     [ClientRpc]
     public void RpcEndTurn(string name)
     {
@@ -2038,6 +2051,25 @@ public class GamePlayer : NetworkBehaviour
                         {
                             GameManager.manager.dealDamageToAll(2);
                         }
+                    }
+
+                    // check for Blacksnake Pip Sling
+                    if (cd.card.cardName == "Blacksnake Pip Sling")
+                    {
+                        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnBottom(cd.card);
+                        cd.updateCard(cd.placeholder);
+                    }
+
+                    // check for gambling ring
+                    if (cd.card.cardName == "RingofGamblingMopoji" && GameManager.manager.players[GameManager.manager.myPlayerIndex].pipsUsedThisTurn == 0)
+                    {
+                        GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount = Random.Range(1, 11);
+                        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].doubleRingBonus)
+                        {
+                            Debug.Log("Double ring bonus");
+                            GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount *= 2;
+                        }
+                        Debug.Log("New pip count: " + GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount);
                     }
                 }
                 GameManager.manager.players[GameManager.manager.myPlayerIndex].currentPlayerHighlight.SetActive(false);
