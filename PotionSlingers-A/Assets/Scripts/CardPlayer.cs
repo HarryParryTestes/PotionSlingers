@@ -63,6 +63,7 @@ public class CardPlayer : MonoBehaviour
     public bool bottleRocketBonus = false;
     public bool blackRainBonus = false;
     public bool opponentPreventedDamage = false;
+    public bool healBonus = false;
 
     public CardPlayer(int user_id, string name)
     {
@@ -238,6 +239,7 @@ public class CardPlayer : MonoBehaviour
         bottleRocketBonus = false;
         blackRainBonus = false;
         opponentPreventedDamage = false;
+        healBonus = false;
 
         if (isNickles)
         {
@@ -628,6 +630,12 @@ public class CardPlayer : MonoBehaviour
             return 6;
         }
 
+        // Squeezebox
+        if(selectedCard.card.cardName == "Squeezebox")
+        {
+            healBonus = true;
+        }
+
         // checking the potions for throw bonuses
         damage = checkBonus(damage, selectedCard.vPotion1);
         damage = checkBonus(damage, selectedCard.vPotion2);
@@ -712,6 +720,26 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.trashDeckMenu.SetActive(true);
                 GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
                 GameManager.manager.td.displayTrash();
+            }
+
+            // Voluptuous Gallipot of Double Entendre
+            if (selectedCard.card.cardName == "VoluptuousGallipot")
+            {
+                // Command check starting
+                if (GameManager.manager.Game.multiplayer)
+                {
+                    foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                    {
+                        if (gp.playerName == GameManager.manager.currentPlayerName)
+                        {
+                            Debug.Log("Target RPC, OpponentHolsterMenu Active");
+                            gp.RpcTMMenuActive();
+                        }
+                    }
+                    return damage;
+                }
+                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.displayOpponentHolster();
             }
 
         }
@@ -1105,6 +1133,11 @@ public class CardPlayer : MonoBehaviour
             selectedCard.card.cardName == "KissFromTheLipsOfAnAncientLove" ||
             selectedCard.card.cardName == "TallDrinkOfWater")
         {
+            if (healBonus)
+            {
+                addHealth(6);
+                return damage;
+            }
             addHealth(3);
         }
 
@@ -1126,6 +1159,13 @@ public class CardPlayer : MonoBehaviour
         // Throw Bonus: If your Holster is empty, place the top 4 cards of the Potion Market Deck into your Holster
         if (selectedCard.card.cardName == "ATearofBlackRain")
         {
+            if (healBonus)
+            {
+                addHealth(4);
+            }else
+            {
+                addHealth(2);
+            }
             Debug.Log("Tear of Black Rain Bonus");
 
             foreach(CardDisplay cd in holster.cardList)
@@ -1176,18 +1216,36 @@ public class CardPlayer : MonoBehaviour
 
         // TAKE INTO ACCOUNT -> Ring: RingOfRings = Doubles all of your Ring Effects. (Check boolean doubleRingBonus == true)
         int preventedDamage = 0;
+        int cardInt = 0;
         foreach (CardDisplay cd in holster.cardList)
         {
+            cardInt++;
             if(cd.card.cardType == "Artifact") 
             {
                 // BubbleWand
                 if(cd.card.cardName == "BubbleWand")
                 {
-                    // May trash 1 loaded potion to prevent 2 damage.
+                    // if there is a loaded potion
+                    if (cd.aPotion.card != cd.placeholder)
+                    {
+                        // May trash 1 loaded potion to prevent 2 damage.
+                        if (GameManager.manager.Game.multiplayer)
+                        {
+                            foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                            {
+                                if (gp.playerName == GameManager.manager.tempPlayer.name)
+                                {
+                                    Debug.Log("Target RPC, Trash Potion Menu Active");
+                                    gp.RpcBubbleWandMenu(gp.playerName, cardInt, damage);
+                                }
+                            }
+                        }
+                    }
                 }
                 // Shield of the Mouth of Truth
                 else if(cd.card.cardName == "Shield of the Mouth of Truth")
                 {
+                    // if there is a loaded potion
                     if (cd.aPotion.card != cd.placeholder) {
                         // May trash 1 loaded potion to prevent 3 damage.
                         if (GameManager.manager.Game.multiplayer)
@@ -1197,7 +1255,7 @@ public class CardPlayer : MonoBehaviour
                                 if (gp.playerName == GameManager.manager.tempPlayer.name)
                                 {
                                     Debug.Log("Target RPC, Trash Potion Menu Active");
-                                    gp.RpcShieldMenu(gp.playerName);
+                                    gp.RpcShieldMenu(gp.playerName, cardInt, damage);
                                 }
                             }
                         }

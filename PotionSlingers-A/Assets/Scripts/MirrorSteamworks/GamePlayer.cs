@@ -310,7 +310,7 @@ public class GamePlayer : NetworkBehaviour
     [Command]
     public void CmdAddStarterPotion(string throwerName)
     {
-        Debug.Log("Executing CmdThrowCard on the server for player: " + playerName);
+        Debug.Log("Executing CmdAddStarterPotion on the server for player: " + playerName);
         RpcAddStarterPotion(throwerName);
     }
 
@@ -530,7 +530,21 @@ public class GamePlayer : NetworkBehaviour
                     cp.potionsThrown++;
                     //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
 
-                    GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1]);
+                    foreach (CardDisplay cd in cp.holster.cardList)
+                    {
+                        if(cd.card.cardName == "Extra Inventory")
+                        {
+                            Debug.Log("Extra Inventory!");
+                            cp.deck.putCardOnBottom(cd.card);
+                            cd.updateCard(cp.holster.cardList[0].placeholder);
+                            break;
+                        }
+                    }
+
+                    if (cp.holster.cardList[selectedCardInt - 1].card.cardName != "placeholder")
+                    {
+                        GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1]);
+                    }
 
                     if (cp.blackRainBonus)
                     {
@@ -1172,6 +1186,74 @@ public class GamePlayer : NetworkBehaviour
     {
         Debug.Log("Executing CmdBottleRocketBonus on the server for player: " + playerName);
         RpcBottleRocketBonus(throwerName, selectedCardInt);
+    }
+
+    [ClientRpc]
+    public void RpcBubbleWandBonus(string throwerName, int selectedCardInt)
+    {
+        Debug.Log("Checking Bubble Wand bonus for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1].aPotion);
+                if(GameManager.manager.previousDamage <= 2)
+                {
+                    if(cp.hp == 10)
+                    {
+                        cp.hpCubes++;
+                        cp.hp = GameManager.manager.previousDamage;
+                    }
+                    cp.addHealth(GameManager.manager.previousDamage);
+                }
+                else
+                {
+                    GameManager.manager.previousDamage -= 2;
+                    cp.addHealth(GameManager.manager.previousDamage);
+                }
+            }
+        }
+    }
+
+    [ClientRpc]
+    public void RpcShieldBonus(string throwerName, int selectedCardInt)
+    {
+        Debug.Log("Checking Shield bonus for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1].aPotion);
+                if (GameManager.manager.previousDamage <= 3)
+                {
+                    if (cp.hp == 10)
+                    {
+                        cp.hpCubes++;
+                        cp.hp = GameManager.manager.previousDamage;
+                    }
+                    cp.addHealth(GameManager.manager.previousDamage);
+                }
+                else
+                {
+                    GameManager.manager.previousDamage -= 3;
+                    cp.addHealth(GameManager.manager.previousDamage);
+                }
+            }
+        }
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdBubbleWandBonus(string throwerName, int selectedCardInt)
+    {
+        Debug.Log("Executing CmdBubbleWandBonus on the server for player: " + playerName);
+        RpcBubbleWandBonus(throwerName, selectedCardInt);
+    }
+
+    [Command(requiresAuthority = false)]
+    public void CmdShieldBonus(string throwerName, int selectedCardInt)
+    {
+        Debug.Log("Executing CmdShieldBonus on the server for player: " + playerName);
+        RpcShieldBonus(throwerName, selectedCardInt);
     }
 
     [Command]
@@ -1905,14 +1987,31 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [TargetRpc]
-    public void RpcShieldMenu(string throwerName)
+    public void RpcShieldMenu(string throwerName, int selectedCardInt, int damage)
     {
+        GameManager.manager.previousDamage = damage;
+        GameManager.manager.opponentCardInt = selectedCardInt;
         Debug.Log("Pulling up Sheild Menu for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if (cp.name == throwerName)
             {
-                GameManager.manager.faisalMenu.SetActive(true);
+                GameManager.manager.shieldMenu.SetActive(true);
+            }
+        }
+    }
+
+    [TargetRpc]
+    public void RpcBubbleWandMenu(string throwerName, int selectedCardInt, int damage)
+    {
+        GameManager.manager.previousDamage = damage;
+        GameManager.manager.opponentCardInt = selectedCardInt;
+        Debug.Log("Pulling up Bubble Wand Menu for: " + playerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == throwerName)
+            {
+                GameManager.manager.bubbleWandMenu.SetActive(true);
             }
         }
     }

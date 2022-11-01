@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     public int numPlayers;
     public int selectedCardInt;
     public int selectedOpponentInt;
+    public int opponentCardInt;
+    public int previousDamage;
     public string selectedOpponentCharName;
     public string currentPlayerName;
     public int loadedCardInt;
@@ -60,6 +62,8 @@ public class GameManager : MonoBehaviour
     public GameObject trashPlayerMenu;
     public GameObject faisalMenu;
     public GameObject scarpettaMenu;
+    public GameObject shieldMenu;
+    public GameObject bubbleWandMenu;
 
     public TMPro.TextMeshProUGUI trashText;
 
@@ -1511,7 +1515,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator shuffleDecks()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(3);
         Game.GamePlayers[0].CmdShuffleDecks();
     }
 
@@ -1823,7 +1827,23 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].potionsThrown++;
                 //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
 
-                td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+                {
+                    if (cd.card.cardName == "Extra Inventory")
+                    {
+                        Debug.Log("Extra Inventory!");
+                        players[myPlayerIndex].deck.putCardOnBottom(cd.card);
+                        cd.updateCard(players[myPlayerIndex].holster.cardList[0].placeholder);
+                        break;
+                    }
+                }
+
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName != "placeholder")
+                {
+                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                }
+
+                //td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
                 if (players[myPlayerIndex].blackRainBonus)
                 {
@@ -3293,6 +3313,58 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void setShieldBonus()
+    {
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == tempPlayer.name)
+                {
+                    Debug.Log("Starting Mirror CmdShieldBonus");
+                    // do the Mirror Command
+                    gp.CmdShieldBonus(gp.playerName, opponentCardInt);
+                }
+            }
+            return;
+        }
+
+        foreach (CardPlayer cp in players)
+        {
+            if (cp.name == tempPlayer.name)
+            {
+                td.addCard(cp.holster.cardList[opponentCardInt - 1].aPotion);
+            }
+        }
+    }
+
+    public void setBubbleWandBonus()
+    {
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == tempPlayer.name)
+                {
+                    Debug.Log("Starting Mirror CmdBubbleWandBonus");
+                    // do the Mirror Command
+                    gp.CmdBubbleWandBonus(gp.playerName, opponentCardInt);
+                }
+            }
+            return;
+        }
+
+        foreach(CardPlayer cp in players)
+        {
+            if(cp.name == tempPlayer.name)
+            {
+                td.addCard(cp.holster.cardList[opponentCardInt - 1].aPotion);
+            }
+        }
+    }
+
     public void setBottleRocketBonus()
     {
         if (Game.multiplayer)
@@ -3322,75 +3394,6 @@ public class GameManager : MonoBehaviour
             sendErrorMessage(6);
             // reset card
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-        }
-    }
-
-    // BUY RESPONSE
-    public void onResponseBuy(ExtendedEventArgs eventArgs)
-    {
-        Debug.Log("ResponseBuy");
-        ResponseBuyEventArgs args = eventArgs as ResponseBuyEventArgs;
-        Debug.Log("ID: " + args.user_id); // User_id of player who made purchase
-        Debug.Log("cardInt: " + args.x); // Card position in market (1, 2, or 3)
-        Debug.Log("Price: " + args.y); // Int price of card purchased
-        Debug.Log("T or B: " + args.z); // Top (1) or Bottom (0) market that card was purchased from.
-
-        
-        for(int i = 0; i < numPlayers; i++)
-        {
-            // Find player who made the Buy request.
-            if(players[i].user_id == args.user_id)
-            {
-                // Subtracts pips from Player who made purchase (buy request)
-                players[i].subPips(args.y);
-
-                // If purchase was made from the top market
-                if(args.z == 1)
-                {
-                    // Update based on card position in the top market (1, 2, or 3)
-                    switch (args.x)
-                    {
-                        case 1:
-                            players[i].deck.putCardOnTop(md1.cardDisplay1.card);
-                            Card card = md1.popCard();
-                            md1.cardDisplay1.updateCard(card);
-                            break;
-                        case 2:
-                            players[i].deck.putCardOnTop(md1.cardDisplay2.card);
-                            Card card2 = md1.popCard();
-                            md1.cardDisplay2.updateCard(card2);
-                            break;
-                        case 3:
-                            players[i].deck.putCardOnTop(md1.cardDisplay3.card);
-                            Card card3 = md1.popCard();
-                            md1.cardDisplay3.updateCard(card3);
-                            break;
-                    }
-                }
-                // If purchase was made from the bottom market
-                else
-                {
-                    // Update based on card position in the bottom market (1, 2, or 3)
-                    switch (args.x)
-                    {
-                        case 1:
-                            players[i].deck.putCardOnTop(md2.cardDisplay1.card);
-                            Card card4 = md2.popCard();
-                            md2.cardDisplay1.updateCard(card4);
-                            break;
-                        case 2:
-                            players[i].deck.putCardOnTop(md2.cardDisplay2.card);
-                            Card card5 = md2.popCard();
-                            md2.cardDisplay2.updateCard(card5);
-                            break;
-                        case 3:
-                            players[i].deck.putCardOnTop(md2.cardDisplay3.card);
-                            Card card6 = md2.popCard();
-                            md2.cardDisplay3.updateCard(card6);
-                            break;
-                    }
-                }
-            }
         }
     }
 
