@@ -3406,33 +3406,33 @@ public class GameManager : MonoBehaviour
 
     public void deal3ToAll()
     {
-        for (int i = 0; i < Game.GamePlayers.Count; i++)
+        foreach (CardPlayer cp in players)
         {
-            if(i != myPlayerIndex)
+            if (cp.name != currentPlayerName)
             {
-                players[i].subHealth(3);
+                cp.subHealth(3);
             }
         }
     }
 
     public void deal1ToAll()
     {
-        for (int i = 0; i < Game.GamePlayers.Count; i++)
+        foreach (CardPlayer cp in players)
         {
-            if (i != myPlayerIndex)
+            if (cp.name != currentPlayerName)
             {
-                players[i].subHealth(1);
+                cp.subHealth(1);
             }
         }
     }
 
     public void dealDamageToAll(int damage)
     {
-        for (int i = 0; i < Game.GamePlayers.Count; i++)
+        foreach (CardPlayer cp in players)
         {
-            if (i != myPlayerIndex)
+            if(cp.name != currentPlayerName)
             {
-                players[i].subHealth(damage);
+                cp.subHealth(damage);
             }
         }
     }

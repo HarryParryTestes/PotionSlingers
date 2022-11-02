@@ -253,18 +253,41 @@ public class CardPlayer : MonoBehaviour
             nicklesAction = false;
         }
 
-        // putting this logic somewhere else
-        /*
-        foreach (CardDisplay cd in holster.cardList)
+       if (isSweetbitter)
         {
-            // if there's a starter ring
-            if (cd.card.cardType == "Ring" &&
-                cd.card.cardQuality == "Starter")
+            bool hasRing = false;
+            int loadedItems = 0;
+            bool hasPhlactery = false;
+
+            foreach (CardDisplay cd in holster.cardList)
             {
-                ringBonus = true;
+                if(cd.card.cardType == "Ring")
+                {
+                    hasRing = true;
+                }
+
+                if(cd.card.cardType == "Artifact" && cd.aPotion.card.cardName != "placeholder")
+                {
+                    loadedItems++;
+                }
+
+                if (cd.card.cardType == "Vessel" && (cd.vPotion1.card.cardName != "placeholder" && cd.vPotion2.card.cardName != "placeholder"))
+                {
+                    loadedItems++;
+                }
+
+                if(cd.card.cardName == "Phylactery")
+                {
+                    hasPhlactery = true;
+                }
+            }
+
+            if(hasRing && hasPhlactery && loadedItems == 2)
+            {
+                Debug.Log("Mega damage!");
+                GameManager.manager.dealDamageToAll(12);
             }
         }
-        */
 
         updatePipsUI();
     }
@@ -1097,8 +1120,35 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
-        // Opponent trashes 1 card in their Holster
-        if (selectedCard.card.cardName == "ParticularlyFrighteningShadeofPurple" ||
+        if (selectedCard.card.cardName != "NorthernOquinox" && selectedCard.card.cardName != "PotionThatMakesHatsUglier" &&
+                selectedCard.card.cardName != "SeriesOfPoisonousWords" && selectedCard.card.cardName != "VerySeriousThreat" &&
+                selectedCard.card.cardName != "BottleOfLeastAmountOfSpiders" && selectedCard.card.cardName != "ContainerFilledWithAngryBees" &&
+                selectedCard.card.cardName != "CupOfNoodles" && selectedCard.card.cardName != "PassiveAggressiveSlurry" &&
+                selectedCard.card.cardName != "ClassicFireball" && selectedCard.card.cardName != "ElectronicTonic" &&
+                selectedCard.card.cardName != "LossOfOnesIntimatePossesions" && selectedCard.card.cardName != "ShotOfWillOWisp" &&
+                selectedCard.card.cardName != "BoldBundleOfLightning" && selectedCard.card.cardName != "CupfulOfRealm" &&
+                selectedCard.card.cardName != "GoopGasAttack" && selectedCard.card.cardName != "ScreechingCry" &&
+                selectedCard.card.cardName != "ATearofBlackRain" && selectedCard.card.cardName != "QuartOfLemonade" &&
+                selectedCard.card.cardName != "VintageAromaticKate" && selectedCard.card.cardName != "JarFullOfGlitter" &&
+                selectedCard.card.cardName != "KissFromTheLipsOfAnAncientLove" && selectedCard.card.cardName != "HumblingGlimpse")
+        {
+            foreach (CardPlayer cp in GameManager.manager.players)
+            {
+                if (cp.isIsadore)
+                {
+                    foreach(CardDisplay cd in cp.holster.cardList)
+                    {
+                        if(cd.card.cardName == "CherryBomb Badge")
+                        {
+                            subHealth(1);
+                        }
+                    }
+                }
+            }
+        }
+
+            // Opponent trashes 1 card in their Holster
+            if (selectedCard.card.cardName == "ParticularlyFrighteningShadeofPurple" ||
             selectedCard.card.cardName == "PhilterOfMalaise" ||
             selectedCard.card.cardName == "MouthfulOfHair" ||
             selectedCard.card.cardName == "PowderOfLaughingFits" ||
@@ -1377,6 +1427,19 @@ public class CardPlayer : MonoBehaviour
                             if (cd2.holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
                             {
                                 preventedDamage += doubleRingBonus ? 4 : 2;
+                                foreach (CardPlayer cp in GameManager.manager.players)
+                                {
+                                    if (cp.isIsadore)
+                                    {
+                                        foreach (CardDisplay cd3 in cp.holster.cardList)
+                                        {
+                                            if (cd3.card.cardName == "CherryBomb Badge")
+                                            {
+                                                preventedDamage -= 1;
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -1387,6 +1450,19 @@ public class CardPlayer : MonoBehaviour
                     // All items thrown at you prevent 1 damage.
                     // (prevents 2 damage with Ring of Rings in Holster)
                     preventedDamage += doubleRingBonus ? 2 : 1;
+                    foreach (CardPlayer cp in GameManager.manager.players)
+                    {
+                        if (cp.isIsadore)
+                        {
+                            foreach (CardDisplay cd2 in cp.holster.cardList)
+                            {
+                                if (cd2.card.cardName == "CherryBomb Badge")
+                                {
+                                    preventedDamage -= 1;
+                                }
+                            }
+                        }
+                    }
                 }
                 // Thick Ring of the Furrowed Brow Dolt
                 else if(cd.card.cardName == "Thick Ring of the Furrowed Brow Dolt")
@@ -1397,6 +1473,19 @@ public class CardPlayer : MonoBehaviour
                     {
                         preventedDamage += doubleRingBonus ? 4 : 2;
                         opponentPreventedDamage = true;
+                        foreach (CardPlayer cp in GameManager.manager.players)
+                        {
+                            if (cp.isIsadore)
+                            {
+                                foreach (CardDisplay cd2 in cp.holster.cardList)
+                                {
+                                    if (cd2.card.cardName == "CherryBomb Badge")
+                                    {
+                                        preventedDamage -= 1;
+                                    }
+                                }
+                            }
+                        }
                     } 
                 }
             }
@@ -1440,6 +1529,19 @@ public class CardPlayer : MonoBehaviour
             }
             else
             {
+                if (isSweetbitter)
+                {
+                    foreach (CardDisplay cd in holster.cardList)
+                    {
+                        if(cd.card.cardName == "Phylactery")
+                        {
+                            hp = 1;
+                            hpCubes = 1;
+                            Debug.Log("Survived because of The Phlactery");
+                            return;
+                        }
+                    }
+                }
                 hp = 0;
                 Debug.Log("Somebody is dead!");
                 dead = true;
