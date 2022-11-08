@@ -12,6 +12,21 @@ public class MyNetworkManager : NetworkManager
     public bool tutorial = false;
     public bool multiplayer = false;
     public LobbyManager lobbyManager;
+    public SteamLobby steamLobby;
+    /*
+    public LobbyManager Manager
+    {
+        get
+        {
+            if (lobbyManager != null)
+            {
+                return lobbyManager;
+            }
+            return lobbyManager = LobbyManager.singleton as LobbyManager;
+        }
+    }
+    */
+
     public List<GamePlayer> GamePlayers { get; } = new List<GamePlayer>();
     [SerializeField] private PlayerListItem playerListPrefab;
     // Start is called before the first frame update
@@ -52,6 +67,17 @@ public class MyNetworkManager : NetworkManager
         }
     }
 
+    /*
+    void Update()
+    {
+        if(lobbyManager == null)
+        {
+            Debug.Log("Lobby managed");
+            lobbyManager = GameObject.Find("OldLobbyMenu").GetComponent<LobbyManager>();
+        }
+    }
+    */
+
     public void StartGame()
     {
         multiplayer = true;
@@ -75,6 +101,7 @@ public class MyNetworkManager : NetworkManager
         }
         return true;
     }
+
     public void OnServerDisconnect(NetworkConnectionToClient conn)
     {
         if (conn.identity != null)

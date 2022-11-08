@@ -187,6 +187,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Going back to title menu");
         Game.tutorial = false;
+        SteamMatchmaking.LeaveLobby((CSteamID)Game.steamLobby.current_lobbyID);
         SceneManager.LoadScene("TitleMenu");
         //Game.ServerChangeScene("TitleMenu");
     }

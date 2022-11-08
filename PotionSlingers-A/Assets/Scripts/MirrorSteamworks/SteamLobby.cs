@@ -56,6 +56,8 @@ public class SteamLobby : MonoBehaviour
         if (!SteamManager.Initialized) { return; }
         MakeInstance();
 
+        DontDestroyOnLoad(this.gameObject);
+
         //greetingName = SteamLobby.instance.GetSteamName();
         //greeting.text = "Hello, " + greetingName;
 

@@ -55,6 +55,7 @@ public class LobbyManager : MonoBehaviour
         // ReadyUpButton.gameObject.SetActive(true);
         // ReadyUpButton.GetComponentInChildren<Text>().text = "Ready Up";
         // StartGameButton.gameObject.SetActive(false);
+        DontDestroyOnLoad(this.gameObject);
     }
     // Update is called once per frame
     void Update()
