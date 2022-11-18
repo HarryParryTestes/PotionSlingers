@@ -66,15 +66,17 @@ public class CardPlayer : MonoBehaviour
     public bool opponentPreventedDamage = false;
     public bool healBonus = false;
 
+    /*
     public CardPlayer(int user_id, string name)
     {
         this.user_id = user_id;
         this.name = name;
     }
+    */
 
     void Start()
     {
-        
+        pipCount = 6;
     }
 
     void Update()

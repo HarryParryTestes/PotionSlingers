@@ -298,14 +298,23 @@ public class MainMenu : MonoBehaviour
 	public void StartTutorial()
 	{
 		networkManager.tutorial = true;
-		networkManager.ServerChangeScene("GameScene");
+        networkManager.multiplayer = false;
+        networkManager.ServerChangeScene("GameScene");
 	}
 
 	public void StartGame()
 	{
 		networkManager.multiplayer = true;
-		networkManager.ServerChangeScene("GameScene");
+        networkManager.tutorial = false;
+        networkManager.ServerChangeScene("GameScene");
 	}
+
+    public void StartSingleplayerGame()
+    {
+        networkManager.multiplayer = false;
+        networkManager.tutorial = false;
+        networkManager.ServerChangeScene("GameScene");
+    }
 
 	public int getNumPlayers() {
 		return numPlayers;

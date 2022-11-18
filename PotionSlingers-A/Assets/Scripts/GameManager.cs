@@ -196,6 +196,38 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager started!!!");
 
+        // single player stuff
+        if(!Game.tutorial && !Game.multiplayer)
+        {
+            Debug.Log("So that happened...");
+            initDecks();
+            md1.shuffle();
+            md1.initCardDisplays();
+            md2.shuffle();
+            md2.initCardDisplays();
+            // initialize the ComputerPlayer classes and add them to the players that need them
+            // make the class and then do AddComponent<ClassName>()
+            // i'm gonna change this to 
+            for (int i = 0; i < players.Length; i++)
+            {
+                // for player 1
+                if(i == 0)
+                {
+                    playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+                    cardPlayer.name = SteamFriends.GetPersonaName().ToString();
+                    currentPlayerName = playerBottomName.text;
+                }
+                // everyone except player 1
+                if(i > 0)
+                {
+                    players[i].gameObject.AddComponent<ComputerPlayer>();
+                    // CardPlayer in players mutated to be ComputerPlayer
+                    //players[i] = players[i].gameObject.GetComponent<ComputerPlayer>();
+                }
+            }
+            return;
+        }
+
         StartCoroutine(shuffleDecks());
 
         p3.SetActive(true);
