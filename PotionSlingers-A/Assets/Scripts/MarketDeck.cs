@@ -15,6 +15,7 @@ public class MarketDeck : MonoBehaviour
     public CardDisplay cardDisplay2;
     public CardDisplay cardDisplay3;
     private Sprite sprite;
+    private static System.Random rng = new System.Random();
 
     public Card popCard()
     {
@@ -43,9 +44,22 @@ public class MarketDeck : MonoBehaviour
     }
     */
 
+    // shuffle method kind of sucked before
+    // gonna try fisher-yates implementation
+    // wow that works so well
     public List<Card> shuffle()
     {
-        return deckList.OrderBy(x => Random.value).ToList();
+        int n = deckList.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            Card value = deckList[k];
+            deckList[k] = deckList[n];
+            deckList[n] = value;
+        }
+
+        return deckList;
     }
 
     public void initCardDisplays()

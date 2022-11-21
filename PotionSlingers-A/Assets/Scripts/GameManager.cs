@@ -200,6 +200,8 @@ public class GameManager : MonoBehaviour
         if(!Game.tutorial && !Game.multiplayer)
         {
             Debug.Log("So that happened...");
+            // changing this to 4 just to test for now, remember to take this out
+            numPlayers = 4;
             initDecks();
             md1.shuffle();
             md1.initCardDisplays();
@@ -242,8 +244,6 @@ public class GameManager : MonoBehaviour
             Debug.Log(gp.playerName);
         }
 
-        numPlayers = Game.GamePlayers.Count;
-
         // dummy players for tutorial
         if (Game.tutorial)
         {
@@ -285,6 +285,7 @@ public class GameManager : MonoBehaviour
         //Debug.Log("Player 1's character is... " + playerOb.charName);
         int tracker = 0;
         currentPlayerName = Game.GamePlayers[0].playerName;
+        numPlayers = Game.GamePlayers.Count;
         for (int i = 0; i < Game.GamePlayers.Count; i++)
         {
             if (Game.GamePlayers[i].isLocalPlayer)
@@ -1110,7 +1111,17 @@ public class GameManager : MonoBehaviour
                 myPlayerIndex = 0;
             }
             currentPlayerName = players[myPlayerIndex].name;
-            onStartTurn(players[myPlayerIndex]);
+
+            // check if the CardPlayer gameObject has a ComputerPlayer script attached
+            if (players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>() != null)
+            {
+                Debug.Log("Computer player!");
+                players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().AITurn();
+            } else
+            {
+                onStartTurn(players[myPlayerIndex]);
+            }
+
             // Debug.Log("Request End Turn");
 
             // ADD IN NETWORKING LATER!
