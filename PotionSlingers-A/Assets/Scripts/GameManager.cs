@@ -1104,19 +1104,20 @@ public class GameManager : MonoBehaviour
 
             myPlayerIndex++;
             
-
-            sendSuccessMessage(18);
             if(myPlayerIndex >= numPlayers)
             {
                 myPlayerIndex = 0;
             }
+            sendSuccessMessage(18);
             currentPlayerName = players[myPlayerIndex].name;
 
             // check if the CardPlayer gameObject has a ComputerPlayer script attached
             if (players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>() != null)
             {
                 Debug.Log("Computer player!");
-                players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().AITurn();
+                onStartTurn(players[myPlayerIndex]);
+                players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().AICards.Clear();
+                players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().StartCoroutine(players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().waitASecBro());
             } else
             {
                 onStartTurn(players[myPlayerIndex]);

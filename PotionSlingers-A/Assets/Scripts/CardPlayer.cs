@@ -1172,8 +1172,19 @@ public class CardPlayer : MonoBehaviour
                 }
                 return damage;
             }
-            GameManager.manager.opponentHolsterMenu.SetActive(true);
-            GameManager.manager.displayOpponentHolster();
+            
+            // if they're not a computer player
+            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            {
+                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.displayOpponentHolster();
+            } else
+            {
+                // make computer choose random player maybe?
+                // I'll figure it out, it's just calling a ComputerPlayer method
+
+            }
+            
         }
 
         // Choose 1 card in an opponent's Holster and trash it
@@ -1189,7 +1200,7 @@ public class CardPlayer : MonoBehaviour
                 {
                     if (gp.playerName == GameManager.manager.currentPlayerName)
                     {
-                        Debug.Log("Target RPC, StarterPotionMenu Active");
+                        Debug.Log("Target RPC, TrashOpponentMenu Active");
                         gp.RpcTMMenuActive();
                     }
                 }
@@ -1204,9 +1215,17 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "Goldbricker")
         {
             // make menu in UI with opponent's holster, we're gonna need this for multiple cards anyways
-            GameManager.manager.replaceStarter = true;
-            GameManager.manager.opponentHolsterMenu.SetActive(true);
-            GameManager.manager.displayOpponentHolster();
+
+            // if they're not a computer player
+            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            {
+                GameManager.manager.replaceStarter = true;
+                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.displayOpponentHolster();
+            } else
+            {
+                // maybe do something for computer
+            }   
         }
 
 
@@ -1258,7 +1277,11 @@ public class CardPlayer : MonoBehaviour
                 }
                 return damage;
             }
-            GameManager.manager.starterPotionMenu.SetActive(true);
+            // if they're not a computer player
+            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            {
+                GameManager.manager.starterPotionMenu.SetActive(true);
+            }
         }
 
         // you may trash 1 card in the market
