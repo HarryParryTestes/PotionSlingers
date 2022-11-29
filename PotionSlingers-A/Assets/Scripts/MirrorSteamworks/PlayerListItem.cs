@@ -17,6 +17,7 @@ public class PlayerListItem : MonoBehaviour
 
     public string charName = "blank";
     public GamePlayer player;
+    public bool computerPlayer = false;
 
     public GameObject ReadyButton;
     public GameObject NotReadyButton;
@@ -26,7 +27,18 @@ public class PlayerListItem : MonoBehaviour
     [SerializeField] private TMPro.TextMeshProUGUI PlayerNameText;
     [SerializeField] private TMPro.TextMeshProUGUI PlayerReadyStatus;
 
-    
+    public PlayerListItem(string playerName)
+    {
+        this.playerName = playerName;
+        computerPlayer = true;
+    }
+
+    public PlayerListItem()
+    {
+        playerName = SteamFriends.GetPersonaName();
+        // something is fucked up about this i gotta figure it out 
+        // PlayerNameText.text = MainMenu.menu.greetingName;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +59,14 @@ public class PlayerListItem : MonoBehaviour
         player.ConnectionId = ConnectionId;
         player.charName = charName;
         //UpdatePlayerItemReadyStatus();
+    }
+
+    public void SetSinglePlayerListItemValues()
+    {
+        playerName = "Computer";
+        PlayerNameText.text = playerName;
+        player.charName = "Bolo";
+        computerPlayer = true;
     }
 
     // TODO: Make references to the GameObjects used for the Ready and Not Ready buttons and

@@ -1291,10 +1291,19 @@ public class CardPlayer : MonoBehaviour
             selectedCard.card.cardName == "Chocolatiers Delicate Pride" ||
             selectedCard.card.cardName == "ANaggingFeeling")
         {
-            // GameManager method
-            GameManager.manager.numTrashed = 1;
-            GameManager.manager.trashMarketUI.SetActive(true);
-            GameManager.manager.updateTrashMarketMenu();
+            // if they're not a computer player
+            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            {
+                // GameManager method
+                GameManager.manager.numTrashed = 1;
+                GameManager.manager.trashMarketUI.SetActive(true);
+                GameManager.manager.updateTrashMarketMenu();
+            } else
+            {
+                // do something else lol
+                // pick a random number and then trash a amarket card
+
+            }
         }
 
         // CARDS WITH THROW BONUSES GO HERE!

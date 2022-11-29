@@ -28,6 +28,8 @@ public class LobbyManager : MonoBehaviour
     public GamePlayer localGamePlayerScript;
     public int playerConnId;
 
+    public bool singleplayer = false;
+
 
     public ulong currentLobbyId;
     // Start is called before the first frame update
@@ -103,8 +105,38 @@ public class LobbyManager : MonoBehaviour
         if (playerListItems.Count == Game.GamePlayers.Count)
             UpdatePlayerListItems();
     }
-    private void CreatePlayerListItems()
+
+    public void CreateSinglePlayerListItems()
     {
+        singleplayer = true;
+
+        // initialize player UI, then add computer players as necessary
+        StartGameButton.gameObject.SetActive(true);
+        playerListItems.Add(new PlayerListItem());
+        playerListItems.Add(new PlayerListItem("Computer"));
+
+        for (int i = 0; i < playerListItems.Count; i++)
+        {
+            GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab) as GameObject;
+            PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
+            newPlayerListItem.transform.SetParent(gameObject.transform);
+            newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 450), -350, 0);
+            newPlayerListItem.transform.localScale = Vector3.one;
+            //newPlayerListItem.transform.localScale = new Vector3(.8f, .8f, .8f);
+            newPlayerListItemScript.NotReadyButton.SetActive(false);
+
+            // computer players
+            if(i >= 1)
+            {
+                newPlayerListItemScript.SetSinglePlayerListItemValues();
+            }
+        }
+    }
+
+        private void CreatePlayerListItems()
+    {
+        singleplayer = false;
+
         Debug.Log("Executing CreatePlayerListItems. This many players to create: " + Game.GamePlayers.Count.ToString());
 
         for (int i = 0; i < Game.GamePlayers.Count; i++)
@@ -220,6 +252,12 @@ public class LobbyManager : MonoBehaviour
     }
     private void RemovePlayerListItems()
     {
+        // make this not fuck with singleplayer
+        if (singleplayer)
+        {
+            return;
+        }
+
         List<PlayerListItem> playerListItemsToRemove = new List<PlayerListItem>();
         foreach (PlayerListItem playerListItem in playerListItems)
         {

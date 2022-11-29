@@ -140,6 +140,8 @@ public class GameManager : MonoBehaviour
     public CardDisplay opponentCard3;
     public CardDisplay opponentCard4;
 
+    private System.Random rng = new System.Random();
+
     public MyNetworkManager game;
     public MyNetworkManager Game
     {
@@ -223,6 +225,19 @@ public class GameManager : MonoBehaviour
                 if(i > 0)
                 {
                     players[i].gameObject.AddComponent<ComputerPlayer>();
+                    players[i].name = "CPU" + i;
+                    switch (i)
+                    {
+                        case 1:
+                            playerLeftName.text = players[i].name;
+                            break;
+                        case 2:
+                            playerTopName.text = players[i].name;
+                            break;
+                        case 3:
+                            playerRightName.text = players[i].name;
+                            break;
+                    }
                     // CardPlayer in players mutated to be ComputerPlayer
                     //players[i] = players[i].gameObject.GetComponent<ComputerPlayer>();
                 }
@@ -1067,6 +1082,18 @@ public class GameManager : MonoBehaviour
                 {
                     players[myPlayerIndex].deck.putCardOnBottom(cd.card);
                     cd.updateCard(cd.placeholder);
+                }
+
+                // check for gambling ring
+                if (cd.card.cardName == "RingofGamblingMopoji" && players[myPlayerIndex].pipsUsedThisTurn == 0)
+                {
+                    players[myPlayerIndex].pipCount = rng.Next(1, 11);
+                    if (players[myPlayerIndex].doubleRingBonus)
+                    {
+                        Debug.Log("Double ring bonus");
+                        players[myPlayerIndex].pipCount *= 2;
+                    }
+                    Debug.Log("New pip count: " + players[myPlayerIndex].pipCount);
                 }
             }
             players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
@@ -3652,31 +3679,6 @@ public class GameManager : MonoBehaviour
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(9);
         }
-    }
-
-    // TRASH RESPONSE
-    public void onResponseTrash(ExtendedEventArgs eventArgs)
-    {
-        // args.x is cardInt, args.y is 0
-        Debug.Log("Trash Response");
-        ResponseTrashEventArgs args = eventArgs as ResponseTrashEventArgs;
-
-        int cardPosition = args.x - 1;
-        Card placeholder = players[0].holster.card1.placeholder;
-
-        for(int i = 0; i < numPlayers; i++) {
-            if(players[i].user_id == args.user_id)
-            {
-                td.addCard(players[i].holster.cardList[cardPosition]);
-                players[i].holster.cardList[cardPosition].card = placeholder;
-                players[i].holster.cardList[cardPosition].updateCard(placeholder);
-            }
-        }
-
-        // if(Constants.USER_ID != args.user_id)
-        // {
-        //     td.addCard(players[myPlayerIndex].holster.cardList[args.x - 1]);
-        // }
     }
 
     public void sendSuccessMessage(int notif)

@@ -13,7 +13,12 @@ public class ComputerPlayer : CardPlayer
     public int rings = 0;
     private int j = 0;
     public int turn = 0;
+    public bool easy = false;
+    public bool medium = false;
+    public bool hard = false;
     public System.Random rng = new System.Random();
+
+    public List<string> actionsList = new List<string>();
 
     // Start is called before the first frame update
     void Start()
@@ -33,14 +38,111 @@ public class ComputerPlayer : CardPlayer
         return num;
     }
 
+    public int chooseMarketCard()
+    {
+        int numero;
+        Card card = GameManager.manager.players[0].deck.placeholder;
+
+        if (artifacts == 0 && vessels == 0)
+        {
+            numero = rng.Next(4, 7);
+        }
+        else if (potions >= 2)
+        {
+            // exclusively buy potions as ammunition
+            numero = rng.Next(1, 4);
+        } else
+        {
+            numero = rng.Next(1, 7);
+        }
+
+        switch (numero)
+        {
+            case 1:
+                card = GameManager.manager.md1.cardDisplay1.card;
+                break;
+            case 2:
+                card = GameManager.manager.md1.cardDisplay2.card;
+                break;
+            case 3:
+                card = GameManager.manager.md1.cardDisplay3.card;
+                break;
+            case 4:
+                card = GameManager.manager.md2.cardDisplay1.card;
+                break;
+            case 5:
+                card = GameManager.manager.md2.cardDisplay2.card;
+                break;
+            case 6:
+                card = GameManager.manager.md2.cardDisplay3.card;
+                break;
+            default:
+                break;
+        }
+
+        switch (card.cardType)
+        {
+            case "Artifact":
+                if (artifacts > 1)
+                {
+                    chooseMarketCard();
+                }
+                break;
+            case "Vessel":
+                if (vessels > 1)
+                {
+                    chooseMarketCard();
+                }
+                break;
+            case "Ring":
+                if (rings > 2)
+                {
+                    chooseMarketCard();
+                }
+                break;
+            default:
+                break;
+        }
+
+        return numero;
+    }
+
     public IEnumerator waitASecBro()
     {
+        // modify this based on what difficulty the CPU is
         yield return new WaitForSeconds(3);
+        if (easy)
+        {
+            AITurn();
+        }
         AITurn();
+    }
+
+    public void mcts()
+    {
+        if (actionsList.Count == 0)
+        {
+            actionsList.Add("BUY");
+            actionsList.Add("SELL");
+            actionsList.Add("THROW");
+            actionsList.Add("LOAD");
+            actionsList.Add("CYCLE");
+            actionsList.Add("TRASH");
+        }
     }
 
     public void AITurn()
     {
+        if (actionsList.Count == 0)
+        {
+            actionsList.Add("BUY");
+            actionsList.Add("SELL");
+            actionsList.Add("THROW");
+            actionsList.Add("LOAD");
+            actionsList.Add("CYCLE");
+            actionsList.Add("TRASH");
+        }
+
         artifacts = 0;
         potions = 0;
         vessels = 0;
@@ -163,16 +265,7 @@ public class ComputerPlayer : CardPlayer
 
         // Post-attack logic goes here
         // Buying
-        int marketNum;
-
-        if(artifacts == 0 && vessels == 0)
-        {
-            marketNum = rng.Next(1, 7);
-        } else
-        {
-            // exclusively buy potions as ammunition
-            marketNum = rng.Next(1, 4);
-        }
+        int marketNum = chooseMarketCard();
         
         switch (marketNum)
         {

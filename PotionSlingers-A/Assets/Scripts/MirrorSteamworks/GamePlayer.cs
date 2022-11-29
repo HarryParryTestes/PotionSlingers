@@ -23,6 +23,7 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar] public int essenceCubes;
     public List<string> shufflingDeck1 = new List<string>();
     public List<string> shufflingDeck2 = new List<string>();
+    private System.Random rng = new System.Random();
 
     public PlayerListItem item;
 
@@ -81,6 +82,15 @@ public class GamePlayer : NetworkBehaviour
         {
             charIndex = 0;
         }
+
+        if (LobbyManager.instance.singleplayer)
+        {
+            charName = MainMenu.menu.characters[charIndex].cardName;
+            item.charDisplay.onCharacterClick(charName);
+            // LobbyManager.instance.UpdateUI();
+            return;
+        }
+
         charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
         LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
@@ -94,6 +104,14 @@ public class GamePlayer : NetworkBehaviour
         if (charIndex < 0)
         {
             charIndex = 8;
+        }
+
+        if (LobbyManager.instance.singleplayer)
+        {
+            charName = MainMenu.menu.characters[charIndex].cardName;
+            item.charDisplay.onCharacterClick(charName);
+            // LobbyManager.instance.UpdateUI();
+            return;
         }
         charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
@@ -2063,7 +2081,7 @@ public class GamePlayer : NetworkBehaviour
                     // check for gambling ring
                     if (cd.card.cardName == "RingofGamblingMopoji" && GameManager.manager.players[GameManager.manager.myPlayerIndex].pipsUsedThisTurn == 0)
                     {
-                        GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount = Random.Range(1, 11);
+                        GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount = rng.Next(1, 11);
                         if (GameManager.manager.players[GameManager.manager.myPlayerIndex].doubleRingBonus)
                         {
                             Debug.Log("Double ring bonus");
