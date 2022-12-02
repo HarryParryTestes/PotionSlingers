@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
     public TMPro.TextMeshProUGUI greeting;
     public string greetingName;
 
-    public int numPlayers;
+	public int numPlayers;
 	public bool flippable = false;
     private bool privacy = false;
 	private GameObject playButton;
@@ -131,7 +131,12 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-    public void checkStats()
+	public void createCPU()
+	{
+		LobbyManager.instance.createCPU();
+	}
+
+	public void checkStats()
     {
         int potions;
         int artifacts;

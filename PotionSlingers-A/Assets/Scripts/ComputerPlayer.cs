@@ -118,6 +118,7 @@ public class ComputerPlayer : CardPlayer
         AITurn();
     }
 
+    /*
     public void mcts()
     {
         if (actionsList.Count == 0)
@@ -130,6 +131,7 @@ public class ComputerPlayer : CardPlayer
             actionsList.Add("TRASH");
         }
     }
+    */
 
     public void AITurn()
     {

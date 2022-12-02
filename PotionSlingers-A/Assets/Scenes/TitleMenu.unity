@@ -11783,10 +11783,13 @@ MonoBehaviour:
   StartGameButton: {fileID: 573058237}
   characterName: 
   havePlayerListItemsBeenCreated: 0
+  playerListItems: []
+  tempPlayerListItems: []
   players: []
   localGamePlayerObject: {fileID: 0}
   localGamePlayerScript: {fileID: 0}
   playerConnId: 0
+  singleplayer: 0
   currentLobbyId: 0
 --- !u!1 &668892861
 GameObject:
@@ -14452,7 +14455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &809917489
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14579,7 +14582,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 285935878}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: StartGame
+        m_MethodName: createCPU
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17063,7 +17066,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 656852787}
         m_TargetAssemblyTypeName: LobbyManager, Assembly-CSharp
-        m_MethodName: PlayerQuitLobby
+        m_MethodName: clearPlayerListItems
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -19042,6 +19045,8 @@ MonoBehaviour:
   lobbyManager: {fileID: 1783119419}
   steamLobby: {fileID: 1194078801}
   playerListPrefab: {fileID: 6515335681367900375, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
+  charNames: []
+  charBools: 
 --- !u!1 &1194325629
 GameObject:
   m_ObjectHideFlags: 0
@@ -32093,10 +32098,13 @@ MonoBehaviour:
   StartGameButton: {fileID: 1540653532}
   characterName: 
   havePlayerListItemsBeenCreated: 0
+  playerListItems: []
+  tempPlayerListItems: []
   players: []
   localGamePlayerObject: {fileID: 0}
   localGamePlayerScript: {fileID: 0}
   playerConnId: 0
+  singleplayer: 0
   currentLobbyId: 0
 --- !u!1 &1784774999
 GameObject:

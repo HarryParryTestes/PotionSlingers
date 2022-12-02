@@ -29,6 +29,8 @@ public class MyNetworkManager : NetworkManager
 
     public List<GamePlayer> GamePlayers { get; } = new List<GamePlayer>();
     [SerializeField] private PlayerListItem playerListPrefab;
+    public List<string> charNames = new List<string>();
+    public List<bool> charBools = new List<bool>();
     // Start is called before the first frame update
     public void OnStartServer()
     {
@@ -77,6 +79,24 @@ public class MyNetworkManager : NetworkManager
         }
     }
     */
+
+    public void getCharsAndBools()
+    {
+        // TODO: do this
+        // take the items and item them in the items
+        foreach (GamePlayer gp in GamePlayers)
+        {
+            charNames.Add(gp.charName);
+            // charBools.Add(hotItem.computerPlayer);
+        }
+    }
+
+    public void StartSingleplayerGame()
+    {
+        multiplayer = false;
+        tutorial = false;
+        ServerChangeScene("GameScene");
+    }
 
     public void StartGame()
     {

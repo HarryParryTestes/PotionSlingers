@@ -203,6 +203,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("So that happened...");
             // changing this to 4 just to test for now, remember to take this out
+
+            for (int j = 0; j < Game.GamePlayers.Count; j++)
+            {
+                Debug.Log("Name: " + Game.charNames[j]);
+                // Debug.Log("Bool: " + Game.charBools[j]);
+            }
+
             numPlayers = 4;
             initDecks();
             md1.shuffle();
@@ -214,7 +221,7 @@ public class GameManager : MonoBehaviour
             // i'm gonna change this to 
             for (int i = 0; i < players.Length; i++)
             {
-                // for player 1
+                // for player 1, the user
                 if(i == 0)
                 {
                     playerBottomName.text = SteamFriends.GetPersonaName().ToString();

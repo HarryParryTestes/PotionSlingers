@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Mirror;
+using TMPro;
 using Steamworks;
 using System.Linq;
 
@@ -22,7 +23,8 @@ public class LobbyManager : MonoBehaviour
     public string characterName;
 
     public bool havePlayerListItemsBeenCreated = false;
-    private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
+    public List<PlayerListItem> playerListItems = new List<PlayerListItem>();
+    public List<PlayerListItem> tempPlayerListItems = new List<PlayerListItem>();
     public List<GamePlayer> players = new List<GamePlayer>();
     public GameObject localGamePlayerObject;
     public GamePlayer localGamePlayerScript;
@@ -106,31 +108,58 @@ public class LobbyManager : MonoBehaviour
             UpdatePlayerListItems();
     }
 
+    public void instantiateItem()
+    {
+        int index = playerListItems.Count - 1;
+
+        GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab) as GameObject;
+        PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
+        newPlayerListItem.transform.SetParent(gameObject.transform);
+        newPlayerListItem.transform.localPosition = new Vector3(-1150 + ((index + 1) * 450), -350, 0);
+        // newPlayerListItem.transform.localScale = Vector3.one;
+        newPlayerListItem.transform.localScale = new Vector3(.8f, .8f, .8f);
+        newPlayerListItemScript.NotReadyButton.SetActive(false);
+        newPlayerListItemScript.cpuToggleObject.SetActive(true);
+        newPlayerListItemScript.SetSinglePlayerListItemValues(index);
+    }
+
+    public void createCPU()
+    {
+        Debug.Log("Creating CPU");
+        GameObject go2 = new GameObject("CPU Item");
+        go2.AddComponent<PlayerListItem>();
+        go2.GetComponent<PlayerListItem>().playerName = "Computer";
+        playerListItems.Add(go2.GetComponent<PlayerListItem>());
+
+        instantiateItem();
+    }
+
+    public void clearPlayerListItems()
+    {
+        playerListItems.Clear();
+    }
+
     public void CreateSinglePlayerListItems()
     {
         singleplayer = true;
 
         // initialize player UI, then add computer players as necessary
         StartGameButton.gameObject.SetActive(true);
-        playerListItems.Add(new PlayerListItem());
-        playerListItems.Add(new PlayerListItem("Computer"));
 
-        for (int i = 0; i < playerListItems.Count; i++)
-        {
-            GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab) as GameObject;
-            PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
-            newPlayerListItem.transform.SetParent(gameObject.transform);
-            newPlayerListItem.transform.localPosition = new Vector3(-950 + ((i + 1) * 450), -350, 0);
-            newPlayerListItem.transform.localScale = Vector3.one;
-            //newPlayerListItem.transform.localScale = new Vector3(.8f, .8f, .8f);
-            newPlayerListItemScript.NotReadyButton.SetActive(false);
+        GameObject go = new GameObject("Player Item");
+        go.AddComponent<PlayerListItem>();
+        // go.GetComponent<PlayerListItem>().playerName = SteamFriends.GetPersonaName();
+        // go.GetComponent<PlayerListItem>().PlayerNameText.text = go.GetComponent<PlayerListItem>().playerName;
+        // go.GetComponent<PlayerListItem>().PlayerNameText.text = "Denzill";
 
-            // computer players
-            if(i >= 1)
-            {
-                newPlayerListItemScript.SetSinglePlayerListItemValues();
-            }
-        }
+        playerListItems.Add(go.GetComponent<PlayerListItem>());
+
+        instantiateItem();
+
+        // make the rest of the four players
+        createCPU();
+        createCPU();
+        createCPU();
     }
 
         private void CreatePlayerListItems()

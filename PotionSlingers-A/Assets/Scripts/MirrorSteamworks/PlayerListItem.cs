@@ -24,8 +24,10 @@ public class PlayerListItem : MonoBehaviour
 
     public CharacterDisplay charDisplay;
 
-    [SerializeField] private TMPro.TextMeshProUGUI PlayerNameText;
+    [SerializeField] public TMPro.TextMeshProUGUI PlayerNameText;
     [SerializeField] private TMPro.TextMeshProUGUI PlayerReadyStatus;
+    public GameObject cpuToggleObject;
+    public TMPro.TextMeshProUGUI cpuToggle;
 
     public PlayerListItem(string playerName)
     {
@@ -61,9 +63,21 @@ public class PlayerListItem : MonoBehaviour
         //UpdatePlayerItemReadyStatus();
     }
 
-    public void SetSinglePlayerListItemValues()
+    public void ChangeCPUStatus()
     {
-        playerName = "Computer";
+        cpuToggle.text = cpuToggle.text == "CPU" ? "Not CPU" : "CPU";
+        computerPlayer = cpuToggle.text == "CPU" ? true : false;
+    }
+
+    public void SetSinglePlayerListItemValues(int i)
+    {
+        if (i == 0)
+        {
+            playerName = SteamFriends.GetPersonaName();
+            PlayerNameText.text = playerName;
+            return;
+        }
+        playerName = "Computer" + i;
         PlayerNameText.text = playerName;
         player.charName = "Bolo";
         computerPlayer = true;
