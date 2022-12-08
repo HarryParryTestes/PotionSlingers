@@ -21,8 +21,6 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar] public CSteamID playerSteamId;
     [SyncVar] public int hp;
     [SyncVar] public int essenceCubes;
-    public List<string> shufflingDeck1 = new List<string>();
-    public List<string> shufflingDeck2 = new List<string>();
     private System.Random rng = new System.Random();
 
     public PlayerListItem item;

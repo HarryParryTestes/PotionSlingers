@@ -252,7 +252,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        StartCoroutine(shuffleDecks());
+        if (!Game.tutorial)
+            StartCoroutine(shuffleDecks());
 
         p3.SetActive(true);
         p4.SetActive(true);

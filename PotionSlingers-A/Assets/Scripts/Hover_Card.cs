@@ -125,6 +125,18 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // (any click, a boolean tracks whether the click is to activate or deactivate something)
     public void OnPointerDown(PointerEventData pointerEventData)
     {
+        /*
+        if (SceneManager.GetActiveScene().name == "TitleMenu")
+        {
+            Debug.Log("Did this trigger");
+            this.transform.localScale = new Vector3(5f, 5f, 5f);
+            this.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+            this.transform.SetParent(viewingCardObject.transform);
+            // this.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+            // ViewCard();
+            return;
+        }
+        */
 
         if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
