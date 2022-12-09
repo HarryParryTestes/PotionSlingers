@@ -823,6 +823,7 @@ public class GameManager : MonoBehaviour
             }
         } else
         {
+            Debug.Log("Did not replace starter");
             if (Game.multiplayer)
             {
                 foreach (GamePlayer gp in Game.GamePlayers)

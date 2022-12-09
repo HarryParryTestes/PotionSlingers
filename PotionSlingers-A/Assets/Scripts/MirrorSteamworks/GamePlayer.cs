@@ -21,6 +21,8 @@ public class GamePlayer : NetworkBehaviour
     [SyncVar] public CSteamID playerSteamId;
     [SyncVar] public int hp;
     [SyncVar] public int essenceCubes;
+    public List<string> shufflingDeck1 = new List<string>();
+    public List<string> shufflingDeck2 = new List<string>();
     private System.Random rng = new System.Random();
 
     public PlayerListItem item;
@@ -196,7 +198,11 @@ public class GamePlayer : NetworkBehaviour
             shufflingDeck2.Add(card.cardName);
         }
 
-        RpcShuffleDeck(shufflingDeck1, shufflingDeck2);
+        // get the deck to the other clients
+        foreach(GamePlayer gp in Game.GamePlayers)
+        {
+            gp.RpcShuffleDeck(shufflingDeck1, shufflingDeck2);
+        }
     }
 
     [ClientRpc]
@@ -225,8 +231,10 @@ public class GamePlayer : NetworkBehaviour
                 }
             }
         }
+        Debug.Log("RPC for " + playerName);
         GameManager.manager.md1.deckList = GameManager.manager.md1.tempDeckList;
         GameManager.manager.md2.deckList = GameManager.manager.md2.tempDeckList;
+        Debug.Log("Initing card displays");
         GameManager.manager.md1.initCardDisplays();
         GameManager.manager.md2.initCardDisplays();
     }

@@ -1201,7 +1201,7 @@ public class CardPlayer : MonoBehaviour
                     if (gp.playerName == GameManager.manager.currentPlayerName)
                     {
                         Debug.Log("Target RPC, TrashOpponentMenu Active");
-                        gp.RpcTMMenuActive();
+                        gp.RpcTrashOneCard(GameManager.manager.tempPlayer.name);
                     }
                 }
                 return damage;
