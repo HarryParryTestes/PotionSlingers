@@ -428,10 +428,10 @@ public class GameManager : MonoBehaviour
 
     public void initDecks()
     {
-        //td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
-        md1 = GameObject.Find("PotionPile").GetComponent<MarketDeck>();
+        // td = GameObject.Find("TrashPile").GetComponent<TrashDeck>();
+        // md1 = GameObject.Find("PotionPile").GetComponent<MarketDeck>();
         md1.init();
-        md2 = GameObject.Find("SpecialCardPile").GetComponent<MarketDeck>();
+       // md2 = GameObject.Find("SpecialCardPile").GetComponent<MarketDeck>();
         md2.init();
     }
 

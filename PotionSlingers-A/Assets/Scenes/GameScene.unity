@@ -24431,6 +24431,7 @@ GameObject:
   - component: {fileID: 628987350}
   - component: {fileID: 628987349}
   - component: {fileID: 628987351}
+  - component: {fileID: 628987352}
   m_Layer: 5
   m_Name: SpecialCardPile
   m_TagString: Untagged
@@ -24508,6 +24509,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852838df1b7fe304f90824c464f1dcd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   deckList:
   - {fileID: 11400000, guid: 63af26b3ff04bb44eb5ba01e8a742496, type: 2}
   - {fileID: 11400000, guid: a76eb5e9ec28c59449d9efb7b3e8e8c2, type: 2}
@@ -24534,6 +24537,23 @@ MonoBehaviour:
   cardDisplay1: {fileID: 908084162}
   cardDisplay2: {fileID: 690513024}
   cardDisplay3: {fileID: 1831950244}
+--- !u!114 &628987352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 628987347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 2704131309
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &629161433 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 521786680406802847, guid: 53989111815513c41a3163993b3810a5, type: 3}
@@ -47230,6 +47250,7 @@ GameObject:
   - component: {fileID: 1168455952}
   - component: {fileID: 1168455951}
   - component: {fileID: 1168455953}
+  - component: {fileID: 1168455954}
   m_Layer: 5
   m_Name: PotionPile
   m_TagString: Untagged
@@ -47307,6 +47328,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 852838df1b7fe304f90824c464f1dcd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   deckList:
   - {fileID: 11400000, guid: 1db7dfcba134e0f41996c3c188df188a, type: 2}
   - {fileID: 11400000, guid: a180eed59bc6d2e4ba6d2000058be65e, type: 2}
@@ -47371,6 +47394,23 @@ MonoBehaviour:
   cardDisplay1: {fileID: 292815344}
   cardDisplay2: {fileID: 2065021267}
   cardDisplay3: {fileID: 486512870}
+--- !u!114 &1168455954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168455949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneId: 802688629
+  serverOnly: 0
+  visible: 0
+  m_AssetId: 
+  hasSpawned: 0
 --- !u!1 &1169466230
 GameObject:
   m_ObjectHideFlags: 0

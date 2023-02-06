@@ -4,8 +4,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Mirror;
 
-public class MarketDeck : MonoBehaviour
+public class MarketDeck : NetworkBehaviour
 {
     // the deck is uninitialized to begin with
     public List<Card> deckList;
