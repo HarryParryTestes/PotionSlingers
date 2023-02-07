@@ -166,7 +166,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             cardMenu.gameObject.SetActive(true);
                             if (SceneManager.GetActiveScene().name != "TitleMenu")
                             {
-                                highlighted.gameObject.SetActive(true);
+                                if( highlighted != null)
+                                {
+                                    highlighted.gameObject.SetActive(true);
+                                }
                             }
                         } 
                     }
@@ -185,7 +188,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 canHover = true;
                 transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 cardMenu.gameObject.SetActive(false);
-                specialCardMenu.gameObject.SetActive(false);
+                if(specialCardMenu != null)
+                {
+                    specialCardMenu.gameObject.SetActive(false);
+                }  
                 if (SceneManager.GetActiveScene().name != "TitleMenu")
                 {
                     highlighted.gameObject.SetActive(false);
@@ -231,7 +237,12 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             if (SceneManager.GetActiveScene().name != "TitleMenu")
             {
                 // for game scene
-                highlighted.gameObject.SetActive(false);
+
+                // check for this NRE
+                if(highlighted != null)
+                {
+                    highlighted.gameObject.SetActive(false);
+                }
                 this.transform.localScale = new Vector3(3f, 3f, 3f);
             } else
             {
@@ -257,7 +268,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             canHover = true;
             if (SceneManager.GetActiveScene().name != "TitleMenu")
             {
-                highlighted.gameObject.SetActive(false);
+                if(highlighted != null)
+                {
+                    highlighted.gameObject.SetActive(false);
+                }
             }
             //highlighted.gameObject.SetActive(false);
         }
