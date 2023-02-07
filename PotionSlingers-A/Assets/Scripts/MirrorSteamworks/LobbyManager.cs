@@ -119,7 +119,8 @@ public class LobbyManager : MonoBehaviour
         // newPlayerListItem.transform.localScale = Vector3.one;
         newPlayerListItem.transform.localScale = new Vector3(.8f, .8f, .8f);
         newPlayerListItemScript.NotReadyButton.SetActive(false);
-        newPlayerListItemScript.cpuToggleObject.SetActive(true);
+        // maybe add this back in? just tweak how it looks
+        // newPlayerListItemScript.cpuToggleObject.SetActive(true);
         newPlayerListItemScript.SetSinglePlayerListItemValues(index);
     }
 
@@ -160,9 +161,57 @@ public class LobbyManager : MonoBehaviour
         createCPU();
         createCPU();
         createCPU();
+
+        Game.numPlayers = 4;
     }
 
-        private void CreatePlayerListItems()
+    public void CreateSinglePlayerListTwoItems()
+    {
+        singleplayer = true;
+
+        // initialize player UI, then add computer players as necessary
+        StartGameButton.gameObject.SetActive(true);
+
+        GameObject go = new GameObject("Player Item");
+        go.AddComponent<PlayerListItem>();
+        // go.GetComponent<PlayerListItem>().playerName = SteamFriends.GetPersonaName();
+        // go.GetComponent<PlayerListItem>().PlayerNameText.text = go.GetComponent<PlayerListItem>().playerName;
+        // go.GetComponent<PlayerListItem>().PlayerNameText.text = "Denzill";
+
+        playerListItems.Add(go.GetComponent<PlayerListItem>());
+
+        instantiateItem();
+
+        // make the rest of the four players
+        createCPU();
+        createCPU();
+        //createCPU();
+    }
+
+    public void CreateSinglePlayerListOneItems()
+    {
+        singleplayer = true;
+
+        // initialize player UI, then add computer players as necessary
+        StartGameButton.gameObject.SetActive(true);
+
+        GameObject go = new GameObject("Player Item");
+        go.AddComponent<PlayerListItem>();
+        // go.GetComponent<PlayerListItem>().playerName = SteamFriends.GetPersonaName();
+        // go.GetComponent<PlayerListItem>().PlayerNameText.text = go.GetComponent<PlayerListItem>().playerName;
+        // go.GetComponent<PlayerListItem>().PlayerNameText.text = "Denzill";
+
+        playerListItems.Add(go.GetComponent<PlayerListItem>());
+
+        instantiateItem();
+
+        // make the rest of the four players
+        createCPU();
+        //createCPU();
+        //createCPU();
+    }
+
+    private void CreatePlayerListItems()
     {
         singleplayer = false;
 

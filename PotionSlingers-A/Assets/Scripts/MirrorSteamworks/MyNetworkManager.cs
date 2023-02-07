@@ -9,6 +9,7 @@ public class MyNetworkManager : NetworkManager
 {
     [SerializeField] private GamePlayer gamePlayerPrefab;
     [SerializeField] public int minPlayers = 2;
+    [SerializeField] public int numPlayers = 2;
     public bool tutorial = false;
     public bool multiplayer = false;
     public LobbyManager lobbyManager;

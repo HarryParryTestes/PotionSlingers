@@ -249,8 +249,23 @@ public class GameManager : MonoBehaviour
                     //players[i] = players[i].gameObject.GetComponent<ComputerPlayer>();
                 }
             }
+
+            if (Game.numPlayers == 2)
+            {
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+            }
+
+            if (Game.numPlayers == 3)
+            {
+                p4.SetActive(false);
+            }
             return;
         }
+
+        // END OF SINGLEPLAYER SETUP
 
         if (!Game.tutorial)
             StartCoroutine(shuffleDecks());
@@ -285,6 +300,8 @@ public class GameManager : MonoBehaviour
             return;
             //Debug.Log("Shuffling market decks for tutorial");
         }
+
+        // END OF TUTORIAL SETUP
 
         if (Game.GamePlayers.Count == 2)
         {
@@ -340,6 +357,8 @@ public class GameManager : MonoBehaviour
                 */
                 Debug.Log("Found local player");
                 players[0].currentPlayerHighlight.SetActive(true);
+                // maybe use this?
+                // players[i].currentPlayerHighlight.SetActive(true);
                 playerBottomName.text = Game.GamePlayers[i].playerName;
                 Debug.Log("Player name before becoming cardPlayer name: " + Game.GamePlayers[i].playerName);
                 players[0].name = Game.GamePlayers[i].playerName;
