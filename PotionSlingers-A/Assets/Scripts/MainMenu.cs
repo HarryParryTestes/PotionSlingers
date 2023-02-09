@@ -316,9 +316,26 @@ public class MainMenu : MonoBehaviour
 
     public void StartSingleplayerGame()
     {
+		// maybe use static reference to Game instead of networkManager?
         networkManager.multiplayer = false;
         networkManager.tutorial = false;
-        networkManager.ServerChangeScene("GameScene");
+		
+		foreach (PlayerListItem item in LobbyManager.instance.playerListItems)
+        {
+			//networkManager.charNames.Add(item.charName);
+			// add gameplayers
+			networkManager.GamePlayers.Add(item.GetComponent<GamePlayer>());
+        }
+
+		// now try adding names
+		/*
+		foreach (GamePlayer player in networkManager.GamePlayers)
+        {
+			networkManager.charNames.Add(player.charName);
+		}
+		*/
+
+		networkManager.ServerChangeScene("GameScene");
     }
 
 	public int getNumPlayers() {

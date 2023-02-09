@@ -186,6 +186,8 @@ public class LobbyManager : MonoBehaviour
         createCPU();
         createCPU();
         //createCPU();
+
+        Game.numPlayers = 3;
     }
 
     public void CreateSinglePlayerListOneItems()
@@ -209,6 +211,8 @@ public class LobbyManager : MonoBehaviour
         createCPU();
         //createCPU();
         //createCPU();
+
+        Game.numPlayers = 2;
     }
 
     private void CreatePlayerListItems()

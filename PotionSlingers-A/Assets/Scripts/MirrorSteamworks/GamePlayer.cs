@@ -153,6 +153,8 @@ public class GamePlayer : NetworkBehaviour
         usernameText.text = item.playerName;
         item.playerName = playerName;
         charName = LobbyManager.instance.characterName;
+
+        // this is important and needs to trigger to preserve the data into the next scene
         DontDestroyOnLoad(this.gameObject);
     }
 

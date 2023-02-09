@@ -194,7 +194,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 }  
                 if (SceneManager.GetActiveScene().name != "TitleMenu")
                 {
-                    highlighted.gameObject.SetActive(false);
+                    if(highlighted != null)
+                    {
+                        highlighted.gameObject.SetActive(false);
+                    }
                 }
                 //viewCardMenu.gameObject.SetActive(false);
                 //exitMenu.SetActive(false);

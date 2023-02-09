@@ -204,13 +204,19 @@ public class GameManager : MonoBehaviour
             Debug.Log("So that happened...");
             // changing this to 4 just to test for now, remember to take this out
 
+            Debug.Log(Game.GamePlayers.Count);
+
+            // take this out for now, maybe put it back in
+            /*
             for (int j = 0; j < Game.GamePlayers.Count; j++)
             {
                 Debug.Log("Name: " + Game.charNames[j]);
                 // Debug.Log("Bool: " + Game.charBools[j]);
             }
+            */
 
-            numPlayers = 4;
+            // this should fix things
+            numPlayers = Game.numPlayers;
             initDecks();
             md1.shuffle();
             md1.initCardDisplays();
@@ -219,10 +225,17 @@ public class GameManager : MonoBehaviour
             // initialize the ComputerPlayer classes and add them to the players that need them
             // make the class and then do AddComponent<ClassName>()
             // i'm gonna change this to 
-            for (int i = 0; i < players.Length; i++)
+            for (int i = 0; i < Game.GamePlayers.Count; i++)
             {
+                // try this out, if it doesn't work take this out
+                // players[i].character.onCharacterClick(Game.GamePlayers[i].charName);
+
+                // get a NRE when I try to access Game.GamePlayers in singleplayer mode
+
+                // Debug.Log(Game.GamePlayers[i].charName);
+                // players[i].charName = Game.GamePlayers[i].charName;
                 // for player 1, the user
-                if(i == 0)
+                if (i == 0)
                 {
                     playerBottomName.text = SteamFriends.GetPersonaName().ToString();
                     cardPlayer.name = SteamFriends.GetPersonaName().ToString();
