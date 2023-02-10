@@ -50,6 +50,7 @@ public class LobbyManager : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("Happened in Start in LobbyManager");
         DontDestroyOnLoad(this.gameObject);
     }
 
@@ -59,6 +60,7 @@ public class LobbyManager : MonoBehaviour
         // ReadyUpButton.gameObject.SetActive(true);
         // ReadyUpButton.GetComponentInChildren<Text>().text = "Ready Up";
         // StartGameButton.gameObject.SetActive(false);
+        Debug.Log("Happened in Awake in LobbyManager");
         DontDestroyOnLoad(this.gameObject);
     }
     // Update is called once per frame
@@ -112,7 +114,9 @@ public class LobbyManager : MonoBehaviour
     {
         int index = playerListItems.Count - 1;
 
-        GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab) as GameObject;
+        // potentially rework this to only add these items to playerListItems List
+        GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab, Game.gameObject.transform) as GameObject;
+        DontDestroyOnLoad(newPlayerListItem);
         PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
         newPlayerListItem.transform.SetParent(gameObject.transform);
         newPlayerListItem.transform.localPosition = new Vector3(-1150 + ((index + 1) * 450), -350, 0);
@@ -122,6 +126,8 @@ public class LobbyManager : MonoBehaviour
         // maybe add this back in? just tweak how it looks
         // newPlayerListItemScript.cpuToggleObject.SetActive(true);
         newPlayerListItemScript.SetSinglePlayerListItemValues(index);
+
+        // instead of instantiating the objects with the LobbyManager, you want to instantiate them with the NetworkManager instead
     }
 
     public void createCPU()
@@ -207,7 +213,6 @@ public class LobbyManager : MonoBehaviour
 
         instantiateItem();
 
-        // make the rest of the four players
         createCPU();
         //createCPU();
         //createCPU();

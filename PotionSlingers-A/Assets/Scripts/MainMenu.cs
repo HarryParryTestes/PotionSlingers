@@ -320,22 +320,25 @@ public class MainMenu : MonoBehaviour
         networkManager.multiplayer = false;
         networkManager.tutorial = false;
 		
+        /*
 		foreach (PlayerListItem item in LobbyManager.instance.playerListItems)
         {
 			//networkManager.charNames.Add(item.charName);
 			// add gameplayers
 			networkManager.GamePlayers.Add(item.GetComponent<GamePlayer>());
         }
+        */
 
-		// now try adding names
-		/*
+        // now try adding names
+        /*
 		foreach (GamePlayer player in networkManager.GamePlayers)
         {
 			networkManager.charNames.Add(player.charName);
 		}
 		*/
 
-		networkManager.ServerChangeScene("GameScene");
+        // networkManager.ServerChangeScene("GameScene");
+        networkManager.StartSingleplayerGame();
     }
 
 	public int getNumPlayers() {

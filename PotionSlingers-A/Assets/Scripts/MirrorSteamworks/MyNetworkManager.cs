@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 public class MyNetworkManager : NetworkManager
 {
     [SerializeField] private GamePlayer gamePlayerPrefab;
+    [SerializeField] private GameObject PlayerListItemPrefab;
     [SerializeField] public int minPlayers = 2;
     [SerializeField] public int numPlayers = 2;
     public bool tutorial = false;
@@ -81,6 +82,28 @@ public class MyNetworkManager : NetworkManager
     }
     */
 
+    /*
+    public void instantiateItem()
+    {
+        int index = LobbyManager.instance.playerListItems.Count - 1;
+
+        // potentially rework this to only add these items to playerListItems List
+        GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab) as GameObject;
+        DontDestroyOnLoad(newPlayerListItem);
+        PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
+        newPlayerListItem.transform.SetParent(gameObject.transform);
+        newPlayerListItem.transform.localPosition = new Vector3(-1150 + ((index + 1) * 450), -350, 0);
+        // newPlayerListItem.transform.localScale = Vector3.one;
+        newPlayerListItem.transform.localScale = new Vector3(.8f, .8f, .8f);
+        newPlayerListItemScript.NotReadyButton.SetActive(false);
+        // maybe add this back in? just tweak how it looks
+        // newPlayerListItemScript.cpuToggleObject.SetActive(true);
+        newPlayerListItemScript.SetSinglePlayerListItemValues(index);
+
+        // instead of instantiating the objects with the LobbyManager, you want to instantiate them with the NetworkManager instead
+    }
+    */
+
     public void getCharsAndBools()
     {
         // TODO: do this
@@ -96,6 +119,18 @@ public class MyNetworkManager : NetworkManager
     {
         multiplayer = false;
         tutorial = false;
+
+        // try to make copy GamePlayers out of the playerListItems List in LobbyManager
+        foreach(PlayerListItem item in LobbyManager.instance.playerListItems)
+        {
+            GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            // check char names
+            GamePlayerInstance.charName = item.charName;
+
+            Debug.Log("Adding GamePlayer with character " + GamePlayerInstance.charName + "!");
+            GamePlayers.Add(GamePlayerInstance);
+        }
+
         ServerChangeScene("GameScene");
     }
 

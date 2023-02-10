@@ -232,7 +232,7 @@ public class GameManager : MonoBehaviour
 
                 // get a NRE when I try to access Game.GamePlayers in singleplayer mode
 
-                // Debug.Log(Game.GamePlayers[i].charName);
+                Debug.Log(Game.GamePlayers[i].charName);
                 // players[i].charName = Game.GamePlayers[i].charName;
                 // for player 1, the user
                 if (i == 0)
