@@ -198,8 +198,54 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager started!!!");
 
+        // check for quickplay
+        if (Game.quickplay)
+        {
+            Debug.Log("Quickplay started");
+            numPlayers = 4;
+            // add computer player and make CPU names
+            for (int i = 0; i < numPlayers; i++)
+            {
+
+                
+                playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+                cardPlayer.name = SteamFriends.GetPersonaName().ToString();
+                // change CardDisplay here with Game.singlePlayerNames
+                // Debug.Log("Changing #" + i + 1 + " player's name to " + Game.singlePlayerNames[i]);
+                players[0].charName = "Pluot";
+                players[0].character.onCharacterClick("Pluot");
+                players[0].checkCharacter();
+                currentPlayerName = playerBottomName.text;
+                // everyone except player 1
+                if (i > 0)
+                {
+                    players[i].gameObject.AddComponent<ComputerPlayer>();
+                    Debug.Log("Computer Player added to player " + (i + 1));
+                    players[i].name = "CPU" + i;
+                    switch (i)
+                    {
+                        case 1:
+                            players[1].charName = "Reets";
+                            playerLeftName.text = players[i].charName;
+                            break;
+                        case 2:
+                            playerTopName.text = players[i].charName;
+                            break;
+                        case 3:
+                            playerRightName.text = players[i].charName;
+                            break;
+                    }
+
+                    players[i].checkCharacter();
+                    // CardPlayer in players mutated to be ComputerPlayer
+                    //players[i] = players[i].gameObject.GetComponent<ComputerPlayer>();
+                }
+            }
+            return;
+        }
+
         // single player stuff
-        if(!Game.tutorial && !Game.multiplayer)
+        if (!Game.tutorial && !Game.multiplayer && !Game.quickplay)
         {
             Debug.Log("So that happened...");
             // changing this to 4 just to test for now, remember to take this out
@@ -222,50 +268,13 @@ public class GameManager : MonoBehaviour
             md1.initCardDisplays();
             md2.shuffle();
             md2.initCardDisplays();
-            // initialize the ComputerPlayer classes and add them to the players that need them
-            // make the class and then do AddComponent<ClassName>()
-            // i'm gonna change this to 
-            for (int i = 0; i < Game.GamePlayers.Count; i++)
-            {
-                // try this out, if it doesn't work take this out
-                // players[i].character.onCharacterClick(Game.GamePlayers[i].charName);
-
-                // get a NRE when I try to access Game.GamePlayers in singleplayer mode
-
-                Debug.Log(Game.GamePlayers[i].charName);
-                // players[i].charName = Game.GamePlayers[i].charName;
-                // for player 1, the user
-                if (i == 0)
-                {
-                    playerBottomName.text = SteamFriends.GetPersonaName().ToString();
-                    cardPlayer.name = SteamFriends.GetPersonaName().ToString();
-                    currentPlayerName = playerBottomName.text;
-                }
-                // everyone except player 1
-                if(i > 0)
-                {
-                    players[i].gameObject.AddComponent<ComputerPlayer>();
-                    players[i].name = "CPU" + i;
-                    switch (i)
-                    {
-                        case 1:
-                            playerLeftName.text = players[i].name;
-                            break;
-                        case 2:
-                            playerTopName.text = players[i].name;
-                            break;
-                        case 3:
-                            playerRightName.text = players[i].name;
-                            break;
-                    }
-                    // CardPlayer in players mutated to be ComputerPlayer
-                    //players[i] = players[i].gameObject.GetComponent<ComputerPlayer>();
-                }
-            }
 
             if (Game.numPlayers == 2)
             {
                 players[1] = players[2];
+                // hardcode this lol
+                playerTopName.text = Game.singlePlayerNames[1];
+                
                 players[2] = players[3];
                 p3.SetActive(false);
                 p4.SetActive(false);
@@ -275,6 +284,61 @@ public class GameManager : MonoBehaviour
             {
                 p4.SetActive(false);
             }
+
+            // initialize the ComputerPlayer classes and add them to the players that need them
+            // make the class and then do AddComponent<ClassName>()
+            // i'm gonna change this to 
+            for (int i = 0; i < numPlayers; i++)
+            {
+                // try this out, if it doesn't work take this out
+                // players[i].character.onCharacterClick(Game.GamePlayers[i].charName);
+
+                // get a NRE when I try to access Game.GamePlayers in singleplayer mode
+                // players[i].charName = Game.GamePlayers[i].charName;
+                // for player 1, the user
+
+                // should happen regardless if human or CPU
+
+                Debug.Log("Changing #" + (i+1) + " player's name to " + Game.singlePlayerNames[i]);
+                players[i].charName = Game.singlePlayerNames[i];
+                players[i].character.onCharacterClick(Game.singlePlayerNames[i]);
+                players[i].checkCharacter();
+
+                if (i == 0)
+                {
+                    playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+                    cardPlayer.name = SteamFriends.GetPersonaName().ToString();
+                    // change CardDisplay here with Game.singlePlayerNames
+                    Debug.Log("Changing #" + i + 1 + " player's name to " + Game.singlePlayerNames[i]);
+                    players[i].charName = Game.singlePlayerNames[i];
+                    players[i].character.onCharacterClick(Game.singlePlayerNames[i]);
+                    currentPlayerName = playerBottomName.text;
+                }
+                // everyone except player 1
+                if(i > 0)
+                {
+                    players[i].gameObject.AddComponent<ComputerPlayer>();
+                    Debug.Log("Computer Player added to player " + (i+1));
+                    players[i].name = "CPU" + i;
+                    switch (i)
+                    {
+                        case 1:
+                            playerLeftName.text = players[i].charName;
+                            break;
+                        case 2:
+                            playerTopName.text = players[i].charName;
+                            break;
+                        case 3:
+                            playerRightName.text = players[i].charName;
+                            break;
+                    }
+
+                    players[i].checkCharacter();
+                    // CardPlayer in players mutated to be ComputerPlayer
+                    //players[i] = players[i].gameObject.GetComponent<ComputerPlayer>();
+                }
+            }
+
             return;
         }
 
@@ -742,7 +806,8 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    opTrashTop.updateCharacter(players[2].character.character);
+                    // changing this to 1 from 2 should fix it
+                    opTrashTop.updateCharacter(players[1].character.character);
                     opTrashLeft.gameObject.SetActive(false);
                     opTrashRight.gameObject.SetActive(false);
                 }
@@ -788,7 +853,8 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                opTop.updateCharacter(players[2].character.character);
+                // changing this to 1 from 2 should fix it
+                opTop.updateCharacter(players[1].character.character);
                 opLeft.gameObject.SetActive(false);
                 opRight.gameObject.SetActive(false);
             }

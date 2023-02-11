@@ -13,6 +13,7 @@ public class MyNetworkManager : NetworkManager
     [SerializeField] public int numPlayers = 2;
     public bool tutorial = false;
     public bool multiplayer = false;
+    public bool quickplay = false;
     public LobbyManager lobbyManager;
     public SteamLobby steamLobby;
     /*
@@ -33,6 +34,7 @@ public class MyNetworkManager : NetworkManager
     [SerializeField] private PlayerListItem playerListPrefab;
     public List<string> charNames = new List<string>();
     public List<bool> charBools = new List<bool>();
+    public List<string> singlePlayerNames = new List<string>();
     // Start is called before the first frame update
     public void OnStartServer()
     {
@@ -120,15 +122,28 @@ public class MyNetworkManager : NetworkManager
         multiplayer = false;
         tutorial = false;
 
+        // GET CHARNAME INFO FROM LOBBYMANAGER OBJECTS
+        // The info should be correct and persist to the next scene
+
+       // GameObject ob = GameObject.Find("Player(Clone)");
+       // Debug.Log(ob);
+
+        
         // try to make copy GamePlayers out of the playerListItems List in LobbyManager
         foreach(PlayerListItem item in LobbyManager.instance.playerListItems)
         {
-            GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            // GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
             // check char names
-            GamePlayerInstance.charName = item.charName;
+            // GamePlayerInstance.CmdChangeCharacter(item.charName);
+            // GamePlayerInstance.charName = item.charName;
 
-            Debug.Log("Adding GamePlayer with character " + GamePlayerInstance.charName + "!");
-            GamePlayers.Add(GamePlayerInstance);
+            // Debug.Log("Adding GamePlayer with character " + GamePlayerInstance.charName + "!");
+            // GamePlayers.Add(GamePlayerInstance);
+
+            PlayerListItem single = Instantiate(item);
+            DontDestroyOnLoad(single.gameObject);
+            singlePlayerNames.Add(single.charName);
+            // SinglePlayer singleScript = single.AddComponent<SinglePlayer>();
         }
 
         ServerChangeScene("GameScene");

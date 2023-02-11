@@ -15,7 +15,7 @@ public class PlayerListItem : MonoBehaviour
     public CSteamID playerSteamId;
     public int playerNumber;
 
-    public string charName = "blank";
+    public string charName = "Bolo";
     public GamePlayer player;
     public bool computerPlayer = false;
 
@@ -79,7 +79,7 @@ public class PlayerListItem : MonoBehaviour
         }
         playerName = "Computer" + i;
         PlayerNameText.text = playerName;
-        player.charName = "Bolo";
+        // player.charName = "Bolo";
         computerPlayer = true;
     }
 

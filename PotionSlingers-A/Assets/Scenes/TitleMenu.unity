@@ -11467,18 +11467,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 656852785}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 285935878}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: StartSingleplayerGame
@@ -11490,6 +11478,18 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 656852785}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &573058238
 MonoBehaviour:
@@ -20386,6 +20386,7 @@ MonoBehaviour:
   playerListPrefab: {fileID: 6515335681367900375, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
   charNames: []
   charBools: 
+  singlePlayerNames: []
 --- !u!1 &1194325629
 GameObject:
   m_ObjectHideFlags: 0
@@ -32423,7 +32424,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 285935878}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: StartSingleplayerGame
+        m_MethodName: StartQuickplayGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

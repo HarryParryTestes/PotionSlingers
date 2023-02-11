@@ -112,7 +112,7 @@ public class LobbyManager : MonoBehaviour
 
     public void instantiateItem()
     {
-        int index = playerListItems.Count - 1;
+        int index = playerListItems.Count;
 
         // potentially rework this to only add these items to playerListItems List
         GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab, Game.gameObject.transform) as GameObject;
@@ -126,6 +126,7 @@ public class LobbyManager : MonoBehaviour
         // maybe add this back in? just tweak how it looks
         // newPlayerListItemScript.cpuToggleObject.SetActive(true);
         newPlayerListItemScript.SetSinglePlayerListItemValues(index);
+        playerListItems.Add(newPlayerListItemScript);
 
         // instead of instantiating the objects with the LobbyManager, you want to instantiate them with the NetworkManager instead
     }
@@ -136,7 +137,7 @@ public class LobbyManager : MonoBehaviour
         GameObject go2 = new GameObject("CPU Item");
         go2.AddComponent<PlayerListItem>();
         go2.GetComponent<PlayerListItem>().playerName = "Computer";
-        playerListItems.Add(go2.GetComponent<PlayerListItem>());
+        // playerListItems.Add(go2.GetComponent<PlayerListItem>());
 
         instantiateItem();
     }
@@ -159,7 +160,8 @@ public class LobbyManager : MonoBehaviour
         // go.GetComponent<PlayerListItem>().PlayerNameText.text = go.GetComponent<PlayerListItem>().playerName;
         // go.GetComponent<PlayerListItem>().PlayerNameText.text = "Denzill";
 
-        playerListItems.Add(go.GetComponent<PlayerListItem>());
+        // be careful, maybe add this back in?
+        // playerListItems.Add(go.GetComponent<PlayerListItem>());
 
         instantiateItem();
 
@@ -184,7 +186,7 @@ public class LobbyManager : MonoBehaviour
         // go.GetComponent<PlayerListItem>().PlayerNameText.text = go.GetComponent<PlayerListItem>().playerName;
         // go.GetComponent<PlayerListItem>().PlayerNameText.text = "Denzill";
 
-        playerListItems.Add(go.GetComponent<PlayerListItem>());
+        // playerListItems.Add(go.GetComponent<PlayerListItem>());
 
         instantiateItem();
 
@@ -209,7 +211,7 @@ public class LobbyManager : MonoBehaviour
         // go.GetComponent<PlayerListItem>().PlayerNameText.text = go.GetComponent<PlayerListItem>().playerName;
         // go.GetComponent<PlayerListItem>().PlayerNameText.text = "Denzill";
 
-        playerListItems.Add(go.GetComponent<PlayerListItem>());
+        // playerListItems.Add(go.GetComponent<PlayerListItem>());
 
         instantiateItem();
 

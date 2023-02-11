@@ -86,6 +86,7 @@ public class GamePlayer : NetworkBehaviour
         if (LobbyManager.instance.singleplayer)
         {
             charName = MainMenu.menu.characters[charIndex].cardName;
+            item.charName = charName;
             item.charDisplay.onCharacterClick(charName);
             // LobbyManager.instance.UpdateUI();
             return;
@@ -109,6 +110,7 @@ public class GamePlayer : NetworkBehaviour
         if (LobbyManager.instance.singleplayer)
         {
             charName = MainMenu.menu.characters[charIndex].cardName;
+            item.charName = charName;
             item.charDisplay.onCharacterClick(charName);
             // LobbyManager.instance.UpdateUI();
             return;
@@ -2338,7 +2340,8 @@ public class GamePlayer : NetworkBehaviour
     {
         if (hasAuthority)
         {
-            LobbyManager.instance.DestroyPlayerListItems();
+            // you're gonna have to debug this
+            // LobbyManager.instance.DestroyPlayerListItems();
             SteamMatchmaking.LeaveLobby((CSteamID)LobbyManager.instance.currentLobbyId);
         }
         Debug.Log("LobbyPlayer destroyed. Returning to main menu.");

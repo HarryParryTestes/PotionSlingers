@@ -304,14 +304,16 @@ public class MainMenu : MonoBehaviour
 	{
 		networkManager.tutorial = true;
         networkManager.multiplayer = false;
-        networkManager.ServerChangeScene("GameScene");
+		networkManager.quickplay = false;
+		networkManager.ServerChangeScene("GameScene");
 	}
 
 	public void StartGame()
 	{
 		networkManager.multiplayer = true;
         networkManager.tutorial = false;
-        networkManager.ServerChangeScene("GameScene");
+		networkManager.quickplay = false;
+		networkManager.ServerChangeScene("GameScene");
 	}
 
     public void StartSingleplayerGame()
@@ -319,8 +321,9 @@ public class MainMenu : MonoBehaviour
 		// maybe use static reference to Game instead of networkManager?
         networkManager.multiplayer = false;
         networkManager.tutorial = false;
-		
-        /*
+		networkManager.quickplay = false;
+
+		/*
 		foreach (PlayerListItem item in LobbyManager.instance.playerListItems)
         {
 			//networkManager.charNames.Add(item.charName);
@@ -329,17 +332,26 @@ public class MainMenu : MonoBehaviour
         }
         */
 
-        // now try adding names
-        /*
+		// now try adding names
+		/*
 		foreach (GamePlayer player in networkManager.GamePlayers)
         {
 			networkManager.charNames.Add(player.charName);
 		}
 		*/
 
-        // networkManager.ServerChangeScene("GameScene");
-        networkManager.StartSingleplayerGame();
+		// networkManager.ServerChangeScene("GameScene");
+		networkManager.StartSingleplayerGame();
     }
+
+	public void StartQuickplayGame()
+    {
+		networkManager.multiplayer = false;
+		networkManager.tutorial = false;
+		networkManager.quickplay = true;
+
+		networkManager.ServerChangeScene("GameScene");
+	}
 
 	public int getNumPlayers() {
 		return numPlayers;

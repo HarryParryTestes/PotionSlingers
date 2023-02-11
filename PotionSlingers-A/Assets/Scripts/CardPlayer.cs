@@ -146,6 +146,7 @@ public class CardPlayer : MonoBehaviour
                 break;
 
             default:
+                Debug.Log("Failed to set any bools");
                 break;
         }
     }
@@ -159,12 +160,15 @@ public class CardPlayer : MonoBehaviour
             {
                 Debug.Log(character + " chosen");
                 this.character.updateCharacter(character2);
-            }  
+                checkCharacter();
+            }
         }
         if (character == "")
         {
             this.character.onCharacterClick("Bolo");
         }
+
+        
     }
 
     public void initHealth()
