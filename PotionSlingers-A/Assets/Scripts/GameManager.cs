@@ -274,6 +274,8 @@ public class GameManager : MonoBehaviour
                 players[1] = players[2];
                 // hardcode this lol
                 playerTopName.text = Game.singlePlayerNames[1];
+                players[1].user_id = 1;
+                players[2].user_id = 1;
                 
                 players[2] = players[3];
                 p3.SetActive(false);

@@ -150,6 +150,7 @@ public class LobbyManager : MonoBehaviour
     public void CreateSinglePlayerListItems()
     {
         singleplayer = true;
+        Game.singlePlayerNames.Clear();
 
         // initialize player UI, then add computer players as necessary
         StartGameButton.gameObject.SetActive(true);
@@ -176,6 +177,7 @@ public class LobbyManager : MonoBehaviour
     public void CreateSinglePlayerListTwoItems()
     {
         singleplayer = true;
+        Game.singlePlayerNames.Clear();
 
         // initialize player UI, then add computer players as necessary
         StartGameButton.gameObject.SetActive(true);
@@ -201,6 +203,7 @@ public class LobbyManager : MonoBehaviour
     public void CreateSinglePlayerListOneItems()
     {
         singleplayer = true;
+        Game.singlePlayerNames.Clear();
 
         // initialize player UI, then add computer players as necessary
         StartGameButton.gameObject.SetActive(true);
