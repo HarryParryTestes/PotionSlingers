@@ -2219,7 +2219,10 @@ public class GamePlayer : NetworkBehaviour
         }
     }
 
-    [Command(requiresAuthority = false)]
+
+    // I may have set requiresAuthority = false because of Scarpetta's mechanics, but I'm gonna see what happens if I take that out
+    // nah, I think I just accidentally left it in
+    [Command]
     public void CmdTrashCard(string throwerName, int selectedCard)
     {
         Debug.Log("Executing CmdTrashCard on the server for player: " + playerName);

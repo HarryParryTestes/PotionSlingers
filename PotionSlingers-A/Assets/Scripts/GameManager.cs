@@ -2476,6 +2476,7 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Artifact is fully loaded!");
                         // DONE: Insert error that displays on screen.
                         sendErrorMessage(8);
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     }
                     // Artifact slot is unloaded.
                     else
@@ -2539,6 +2540,7 @@ public class GameManager : MonoBehaviour
                     // TODO: Make another error message
                     Debug.Log("This error message???");
                     sendErrorMessage(12);
+                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 }
                 else if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Artifact")
                 {
@@ -2552,6 +2554,7 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Artifact is fully loaded!");
                         // DONE: Insert error that displays on screen.
                         sendErrorMessage(8);
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     }
                     // Artifact slot is unloaded.
                     else
@@ -2564,6 +2567,8 @@ public class GameManager : MonoBehaviour
                         sendSuccessMessage(5);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Starter potion loaded in Artifact slot!");
+
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
                         // MATTEO: Add Loading potion SFX here.
 
@@ -2595,6 +2600,7 @@ public class GameManager : MonoBehaviour
                                 Debug.Log("Vessel is fully loaded!");
                                 // DONE: Insert error that displays on screen.
                                 sendErrorMessage(9);
+                                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             }
                             else
                             {
@@ -2648,6 +2654,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Artifact is fully loaded!");
                             // DONE: Insert error that displays on screen.
                             sendErrorMessage(8);
+                            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         }
                         // Artifact slot is unloaded.
                         else
@@ -2672,6 +2679,7 @@ public class GameManager : MonoBehaviour
                     // add error message
                     Debug.Log("That error message...");
                     sendErrorMessage(12);
+                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 }
             }
         }
@@ -2769,6 +2777,7 @@ public class GameManager : MonoBehaviour
             } else if(cardPlayer.pips < 1)
             {
                 sendErrorMessage(5);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             }
             else if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Artifact" ||
                     playerHolster.cardList[selectedCardInt - 1].card.cardType == "Vessel" ||
@@ -2803,6 +2812,7 @@ public class GameManager : MonoBehaviour
             {
                 // "You are not the currentPlayer!"
                 sendErrorMessage(7);
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
 
@@ -3005,6 +3015,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 case 2:
@@ -3023,6 +3034,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 case 3:
@@ -3041,6 +3053,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 default:
@@ -3135,6 +3148,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 case 2:
@@ -3194,6 +3208,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 case 3:
@@ -3253,6 +3268,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 default:
@@ -3349,6 +3365,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 case 2:
@@ -3407,6 +3424,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 case 3:
@@ -3464,6 +3482,7 @@ public class GameManager : MonoBehaviour
                     else
                     {
                         sendErrorMessage(6);
+                        md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
                 default:
@@ -3790,6 +3809,16 @@ public class GameManager : MonoBehaviour
 
     public void sendSuccessMessage(int notif)
     {
+        foreach (GameObject ob in successMessages)
+        {
+            ob.SetActive(false);
+        }
+
+        foreach (GameObject ob in errorMessages)
+        {
+            ob.SetActive(false);
+        }
+
         GameObject message = successMessages[notif - 1];
         if (notif == 18)
         {
@@ -3803,6 +3832,16 @@ public class GameManager : MonoBehaviour
 
     public void sendSuccessMessage(int notif, string name)
     {
+        foreach(GameObject ob in successMessages)
+        {
+            ob.SetActive(false);
+        }
+
+        foreach (GameObject ob in errorMessages)
+        {
+            ob.SetActive(false);
+        }
+
         GameObject message = successMessages[notif - 1];
         if (notif == 18)
         {
