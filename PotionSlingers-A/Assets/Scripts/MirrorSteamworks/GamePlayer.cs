@@ -580,7 +580,15 @@ public class GamePlayer : NetworkBehaviour
                         cp.blackRainBonus = false;
                     }
 
-                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
 
                     // may need to add this back in
                     foreach (CardPlayer cp2 in GameManager.manager.players)
@@ -635,7 +643,15 @@ public class GamePlayer : NetworkBehaviour
                             GameManager.manager.sendSuccessMessage(3);
                         }
 
-                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                        {
+                            cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        }
+                        else
+                        {
+                            cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                        }
                         // MATTEO: Add Artifact using SFX here.
 
                     }
@@ -683,7 +699,15 @@ public class GamePlayer : NetworkBehaviour
                         }
                         //GameManager.manager.tempPlayer.subHealth(damage);
                         GameManager.manager.sendSuccessMessage(4);
-                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                        {
+                            cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        }
+                        else
+                        {
+                            cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                        }
 
                         // MATTEO: Add Vessel throw SFX here.
 
@@ -728,7 +752,15 @@ public class GamePlayer : NetworkBehaviour
                 GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1]);
 
                 // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
-                cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                {
+                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
+                else
+                {
+                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                }
                 GameManager.manager.sendSuccessMessage(8);
                 return;
             }
@@ -1197,13 +1229,29 @@ public class GamePlayer : NetworkBehaviour
                     // add some success message but change what you initially put here lol
                     GameManager.manager.sendSuccessMessage(14);
                     // reset card
-                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
                 }
                 else
                 {
                     GameManager.manager.sendErrorMessage(6);
                     // reset card
-                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
                 }
             }
         }
@@ -1384,7 +1432,15 @@ public class GamePlayer : NetworkBehaviour
                     cp.deck.putCardOnBottom(cp.holster.cardList[selectedCard - 1].card);
                     cp.holster.cardList[selectedCard - 1].updateCard(GameManager.manager.players[0].holster.card1.placeholder);
                     GameManager.manager.sendSuccessMessage(7);
-                    cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
                     // MATTEO: Add Cycle SFX here.
 
                 }
@@ -1404,7 +1460,15 @@ public class GamePlayer : NetworkBehaviour
                     cp.deck.putCardOnBottom(cp.holster.cardList[selectedCard - 1].card);
                     cp.holster.cardList[selectedCard - 1].updateCard(GameManager.manager.players[0].holster.card1.placeholder);
                     GameManager.manager.sendSuccessMessage(7);
-                    cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
                     // MATTEO: Add Cycle SFX here.
                 }
                 else
@@ -1463,6 +1527,14 @@ public class GamePlayer : NetworkBehaviour
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             GameManager.manager.sendSuccessMessage(5);
                             //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                            {
+                                cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            }
+                            else
+                            {
+                                cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                            }
                             Debug.Log("Starter potion loaded in Artifact slot!");
 
                             // MATTEO: Add Loading potion SFX here.
@@ -1506,7 +1578,15 @@ public class GamePlayer : NetworkBehaviour
 
                                     // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                                     GameManager.manager.sendSuccessMessage(5);
-                                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                    // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                    if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                                    {
+                                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                    }
+                                    else
+                                    {
+                                        cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                                    }
                                     Debug.Log("Potion loaded in Vessel slot 2!");
 
                                     // MATTEO: Add Loading potion SFX here.
@@ -1525,7 +1605,15 @@ public class GamePlayer : NetworkBehaviour
 
                                 // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                                 GameManager.manager.sendSuccessMessage(5);
-                                cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                                {
+                                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                }
+                                else
+                                {
+                                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                                }
                                 Debug.Log("Potion loaded in Vessel slot 1!");
 
                                 // MATTEO: Add Loading potion SFX here.
@@ -1558,7 +1646,15 @@ public class GamePlayer : NetworkBehaviour
                                 cp.holster.cardList[loadedCardInt].aPotion.updateCard(cp.holster.cardList[selectedCardInt - 1].card);
                                 // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                                 GameManager.manager.sendSuccessMessage(5);
-                                cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                // cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                if (cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                                {
+                                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                }
+                                else
+                                {
+                                    cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                                }
                                 Debug.Log("Potion loaded in Artifact slot!");
 
                                 // MATTEO: Add Loading potion SFX here.
@@ -1655,7 +1751,6 @@ public class GamePlayer : NetworkBehaviour
                             cp.deck.putCardOnTop(GameManager.manager.md1.cardDisplay1.card);
                             card = GameManager.manager.md1.popCard();
                             GameManager.manager.md1.cardDisplay1.updateCard(card);
-                            //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             GameManager.manager.md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                             GameManager.manager.sendSuccessMessage(1);
                         }
@@ -2212,7 +2307,15 @@ public class GamePlayer : NetworkBehaviour
                     GameManager.manager.sendSuccessMessage(15);
                     cp.character.canBeFlipped = true;
                 }
-                cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                if (cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>() != null)
+                {
+                    cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
+                else
+                {
+                    cp.holster.cardList[selectedCard - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                }
                 // GameManager.manager.sendSuccessMessage(9);
                 return;
             }

@@ -2039,7 +2039,16 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].blackRainBonus = false;
                 }
 
-                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                {
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
+                else
+                {
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                }
 
                 // may need to add this back in
                 tempPlayer.subHealth(damage);
@@ -2073,8 +2082,16 @@ public class GameManager : MonoBehaviour
                     {
                         sendSuccessMessage(3);
                     }
-                    
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
                     // MATTEO: Add Artifact using SFX here.
 
                 }
@@ -2112,7 +2129,15 @@ public class GameManager : MonoBehaviour
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                     tempPlayer.subHealth(damage);
                     sendSuccessMessage(4);
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
 
                     // MATTEO: Add Vessel throw SFX here.
 
@@ -2435,6 +2460,7 @@ public class GameManager : MonoBehaviour
                             sendSuccessMessage(5);
                             StartCoroutine(waitThreeSeconds(dialog));
                             playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+
                             Debug.Log("Potion loaded in Vessel slot 2!");
 
                             // MATTEO: Add Loading potion SFX here.
@@ -2542,7 +2568,14 @@ public class GameManager : MonoBehaviour
                     // TODO: Make another error message
                     Debug.Log("This error message???");
                     sendErrorMessage(12);
-                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
                 }
                 else if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardType == "Artifact")
                 {
@@ -2556,7 +2589,14 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Artifact is fully loaded!");
                         // DONE: Insert error that displays on screen.
                         sendErrorMessage(8);
-                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                        {
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                        }
                     }
                     // Artifact slot is unloaded.
                     else
@@ -2570,7 +2610,14 @@ public class GameManager : MonoBehaviour
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Starter potion loaded in Artifact slot!");
 
-                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                        {
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                        }
 
                         // MATTEO: Add Loading potion SFX here.
 
@@ -2602,7 +2649,14 @@ public class GameManager : MonoBehaviour
                                 Debug.Log("Vessel is fully loaded!");
                                 // DONE: Insert error that displays on screen.
                                 sendErrorMessage(9);
-                                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                                {
+                                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                }
+                                else
+                                {
+                                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                                }
                             }
                             else
                             {
@@ -2613,7 +2667,15 @@ public class GameManager : MonoBehaviour
 
                                 // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                                 sendSuccessMessage(5);
-                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                                {
+                                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                }
+                                else
+                                {
+                                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                                }
                                 Debug.Log("Potion loaded in Vessel slot 2!");
 
                                 // MATTEO: Add Loading potion SFX here.
@@ -2632,7 +2694,15 @@ public class GameManager : MonoBehaviour
 
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                            {
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            }
+                            else
+                            {
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                            }
                             Debug.Log("Potion loaded in Vessel slot 1!");
 
                             // MATTEO: Add Loading potion SFX here.
@@ -2656,7 +2726,15 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Artifact is fully loaded!");
                             // DONE: Insert error that displays on screen.
                             sendErrorMessage(8);
-                            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                            {
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            }
+                            else
+                            {
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                            }
                         }
                         // Artifact slot is unloaded.
                         else
@@ -2666,7 +2744,14 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
-                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                            {
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            }
+                            else
+                            {
+                                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                            } 
                             Debug.Log("Potion loaded in Artifact slot!");
 
                             // MATTEO: Add Loading potion SFX here.
@@ -2681,7 +2766,14 @@ public class GameManager : MonoBehaviour
                     // add error message
                     Debug.Log("That error message...");
                     sendErrorMessage(12);
-                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                    {
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    }
+                    else
+                    {
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                    }
                 }
             }
         }
@@ -2814,7 +2906,15 @@ public class GameManager : MonoBehaviour
             {
                 // "You are not the currentPlayer!"
                 sendErrorMessage(7);
-                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                {
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
+                else
+                {
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                }
                 return;
             }
 
@@ -2825,9 +2925,17 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
                 // bool connected = networkManager.sendCycleRequest(selectedCardInt, 0);
                 sendSuccessMessage(7);
-                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                {
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
+                else
+                {
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                }
                 // MATTEO: Add Cycle SFX here.
-                
+
             }
             // If Player has no pips to cycle an Artifact, Vessel, or Ring.
             else if (players[myPlayerIndex].pips < 1)
@@ -2845,7 +2953,15 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
                 sendSuccessMessage(7);
-                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+                {
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
+                else
+                {
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+                }
                 // MATTEO: Add Cycle SFX here.
             }
             else
@@ -3595,12 +3711,28 @@ public class GameManager : MonoBehaviour
             // add some success message but change what you initially put here lol
             sendSuccessMessage(14);
             // reset card
-            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            }
+            else
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+            }
         } else
         {
             sendErrorMessage(6);
             // reset card
-            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            }
+            else
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+            }
         }
     }
 
@@ -3711,9 +3843,17 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             }
             td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-            
+
             // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
-            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            }
+            else
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+            }
             sendSuccessMessage(8);
             // MATTEO: Add sell SFX here.
         }
@@ -3804,7 +3944,15 @@ public class GameManager : MonoBehaviour
                 sendSuccessMessage(15);
                 players[myPlayerIndex].character.canBeFlipped = true;
             }
-            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            }
+            else
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+            }
             sendSuccessMessage(9);
         }
     }

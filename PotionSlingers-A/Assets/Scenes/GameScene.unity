@@ -685,8 +685,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1964603847}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1964603851}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -919,8 +919,8 @@ GameObject:
   - component: {fileID: 18587987}
   - component: {fileID: 18587991}
   - component: {fileID: 18587990}
-  - component: {fileID: 18587988}
   - component: {fileID: 18587989}
+  - component: {fileID: 18587992}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -950,18 +950,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &18587988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 18587986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &18587989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1022,6 +1010,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 18587986}
   m_CullTransparentMesh: 1
+--- !u!114 &18587992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18587986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &24544003
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,8 +1581,8 @@ GameObject:
   - component: {fileID: 32165802}
   - component: {fileID: 32165806}
   - component: {fileID: 32165805}
-  - component: {fileID: 32165803}
   - component: {fileID: 32165804}
+  - component: {fileID: 32165807}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -1612,18 +1612,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &32165803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 32165801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &32165804
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1684,6 +1672,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32165801}
   m_CullTransparentMesh: 1
+--- !u!114 &32165807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32165801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &33373100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1921,8 +1921,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 123623434}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 123623438}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -2705,8 +2705,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 359969985}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 359969989}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -3243,7 +3243,7 @@ RectTransform:
   m_GameObject: {fileID: 64409821}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2087900613}
@@ -3253,7 +3253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &66789019
@@ -3551,8 +3551,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 726565419}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 726565421}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -3962,6 +3962,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 86375376}
   m_CullTransparentMesh: 1
+--- !u!1 &86951153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660437552947478, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &86951159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 86951153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &88117071
 GameObject:
   m_ObjectHideFlags: 0
@@ -3973,8 +3990,8 @@ GameObject:
   - component: {fileID: 88117072}
   - component: {fileID: 88117076}
   - component: {fileID: 88117075}
-  - component: {fileID: 88117073}
   - component: {fileID: 88117074}
+  - component: {fileID: 88117077}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -4004,18 +4021,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &88117073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 88117071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &88117074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4076,6 +4081,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 88117071}
   m_CullTransparentMesh: 1
+--- !u!114 &88117077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88117071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &88947183
 GameObject:
   m_ObjectHideFlags: 0
@@ -5229,8 +5246,8 @@ GameObject:
   - component: {fileID: 117611926}
   - component: {fileID: 117611930}
   - component: {fileID: 117611929}
-  - component: {fileID: 117611927}
   - component: {fileID: 117611928}
+  - component: {fileID: 117611931}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -5260,18 +5277,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &117611927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 117611925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &117611928
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5332,6 +5337,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117611925}
   m_CullTransparentMesh: 1
+--- !u!114 &117611931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 117611925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &119079160
 GameObject:
   m_ObjectHideFlags: 0
@@ -5492,8 +5509,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1523948071}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1523948075}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -5726,8 +5743,8 @@ GameObject:
   - component: {fileID: 123623433}
   - component: {fileID: 123623437}
   - component: {fileID: 123623436}
-  - component: {fileID: 123623434}
   - component: {fileID: 123623435}
+  - component: {fileID: 123623438}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -5757,18 +5774,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &123623434
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 123623432}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &123623435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5829,6 +5834,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 123623432}
   m_CullTransparentMesh: 1
+--- !u!114 &123623438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 123623432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &130488229
 GameObject:
   m_ObjectHideFlags: 0
@@ -6032,8 +6049,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1996741007}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1996741011}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -6876,8 +6893,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6997485960419392671}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 6997485960419392673}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -7355,8 +7372,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 88117073}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 88117077}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -8036,8 +8053,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 971900006}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 971900010}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -8457,7 +8474,7 @@ RectTransform:
   m_GameObject: {fileID: 192691395}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 614096524}
@@ -8467,7 +8484,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &200725190
@@ -8594,8 +8611,8 @@ GameObject:
   - component: {fileID: 215704903}
   - component: {fileID: 215704907}
   - component: {fileID: 215704906}
-  - component: {fileID: 215704904}
   - component: {fileID: 215704905}
+  - component: {fileID: 215704908}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -8625,18 +8642,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &215704904
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 215704902}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &215704905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8697,6 +8702,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 215704902}
   m_CullTransparentMesh: 1
+--- !u!114 &215704908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215704902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &219560155
 GameObject:
   m_ObjectHideFlags: 0
@@ -9144,7 +9161,7 @@ RectTransform:
   m_GameObject: {fileID: 222754393}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 319474355}
@@ -9154,7 +9171,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &228554430
@@ -9317,8 +9334,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1146106479}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1146106483}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -9451,8 +9468,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 379836369}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 379836373}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -10178,8 +10195,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7877603901685229319}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 7877603901685229321}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -10619,8 +10636,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 379836369}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 379836373}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -10790,8 +10807,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 18587988}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 18587992}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -11765,8 +11782,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 512384242}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 512384246}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -12196,8 +12213,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9083293872726131331}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 9083293872726131333}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -14288,8 +14305,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 844262007}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 844262011}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -14610,8 +14627,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 18587988}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 18587992}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -15169,8 +15186,8 @@ GameObject:
   - component: {fileID: 359969984}
   - component: {fileID: 359969988}
   - component: {fileID: 359969987}
-  - component: {fileID: 359969985}
   - component: {fileID: 359969986}
+  - component: {fileID: 359969989}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -15200,18 +15217,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &359969985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 359969983}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &359969986
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15272,6 +15277,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 359969983}
   m_CullTransparentMesh: 1
+--- !u!114 &359969989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359969983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &360009779
 GameObject:
   m_ObjectHideFlags: 0
@@ -15283,8 +15300,8 @@ GameObject:
   - component: {fileID: 360009780}
   - component: {fileID: 360009784}
   - component: {fileID: 360009783}
-  - component: {fileID: 360009781}
   - component: {fileID: 360009782}
+  - component: {fileID: 360009785}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -15314,18 +15331,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &360009781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 360009779}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &360009782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15386,6 +15391,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 360009779}
   m_CullTransparentMesh: 1
+--- !u!114 &360009785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 360009779}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &366794151
 GameObject:
   m_ObjectHideFlags: 0
@@ -16114,8 +16131,8 @@ GameObject:
   - component: {fileID: 379836368}
   - component: {fileID: 379836372}
   - component: {fileID: 379836371}
-  - component: {fileID: 379836369}
   - component: {fileID: 379836370}
+  - component: {fileID: 379836373}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -16145,18 +16162,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &379836369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 379836367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &379836370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16217,6 +16222,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379836367}
   m_CullTransparentMesh: 1
+--- !u!114 &379836373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 379836367}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &385338048
 GameObject:
   m_ObjectHideFlags: 0
@@ -16414,8 +16431,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 950445660}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 950445664}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -16697,7 +16714,7 @@ RectTransform:
   m_GameObject: {fileID: 398751200}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1060715496}
@@ -16707,7 +16724,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &400338778
@@ -17731,7 +17748,7 @@ RectTransform:
   m_GameObject: {fileID: 448201054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 332872280}
@@ -17741,7 +17758,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &451490178
@@ -19030,6 +19047,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469673583}
   m_CullTransparentMesh: 1
+--- !u!1 &469719296 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660438508597380, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &469719302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 469719296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &472871951
 GameObject:
   m_ObjectHideFlags: 0
@@ -19229,8 +19263,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1263815538}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1263815542}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -19553,7 +19587,7 @@ RectTransform:
   m_GameObject: {fileID: 483352957}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 351698950}
@@ -19563,7 +19597,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &485528014
@@ -19591,7 +19625,7 @@ RectTransform:
   m_GameObject: {fileID: 485528014}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 528670530}
@@ -19601,7 +19635,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &486512865
@@ -19807,6 +19841,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 498051351}
   m_CullTransparentMesh: 1
+--- !u!1 &500197888 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660438964847818, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &500197894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500197888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &505530892
 GameObject:
   m_ObjectHideFlags: 0
@@ -20103,8 +20154,8 @@ GameObject:
   - component: {fileID: 512384241}
   - component: {fileID: 512384245}
   - component: {fileID: 512384244}
-  - component: {fileID: 512384242}
   - component: {fileID: 512384243}
+  - component: {fileID: 512384246}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -20134,18 +20185,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &512384242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 512384240}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &512384243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20206,6 +20245,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 512384240}
   m_CullTransparentMesh: 1
+--- !u!114 &512384246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512384240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &514403269
 GameObject:
   m_ObjectHideFlags: 0
@@ -21563,7 +21614,7 @@ RectTransform:
   m_GameObject: {fileID: 553535030}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1007355346}
@@ -21573,7 +21624,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &554945194
@@ -22154,7 +22205,7 @@ RectTransform:
   m_GameObject: {fileID: 560592230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1451674362}
@@ -22164,7 +22215,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &560669208
@@ -22344,7 +22395,7 @@ RectTransform:
   m_GameObject: {fileID: 572433314}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1877925742}
@@ -22354,7 +22405,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &573145300
@@ -22479,8 +22530,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 668287052}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 668287056}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -22711,7 +22762,7 @@ RectTransform:
   m_GameObject: {fileID: 581382387}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1827952586}
@@ -22721,7 +22772,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &582504454
@@ -23146,8 +23197,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 360009781}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 360009785}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -23472,8 +23523,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1214423742}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1214423746}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -23606,8 +23657,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1240041112}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1240041116}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -23740,8 +23791,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1687916534}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1687916538}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -25006,8 +25057,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 32165803}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 32165807}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -25140,8 +25191,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 971900006}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 971900010}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -25718,8 +25769,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7236186977709366209}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 7236186977709366211}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -26515,8 +26566,8 @@ GameObject:
   - component: {fileID: 668287051}
   - component: {fileID: 668287055}
   - component: {fileID: 668287054}
-  - component: {fileID: 668287052}
   - component: {fileID: 668287053}
+  - component: {fileID: 668287056}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -26546,18 +26597,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &668287052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 668287050}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &668287053
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26618,6 +26657,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 668287050}
   m_CullTransparentMesh: 1
+--- !u!114 &668287056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668287050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &671185218
 GameObject:
   m_ObjectHideFlags: 0
@@ -27206,8 +27257,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1593199411}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1593199415}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -27514,8 +27565,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1495737408}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1495737412}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -28151,8 +28202,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 512384242}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 512384246}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -28355,8 +28406,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1311416936}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1311416940}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -28481,6 +28532,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 694558550}
   m_CullTransparentMesh: 1
+--- !u!1 &696743015 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660438140654742, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &696743021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 696743015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &696882901
 GameObject:
   m_ObjectHideFlags: 0
@@ -28775,7 +28843,7 @@ RectTransform:
   m_GameObject: {fileID: 701173060}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1776885364}
@@ -28785,7 +28853,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &711878153
@@ -28929,7 +28997,7 @@ RectTransform:
   m_GameObject: {fileID: 713896950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 657633297}
@@ -28939,7 +29007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &714955799
@@ -29338,8 +29406,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 726565419}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 726565421}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -29567,8 +29635,8 @@ GameObject:
   - component: {fileID: 726565416}
   - component: {fileID: 726565418}
   - component: {fileID: 726565417}
-  - component: {fileID: 726565419}
   - component: {fileID: 726565420}
+  - component: {fileID: 726565421}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -29636,18 +29704,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 726565415}
   m_CullTransparentMesh: 1
---- !u!114 &726565419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 726565415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &726565420
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29670,6 +29726,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 1151230950}
   vPotion1: {fileID: 1146106480}
   vPotion2: {fileID: 1523948072}
+--- !u!114 &726565421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 726565415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &728456629
 GameObject:
   m_ObjectHideFlags: 0
@@ -30359,6 +30427,23 @@ RectTransform:
   m_AnchoredPosition: {x: 15, y: -12.5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &741295339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660437101802457, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &741295345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 741295339}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &741934368
 GameObject:
   m_ObjectHideFlags: 0
@@ -30633,8 +30718,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1405361822}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1405361826}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -30977,8 +31062,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1240041112}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1240041116}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -31111,7 +31196,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8898653789182682589}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -32715,7 +32800,7 @@ RectTransform:
   m_GameObject: {fileID: 816704382}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1778767106}
@@ -32725,7 +32810,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &816977228
@@ -32905,7 +32990,7 @@ RectTransform:
   m_GameObject: {fileID: 825357675}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 469673584}
@@ -32915,7 +33000,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &825414954
@@ -33737,8 +33822,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1405361822}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1405361826}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -34006,8 +34091,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1930520956}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1930520960}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -34386,6 +34471,23 @@ RectTransform:
   m_AnchoredPosition: {x: -37.5, y: -30}
   m_SizeDelta: {x: 75, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &843595147 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660438534196087, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &843595153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 843595147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &844262005
 GameObject:
   m_ObjectHideFlags: 0
@@ -34397,8 +34499,8 @@ GameObject:
   - component: {fileID: 844262006}
   - component: {fileID: 844262010}
   - component: {fileID: 844262009}
-  - component: {fileID: 844262007}
   - component: {fileID: 844262008}
+  - component: {fileID: 844262011}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -34428,18 +34530,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &844262007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 844262005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &844262008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34500,6 +34590,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844262005}
   m_CullTransparentMesh: 1
+--- !u!114 &844262011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 844262005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &844744327
 GameObject:
   m_ObjectHideFlags: 0
@@ -35647,8 +35749,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 844262007}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 844262011}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -35831,8 +35933,8 @@ GameObject:
   - component: {fileID: 889852995}
   - component: {fileID: 889852999}
   - component: {fileID: 889852998}
-  - component: {fileID: 889852996}
   - component: {fileID: 889852997}
+  - component: {fileID: 889853000}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -35862,18 +35964,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &889852996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 889852994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &889852997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35934,6 +36024,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889852994}
   m_CullTransparentMesh: 1
+--- !u!114 &889853000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 889852994}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &896649561
 GameObject:
   m_ObjectHideFlags: 0
@@ -36018,8 +36120,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1679052114}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1679052118}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -37654,8 +37756,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1542932600}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1542932604}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -37791,8 +37893,8 @@ GameObject:
   - component: {fileID: 950445659}
   - component: {fileID: 950445663}
   - component: {fileID: 950445662}
-  - component: {fileID: 950445660}
   - component: {fileID: 950445661}
+  - component: {fileID: 950445664}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -37822,18 +37924,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &950445660
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 950445658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &950445661
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37894,6 +37984,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 950445658}
   m_CullTransparentMesh: 1
+--- !u!114 &950445664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 950445658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &951793537
 GameObject:
   m_ObjectHideFlags: 0
@@ -38288,8 +38390,8 @@ GameObject:
   - component: {fileID: 967698823}
   - component: {fileID: 967698827}
   - component: {fileID: 967698826}
-  - component: {fileID: 967698824}
   - component: {fileID: 967698825}
+  - component: {fileID: 967698828}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -38319,18 +38421,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &967698824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 967698822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &967698825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38391,6 +38481,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 967698822}
   m_CullTransparentMesh: 1
+--- !u!114 &967698828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 967698822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &969399917
 GameObject:
   m_ObjectHideFlags: 0
@@ -38685,8 +38787,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1679052114}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1679052118}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -38819,7 +38921,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9213095926625135003}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -38880,8 +38982,8 @@ GameObject:
   - component: {fileID: 971900005}
   - component: {fileID: 971900009}
   - component: {fileID: 971900008}
-  - component: {fileID: 971900006}
   - component: {fileID: 971900007}
+  - component: {fileID: 971900010}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -38911,18 +39013,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &971900006
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 971900004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &971900007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38983,6 +39073,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 971900004}
   m_CullTransparentMesh: 1
+--- !u!114 &971900010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971900004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &972374439
 GameObject:
   m_ObjectHideFlags: 0
@@ -39299,6 +39401,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 976253254}
   m_CullTransparentMesh: 1
+--- !u!1 &978998857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660438597447620, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &978998863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978998857}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &979338369
 GameObject:
   m_ObjectHideFlags: 0
@@ -40321,8 +40440,8 @@ GameObject:
   - component: {fileID: 990961309}
   - component: {fileID: 990961313}
   - component: {fileID: 990961312}
-  - component: {fileID: 990961310}
   - component: {fileID: 990961311}
+  - component: {fileID: 990961314}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -40352,18 +40471,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &990961310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 990961308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &990961311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40424,6 +40531,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 990961308}
   m_CullTransparentMesh: 1
+--- !u!114 &990961314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990961308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &992398938
 GameObject:
   m_ObjectHideFlags: 0
@@ -40966,8 +41085,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1418984700}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1418984702}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -41621,7 +41740,7 @@ RectTransform:
   m_GameObject: {fileID: 1032497051}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 560669209}
@@ -41631,7 +41750,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1035481194
@@ -42063,8 +42182,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 990961310}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 990961314}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -42846,8 +42965,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2049553824}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 2049553828}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -43229,8 +43348,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1752554482}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1752554486}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -43304,7 +43423,7 @@ RectTransform:
   m_GameObject: {fileID: 1075061190}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1367755694}
@@ -43314,7 +43433,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1075131572
@@ -43606,7 +43725,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9213095926625135003}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -45146,8 +45265,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 32165803}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 32165807}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -45221,7 +45340,7 @@ RectTransform:
   m_GameObject: {fileID: 1112397135}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1849055042}
@@ -45231,7 +45350,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1118874818
@@ -45318,8 +45437,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1347482593}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1347482597}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -45495,8 +45614,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1347482593}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1347482597}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -45819,7 +45938,7 @@ RectTransform:
   m_GameObject: {fileID: 1133223667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 641047961}
@@ -45829,7 +45948,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1137251200
@@ -45967,8 +46086,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 123623434}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 123623438}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -46507,8 +46626,8 @@ GameObject:
   - component: {fileID: 1146106478}
   - component: {fileID: 1146106482}
   - component: {fileID: 1146106481}
-  - component: {fileID: 1146106479}
   - component: {fileID: 1146106480}
+  - component: {fileID: 1146106483}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -46538,18 +46657,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1146106479
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146106477}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1146106480
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46610,6 +46717,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1146106477}
   m_CullTransparentMesh: 1
+--- !u!114 &1146106483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146106477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1149479564
 GameObject:
   m_ObjectHideFlags: 0
@@ -47798,7 +47917,7 @@ RectTransform:
   m_GameObject: {fileID: 1172353601}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2083827296}
@@ -47808,7 +47927,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1174676524
@@ -47895,8 +48014,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1930520956}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1930520960}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -48104,8 +48223,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 359969985}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 359969989}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -48806,8 +48925,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1593199411}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1593199415}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -49358,8 +49477,8 @@ GameObject:
   - component: {fileID: 1214423741}
   - component: {fileID: 1214423745}
   - component: {fileID: 1214423744}
-  - component: {fileID: 1214423742}
   - component: {fileID: 1214423743}
+  - component: {fileID: 1214423746}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -49389,18 +49508,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1214423742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1214423740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1214423743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49461,6 +49568,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1214423740}
   m_CullTransparentMesh: 1
+--- !u!114 &1214423746
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214423740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1217552534
 GameObject:
   m_ObjectHideFlags: 0
@@ -50595,8 +50714,8 @@ GameObject:
   - component: {fileID: 1240041111}
   - component: {fileID: 1240041115}
   - component: {fileID: 1240041114}
-  - component: {fileID: 1240041112}
   - component: {fileID: 1240041113}
+  - component: {fileID: 1240041116}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -50626,18 +50745,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1240041112
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1240041110}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1240041113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50698,6 +50805,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240041110}
   m_CullTransparentMesh: 1
+--- !u!114 &1240041116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240041110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1240177731
 GameObject:
   m_ObjectHideFlags: 0
@@ -51487,8 +51606,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2049553824}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 2049553828}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -51720,8 +51839,8 @@ GameObject:
   - component: {fileID: 1263815537}
   - component: {fileID: 1263815541}
   - component: {fileID: 1263815540}
-  - component: {fileID: 1263815538}
   - component: {fileID: 1263815539}
+  - component: {fileID: 1263815542}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -51751,18 +51870,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1263815538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1263815536}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1263815539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51823,6 +51930,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1263815536}
   m_CullTransparentMesh: 1
+--- !u!114 &1263815542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1263815536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1264515855
 GameObject:
   m_ObjectHideFlags: 0
@@ -53014,7 +53133,7 @@ RectTransform:
   m_GameObject: {fileID: 1282454385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2068213421}
@@ -53024,7 +53143,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1286344446
@@ -54308,8 +54427,8 @@ GameObject:
   - component: {fileID: 1311416935}
   - component: {fileID: 1311416939}
   - component: {fileID: 1311416938}
-  - component: {fileID: 1311416936}
   - component: {fileID: 1311416937}
+  - component: {fileID: 1311416940}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -54339,18 +54458,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1311416936
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311416934}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1311416937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54411,6 +54518,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1311416934}
   m_CullTransparentMesh: 1
+--- !u!114 &1311416940
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1311416934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1316842258
 GameObject:
   m_ObjectHideFlags: 0
@@ -54663,7 +54782,7 @@ RectTransform:
   m_GameObject: {fileID: 1319880413}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 545859985}
@@ -54673,7 +54792,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1320993232
@@ -55191,8 +55310,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 88117073}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 88117077}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -55749,8 +55868,8 @@ GameObject:
   - component: {fileID: 1347482592}
   - component: {fileID: 1347482596}
   - component: {fileID: 1347482595}
-  - component: {fileID: 1347482593}
   - component: {fileID: 1347482594}
+  - component: {fileID: 1347482597}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -55780,18 +55899,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1347482593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1347482591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1347482594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55852,6 +55959,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1347482591}
   m_CullTransparentMesh: 1
+--- !u!114 &1347482597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347482591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1354188362
 GameObject:
   m_ObjectHideFlags: 0
@@ -57015,8 +57134,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 889852996}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 889853000}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -57225,8 +57344,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6997485960419392671}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 6997485960419392673}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -58055,8 +58174,8 @@ GameObject:
   - component: {fileID: 1405361821}
   - component: {fileID: 1405361825}
   - component: {fileID: 1405361824}
-  - component: {fileID: 1405361822}
   - component: {fileID: 1405361823}
+  - component: {fileID: 1405361826}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -58086,18 +58205,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1405361822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1405361820}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1405361823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58158,6 +58265,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1405361820}
   m_CullTransparentMesh: 1
+--- !u!114 &1405361826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1405361820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1407618894
 GameObject:
   m_ObjectHideFlags: 0
@@ -58394,8 +58513,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 9083293872726131331}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 9083293872726131333}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -58828,8 +58947,8 @@ GameObject:
   - component: {fileID: 1418984697}
   - component: {fileID: 1418984699}
   - component: {fileID: 1418984698}
-  - component: {fileID: 1418984700}
   - component: {fileID: 1418984701}
+  - component: {fileID: 1418984702}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -58897,18 +59016,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1418984696}
   m_CullTransparentMesh: 1
---- !u!114 &1418984700
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1418984696}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1418984701
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58931,6 +59038,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 1872420598}
   vPotion1: {fileID: 1214423743}
   vPotion2: {fileID: 668287053}
+--- !u!114 &1418984702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1418984696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1425693222
 GameObject:
   m_ObjectHideFlags: 0
@@ -59226,8 +59345,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1542932600}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1542932604}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -59618,8 +59737,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1996741007}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1996741011}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -59886,8 +60005,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 950445660}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 950445664}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -60058,8 +60177,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1964603847}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1964603851}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -60479,8 +60598,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 360009781}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 360009785}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -60613,8 +60732,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2120949264}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 2120949266}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -61201,7 +61320,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8588524002833841733}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -62356,8 +62475,8 @@ GameObject:
   - component: {fileID: 1495737407}
   - component: {fileID: 1495737411}
   - component: {fileID: 1495737410}
-  - component: {fileID: 1495737408}
   - component: {fileID: 1495737409}
+  - component: {fileID: 1495737412}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -62387,18 +62506,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1495737408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1495737406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1495737409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62459,6 +62566,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1495737406}
   m_CullTransparentMesh: 1
+--- !u!114 &1495737412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495737406}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1496582963
 GameObject:
   m_ObjectHideFlags: 0
@@ -62695,8 +62814,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 668287052}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 668287056}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -63366,8 +63485,8 @@ GameObject:
   - component: {fileID: 1523948070}
   - component: {fileID: 1523948074}
   - component: {fileID: 1523948073}
-  - component: {fileID: 1523948071}
   - component: {fileID: 1523948072}
+  - component: {fileID: 1523948075}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -63397,18 +63516,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1523948071
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1523948069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1523948072
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63469,6 +63576,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1523948069}
   m_CullTransparentMesh: 1
+--- !u!114 &1523948075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523948069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1525922914
 GameObject:
   m_ObjectHideFlags: 0
@@ -63784,8 +63903,8 @@ GameObject:
   - component: {fileID: 1542932599}
   - component: {fileID: 1542932603}
   - component: {fileID: 1542932602}
-  - component: {fileID: 1542932600}
   - component: {fileID: 1542932601}
+  - component: {fileID: 1542932604}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -63815,18 +63934,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1542932600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1542932598}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1542932601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63887,6 +63994,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1542932598}
   m_CullTransparentMesh: 1
+--- !u!114 &1542932604
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542932598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1545343407
 GameObject:
   m_ObjectHideFlags: 0
@@ -64801,6 +64920,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 40, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1567347961 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660437683950642, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1567347967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1567347961}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1569290026
 GameObject:
   m_ObjectHideFlags: 0
@@ -64983,7 +65119,7 @@ RectTransform:
   m_GameObject: {fileID: 1573795836}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 789998544}
@@ -64993,7 +65129,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1574357629
@@ -65587,8 +65723,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 967698824}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 967698828}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -66182,8 +66318,8 @@ GameObject:
   - component: {fileID: 1593199410}
   - component: {fileID: 1593199414}
   - component: {fileID: 1593199413}
-  - component: {fileID: 1593199411}
   - component: {fileID: 1593199412}
+  - component: {fileID: 1593199415}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -66213,18 +66349,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1593199411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1593199409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1593199412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66285,6 +66409,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1593199409}
   m_CullTransparentMesh: 1
+--- !u!114 &1593199415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1593199409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1594828758
 GameObject:
   m_ObjectHideFlags: 0
@@ -67285,8 +67421,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1146106479}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1146106483}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -67669,8 +67805,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 215704904}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 215704908}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -67967,6 +68103,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1628800491}
   m_CullTransparentMesh: 1
+--- !u!1 &1630958833 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660438618924892, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1630958839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630958833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1632665221
 GameObject:
   m_ObjectHideFlags: 0
@@ -68051,8 +68204,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2093876469}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 2093876473}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -68164,7 +68317,7 @@ RectTransform:
   m_GameObject: {fileID: 1635132545}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 221294098}
@@ -68174,7 +68327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1637644244
@@ -68303,8 +68456,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 215704904}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 215704908}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -68551,8 +68704,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 967698824}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 967698828}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -69007,7 +69160,7 @@ RectTransform:
   m_GameObject: {fileID: 1648248919}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1498435055}
@@ -69017,7 +69170,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1649627234
@@ -69262,8 +69415,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1495737408}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1495737412}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -69531,8 +69684,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2120949264}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 2120949266}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -70049,7 +70202,7 @@ RectTransform:
   m_GameObject: {fileID: 1669260284}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1922893334}
@@ -70059,7 +70212,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1670020716
@@ -70336,7 +70489,7 @@ RectTransform:
   m_GameObject: {fileID: 1677110288}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1642253803}
@@ -70346,7 +70499,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1679052112
@@ -70360,8 +70513,8 @@ GameObject:
   - component: {fileID: 1679052113}
   - component: {fileID: 1679052117}
   - component: {fileID: 1679052116}
-  - component: {fileID: 1679052114}
   - component: {fileID: 1679052115}
+  - component: {fileID: 1679052118}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -70391,18 +70544,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1679052114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1679052112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1679052115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70463,6 +70604,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1679052112}
   m_CullTransparentMesh: 1
+--- !u!114 &1679052118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679052112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1681632586
 GameObject:
   m_ObjectHideFlags: 0
@@ -70830,8 +70983,8 @@ GameObject:
   - component: {fileID: 1687916533}
   - component: {fileID: 1687916537}
   - component: {fileID: 1687916536}
-  - component: {fileID: 1687916534}
   - component: {fileID: 1687916535}
+  - component: {fileID: 1687916538}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -70861,18 +71014,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1687916534
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1687916532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1687916535
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70933,6 +71074,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687916532}
   m_CullTransparentMesh: 1
+--- !u!114 &1687916538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1687916532}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1692397281
 GameObject:
   m_ObjectHideFlags: 0
@@ -73192,8 +73345,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2093876469}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 2093876473}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -73457,8 +73610,8 @@ GameObject:
   - component: {fileID: 1752554481}
   - component: {fileID: 1752554485}
   - component: {fileID: 1752554484}
-  - component: {fileID: 1752554482}
   - component: {fileID: 1752554483}
+  - component: {fileID: 1752554486}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -73488,18 +73641,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1752554482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1752554480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1752554483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73560,6 +73701,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752554480}
   m_CullTransparentMesh: 1
+--- !u!114 &1752554486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1752554480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1754417854
 GameObject:
   m_ObjectHideFlags: 0
@@ -73720,8 +73873,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 117611927}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 117611931}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -73896,8 +74049,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 990961310}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 990961314}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -74603,8 +74756,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7877603901685229319}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 7877603901685229321}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -74737,8 +74890,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7329947042470998233}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 7329947042470998235}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -74950,8 +75103,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7329947042470998233}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 7329947042470998235}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -75345,6 +75498,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794660291}
   m_CullTransparentMesh: 1
+--- !u!1 &1796563181 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660437218611706, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1796563187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1796563181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1796812006
 GameObject:
   m_ObjectHideFlags: 0
@@ -76135,6 +76305,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1807476892}
   m_CullTransparentMesh: 1
+--- !u!1 &1807657467 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660439071948412, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1807657473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807657467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1808253378
 GameObject:
   m_ObjectHideFlags: 0
@@ -76240,7 +76427,7 @@ RectTransform:
   m_GameObject: {fileID: 1808453498}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1858330630}
@@ -76250,7 +76437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1811807136
@@ -76844,7 +77031,7 @@ RectTransform:
   m_GameObject: {fileID: 1825655367}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1291762164}
@@ -76854,7 +77041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1827952585
@@ -77113,7 +77300,7 @@ RectTransform:
   m_GameObject: {fileID: 1833972542}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 577553267}
@@ -77123,7 +77310,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1838374471
@@ -78892,8 +79079,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7236186977709366209}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 7236186977709366211}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -79264,8 +79451,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1263815538}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1263815542}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -80737,8 +80924,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1214423742}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1214423746}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -81007,7 +81194,7 @@ RectTransform:
   m_GameObject: {fileID: 1915793320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1302950128}
@@ -81017,7 +81204,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1916230032
@@ -81314,8 +81501,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 889852996}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 889853000}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -81524,8 +81711,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1752554482}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1752554486}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -81893,8 +82080,8 @@ GameObject:
   - component: {fileID: 1930520955}
   - component: {fileID: 1930520959}
   - component: {fileID: 1930520958}
-  - component: {fileID: 1930520956}
   - component: {fileID: 1930520957}
+  - component: {fileID: 1930520960}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -81924,18 +82111,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1930520956
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1930520954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1930520957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81996,6 +82171,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1930520954}
   m_CullTransparentMesh: 1
+--- !u!114 &1930520960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1930520954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1934230781
 GameObject:
   m_ObjectHideFlags: 0
@@ -82192,8 +82379,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 117611927}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 117611931}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -83663,7 +83850,7 @@ RectTransform:
   m_GameObject: {fileID: 1962619086}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1525922915}
@@ -83673,7 +83860,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1964603845
@@ -83687,8 +83874,8 @@ GameObject:
   - component: {fileID: 1964603846}
   - component: {fileID: 1964603850}
   - component: {fileID: 1964603849}
-  - component: {fileID: 1964603847}
   - component: {fileID: 1964603848}
+  - component: {fileID: 1964603851}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -83718,18 +83905,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1964603847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1964603845}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1964603848
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83790,6 +83965,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1964603845}
   m_CullTransparentMesh: 1
+--- !u!114 &1964603851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1964603845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1965174958
 GameObject:
   m_ObjectHideFlags: 0
@@ -84009,8 +84196,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1311416936}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1311416940}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -85073,8 +85260,8 @@ GameObject:
   - component: {fileID: 1996741006}
   - component: {fileID: 1996741010}
   - component: {fileID: 1996741009}
-  - component: {fileID: 1996741007}
   - component: {fileID: 1996741008}
+  - component: {fileID: 1996741011}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -85104,18 +85291,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1996741007
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1996741005}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1996741008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -85176,6 +85351,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1996741005}
   m_CullTransparentMesh: 1
+--- !u!114 &1996741011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1996741005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1997329725
 GameObject:
   m_ObjectHideFlags: 0
@@ -85464,7 +85651,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8588524002833841733}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -86823,7 +87010,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8898653789182682589}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -87382,8 +87569,8 @@ GameObject:
   - component: {fileID: 2049553823}
   - component: {fileID: 2049553827}
   - component: {fileID: 2049553826}
-  - component: {fileID: 2049553824}
   - component: {fileID: 2049553825}
+  - component: {fileID: 2049553828}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -87413,18 +87600,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2049553824
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2049553822}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2049553825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -87485,6 +87660,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2049553822}
   m_CullTransparentMesh: 1
+--- !u!114 &2049553828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2049553822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2053633988
 GameObject:
   m_ObjectHideFlags: 0
@@ -87569,8 +87756,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1418984700}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1418984702}
+        m_TargetAssemblyTypeName: CPUHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -87816,8 +88003,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1687916534}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1687916538}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
         m_Arguments:
@@ -88591,7 +88778,7 @@ RectTransform:
   m_GameObject: {fileID: 2066442547}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 142006062}
@@ -88601,7 +88788,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2066540363
@@ -88629,7 +88816,7 @@ RectTransform:
   m_GameObject: {fileID: 2066540363}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 145377414}
@@ -88639,7 +88826,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2066975298
@@ -88667,7 +88854,7 @@ RectTransform:
   m_GameObject: {fileID: 2066975298}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 948827172}
@@ -88677,9 +88864,26 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2067059442 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3975660439142775526, guid: 53989111815513c41a3163993b3810a5, type: 3}
+  m_PrefabInstance: {fileID: 3975660438111221347}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2067059448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2067059442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38d531add7ed3004a946626ffb99e659, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2067404678
 GameObject:
   m_ObjectHideFlags: 0
@@ -90509,7 +90713,7 @@ RectTransform:
   m_GameObject: {fileID: 2092723022}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 98290478}
@@ -90519,7 +90723,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -12.5, y: -12.5}
+  m_AnchoredPosition: {x: 6, y: -5}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2093876467
@@ -90533,8 +90737,8 @@ GameObject:
   - component: {fileID: 2093876468}
   - component: {fileID: 2093876472}
   - component: {fileID: 2093876471}
-  - component: {fileID: 2093876469}
   - component: {fileID: 2093876470}
+  - component: {fileID: 2093876473}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -90564,18 +90768,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2093876469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2093876467}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2093876470
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -90636,6 +90828,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093876467}
   m_CullTransparentMesh: 1
+--- !u!114 &2093876473
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093876467}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c9715a492c73e4ba644410f15192cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2094440177
 GameObject:
   m_ObjectHideFlags: 0
@@ -90970,8 +91174,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1523948071}
-        m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
+      - m_Target: {fileID: 1523948075}
+        m_TargetAssemblyTypeName: LoadedHoverCard, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
         m_Arguments:
@@ -92009,8 +92213,8 @@ GameObject:
   - component: {fileID: 2120949261}
   - component: {fileID: 2120949263}
   - component: {fileID: 2120949262}
-  - component: {fileID: 2120949264}
   - component: {fileID: 2120949265}
+  - component: {fileID: 2120949266}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -92078,18 +92282,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2120949260}
   m_CullTransparentMesh: 1
---- !u!114 &2120949264
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2120949260}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2120949265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -92112,6 +92304,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 2095188231}
   vPotion1: {fileID: 990961311}
   vPotion2: {fileID: 359969986}
+--- !u!114 &2120949266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2120949260}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2121368780 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2566933829503773462, guid: 53989111815513c41a3163993b3810a5, type: 3}
@@ -92961,8 +93165,8 @@ GameObject:
   - component: {fileID: 7236186977709366208}
   - component: {fileID: 2487983643245374912}
   - component: {fileID: 923476659331669401}
-  - component: {fileID: 7236186977709366209}
   - component: {fileID: 7236186977709366210}
+  - component: {fileID: 7236186977709366211}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -93368,8 +93572,8 @@ GameObject:
   - component: {fileID: 9083293872726131330}
   - component: {fileID: 4099781856317224066}
   - component: {fileID: 1635535853565134043}
-  - component: {fileID: 9083293872726131331}
   - component: {fileID: 9083293872726131332}
+  - component: {fileID: 9083293872726131333}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -93388,8 +93592,8 @@ GameObject:
   - component: {fileID: 3260525582816678902}
   - component: {fileID: 7877603901685229318}
   - component: {fileID: 3971474474920761520}
-  - component: {fileID: 7877603901685229319}
   - component: {fileID: 7877603901685229320}
+  - component: {fileID: 7877603901685229321}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -93440,8 +93644,8 @@ GameObject:
   - component: {fileID: 9213095926625135002}
   - component: {fileID: 5900471170869070864}
   - component: {fileID: 6875271150156047245}
-  - component: {fileID: 9213095926625135003}
   - component: {fileID: 9213095926625135004}
+  - component: {fileID: 9213095926625135005}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -93786,6 +93990,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437097427575, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437189109893, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -93794,6 +94002,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437245065094, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437245065094, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437245065094, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437245065094, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437254936155, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -93846,6 +94070,54 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437350631489, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437350631489, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437350631489, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437350631489, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437379681836, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437379681836, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437379681836, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437379681836, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437379681837, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437396322302, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 500197894}
+    - target: {fileID: 3975660437396322302, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437396322302, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437398751474, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -93854,6 +94126,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437409411894, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 741295345}
+    - target: {fileID: 3975660437409411894, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437409411894, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437423850727, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -93874,6 +94158,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437456851765, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1796563187}
+    - target: {fileID: 3975660437456851765, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437456851765, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437494817573, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 843595153}
+    - target: {fileID: 3975660437494817573, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437494817573, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437495389663, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -93902,6 +94210,18 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 12.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3975660437552164386, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 86951159}
+    - target: {fileID: 3975660437552164386, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437552164386, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437580483225, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -93922,6 +94242,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437619176993, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 469719302}
+    - target: {fileID: 3975660437619176993, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437619176993, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437632718153, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -93930,6 +94262,38 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437645434472, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437645434472, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437645434472, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437645434472, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437649066103, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437649066103, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437649066103, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437649066103, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437669861681, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -93954,6 +94318,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437683950642, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437687777434, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 12.5
@@ -93982,6 +94350,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437741245013, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 978998863}
+    - target: {fileID: 3975660437741245013, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437741245013, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437742731112, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94005,6 +94385,18 @@ PrefabInstance:
     - target: {fileID: 3975660437744006369, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: cycleCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437765844628, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1630958839}
+    - target: {fileID: 3975660437765844628, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437765844628, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3975660437823181332, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_Pivot.x
@@ -94106,6 +94498,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: trashCard
       objectReference: {fileID: 0}
+    - target: {fileID: 3975660437861750209, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437861750209, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437861750209, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437861750209, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -6
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660437867710628, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94154,6 +94562,42 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660437972015981, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 86951159}
+    - target: {fileID: 3975660437972015981, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437972015981, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437972538411, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1807657473}
+    - target: {fileID: 3975660437972538411, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660437972538411, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438008931871, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 696743021}
+    - target: {fileID: 3975660438008931871, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438008931871, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoadedHoverCard, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438037864350, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94166,6 +94610,34 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660438064106787, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1796563187}
+    - target: {fileID: 3975660438064106787, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438064106787, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438097448796, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438097448796, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438097448796, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438097448796, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438097686537, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94182,6 +94654,18 @@ PrefabInstance:
       propertyPath: character
       value: 
       objectReference: {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
+    - target: {fileID: 3975660438140758535, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 469719302}
+    - target: {fileID: 3975660438140758535, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438140758535, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438155704002, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94190,6 +94674,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660438170961106, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2067059448}
+    - target: {fileID: 3975660438170961106, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438170961106, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438174972455, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94282,6 +94778,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660438238864993, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2067059448}
+    - target: {fileID: 3975660438238864993, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438238864993, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438254720775, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94290,6 +94798,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660438255371271, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438255371271, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438255371271, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438255371271, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438293861913, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94298,6 +94822,34 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660438320753292, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 500197894}
+    - target: {fileID: 3975660438320753292, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438320753292, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438322349867, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438322349867, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438322349867, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438322349867, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438368056707, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 3
@@ -94366,6 +94918,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660438438749694, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1630958839}
+    - target: {fileID: 3975660438438749694, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438438749694, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438441503957, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1807657473}
+    - target: {fileID: 3975660438441503957, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438441503957, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438476101078, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94378,6 +94954,18 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: trashCard
       objectReference: {fileID: 0}
+    - target: {fileID: 3975660438482194784, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 843595153}
+    - target: {fileID: 3975660438482194784, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438482194784, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438483147995, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94386,6 +94974,22 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 2083794569}
+    - target: {fileID: 3975660438518335268, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438518335268, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438518335268, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438518335268, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438540239787, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 3
@@ -94486,10 +95090,50 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3975660438690833309, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438690833309, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438690833309, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438690833309, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438697244732, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1567347967}
+    - target: {fileID: 3975660438697244732, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438697244732, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438704426780, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1081830690}
+    - target: {fileID: 3975660438706107799, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 978998863}
+    - target: {fileID: 3975660438706107799, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438706107799, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438735743450, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94578,6 +95222,30 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: trashCard
       objectReference: {fileID: 0}
+    - target: {fileID: 3975660438865898454, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 741295345}
+    - target: {fileID: 3975660438865898454, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438865898454, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438883969470, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 696743021}
+    - target: {fileID: 3975660438883969470, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: resetView
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438883969470, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LoadedHoverCard, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 3975660438890436602, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
@@ -94597,6 +95265,18 @@ PrefabInstance:
     - target: {fileID: 3975660438893110004, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438919776460, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1567347967}
+    - target: {fileID: 3975660438919776460, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ViewCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660438919776460, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerLoadedCardHover, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 3975660438956654296, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -94645,6 +95325,22 @@ PrefabInstance:
     - target: {fileID: 3975660439079440646, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
       value: cycleCard
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660439157584497, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660439157584497, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660439157584497, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3975660439157584497, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -7
       objectReference: {fileID: 0}
     - target: {fileID: 3975660439162571591, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -94829,6 +95525,18 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 6853967675471511707, guid: 53989111815513c41a3163993b3810a5, type: 3}
     - {fileID: 3975660437273336508, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660438140654740, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660437683950640, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660438534196085, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660439071948354, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660438597447626, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660438618924834, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660437218611704, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660439142775524, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660437101802463, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660438964847816, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660438508597386, guid: 53989111815513c41a3163993b3810a5, type: 3}
+    - {fileID: 3975660437552947476, guid: 53989111815513c41a3163993b3810a5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 53989111815513c41a3163993b3810a5, type: 3}
 --- !u!1 &3975660438111221348 stripped
 GameObject:
@@ -95043,8 +95751,8 @@ GameObject:
   - component: {fileID: 3989618277103094452}
   - component: {fileID: 8588524002833841732}
   - component: {fileID: 3278564381638558194}
-  - component: {fileID: 8588524002833841733}
   - component: {fileID: 8588524002833841734}
+  - component: {fileID: 8588524002833841735}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -95063,8 +95771,8 @@ GameObject:
   - component: {fileID: 7329947042470998232}
   - component: {fileID: 5440596109077239122}
   - component: {fileID: 4975229360479189711}
-  - component: {fileID: 7329947042470998233}
   - component: {fileID: 7329947042470998234}
+  - component: {fileID: 7329947042470998235}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -95250,8 +95958,8 @@ GameObject:
   - component: {fileID: 1436026716769491449}
   - component: {fileID: 4787461937815778208}
   - component: {fileID: 619590304503897434}
-  - component: {fileID: 6997485960419392671}
   - component: {fileID: 6997485960419392672}
+  - component: {fileID: 6997485960419392673}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -95259,18 +95967,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &6997485960419392671
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6997485960419392670}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6997485960419392672
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95293,6 +95989,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 402239870}
   vPotion1: {fileID: 967698825}
   vPotion2: {fileID: 379836370}
+--- !u!114 &6997485960419392673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6997485960419392670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7236186977709366208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -95315,18 +96023,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0.000011175871}
   m_SizeDelta: {x: 112.5, y: 157.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7236186977709366209
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 357985115138957816}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7236186977709366210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95349,6 +96045,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 667379163}
   vPotion1: {fileID: 950445661}
   vPotion2: {fileID: 1996741008}
+--- !u!114 &7236186977709366211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357985115138957816}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &7329947042470998232
 RectTransform:
   m_ObjectHideFlags: 0
@@ -95371,18 +96079,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0, y: -0.000011175871}
   m_SizeDelta: {x: 112.5, y: 157.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7329947042470998233
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4401424613343684950}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7329947042470998234
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95405,6 +96101,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 673252830}
   vPotion1: {fileID: 88117074}
   vPotion2: {fileID: 1752554483}
+--- !u!114 &7329947042470998235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4401424613343684950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &7877603901685229318
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -95413,18 +96121,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2394320331589133611}
   m_CullTransparentMesh: 1
---- !u!114 &7877603901685229319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2394320331589133611}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7877603901685229320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95447,6 +96143,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 884301030}
   vPotion1: {fileID: 117611928}
   vPotion2: {fileID: 1495737409}
+--- !u!114 &7877603901685229321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2394320331589133611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!222 &8588524002833841732
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -95455,18 +96163,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4276198317205224553}
   m_CullTransparentMesh: 1
---- !u!114 &8588524002833841733
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4276198317205224553}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8588524002833841734
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95489,6 +96185,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 1249361378}
   vPotion1: {fileID: 32165804}
   vPotion2: {fileID: 1405361823}
+--- !u!114 &8588524002833841735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4276198317205224553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8898653789182682588
 GameObject:
   m_ObjectHideFlags: 0
@@ -95500,8 +96208,8 @@ GameObject:
   - component: {fileID: 688915098155761851}
   - component: {fileID: 6346193464371718882}
   - component: {fileID: 1367814489994773528}
-  - component: {fileID: 8898653789182682589}
   - component: {fileID: 8898653789182682590}
+  - component: {fileID: 8898653789182682591}
   m_Layer: 5
   m_Name: CardDisplay
   m_TagString: Untagged
@@ -95509,18 +96217,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &8898653789182682589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8898653789182682588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8898653789182682590
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95543,6 +96239,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 1178101385}
   vPotion1: {fileID: 1930520957}
   vPotion2: {fileID: 18587989}
+--- !u!114 &8898653789182682591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8898653789182682588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &9083293872726131330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -95565,18 +96273,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000038146973, y: -0.0000111758745}
   m_SizeDelta: {x: 112.5, y: 157.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9083293872726131331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2203842972192241850}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9083293872726131332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95599,6 +96295,18 @@ MonoBehaviour:
   vesselSlot2: {fileID: 253813284}
   vPotion1: {fileID: 123623435}
   vPotion2: {fileID: 215704905}
+--- !u!114 &9083293872726131333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2203842972192241850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &9213095926625135002
 RectTransform:
   m_ObjectHideFlags: 0
@@ -95621,18 +96329,6 @@ RectTransform:
   m_AnchoredPosition: {x: -0, y: 0.000011175871}
   m_SizeDelta: {x: 112.5, y: 157.5}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &9213095926625135003
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2843827781337133076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &9213095926625135004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95655,3 +96351,15 @@ MonoBehaviour:
   vesselSlot2: {fileID: 2123334445}
   vPotion1: {fileID: 1687916535}
   vPotion2: {fileID: 1311416937}
+--- !u!114 &9213095926625135005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2843827781337133076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
