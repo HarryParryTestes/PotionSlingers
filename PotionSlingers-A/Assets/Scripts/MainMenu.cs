@@ -115,8 +115,10 @@ public class MainMenu : MonoBehaviour
 
 	void Start()
     {
-        //numPlayers = 0;
-        playButton = GameObject.Find("PLAY");
+		Screen.fullScreen = true;
+		Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+		//numPlayers = 0;
+		playButton = GameObject.Find("PLAY");
 		//networkManager = GetComponent<MyNetworkManager>();
 
         if (!SteamManager.Initialized) { return; }

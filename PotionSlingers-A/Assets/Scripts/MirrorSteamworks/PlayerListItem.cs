@@ -37,7 +37,7 @@ public class PlayerListItem : MonoBehaviour
 
     public PlayerListItem()
     {
-        playerName = SteamFriends.GetPersonaName();
+        // playerName = SteamFriends.GetPersonaName();
         // something is fucked up about this i gotta figure it out 
         // PlayerNameText.text = MainMenu.menu.greetingName;
     }
