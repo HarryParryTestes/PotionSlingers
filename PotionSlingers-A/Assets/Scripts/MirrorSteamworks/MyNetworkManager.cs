@@ -16,6 +16,10 @@ public class MyNetworkManager : NetworkManager
     public bool quickplay = false;
     public LobbyManager lobbyManager;
     public SteamLobby steamLobby;
+    public GameObject sceneTransition;
+    public GameObject loadingScreen;
+    public GameObject loadingText;
+    public Animator animator;
     /*
     public LobbyManager Manager
     {
@@ -36,6 +40,13 @@ public class MyNetworkManager : NetworkManager
     public List<bool> charBools = new List<bool>();
     public List<string> singlePlayerNames = new List<string>();
     // Start is called before the first frame update
+    public void Start()
+    {
+        // DontDestroyOnLoad the animator controller
+        DontDestroyOnLoad(animator);
+        DontDestroyOnLoad(sceneTransition);
+    }
+
     public void OnStartServer()
     {
         Debug.Log("Starting Server");
@@ -142,23 +153,47 @@ public class MyNetworkManager : NetworkManager
 
             PlayerListItem single = Instantiate(item);
             DontDestroyOnLoad(single.gameObject);
-            singlePlayerNames.Add(single.charName);
+            if(single.charName == "blank")
+            {
+                singlePlayerNames.Add("Bolo");
+            } else
+            {
+                singlePlayerNames.Add(single.charName);
+            }
             // SinglePlayer singleScript = single.AddComponent<SinglePlayer>();
         }
 
+        // make sure you debug this
+        StartCoroutine(LoadLevel());
+
+        // ServerChangeScene("GameScene");
+    }
+
+    public IEnumerator LoadLevel()
+    {
+        animator.SetTrigger("Start");
+        yield return new WaitForSeconds(1);
+        loadingScreen.SetActive(true);
+        loadingText.SetActive(true);
+        animator.SetTrigger("End");
+        yield return new WaitForSeconds(2);
         ServerChangeScene("GameScene");
     }
 
     public void StartGame()
     {
         multiplayer = true;
-        ServerChangeScene("GameScene");
+
+
+        StartCoroutine(LoadLevel());
+        // ServerChangeScene("GameScene");
     }
 
     public void StartTutorial()
     {
         tutorial = true;
-        ServerChangeScene("GameScene");
+        StartCoroutine(LoadLevel());
+        // ServerChangeScene("GameScene");
     }
 
     private bool CanStartGame()

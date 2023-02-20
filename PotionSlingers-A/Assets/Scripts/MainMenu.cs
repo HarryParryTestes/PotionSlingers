@@ -307,7 +307,9 @@ public class MainMenu : MonoBehaviour
 		networkManager.tutorial = true;
         networkManager.multiplayer = false;
 		networkManager.quickplay = false;
-		networkManager.ServerChangeScene("GameScene");
+
+		StartCoroutine(networkManager.LoadLevel());
+		// networkManager.ServerChangeScene("GameScene");
 	}
 
 	public void StartGame()
@@ -315,7 +317,8 @@ public class MainMenu : MonoBehaviour
 		networkManager.multiplayer = true;
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
-		networkManager.ServerChangeScene("GameScene");
+		StartCoroutine(networkManager.LoadLevel());
+		// networkManager.ServerChangeScene("GameScene");
 	}
 
     public void StartSingleplayerGame()
@@ -352,7 +355,9 @@ public class MainMenu : MonoBehaviour
 		networkManager.tutorial = false;
 		networkManager.quickplay = true;
 
-		networkManager.ServerChangeScene("GameScene");
+		StartCoroutine(networkManager.LoadLevel());
+
+		// networkManager.ServerChangeScene("GameScene");
 	}
 
 	public int getNumPlayers() {
