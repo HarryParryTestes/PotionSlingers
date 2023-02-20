@@ -130,7 +130,20 @@ public class MainMenu : MonoBehaviour
         {
 			Debug.Log("Missing network manager");
 			networkManager = GameObject.Find("NetworkManager").GetComponent<MyNetworkManager>();
-        }
+			// add missing references
+			// lobby manager
+			// scene transition
+			// loading screen
+			// loading text
+			// animator
+			networkManager.animator = GameObject.Find("SceneTransition").GetComponent<Animator>();
+			networkManager.sceneTransition = GameObject.Find("SceneTransition");
+			networkManager.loadingScreen = GameObject.Find("LoadingScreen");
+			networkManager.loadingText = GameObject.Find("LOADING");
+			networkManager.lobbyManager = GameObject.Find("OldLobbyMenu").GetComponent<LobbyManager>();
+			
+
+		}
     }
 
 	public void createCPU()

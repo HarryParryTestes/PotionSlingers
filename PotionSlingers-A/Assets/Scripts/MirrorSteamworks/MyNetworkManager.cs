@@ -173,8 +173,11 @@ public class MyNetworkManager : NetworkManager
     {
         animator.SetTrigger("Start");
         yield return new WaitForSeconds(1);
-        loadingScreen.SetActive(true);
-        loadingText.SetActive(true);
+        if(loadingScreen != null && loadingText != null)
+        {
+            loadingScreen.SetActive(true);
+            loadingText.SetActive(true);
+        }
         animator.SetTrigger("End");
         yield return new WaitForSeconds(2);
         ServerChangeScene("GameScene");

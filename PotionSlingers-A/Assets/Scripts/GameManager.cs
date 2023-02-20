@@ -1845,6 +1845,12 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
+            if (dialog.textBoxCounter != 2 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 19)
+            {
+                sendErrorMessage(1);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                return;
+            }
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
                 int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
