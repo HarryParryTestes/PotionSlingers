@@ -140,7 +140,7 @@ public class MainMenu : MonoBehaviour
 			networkManager.sceneTransition = GameObject.Find("SceneTransition");
 			networkManager.loadingScreen = GameObject.Find("LoadingScreen");
 			networkManager.loadingText = GameObject.Find("LOADING");
-			networkManager.lobbyManager = GameObject.Find("OldLobbyMenu").GetComponent<LobbyManager>();
+			// networkManager.lobbyManager = GameObject.Find("OldLobbyMenu").GetComponent<LobbyManager>();
 			
 
 		}

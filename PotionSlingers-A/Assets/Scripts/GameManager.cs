@@ -190,6 +190,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Going back to title menu");
         Game.tutorial = false;
         SteamMatchmaking.LeaveLobby((CSteamID)Game.steamLobby.current_lobbyID);
+        Game.StopHost();
         SceneManager.LoadScene("TitleMenu");
         //Game.ServerChangeScene("TitleMenu");
     }
@@ -1213,6 +1214,12 @@ public class GameManager : MonoBehaviour
             SteamUserStats.GetStat("potions_thrown", out potions);
             SteamUserStats.GetStat("artifacts_used", out artifacts);
             SteamUserStats.GetStat("pips_spent", out pips);
+
+            /*
+            Debug.Log("Potions : " + potions);
+            Debug.Log("Artifacts : " + artifacts);
+            Debug.Log("Pips : " + pips);
+            */
             potions += players[myPlayerIndex].potionsThrown;
             artifacts += players[myPlayerIndex].artifactsUsed;
             pips += players[myPlayerIndex].pipsUsedThisTurn;
