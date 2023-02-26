@@ -20,6 +20,7 @@ public class MyNetworkManager : NetworkManager
     public GameObject loadingScreen;
     public GameObject loadingText;
     public Animator animator;
+    public AnimationHolder canvas;
     /*
     public LobbyManager Manager
     {
@@ -45,6 +46,7 @@ public class MyNetworkManager : NetworkManager
         // DontDestroyOnLoad the animator controller
         DontDestroyOnLoad(animator);
         DontDestroyOnLoad(sceneTransition);
+        DontDestroyOnLoad(loadingScreen);
     }
 
     public void OnStartServer()
@@ -117,6 +119,21 @@ public class MyNetworkManager : NetworkManager
     }
     */
 
+    public void openDiscordLink()
+    {
+        Application.OpenURL("https://discord.gg/xjU69XMZ8W");
+    }
+
+    public void openWebsiteLink()
+    {
+        Application.OpenURL("https://www.potionslingers.com/");
+    }
+
+    public void openRulesLink()
+    {
+        Application.OpenURL("https://www.potionslingers.com/s/Potionslingers-Full-Rules.pdf");
+    }
+
     public void getCharsAndBools()
     {
         // TODO: do this
@@ -171,13 +188,25 @@ public class MyNetworkManager : NetworkManager
 
     public IEnumerator LoadLevel()
     {
+        canvas = GameObject.Find("Canvas").GetComponent<AnimationHolder>();
+
+        loadingScreen = canvas.loadingScreen;
+        loadingText = canvas.loadingText;
+
         animator.SetTrigger("Start");
         yield return new WaitForSeconds(1);
         if(loadingScreen != null && loadingText != null)
         {
             loadingScreen.SetActive(true);
             loadingText.SetActive(true);
+        } 
+        /*
+        else
+        {
+            canvas.loadingScreen.SetActive(true);
+            canvas.loadingText.SetActive(true);
         }
+        */
         animator.SetTrigger("End");
         yield return new WaitForSeconds(2);
         ServerChangeScene("GameScene");

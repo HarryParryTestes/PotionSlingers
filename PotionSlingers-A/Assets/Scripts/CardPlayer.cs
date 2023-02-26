@@ -425,6 +425,9 @@ public class CardPlayer : MonoBehaviour
         // put a potion from the trash to the top of your deck
         if(selectedCard.card.cardName == "Treasure Cloak Map")
         {
+            // add a check to see if a computer player triggered this and don't display the menu
+            // probably just select a random card from the trash
+
             GameManager.manager.numTrashed = 1;
             GameManager.manager.trashDeckBonus = true;
             GameManager.manager.trashDeckMenu.SetActive(true);
@@ -461,6 +464,8 @@ public class CardPlayer : MonoBehaviour
                 {
                     tricks = 0;
                     hpCubes++;
+
+                    // TODO: add success message signifying you did a trick
                 }
                 return damage;
             }
@@ -694,6 +699,8 @@ public class CardPlayer : MonoBehaviour
                     }
                 } else
                 {
+                    // TODO: check for computer player and disable this
+
                     GameManager.manager.numTrashed += 2;
                     GameManager.manager.trashMarketUI.SetActive(true);
                     GameManager.manager.updateTrashMarketMenu();
@@ -819,6 +826,9 @@ public class CardPlayer : MonoBehaviour
                     }
                     return damage;
                 }
+
+                // add a check for a ComputerPlayer component
+
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
                 GameManager.manager.displayOpponentHolster();
             }
@@ -843,6 +853,7 @@ public class CardPlayer : MonoBehaviour
                     }
                 } else
                 {
+                    // add a check for a ComputerPlayer component
                     GameManager.manager.opponentHolsterMenu.SetActive(true);
                     GameManager.manager.displayOpponentHolster();
                 }
@@ -864,6 +875,7 @@ public class CardPlayer : MonoBehaviour
                 }
                 else
                 {
+                    // add a check for a ComputerPlayer component
                     GameManager.manager.opponentHolsterMenu.SetActive(true);
                     GameManager.manager.displayOpponentHolster();
                 }
@@ -926,7 +938,7 @@ public class CardPlayer : MonoBehaviour
             // Put a market card on the top of your deck
             if (selectedCard.card.cardName == "VinylDemijohnofTunesandLibation")
             {
-                // TODO: make this method in GameManager
+                // TODO: check for computer player and check related method in GameManager
                 GameManager.manager.takeMarketMenu.SetActive(true);
                 GameManager.manager.updateTakeMarketMenu();
             }
@@ -1146,6 +1158,7 @@ public class CardPlayer : MonoBehaviour
                     {
                         if(cd.card.cardName == "CherryBomb Badge")
                         {
+                            // they should take 1 damage from CherryBomb Badge
                             subHealth(1);
                         }
                     }
@@ -1177,6 +1190,7 @@ public class CardPlayer : MonoBehaviour
                 return damage;
             }
             
+            // IMPORTANT: use this as template for other implementations of ComputerPlayer logic!!!
             // if they're not a computer player
             if (gameObject.GetComponent<ComputerPlayer>() == null)
             {

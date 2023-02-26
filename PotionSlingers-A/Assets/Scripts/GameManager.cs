@@ -1110,6 +1110,12 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
+            if ((dialog.textBoxCounter != 14 && dialog.textBoxCounter != 25) && dialog.textBoxCounter < 39)
+            {
+                sendErrorMessage(1);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                return;
+            }
             Debug.Log("Tutorial turn ended");
             onStartTurn(cardPlayer);
             if(dialog.textBoxCounter == 24)
@@ -1639,14 +1645,14 @@ public class GameManager : MonoBehaviour
         }
 
         // change this to flipped and not !flipped after you test this
-        if (players[myPlayerIndex].isIsadore && !players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].character.uniqueCardUsed)
+        if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].character.uniqueCardUsed)
         {
             isadoreMenu.SetActive(true);
         } else
         {
             // not able to do action
             // fix this later
-            //sendErrorMessage(13);
+            // sendErrorMessage(13);
         }
 
         if (players[myPlayerIndex].isPluot && players[myPlayerIndex].character.character.flipped)
@@ -1852,7 +1858,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if (dialog.textBoxCounter != 2 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 19)
+            if ((dialog.textBoxCounter != 2 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 19) && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(1);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -1922,6 +1928,7 @@ public class GameManager : MonoBehaviour
                 {
                     // "Can't throw an unloaded Vessel!"
                     //Debug.Log("Vessel Error");
+                    Debug.Log("Did this happen?");
                     sendErrorMessage(2);
                 }
             }
@@ -2443,6 +2450,12 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
+            if ((dialog.textBoxCounter != 5 && dialog.textBoxCounter != 17 && dialog.textBoxCounter != 18) && dialog.textBoxCounter < 39)
+            {
+                sendErrorMessage(12);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                return;
+            }
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
                 // Loading a Vessel:
@@ -2874,6 +2887,12 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
+            if (dialog.textBoxCounter != 30 && dialog.textBoxCounter < 39)
+            {
+                sendErrorMessage(1);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                return;
+            }
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
                 cardPlayer.deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].card);
@@ -2894,6 +2913,7 @@ public class GameManager : MonoBehaviour
                 cardPlayer.deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].card);
                 sendSuccessMessage(7);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                StartCoroutine(waitThreeSeconds(dialog));
             }
             return;
         }
@@ -3697,6 +3717,7 @@ public class GameManager : MonoBehaviour
             if(cp.name == tempPlayer.name)
             {
                 td.addCard(cp.holster.cardList[opponentCardInt - 1].aPotion);
+                // correct this logic in a little bit
             }
         }
     }
@@ -3810,6 +3831,12 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
+            if (dialog.textBoxCounter != 28 && dialog.textBoxCounter < 39)
+            {
+                sendErrorMessage(1);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                return;
+            }
             cardPlayer.addPips(playerHolster.cardList[selectedCardInt - 1].card.sellPrice);
             td.addCard(playerHolster.cardList[selectedCardInt - 1]);
             playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -3909,6 +3936,12 @@ public class GameManager : MonoBehaviour
 
         if (Game.tutorial)
         {
+            if (dialog.textBoxCounter != 22 && dialog.textBoxCounter < 39)
+            {
+                sendErrorMessage(1);
+                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                return;
+            }
             td.addCard(playerHolster.cardList[selectedCardInt - 1]);
             StartCoroutine(waitThreeSeconds(dialog));
             playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
