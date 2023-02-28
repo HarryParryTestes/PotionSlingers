@@ -115,7 +115,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 float height = rt.sizeDelta.y * rt.localScale.y;
 
                 // does taking this line below out change anything big?
-                this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+                // this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
                 // transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
                 transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
@@ -281,6 +281,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             } else
             {
                 // for title menu
+                cardMenu.gameObject.SetActive(false);
                 this.transform.localScale = new Vector3(5f, 5f, 5f);
             }
             this.transform.position = new Vector3 (Screen.width * 0.5f, Screen.height * 0.5f, 0);

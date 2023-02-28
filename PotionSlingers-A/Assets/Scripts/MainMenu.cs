@@ -456,7 +456,7 @@ reuse, recycle!
 
 		// Saltimbocca
 		infoQuotes[5] = "Saltimbocca\nPlaystyle: Strategic\nDifficulty: * *\nProficiency: Thrifting\n\n\n" +
-			"With intimidation and an eye for quality,\nBocca wants the best items and wants them\ncheap. Preferably also sharp, heavy, and\naerodynamic.";
+			"With intimidation and an eye for quality,\nBocca wants the best items and wants 'em\ncheap. Preferably also sharp, heavy, and\naerodynamic.";
 
 		// Scarpetta
 		infoQuotes[6] = "Scarpetta\nPlaystyle:  ? ? ?\nDifficulty: ? ? ?\nProficiency: Trash\n\n\nScarpetta loves trash. While others may\n" +
