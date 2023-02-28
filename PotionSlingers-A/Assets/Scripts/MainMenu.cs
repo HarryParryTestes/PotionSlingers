@@ -440,11 +440,11 @@ reuse, recycle!
 
 		// Isadore
 		infoQuotes[1] = "Isadore\t\tPlaystyle: Aggressive\nDifficulty: * *\tProficiency: Artifacts\nIsadore is a master of artifacts, and is\nextremely" +
-			" versatile with them.\nFlip her to equip her badge, and punish\n     her foes\n     even further!";
+			" versatile with them. Flip her to\nequip her badge, and punish her foes\neven further!";
 
 		//Nickles
 		infoQuotes[2] = "Nickles\t\tPlaystyle: Flexible\nDifficulty: * *\tProficiency: Pips\nNickles can use " +
-            "leftover pips as an extra\nresource. Use his unique item to rustle\nup a couple extra pips to sling or even\n    to spend!";
+            "leftover pips as an extra\nresource. Use his unique item to rustle\nup a couple extra pips to sling or even\nto spend!";
 
 		// Pluot
 		infoQuotes[3] = "Pluot\t\t\tPlaystyle: Aggressive\nDifficulty: *\t\tProficiency: Potions\nPluot's strategy is simple; collect potions\n" +
@@ -459,12 +459,12 @@ reuse, recycle!
 			"With intimidation and an eye for quality,\nBocca wants the best items and wants them\ncheap. Preferably also sharp, heavy, and\naerodynamic.";
 
 		// Scarpetta
-		infoQuotes[6] = "Scarpetta\nPlaystyle:  ? ? ?\nDifficulty: ? ? ?\nProficiency: Trash\n\n\nScarpetta loves trash. When others may\n" +
+		infoQuotes[6] = "Scarpetta\nPlaystyle:  ? ? ?\nDifficulty: ? ? ?\nProficiency: Trash\n\n\nScarpetta loves trash. While others may\n" +
             "scoff at as useless junk, he revels in an\never-increasing pile of treasures. Refuse,\nreuse, recycle!";
 
 		// Sweetbitter
 		infoQuotes[7] = "Sweetbitter\t\tPlaystyle: Technical\nDifficulty: * * * *  Proficiency: Resilience\nSweetbitter has a strange object that\n" +
-            "prevents her from dying. She also has a\nnefarious plan. She just has to collect a\n    few things...";
+            "prevents her from dying. She also has a\nnefarious plan. She just has to collect a\nfew things...";
 
         // Twins
         infoQuotes[8] = "Twins\nPlaystyle: Flexible\nDifficulty: *\nProficiency: Self Healing\n\n\n" +

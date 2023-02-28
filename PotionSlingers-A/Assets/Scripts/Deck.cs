@@ -27,6 +27,10 @@ public class Deck : MonoBehaviour
     public void putCardOnBottom(Card card)
     {
         deckList.Add(card);
+        if(deckList.Count == 1)
+        {
+            updateCardSprite();
+        }
     }
 
     // puts a card on top of deck

@@ -530,7 +530,25 @@ public class GamePlayer : NetworkBehaviour
             if (cp.name == throwerName)
             {
                 int damage = 0;
-                Debug.Log("GameManager Throw Potion");
+                Debug.Log("GameManager RPCThrowCard");
+
+                // if you're saltimbocca and you're flipped
+                if (cp.isSaltimbocca && cp.character.character.flipped)
+                {
+                    damage = cp.holster.cardList[selectedCardInt - 1].card.buyPrice;
+
+                    foreach (CardPlayer cp2 in GameManager.manager.players)
+                    {
+                        if (cp2.name == opponentName)
+                        {
+                            cp2.subHealth(damage);
+                            GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1]);
+                            // maybe add a notif idk
+                            GameManager.manager.sendSuccessMessage(2);
+                            return;
+                        }
+                    }
+                }
 
                 if (cp.holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
                 {

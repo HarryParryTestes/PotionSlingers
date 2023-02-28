@@ -169,7 +169,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             clicked = true;
                             transform.localScale = cachedScale;
                             gameObject.transform.position = originalPos;
-                            cardMenu.gameObject.SetActive(true);
+
+                            // prevents the eye from popping up when viewing the top card of the deck
+                            if(this.gameObject.name != "DeckPile")
+                                cardMenu.gameObject.SetActive(true);
                             // you added this in as a funny haha like what would happen type of thing
                             // Debug.Log(originalPos);
                             // THIS IS IMPORTANT
