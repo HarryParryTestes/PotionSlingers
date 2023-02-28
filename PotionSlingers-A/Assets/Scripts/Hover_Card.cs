@@ -15,18 +15,19 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     // canHover is public static because if not static, other cards can be hovered
     // over while a card is clicked and attached to cursor.
-    public static bool canHover = true; // Determines if cards can be hovered over.
-    public static bool clicked = false; // Determines if cards can be clicked.
+    public bool canHover = true; // Determines if cards can be hovered over.
+    public bool clicked = false; // Determines if cards can be clicked.
 
     Transform cardMenu;
     Transform viewCardMenu;
     Transform specialCardMenu;
     Transform highlighted;
+    GameObject holster;
     GameObject parentObject;
     GameObject attackMenu;
     GameObject viewingCardObject;
-    bool cardSelected = false;
-    public static bool viewingCard = false;
+    public bool cardSelected = false;
+    public bool viewingCard = false;
     //public GameObject exitMenu;
 
     // On startup:
@@ -38,6 +39,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         originalRotation = this.transform.localRotation;
 
         parentObject = this.transform.parent.gameObject;
+        holster = this.transform.parent.transform.parent.gameObject;
         cardMenu = this.transform.Find("CardMenu");
         viewCardMenu = this.transform.Find("ViewCardMenu");
         specialCardMenu = this.transform.Find("SpecialCardMenu");
@@ -95,6 +97,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             float width = rt.sizeDelta.x * rt.localScale.x;
             float height = rt.sizeDelta.y * rt.localScale.y;
+            // does taking this line below out change anything big?
             this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
             transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
@@ -110,8 +113,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             if(canHover) {
                 float width = rt.sizeDelta.x * rt.localScale.x;
                 float height = rt.sizeDelta.y * rt.localScale.y;
+
+                // does taking this line below out change anything big?
                 this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
-                //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
+                // transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
                 transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
 
@@ -153,9 +158,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             transform.localScale = cachedScale;
                             gameObject.transform.position = originalPos;
                             specialCardMenu.gameObject.SetActive(true);
+                            // just set these false for now I'm not worrying about the highlight rn
                             if (SceneManager.GetActiveScene().name != "TitleMenu")
                             {
-                                highlighted.gameObject.SetActive(true);
+                                highlighted.gameObject.SetActive(false);
                             }
                         } else
                         {
@@ -164,11 +170,16 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             transform.localScale = cachedScale;
                             gameObject.transform.position = originalPos;
                             cardMenu.gameObject.SetActive(true);
+                            // you added this in as a funny haha like what would happen type of thing
+                            // Debug.Log(originalPos);
+                            // THIS IS IMPORTANT
+                            ViewCard();
+                            // just set these false for now I'm not worrying about the highlight rn
                             if (SceneManager.GetActiveScene().name != "TitleMenu")
                             {
                                 if( highlighted != null)
                                 {
-                                    highlighted.gameObject.SetActive(true);
+                                    highlighted.gameObject.SetActive(false);
                                 }
                             }
                         } 
@@ -183,25 +194,37 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 }
             }
             else if(clicked && cardSelected) {
+
+                /*
+                 * This is code that triggers when you click to make it go back to original scale
+                 * Check the card menus and make sure to modify it correctly
+                 */
+
                 clicked = false;
                 cardSelected = false;
                 canHover = true;
                 transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 cardMenu.gameObject.SetActive(false);
-                if(specialCardMenu != null)
-                {
-                    specialCardMenu.gameObject.SetActive(false);
-                }  
+                gameObject.transform.position = originalPos;
+                // you added this in as a funny haha like what would happen type of thing
                 if (SceneManager.GetActiveScene().name != "TitleMenu")
                 {
-                    if(highlighted != null)
+                    if (highlighted != null)
                     {
                         highlighted.gameObject.SetActive(false);
                     }
                 }
+                if (specialCardMenu != null)
+                {
+                    specialCardMenu.gameObject.SetActive(false);
+                }
+                resetView();
+                
+                
                 //viewCardMenu.gameObject.SetActive(false);
                 //exitMenu.SetActive(false);
             }
+            // Debug.Log(this.transform.parent.gameObject.name);
         }
     }
  
@@ -227,7 +250,8 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void ViewCard() {
         viewingCard = true;
         if(cardSelected) {
-            cardMenu.gameObject.SetActive(false);
+            // you added this in to change how clicking on a card now brings up the menu
+            // cardMenu.gameObject.SetActive(false);
             if(specialCardMenu != null)
             {
                 // solves null reference exception
@@ -235,8 +259,12 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
             // let's try this
             this.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+            Debug.Log(parentObject.name);
             this.transform.SetParent(viewingCardObject.transform);
+            Debug.Log(parentObject.name);
             this.transform.localRotation = Quaternion.identity;
+            Debug.Log(this.transform.parent.gameObject.name);
+            Debug.Log(parentObject.name);
             if (SceneManager.GetActiveScene().name != "TitleMenu")
             {
                 // for game scene
@@ -253,15 +281,20 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 this.transform.localScale = new Vector3(5f, 5f, 5f);
             }
             this.transform.position = new Vector3 (Screen.width * 0.5f, Screen.height * 0.5f, 0);
-            viewCardMenu.gameObject.SetActive(true);
+            // take this out to prevent the red X from popping up
+            // viewCardMenu.gameObject.SetActive(true);
             this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);
+            // Debug.Log(originalPos);
         }
     }
 
-    public void resetView() {
+    public void resetView()
+    {
+        // canHover = true;
         viewingCard = false;
         viewCardMenu.gameObject.SetActive(false);
-        if(cardSelected) {
+        if (cardSelected)
+        {
             clicked = false;
             cardSelected = false;
             this.transform.SetParent(parentObject.transform);
@@ -271,6 +304,36 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             canHover = true;
             if (SceneManager.GetActiveScene().name != "TitleMenu")
             {
+                if (highlighted != null)
+                {
+                    highlighted.gameObject.SetActive(false);
+                }
+            }
+            //highlighted.gameObject.SetActive(false);
+        }
+        // canHover = false;
+    }
+
+    /*
+    public void resetView() {
+        canHover = true;
+        viewingCard = false;
+        viewCardMenu.gameObject.SetActive(false);
+        if(cardSelected) {
+            transform.localScale = cachedScale;
+            gameObject.transform.position = originalPos;
+            // the parent object is being overwritten and you need to set it back to the holster
+            parentObject = this.transform.parent.gameObject;
+            this.transform.SetParent(parentObject.transform);
+            this.transform.localRotation = Quaternion.identity;
+            transform.localScale = cachedScale;
+            gameObject.transform.position = originalPos;
+            clicked = false;
+            cardSelected = false; 
+            // canHover = false;
+
+            if (SceneManager.GetActiveScene().name != "TitleMenu")
+            {
                 if(highlighted != null)
                 {
                     highlighted.gameObject.SetActive(false);
@@ -278,7 +341,11 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             }
             //highlighted.gameObject.SetActive(false);
         }
+        canHover = false;
+        viewingCard = false;
+        Debug.Log(originalPos);
     }
+    */
 
     public void resetCard() {
         canHover = true;
