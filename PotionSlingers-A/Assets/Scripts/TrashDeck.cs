@@ -35,6 +35,24 @@ public class TrashDeck : MonoBehaviour
     public void changeTrashBool()
     {
         trash = !trash;
+
+        Market_Hover m1 = cd1.gameObject.GetComponent<Market_Hover>();
+        m1.viewCardMenu.gameObject.SetActive(false);
+        m1.cardMenu.gameObject.SetActive(false);
+        m1.onlyViewCardMenu.gameObject.SetActive(false);
+        m1.scarpettaMenu.gameObject.SetActive(false);
+
+        Market_Hover m2 = cd2.gameObject.GetComponent<Market_Hover>();
+        m2.viewCardMenu.gameObject.SetActive(false);
+        m2.cardMenu.gameObject.SetActive(false);
+        m2.onlyViewCardMenu.gameObject.SetActive(false);
+        m2.scarpettaMenu.gameObject.SetActive(false);
+
+        Market_Hover m3 = cd3.gameObject.GetComponent<Market_Hover>();
+        m3.viewCardMenu.gameObject.SetActive(false);
+        m3.cardMenu.gameObject.SetActive(false);
+        m3.onlyViewCardMenu.gameObject.SetActive(false);
+        m3.scarpettaMenu.gameObject.SetActive(false);
     }
 
     public void addCard(CardDisplay cd)

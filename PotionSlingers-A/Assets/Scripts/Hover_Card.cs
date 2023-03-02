@@ -15,8 +15,8 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
     // canHover is public static because if not static, other cards can be hovered
     // over while a card is clicked and attached to cursor.
-    public bool canHover = true; // Determines if cards can be hovered over.
-    public bool clicked = false; // Determines if cards can be clicked.
+    public static bool canHover = true; // Determines if cards can be hovered over.
+    public static bool clicked = false; // Determines if cards can be clicked.
 
     Transform cardMenu;
     Transform viewCardMenu;
@@ -27,7 +27,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     GameObject attackMenu;
     GameObject viewingCardObject;
     public bool cardSelected = false;
-    public bool viewingCard = false;
+    public static bool viewingCard = false;
     //public GameObject exitMenu;
 
     // On startup:

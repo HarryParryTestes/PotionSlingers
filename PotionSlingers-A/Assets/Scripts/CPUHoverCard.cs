@@ -162,7 +162,7 @@ public class CPUHoverCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                             specialCardMenu.gameObject.SetActive(true);
                             if (SceneManager.GetActiveScene().name != "TitleMenu")
                             {
-                                highlighted.gameObject.SetActive(true);
+                                highlighted.gameObject.SetActive(false);
                             }
                         }
                         else
@@ -171,12 +171,14 @@ public class CPUHoverCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                             clicked = true;
                             transform.localScale = cachedScale;
                             gameObject.transform.position = originalPos;
-                            cardMenu.gameObject.SetActive(true);
+                            // THIS IS IMPORTANT
+                            ViewCard();
+                            // cardMenu.gameObject.SetActive(true);
                             if (SceneManager.GetActiveScene().name != "TitleMenu")
                             {
                                 if (highlighted != null)
                                 {
-                                    highlighted.gameObject.SetActive(true);
+                                    highlighted.gameObject.SetActive(false);
                                 }
                             }
                         }
@@ -192,6 +194,10 @@ public class CPUHoverCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             }
             else if (clicked && cardSelected)
             {
+                // Debug.Log("So that happened!!!");
+                resetView();
+                return;
+
                 clicked = false;
                 cardSelected = false;
                 canHover = true;
@@ -208,8 +214,10 @@ public class CPUHoverCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                         highlighted.gameObject.SetActive(false);
                     }
                 }
+                
                 //viewCardMenu.gameObject.SetActive(false);
                 //exitMenu.SetActive(false);
+
             }
         }
     }
@@ -267,13 +275,15 @@ public class CPUHoverCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                 this.transform.localScale = new Vector3(5f, 5f, 5f);
             }
             this.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
-            viewCardMenu.gameObject.SetActive(true);
+            // taking this out should disbable the red X on the cards, just uncomment it if you want it back
+            // viewCardMenu.gameObject.SetActive(true);
             this.transform.Rotate(0.0f, 0.0f, 0.0f, Space.Self);
         }
     }
 
     public void resetView()
     {
+        // Debug.Log("So this happened");
         viewingCard = false;
         viewCardMenu.gameObject.SetActive(false);
         if (cardSelected)
