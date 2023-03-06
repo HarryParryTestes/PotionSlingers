@@ -18,6 +18,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public static bool canHover = true; // Determines if cards can be hovered over.
     public static bool clicked = false; // Determines if cards can be clicked.
 
+    public Animator animator;
     Transform cardMenu;
     Transform viewCardMenu;
     Transform specialCardMenu;
@@ -98,7 +99,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             float width = rt.sizeDelta.x * rt.localScale.x;
             float height = rt.sizeDelta.y * rt.localScale.y;
             // does taking this line below out change anything big?
-            this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+            // this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
             transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
@@ -158,6 +159,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             transform.localScale = cachedScale;
                             gameObject.transform.position = originalPos;
                             specialCardMenu.gameObject.SetActive(true);
+                            ViewCard();
                             // just set these false for now I'm not worrying about the highlight rn
                             if (SceneManager.GetActiveScene().name != "TitleMenu")
                             {
@@ -255,19 +257,14 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         if(cardSelected) {
             // you added this in to change how clicking on a card now brings up the menu
             // cardMenu.gameObject.SetActive(false);
-            if(specialCardMenu != null)
-            {
-                // solves null reference exception
-                specialCardMenu.gameObject.SetActive(false);
-            }
             // let's try this
             this.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
-            Debug.Log(parentObject.name);
+            // Debug.Log(parentObject.name);
             this.transform.SetParent(viewingCardObject.transform);
-            Debug.Log(parentObject.name);
+            // Debug.Log(parentObject.name);
             this.transform.localRotation = Quaternion.identity;
-            Debug.Log(this.transform.parent.gameObject.name);
-            Debug.Log(parentObject.name);
+            // Debug.Log(this.transform.parent.gameObject.name);
+            // Debug.Log(parentObject.name);
             if (SceneManager.GetActiveScene().name != "TitleMenu")
             {
                 // for game scene
@@ -292,11 +289,27 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         }
     }
 
+    /*
+    public IEnumerator cardAnimation()
+    {
+        animator.SetTrigger("Start");
+        yield return new WaitForSeconds(2);
+    }
+    */
+
     public void resetView()
     {
+        this.transform.SetParent(parentObject.transform);
+        transform.localScale = cachedScale;
+        gameObject.transform.position = originalPos;
         // canHover = true;
         viewingCard = false;
         viewCardMenu.gameObject.SetActive(false);
+        if (specialCardMenu != null)
+        {
+            // solves null reference exception
+            specialCardMenu.gameObject.SetActive(false);
+        }
         if (cardSelected)
         {
             clicked = false;
@@ -359,7 +372,8 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         gameObject.transform.position = originalPos;
         clicked = false;
         cardSelected = false;
-        highlighted.gameObject.SetActive(false);
+        if(highlighted != null)
+            highlighted.gameObject.SetActive(false);
     }
 
     public void ChooseAttackPlayer() {

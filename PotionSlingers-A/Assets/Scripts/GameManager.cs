@@ -3159,14 +3159,14 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay1.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
                         // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetView();
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                     }
                     else
                     {
                         sendErrorMessage(6);
-                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                        md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetView();
                     }
                     break;
                 case 2:

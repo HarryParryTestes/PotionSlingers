@@ -109,7 +109,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             float width = rt.sizeDelta.x * rt.localScale.x;
             float height = rt.sizeDelta.y * rt.localScale.y;
-            this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+            // this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
             transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
@@ -128,7 +128,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             {
                 float width = rt.sizeDelta.x * rt.localScale.x;
                 float height = rt.sizeDelta.y * rt.localScale.y;
-                this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+                // this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
                 //transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
                     transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
                 // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
@@ -262,11 +262,13 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                         if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "BottleRocket")
                         {
                             Debug.Log("Bottle Rocket Menu");
+
                             canHover = false;
                             clicked = true;
                             transform.localScale = cachedScale;
                             gameObject.transform.position = originalPos;
-                            specialCardMenu.gameObject.SetActive(true);
+                            // specialCardMenu.gameObject.SetActive(true);
+                            ViewCard();
                             if (SceneManager.GetActiveScene().name != "TitleMenu")
                             {
                                 highlighted.gameObject.SetActive(false);
@@ -391,6 +393,9 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void resetView()
     {
+        this.transform.SetParent(parentObject.transform);
+        transform.localScale = cachedScale;
+        gameObject.transform.position = originalPos;
         // Debug.Log("So this happened");
         canHover = true;
         viewingCard = false;
