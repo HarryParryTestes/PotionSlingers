@@ -34,6 +34,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject damageAmount;
     public GameObject healSign;
     public GameObject healAmount;
+    private System.Random rng = new System.Random();
 
 
     // TODO: Refactor methods that use UniqueCard and replace them all with Card
@@ -222,6 +223,19 @@ public class CardPlayer : MonoBehaviour
             if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
             {
                 doubleRingBonus = true;
+            }
+
+            // check for gambling ring
+            if (cd.card.cardName == "RingofGamblingMopoji" && GameManager.manager.players[GameManager.manager.myPlayerIndex].pipsUsedThisTurn == 0)
+            {
+                Debug.Log("It's gambling time...");
+                GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount = rng.Next(1, 11);
+                if (GameManager.manager.players[GameManager.manager.myPlayerIndex].doubleRingBonus)
+                {
+                    Debug.Log("Double ring bonus");
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount *= 2;
+                }
+                Debug.Log("New pip count: " + GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount);
             }
         }
 
