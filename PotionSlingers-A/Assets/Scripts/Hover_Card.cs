@@ -19,7 +19,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public static bool clicked = false; // Determines if cards can be clicked.
 
     public Animator animator;
-    Transform cardMenu;
+    public Transform cardMenu;
     Transform viewCardMenu;
     Transform specialCardMenu;
     Transform highlighted;

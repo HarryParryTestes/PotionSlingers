@@ -64,6 +64,7 @@ public class GameManager : MonoBehaviour
     public GameObject scarpettaMenu;
     public GameObject shieldMenu;
     public GameObject bubbleWandMenu;
+    public GameObject chooseOpponentMenu;
 
     public TMPro.TextMeshProUGUI trashText;
 
@@ -690,7 +691,7 @@ public class GameManager : MonoBehaviour
             }
         }
         // this should make it not trigger every turn
-        if (player.isPluot && player.name == currentPlayerName)
+        if (player.isPluot && player.name == currentPlayerName && player.gameObject.GetComponent<ComputerPlayer>() == null)
         {
             if (Game.multiplayer)
             {
@@ -1110,7 +1111,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if ((dialog.textBoxCounter != 14 && dialog.textBoxCounter != 25) && dialog.textBoxCounter < 39)
+            if ((dialog.textBoxCounter != 14 && dialog.textBoxCounter != 24) && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(1);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -1858,7 +1859,8 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if ((dialog.textBoxCounter != 2 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 19) && dialog.textBoxCounter < 39)
+            if ((dialog.textBoxCounter != 2 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 17
+                && dialog.textBoxCounter != 18 && dialog.textBoxCounter != 19) && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(1);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -2442,10 +2444,45 @@ public class GameManager : MonoBehaviour
         starterPotion = true;
     }
 
+    public void preLoadPotion()
+    {
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
+        {
+            Debug.Log("Not a potion, ERROR");
+            sendErrorMessage(17);
+            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
+
+        } else
+        {
+            loadMenu.SetActive(true);
+            displayPotions();
+        }
+    }
+
+    public void preThrowPotion()
+    {
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion" &&
+            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Artifact" &&
+            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Vessel")
+        {
+            Debug.Log("Throwing ring, ERROR");
+            sendErrorMessage(16);
+            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
+
+        }
+        else
+        {
+            chooseOpponentMenu.SetActive(true);
+            displayOpponents();
+        }
+    }
+
     // LOAD REQUEST (DONE - 2 clients)
     public void loadPotion()
     {
         Debug.Log("Load Potion");
+
+        
 
         // TUTORIAL LOGIC
         if (Game.tutorial)
