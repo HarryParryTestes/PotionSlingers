@@ -843,8 +843,19 @@ public class CardPlayer : MonoBehaviour
 
                 // add a check for a ComputerPlayer component
 
-                GameManager.manager.opponentHolsterMenu.SetActive(true);
-                GameManager.manager.displayOpponentHolster();
+                // if they're not a computer player
+                if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+                    && gameObject.GetComponent<ComputerPlayer>() == null)
+                {
+                    GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    GameManager.manager.displayOpponentHolster();
+                }
+                else
+                {
+                    // maybe do something for computer
+                }
+
+                
             }
         }
 
@@ -868,8 +879,21 @@ public class CardPlayer : MonoBehaviour
                 } else
                 {
                     // add a check for a ComputerPlayer component
-                    GameManager.manager.opponentHolsterMenu.SetActive(true);
-                    GameManager.manager.displayOpponentHolster();
+
+                    // if they're not a computer player
+                    if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+                        && gameObject.GetComponent<ComputerPlayer>() == null)
+                    {
+                        GameManager.manager.opponentHolsterMenu.SetActive(true);
+                        GameManager.manager.displayOpponentHolster();
+                    }
+                    else
+                    {
+                        // maybe do something for computer
+                    }
+
+                    // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    // GameManager.manager.displayOpponentHolster();
                 }
             }
 
@@ -890,8 +914,20 @@ public class CardPlayer : MonoBehaviour
                 else
                 {
                     // add a check for a ComputerPlayer component
-                    GameManager.manager.opponentHolsterMenu.SetActive(true);
-                    GameManager.manager.displayOpponentHolster();
+
+                    // if they're not a computer player
+                    if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+                        && gameObject.GetComponent<ComputerPlayer>() == null)
+                    {
+                        GameManager.manager.opponentHolsterMenu.SetActive(true);
+                        GameManager.manager.displayOpponentHolster();
+                    }
+                    else
+                    {
+                        // maybe do something for computer
+                    }
+                    // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    // GameManager.manager.displayOpponentHolster();
                 }
             }
         }
@@ -953,8 +989,19 @@ public class CardPlayer : MonoBehaviour
             if (selectedCard.card.cardName == "VinylDemijohnofTunesandLibation")
             {
                 // TODO: check for computer player and check related method in GameManager
-                GameManager.manager.takeMarketMenu.SetActive(true);
-                GameManager.manager.updateTakeMarketMenu();
+
+                // if they're not a computer player
+                if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+                    && gameObject.GetComponent<ComputerPlayer>() == null)
+                {
+                    GameManager.manager.takeMarketMenu.SetActive(true);
+                    GameManager.manager.updateTakeMarketMenu();
+                }
+                else
+                {
+                    // maybe do something for computer
+                }
+                
             }
         }
 
@@ -1206,15 +1253,19 @@ public class CardPlayer : MonoBehaviour
             
             // IMPORTANT: use this as template for other implementations of ComputerPlayer logic!!!
             // if they're not a computer player
-            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+                && gameObject.GetComponent<ComputerPlayer>() == null)
             {
+                Debug.Log("No computer players?");
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
                 GameManager.manager.displayOpponentHolster();
             } else
             {
                 // make computer choose random player maybe?
                 // I'll figure it out, it's just calling a ComputerPlayer method
+                Debug.Log("Computer player detected");
 
+                // TODO: Add method that trashes one random card from ComputerPlayer's holster
             }
             
         }
@@ -1249,7 +1300,8 @@ public class CardPlayer : MonoBehaviour
             // make menu in UI with opponent's holster, we're gonna need this for multiple cards anyways
 
             // if they're not a computer player
-            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+                && gameObject.GetComponent<ComputerPlayer>() == null)
             {
                 GameManager.manager.replaceStarter = true;
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
@@ -1310,7 +1362,8 @@ public class CardPlayer : MonoBehaviour
                 return damage;
             }
             // if they're not a computer player
-            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+                && gameObject.GetComponent<ComputerPlayer>() == null)
             {
                 GameManager.manager.starterPotionMenu.SetActive(true);
             }
@@ -1324,7 +1377,8 @@ public class CardPlayer : MonoBehaviour
             selectedCard.card.cardName == "ANaggingFeeling")
         {
             // if they're not a computer player
-            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+                && gameObject.GetComponent<ComputerPlayer>() == null)
             {
                 // GameManager method
                 GameManager.manager.numTrashed = 1;
