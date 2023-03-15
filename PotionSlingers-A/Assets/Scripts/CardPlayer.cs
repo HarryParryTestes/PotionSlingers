@@ -364,6 +364,7 @@ public class CardPlayer : MonoBehaviour
             if(card.card.cardName == "placeholder")
             {
                 card.updateCard(uniqueCards[2]);
+                GameManager.manager.sendSuccessMessage(19);
                 return;
             }
         }

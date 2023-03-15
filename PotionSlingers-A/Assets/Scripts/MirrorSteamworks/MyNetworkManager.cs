@@ -21,6 +21,8 @@ public class MyNetworkManager : NetworkManager
     public GameObject loadingText;
     public Animator animator;
     public AnimationHolder canvas;
+    public Texture2D texture;
+    public Texture2D texture2;
     /*
     public LobbyManager Manager
     {
@@ -44,9 +46,21 @@ public class MyNetworkManager : NetworkManager
     public void Start()
     {
         // DontDestroyOnLoad the animator controller
+        Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
         DontDestroyOnLoad(animator);
         DontDestroyOnLoad(sceneTransition);
         DontDestroyOnLoad(loadingScreen);
+    }
+
+    public void Update()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            Cursor.SetCursor(texture2, Vector2.zero, CursorMode.Auto);
+        } else
+        {
+            Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
+        }
     }
 
     public void OnStartServer()

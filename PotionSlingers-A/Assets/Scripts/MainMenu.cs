@@ -12,6 +12,9 @@ public class MainMenu : MonoBehaviour
     public TMPro.TextMeshProUGUI greeting;
     public string greetingName;
 
+	public Texture2D texture;
+	public Texture2D texture2;
+
 	public int numPlayers;
 	public bool flippable = false;
     private bool privacy = false;
@@ -103,18 +106,19 @@ public class MainMenu : MonoBehaviour
 	public List<string> infoQuotes;
 	public List<UniqueCard> uniqueCards;
 
-
-    void Awake()
+	void Awake()
     {
-        menu = this;
+		// Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
+		menu = this;
         //DontDestroyOnLoad(gameObject);
         if (!SteamManager.Initialized) { return; }
         greetingName = SteamFriends.GetPersonaName().ToString();
-        greeting.text = "HELLO, "+ greetingName;
+        greeting.text = "Hello, "+ greetingName;
     }
 
 	void Start()
     {
+		// Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
 		Screen.fullScreen = true;
 		Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
 		//numPlayers = 0;

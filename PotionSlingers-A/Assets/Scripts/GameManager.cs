@@ -265,11 +265,11 @@ public class GameManager : MonoBehaviour
 
             // this should fix things
             numPlayers = Game.numPlayers;
-            initDecks();
-            md1.shuffle();
-            md1.initCardDisplays();
-            md2.shuffle();
-            md2.initCardDisplays();
+            // initDecks();
+            // md1.shuffle();
+            // md1.initCardDisplays();
+            // md2.shuffle();
+            // md2.initCardDisplays();
 
             if (Game.numPlayers == 2)
             {
@@ -356,8 +356,6 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Number of players on network: " + Game.GamePlayers.Count);
 
-        initDecks();
-
         foreach(GamePlayer gp in Game.GamePlayers)
         {
             Debug.Log(gp.playerName);
@@ -383,6 +381,8 @@ public class GameManager : MonoBehaviour
         }
 
         // END OF TUTORIAL SETUP
+
+        initDecks();
 
         if (Game.GamePlayers.Count == 2)
         {
@@ -1113,7 +1113,7 @@ public class GameManager : MonoBehaviour
         {
             if ((dialog.textBoxCounter != 14 && dialog.textBoxCounter != 24) && dialog.textBoxCounter < 39)
             {
-                sendErrorMessage(1);
+                sendErrorMessage(18);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
@@ -1727,7 +1727,7 @@ public class GameManager : MonoBehaviour
         {
             yield break;
         }
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         dialog.textBoxCounter++;
         if (dialog.textBoxCounter == 3)
         {
@@ -1862,7 +1862,7 @@ public class GameManager : MonoBehaviour
             if ((dialog.textBoxCounter != 2 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 17
                 && dialog.textBoxCounter != 18 && dialog.textBoxCounter != 19) && dialog.textBoxCounter < 39)
             {
-                sendErrorMessage(1);
+                sendErrorMessage(19);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
@@ -2926,7 +2926,7 @@ public class GameManager : MonoBehaviour
         {
             if (dialog.textBoxCounter != 30 && dialog.textBoxCounter < 39)
             {
-                sendErrorMessage(1);
+                sendErrorMessage(19);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
@@ -3181,7 +3181,7 @@ public class GameManager : MonoBehaviour
                 dialog.textBoxCounter != 24) && dialog.textBoxCounter < 38)
             {
                 Debug.Log("You weren't supposed to do that, add UI for tutorial error");
-                sendErrorMessage(1);
+                sendErrorMessage(19);
                 return;
             }
             switch (md1.cardInt)
@@ -3470,7 +3470,18 @@ public class GameManager : MonoBehaviour
     public void bottomMarketBuy()
     {
         Debug.Log("Bottom Market Buy");
-        if (Game.multiplayer)
+
+        if (Game.tutorial)
+        {
+            if (dialog.textBoxCounter < 38)
+            {
+                Debug.Log("You weren't supposed to do that, add UI for tutorial error");
+                sendErrorMessage(19);
+                return;
+            }
+        }
+
+            if (Game.multiplayer)
         {
             foreach (GamePlayer gp in Game.GamePlayers)
             {
@@ -3870,7 +3881,7 @@ public class GameManager : MonoBehaviour
         {
             if (dialog.textBoxCounter != 28 && dialog.textBoxCounter < 39)
             {
-                sendErrorMessage(1);
+                sendErrorMessage(19);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
@@ -3975,7 +3986,7 @@ public class GameManager : MonoBehaviour
         {
             if (dialog.textBoxCounter != 22 && dialog.textBoxCounter < 39)
             {
-                sendErrorMessage(1);
+                sendErrorMessage(19);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
@@ -4101,7 +4112,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator waitThreeSeconds(GameObject gameObj)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         gameObj.SetActive(false);
     }
 
