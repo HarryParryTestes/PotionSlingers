@@ -1682,7 +1682,10 @@ public class CardPlayer : MonoBehaviour
                 {
                     // do achievement check in here
                     // you probably want to make new UI for this so this is placeholder stuff
-                    GameManager.manager.pauseUI.SetActive(true);
+
+                    // hold on partner! don't do this yet
+                    // GameManager.manager.pauseUI.SetActive(true);
+                    GameManager.manager.dialog.endTutorialDialog();
                 }
             }
         }

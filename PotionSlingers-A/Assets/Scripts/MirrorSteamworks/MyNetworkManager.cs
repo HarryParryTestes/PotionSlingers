@@ -14,6 +14,7 @@ public class MyNetworkManager : NetworkManager
     public bool tutorial = false;
     public bool multiplayer = false;
     public bool quickplay = false;
+    public bool completedTutorial = false;
     public LobbyManager lobbyManager;
     public SteamLobby steamLobby;
     public GameObject sceneTransition;
@@ -45,11 +46,21 @@ public class MyNetworkManager : NetworkManager
     // Start is called before the first frame update
     public void Start()
     {
-        // DontDestroyOnLoad the animator controller
+
         Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
         DontDestroyOnLoad(animator);
         DontDestroyOnLoad(sceneTransition);
         DontDestroyOnLoad(loadingScreen);
+    }
+
+    public void checkCompletedTutorial()
+    {
+        // DontDestroyOnLoad the animator controller
+        if (completedTutorial)
+        {
+            Debug.Log("Completed Tutorial!");
+            // TODO: do achievement check in here once you make it in Steamworks
+        }
     }
 
     public void Update()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public class Dialog : MonoBehaviour, IPointerDownHandler
 {
@@ -14,8 +15,22 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
     public int textBoxCounter = 0;
     public int textIndex = 0;
     public bool scrolling = false;
+    public bool endDialog = false;
     public GameObject arrow;
 
+
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
 
 
     void Start()
@@ -69,6 +84,22 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             textSpeed = 0.001f;
             return;
         }
+
+        if (endDialog)
+        {
+            /*
+            textInfo = "In each game of Potion Slingers, each player starts with the\nsame starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a\nfancy ring at the top of your deck!\n\n"
+                + "Try throwing a starter potion at me! Take your best shot!";
+            ActivateText(dialogBox);
+            GameManager.manager.pauseUI.SetActive(true);
+            */
+
+            // bye bye
+            // Debug.Log("Ending tutorial?");
+            SceneManager.LoadScene("TitleMenu");
+            return;
+        }
+
         textBoxCounter++;
         if (textBoxCounter == 1)
         {
@@ -242,6 +273,16 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    public void endTutorialDialog()
+    {
+        endDialog = true;
+        Game.completedTutorial = true;
+        this.gameObject.SetActive(true);
+        textInfo = "Congratulations! You have completed the tutorial!\n" +
+            "What do we do after this?";
+        ActivateText(dialogBox);
+    }
+
     public void OnPointerDown(PointerEventData pointerEventData)
     {
         arrow.SetActive(false);
@@ -251,6 +292,24 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             return;
         }
         textBoxCounter++;
+
+
+        if (endDialog)
+        {
+            /*
+            textInfo = "In each game of Potion Slingers, each player starts with the\nsame starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a\nfancy ring at the top of your deck!\n\n"
+                + "Try throwing a starter potion at me! Take your best shot!";
+            ActivateText(dialogBox);
+            GameManager.manager.pauseUI.SetActive(true);
+            */
+
+            // bye bye
+            // Debug.Log("Ending tutorial?");
+            SceneManager.LoadScene("TitleMenu");
+            return;
+        }
+
+
         if(textBoxCounter == 1)
         {
             textInfo = "In each game of Potion Slingers, each player starts with the\nsame starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a\nfancy ring at the top of your deck!\n\n"

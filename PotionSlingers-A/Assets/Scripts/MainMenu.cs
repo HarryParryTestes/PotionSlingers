@@ -134,6 +134,8 @@ public class MainMenu : MonoBehaviour
         {
 			Debug.Log("Missing network manager");
 			networkManager = GameObject.Find("NetworkManager").GetComponent<MyNetworkManager>();
+
+			networkManager.checkCompletedTutorial();
 			// add missing references
 			// lobby manager
 			// scene transition

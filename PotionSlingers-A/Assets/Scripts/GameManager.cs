@@ -2954,6 +2954,7 @@ public class GameManager : MonoBehaviour
             {
                 cardPlayer.subPips(1);
                 cardPlayer.deck.putCardOnBottom(playerHolster.cardList[selectedCardInt - 1].card);
+                playerHolster.cardList[selectedCardInt - 1].updateCard(playerHolster.card1.placeholder);
                 sendSuccessMessage(7);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 StartCoroutine(waitThreeSeconds(dialog));
