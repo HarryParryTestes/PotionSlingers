@@ -54,6 +54,7 @@ public class MyNetworkManager : NetworkManager
 
     public void Update()
     {
+        /*
         if (Input.GetMouseButton(0))
         {
             Cursor.SetCursor(texture2, Vector2.zero, CursorMode.Auto);
@@ -61,6 +62,21 @@ public class MyNetworkManager : NetworkManager
         {
             Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
         }
+        */
+    }
+
+    public void pointCursor()
+    {
+        // switch cursor
+        // Debug.Log("setting cursor?");
+        Cursor.SetCursor(texture2, Vector2.zero, CursorMode.Auto);
+    }
+
+    public void obsidianCursor()
+    {
+        // switch cursor
+        // Debug.Log("setting cursor?");
+        Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
     }
 
     public void OnStartServer()

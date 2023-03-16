@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
+public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
     Vector3 cachedScale; // Tracks original size of Card (for hovering as it manipulates scale of Card).
@@ -52,6 +52,16 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler
         artworkImage = this.GetComponent<Image>();
         artworkImage.sprite = character.image;
         character.flipped = false;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        Game.pointCursor();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        Game.obsidianCursor();
     }
 
     public void updateCharacter(Character character)

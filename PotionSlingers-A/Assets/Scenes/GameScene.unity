@@ -3252,6 +3252,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!114 &62669604
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6088,6 +6089,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!114 &130488232
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12805,6 +12807,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!114 &292815346
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15487,6 +15490,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!114 &356988136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20570,6 +20574,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!1 &487231977 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 698874206371663198, guid: 53989111815513c41a3163993b3810a5, type: 3}
@@ -23277,6 +23282,7 @@ GameObject:
   - component: {fileID: 572077399}
   - component: {fileID: 572077401}
   - component: {fileID: 572077402}
+  - component: {fileID: 572077403}
   m_Layer: 5
   m_Name: Arrow
   m_TagString: Untagged
@@ -23418,6 +23424,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &572077403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572077397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c50e11b0498e2ef4dac4534eee1662f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &572433314
 GameObject:
   m_ObjectHideFlags: 0
@@ -25570,6 +25588,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!114 &623263286
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28813,6 +28832,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!1 &691010927
 GameObject:
   m_ObjectHideFlags: 0
@@ -30819,6 +30839,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!1 &728456629
 GameObject:
   m_ObjectHideFlags: 0
@@ -37646,6 +37667,8 @@ MonoBehaviour:
   damageAmount: {fileID: 1181464431}
   healSign: {fileID: 1651675818}
   healAmount: {fileID: 974692135}
+  hpBar: {fileID: 0}
+  healthText: {fileID: 0}
   uniqueCards: []
   throwBonus: 0
   vesselBonus: 0
@@ -37843,6 +37866,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!1 &908166514
 GameObject:
   m_ObjectHideFlags: 0
@@ -54266,6 +54290,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   cardMenu: {fileID: 0}
   cardSelected: 0
+  game: {fileID: 0}
 --- !u!1 &1272827877
 GameObject:
   m_ObjectHideFlags: 0
@@ -55430,7 +55455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -26.837, y: 20}
+  m_AnchoredPosition: {x: -35, y: 20}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1292678684
@@ -55460,7 +55485,7 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 4
     m_MaxSize: 97
-    m_Alignment: 0
+    m_Alignment: 1
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
@@ -59482,6 +59507,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!114 &1390486995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60944,6 +60970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!1 &1425693222
 GameObject:
   m_ObjectHideFlags: 0
@@ -65893,6 +65920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!1 &1542932598
 GameObject:
   m_ObjectHideFlags: 0
@@ -68746,6 +68774,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   cardMenu: {fileID: 0}
   cardSelected: 0
+  game: {fileID: 0}
 --- !u!1 &1595939690
 GameObject:
   m_ObjectHideFlags: 0
@@ -79675,6 +79704,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!1 &1833972542
 GameObject:
   m_ObjectHideFlags: 0
@@ -82678,6 +82708,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   cardMenu: {fileID: 0}
   cardSelected: 0
+  game: {fileID: 0}
 --- !u!1 &1886045654
 GameObject:
   m_ObjectHideFlags: 0
@@ -83591,6 +83622,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!114 &1913723197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89548,6 +89580,8 @@ MonoBehaviour:
   damageAmount: {fileID: 177182558}
   healSign: {fileID: 164053555}
   healAmount: {fileID: 48977211}
+  hpBar: {fileID: 0}
+  healthText: {fileID: 0}
   uniqueCards: []
   throwBonus: 0
   vesselBonus: 0
@@ -91231,6 +91265,7 @@ MonoBehaviour:
   specialCardMenu: {fileID: 0}
   scarpettaMenu: {fileID: 0}
   onlyViewCardMenu: {fileID: 0}
+  game: {fileID: 0}
 --- !u!1 &2066151197
 GameObject:
   m_ObjectHideFlags: 0
@@ -95047,6 +95082,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!1 &2121368780 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2566933829503773462, guid: 53989111815513c41a3163993b3810a5, type: 3}
@@ -96271,6 +96307,8 @@ MonoBehaviour:
   damageAmount: {fileID: 807864802}
   healSign: {fileID: 514978359}
   healAmount: {fileID: 1859431382}
+  hpBar: {fileID: 0}
+  healthText: {fileID: 0}
   uniqueCards: []
   throwBonus: 0
   vesselBonus: 0
@@ -101151,6 +101189,8 @@ MonoBehaviour:
   damageAmount: {fileID: 1956192406}
   healSign: {fileID: 1956192405}
   healAmount: {fileID: 1956192404}
+  hpBar: {fileID: 981219336}
+  healthText: {fileID: 1292678682}
   uniqueCards:
   - {fileID: 11400000, guid: 6d36c253bc7ef54408c9f37bd8a20111, type: 2}
   - {fileID: 11400000, guid: b9421360ef617be49a2f8c9684ae2a2b, type: 2}
@@ -101558,6 +101598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!224 &7236186977709366208
 RectTransform:
   m_ObjectHideFlags: 0
@@ -101614,6 +101655,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!224 &7329947042470998232
 RectTransform:
   m_ObjectHideFlags: 0
@@ -101670,6 +101712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!222 &7877603901685229318
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -101712,6 +101755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!222 &8588524002833841732
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -101754,6 +101798,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!1 &8898653789182682588
 GameObject:
   m_ObjectHideFlags: 0
@@ -101808,6 +101853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!224 &9083293872726131330
 RectTransform:
   m_ObjectHideFlags: 0
@@ -101864,6 +101910,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}
 --- !u!224 &9213095926625135002
 RectTransform:
   m_ObjectHideFlags: 0
@@ -101920,3 +101967,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03c2e2cdd605c504496e5f9120347bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  game: {fileID: 0}

@@ -30,6 +30,18 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     bool cardSelected = false;
     public static bool viewingCard = false;
     //public GameObject exitMenu;
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
 
     // On startup:
     void Start()
@@ -96,6 +108,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                            this.gameObject.name == "TrashCardDisplay2" ||
                            this.gameObject.name == "TrashCardDisplay3")
         {
+            Game.pointCursor();
             return;
         }
 
@@ -114,6 +127,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
 
+            Game.pointCursor();
             // Card Hover sound effect:
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
             return;
@@ -124,6 +138,7 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
                             this.gameObject.name != "TrashCardDisplay2" &&
                             this.gameObject.name != "TrashCardDisplay3"))
         {
+            Game.pointCursor();
             if (canHover)
             {
                 float width = rt.sizeDelta.x * rt.localScale.x;
@@ -340,10 +355,12 @@ public class Market_Hover : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         {
             transform.localScale = cachedScale;
             gameObject.transform.position = originalPos;
+            Game.obsidianCursor();
             return;
         }
         if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
+            Game.obsidianCursor();
             if (canHover)
             {
                 transform.localScale = cachedScale;

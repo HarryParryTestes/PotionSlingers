@@ -30,6 +30,18 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public bool cardSelected = false;
     public static bool viewingCard = false;
     //public GameObject exitMenu;
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
 
     // On startup:
     void Start() {
@@ -104,6 +116,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
             transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
 
+            Game.pointCursor();
             // Card Hover sound effect:
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
             return;
@@ -111,7 +124,9 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
-            if(canHover) {
+            // switch cursor
+            Game.pointCursor();
+            if (canHover) {
                 float width = rt.sizeDelta.x * rt.localScale.x;
                 float height = rt.sizeDelta.y * rt.localScale.y;
 
@@ -241,11 +256,14 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         {
             transform.localScale = cachedScale;
             gameObject.transform.position = originalPos;
+            Game.obsidianCursor();
             return;
         }
         if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
-            if(canHover) {
+            // switch cursor back from pointing
+            Game.obsidianCursor();
+            if (canHover) {
                 transform.localScale = cachedScale;
                 gameObject.transform.position = originalPos;
             }

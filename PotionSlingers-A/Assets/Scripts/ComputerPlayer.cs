@@ -11,7 +11,7 @@ public class ComputerPlayer : CardPlayer
     public int artifacts = 0;
     public int vessels = 0;
     public int rings = 0;
-    private int j = 0;
+    private int j = 3;
     public int turn = 0;
     public bool easy = false;
     public bool medium = false;
@@ -30,7 +30,7 @@ public class ComputerPlayer : CardPlayer
     {
         int num = rng.Next(0, 4);
         Debug.Log("Number: " + num);
-        if (num == j)
+        if (charName == GameManager.manager.players[num].character.character.cardName)
         {
             Debug.Log("Changing number");
             chooseRandomPlayer();
@@ -212,6 +212,7 @@ public class ComputerPlayer : CardPlayer
 
                 int number = chooseRandomPlayer();
                 GameManager.manager.selectedOpponentCharName = GameManager.manager.players[number].character.character.cardName;
+                Debug.Log("Opponent name is: " + GameManager.manager.selectedOpponentCharName);
                 GameManager.manager.selectedCardInt = i + 1;
                 GameManager.manager.throwPotion();
                 StartCoroutine(waitASecBro());
@@ -228,6 +229,7 @@ public class ComputerPlayer : CardPlayer
                         AICards[k].cardType == "Potion" && AICards[k].effectAmount > 0)
                     {
                         int number = chooseRandomPlayer();
+                        Debug.Log("Number is: " + number);
                         GameManager.manager.selectedOpponentCharName = GameManager.manager.players[number].character.character.cardName;
                         GameManager.manager.selectedCardInt = k + 1;
                         GameManager.manager.throwPotion();

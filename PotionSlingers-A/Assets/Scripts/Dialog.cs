@@ -16,7 +16,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
     public bool scrolling = false;
     public GameObject arrow;
 
-    
+
 
     void Start()
     {

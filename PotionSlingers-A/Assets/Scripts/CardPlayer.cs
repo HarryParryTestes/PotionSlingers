@@ -34,6 +34,8 @@ public class CardPlayer : MonoBehaviour
     public GameObject damageAmount;
     public GameObject healSign;
     public GameObject healAmount;
+    public GameObject hpBar;
+    public GameObject healthText;
     private System.Random rng = new System.Random();
 
 
@@ -181,6 +183,15 @@ public class CardPlayer : MonoBehaviour
 
     public void updateHealthUI()
     {
+        if(healthText != null && hpBar != null)
+        {
+            healthText.GetComponent<Text>().text = hp.ToString();
+            float numbers = (float)hp / 10f;
+            // Debug.Log("Fill amount is: " + numbers);
+            hpBar.GetComponent<Image>().fillAmount = numbers;
+        }
+        
+        
         if (playerHP != null && playerHPCubes != null)
         {
             playerHP.GetComponent<Text>().text = hp.ToString();
@@ -188,6 +199,7 @@ public class CardPlayer : MonoBehaviour
             // playerHP.GetComponent<Text>().text = "HP: " + hp.ToString() + " /10";
             // playerHPCubes.GetComponent<Text>().text = "Cubes: " + hpCubes.ToString();
         }
+        
     }
 
     public void updatePipsUI()

@@ -200,10 +200,16 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager started!!!");
 
+        // just testing the new health bar
+        // players[0].subHealth(5);
+
         // check for quickplay
         if (Game.quickplay)
         {
             Debug.Log("Quickplay started");
+            md1.shuffle();
+            md2.shuffle();
+            initDecks();
             numPlayers = 4;
             // add computer player and make CPU names
             for (int i = 0; i < numPlayers; i++)
