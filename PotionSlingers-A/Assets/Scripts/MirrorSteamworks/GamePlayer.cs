@@ -614,6 +614,7 @@ public class GamePlayer : NetworkBehaviour
                         if (cp2.name == opponentName)
                         {
                             Debug.Log("Damaging player: "+ opponentName);
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                             cp2.subHealth(damage);
                         }
                     }
@@ -643,6 +644,7 @@ public class GamePlayer : NetworkBehaviour
                             if (cp2.name == opponentName)
                             {
                                 Debug.Log("Damaging player: " + opponentName);
+                                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
                                 cp2.subHealth(damage);
                             }
                         }
@@ -712,6 +714,7 @@ public class GamePlayer : NetworkBehaviour
                             if (cp2.name == opponentName)
                             {
                                 Debug.Log("Damaging player: " + opponentName);
+                                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                                 cp2.subHealth(damage);
                             }
                         }
@@ -779,6 +782,7 @@ public class GamePlayer : NetworkBehaviour
                 {
                     cp.holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                 }
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                 GameManager.manager.sendSuccessMessage(8);
                 return;
             }
@@ -1402,6 +1406,7 @@ public class GamePlayer : NetworkBehaviour
             {
                 cp.subPips(GameManager.manager.td.deckList[cardInt].buyPrice);
                 cp.deck.putCardOnTop(GameManager.manager.td.deckList[cardInt]);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                 GameManager.manager.td.deckList.RemoveAt(cardInt);
             }
         }
@@ -1739,6 +1744,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md1.popCard();
                             GameManager.manager.md1.cardDisplay1.updateCard(card);
                             GameManager.manager.md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                             // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                             // SALTIMBOCCA LOGIC
@@ -1770,6 +1776,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md1.popCard();
                             GameManager.manager.md1.cardDisplay1.updateCard(card);
                             GameManager.manager.md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                         }
                         else
@@ -1797,6 +1804,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md1.popCard();
                             GameManager.manager.md1.cardDisplay2.updateCard(card);
                             GameManager.manager.md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                         }
                         else if (cp.isSaltimbocca && cp.pips >= (GameManager.manager.md1.cardDisplay2.card.buyPrice - 1))
@@ -1826,6 +1834,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md1.popCard();
                             GameManager.manager.md1.cardDisplay2.updateCard(card);
                             GameManager.manager.md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                         }
                         else
@@ -1853,6 +1862,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md1.popCard();
                             GameManager.manager.md1.cardDisplay3.updateCard(card);
                             GameManager.manager.md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                             // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                         }
@@ -1883,6 +1893,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md1.popCard();
                             GameManager.manager.md1.cardDisplay3.updateCard(card);
                             GameManager.manager.md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                         }
                         else
@@ -1937,6 +1948,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md2.popCard();
                             GameManager.manager.md2.cardDisplay1.updateCard(card);
                             GameManager.manager.md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                             // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                             // SALTIMBOCCA LOGIC
@@ -1968,6 +1980,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md2.popCard();
                             GameManager.manager.md2.cardDisplay1.updateCard(card);
                             GameManager.manager.md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                         }
                         else
@@ -1995,6 +2008,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md2.popCard();
                             GameManager.manager.md2.cardDisplay2.updateCard(card);
                             GameManager.manager.md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                         }
                         else if (cp.isSaltimbocca && cp.pips >= (GameManager.manager.md2.cardDisplay2.card.buyPrice - 1))
@@ -2024,6 +2038,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md2.popCard();
                             GameManager.manager.md2.cardDisplay2.updateCard(card);
                             GameManager.manager.md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                         }
                         else
@@ -2051,6 +2066,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md2.popCard();
                             GameManager.manager.md2.cardDisplay3.updateCard(card);
                             GameManager.manager.md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                             // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                         }
@@ -2081,6 +2097,7 @@ public class GamePlayer : NetworkBehaviour
                             card = GameManager.manager.md2.popCard();
                             GameManager.manager.md2.cardDisplay3.updateCard(card);
                             GameManager.manager.md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                             GameManager.manager.sendSuccessMessage(1);
                         }
                         else
@@ -2142,7 +2159,7 @@ public class GamePlayer : NetworkBehaviour
     {
         GameManager.manager.previousDamage = damage;
         GameManager.manager.opponentCardInt = selectedCardInt;
-        Debug.Log("Pulling up Sheild Menu for: " + playerName);
+        Debug.Log("Pulling up Shield Menu for: " + playerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if (cp.name == throwerName)

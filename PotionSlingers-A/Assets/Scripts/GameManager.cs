@@ -1881,6 +1881,7 @@ public class GameManager : MonoBehaviour
                 td.addCard(playerHolster.cardList[selectedCardInt - 1]);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 bolo.subHealth(damage);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                 StartCoroutine(waitThreeSeconds(dialog));
             } else if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
             {
@@ -1897,6 +1898,7 @@ public class GameManager : MonoBehaviour
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                     bolo.subHealth(damage);
                     sendSuccessMessage(3);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
                     StartCoroutine(waitThreeSeconds(dialog));
                     playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     // MATTEO: Add Artifact using SFX here.
@@ -1925,6 +1927,7 @@ public class GameManager : MonoBehaviour
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                     bolo.subHealth(damage);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     sendSuccessMessage(4);
                     StartCoroutine(waitThreeSeconds(dialog));
                     playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -1983,6 +1986,7 @@ public class GameManager : MonoBehaviour
                 if (cp.character.character.cardName == selectedOpponentCharName)
                 {
                     cp.subHealth(damage);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     // maybe add a notif idk
                     sendSuccessMessage(2);
@@ -2080,6 +2084,7 @@ public class GameManager : MonoBehaviour
 
                 // may need to add this back in
                 tempPlayer.subHealth(damage);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
 
             } else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
             {
@@ -2097,6 +2102,7 @@ public class GameManager : MonoBehaviour
 
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
                     tempPlayer.subHealth(damage);
 
                     // ISADORE LOGIC
@@ -2156,6 +2162,7 @@ public class GameManager : MonoBehaviour
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                     tempPlayer.subHealth(damage);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     sendSuccessMessage(4);
                     // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
@@ -3204,6 +3211,7 @@ public class GameManager : MonoBehaviour
                         StartCoroutine(waitThreeSeconds(dialog));
                         // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetView();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                     }
@@ -3223,6 +3231,7 @@ public class GameManager : MonoBehaviour
                         StartCoroutine(waitThreeSeconds(dialog));
                         // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                     }
@@ -3242,6 +3251,7 @@ public class GameManager : MonoBehaviour
                         StartCoroutine(waitThreeSeconds(dialog));
                         // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
@@ -3307,6 +3317,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay1.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                         // SALTIMBOCCA LOGIC
@@ -3338,6 +3349,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay1.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                     }
                     else
@@ -3367,6 +3379,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay2.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                     }
@@ -3398,6 +3411,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay2.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                     }
                     else
@@ -3427,6 +3441,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay3.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
@@ -3458,6 +3473,7 @@ public class GameManager : MonoBehaviour
                         md1.cardDisplay3.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                     }
                     else
@@ -3536,6 +3552,7 @@ public class GameManager : MonoBehaviour
                         Card card = md2.popCard();
                         md2.cardDisplay1.updateCard(card);
                         md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                     }
@@ -3566,6 +3583,7 @@ public class GameManager : MonoBehaviour
                         md2.cardDisplay1.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                     }
                     else
@@ -3594,6 +3612,7 @@ public class GameManager : MonoBehaviour
                         Card card = md2.popCard();
                         md2.cardDisplay2.updateCard(card);
                         md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                     }
@@ -3625,6 +3644,7 @@ public class GameManager : MonoBehaviour
                         md2.cardDisplay2.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                     }
                     else
@@ -3652,6 +3672,7 @@ public class GameManager : MonoBehaviour
                         Card card = md2.popCard();
                         md2.cardDisplay3.updateCard(card);
                         md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }
@@ -3683,6 +3704,7 @@ public class GameManager : MonoBehaviour
                         md2.cardDisplay3.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                     }
                     else
@@ -3896,6 +3918,7 @@ public class GameManager : MonoBehaviour
             td.addCard(playerHolster.cardList[selectedCardInt - 1]);
             playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             StartCoroutine(waitThreeSeconds(dialog));
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
             sendSuccessMessage(8);
             return;
         }
@@ -3949,6 +3972,7 @@ public class GameManager : MonoBehaviour
             {
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
             }
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
             sendSuccessMessage(8);
             // MATTEO: Add sell SFX here.
         }
