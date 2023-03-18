@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Mirror;
 using Steamworks;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,7 @@ public class MyNetworkManager : NetworkManager
     public bool multiplayer = false;
     public bool quickplay = false;
     public bool completedTutorial = false;
+    public bool completedGame = false;
     public LobbyManager lobbyManager;
     public SteamLobby steamLobby;
     public GameObject sceneTransition;
@@ -60,6 +62,7 @@ public class MyNetworkManager : NetworkManager
         {
             Debug.Log("Completed Tutorial!");
             // TODO: do achievement check in here once you make it in Steamworks
+            SteamUserStats.SetAchievement("BEAT_TUTORIAL");
         }
     }
 

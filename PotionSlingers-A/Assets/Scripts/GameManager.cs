@@ -1224,40 +1224,42 @@ public class GameManager : MonoBehaviour
             int potions;
             int artifacts;
             int pips;
-            SteamUserStats.GetStat("potions_thrown", out potions);
-            SteamUserStats.GetStat("artifacts_used", out artifacts);
-            SteamUserStats.GetStat("pips_spent", out pips);
 
-            /*
-            Debug.Log("Potions : " + potions);
-            Debug.Log("Artifacts : " + artifacts);
-            Debug.Log("Pips : " + pips);
-            */
-            potions += players[myPlayerIndex].potionsThrown;
-            artifacts += players[myPlayerIndex].artifactsUsed;
-            pips += players[myPlayerIndex].pipsUsedThisTurn;
-
-            if (potions >= 10)
+            
+            // if character's name matches your Steam username
+            if (SteamFriends.GetPersonaName().ToString() == players[myPlayerIndex].name)
             {
-                SteamUserStats.SetAchievement("THROW_10_POTIONS");
+                SteamUserStats.GetStat("potions_thrown", out potions);
+                SteamUserStats.GetStat("artifacts_used", out artifacts);
+                SteamUserStats.GetStat("pips_spent", out pips);
+
+               
+                potions += players[myPlayerIndex].potionsThrown;
+                artifacts += players[myPlayerIndex].artifactsUsed;
+                pips += players[myPlayerIndex].pipsUsedThisTurn;
+
+                if (potions >= 10)
+                {
+                    SteamUserStats.SetAchievement("THROW_10_POTIONS");
+                }
+
+                if (artifacts >= 10)
+                {
+                    SteamUserStats.SetAchievement("USE_10_ARTIFACTS");
+                }
+
+                if (pips >= 100)
+                {
+                    SteamUserStats.SetAchievement("SPEND_100_PIPS");
+                }
+
+                SteamUserStats.SetStat("potions_thrown", potions);
+                SteamUserStats.SetStat("artifacts_used", artifacts);
+                SteamUserStats.SetStat("pips_spent", pips);
+
+                SteamUserStats.StoreStats();
             }
-
-            if (artifacts >= 10)
-            {
-                SteamUserStats.SetAchievement("USE_10_ARTIFACTS");
-            }
-
-            if (pips >= 100)
-            {
-                SteamUserStats.SetAchievement("SPEND_100_PIPS");
-            }
-
-            SteamUserStats.SetStat("potions_thrown", potions);
-            SteamUserStats.SetStat("artifacts_used", artifacts);
-            SteamUserStats.SetStat("pips_spent", pips);
-
-            SteamUserStats.StoreStats();
-
+            
             myPlayerIndex++;
             
             if(myPlayerIndex >= numPlayers)

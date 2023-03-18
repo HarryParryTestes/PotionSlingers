@@ -277,6 +277,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
     {
         endDialog = true;
         Game.completedTutorial = true;
+        Game.completedGame = true;
         this.gameObject.SetActive(true);
         textInfo = "Congratulations! You have completed the tutorial!\n" +
             "What do we do after this?";

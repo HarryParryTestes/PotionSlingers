@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Mirror;
 using Steamworks;
@@ -106,6 +107,20 @@ public class MainMenu : MonoBehaviour
 	public List<string> infoQuotes;
 	public List<UniqueCard> uniqueCards;
 
+	public Slider levelBar;
+	public TMPro.TextMeshProUGUI levelText;
+	public TMPro.TextMeshProUGUI expText;
+	public int level;
+	public int points;
+
+	public GameObject titleMenu;
+	public GameObject logo;
+	public GameObject expMenu;
+	public Slider expMenuBar;
+	public TMPro.TextMeshProUGUI expMenuLevelText;
+	public TMPro.TextMeshProUGUI expMenuExpText;
+
+
 	void Awake()
     {
 		// Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
@@ -114,7 +129,22 @@ public class MainMenu : MonoBehaviour
         if (!SteamManager.Initialized) { return; }
         greetingName = SteamFriends.GetPersonaName().ToString();
         greeting.text = "Hello, "+ greetingName;
-    }
+
+		SteamUserStats.GetStat("exp_points", out points);
+		SteamUserStats.GetStat("exp_level", out level);
+
+		Debug.Log("Experience Points: " + points);
+		Debug.Log("Experience Level: " + level);
+
+
+		handleMaxValue();
+		// float numbers = (float)points / (float)levelBar.maxValue;
+		levelBar.value = points;
+		expText.text = points + " / " + levelBar.maxValue;
+		levelText.text = "Level " + level;
+		expMenuBar.value = points;
+		expMenuLevelText.text = "Level " + level;
+	}
 
 	void Start()
     {
@@ -146,11 +176,121 @@ public class MainMenu : MonoBehaviour
 			networkManager.sceneTransition = GameObject.Find("SceneTransition");
 			networkManager.loadingScreen = GameObject.Find("LoadingScreen");
 			networkManager.loadingText = GameObject.Find("LOADING");
-			// networkManager.lobbyManager = GameObject.Find("OldLobbyMenu").GetComponent<LobbyManager>();
-			
+            // networkManager.lobbyManager = GameObject.Find("OldLobbyMenu").GetComponent<LobbyManager>();
+
+            if (networkManager.completedGame)
+            {
+				titleMenu.SetActive(false);
+				logo.SetActive(false);
+				Debug.Log("Experience Menu");
+                if (networkManager.completedTutorial)
+                {
+					initExperienceMenu(50);
+					return;
+				}
+				initExperienceMenu(30);
+            }
 
 		}
     }
+
+	public void setSliderValue()
+    {
+		levelBar.value = points;
+		expText.text = points + " / " + levelBar.maxValue;
+	}
+
+	public void handleMaxValue()
+    {
+        switch (level)
+        {
+			case 1:
+				levelBar.maxValue = 100;
+				expMenuBar.maxValue = 100;
+				break;
+			case 2:
+				levelBar.maxValue = 200;
+				expMenuBar.maxValue = 200;
+				break;
+			case 3:
+				levelBar.maxValue = 300;
+				expMenuBar.maxValue = 300;
+				break;
+			case 4:
+				levelBar.maxValue = 400;
+				expMenuBar.maxValue = 400;
+				break;
+			default:
+				levelBar.maxValue = 200;
+				expMenuBar.maxValue = 200;
+				break;
+
+		}
+    }
+
+	public void initExperienceMenu(int exp)
+    {
+		titleMenu.SetActive(false);
+		logo.SetActive(false);
+		Debug.Log("Experience Menu");
+		expMenu.SetActive(true);
+		SteamUserStats.GetStat("exp_points", out points);
+		SteamUserStats.GetStat("exp_level", out level);
+
+		points += exp;
+		if(points >= expMenuBar.maxValue)
+        {
+			levelUp(level);
+        }
+		expMenuBar.value = points;
+		expMenuExpText.text = points + " / " + levelBar.maxValue;
+		Debug.Log("EXP: " + points);
+		SteamUserStats.SetStat("exp_points", points);
+		SteamUserStats.StoreStats();
+	}
+
+	public void levelUp(int level)
+    {
+		Debug.Log("You leveled up!!!");
+		points -= (int)expMenuBar.maxValue;
+		level++;
+		Debug.Log("EXP: " + points);
+		Debug.Log("LEVEL: " + level);
+
+        switch (level)
+        {
+			case 1:
+				levelBar.maxValue = 100;
+				expMenuBar.maxValue = 100;
+				break;
+			case 2:
+				levelBar.maxValue = 200;
+				expMenuBar.maxValue = 200;
+				break;
+			case 3:
+				levelBar.maxValue = 300;
+				expMenuBar.maxValue = 300;
+				break;
+			case 4:
+				levelBar.maxValue = 400;
+				expMenuBar.maxValue = 400;
+				break;
+			default:
+				levelBar.maxValue = 200;
+				expMenuBar.maxValue = 200;
+				break;
+		}
+
+		levelBar.value = points;
+		expText.text = points + " / " + levelBar.maxValue;
+		levelText.text = "Level " + level;
+		expMenuBar.value = points;
+		expMenuLevelText.text = "Level " + level;
+
+		SteamUserStats.SetStat("exp_points", points);
+		SteamUserStats.SetStat("exp_level", level);
+		SteamUserStats.StoreStats();
+	}
 
 	public void createCPU()
 	{
