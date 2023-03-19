@@ -26,7 +26,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     GameObject holster;
     GameObject parentObject;
     GameObject attackMenu;
-    GameObject viewingCardObject;
+    public GameObject viewingCardObject;
     public bool cardSelected = false;
     public static bool viewingCard = false;
     //public GameObject exitMenu;
@@ -62,7 +62,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
 
         if (SceneManager.GetActiveScene().name == "TitleMenu")
         {
-            viewingCardObject = this.gameObject;
+            // viewingCardObject = this.gameObject;
         }
 
         cardSelected = false;
@@ -149,13 +149,34 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         
         if (SceneManager.GetActiveScene().name == "TitleMenu")
         {
-            Debug.Log("Did this trigger");
-            this.transform.localScale = new Vector3(5f, 5f, 5f);
-            // this.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
-            // this.transform.SetParent(viewingCardObject.transform);
-            this.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
-            // ViewCard();
-            return;
+            
+            if (cardSelected)
+            {
+                cardSelected = false;
+                resetView();
+                return;
+            } else
+            {
+                /*
+                transform.localScale = cachedScale;
+                gameObject.transform.position = originalPos;
+                cardSelected = true;
+                this.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+                this.transform.localScale = new Vector3(5f, 5f, 5f);
+                this.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+                ViewCard();
+                */
+                // Debug.Log("Did this trigger");
+                cardSelected = true;
+                transform.localScale = cachedScale;
+                gameObject.transform.position = originalPos;
+                this.transform.localScale = new Vector3(5f, 5f, 5f);
+                this.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
+                // this.transform.SetParent(viewingCardObject.transform);
+                this.transform.position = viewingCardObject.transform.position;
+                return;
+            }
+            
         }
         
 
@@ -252,6 +273,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // (aka when mouse cursor exits GameObject's X/Y/Z boundaries)
     public void OnPointerExit(PointerEventData eventData) {
 
+        
         if (this.gameObject.name == "CharacterCard")
         {
             transform.localScale = cachedScale;
@@ -268,11 +290,13 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                 gameObject.transform.position = originalPos;
             }
         }
+        
     }
 
     public void ViewCard() {
         viewingCard = true;
         if(cardSelected) {
+            Debug.Log("Card selected");
             // you added this in to change how clicking on a card now brings up the menu
             // cardMenu.gameObject.SetActive(false);
             // let's try this

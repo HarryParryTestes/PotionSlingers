@@ -2513,6 +2513,13 @@ public class GameManager : MonoBehaviour
                 // Loading a Vessel:
                 if (playerHolster.cardList[loadedCardInt].card.cardType == "Vessel")
                 {
+                    if(dialog.textBoxCounter == 5)
+                    {
+                        sendErrorMessage(19);
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        return;
+                    }
+
                     // Enable Vessel menu if it wasn't already enabled.
                     Debug.Log("Vessel menu enabled.");
                     playerHolster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
@@ -2572,6 +2579,12 @@ public class GameManager : MonoBehaviour
                 // Loading an Artifact:
                 else if (playerHolster.cardList[loadedCardInt].card.cardType == "Artifact")
                 {
+                    if (dialog.textBoxCounter == 17 || dialog.textBoxCounter == 18)
+                    {
+                        sendErrorMessage(19);
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        return;
+                    }
                     // Enable Artifact menu if it wasn't already enabled.
                     Debug.Log("Artifact menu enabled.");
                     playerHolster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
