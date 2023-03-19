@@ -23,18 +23,18 @@ public class OptionsMenu : MonoBehaviour
 
     public void toggleFullscreen()
     {
-        if(fullscreenText.text == "FULLSCREEN")
+        if(fullscreenText.text == "Fullscreen")
         {
-            fullscreenText.text = "WINDOWED";
+            fullscreenText.text = "Windowed";
         } else
         {
-            fullscreenText.text = "FULLSCREEN";
+            fullscreenText.text = "Fullscreen";
         }
     }
 
     public void applyChanges()
     {
-        bool full = fullscreenText.text == "FULLSCREEN";
+        bool full = fullscreenText.text == "Fullscreen";
         Debug.Log("Changing resolution to " + (int)resolutions[index].x + "x" + (int)resolutions[index].y);
         Screen.SetResolution((int)resolutions[index].x, (int)resolutions[index].y, full);
     }
