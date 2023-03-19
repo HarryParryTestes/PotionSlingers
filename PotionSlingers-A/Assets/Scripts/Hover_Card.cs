@@ -273,21 +273,24 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     // (aka when mouse cursor exits GameObject's X/Y/Z boundaries)
     public void OnPointerExit(PointerEventData eventData) {
 
-        
-        if (this.gameObject.name == "CharacterCard")
+        if (SceneManager.GetActiveScene().name != "TitleMenu")
         {
-            transform.localScale = cachedScale;
-            gameObject.transform.position = originalPos;
-            Game.obsidianCursor();
-            return;
-        }
-        if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
-        {
-            // switch cursor back from pointing
-            Game.obsidianCursor();
-            if (canHover) {
+            if (this.gameObject.name == "CharacterCard")
+            {
                 transform.localScale = cachedScale;
                 gameObject.transform.position = originalPos;
+                Game.obsidianCursor();
+                return;
+            }
+            if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+            {
+                // switch cursor back from pointing
+                Game.obsidianCursor();
+                if (canHover)
+                {
+                    transform.localScale = cachedScale;
+                    gameObject.transform.position = originalPos;
+                }
             }
         }
         

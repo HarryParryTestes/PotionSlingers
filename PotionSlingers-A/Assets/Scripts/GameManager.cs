@@ -1876,6 +1876,11 @@ public class GameManager : MonoBehaviour
             }
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
+                if(dialog.textBoxCounter == 17 || dialog.textBoxCounter == 18)
+                {
+                    sendErrorMessage(19);
+                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                }
                 int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
                 damage = cardPlayer.checkBonus(damage, playerHolster.cardList[selectedCardInt - 1]);
                 sendSuccessMessage(2); // Only display on thrower's client.
