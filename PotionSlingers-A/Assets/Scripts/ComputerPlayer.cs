@@ -110,7 +110,7 @@ public class ComputerPlayer : CardPlayer
     public IEnumerator waitASecBro()
     {
         // modify this based on what difficulty the CPU is
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
         if (easy)
         {
             AITurn();
@@ -208,6 +208,16 @@ public class ComputerPlayer : CardPlayer
                         Debug.Log("J: " + j);
                         break;
                     }
+                }
+
+                // if two players, just hardcode throwing at player 1
+                if(GameManager.manager.numPlayers == 2)
+                {
+                    GameManager.manager.selectedOpponentCharName = GameManager.manager.players[0].character.character.cardName;
+                    GameManager.manager.selectedCardInt = i + 1;
+                    GameManager.manager.throwPotion();
+                    StartCoroutine(waitASecBro());
+                    return;
                 }
 
                 int number = chooseRandomPlayer();

@@ -260,6 +260,10 @@ public class GameManager : MonoBehaviour
 
             Debug.Log(Game.GamePlayers.Count);
 
+            md1.shuffle();
+            md2.shuffle();
+            initDecks();
+
             // take this out for now, maybe put it back in
             /*
             for (int j = 0; j < Game.GamePlayers.Count; j++)
@@ -1974,12 +1978,15 @@ public class GameManager : MonoBehaviour
 
         foreach (CardPlayer cp in players)
         {
-            if (cp.character.character.cardName == selectedOpponentCharName)
+            if (cp.gameObject.activeInHierarchy)
             {
-                Debug.Log("Name matched");
-                tempPlayer = cp;
-                // idiot, don't put this here
-                // return;
+                if (cp.character.character.cardName == selectedOpponentCharName)
+                {
+                    Debug.Log("Name matched");
+                    tempPlayer = cp;
+                    // idiot, don't put this here
+                    // return;
+                }
             }
         }
 
@@ -2466,6 +2473,22 @@ public class GameManager : MonoBehaviour
 
     public void preLoadPotion()
     {
+        int cards = 0;
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            if (cd.card.cardType == "Artifact" || cd.card.cardType == "Vessel")
+            {
+                cards++;
+            }
+        }
+
+        if(cards == 0)
+        {
+            sendErrorMessage(20);
+            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
+            return;
+        }
+
         if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
         {
             Debug.Log("Not a potion, ERROR");
