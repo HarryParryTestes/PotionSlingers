@@ -17,6 +17,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
     public bool scrolling = false;
     public bool endDialog = false;
     public GameObject arrow;
+    public GameObject Bolotalk;
+    public GameObject Boloidle;
+    
 
 
     public MyNetworkManager game;
@@ -32,6 +35,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    
 
     void Start()
     {
@@ -55,6 +59,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         textInfo = "Hello, and welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion-\n" +
             "slinging action this game has to offer!";
         ActivateText(dialogBox);
+        Boloidle.SetActive(false);
+        Bolotalk.SetActive(true);
     }
 
     public void ActivateText(TMPro.TextMeshProUGUI textBox)
@@ -72,6 +78,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             yield return new WaitForSeconds(textSpeed);
         }
         arrow.SetActive(true);
+        Bolotalk.SetActive(false);
+        Boloidle.SetActive(true);
         textSpeed = 0.03f;
         scrolling = false;
     }
@@ -106,6 +114,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             textInfo = "In each game of Potion Slingers, each player starts with the\nsame starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a\nfancy ring at the top of your deck!\n\n"
                 + "Try throwing a starter potion at me! Take your best shot!";
             ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
             //dialogBox.text = "In each game of Potion Slingers, each player starts with the\nsame starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a\nfancy ring at the top of your deck!\n\n"
             //+ "Try throwing a starter potion at me! Take your best shot!";
 
@@ -123,6 +133,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "artifact card!";
 
             ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 5)
         {
@@ -145,7 +157,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "and buy two potions!\n\nThe top row in the market is exclusively for potions,\n" +
                 "and the bottom row is for vessels, artifacts, and rings!\n\n" +
                 "Buy cards using your hard-earned Pips! You get 6 Pips\nat the start of your turn!";
-            ActivateText(dialogBox);
+            ActivateText(dialogBox); 
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 10)
         {
@@ -159,6 +173,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             textInfo = "Now let's end your turn... Click the red END TURN button\n" +
                 "in the lower right corner!";
             ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 14)
         {
@@ -173,6 +189,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "potions\nto use and can deal huge damage with the right set of cards!\n\n" +
                 "Load two potions into the starter vessel and sling\nit over here!";
             ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 17)
         {
@@ -187,6 +205,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "Try putting your artifact card in the trash!\n\n" +
                 "Click on the artifact card and click TRASH!";
             ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 22)
         {
@@ -208,6 +228,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "Try selling an item in your holster! Click on a card\n" +
                 "you want to sell and click SELL!";
             ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 28)
         {
@@ -232,6 +254,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "Try flipping your character! Click on the character card\n" +
                 "and click FLIP!";
             ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 33)
         {
@@ -254,7 +278,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             textInfo = "The object of the game is to beat your opponents down\n" +
                 "to 0 health and take all of their Essence Cubes!\n\n" +
                 "The last person standing is declared the winner!";
-            ActivateText(dialogBox);
+            ActivateText(dialogBox); 
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 38)
         {
@@ -262,6 +288,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "Cubes will be awarded to the player that deals the killing blow!\n\n" +
                 "Try finishing me off and getting me to 0 health!";
             ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 39)
         {
@@ -282,11 +310,15 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         textInfo = "Congratulations! You have completed the tutorial!\n" +
             "What do we do after this?";
         ActivateText(dialogBox);
+        Boloidle.SetActive(false);
+        Bolotalk.SetActive(true);
     }
 
     public void OnPointerDown(PointerEventData pointerEventData)
     {
         arrow.SetActive(false);
+        Boloidle.SetActive(false);
+        Bolotalk.SetActive(true);
         if (scrolling)
         {
             textSpeed = 0.001f;
