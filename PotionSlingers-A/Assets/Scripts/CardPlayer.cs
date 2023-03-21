@@ -206,7 +206,8 @@ public class CardPlayer : MonoBehaviour
     {
         if (playerPips != null)
         {
-            playerPips.GetComponent<Text>().text = pips.ToString() + " Pips";
+            // playerPips.GetComponent<Text>().text = pips.ToString() + " Pips";
+            playerPips.GetComponent<Text>().text = pips.ToString();
         }
     }
 
