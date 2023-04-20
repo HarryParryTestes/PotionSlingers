@@ -1867,7 +1867,10 @@ public class GameManager : MonoBehaviour
     // THROW POTION REQUEST
     public void throwPotion()
     {
-        
+
+        string cardQuality;
+        cardQuality = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality;
+
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
@@ -2097,7 +2100,7 @@ public class GameManager : MonoBehaviour
                 }
 
                 // may need to add this back in
-                tempPlayer.subHealth(damage);
+                tempPlayer.subHealth(damage, cardQuality);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
 
             } else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
@@ -2117,7 +2120,7 @@ public class GameManager : MonoBehaviour
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
-                    tempPlayer.subHealth(damage);
+                    tempPlayer.subHealth(damage, cardQuality);
 
                     // ISADORE LOGIC
                     if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].artifactsUsed == 2)
@@ -2175,7 +2178,7 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
-                    tempPlayer.subHealth(damage);
+                    tempPlayer.subHealth(damage, cardQuality);
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     sendSuccessMessage(4);
                     // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();

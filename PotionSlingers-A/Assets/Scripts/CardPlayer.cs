@@ -36,6 +36,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject healAmount;
     public GameObject hpBar;
     public GameObject healthText;
+    public GameObject hitAnimation;
     private System.Random rng = new System.Random();
 
 
@@ -181,7 +182,7 @@ public class CardPlayer : MonoBehaviour
         updateHealthUI();
     }
 
-    public void updateHealthUI()
+    public void updateHealthUI(string cardQuality = "")
     {
         if(healthText != null && hpBar != null)
         {
@@ -199,7 +200,25 @@ public class CardPlayer : MonoBehaviour
             // playerHP.GetComponent<Text>().text = "HP: " + hp.ToString() + " /10";
             // playerHPCubes.GetComponent<Text>().text = "Cubes: " + hpCubes.ToString();
         }
+
+        switch (cardQuality)
+        {
+            case "Hot":
+                // hitAnimation.SetActive(true);
+                StartCoroutine(showHit());
+                break;
+            default:
+                StartCoroutine(showHit());
+                break;
+        }
         
+    }
+
+    public IEnumerator showHit()
+    {
+        hitAnimation.SetActive(true);
+        yield return new WaitForSeconds(2);
+        hitAnimation.SetActive(false);
     }
 
     public void updatePipsUI()
@@ -1642,7 +1661,7 @@ public class CardPlayer : MonoBehaviour
         updateHealthUI();
     }
 
-    public void subHealth(int damage)
+    public void subHealth(int damage, string cardQuality = "")
     {
         hp -= damage;
 
