@@ -37,6 +37,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject hpBar;
     public GameObject healthText;
     public GameObject hitAnimation;
+    public List<Sprite> hitImages;
     private System.Random rng = new System.Random();
 
 
@@ -205,9 +206,26 @@ public class CardPlayer : MonoBehaviour
         {
             case "Hot":
                 // hitAnimation.SetActive(true);
+                hitAnimation.GetComponent<Image>().sprite = hitImages[0];
+                StartCoroutine(showHit());
+                break;
+            case "Wet":
+                // hitAnimation.SetActive(true);
+                hitAnimation.GetComponent<Image>().sprite = hitImages[1];
+                StartCoroutine(showHit());
+                break;
+            case "Cold":
+                // hitAnimation.SetActive(true);
+                hitAnimation.GetComponent<Image>().sprite = hitImages[2];
+                StartCoroutine(showHit());
+                break;
+            case "Dry":
+                // hitAnimation.SetActive(true);
+                hitAnimation.GetComponent<Image>().sprite = hitImages[3];
                 StartCoroutine(showHit());
                 break;
             default:
+                hitAnimation.GetComponent<Image>().sprite = hitImages[4];
                 StartCoroutine(showHit());
                 break;
         }
@@ -1410,18 +1428,18 @@ public class CardPlayer : MonoBehaviour
             selectedCard.card.cardName == "ANaggingFeeling")
         {
             // if they're not a computer player
-            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
-                && gameObject.GetComponent<ComputerPlayer>() == null)
+            if (gameObject.GetComponent<ComputerPlayer>() == null)
             {
                 // GameManager method
+                Debug.Log("Trash One from the Market Bonus");
                 GameManager.manager.numTrashed = 1;
                 GameManager.manager.trashMarketUI.SetActive(true);
                 GameManager.manager.updateTrashMarketMenu();
             } else
             {
                 // do something else lol
-                // pick a random number and then trash a amarket card
-
+                // pick a random number and then trash a market card
+                Debug.Log("Implement action for the computer player!");
             }
         }
 

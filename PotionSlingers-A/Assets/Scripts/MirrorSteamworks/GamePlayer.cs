@@ -517,6 +517,8 @@ public class GamePlayer : NetworkBehaviour
     [ClientRpc]
     public void RpcThrowCard(string throwerName, string opponentName, int selectedCardInt)
     {
+
+        string cardQuality;
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if(cp.name == opponentName)
@@ -529,6 +531,7 @@ public class GamePlayer : NetworkBehaviour
         {
             if (cp.name == throwerName)
             {
+                cardQuality = cp.holster.cardList[selectedCardInt - 1].card.cardQuality;
                 int damage = 0;
                 Debug.Log("GameManager RPCThrowCard");
 
@@ -615,7 +618,7 @@ public class GamePlayer : NetworkBehaviour
                         {
                             Debug.Log("Damaging player: "+ opponentName);
                             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-                            cp2.subHealth(damage);
+                            cp2.subHealth(damage, cardQuality);
                         }
                     }
                     //GameManager.manager.tempPlayer.subHealth(damage);
@@ -645,7 +648,7 @@ public class GamePlayer : NetworkBehaviour
                             {
                                 Debug.Log("Damaging player: " + opponentName);
                                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
-                                cp2.subHealth(damage);
+                                cp2.subHealth(damage, cardQuality);
                             }
                         }
                         //GameManager.manager.tempPlayer.subHealth(damage);
@@ -715,7 +718,7 @@ public class GamePlayer : NetworkBehaviour
                             {
                                 Debug.Log("Damaging player: " + opponentName);
                                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-                                cp2.subHealth(damage);
+                                cp2.subHealth(damage, cardQuality);
                             }
                         }
                         //GameManager.manager.tempPlayer.subHealth(damage);
