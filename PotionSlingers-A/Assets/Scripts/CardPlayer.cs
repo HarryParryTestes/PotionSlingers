@@ -1250,6 +1250,33 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // snakey motherfucker
+        if (selectedCard.card.cardName == "A Swipe of Snake Oil")
+        {
+
+            GameManager.manager.deckMenu.SetActive(true);
+            GameManager.manager.displayDeck();
+            /*
+            Debug.Log("Command check starting");
+            if (GameManager.manager.Game.multiplayer)
+            {
+                foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                {
+                    if (gp.playerName == GameManager.manager.currentPlayerName)
+                    {
+                        // Debug.Log("Target RPC, TrashOpponentMenu Active");
+                        // gp.RpcTrashOneCard(GameManager.manager.tempPlayer.name);
+                    }
+                }
+                // return damage;
+            } else
+            {
+                // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                // GameManager.manager.displayOpponentHolster();
+            }
+            */
+        }
+
         if (selectedCard.card.cardName != "NorthernOquinox" && selectedCard.card.cardName != "PotionThatMakesHatsUglier" &&
                 selectedCard.card.cardName != "SeriesOfPoisonousWords" && selectedCard.card.cardName != "VerySeriousThreat" &&
                 selectedCard.card.cardName != "BottleOfLeastAmountOfSpiders" && selectedCard.card.cardName != "ContainerFilledWithAngryBees" &&

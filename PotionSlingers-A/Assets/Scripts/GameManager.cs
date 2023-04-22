@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
     private MessageQueue msgQueue;
+    public DeckMenuScroll deckMenuScroll;
 
     public List<Card> starterCards;
 
@@ -65,6 +66,7 @@ public class GameManager : MonoBehaviour
     public GameObject shieldMenu;
     public GameObject bubbleWandMenu;
     public GameObject chooseOpponentMenu;
+    public GameObject deckMenu;
 
     public TMPro.TextMeshProUGUI trashText;
 
@@ -106,7 +108,9 @@ public class GameManager : MonoBehaviour
     public bool damage = false;
     public bool trashDeckBonus = false;
     public bool replaceStarter = false;
+    public bool replace = false;
     public bool mirrorCommand = false;
+    public bool snakeBonus = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -756,6 +760,11 @@ public class GameManager : MonoBehaviour
                 loadedCardInt = i;
             }
         }
+    }
+
+    public void displayDeck()
+    {
+        deckMenuScroll.displayCards();
     }
 
     public void opponentTrashesHolster(CharacterDisplay cd)
@@ -4126,6 +4135,11 @@ public class GameManager : MonoBehaviour
             }
             sendSuccessMessage(9);
         }
+    }
+
+    public void trashCardInDeck(CardDisplay cd)
+    {
+        deckMenuScroll.addCardToTrash(cd);
     }
 
     public void sendSuccessMessage(int notif)
