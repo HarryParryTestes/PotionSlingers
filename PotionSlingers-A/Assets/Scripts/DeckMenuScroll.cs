@@ -19,6 +19,8 @@ public class DeckMenuScroll : MonoBehaviour
     public CardDisplay cd2;
     public CardDisplay cd3;
 
+    public GameObject errorText;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,16 +33,35 @@ public class DeckMenuScroll : MonoBehaviour
         });
     }
 
+    public IEnumerator showErrorMessage()
+    {
+        errorText.SetActive(true);
+        yield return new WaitForSeconds(2);
+        errorText.SetActive(false);
+
+    }
+
     public void addCardToTrash(CardDisplay cd)
     {
         Debug.Log(cd.card.cardName);
+
+        // Check if it's a starter card
+        if(cd.card.cardQuality == "Starter")
+        {
+            Debug.Log("Error! Add UI in the DeckScrollMenu to show this!");
+            StartCoroutine(showErrorMessage());
+            return;
+        }
+
         for(int i = 0; i < GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList.Count; i++)
         {
             if(GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList[i].cardName == cd.card.cardName)
             {
                 Debug.Log("Card found");
                 GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList.RemoveAt(i);
+                GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.updateCardSprite();
                 GameManager.manager.snakeBonus = true;
+                gameObject.SetActive(false);
                 GameManager.manager.chooseOpponentMenu.SetActive(true);
                 GameManager.manager.displayOpponents();
                 return;

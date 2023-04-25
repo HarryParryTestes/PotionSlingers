@@ -15,7 +15,7 @@ public class CardThrow : MonoBehaviour, IPointerDownHandler
     {
         CharacterDisplay opCharacter = this.gameObject.GetComponent<CharacterDisplay>();
         Debug.Log("Attacking Char: " + opCharacter.character.cardName);
-        manager.setOPName(opCharacter.character.cardName);
+        manager.setOPName(opCharacter);
         // manager.setOPInt(id);
         Throw();
     }

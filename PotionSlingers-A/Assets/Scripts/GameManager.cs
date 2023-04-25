@@ -733,9 +733,35 @@ public class GameManager : MonoBehaviour
         selectedOpponentInt = num;
     }
 
-    public void setOPName(string characterName)
+    public void setOPName(CharacterDisplay character)
     {
-        selectedOpponentCharName = characterName;
+        selectedOpponentCharName = character.character.name;
+        foreach (CardPlayer cp in players)
+        {
+            if (cp.charName == character.character.name)
+            {
+                Debug.Log("Opponent found");
+                tempPlayer = cp;
+                break;
+            }
+        }
+        /*
+        if (multiplayer)
+        {
+
+        }
+        else
+        {
+            Debug.Log("Singleplayer");
+            foreach(CardPlayer cp in players)
+            {
+                if(cp.charName == characterName)
+                {
+                    tempPlayer = cp;
+                }
+            }
+        }
+        */
     }
 
     public void setLoadedInt(string cardName)
@@ -919,8 +945,47 @@ public class GameManager : MonoBehaviour
         opponentCard4.updateCard(tempPlayer.holster.cardList[3].card);
     }
 
+    public void stealCard(int selectedCard)
+    {
+        Debug.Log("Stealing card from " + tempPlayer.charName);
+        foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            if (cd.card.cardName == "placeholder")
+            {
+                cd.updateCard(tempPlayer.holster.cardList[selectedCard - 1].card);
+                tempPlayer.holster.cardList[selectedCard - 1].updateCard(td.card);
+                sendSuccessMessage(20);
+                break;
+            }
+        }
+    }
+
     public void replaceOpponentCardWithStarter(int selectedCard)
     {
+        if (snakeBonus)
+        {
+            if (Game.multiplayer)
+            {
+                foreach (GamePlayer gp in Game.GamePlayers)
+                {
+                    // if the steam usernames match
+                    if (gp.playerName == tempPlayer.name)
+                    {
+                        Debug.Log("Starting Mirror CmdTrashCard");
+                        // do the Mirror Command
+                        // gp.CmdStealCard(tempPlayer.name, selectedCard);
+                    }
+                }
+            } else
+            {
+                stealCard(selectedCard);
+            }
+
+            snakeBonus = false;
+            opponentHolsterMenu.SetActive(false);
+            return;
+        }
+
         if (replaceStarter)
         {
             if (tempPlayer.holster.cardList[selectedCard - 1].card.cardType == "Potion")
@@ -1876,6 +1941,15 @@ public class GameManager : MonoBehaviour
     // THROW POTION REQUEST
     public void throwPotion()
     {
+        if (snakeBonus)
+        {
+            Debug.Log("SNAKE!!!");
+            // pull the opponent holster UI up here
+            opponentHolsterMenu.SetActive(true);
+            displayOpponentHolster();
+            Debug.Log(tempPlayer.charName);
+            return;
+        }
 
         string cardQuality;
         cardQuality = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality;
