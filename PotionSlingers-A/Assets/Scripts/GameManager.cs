@@ -969,11 +969,11 @@ public class GameManager : MonoBehaviour
                 foreach (GamePlayer gp in Game.GamePlayers)
                 {
                     // if the steam usernames match
-                    if (gp.playerName == tempPlayer.name)
+                    if (gp.playerName == currentPlayerName)
                     {
-                        Debug.Log("Starting Mirror CmdTrashCard");
+                        Debug.Log("Starting Mirror CmdStealCard");
                         // do the Mirror Command
-                        // gp.CmdStealCard(tempPlayer.name, selectedCard);
+                        gp.CmdStealCard(tempPlayer.name, selectedCard);
                     }
                 }
             } else

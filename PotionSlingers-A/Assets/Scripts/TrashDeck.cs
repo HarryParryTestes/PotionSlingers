@@ -55,6 +55,11 @@ public class TrashDeck : MonoBehaviour
         m3.scarpettaMenu.gameObject.SetActive(false);
     }
 
+    public void addCard(Card card)
+    {
+        deckList.Add(card);
+    }
+
     public void addCard(CardDisplay cd)
     {
         deckList.Add(cd.card);

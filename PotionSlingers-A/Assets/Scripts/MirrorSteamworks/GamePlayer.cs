@@ -321,6 +321,45 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [Command]
+    public void CmdTrashCardInDeck(int deckIndex)
+    {
+        Debug.Log("Executing CmdTrashCardInDeck on server");
+        RpcTrashCardInDeck(deckIndex);
+    }
+
+    [ClientRpc]
+    public void RpcTrashCardInDeck(int i)
+    {
+        Debug.Log("RPC for trashing card in deck");
+        GameManager.manager.td.addCard(GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList[i]);
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList.RemoveAt(i);
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.updateCardSprite();
+    }
+
+
+    [Command]
+    public void CmdStealCard(string opponentName, int selectedCard)
+    {
+        // shuffle market decks
+        Debug.Log("Executing CmdStealCard on the server for player: " + GameManager.manager.currentPlayerName);
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.name == opponentName)
+            {
+                GameManager.manager.tempPlayer = cp;
+            }
+        }
+        RpcStealCard(selectedCard);
+    }
+
+    [ClientRpc]
+    public void RpcStealCard(int selectedCard)
+    {
+        Debug.Log("RPC for stealing card from someone");
+        GameManager.manager.stealCard(selectedCard);
+    }
+
+        [Command]
     public void CmdEverybodyTrashOneCard(string throwerName)
     {
         // shuffle market decks

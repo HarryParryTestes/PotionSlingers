@@ -21,6 +21,19 @@ public class DeckMenuScroll : MonoBehaviour
 
     public GameObject errorText;
 
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -58,8 +71,27 @@ public class DeckMenuScroll : MonoBehaviour
             if(GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList[i].cardName == cd.card.cardName)
             {
                 Debug.Log("Card found");
-                GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList.RemoveAt(i);
-                GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.updateCardSprite();
+                if (Game.multiplayer)
+                {
+                    GameManager.manager.snakeBonus = true;
+                    // trigger Command that removes card from that player's deck
+                    foreach (GamePlayer gp in Game.GamePlayers)
+                    {
+                        // if the steam usernames match
+                        if (gp.playerName == GameManager.manager.currentPlayerName)
+                        {
+                            Debug.Log("Starting Mirror CmdTrashCardInDeck");
+                            // do the Mirror Command
+                            gp.CmdTrashCardInDeck(i);
+                        }
+                    }
+                } else
+                {
+                    GameManager.manager.td.addCard(GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList[i]);
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList.RemoveAt(i);
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.updateCardSprite();
+                }
+                
                 GameManager.manager.snakeBonus = true;
                 gameObject.SetActive(false);
                 GameManager.manager.chooseOpponentMenu.SetActive(true);
@@ -67,7 +99,6 @@ public class DeckMenuScroll : MonoBehaviour
                 return;
             }
         }
-        // update with placeholder
     }
 
     public void initDecklist()
