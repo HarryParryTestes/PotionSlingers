@@ -28,8 +28,16 @@ public class ComputerPlayer : CardPlayer
 
     public int chooseRandomPlayer()
     {
-        int num = rng.Next(0, GameManager.manager.players.Length);
+        Debug.Log("Number of players: " + GameManager.manager.numPlayers);
+
+        int num = rng.Next(0, GameManager.manager.numPlayers);
         Debug.Log("Number: " + num);
+
+        if(j == num)
+        {
+            Debug.Log("Why are you hitting yourself???");
+            chooseRandomPlayer();
+        }
         if (charName == GameManager.manager.players[num].character.character.cardName)
         {
             Debug.Log("Changing number");

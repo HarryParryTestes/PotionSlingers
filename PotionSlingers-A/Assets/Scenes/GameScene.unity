@@ -47744,6 +47744,7 @@ MonoBehaviour:
   blackRainBonus: 0
   opponentPreventedDamage: 0
   healBonus: 0
+  game: {fileID: 0}
 --- !u!1 &906331845
 GameObject:
   m_ObjectHideFlags: 0
@@ -105161,6 +105162,7 @@ MonoBehaviour:
   blackRainBonus: 0
   opponentPreventedDamage: 0
   healBonus: 0
+  game: {fileID: 0}
 --- !u!1 &2032555036
 GameObject:
   m_ObjectHideFlags: 0
@@ -112098,6 +112100,7 @@ MonoBehaviour:
   blackRainBonus: 0
   opponentPreventedDamage: 0
   healBonus: 0
+  game: {fileID: 0}
 --- !u!1 &2203842972192241850
 GameObject:
   m_ObjectHideFlags: 0
@@ -116271,6 +116274,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4669177692932267975, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5130425036996959873, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -116482,6 +116489,14 @@ PrefabInstance:
     - target: {fileID: 6884249105785936791, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035737726269477743, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7035737726269477743, guid: 53989111815513c41a3163993b3810a5, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -33.75
       objectReference: {fileID: 0}
     - target: {fileID: 7062766300744719757, guid: 53989111815513c41a3163993b3810a5, type: 3}
       propertyPath: m_IsActive
@@ -117023,6 +117038,7 @@ MonoBehaviour:
   blackRainBonus: 0
   opponentPreventedDamage: 0
   healBonus: 0
+  game: {fileID: 0}
 --- !u!114 &3975660438111221351 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3975660437273336509, guid: 53989111815513c41a3163993b3810a5, type: 3}

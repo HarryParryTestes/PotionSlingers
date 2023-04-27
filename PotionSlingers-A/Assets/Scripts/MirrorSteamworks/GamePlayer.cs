@@ -1138,15 +1138,23 @@ public class GamePlayer : NetworkBehaviour
                 {
                     // not able to do action
                     // fix this later
-                    //sendErrorMessage(13);
+                    // GameManagar.manager.sendErrorMessage(13);
                 }
 
                 if (cp.isPluot && cp.character.character.flipped)
                 {
-                    // prompt ui for adding Extra Inventory into holster
-                    // Target RPC for Pluot Menu
-                    RpcPluotMenu(throwerName);
-                    //ExtraInventoryMenu.SetActive(true);
+                    if (cp.character.character.flipped)
+                    {
+                        // prompt ui for adding Extra Inventory into holster
+                        // Target RPC for Pluot Menu
+                        RpcPluotMenu(throwerName);
+                        //ExtraInventoryMenu.SetActive(true);
+                    }
+                    else
+                    {
+                        GameManager.manager.sendErrorMessage(13);
+                    }
+
                 }
                 else
                 {
@@ -1254,7 +1262,7 @@ public class GamePlayer : NetworkBehaviour
                 else
                 {
                     // character card flip error
-                    //sendErrorMessage(11);
+                    GameManager.manager.sendErrorMessage(11);
                     cp.character.menu.SetActive(false);
                 }
             }

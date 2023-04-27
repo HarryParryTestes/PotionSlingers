@@ -1742,15 +1742,17 @@ public class GameManager : MonoBehaviour
             // sendErrorMessage(13);
         }
 
-        if (players[myPlayerIndex].isPluot && players[myPlayerIndex].character.character.flipped)
+        if (players[myPlayerIndex].isPluot)
         {
-            // prompt ui for adding Extra Inventory into holster
-            ExtraInventoryMenu.SetActive(true);
-        }
-        else
-        {
-            // not able to do action
-            //sendErrorMessage(13);
+            if (players[myPlayerIndex].character.character.flipped)
+            {
+                // prompt ui for adding Extra Inventory into holster
+                ExtraInventoryMenu.SetActive(true);
+            } else
+            {
+                sendErrorMessage(13);
+            }
+            
         }
 
         if (players[myPlayerIndex].isReets)
@@ -2068,8 +2070,8 @@ public class GameManager : MonoBehaviour
                 if (cp.character.character.cardName == selectedOpponentCharName)
                 {
                     Debug.Log("Name matched");
-                    Debug.Log("Enemy's charName: " + tempPlayer.charName);
                     tempPlayer = cp;
+                    Debug.Log("Enemy's charName: " + tempPlayer.charName);
                 }
             }
         }
