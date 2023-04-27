@@ -28,11 +28,18 @@ public class ComputerPlayer : CardPlayer
 
     public int chooseRandomPlayer()
     {
-        int num = rng.Next(0, 4);
+        int num = rng.Next(0, GameManager.manager.players.Length);
         Debug.Log("Number: " + num);
         if (charName == GameManager.manager.players[num].character.character.cardName)
         {
             Debug.Log("Changing number");
+            chooseRandomPlayer();
+        }
+
+        // if the player is dead, don't attack them
+        if (GameManager.manager.players[num].dead)
+        {
+            Debug.Log("This player is dead! Changing number");
             chooseRandomPlayer();
         }
         return num;

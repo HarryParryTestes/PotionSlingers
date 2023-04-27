@@ -71,6 +71,19 @@ public class CardPlayer : MonoBehaviour
     public bool opponentPreventedDamage = false;
     public bool healBonus = false;
 
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     /*
     public CardPlayer(int user_id, string name)
     {
@@ -522,6 +535,7 @@ public class CardPlayer : MonoBehaviour
                 selectedCard.aPotion.card.cardName != "VintageAromaticKate" && selectedCard.aPotion.card.cardName != "JarFullOfGlitter" &&
                 selectedCard.aPotion.card.cardName != "KissFromTheLipsOfAnAncientLove" && selectedCard.aPotion.card.cardName != "HumblingGlimpse")
             {
+                Debug.Log("SKATEBOARD TRICK DONE!!!");
                 GameManager.manager.sendSuccessMessage(16);
                 tricks++;
                 // after 4 tricks, add an essence cube to their collection
@@ -529,6 +543,7 @@ public class CardPlayer : MonoBehaviour
                 {
                     tricks = 0;
                     hpCubes++;
+                    updateHealthUI();
 
                     // TODO: add success message signifying you did a trick
                 }
@@ -876,8 +891,10 @@ public class CardPlayer : MonoBehaviour
             }
 
             // Voluptuous Gallipot of Double Entendre
+            // come back to this
             if (selectedCard.card.cardName == "VoluptuousGallipot")
             {
+                Debug.Log("Gal, your pot!");
                 // Command check starting
                 if (GameManager.manager.Game.multiplayer)
                 {
@@ -891,12 +908,12 @@ public class CardPlayer : MonoBehaviour
                     }
                     return damage;
                 }
+                
 
                 // add a check for a ComputerPlayer component
 
                 // if they're not a computer player
-                if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
-                    && gameObject.GetComponent<ComputerPlayer>() == null)
+                if (gameObject.GetComponent<ComputerPlayer>() == null)
                 {
                     GameManager.manager.opponentHolsterMenu.SetActive(true);
                     GameManager.manager.displayOpponentHolster();
@@ -906,7 +923,7 @@ public class CardPlayer : MonoBehaviour
                     // maybe do something for computer
                 }
 
-                
+                return damage;
             }
         }
 
@@ -931,9 +948,8 @@ public class CardPlayer : MonoBehaviour
                 {
                     // add a check for a ComputerPlayer component
 
-                    // if they're not a computer player
-                    if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
-                        && gameObject.GetComponent<ComputerPlayer>() == null)
+                    // if the ememy is not a computer player
+                    if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
                     {
                         GameManager.manager.opponentHolsterMenu.SetActive(true);
                         GameManager.manager.displayOpponentHolster();
@@ -941,6 +957,7 @@ public class CardPlayer : MonoBehaviour
                     else
                     {
                         // maybe do something for computer
+                        // make method that trashes a random card
                     }
 
                     // GameManager.manager.opponentHolsterMenu.SetActive(true);
@@ -967,8 +984,7 @@ public class CardPlayer : MonoBehaviour
                     // add a check for a ComputerPlayer component
 
                     // if they're not a computer player
-                    if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
-                        && gameObject.GetComponent<ComputerPlayer>() == null)
+                    if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
                     {
                         GameManager.manager.opponentHolsterMenu.SetActive(true);
                         GameManager.manager.displayOpponentHolster();
@@ -1254,9 +1270,9 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "A Swipe of Snake Oil")
         {
 
-            GameManager.manager.deckMenu.SetActive(true);
-            GameManager.manager.displayDeck();
-            /*
+            // GameManager.manager.deckMenu.SetActive(true);
+            // GameManager.manager.displayDeck();
+            
             Debug.Log("Command check starting");
             if (GameManager.manager.Game.multiplayer)
             {
@@ -1264,17 +1280,18 @@ public class CardPlayer : MonoBehaviour
                 {
                     if (gp.playerName == GameManager.manager.currentPlayerName)
                     {
-                        // Debug.Log("Target RPC, TrashOpponentMenu Active");
-                        // gp.RpcTrashOneCard(GameManager.manager.tempPlayer.name);
+                        Debug.Log("Target RPC, DisplayDeckMenu");
+                        gp.RpcDisplayDeckMenu();
                     }
                 }
-                // return damage;
+                
             } else
             {
-                // GameManager.manager.opponentHolsterMenu.SetActive(true);
-                // GameManager.manager.displayOpponentHolster();
+                // not networked logic
+                GameManager.manager.deckMenu.SetActive(true);
+                GameManager.manager.displayDeck();
             }
-            */
+            return damage;
         }
 
         if (selectedCard.card.cardName != "NorthernOquinox" && selectedCard.card.cardName != "PotionThatMakesHatsUglier" &&
@@ -1751,6 +1768,30 @@ public class CardPlayer : MonoBehaviour
                     // hold on partner! don't do this yet
                     // GameManager.manager.pauseUI.SetActive(true);
                     GameManager.manager.dialog.endTutorialDialog();
+                } else
+                {
+                    int numDead = 0;
+                    int numOfThem = 0;
+                    // check if every player is dead except one
+                    foreach(CardPlayer cp in GameManager.manager.players)
+                    {
+                        if (cp.gameObject.activeInHierarchy)
+                        {
+                            numOfThem++;
+                        }
+
+                        if (cp.dead)
+                        {
+                            numDead++;
+                        }
+
+                        if(numOfThem - numDead == 1)
+                        {
+                            Debug.Log("The game is over, somebody won!");
+                            Game.completedGame = true;
+                            GameManager.manager.pauseUI.SetActive(true);
+                        }
+                    }
                 }
             }
         }

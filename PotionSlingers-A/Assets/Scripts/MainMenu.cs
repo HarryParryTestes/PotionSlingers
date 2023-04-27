@@ -120,6 +120,8 @@ public class MainMenu : MonoBehaviour
 	public TMPro.TextMeshProUGUI expMenuLevelText;
 	public TMPro.TextMeshProUGUI expMenuExpText;
 
+	public GameObject levelUpText;
+
 
 	void Awake()
     {
@@ -188,7 +190,7 @@ public class MainMenu : MonoBehaviour
 					initExperienceMenu(50);
 					return;
 				}
-				initExperienceMenu(30);
+				initExperienceMenu(100);
             }
 
 		}
@@ -252,6 +254,7 @@ public class MainMenu : MonoBehaviour
 	public void levelUp(int level)
     {
 		Debug.Log("You leveled up!!!");
+		levelUpText.SetActive(true);
 		points -= (int)expMenuBar.maxValue;
 		level++;
 		Debug.Log("EXP: " + points);
@@ -274,6 +277,22 @@ public class MainMenu : MonoBehaviour
 			case 4:
 				levelBar.maxValue = 400;
 				expMenuBar.maxValue = 400;
+				break;
+			case 5:
+				levelBar.maxValue = 500;
+				expMenuBar.maxValue = 500;
+				break;
+			case 6:
+				levelBar.maxValue = 600;
+				expMenuBar.maxValue = 600;
+				break;
+			case 7:
+				levelBar.maxValue = 800;
+				expMenuBar.maxValue = 800;
+				break;
+			case 8:
+				levelBar.maxValue = 1000;
+				expMenuBar.maxValue = 1000;
 				break;
 			default:
 				levelBar.maxValue = 200;

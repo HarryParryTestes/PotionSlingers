@@ -259,6 +259,14 @@ public class GamePlayer : NetworkBehaviour
     }
 
     [TargetRpc]
+    public void RpcDisplayDeckMenu()
+    {
+        Debug.Log("Pulling up Deck Menu for: " + GameManager.manager.currentPlayerName);
+        GameManager.manager.deckMenu.SetActive(true);
+        GameManager.manager.displayDeck();
+    }
+
+    [TargetRpc]
     public void RpcTrashOneCard(string throwerName)
     {
         Debug.Log("Pulling up Opponent Trash Menu for: " + playerName);

@@ -1947,7 +1947,6 @@ public class GameManager : MonoBehaviour
             // pull the opponent holster UI up here
             opponentHolsterMenu.SetActive(true);
             displayOpponentHolster();
-            Debug.Log(tempPlayer.charName);
             return;
         }
 
@@ -2069,9 +2068,8 @@ public class GameManager : MonoBehaviour
                 if (cp.character.character.cardName == selectedOpponentCharName)
                 {
                     Debug.Log("Name matched");
+                    Debug.Log("Enemy's charName: " + tempPlayer.charName);
                     tempPlayer = cp;
-                    // idiot, don't put this here
-                    // return;
                 }
             }
         }
