@@ -141,7 +141,7 @@ public class MainMenuManager : MonoBehaviour
                     newLobbyListItemScript.SetLobbyItemValues();
 
 
-                    newLobbyListItem.transform.SetParent(ContentPanel.transform);
+                    newLobbyListItem.transform.SetParent(ContentPanel.transform, true);
                     newLobbyListItem.transform.localScale = Vector3.one;
 
                     listOfLobbyListItems.Add(newLobbyListItem);

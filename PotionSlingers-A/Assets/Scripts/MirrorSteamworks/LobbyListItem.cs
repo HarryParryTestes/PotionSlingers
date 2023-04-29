@@ -17,6 +17,8 @@ public class LobbyListItem : MonoBehaviour
 
     [SerializeField] private TMPro.TextMeshProUGUI LobbyNameText;
     [SerializeField] private TMPro.TextMeshProUGUI NumberOfPlayersText;
+    public GameObject image;
+    public GameObject joinButton;
 
     private MyNetworkManager game;
     private MyNetworkManager Game
@@ -47,6 +49,12 @@ public class LobbyListItem : MonoBehaviour
     {
         LobbyNameText.text = lobbyName;
         NumberOfPlayersText.text = "Players: " + numberOfPlayers.ToString() + "/" + maxNumberOfPlayers.ToString();
+        // gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, 0);
+        // this works!
+        LobbyNameText.transform.Translate(0, 0, 100);
+        NumberOfPlayersText.transform.Translate(0, 0, 100);
+        image.transform.Translate(0, 0, 100);
+        joinButton.transform.Translate(0, 0, 100);
     }
     public void JoinLobby()
     {
