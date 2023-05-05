@@ -2560,6 +2560,17 @@ public class GameManager : MonoBehaviour
     public void preLoadPotion()
     {
         int cards = 0;
+        if (Game.multiplayer)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i].name == currentPlayerName)
+                {
+                    myPlayerIndex = i;
+                }
+            }
+        }
+
         foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
             if (cd.card.cardType == "Artifact" || cd.card.cardType == "Vessel")
@@ -2590,13 +2601,29 @@ public class GameManager : MonoBehaviour
 
     public void preThrowPotion()
     {
+
+        if (Game.multiplayer)
+        {
+            for (int i = 0; i < players.Length; i++)
+            {
+                if (players[i].name == currentPlayerName)
+                {
+                    Debug.Log("myPlayerIndex changed???");
+                    myPlayerIndex = i;
+                }
+            }
+        }
+
         if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion" &&
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Artifact" &&
             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Vessel")
         {
             Debug.Log("Throwing ring, ERROR");
             sendErrorMessage(16);
-            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
+            if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
+            {
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
+            }
 
         }
         else
