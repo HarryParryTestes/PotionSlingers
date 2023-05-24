@@ -228,7 +228,7 @@ public class ComputerPlayer : CardPlayer
                 // if two players, just hardcode throwing at player 1
                 if(GameManager.manager.numPlayers == 2)
                 {
-                    GameManager.manager.selectedOpponentCharName = GameManager.manager.players[0].character.character.cardName;
+                    GameManager.manager.selectedOpponentName = GameManager.manager.players[0].name;
                     GameManager.manager.selectedCardInt = i + 1;
                     GameManager.manager.throwPotion();
                     StartCoroutine(waitASecBro());
@@ -236,8 +236,8 @@ public class ComputerPlayer : CardPlayer
                 }
 
                 int number = chooseRandomPlayer();
-                GameManager.manager.selectedOpponentCharName = GameManager.manager.players[number].character.character.cardName;
-                Debug.Log("Opponent name is: " + GameManager.manager.selectedOpponentCharName);
+                GameManager.manager.selectedOpponentName = GameManager.manager.players[number].name;
+                Debug.Log("Opponent name is: " + GameManager.manager.selectedOpponentName);
                 GameManager.manager.selectedCardInt = i + 1;
                 GameManager.manager.throwPotion();
                 StartCoroutine(waitASecBro());
@@ -255,7 +255,7 @@ public class ComputerPlayer : CardPlayer
                     {
                         int number = chooseRandomPlayer();
                         Debug.Log("Number is: " + number);
-                        GameManager.manager.selectedOpponentCharName = GameManager.manager.players[number].character.character.cardName;
+                        GameManager.manager.selectedOpponentName = GameManager.manager.players[number].name;
                         GameManager.manager.selectedCardInt = k + 1;
                         GameManager.manager.throwPotion();
                     }

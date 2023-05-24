@@ -104,7 +104,7 @@ public class CardPlayer : MonoBehaviour
         {
             foreach(CardPlayer player in GameManager.manager.players)
             {
-                if(player.character.character.cardName == GameManager.manager.selectedOpponentCharName)
+                if(player.name == GameManager.manager.selectedOpponentName)
                 {
                     player.subHealth(2);
                     GameManager.manager.damage = false;

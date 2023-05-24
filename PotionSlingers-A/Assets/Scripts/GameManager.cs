@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     public int selectedOpponentInt;
     public int opponentCardInt;
     public int previousDamage;
-    public string selectedOpponentCharName;
+    public string selectedOpponentName;
     public string currentPlayerName;
     public int loadedCardInt;
     public int myPlayerIndex = 0; // used to be currentPlayer
@@ -84,8 +84,11 @@ public class GameManager : MonoBehaviour
     public GameObject p3;
     public GameObject p4;
     public CharacterDisplay opLeft;
+    public TMPro.TextMeshProUGUI opLeftText;
     public CharacterDisplay opTop;
+    public TMPro.TextMeshProUGUI opTopText;
     public CharacterDisplay opRight;
+    public TMPro.TextMeshProUGUI opRightText;
     public CharacterDisplay opTrashLeft;
     public CharacterDisplay opTrashTop;
     public CharacterDisplay opTrashRight;
@@ -733,8 +736,20 @@ public class GameManager : MonoBehaviour
         selectedOpponentInt = num;
     }
 
-    public void setOPName(CharacterDisplay character)
+    public void setOPName(string username)
     {
+        foreach(CardPlayer cp in players)
+        {
+            if(cp.name == username)
+            {
+                Debug.Log("Opponent found");
+                tempPlayer = cp;
+                selectedOpponentName = cp.name;
+                break;
+            }
+        }
+
+        /*
         selectedOpponentCharName = character.character.name;
         foreach (CardPlayer cp in players)
         {
@@ -745,6 +760,8 @@ public class GameManager : MonoBehaviour
                 break;
             }
         }
+        */
+
         /*
         if (multiplayer)
         {
@@ -838,6 +855,7 @@ public class GameManager : MonoBehaviour
             opLeft.gameObject.SetActive(false);
             opRight.gameObject.SetActive(false);
             opTop.onCharacterClick("Bolo");
+            opTopText.text = "Bolo";
             return;
         }
 
@@ -897,6 +915,7 @@ public class GameManager : MonoBehaviour
             if (Game.multiplayer)
             {
                 opTop.updateCharacter(players[1].character.character);
+                opTopText.text = players[1].name;
                 opLeft.gameObject.SetActive(false);
                 opRight.gameObject.SetActive(false);
             }
@@ -920,7 +939,9 @@ public class GameManager : MonoBehaviour
             int tracker = 0;
 
             opLeft.updateCharacter(players[1].character.character);
+            opLeftText.text = players[1].name;
             opTop.updateCharacter(players[2].character.character);
+            opTopText.text = players[2].name;
 
         }
 
@@ -932,8 +953,11 @@ public class GameManager : MonoBehaviour
             int tracker = 0;
 
             opLeft.updateCharacter(players[1].character.character);
+            opLeftText.text = players[1].name;
             opTop.updateCharacter(players[2].character.character);
-            opRight.updateCharacter(players[3].character.character);           
+            opTopText.text = players[2].name;
+            opRight.updateCharacter(players[3].character.character);
+            opRightText.text = players[3].name;
         }
     }
 
@@ -2048,7 +2072,7 @@ public class GameManager : MonoBehaviour
         {
             foreach (CardPlayer cp in players)
             {
-                if(cp.character.character.cardName == selectedOpponentCharName)
+                if(cp.name == selectedOpponentName)
                 {
                     players[myPlayerIndex].subPips(nicklesDamage);
                     cp.subHealth(nicklesDamage);
@@ -2067,7 +2091,7 @@ public class GameManager : MonoBehaviour
         {
             if (cp.gameObject.activeInHierarchy)
             {
-                if (cp.character.character.cardName == selectedOpponentCharName)
+                if (cp.name == selectedOpponentName)
                 {
                     Debug.Log("Name matched");
                     tempPlayer = cp;
@@ -2083,7 +2107,7 @@ public class GameManager : MonoBehaviour
 
             foreach (CardPlayer cp in players)
             {
-                if (cp.character.character.cardName == selectedOpponentCharName)
+                if (cp.name == selectedOpponentName)
                 {
                     cp.subHealth(damage);
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
