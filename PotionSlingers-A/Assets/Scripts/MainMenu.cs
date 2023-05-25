@@ -130,7 +130,7 @@ public class MainMenu : MonoBehaviour
         //DontDestroyOnLoad(gameObject);
         if (!SteamManager.Initialized) { return; }
         greetingName = SteamFriends.GetPersonaName().ToString();
-        greeting.text = "Hello, "+ greetingName;
+        greeting.text = "Hello, "+ greetingName + "!";
 
 		SteamUserStats.GetStat("exp_points", out points);
 		SteamUserStats.GetStat("exp_level", out level);

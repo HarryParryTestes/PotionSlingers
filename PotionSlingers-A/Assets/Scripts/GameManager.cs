@@ -85,10 +85,13 @@ public class GameManager : MonoBehaviour
     public GameObject p4;
     public CharacterDisplay opLeft;
     public TMPro.TextMeshProUGUI opLeftText;
+    public TMPro.TextMeshProUGUI opLeftTrashText;
     public CharacterDisplay opTop;
     public TMPro.TextMeshProUGUI opTopText;
+    public TMPro.TextMeshProUGUI opTopTrashText;
     public CharacterDisplay opRight;
     public TMPro.TextMeshProUGUI opRightText;
+    public TMPro.TextMeshProUGUI opRightTrashText;
     public CharacterDisplay opTrashLeft;
     public CharacterDisplay opTrashTop;
     public CharacterDisplay opTrashRight;
@@ -868,6 +871,7 @@ public class GameManager : MonoBehaviour
                 if (Game.multiplayer)
                 {
                     opTrashTop.updateCharacter(players[1].character.character);
+                    opTopTrashText.text = players[1].name;
                     opTrashLeft.gameObject.SetActive(false);
                     opTrashRight.gameObject.SetActive(false);
                 }
@@ -875,6 +879,7 @@ public class GameManager : MonoBehaviour
                 {
                     // changing this to 1 from 2 should fix it
                     opTrashTop.updateCharacter(players[1].character.character);
+                    opTopTrashText.text = players[1].name;
                     opTrashLeft.gameObject.SetActive(false);
                     opTrashRight.gameObject.SetActive(false);
                 }
@@ -891,7 +896,9 @@ public class GameManager : MonoBehaviour
                 int tracker = 0;
 
                 opTrashLeft.updateCharacter(players[1].character.character);
+                opLeftTrashText.text = players[1].name;
                 opTrashTop.updateCharacter(players[2].character.character);
+                opTopTrashText.text = players[2].name;
 
             }
 
@@ -903,8 +910,11 @@ public class GameManager : MonoBehaviour
                 int tracker = 0;
 
                 opTrashLeft.updateCharacter(players[1].character.character);
+                opLeftTrashText.text = players[1].name;
                 opTrashTop.updateCharacter(players[2].character.character);
+                opTopTrashText.text = players[2].name;
                 opTrashRight.updateCharacter(players[3].character.character);
+                opRightTrashText.text = players[3].name;
             }
             return;
         }
@@ -923,6 +933,7 @@ public class GameManager : MonoBehaviour
             {
                 // changing this to 1 from 2 should fix it
                 opTop.updateCharacter(players[1].character.character);
+                opTopText.text = players[1].name;
                 opLeft.gameObject.SetActive(false);
                 opRight.gameObject.SetActive(false);
             }
@@ -1622,7 +1633,18 @@ public class GameManager : MonoBehaviour
 
     public void setNicklesAttack(int damage)
     {
+        // why did you never check their money? Dumbass lol
+        if(damage > players[myPlayerIndex].pips)
+        {
+            Debug.Log("Nickles action failed");
+            sendErrorMessage(6);
+            return;
+        }
+
+        Debug.Log("Nickles action succeeded");
+        players[myPlayerIndex].nicklesAction = true;
         nicklesDamage = damage;
+        chooseOpponentMenu.SetActive(true);
         displayOpponents();
     }
 
@@ -1976,8 +1998,9 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        string cardQuality;
-        cardQuality = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality;
+        string cardQuality = "None";
+        if (!players[myPlayerIndex].nicklesAction)
+            cardQuality = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality;
 
         // TUTORIAL LOGIC
         if (Game.tutorial)
@@ -2074,9 +2097,11 @@ public class GameManager : MonoBehaviour
             {
                 if(cp.name == selectedOpponentName)
                 {
+                    Debug.Log("Nickles damage action damaged for: " + nicklesDamage);
                     players[myPlayerIndex].subPips(nicklesDamage);
                     cp.subHealth(nicklesDamage);
                     nicklesDamage = 0;
+                    sendSuccessMessage(21);
                     // add a notification here??? up to you future denzill
                     
                     return;
