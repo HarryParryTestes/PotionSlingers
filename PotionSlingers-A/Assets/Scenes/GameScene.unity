@@ -31511,7 +31511,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1595608077}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -42016,7 +42016,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1595608077}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -51751,6 +51751,7 @@ MonoBehaviour:
   dead: 0
   potionsThrown: 0
   artifactsUsed: 0
+  uniqueArtifactsUsed: 0
   tricks: 0
   character: {fileID: 189316755}
   ringBonus: 0
@@ -51774,6 +51775,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
   - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
   - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  lastArtifactUsed: 
   uniqueCards: []
   throwBonus: 0
   vesselBonus: 0
@@ -66165,7 +66167,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1271437220}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -71663,14 +71665,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 1271437214}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 0}
-  cardSelected: 0
-  game: {fileID: 0}
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1271437218}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1674622730}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1901167827723679912}
+        m_TargetAssemblyTypeName: CardPlayer, Assembly-CSharp
+        m_MethodName: displayDeck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &1272827877
 GameObject:
   m_ObjectHideFlags: 0
@@ -78077,7 +78130,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1885509570}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -88604,14 +88657,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 1595608071}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 0}
-  cardSelected: 0
-  game: {fileID: 0}
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1595608075}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1674622730}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2032181734}
+        m_TargetAssemblyTypeName: CardPlayer, Assembly-CSharp
+        m_MethodName: displayDeck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1595939690
 GameObject:
   m_ObjectHideFlags: 0
@@ -104909,14 +105013,65 @@ MonoBehaviour:
   m_GameObject: {fileID: 1885509564}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 0}
-  cardSelected: 0
-  game: {fileID: 0}
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1885509566}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1674622730}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 905353797}
+        m_TargetAssemblyTypeName: CardPlayer, Assembly-CSharp
+        m_MethodName: displayDeck
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1886045654
 GameObject:
   m_ObjectHideFlags: 0
@@ -105643,7 +105798,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1885509570}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -107297,7 +107452,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1271437220}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -113070,6 +113225,7 @@ MonoBehaviour:
   dead: 0
   potionsThrown: 0
   artifactsUsed: 0
+  uniqueArtifactsUsed: 0
   tricks: 0
   character: {fileID: 1714507737}
   ringBonus: 0
@@ -113093,6 +113249,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
   - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
   - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  lastArtifactUsed: 
   uniqueCards: []
   throwBonus: 0
   vesselBonus: 0
@@ -120501,6 +120658,7 @@ MonoBehaviour:
   dead: 0
   potionsThrown: 0
   artifactsUsed: 0
+  uniqueArtifactsUsed: 0
   tricks: 0
   character: {fileID: 1624123902}
   ringBonus: 0
@@ -120524,6 +120682,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
   - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
   - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  lastArtifactUsed: 
   uniqueCards: []
   throwBonus: 0
   vesselBonus: 0
@@ -125440,6 +125599,7 @@ MonoBehaviour:
   dead: 0
   potionsThrown: 0
   artifactsUsed: 0
+  uniqueArtifactsUsed: 0
   tricks: 0
   character: {fileID: 3975660438111221351}
   ringBonus: 0
@@ -125463,6 +125623,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
   - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
   - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  lastArtifactUsed: 
   uniqueCards:
   - {fileID: 11400000, guid: 6d36c253bc7ef54408c9f37bd8a20111, type: 2}
   - {fileID: 11400000, guid: b9421360ef617be49a2f8c9684ae2a2b, type: 2}
@@ -125659,6 +125820,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+--- !u!114 &3975660438111221366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 210428386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c50e11b0498e2ef4dac4534eee1662f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &3989618277103094452
 RectTransform:
   m_ObjectHideFlags: 0

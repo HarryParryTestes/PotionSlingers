@@ -627,41 +627,88 @@ public class GameManager : MonoBehaviour
             {
                 players[myPlayerIndex].character.flipCard();
                 players[myPlayerIndex].character.menu.SetActive(false);
+                players[myPlayerIndex].character.canBeFlipped = false;
+                sendSuccessMessage(11);
+                return;
             }
-            else
+
+            if (players[myPlayerIndex].isIsadore)
             {
-                sendErrorMessage(11);
+                players[myPlayerIndex].character.flipCard();
                 players[myPlayerIndex].character.menu.SetActive(false);
+                players[myPlayerIndex].character.canBeFlipped = false;
+                sendSuccessMessage(11);
+                return;
+            }
+
+            if (players[myPlayerIndex].isPluot)
+            {
+                players[myPlayerIndex].character.flipCard();
+                players[myPlayerIndex].character.menu.SetActive(false);
+                players[myPlayerIndex].character.canBeFlipped = false;
+                sendSuccessMessage(11);
+                return;
             }
 
             // pay 2 pips to flip sweetbitter back to front
-            if (players[myPlayerIndex].isSweetbitter && players[myPlayerIndex].pips > 2)
+            if (players[myPlayerIndex].isSweetbitter && players[myPlayerIndex].pips >= 2)
             {
                 players[myPlayerIndex].subPips(2);
                 players[myPlayerIndex].character.flipCard();
                 players[myPlayerIndex].character.menu.SetActive(false);
-            } else
+                return;
+            }
+
+            if (players[myPlayerIndex].isSweetbitter && players[myPlayerIndex].pips < 2)
             {
                 sendErrorMessage(11);
                 players[myPlayerIndex].character.menu.SetActive(false);
+                return;
             }
         }
 
-        if (players[myPlayerIndex].isScarpetta && players[myPlayerIndex].pipsUsedThisTurn == 0 && players[myPlayerIndex].potionsThrown == 0 && players[myPlayerIndex].artifactsUsed == 0)
+        if (players[myPlayerIndex].isScarpetta && players[myPlayerIndex].pipsUsedThisTurn == 0 && players[myPlayerIndex].potionsThrown == 0 && players[myPlayerIndex].artifactsUsed == 0 && players[myPlayerIndex].character.character.flipped == false)
         {
             players[myPlayerIndex].character.canBeFlipped = true;
             players[myPlayerIndex].character.flipCard();
             players[myPlayerIndex].character.menu.SetActive(false);
+            return;
         }
+
+        if (players[myPlayerIndex].isScarpetta && (players[myPlayerIndex].pipsUsedThisTurn > 0 || players[myPlayerIndex].potionsThrown > 0 || players[myPlayerIndex].artifactsUsed > 0))
+        {
+            Debug.Log("Reached Scarpetta here");
+            sendErrorMessage(11);
+            players[myPlayerIndex].character.menu.SetActive(false);
+            return;
+        }
+
+
+        /*
+        else
+        {
+            // character card flip error
+            sendErrorMessage(11);
+            players[myPlayerIndex].character.menu.SetActive(false);
+            return;
+        }
+        */
 
         if (players[myPlayerIndex].character.canBeFlipped)
         {
             players[myPlayerIndex].character.flipCard();
+            sendSuccessMessage(11);
+            if (players[myPlayerIndex].isBolo || players[myPlayerIndex].isNickles || players[myPlayerIndex].isReets || players[myPlayerIndex].isScarpetta || players[myPlayerIndex].isTwins)
+            {
+                players[myPlayerIndex].character.canBeFlipped = false;
+            }
+
             players[myPlayerIndex].character.menu.SetActive(false);
         } else
         {
             // character card flip error
-            //sendErrorMessage(11);
+            sendErrorMessage(11);
+            Debug.Log("Reached here");
             players[myPlayerIndex].character.menu.SetActive(false);
         }
     }
@@ -1207,6 +1254,7 @@ public class GameManager : MonoBehaviour
                                     right.card = cd.card;
                                     Debug.Log("Right Card: " + right.card.cardName);
                                     right.updateCard(cd.card);
+                                    set++;
                                     break;
                                 default:
                                     break;
@@ -1224,6 +1272,12 @@ public class GameManager : MonoBehaviour
                     {
                         // right.updateCard(players[myPlayerIndex].deck.placeholder);
                         loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+                    }
+                    if(set == 3)
+                    {
+                        loadMenu.transform.Find("Card (Left)").gameObject.SetActive(true);
+                        loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(true);
+                        loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
                     }
                 }
             }
@@ -1830,15 +1884,14 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // change this to flipped and not !flipped after you test this
-        if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].character.uniqueCardUsed)
+        if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].character.character.flipped && !players[myPlayerIndex].character.uniqueCardUsed)
         {
             isadoreMenu.SetActive(true);
-        } else
+        } else if (players[myPlayerIndex].isIsadore && (!players[myPlayerIndex].character.character.flipped || players[myPlayerIndex].character.uniqueCardUsed))
         {
             // not able to do action
             // fix this later
-            // sendErrorMessage(13);
+            sendErrorMessage(13);
         }
 
         if (players[myPlayerIndex].isPluot)
@@ -2298,7 +2351,13 @@ public class GameManager : MonoBehaviour
                     damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
 
                     // Update response to account for trashing loaded artifact's potion and not the artifact
+                    // if the artifact being used is different from the last one they used
+                    if(players[myPlayerIndex].lastArtifactUsed != players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName)
+                    {
+                        players[myPlayerIndex].uniqueArtifactsUsed++;
+                    }
                     players[myPlayerIndex].artifactsUsed++;
+                    players[myPlayerIndex].lastArtifactUsed = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName;
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
@@ -2308,7 +2367,8 @@ public class GameManager : MonoBehaviour
                     tempPlayer.subHealth(damage, cardQuality);
 
                     // ISADORE LOGIC
-                    if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].artifactsUsed == 2)
+                    // change this logic to check for unique artifacts
+                    if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].uniqueArtifactsUsed == 2)
                     {
                         players[myPlayerIndex].character.canBeFlipped = true;
                         // add success message for "You can now flip your card!" or something
@@ -2351,6 +2411,8 @@ public class GameManager : MonoBehaviour
                     damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = players[myPlayerIndex].checkVesselBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
+
+                    players[myPlayerIndex].vesselsThrown++;
 
                     // TODO: fix bonus damage
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);

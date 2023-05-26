@@ -568,7 +568,10 @@ public class GamePlayer : NetworkBehaviour
     public void RpcThrowCard(string throwerName, string opponentName, int selectedCardInt)
     {
 
-        string cardQuality;
+        string cardQuality = "None";
+        if (!GameManager.manager.players[GameManager.manager.myPlayerIndex].nicklesAction)
+            cardQuality = GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality;
+
         foreach (CardPlayer cp in GameManager.manager.players)
         {
             if(cp.name == opponentName)
@@ -688,7 +691,13 @@ public class GamePlayer : NetworkBehaviour
                         Debug.Log("Damage after defensive bonuses: " + damage);
 
                         // Update response to account for trashing loaded artifact's potion and not the artifact
+                        // if the artifact being used is different from the last one they used
+                        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].lastArtifactUsed != GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName)
+                        {
+                            GameManager.manager.players[GameManager.manager.myPlayerIndex].uniqueArtifactsUsed++;
+                        }
                         cp.artifactsUsed++;
+                        cp.lastArtifactUsed = GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName;
                         GameManager.manager.td.addCard(cp.holster.cardList[selectedCardInt - 1].aPotion);
                         cp.holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
@@ -704,7 +713,7 @@ public class GamePlayer : NetworkBehaviour
                         //GameManager.manager.tempPlayer.subHealth(damage);
 
                         // ISADORE LOGIC
-                        if (cp.isIsadore && cp.artifactsUsed == 2)
+                        if (cp.isIsadore && cp.uniqueArtifactsUsed == 2)
                         {
                             cp.character.canBeFlipped = true;
                             // add success message for "You can now flip your card!" or something
@@ -752,6 +761,8 @@ public class GamePlayer : NetworkBehaviour
                         Debug.Log("Damage after thrower bonuses: " + damage);
                         damage = GameManager.manager.tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                         Debug.Log("Damage after defensive bonuses: " + damage);
+
+                        cp.vesselsThrown++;
 
                         // TODO: fix bonus damage
                         //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
@@ -1131,17 +1142,17 @@ public class GamePlayer : NetworkBehaviour
                 }
 
                 // change this to flipped and not !flipped after you test this
-                if (cp.isIsadore && !cp.character.character.flipped && cp.character.uniqueCardUsed)
+                if (cp.isIsadore && cp.character.character.flipped && !cp.character.uniqueCardUsed)
                 {
                     // Target RPC for Isadore Menu
                     RpcIsadoreMenu(throwerName);
                     //isadoreMenu.SetActive(true);
                 }
-                else
+                else if (cp.isIsadore && (!cp.character.character.flipped || cp.character.uniqueCardUsed))
                 {
                     // not able to do action
                     // fix this later
-                    // GameManagar.manager.sendErrorMessage(13);
+                    GameManager.manager.sendErrorMessage(13);
                 }
 
                 if (cp.isPluot && cp.character.character.flipped)
@@ -1228,6 +1239,9 @@ public class GamePlayer : NetworkBehaviour
                     {
                         cp.character.flipCard();
                         cp.character.menu.SetActive(false);
+                        cp.character.canBeFlipped = false;
+                        GameManager.manager.sendSuccessMessage(11);
+                        return;
                     }
                     else
                     {
@@ -1235,21 +1249,43 @@ public class GamePlayer : NetworkBehaviour
                         cp.character.menu.SetActive(false);
                     }
 
+                    if (cp.isIsadore)
+                    {
+                        cp.character.flipCard();
+                        cp.character.menu.SetActive(false);
+                        cp.character.canBeFlipped = false;
+                        GameManager.manager.sendSuccessMessage(11);
+                        return;
+                    }
+
+                    if (cp.isPluot)
+                    {
+                        cp.character.flipCard();
+                        cp.character.menu.SetActive(false);
+                        cp.character.canBeFlipped = false;
+                        GameManager.manager.sendSuccessMessage(11);
+                        return;
+                    }
+
                     // pay 2 pips to flip sweetbitter back to front
-                    if (cp.isSweetbitter && cp.pips > 2)
+                    if (cp.isSweetbitter && cp.pips >= 2)
                     {
                         cp.subPips(2);
                         cp.character.flipCard();
                         cp.character.menu.SetActive(false);
+                        GameManager.manager.sendSuccessMessage(11);
+                        return;
                     }
-                    else
+                    
+                    if(cp.isSweetbitter && cp.pips < 2)
                     {
                         GameManager.manager.sendErrorMessage(11);
                         cp.character.menu.SetActive(false);
+                        return;
                     }
                 }
 
-                if (cp.isScarpetta && cp.pipsUsedThisTurn == 0 && cp.potionsThrown == 0 && cp.artifactsUsed == 0)
+                if (cp.isScarpetta && cp.pipsUsedThisTurn == 0 && cp.potionsThrown == 0 && cp.artifactsUsed == 0 && cp.character.character.flipped == false)
                 {
                     cp.character.canBeFlipped = true;
                     cp.character.flipCard();
@@ -1257,9 +1293,21 @@ public class GamePlayer : NetworkBehaviour
                     return;
                 }
 
+                if (cp.isScarpetta && (cp.pipsUsedThisTurn > 0 || cp.potionsThrown > 0 || cp.artifactsUsed > 0))
+                {
+                    GameManager.manager.sendErrorMessage(11);
+                    cp.character.menu.SetActive(false);
+                    return;
+                }
+
                 if (cp.character.canBeFlipped)
                 {
                     cp.character.flipCard();
+                    GameManager.manager.sendSuccessMessage(11);
+                    if (cp.isBolo || cp.isNickles || cp.isReets || cp.isScarpetta || cp.isTwins)
+                    {
+                        cp.character.canBeFlipped = false;
+                    }
                     cp.character.menu.SetActive(false);
                 }
                 else

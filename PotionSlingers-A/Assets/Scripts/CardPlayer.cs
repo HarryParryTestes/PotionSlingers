@@ -18,7 +18,9 @@ public class CardPlayer : MonoBehaviour
     public int pipsUsedThisTurn = 0;
     public bool dead;           //Does the player still have health left?
     public int potionsThrown = 0;
+    public int vesselsThrown = 0;
     public int artifactsUsed = 0;
+    public int uniqueArtifactsUsed = 0;
     public int tricks = 0;
     public CharacterDisplay character;
     public bool ringBonus;
@@ -39,6 +41,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject hitAnimation;
     public List<Sprite> hitImages;
     private System.Random rng = new System.Random();
+    public string lastArtifactUsed = "";
 
 
     // TODO: Refactor methods that use UniqueCard and replace them all with Card
@@ -286,9 +289,9 @@ public class CardPlayer : MonoBehaviour
 
         foreach (CardDisplay cd in holster.cardList)
         {
-            // Tiny Ring of Extra Coin Purse
-            // Start your turn with +2 pips
-            if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
+            // Ring of the Rings
+            // Double all ring effects, your rings cost 4 pips
+            if (cd.card.cardName == "RingoftheRings")
             {
                 doubleRingBonus = true;
             }
@@ -330,6 +333,8 @@ public class CardPlayer : MonoBehaviour
         pipsUsedThisTurn = 0;
         potionsThrown = 0;
         artifactsUsed = 0;
+        uniqueArtifactsUsed = 0;
+        lastArtifactUsed = "";
         ringBonus = false;
         bottleRocketBonus = false;
         blackRainBonus = false;
@@ -1167,7 +1172,8 @@ public class CardPlayer : MonoBehaviour
         {
             if(cd.card.cardType == "Ring")
             {
-                if(cd.card.cardQuality == "Starter" && potionsThrown == 0)
+                Debug.Log(selectedCard.card.cardType);
+                if(cd.card.cardQuality == "Starter" && potionsThrown == 0 && vesselsThrown == 0 && selectedCard.card.cardType != "Artifact")
                 {
                     Debug.Log("Starter ring bonus");
                     damage++;
@@ -1518,11 +1524,13 @@ public class CardPlayer : MonoBehaviour
             addPips(1);
         }
 
+        /*
         // ring damage bonus
         if (ringBonus && potionsThrown == 0)
         {
             damage++;
         }
+        */
 
         // Throw Bonus: If your Holster is empty, place the top 4 cards of the Potion Market Deck into your Holster
         if (selectedCard.card.cardName == "ATearofBlackRain")

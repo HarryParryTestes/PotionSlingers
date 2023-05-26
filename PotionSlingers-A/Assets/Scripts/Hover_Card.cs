@@ -209,8 +209,10 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
                             gameObject.transform.position = originalPos;
 
                             // prevents the eye from popping up when viewing the top card of the deck
+                            
                             if(this.gameObject.name != "DeckPile")
                                 cardMenu.gameObject.SetActive(true);
+                            
                             // you added this in as a funny haha like what would happen type of thing
                             // Debug.Log(originalPos);
                             // THIS IS IMPORTANT
@@ -413,6 +415,7 @@ public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
         canHover = true;
         if(specialCardMenu != null)
             specialCardMenu.gameObject.SetActive(false);
+        this.transform.localRotation = Quaternion.identity;
         transform.localScale = cachedScale;
         gameObject.transform.position = originalPos;
         clicked = false;
