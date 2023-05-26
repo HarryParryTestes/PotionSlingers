@@ -333,6 +333,7 @@ public class CardPlayer : MonoBehaviour
         pipsUsedThisTurn = 0;
         potionsThrown = 0;
         artifactsUsed = 0;
+        vesselsThrown = 0;
         uniqueArtifactsUsed = 0;
         lastArtifactUsed = "";
         ringBonus = false;
