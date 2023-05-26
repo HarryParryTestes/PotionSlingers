@@ -71,7 +71,7 @@ public class DeckMenuScroll : MonoBehaviour
             if(GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList[i].cardName == cd.card.cardName)
             {
                 Debug.Log("Card found");
-                if (Game.multiplayer)
+                if (GameManager.manager.Game.multiplayer)
                 {
                     GameManager.manager.snakeBonus = true;
                     // trigger Command that removes card from that player's deck
@@ -111,16 +111,39 @@ public class DeckMenuScroll : MonoBehaviour
         }
     }
 
-    public void displayCards()
+    public void initDecklist(Deck deck)
     {
-        initDecklist();
+        Debug.Log("DECK DECK DECK");
+
+        deckList.Clear();
+
+        foreach (Card cd in deck.deckList)
+        {
+            deckList.Add(cd);
+        }
+    }
+
+    public void displayCards(Deck deck = null)
+    {
+        Card temp;
+        Card temp2;
+        Card temp3;
+
+        if (deck != null)
+        {
+            initDecklist(deck);
+        } else
+            initDecklist();
+
+        Debug.Log("Decklist count:" + deckList.Count);
+
         cardIndex = 0;
         // trash = !trash;
         //slider.maxValue = deckList.Count - 3;
         slider.maxValue = 2;
 
         // menuUI.SetActive(true);
-        if (deckList.Count < 3)
+        if (deckList.Count < 4)
         {
             slider.gameObject.SetActive(false);
             foreach (CardDisplay cd in cdList)
@@ -129,18 +152,27 @@ public class DeckMenuScroll : MonoBehaviour
             }
             if (deckList.Count == 1)
             {
-                Card temp = deckList[0];
+                temp = deckList[0];
                 cd1.updateCard(temp);
                 cd2.updateCard(cd2.placeholder);
                 cd3.updateCard(cd3.placeholder);
             }
             else if (deckList.Count == 2)
             {
-                Card temp = deckList[0];
+                temp = deckList[0];
                 cd1.updateCard(temp);
-                Card temp2 = deckList[1];
+                temp2 = deckList[1];
                 cd2.updateCard(temp2);
                 cd3.updateCard(cd3.placeholder);
+            }
+            else if (deckList.Count == 3)
+            {
+                temp = deckList[0];
+                cd1.updateCard(temp);
+                temp2 = deckList[1];
+                cd2.updateCard(temp2);
+                temp3 = deckList[2];
+                cd3.updateCard(temp3);
             }
             else if (deckList.Count == 0)
             {
@@ -149,7 +181,17 @@ public class DeckMenuScroll : MonoBehaviour
                 cd3.updateCard(cd3.placeholder);
             }
             return;
+        } else
+        {
+            temp = deckList[0];
+            cd1.updateCard(temp);
+            temp2 = deckList[1];
+            cd2.updateCard(temp2);
+            temp3 = deckList[2];
+            cd3.updateCard(temp3);
         }
+
+        
 
         slider.maxValue = deckList.Count - 3;
         slider.gameObject.SetActive(true);
@@ -157,7 +199,7 @@ public class DeckMenuScroll : MonoBehaviour
         {
             cd.gameObject.SetActive(true);
         }
-        displayCards();
+        // displayCards();
 
 
 

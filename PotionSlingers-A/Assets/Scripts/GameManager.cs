@@ -67,6 +67,7 @@ public class GameManager : MonoBehaviour
     public GameObject bubbleWandMenu;
     public GameObject chooseOpponentMenu;
     public GameObject deckMenu;
+    public DeckMenuScroll deckDisplay;
 
     public TMPro.TextMeshProUGUI trashText;
 
@@ -811,6 +812,7 @@ public class GameManager : MonoBehaviour
     public void displayDeck()
     {
         deckMenuScroll.displayCards();
+        // deckDisplay.displayCards();
     }
 
     public void opponentTrashesHolster(CharacterDisplay cd)

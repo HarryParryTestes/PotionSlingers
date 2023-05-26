@@ -122,6 +122,11 @@ public class CardPlayer : MonoBehaviour
         }
     }
 
+    public void displayDeck()
+    {
+        GameManager.manager.deckDisplay.displayCards(deck);
+    }
+
     public void checkCharacter()
     {
         switch (character.character.cardName)
