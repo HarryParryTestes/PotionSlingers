@@ -982,17 +982,37 @@ public class GameManager : MonoBehaviour
         opponentCard4.updateCard(tempPlayer.holster.cardList[3].card);
     }
 
-    public void stealCard(int selectedCard)
+    public void stealCard(string opponentName, int selectedCard)
     {
-        Debug.Log("Stealing card from " + tempPlayer.charName);
+        Debug.Log("Stealing card from " + opponentName);
+        Debug.Log("CARDVALUE = " + selectedCard);
         foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
             if (cd.card.cardName == "placeholder")
             {
+                foreach(CardPlayer cp in players)
+                {
+                    if(cp.name == opponentName)
+                    {
+                        Debug.Log("Code reaches here");
+                        cd.updateCard(cp.holster.cardList[selectedCard - 1].card);
+                        Debug.Log("Code reaches here");
+                        cp.holster.cardList[selectedCard - 1].updateCard(td.card);
+                        Debug.Log("Code reaches here");
+                        sendSuccessMessage(20);
+                        Debug.Log("Code reaches here");
+                        return;
+                    }
+                }
+                Debug.Log("Code reaches here");
                 cd.updateCard(tempPlayer.holster.cardList[selectedCard - 1].card);
+                Debug.Log("Code reaches here");
                 tempPlayer.holster.cardList[selectedCard - 1].updateCard(td.card);
+                Debug.Log("Code reaches here");
                 sendSuccessMessage(20);
-                break;
+                Debug.Log("Code reaches here");
+                // break;
+                return;
             }
         }
     }
@@ -1015,7 +1035,7 @@ public class GameManager : MonoBehaviour
                 }
             } else
             {
-                stealCard(selectedCard);
+                stealCard(tempPlayer.name, selectedCard);
             }
 
             snakeBonus = false;

@@ -352,19 +352,21 @@ public class GamePlayer : NetworkBehaviour
         Debug.Log("Executing CmdStealCard on the server for player: " + GameManager.manager.currentPlayerName);
         foreach (CardPlayer cp in GameManager.manager.players)
         {
+            /*
             if (cp.name == opponentName)
             {
                 GameManager.manager.tempPlayer = cp;
             }
+            */
         }
-        RpcStealCard(selectedCard);
+        RpcStealCard(opponentName, selectedCard);
     }
 
     [ClientRpc]
-    public void RpcStealCard(int selectedCard)
+    public void RpcStealCard(string opponentName, int selectedCard)
     {
         Debug.Log("RPC for stealing card from someone");
-        GameManager.manager.stealCard(selectedCard);
+        GameManager.manager.stealCard(opponentName, selectedCard);
     }
 
         [Command]
