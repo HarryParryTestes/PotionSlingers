@@ -984,8 +984,38 @@ public class GameManager : MonoBehaviour
 
     public void stealCard(string opponentName, int selectedCard)
     {
+        Debug.Log("Player receiving card: " + currentPlayerName);
         Debug.Log("Stealing card from " + opponentName);
         Debug.Log("CARDVALUE = " + selectedCard);
+
+        foreach(CardPlayer cp in players)
+        {
+            if(cp.name == currentPlayerName)
+            {
+                foreach(CardDisplay cd in cp.holster.cardList)
+                {
+                    if(cd.card.cardName == "placeholder")
+                    {
+                        foreach(CardPlayer cp2 in players)
+                        {
+                            if(cp2.name == opponentName)
+                            {
+                                Debug.Log("Code reaches here");
+                                cd.updateCard(cp2.holster.cardList[selectedCard - 1].card);
+                                Debug.Log("Code reaches here");
+                                cp2.holster.cardList[selectedCard - 1].updateCard(td.card);
+                                Debug.Log("Code reaches here");
+                                sendSuccessMessage(20);
+                                Debug.Log("Code reaches here");
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        /*
         foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
             if (cd.card.cardName == "placeholder")
@@ -1015,6 +1045,7 @@ public class GameManager : MonoBehaviour
                 return;
             }
         }
+        */
     }
 
     public void replaceOpponentCardWithStarter(int selectedCard)

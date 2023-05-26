@@ -367,6 +367,7 @@ public class GamePlayer : NetworkBehaviour
     {
         Debug.Log("RPC for stealing card from someone");
         GameManager.manager.stealCard(opponentName, selectedCard);
+        GameManager.manager.selectedOpponentName = opponentName;
     }
 
         [Command]
