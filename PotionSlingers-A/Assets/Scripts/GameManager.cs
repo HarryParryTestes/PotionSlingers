@@ -749,7 +749,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Opponent found");
                 tempPlayer = cp;
                 selectedOpponentName = cp.name;
-                break;
+                return;
             }
         }
 
