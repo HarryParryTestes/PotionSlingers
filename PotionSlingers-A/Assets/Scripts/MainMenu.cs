@@ -125,6 +125,20 @@ public class MainMenu : MonoBehaviour
 
 	void Awake()
     {
+		if (PlayerPrefs.HasKey("fullscreen"))
+		{
+			
+			int resolutionX = PlayerPrefs.GetInt("resolutionX");
+			int resolutionY = PlayerPrefs.GetInt("resolutionY");
+			Debug.Log("Setting saved resolution of " + resolutionX + "x" + resolutionY);
+
+			bool full = PlayerPrefs.GetString("fullscreen") == "Fullscreen";
+
+			Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+			Screen.SetResolution(resolutionX, resolutionY, full);
+			
+		}
+
 		// Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
 		menu = this;
         //DontDestroyOnLoad(gameObject);
@@ -151,8 +165,8 @@ public class MainMenu : MonoBehaviour
 	void Start()
     {
 		// Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
-		Screen.fullScreen = true;
-		Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
+		// Screen.fullScreen = true;
+		// Screen.fullScreenMode = FullScreenMode.ExclusiveFullScreen;
 		//numPlayers = 0;
 		playButton = GameObject.Find("PLAY");
 		//networkManager = GetComponent<MyNetworkManager>();
@@ -485,6 +499,18 @@ public class MainMenu : MonoBehaviour
 		networkManager.tutorial = true;
         networkManager.multiplayer = false;
 		networkManager.quickplay = false;
+		networkManager.storyMode = false;
+
+		StartCoroutine(networkManager.LoadLevel());
+		// networkManager.ServerChangeScene("GameScene");
+	}
+
+	public void StartStoryMode()
+	{
+		networkManager.tutorial = false;
+		networkManager.multiplayer = false;
+		networkManager.quickplay = false;
+		networkManager.storyMode = true;
 
 		StartCoroutine(networkManager.LoadLevel());
 		// networkManager.ServerChangeScene("GameScene");
@@ -495,6 +521,7 @@ public class MainMenu : MonoBehaviour
 		networkManager.multiplayer = true;
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
+		networkManager.storyMode = false;
 		StartCoroutine(networkManager.LoadLevel());
 		// networkManager.ServerChangeScene("GameScene");
 	}
@@ -505,6 +532,7 @@ public class MainMenu : MonoBehaviour
         networkManager.multiplayer = false;
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
+		networkManager.storyMode = false;
 
 		/*
 		foreach (PlayerListItem item in LobbyManager.instance.playerListItems)
@@ -532,6 +560,7 @@ public class MainMenu : MonoBehaviour
 		networkManager.multiplayer = false;
 		networkManager.tutorial = false;
 		networkManager.quickplay = true;
+		networkManager.storyMode = false;
 
 		StartCoroutine(networkManager.LoadLevel());
 

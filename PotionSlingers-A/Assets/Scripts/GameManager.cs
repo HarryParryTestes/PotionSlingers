@@ -105,6 +105,8 @@ public class GameManager : MonoBehaviour
     public GameObject pauseUI;
     public GameObject starterPotionMenu;
 
+    public System.Random rng = new System.Random();
+
     public bool paused = false;
     public bool starterPotion = false;
     public bool usedStarterPotion = false;
@@ -151,8 +153,6 @@ public class GameManager : MonoBehaviour
     public CardDisplay opponentCard2;
     public CardDisplay opponentCard3;
     public CardDisplay opponentCard4;
-
-    private System.Random rng = new System.Random();
 
     public MyNetworkManager game;
     public MyNetworkManager Game
@@ -213,6 +213,63 @@ public class GameManager : MonoBehaviour
 
         // just testing the new health bar
         // players[0].subHealth(5);
+
+        if (Game.storyMode)
+        {
+            Debug.Log("Story mode!!!");
+
+            md1.shuffle();
+            md2.shuffle();
+            initDecks();
+
+            numPlayers = 2;
+
+            if (numPlayers == 2)
+            {
+                // hardcoding 2-player duel, we'll be able to change the character and gamestate in here
+                // when implementing character selection, get info from MyNetworkManager.singlePlayerNames[0]
+                // Be sure to change the hardcoded values!!!
+                // playerTopName.text = Game.singlePlayerNames[1];
+
+                int num = rng.Next(0, 2);
+
+
+                players[0].name = SteamFriends.GetPersonaName().ToString();
+                players[0].charName = "Pluot";
+                playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+
+                if(num == 0)
+                {
+                    players[2].gameObject.AddComponent<ComputerPlayer>();
+                    players[2].charName = "Reets";
+                    players[2].character.onCharacterClick("Reets");
+                    players[2].checkCharacter();
+                    players[2].name = "Reets";
+                    playerTopName.text = players[2].charName;
+                }
+                
+                if(num == 1)
+                {
+                    players[2].gameObject.AddComponent<ComputerPlayer>();
+                    players[2].charName = "Bolo";
+                    players[2].character.onCharacterClick("Bolo");
+                    players[2].checkCharacter();
+                    players[2].name = "Bolo";
+                    playerTopName.text = players[2].charName;
+                }
+
+                players[1] = players[2];
+                // hardcode this lol
+                // playerTopName.text = Game.singlePlayerNames[1];
+                players[1].user_id = 1;
+                players[2].user_id = 1;
+
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+            }
+            return;
+        }
 
         // check for quickplay
         if (Game.quickplay)
@@ -334,7 +391,7 @@ public class GameManager : MonoBehaviour
                     playerBottomName.text = SteamFriends.GetPersonaName().ToString();
                     cardPlayer.name = SteamFriends.GetPersonaName().ToString();
                     // change CardDisplay here with Game.singlePlayerNames
-                    Debug.Log("Changing #" + i + 1 + " player's name to " + Game.singlePlayerNames[i]);
+                    Debug.Log("Changing #" + (i + 1) + " player's name to " + Game.singlePlayerNames[i]);
                     players[i].charName = Game.singlePlayerNames[i];
                     players[i].character.onCharacterClick(Game.singlePlayerNames[i]);
                     currentPlayerName = playerBottomName.text;
@@ -1310,6 +1367,7 @@ public class GameManager : MonoBehaviour
                         right.card = cd.card;
                         Debug.Log("Right Card: " + right.card.cardName);
                         right.updateCard(cd.card);
+                        set++;
                         break;
                     default:
                         break;
@@ -1327,6 +1385,10 @@ public class GameManager : MonoBehaviour
         {
             // right.updateCard(players[myPlayerIndex].deck.placeholder);
             loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+        }
+        if(set == 3)
+        {
+            loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
         }
     }
 

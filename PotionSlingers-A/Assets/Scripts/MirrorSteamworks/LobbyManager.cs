@@ -144,7 +144,17 @@ public class LobbyManager : MonoBehaviour
 
     public void clearPlayerListItems()
     {
-        playerListItems.Clear();
+
+        DestroyPlayerListItems();
+        // playerListItems.Clear();
+
+        /*
+        while (this.transform.Find("Player(Clone)"))
+        {
+            Destroy()
+        }
+        */
+
     }
 
     public void CreateSinglePlayerListItems()

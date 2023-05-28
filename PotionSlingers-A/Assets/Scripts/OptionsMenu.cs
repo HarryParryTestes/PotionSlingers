@@ -32,11 +32,39 @@ public class OptionsMenu : MonoBehaviour
         }
     }
 
+    // be careful with this
+    public void deletePlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+        Debug.Log("DELETING");
+    }
+
+    public void loadOptions()
+    {
+        if (PlayerPrefs.HasKey("fullscreen"))
+        {
+            Debug.Log("Loading options...");
+            int resolutionX = PlayerPrefs.GetInt("resolutionX");
+            int resolutionY = PlayerPrefs.GetInt("resolutionY");
+
+            resolutionText.text = resolutionX.ToString() + "x" + resolutionY.ToString();
+            fullscreenText.text = PlayerPrefs.GetString("fullscreen");
+        }
+    }
+
     public void applyChanges()
     {
         bool full = fullscreenText.text == "Fullscreen";
         Debug.Log("Changing resolution to " + (int)resolutions[index].x + "x" + (int)resolutions[index].y);
         Screen.SetResolution((int)resolutions[index].x, (int)resolutions[index].y, full);
+
+        PlayerPrefs.SetInt("resolutionX", (int)resolutions[index].x);
+        PlayerPrefs.SetInt("resolutionY", (int)resolutions[index].y);
+
+        PlayerPrefs.SetString("fullscreen", fullscreenText.text);
+        Debug.Log("Saving changes");
+        PlayerPrefs.Save();
+
     }
 
     public void upResolution()

@@ -15,6 +15,7 @@ public class MyNetworkManager : NetworkManager
     public bool tutorial = false;
     public bool multiplayer = false;
     public bool quickplay = false;
+    public bool storyMode = false;
     public bool completedTutorial = false;
     public bool completedGame = false;
     public LobbyManager lobbyManager;
@@ -189,6 +190,16 @@ public class MyNetworkManager : NetworkManager
             charNames.Add(gp.charName);
             // charBools.Add(hotItem.computerPlayer);
         }
+    }
+
+    public void StartStoryModeGame()
+    {
+        multiplayer = false;
+        tutorial = false;
+        quickplay = false;
+        storyMode = true;
+
+        StartCoroutine(LoadLevel());
     }
 
     public void StartSingleplayerGame()
