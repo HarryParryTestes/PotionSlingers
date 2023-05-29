@@ -70,8 +70,12 @@ public class LobbyManager : MonoBehaviour
     }
     void MakeInstance()
     {
+        /*
         if (instance == null)
             instance = this;
+        */
+
+        instance = this;
     }
 
     public void FindLocalPlayer()
@@ -208,6 +212,31 @@ public class LobbyManager : MonoBehaviour
         //createCPU();
 
         Game.numPlayers = 3;
+    }
+
+    public void CreateStoryModeCharacterSelect()
+    {
+        singleplayer = true;
+        Game.singlePlayerNames.Clear();
+
+        // initialize player UI, then add computer players as necessary
+        StartGameButton.gameObject.SetActive(true);
+
+        GameObject go = new GameObject("Player Item");
+        go.AddComponent<PlayerListItem>();
+        // go.GetComponent<PlayerListItem>().playerName = SteamFriends.GetPersonaName();
+        // go.GetComponent<PlayerListItem>().PlayerNameText.text = go.GetComponent<PlayerListItem>().playerName;
+        // go.GetComponent<PlayerListItem>().PlayerNameText.text = "Denzill";
+
+        // playerListItems.Add(go.GetComponent<PlayerListItem>());
+
+        instantiateItem();
+
+        //createCPU();
+        //createCPU();
+        //createCPU();
+
+        Game.numPlayers = 2;
     }
 
     public void CreateSinglePlayerListOneItems()

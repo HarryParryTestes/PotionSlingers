@@ -79,6 +79,7 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
             if (character2.cardName == character)
             {
                 Debug.Log(character + " chosen");
+                Game.storyModeCharName = character;
                 updateCharacter(character2);
             }
         }

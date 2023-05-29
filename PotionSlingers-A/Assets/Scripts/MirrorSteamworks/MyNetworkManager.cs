@@ -16,9 +16,11 @@ public class MyNetworkManager : NetworkManager
     public bool multiplayer = false;
     public bool quickplay = false;
     public bool storyMode = false;
+    public bool savedGame = false;
     public bool completedTutorial = false;
     public bool completedGame = false;
     public LobbyManager lobbyManager;
+    public LobbyManager storyModeLobby;
     public SteamLobby steamLobby;
     public GameObject sceneTransition;
     public GameObject loadingScreen;
@@ -27,6 +29,7 @@ public class MyNetworkManager : NetworkManager
     public AnimationHolder canvas;
     public Texture2D texture;
     public Texture2D texture2;
+    public string storyModeCharName = "Bolo";
     /*
     public LobbyManager Manager
     {
@@ -198,6 +201,31 @@ public class MyNetworkManager : NetworkManager
         tutorial = false;
         quickplay = false;
         storyMode = true;
+
+        // copy this code from singleplayer implementations
+        foreach (PlayerListItem item in LobbyManager.instance.playerListItems)
+        {
+            Debug.Log("Adding name");
+            // GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);
+            // check char names
+            // GamePlayerInstance.CmdChangeCharacter(item.charName);
+            // GamePlayerInstance.charName = item.charName;
+
+            // Debug.Log("Adding GamePlayer with character " + GamePlayerInstance.charName + "!");
+            // GamePlayers.Add(GamePlayerInstance);
+
+            PlayerListItem single = Instantiate(item);
+            DontDestroyOnLoad(single.gameObject);
+            if (single.charName == "blank")
+            {
+                singlePlayerNames.Add("Bolo");
+            }
+            else
+            {
+                singlePlayerNames.Add(single.charName);
+            }
+            // SinglePlayer singleScript = single.AddComponent<SinglePlayer>();
+        }
 
         StartCoroutine(LoadLevel());
     }

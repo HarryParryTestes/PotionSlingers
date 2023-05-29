@@ -500,6 +500,7 @@ public class MainMenu : MonoBehaviour
         networkManager.multiplayer = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = false;
+		networkManager.savedGame = false;
 
 		StartCoroutine(networkManager.LoadLevel());
 		// networkManager.ServerChangeScene("GameScene");
@@ -511,6 +512,19 @@ public class MainMenu : MonoBehaviour
 		networkManager.multiplayer = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = true;
+		networkManager.savedGame = false;
+
+		StartCoroutine(networkManager.LoadLevel());
+		// networkManager.ServerChangeScene("GameScene");
+	}
+
+	public void StartSavedStoryMode()
+	{
+		networkManager.tutorial = false;
+		networkManager.multiplayer = false;
+		networkManager.quickplay = false;
+		networkManager.storyMode = true;
+		networkManager.savedGame = true;
 
 		StartCoroutine(networkManager.LoadLevel());
 		// networkManager.ServerChangeScene("GameScene");
@@ -522,6 +536,7 @@ public class MainMenu : MonoBehaviour
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = false;
+		networkManager.savedGame = false;
 		StartCoroutine(networkManager.LoadLevel());
 		// networkManager.ServerChangeScene("GameScene");
 	}
@@ -533,6 +548,7 @@ public class MainMenu : MonoBehaviour
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = false;
+		networkManager.savedGame = false;
 
 		/*
 		foreach (PlayerListItem item in LobbyManager.instance.playerListItems)
@@ -561,6 +577,7 @@ public class MainMenu : MonoBehaviour
 		networkManager.tutorial = false;
 		networkManager.quickplay = true;
 		networkManager.storyMode = false;
+		networkManager.savedGame = false;
 
 		StartCoroutine(networkManager.LoadLevel());
 

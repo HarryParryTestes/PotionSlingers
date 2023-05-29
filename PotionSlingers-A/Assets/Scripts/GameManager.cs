@@ -218,6 +218,14 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Story mode!!!");
 
+
+            // THIS IS WHERE YOU WILL MANIPULATE GAMESTATE WITH SAVE DATA
+            if (Game.savedGame)
+            {
+                Debug.Log("SAVED GAME!!!");
+                return;
+            }
+
             md1.shuffle();
             md2.shuffle();
             initDecks();
@@ -235,7 +243,9 @@ public class GameManager : MonoBehaviour
 
 
                 players[0].name = SteamFriends.GetPersonaName().ToString();
-                players[0].charName = "Pluot";
+                players[0].charName = Game.storyModeCharName;
+                players[0].character.onCharacterClick(players[0].charName);
+                players[0].checkCharacter();
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
 
                 if(num == 0)
