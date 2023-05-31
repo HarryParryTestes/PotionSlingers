@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public int selectedOpponentInt;
     public int opponentCardInt;
     public int previousDamage;
+    public int stage = 1;
     public string selectedOpponentName;
     public string currentPlayerName;
     public int loadedCardInt;
@@ -40,7 +41,6 @@ public class GameManager : MonoBehaviour
     public MarketDeck md2;
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
-    private MessageQueue msgQueue;
     public DeckMenuScroll deckMenuScroll;
 
     public List<Card> starterCards;
@@ -154,6 +154,8 @@ public class GameManager : MonoBehaviour
     public CardDisplay opponentCard3;
     public CardDisplay opponentCard4;
 
+    public SaveData saveData;
+
     public MyNetworkManager game;
     public MyNetworkManager Game
     {
@@ -201,6 +203,14 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Going back to title menu");
         Game.tutorial = false;
+
+        if (Game.storyMode)
+        {
+            SaveSystem.SaveGameData(this);
+            SceneManager.LoadScene("TitleMenu");
+            return;
+        }
+
         SteamMatchmaking.LeaveLobby((CSteamID)Game.steamLobby.current_lobbyID);
         Game.StopHost();
         SceneManager.LoadScene("TitleMenu");
@@ -223,6 +233,12 @@ public class GameManager : MonoBehaviour
             if (Game.savedGame)
             {
                 Debug.Log("SAVED GAME!!!");
+                saveData = SaveSystem.LoadGameData();
+
+
+                Debug.Log(saveData.playerName + "!!!");
+                Debug.Log(saveData.playerCharName + "!!!");
+                players[0].deck.loadDeck();
                 return;
             }
 
@@ -586,14 +602,6 @@ public class GameManager : MonoBehaviour
         /*
         menu = GameObject.Find("MainMenuScript").GetComponent<MainMenu>();
         networkManager = GameObject.Find("OldNetworkManager").GetComponent<OldNetworkManager>();
-        msgQueue = networkManager.GetComponent<MessageQueue>();
-        msgQueue.AddCallback(Constants.SMSG_P_THROW, onResponsePotionThrow);
-        msgQueue.AddCallback(Constants.SMSG_END_TURN, onResponseEndTurn);
-        msgQueue.AddCallback(Constants.SMSG_BUY, onResponseBuy);
-        msgQueue.AddCallback(Constants.SMSG_SELL, onResponseSell);
-        msgQueue.AddCallback(Constants.SMSG_CYCLE, onResponseCycle);
-        msgQueue.AddCallback(Constants.SMSG_TRASH, onResponseTrash);
-        msgQueue.AddCallback(Constants.SMSG_LOAD, onResponseLoad);
         */
 
         /*
@@ -815,6 +823,10 @@ public class GameManager : MonoBehaviour
         trash = false;
         damage = false;
         trashDeckBonus = false;
+
+        // CARDS GET PUT INTO HOLSTER FROM DECK IN THIS METHOD
+        // SAVE STORY MODE DATA HERE!
+
         foreach(CardDisplay cd in player.holster.cardList)
         {
             if(player.deck.deckList.Count >= 1)

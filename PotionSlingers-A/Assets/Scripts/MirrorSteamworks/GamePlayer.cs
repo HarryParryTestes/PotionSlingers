@@ -7,6 +7,7 @@ using Steamworks;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
 public class GamePlayer : NetworkBehaviour
 {
     [Header("GamePlayer Info")]

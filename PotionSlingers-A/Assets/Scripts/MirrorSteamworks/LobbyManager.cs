@@ -7,6 +7,7 @@ using TMPro;
 using Steamworks;
 using System.Linq;
 
+[System.Serializable]
 public class LobbyManager : MonoBehaviour
 {
     public static LobbyManager instance;

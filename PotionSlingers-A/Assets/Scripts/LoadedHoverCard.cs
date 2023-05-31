@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
 public class LoadedHoverCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
     Vector3 cachedScale; // Tracks original size of Card (for hovering as it manipulates scale of Card).

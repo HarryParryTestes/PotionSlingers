@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [CreateAssetMenu(fileName = "New Character", menuName = "Character")]
+[System.Serializable]
 public class Character : ScriptableObject
 {
     public int id;

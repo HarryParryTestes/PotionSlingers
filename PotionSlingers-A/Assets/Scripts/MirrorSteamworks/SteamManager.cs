@@ -20,6 +20,7 @@ using Steamworks;
 // It handles the basics of starting up and shutting down the SteamAPI for use.
 //
 [DisallowMultipleComponent]
+[System.Serializable]
 public class SteamManager : MonoBehaviour
 {
 #if !DISABLESTEAMWORKS

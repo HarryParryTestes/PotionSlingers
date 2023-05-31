@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
 public class Holster : MonoBehaviour, IPointerDownHandler
 {
     public List<CardDisplay> cardList;

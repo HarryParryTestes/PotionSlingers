@@ -6,7 +6,7 @@ using Mirror;
 using Steamworks;
 
 
-
+[System.Serializable]
 public class PlayerListItem : MonoBehaviour
 {
     public string playerName;

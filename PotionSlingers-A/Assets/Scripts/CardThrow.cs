@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
 public class CardThrow : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] GameEvent _throwPotion;

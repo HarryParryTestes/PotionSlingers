@@ -6,6 +6,7 @@ using Mirror;
 using Steamworks;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
 public class MyNetworkManager : NetworkManager
 {
     [SerializeField] private GamePlayer gamePlayerPrefab;

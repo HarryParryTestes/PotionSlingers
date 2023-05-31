@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
 public class SteamLobby : MonoBehaviour
 {
     public static SteamLobby instance;

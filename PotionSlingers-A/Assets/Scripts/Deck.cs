@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
 public class Deck : MonoBehaviour
 {
     // the deck is uninitialized to begin with
@@ -15,6 +16,34 @@ public class Deck : MonoBehaviour
     public Deck()
     {
         deckList = new List<Card>();
+    }
+
+    public void loadDeck()
+    {
+        deckList.Clear();
+
+        foreach(string cardName in GameManager.manager.saveData.playerDeck)
+        {
+            Debug.Log(cardName);
+            foreach(Card card in GameManager.manager.md1.deckList)
+            {
+                if(card.cardName == cardName)
+                {
+                    Debug.Log("Adding card " + card.cardName);
+                    deckList.Add(card);
+                }
+            }
+
+            foreach (Card card in GameManager.manager.md2.deckList)
+            {
+                if (card.cardName == cardName)
+                {
+                    Debug.Log("Adding card " + card.cardName);
+                    deckList.Add(card);
+                }
+            }
+        }
+        popCard();
     }
 
     

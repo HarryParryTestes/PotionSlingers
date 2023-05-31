@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
+[System.Serializable]
 public class Dialog : MonoBehaviour, IPointerDownHandler
 {
     public string textInfo;

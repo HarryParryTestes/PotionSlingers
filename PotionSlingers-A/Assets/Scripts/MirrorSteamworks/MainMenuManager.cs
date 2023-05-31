@@ -6,6 +6,7 @@ using Steamworks;
 using UnityEngine.UI;
 using TMPro;
 
+[System.Serializable]
 public class MainMenuManager : MonoBehaviour
 {
     public static MainMenuManager instance;

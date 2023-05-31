@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[System.Serializable]
 public class DeckMenuScroll : MonoBehaviour
 {
     public List<Card> deckList;

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Steamworks;
 using Mirror;
 
+[System.Serializable]
 public class LobbyListItem : MonoBehaviour
 {
     public CSteamID lobbySteamId;

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 
 [CreateAssetMenu(menuName = "Game Event", fileName = "New Game Event")]
+[System.Serializable]
 public class GameEvent : ScriptableObject
 {
     HashSet<GameEventListener> listeners = new HashSet<GameEventListener>();

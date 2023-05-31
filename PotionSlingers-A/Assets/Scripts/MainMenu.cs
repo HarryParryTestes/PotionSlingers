@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using Mirror;
 using Steamworks;
 
+[System.Serializable]
 public class MainMenu : MonoBehaviour
 {
     public static MainMenu menu;
@@ -456,6 +457,11 @@ public class MainMenu : MonoBehaviour
 		LobbyManager.instance.UpdateUI();
 		*/
 	}
+
+	public void checkSaveGame()
+    {
+		SaveSystem.checkGameData();
+    }
 
 	public void changePrivacy()
     {

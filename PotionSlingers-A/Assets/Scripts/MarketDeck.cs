@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Mirror;
 
+[System.Serializable]
 public class MarketDeck : NetworkBehaviour
 {
     // the deck is uninitialized to begin with
