@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
 
     // Later change to be however many players joined when the GameScene loads in.
     // (Maybe transferring numPlayers from MainMenu script to here? Maybe get from server?)
-    public int numPlayers;
+    public int numPlayers = 2;
     public int selectedCardInt;
     public int selectedOpponentInt;
     public int opponentCardInt;
@@ -174,6 +174,9 @@ public class GameManager : MonoBehaviour
         manager = this;
         //DontDestroyOnLoad(gameObject);
 
+        if(Game.storyMode)
+            numPlayers = 2;
+
         if (Game.tutorial)
         {
             Debug.Log("Happened in Awake");
@@ -235,10 +238,42 @@ public class GameManager : MonoBehaviour
                 Debug.Log("SAVED GAME!!!");
                 saveData = SaveSystem.LoadGameData();
 
+                // maybe take this out, we'll see
+                md1.shuffle();
+                md2.shuffle();
+                initDecks();
 
+                // check this
+                myPlayerIndex = 0;
                 Debug.Log(saveData.playerName + "!!!");
                 Debug.Log(saveData.playerCharName + "!!!");
-                players[0].deck.loadDeck();
+                stage = saveData.stage;
+                players[0].name = saveData.playerName;
+                players[0].charName = saveData.playerCharName;
+                players[0].character.onCharacterClick(players[0].charName);
+                players[0].checkCharacter();
+                playerBottomName.text = players[0].name;
+                currentPlayerName = players[0].name;
+                // players[0].deck.loadDeck();
+
+
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].name = saveData.oppCharName;
+                players[2].charName = saveData.oppCharName;
+                players[2].character.onCharacterClick(players[2].charName);
+                players[2].checkCharacter();
+                // players[2].name = "Reets";
+                playerTopName.text = players[2].charName;
+
+                players[1] = players[2];
+                // hardcode this lol
+                // playerTopName.text = Game.singlePlayerNames[1];
+                players[1].user_id = 1;
+                players[2].user_id = 1;
+
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
                 return;
             }
 
@@ -294,6 +329,8 @@ public class GameManager : MonoBehaviour
                 p3.SetActive(false);
                 p4.SetActive(false);
             }
+
+            numPlayers = 2;
             return;
         }
 
@@ -1047,6 +1084,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (Game.storyMode)
+        {
+            numPlayers = 2;
+        }
+
         // Displaying opponents to attack for 2 player game.
         if(numPlayers == 2) 
         {
@@ -1568,6 +1610,7 @@ public class GameManager : MonoBehaviour
             
             if(myPlayerIndex >= numPlayers)
             {
+                Debug.Log("myPlayerIndex rolled over???");
                 myPlayerIndex = 0;
             }
             sendSuccessMessage(18);

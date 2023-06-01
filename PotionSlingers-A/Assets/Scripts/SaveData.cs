@@ -20,11 +20,14 @@ public class SaveData
     public string oppCharName;
     public int oppHealth;
     public int oppCubes;
+    public int stage;
     public List<string> oppDeck = new List<string>();
     public List<string> oppHolster = new List<string>();
 
     public SaveData (GameManager manager)
     {
+        stage = manager.stage;
+
         playerName = manager.players[0].name;
         playerCharName = manager.players[0].charName;
         playerHealth = manager.players[0].hp;
@@ -34,15 +37,25 @@ public class SaveData
         {
             playerDeck.Add(card.cardName);
         }
+
+        foreach (CardDisplay cd in manager.players[0].holster.cardList)
+        {
+            playerHolster.Add(cd.card.cardName);
+        }
         // playerDeck = manager.players[0].deck.deckList;
         // playerHolster = manager.players[0].holster.cardList;
-        oppName = manager.players[2].name;
-        oppCharName = manager.players[2].charName;
-        oppHealth = manager.players[2].hp;
-        oppCubes = manager.players[2].hpCubes;
-        foreach (Card card in manager.players[2].deck.deckList)
+        oppName = manager.players[1].name;
+        oppCharName = manager.players[1].charName;
+        oppHealth = manager.players[1].hp;
+        oppCubes = manager.players[1].hpCubes;
+        foreach (Card card in manager.players[1].deck.deckList)
         {
             oppDeck.Add(card.cardName);
+        }
+
+        foreach (CardDisplay cd in manager.players[1].holster.cardList)
+        {
+            oppHolster.Add(cd.card.cardName);
         }
         // oppDeck = manager.players[2].deck.deckList;
         // oppHolster = manager.players[2].holster.cardList;
