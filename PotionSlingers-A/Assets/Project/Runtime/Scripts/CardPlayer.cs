@@ -23,6 +23,7 @@ public class CardPlayer : MonoBehaviour
     public int uniqueArtifactsUsed = 0;
     public int tricks = 0;
     public CharacterDisplay character;
+    public bool cubed = false;
     public bool ringBonus;
     public bool doubleRingBonus = false;
     public int bonusAmount;
@@ -277,6 +278,79 @@ public class CardPlayer : MonoBehaviour
     public void setDefaultTurn()
     {
         currentPlayerHighlight.SetActive(true);
+
+        // check if cube should be taken
+        if (cubed)
+        {
+            hpCubes--;
+            if (hpCubes > 0)
+            {
+                hp = 10;
+
+                if (isSweetbitter && hpCubes == 1)
+                {
+                    character.canBeFlipped = true;
+                    Debug.Log("Make UI message for this");
+                }
+            }
+            else
+            {
+                if (isSweetbitter)
+                {
+                    foreach (CardDisplay cd in holster.cardList)
+                    {
+                        if (cd.card.cardName == "Phylactery")
+                        {
+                            hp = 1;
+                            hpCubes = 1;
+                            Debug.Log("Survived because of The Phlactery");
+                            return;
+                        }
+                    }
+                }
+                hp = 0;
+                Debug.Log("Somebody is dead!");
+                dead = true;
+                if (GameManager.manager.Game.tutorial)
+                {
+                    // do achievement check in here
+                    // you probably want to make new UI for this so this is placeholder stuff
+
+                    // hold on partner! don't do this yet
+                    // GameManager.manager.pauseUI.SetActive(true);
+                    GameManager.manager.dialog.endTutorialDialog();
+                }
+                else
+                {
+                    int numDead = 0;
+                    int numOfThem = 0;
+                    // check if every player is dead except one
+                    foreach (CardPlayer cp in GameManager.manager.players)
+                    {
+                        if (cp.gameObject.activeInHierarchy)
+                        {
+                            numOfThem++;
+                        }
+
+                        if (cp.dead)
+                        {
+                            numDead++;
+                        }
+
+                        if (numOfThem - numDead == 1)
+                        {
+                            Debug.Log("The game is over, somebody won!");
+                            Game.completedGame = true;
+                            GameManager.manager.pauseUI.SetActive(true);
+                        }
+                    }
+                }
+            }
+            updateHealthUI();
+        }
+
+        cubed = false;
+
         if (isPluot)
         {
             pluotCold = false;
@@ -1745,73 +1819,25 @@ public class CardPlayer : MonoBehaviour
         //If hp goes below 0, set it to 10 and subtract a health cube
         if (hp <= 0)
         {
-            hpCubes--;
-            if (hpCubes > 0)
+            cubed = true;
+            if (GameManager.manager.Game.tutorial)
             {
-                hp = 10;
+                // do achievement check in here
+                // you probably want to make new UI for this so this is placeholder stuff
 
-                if(isSweetbitter && hpCubes == 1)
-                {
-                    character.canBeFlipped = true;
-                    Debug.Log("Make UI message for this");
-                }
-            }
-            else
-            {
-                if (isSweetbitter)
-                {
-                    foreach (CardDisplay cd in holster.cardList)
-                    {
-                        if(cd.card.cardName == "Phylactery")
-                        {
-                            hp = 1;
-                            hpCubes = 1;
-                            Debug.Log("Survived because of The Phlactery");
-                            return;
-                        }
-                    }
-                }
-                hp = 0;
-                Debug.Log("Somebody is dead!");
-                dead = true;
-                if (GameManager.manager.Game.tutorial)
-                {
-                    // do achievement check in here
-                    // you probably want to make new UI for this so this is placeholder stuff
-
-                    // hold on partner! don't do this yet
-                    // GameManager.manager.pauseUI.SetActive(true);
-                    GameManager.manager.dialog.endTutorialDialog();
-                } else
-                {
-                    int numDead = 0;
-                    int numOfThem = 0;
-                    // check if every player is dead except one
-                    foreach(CardPlayer cp in GameManager.manager.players)
-                    {
-                        if (cp.gameObject.activeInHierarchy)
-                        {
-                            numOfThem++;
-                        }
-
-                        if (cp.dead)
-                        {
-                            numDead++;
-                        }
-
-                        if(numOfThem - numDead == 1)
-                        {
-                            Debug.Log("The game is over, somebody won!");
-                            Game.completedGame = true;
-                            GameManager.manager.pauseUI.SetActive(true);
-                        }
-                    }
-                }
+                // hold on partner! don't do this yet
+                // GameManager.manager.pauseUI.SetActive(true);
+                GameManager.manager.dialog.endTutorialDialog();
+                return;
             }
         }
 
         Debug.Log("Subtracted " + damage + "from " + charName);
         Debug.Log(charName + "'s health = " + hp + " HP");
+        if (cubed)
+        {
+            hp = 0;
+        }
         updateHealthUI();
 
         // Flashes damage sign

@@ -53,6 +53,7 @@ public class MyNetworkManager : NetworkManager
     // Start is called before the first frame update
     public void Start()
     {
+        // MAKE SURE YOU PUT THIS BACK AFTER YOU"RE DONE TESTING
 
         Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
         DontDestroyOnLoad(animator);
