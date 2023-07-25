@@ -480,15 +480,21 @@ public class CardPlayer : MonoBehaviour
                     return;
                 }
             }
-            Debug.Log("Reets error");
-            GameManager.manager.sendErrorMessage(14);
+
             if (!character.character.flipped)
             {
-                addPips(2);
+                subPips(2);
             } else
             {
-                addPips(1);
+                subPips(1);
             }
+        }
+        else
+        {
+            Debug.Log("Reets error");
+
+            // TODO: make error message that signifies that you cannot do action
+            GameManager.manager.sendErrorMessage(14);
         }
     }
 
@@ -1808,6 +1814,16 @@ public class CardPlayer : MonoBehaviour
         if(hp > 10) {
             hp = 10;
         }
+
+        if (healSign != null && healAmount != null)
+        {
+            healAmount.GetComponent<TMPro.TextMeshProUGUI>().text = health.ToString();
+            healSign.SetActive(true);
+            healAmount.SetActive(true);
+            StartCoroutine(waitThreeSeconds(healSign));
+            StartCoroutine(waitThreeSeconds(healAmount));
+        }
+
         updateHealthUI();
     }
 
@@ -1841,8 +1857,18 @@ public class CardPlayer : MonoBehaviour
         updateHealthUI();
 
         // Flashes damage sign
-
+        /*
         if (damageSign.activeInHierarchy)
+        {
+            damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
+            damageSign.SetActive(true);
+            damageAmount.SetActive(true);
+            StartCoroutine(waitThreeSeconds(damageSign));
+            StartCoroutine(waitThreeSeconds(damageAmount));
+        }
+        */
+
+        if(damageSign !=  null && damageAmount != null)
         {
             damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
             damageSign.SetActive(true);

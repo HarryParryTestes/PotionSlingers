@@ -1838,9 +1838,9 @@ public class GameManager : MonoBehaviour
 
         if (players[myPlayerIndex].character.character.flipped)
         {
-            if (players[myPlayerIndex].pips > 1)
+            if (players[myPlayerIndex].pips >= 1)
             {
-                players[myPlayerIndex].subPips(1);
+                // players[myPlayerIndex].subPips(1);
                 players[myPlayerIndex].addReetsCard();
             } else
             {
@@ -1851,9 +1851,9 @@ public class GameManager : MonoBehaviour
         else
         // not flipped
         {
-            if (players[myPlayerIndex].pips > 2)
+            if (players[myPlayerIndex].pips >= 2)
             {
-                players[myPlayerIndex].subPips(2);
+                // players[myPlayerIndex].subPips(2);
                 players[myPlayerIndex].addReetsCard();
             }
             else
