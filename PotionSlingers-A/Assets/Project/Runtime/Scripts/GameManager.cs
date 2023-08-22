@@ -190,12 +190,20 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Escape key was pressed");
-            paused = !paused;
-            if (paused)
+            // paused = !paused;
+            if (pauseUI.activeInHierarchy == false)
             {
                 pauseUI.SetActive(true);
             } else
             {
+                pauseUI.transform.GetChild(0).Find("Debug Menu").gameObject.SetActive(false);
+                pauseUI.transform.GetChild(0).Find("Graphics Menu").gameObject.SetActive(false);
+                pauseUI.transform.GetChild(0).Find("DialogText").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("RESUME").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("AUDIO").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("GRAPHICS").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("DEBUG").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("MAIN MENU").gameObject.SetActive(true);
                 pauseUI.SetActive(false);
             }
             
