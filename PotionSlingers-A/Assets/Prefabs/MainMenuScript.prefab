@@ -1,0 +1,160 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3691408318028639731
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2628566910368688263}
+  - component: {fileID: 7959832534338071153}
+  - component: {fileID: 7959832534338071167}
+  m_Layer: 0
+  m_Name: MainMenuScript
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2628566910368688263
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691408318028639731}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 374.65237, y: 190.10309, z: -0.47125942}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7959832534338071153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691408318028639731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7542693425501d3499df6eda77552287, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greeting: {fileID: 0}
+  greetingName: 
+  texture: {fileID: 2800000, guid: 68fdabe62421eba44a72b1830d8b4ccd, type: 3}
+  texture2: {fileID: 2800000, guid: 148f30a0ad9c84941adb66af5348101d, type: 3}
+  numPlayers: 0
+  flippable: 0
+  gameManager: {fileID: 0}
+  characters:
+  - {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
+  - {fileID: 11400000, guid: 6f37677945eff4915957fbaf9b104512, type: 2}
+  - {fileID: 11400000, guid: d9f921f65e72546dba4939253745cb60, type: 2}
+  - {fileID: 11400000, guid: 0fdf57218f2f647bcbda4c7d58f0daa0, type: 2}
+  - {fileID: 11400000, guid: b3fa98b132be44beda013cba1c0bea2d, type: 2}
+  - {fileID: 11400000, guid: 829aa6fa9b07d464ca8489dad4ee4f33, type: 2}
+  - {fileID: 11400000, guid: a3977bdfbf9ec43c185c71fb055d0234, type: 2}
+  - {fileID: 11400000, guid: 51f610b86ef694a9ca5e7d96bb09e025, type: 2}
+  - {fileID: 11400000, guid: e126101c9d11f44b18e0b4b27d14054a, type: 2}
+  charSelectIndex: 0
+  lobbyMenu: {fileID: 0}
+  stat1: {fileID: 0}
+  stat2: {fileID: 0}
+  stat3: {fileID: 0}
+  player1Name: {fileID: 0}
+  player2Name: {fileID: 0}
+  player3Name: {fileID: 0}
+  player4Name: {fileID: 0}
+  p1CharCard: {fileID: 0}
+  p2CharCard: {fileID: 0}
+  p3CharCard: {fileID: 0}
+  p4CharCard: {fileID: 0}
+  p1Name: Player 1
+  p1UserId: 0
+  p2Name: Player 2
+  p2UserId: 0
+  p3Name: Player 3
+  p3UserId: 0
+  p4Name: Player 4
+  p4UserId: 0
+  playerUsernameInputField: {fileID: 0}
+  playerPasswordInputField: {fileID: 0}
+  publicButton: {fileID: 0}
+  networkManager: {fileID: 0}
+  authUsername: {fileID: 0}
+  p1ReadyButton: {fileID: 0}
+  p1NotReadyButton: {fileID: 0}
+  p2ReadyButton: {fileID: 0}
+  p2NotReadyButton: {fileID: 0}
+  p2Waiting: {fileID: 0}
+  p3ReadyButton: {fileID: 0}
+  p3NotReadyButton: {fileID: 0}
+  p3Waiting: {fileID: 0}
+  p4ReadyButton: {fileID: 0}
+  p4NotReadyButton: {fileID: 0}
+  p4Waiting: {fileID: 0}
+  charSelectChar: {fileID: 0}
+  uniqueCard: {fileID: 0}
+  infoText: {fileID: 0}
+  nameText: {fileID: 0}
+  uniqueCardText: {fileID: 0}
+  infoQuotes:
+  - Bolo Text
+  - Isadore Text
+  - Nickels Text
+  - Pluot Text
+  - Reets Text
+  - Bocca Text
+  - Scarpetta Text
+  - Sweetbitter Text
+  - Twins Text
+  uniqueCards:
+  - {fileID: 11400000, guid: ebab098ec90be42648879556d0e86d2c, type: 2}
+  - {fileID: 11400000, guid: a047ac4bfbbd14a7988ace78b392fdfa, type: 2}
+  - {fileID: 11400000, guid: 5ee8f0e1378e34b27b7585f904f01ea0, type: 2}
+  - {fileID: 11400000, guid: 48d12764855284fb78c1437390267fd5, type: 2}
+  levelBar: {fileID: 0}
+  levelText: {fileID: 0}
+  expText: {fileID: 0}
+  level: 0
+  points: 0
+  titleMenu: {fileID: 0}
+  logo: {fileID: 0}
+  expMenu: {fileID: 0}
+  expMenuBar: {fileID: 0}
+  expMenuLevelText: {fileID: 0}
+  expMenuExpText: {fileID: 0}
+  levelUpText: {fileID: 0}
+--- !u!114 &7959832534338071167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3691408318028639731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6a2e15b93101dd4e9f5d3fe9543c109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  greetingName: {fileID: 0}
+  LobbyListItemPrefab: {fileID: 8222084821400986541, guid: 22de36728a6b2fb43beef1ed40d24238, type: 3}
+  ContentPanel: {fileID: 0}
+  LobbyListScrollRect: {fileID: 0}
+  searchBox: {fileID: 0}
+  didPlayerSearchForLobbies: 0
+  CreateLobbyCanvas: {fileID: 0}
+  CharMenu: {fileID: 0}
+  availableLobbyText: {fileID: 0}
+  lobbyNameInputField: {fileID: 0}
+  didPlayerNameTheLobby: 0
+  lobbyName: 
+  privacy: 0
+  listOfLobbyListItems: []
+  publicButton: {fileID: 0}

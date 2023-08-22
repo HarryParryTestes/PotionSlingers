@@ -74,16 +74,16 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
 
     public void onCharacterClick(string character)
     {
-        Debug.Log("Send CharReq");
-        foreach (Character character2 in MainMenu.menu.characters)
-        {
-            if (character2.cardName == character)
-            {
-                Debug.Log(character + " chosen");
-                Game.storyModeCharName = character;
-                updateCharacter(character2);
-            }
-        }
+        // Debug.Log("hey this character is " + MainMenu);
+        // foreach (Character character2 in MainMenu.menu.characters)
+        // {
+        //     if (character2.cardName == character)
+        //     {
+        //         Debug.Log(character + " chosen");
+        //         Game.storyModeCharName = character;
+        //         updateCharacter(character2);
+        //     }
+        // }
     }
 
     public void menuCheck()

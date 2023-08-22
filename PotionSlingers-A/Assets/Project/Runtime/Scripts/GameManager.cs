@@ -156,18 +156,18 @@ public class GameManager : MonoBehaviour
 
     public SaveData saveData;
 
-    public MyNetworkManager game;
-    public MyNetworkManager Game
-    {
-        get
-        {
-            if (game != null)
-            {
-                return game;
-            }
-            return game = MyNetworkManager.singleton as MyNetworkManager;
-        }
-    }
+    // public MyNetworkManager game;
+    public MyNetworkManager Game;
+    // {
+    //     get
+    //     {
+    //         if (game != null)
+    //         {
+    //             return game;
+    //         }
+    //         return game = MyNetworkManager.singleton as MyNetworkManager;
+    //     }
+    // }
 
     void Awake()
     {

@@ -1248,9 +1248,11 @@ public class CardPlayer : MonoBehaviour
     {
         // ring bonuses obviously, but only the ones that relate to damage
         // all defensive stuff is going in its own separate method
+        Debug.Log("checkRingBonus ring for: " + name + user_id);
 
         foreach (CardDisplay cd in holster.cardList)
         {
+            if (!cd) continue;
             if(cd.card.cardType == "Ring")
             {
                 Debug.Log(selectedCard.card.cardType);

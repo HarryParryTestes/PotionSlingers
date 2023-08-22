@@ -55,7 +55,7 @@ public class MyNetworkManager : NetworkManager
     {
         // MAKE SURE YOU PUT THIS BACK AFTER YOU"RE DONE TESTING
 
-        Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
+        // Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
         DontDestroyOnLoad(animator);
         DontDestroyOnLoad(sceneTransition);
         DontDestroyOnLoad(loadingScreen);
@@ -89,7 +89,7 @@ public class MyNetworkManager : NetworkManager
     {
         // switch cursor
         // Debug.Log("setting cursor?");
-        Cursor.SetCursor(texture2, Vector2.zero, CursorMode.Auto);
+        // Cursor.SetCursor(texture2, Vector2.zero, CursorMode.Auto);
         // Cursor.SetCursor(texture2, Vector2.zero, CursorMode.ForceSoftware);
     }
 
@@ -97,7 +97,7 @@ public class MyNetworkManager : NetworkManager
     {
         // switch cursor
         // Debug.Log("setting cursor?");
-        Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
+        // Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
         // Cursor.SetCursor(texture, Vector2.zero, CursorMode.ForceSoftware);
     }
 
