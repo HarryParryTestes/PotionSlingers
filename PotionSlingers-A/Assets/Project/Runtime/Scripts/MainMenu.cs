@@ -125,6 +125,8 @@ public class MainMenu : MonoBehaviour
 
 	void Awake()
     {
+		// Don't worry about this for now
+		/*
 		if (PlayerPrefs.HasKey("fullscreen"))
 		{
 			
@@ -138,6 +140,7 @@ public class MainMenu : MonoBehaviour
 			Screen.SetResolution(resolutionX, resolutionY, full);
 			
 		}
+		*/
 
 		// Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
 		menu = this;

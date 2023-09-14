@@ -171,7 +171,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 13)
         {
-            textInfo = "Now let's end your turn... Click the red END TURN button\n" +
+            textInfo = "Now let's end your turn... Click that PASS button\n" +
                 "in the lower right corner!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
@@ -180,7 +180,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 14)
         {
             directions.SetActive(true);
-            directionBox.text = "Click the END TURN button!";
+            directionBox.text = "Click the PASS button!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -219,7 +219,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 24)
         {
             directions.SetActive(true);
-            directionBox.text = "Buy more potions from the\nmarket! Then click END TURN!";
+            directionBox.text = "Buy more potions from the\nmarket! Then click PASS!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }

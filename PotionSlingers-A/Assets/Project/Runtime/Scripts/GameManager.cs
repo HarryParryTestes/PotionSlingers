@@ -210,6 +210,50 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void checkForEndGame()
+    {
+        if (Game.tutorial)
+        {
+            // do achievement check in here
+            // you probably want to make new UI for this so this is placeholder stuff
+
+            // hold on partner! don't do this yet
+            // GameManager.manager.pauseUI.SetActive(true);
+            dialog.endTutorialDialog();
+            return;
+        }
+
+        int numAlive = 0;
+        int numDead = 0;
+
+        foreach (CardPlayer cp in players)
+        {
+            if (cp.dead)
+            {
+                numDead++;
+            } else
+            {
+                numAlive++;
+            }
+        }
+
+        if (numAlive == 1 && numDead >= 1)
+        {
+            // The game is over!
+            Debug.Log("The game is over!!!");
+
+            // make animated win / loss screen here
+            // look up how to use DOTween
+
+            if (Game.storyMode)
+            {
+                // advance a stage and save the game data
+                stage++;
+                SaveSystem.SaveGameData(this);
+            }
+        }
+    }
+
     public void ohFuckGoBack()
     {
         Debug.Log("Going back to title menu");
@@ -218,6 +262,7 @@ public class GameManager : MonoBehaviour
         if (Game.storyMode)
         {
             SaveSystem.SaveGameData(this);
+            Debug.Log("Game data saved");
             SceneManager.LoadScene("TitleMenu");
             return;
         }
@@ -255,6 +300,9 @@ public class GameManager : MonoBehaviour
                 myPlayerIndex = 0;
                 Debug.Log(saveData.playerName + "!!!");
                 Debug.Log(saveData.playerCharName + "!!!");
+                Debug.Log(saveData.oppName + "!!!");
+                Debug.Log(saveData.oppCharName + "!!!");
+                Debug.Log(saveData.stage + "!!!");
                 stage = saveData.stage;
                 players[0].name = saveData.playerName;
                 players[0].charName = saveData.playerCharName;

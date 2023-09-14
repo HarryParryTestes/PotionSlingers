@@ -18,6 +18,7 @@ public class Deck : MonoBehaviour
         deckList = new List<Card>();
     }
 
+    /*
     public void loadDeck()
     {
         deckList.Clear();
@@ -45,6 +46,7 @@ public class Deck : MonoBehaviour
         }
         popCard();
     }
+    */
 
     
     public void buildDeck()
