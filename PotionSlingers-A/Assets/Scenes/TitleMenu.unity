@@ -633,7 +633,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 677662287}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -1209,9 +1209,9 @@ GameObject:
   - component: {fileID: 56219333}
   - component: {fileID: 56219337}
   - component: {fileID: 56219336}
-  - component: {fileID: 56219334}
   - component: {fileID: 56219335}
   - component: {fileID: 56219338}
+  - component: {fileID: 56219339}
   m_Layer: 5
   m_Name: CardDisplay3
   m_TagString: Untagged
@@ -1241,23 +1241,6 @@ RectTransform:
   m_AnchoredPosition: {x: 363, y: 251}
   m_SizeDelta: {x: 96.62, y: 131.76}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &56219334
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56219332}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 984803140}
-  cardSelected: 0
-  game: {fileID: 0}
 --- !u!114 &56219335
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1330,6 +1313,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50e11b0498e2ef4dac4534eee1662f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &56219339
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 56219332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6acb8ed7cbbe8346b3bb1b01f02e7ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clicked: 0
 --- !u!1 &57802222
 GameObject:
   m_ObjectHideFlags: 0
@@ -6322,9 +6318,9 @@ GameObject:
   - component: {fileID: 216018919}
   - component: {fileID: 216018923}
   - component: {fileID: 216018922}
-  - component: {fileID: 216018920}
   - component: {fileID: 216018921}
   - component: {fileID: 216018924}
+  - component: {fileID: 216018925}
   m_Layer: 5
   m_Name: CardDisplay2
   m_TagString: Untagged
@@ -6354,23 +6350,6 @@ RectTransform:
   m_AnchoredPosition: {x: -66.000015, y: 254.62}
   m_SizeDelta: {x: 96.62, y: 131.76}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &216018920
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 216018918}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 984803140}
-  cardSelected: 0
-  game: {fileID: 0}
 --- !u!114 &216018921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6443,6 +6422,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50e11b0498e2ef4dac4534eee1662f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &216018925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 216018918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6acb8ed7cbbe8346b3bb1b01f02e7ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clicked: 0
 --- !u!1 &222419085
 GameObject:
   m_ObjectHideFlags: 0
@@ -8808,7 +8800,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 677662287}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -14060,9 +14052,9 @@ GameObject:
   - component: {fileID: 437844509}
   - component: {fileID: 437844513}
   - component: {fileID: 437844512}
-  - component: {fileID: 437844510}
   - component: {fileID: 437844511}
   - component: {fileID: 437844514}
+  - component: {fileID: 437844515}
   m_Layer: 5
   m_Name: CardDisplay5
   m_TagString: Untagged
@@ -14092,23 +14084,6 @@ RectTransform:
   m_AnchoredPosition: {x: -66, y: -167}
   m_SizeDelta: {x: 96.62, y: 131.76}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &437844510
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 437844508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 984803140}
-  cardSelected: 0
-  game: {fileID: 0}
 --- !u!114 &437844511
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14181,6 +14156,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50e11b0498e2ef4dac4534eee1662f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &437844515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 437844508}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6acb8ed7cbbe8346b3bb1b01f02e7ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clicked: 0
 --- !u!1 &444358769
 GameObject:
   m_ObjectHideFlags: 0
@@ -16023,7 +16011,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &517763326
 RectTransform:
   m_ObjectHideFlags: 0
@@ -17983,7 +17971,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &593444141
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18021,7 +18009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &598961225
 RectTransform:
   m_ObjectHideFlags: 0
@@ -20160,9 +20148,9 @@ GameObject:
   - component: {fileID: 677662286}
   - component: {fileID: 677662290}
   - component: {fileID: 677662289}
-  - component: {fileID: 677662287}
   - component: {fileID: 677662288}
   - component: {fileID: 677662291}
+  - component: {fileID: 677662292}
   m_Layer: 5
   m_Name: CardDisplay4
   m_TagString: Untagged
@@ -20192,23 +20180,6 @@ RectTransform:
   m_AnchoredPosition: {x: -513, y: -170}
   m_SizeDelta: {x: 96.62, y: 131.76}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &677662287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 677662285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 984803140}
-  cardSelected: 0
-  game: {fileID: 0}
 --- !u!114 &677662288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20281,6 +20252,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50e11b0498e2ef4dac4534eee1662f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &677662292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 677662285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6acb8ed7cbbe8346b3bb1b01f02e7ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clicked: 0
 --- !u!1 &684224583
 GameObject:
   m_ObjectHideFlags: 0
@@ -21677,7 +21661,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 437844510}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -21992,7 +21976,7 @@ GameObject:
   - component: {fileID: 775920931}
   - component: {fileID: 775920935}
   - component: {fileID: 775920934}
-  - component: {fileID: 775920932}
+  - component: {fileID: 775920937}
   - component: {fileID: 775920933}
   - component: {fileID: 775920936}
   m_Layer: 5
@@ -22024,23 +22008,6 @@ RectTransform:
   m_AnchoredPosition: {x: -513, y: 251.62}
   m_SizeDelta: {x: 96.62, y: 131.76}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &775920932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 775920930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 984803140}
-  cardSelected: 0
-  game: {fileID: 0}
 --- !u!114 &775920933
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22113,6 +22080,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50e11b0498e2ef4dac4534eee1662f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &775920937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775920930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6acb8ed7cbbe8346b3bb1b01f02e7ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clicked: 0
 --- !u!1 &776061271
 GameObject:
   m_ObjectHideFlags: 0
@@ -27977,7 +27957,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 775920932}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -31530,7 +31510,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1700293047}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -35185,7 +35165,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 216018920}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -35928,7 +35908,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1347179386
 RectTransform:
   m_ObjectHideFlags: 0
@@ -38133,7 +38113,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 56219334}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -41041,7 +41021,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 56219334}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -44635,7 +44615,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 437844510}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -46809,9 +46789,9 @@ GameObject:
   - component: {fileID: 1700293046}
   - component: {fileID: 1700293050}
   - component: {fileID: 1700293049}
-  - component: {fileID: 1700293047}
   - component: {fileID: 1700293048}
   - component: {fileID: 1700293051}
+  - component: {fileID: 1700293052}
   m_Layer: 5
   m_Name: CardDisplay6
   m_TagString: Untagged
@@ -46841,23 +46821,6 @@ RectTransform:
   m_AnchoredPosition: {x: 363, y: -170.62}
   m_SizeDelta: {x: 96.62, y: 131.76}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1700293047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1700293045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7fad593b64d472e4e8a02a236c644b59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 0}
-  cardMenu: {fileID: 0}
-  viewingCardObject: {fileID: 984803140}
-  cardSelected: 0
-  game: {fileID: 0}
 --- !u!114 &1700293048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -46930,6 +46893,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c50e11b0498e2ef4dac4534eee1662f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1700293052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1700293045}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6acb8ed7cbbe8346b3bb1b01f02e7ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clicked: 0
 --- !u!1 &1715874552
 GameObject:
   m_ObjectHideFlags: 0
@@ -47961,7 +47937,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1752467324
 RectTransform:
   m_ObjectHideFlags: 0
@@ -50069,7 +50045,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 775920932}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
@@ -53184,7 +53160,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1948077490
 RectTransform:
   m_ObjectHideFlags: 0
@@ -56477,7 +56453,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1700293047}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: resetView
         m_Mode: 1
@@ -56611,7 +56587,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 216018920}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Hover_Card, Assembly-CSharp
         m_MethodName: ViewCard
         m_Mode: 1
