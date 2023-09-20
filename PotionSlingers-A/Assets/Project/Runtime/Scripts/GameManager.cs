@@ -212,6 +212,8 @@ public class GameManager : MonoBehaviour
 
     public void checkForEndGame()
     {
+        Debug.Log("Checking if the game is over");
+
         if (Game.tutorial)
         {
             // do achievement check in here
@@ -231,11 +233,14 @@ public class GameManager : MonoBehaviour
             if (cp.dead)
             {
                 numDead++;
-            } else
+            } else if(cp.gameObject.activeInHierarchy)
             {
                 numAlive++;
             }
         }
+
+        Debug.Log("Dead: " + numDead);
+        Debug.Log("Alive" + numAlive);
 
         if (numAlive == 1 && numDead >= 1)
         {

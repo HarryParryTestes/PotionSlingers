@@ -1842,6 +1842,7 @@ public class CardPlayer : MonoBehaviour
         if (hp <= 0)
         {
             cubed = true;
+            hp = 0;
         }
 
         Debug.Log("Subtracted " + damage + "from " + charName);

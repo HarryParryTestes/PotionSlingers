@@ -10,10 +10,13 @@ public class CardMover : MonoBehaviour, IPointerDownHandler
 
     public GameObject mask;
     // public CanvasGroup canvasGroup;
-    public bool clicked = false;
+    bool clicked = false;
     Vector3 originalPosition;
     int previousSiblingIndex;
-    float speed = .75f;
+    float speed = .5f;
+
+    Image mask1;
+    Image mask2;
 
     // public Renderer renderer;
 
@@ -22,8 +25,11 @@ public class CardMover : MonoBehaviour, IPointerDownHandler
     // Start is called before the first frame update
     void Start()
     {
+        // mask = GameObject.Find("CardGalleryMenu/Mask");
         originalPosition = transform.position;
         previousSiblingIndex = transform.GetSiblingIndex();
+        mask1 = mask.transform.GetChild(1).GetComponent<Image>();
+        mask2 = mask.transform.GetChild(2).GetComponent<Image>();
     }
 
     /*
@@ -66,24 +72,21 @@ public class CardMover : MonoBehaviour, IPointerDownHandler
             transform.DOLocalPath(vec, speed, PathType.Linear);
             transform.DOScale(5f, speed);
             mask.SetActive(true);
-            // mask.GetComponent<Image>().material.DOFade(1f, speed);
-            // canvasGroup.DOFade(1f, speed);
-            // StartCoroutine(MaskFade());
+            // mask1.color = new Color(mask1.color.r, mask1.color.g, mask1.color.b, 0f);
+            // mask2.color = new Color(mask2.color.r, mask2.color.g, mask2.color.b, 0f);
+            mask1.GetComponent<CanvasRenderer>().SetAlpha(0f);
+            mask2.GetComponent<CanvasRenderer>().SetAlpha(0f);
+
+            mask1.CrossFadeAlpha(1, speed, true);
+            mask2.CrossFadeAlpha(1, speed, true);
         }
         else
         {
             clicked = false;
-            // Vector3 originalPosition = transform.position;
-            // transform.DOMoveX(10, 5);
             transform.DOMove(originalPosition, speed);
             transform.DOScale(3f, speed);
-            // mask.GetComponent<Image>().material.DOFade(0.5f, speed);
-            // canvasGroup.DOFade(0f, speed);
-            mask.SetActive(false);
-            // StartCoroutine(MaskFade());
-
-            // may want a small coroutine to set this after the card has finished moving back
-            // there's a callback you can use ONLY WITH OTHER TWEEN METHODS, otherwise use a coroutine
+            mask1.CrossFadeAlpha(0, speed, true);
+            mask2.CrossFadeAlpha(0, speed, true);
         }
     }
 
@@ -107,6 +110,7 @@ public class CardMover : MonoBehaviour, IPointerDownHandler
     {
         yield return new WaitForSeconds(speed);
         transform.SetSiblingIndex(previousSiblingIndex);
+        mask.SetActive(false);
         UnityEngine.Debug.Log("Sibling index changed");
     }
 

@@ -134,23 +134,16 @@ public class ComputerPlayer : CardPlayer
         AITurn();
     }
 
-    /*
-    public void mcts()
-    {
-        if (actionsList.Count == 0)
-        {
-            actionsList.Add("BUY");
-            actionsList.Add("SELL");
-            actionsList.Add("THROW");
-            actionsList.Add("LOAD");
-            actionsList.Add("CYCLE");
-            actionsList.Add("TRASH");
-        }
-    }
-    */
-
     public void AITurn()
     {
+        if (dead)
+        {
+            Debug.Log("The computer player is dead");
+            GameManager.manager.endTurn();
+            return;
+        }
+
+        /*
         if (actionsList.Count == 0)
         {
             actionsList.Add("BUY");
@@ -160,6 +153,7 @@ public class ComputerPlayer : CardPlayer
             actionsList.Add("CYCLE");
             actionsList.Add("TRASH");
         }
+        */
 
         artifacts = 0;
         potions = 0;
@@ -174,6 +168,16 @@ public class ComputerPlayer : CardPlayer
         if(actions > 5)
         {
             actions = 0;
+
+            Debug.Log("Actions done by the computer this turn:");
+            
+            foreach (string act in actionsList)
+            {
+                Debug.Log(act);
+            }
+            
+            // Debug.Log(actionsList);
+            actionsList.Clear();
             GameManager.manager.endTurn();
             return;
         }
@@ -232,6 +236,7 @@ public class ComputerPlayer : CardPlayer
                     GameManager.manager.selectedOpponentName = GameManager.manager.players[0].name;
                     GameManager.manager.selectedCardInt = i + 1;
                     GameManager.manager.throwPotion();
+                    actionsList.Add("THROW");
                     StartCoroutine(waitASecBro());
                     return;
                 }
@@ -241,6 +246,7 @@ public class ComputerPlayer : CardPlayer
                 Debug.Log("Opponent name is: " + GameManager.manager.selectedOpponentName);
                 GameManager.manager.selectedCardInt = i + 1;
                 GameManager.manager.throwPotion();
+                actionsList.Add("THROW");
                 StartCoroutine(waitASecBro());
                 return;
             }
@@ -259,6 +265,7 @@ public class ComputerPlayer : CardPlayer
                         GameManager.manager.selectedOpponentName = GameManager.manager.players[number].name;
                         GameManager.manager.selectedCardInt = k + 1;
                         GameManager.manager.throwPotion();
+                        actionsList.Add("THROW");
                     }
 
                     // Loading artifacts
@@ -267,6 +274,7 @@ public class ComputerPlayer : CardPlayer
                         GameManager.manager.loadedCardInt = i;
                         GameManager.manager.selectedCardInt = k + 1;
                         GameManager.manager.loadPotion();
+                        actionsList.Add("LOAD");
                         StartCoroutine(waitASecBro());
                         return;
                     }
@@ -280,6 +288,7 @@ public class ComputerPlayer : CardPlayer
             {
                 GameManager.manager.selectedCardInt = i + 1;
                 GameManager.manager.trashCard();
+                actionsList.Add("TRASH");
                 StartCoroutine(waitASecBro());
                 return;
             }
@@ -288,6 +297,7 @@ public class ComputerPlayer : CardPlayer
             {
                 GameManager.manager.selectedCardInt = i + 1;
                 GameManager.manager.trashCard();
+                actionsList.Add("TRASH");
                 StartCoroutine(waitASecBro());
                 return;
             }
@@ -302,26 +312,32 @@ public class ComputerPlayer : CardPlayer
             case 1:
                 GameManager.manager.md1.cardInt = 1;
                 GameManager.manager.topMarketBuy();
+                actionsList.Add("BUY");
                 break;
             case 2:
                 GameManager.manager.md1.cardInt = 2;
                 GameManager.manager.topMarketBuy();
+                actionsList.Add("BUY");
                 break;
             case 3:
                 GameManager.manager.md1.cardInt = 3;
                 GameManager.manager.topMarketBuy();
+                actionsList.Add("BUY");
                 break;
             case 4:
                 GameManager.manager.md2.cardInt = 1;
                 GameManager.manager.bottomMarketBuy();
+                actionsList.Add("BUY");
                 break;
             case 5:
                 GameManager.manager.md2.cardInt = 2;
                 GameManager.manager.bottomMarketBuy();
+                actionsList.Add("BUY");
                 break;
             case 6:
                 GameManager.manager.md2.cardInt = 3;
                 GameManager.manager.bottomMarketBuy();
+                actionsList.Add("BUY");
                 break;
             default:
                 break;
