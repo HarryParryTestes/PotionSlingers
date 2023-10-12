@@ -30909,125 +30909,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188154352}
   m_CullTransparentMesh: 1
---- !u!1 &1194078796
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1194078797}
-  - component: {fileID: 1194078800}
-  - component: {fileID: 1194078802}
-  - component: {fileID: 1194078801}
-  m_Layer: 0
-  m_Name: NetworkManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1194078797
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194078796}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 556.2632, y: 329.44904, z: -10.346007}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1194078800
+--- !u!114 &1194078801 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8589603978719326581, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+  m_PrefabInstance: {fileID: 8589603979912332068}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194078796}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6e55fca1f4e4844593a3dd65a3ecb39, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Channels: 0200000001000000
-  Timeout: 25
-  AllowSteamRelay: 1
-  UseNextGenSteamNetworking: 1
---- !u!114 &1194078801
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194078796}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 930a561d32e729f46bb7481dc3581ca4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  greeting: {fileID: 1848425905}
-  greetingName: 
-  current_lobbyID: 0
-  lobbyIDS: []
-  networkManager: {fileID: 1194078802}
---- !u!114 &1194078802
+--- !u!114 &1194078802 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 8589603978719326582, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+  m_PrefabInstance: {fileID: 8589603979912332068}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1194078796}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 710b6b04fd539c549ae12079fdcb8ee5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dontDestroyOnLoad: 1
-  runInBackground: 1
-  autoStartServerBuild: 1
-  serverTickRate: 20
-  offlineScene: Assets/Scenes/TitleMenu.unity
-  onlineScene: Assets/Scenes/TitleMenu.unity
-  transport: {fileID: 1194078800}
-  networkAddress: localhost
-  maxConnections: 4
-  authenticator: {fileID: 0}
-  playerPrefab: {fileID: 819319328743518873, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
-  autoCreatePlayer: 1
-  playerSpawnMethod: 0
-  spawnPrefabs: []
-  gamePlayerPrefab: {fileID: 819319328743518875, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
-  PlayerListItemPrefab: {fileID: 819319328743518873, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
-  minPlayers: 2
-  numPlayers: 2
-  tutorial: 0
-  multiplayer: 0
-  quickplay: 0
-  storyMode: 0
-  savedGame: 0
-  completedTutorial: 0
-  completedGame: 0
-  lobbyManager: {fileID: 1783119419}
-  storyModeLobby: {fileID: 83529399}
-  steamLobby: {fileID: 1194078801}
-  sceneTransition: {fileID: 796950835}
-  loadingScreen: {fileID: 2047011662}
-  loadingText: {fileID: 1085278873}
-  animator: {fileID: 796950837}
-  canvas: {fileID: 1725211337}
-  texture: {fileID: 2800000, guid: 68fdabe62421eba44a72b1830d8b4ccd, type: 3}
-  texture2: {fileID: 2800000, guid: 148f30a0ad9c84941adb66af5348101d, type: 3}
-  storyModeCharName: Bolo
-  playerListPrefab: {fileID: 6515335681367900375, guid: ac00fb6b2fceb35408f2847adf62f2ee, type: 3}
-  charNames: []
-  charBools: 
-  singlePlayerNames: []
 --- !u!1 &1194325629
 GameObject:
   m_ObjectHideFlags: 0
@@ -58302,3 +58205,92 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 664b8ede56c498340b69f7fa39e39a82, type: 3}
+--- !u!1001 &8589603979912332068
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 8589603978719326568, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_Name
+      value: NetworkManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 556.2632
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 329.44904
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.346007
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326569, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589603978719326581, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: greeting
+      value: 
+      objectReference: {fileID: 1848425905}
+    - target: {fileID: 8589603978719326582, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1725211337}
+    - target: {fileID: 8589603978719326582, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 796950837}
+    - target: {fileID: 8589603978719326582, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: loadingText
+      value: 
+      objectReference: {fileID: 1085278873}
+    - target: {fileID: 8589603978719326582, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: lobbyManager
+      value: 
+      objectReference: {fileID: 1783119419}
+    - target: {fileID: 8589603978719326582, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: loadingScreen
+      value: 
+      objectReference: {fileID: 2047011662}
+    - target: {fileID: 8589603978719326582, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: storyModeLobby
+      value: 
+      objectReference: {fileID: 83529399}
+    - target: {fileID: 8589603978719326582, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}
+      propertyPath: sceneTransition
+      value: 
+      objectReference: {fileID: 796950835}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 179903aca4b07cb4dad356053b7e83f9, type: 3}

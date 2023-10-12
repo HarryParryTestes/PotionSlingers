@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class Hover_Card : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler
 {
-    Vector3 cachedScale; // Tracks original size of Card (for hovering as it manipulates scale of Card).
-    Vector3 originalPos; // Tracks original position of Card.
-    Vector3 mousePos; // Tracks current mouse cursor position.
-    Quaternion originalRotation;
+    private Vector3 cachedScale; // Tracks original size of Card (for hovering as it manipulates scale of Card).
+    private Vector3 originalPos; // Tracks original position of Card.
+    private Vector3 mousePos; // Tracks current mouse cursor position.
+    private Quaternion originalRotation;
 
     RectTransform rt;
 

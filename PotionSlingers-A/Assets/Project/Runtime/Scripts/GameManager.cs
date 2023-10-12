@@ -959,6 +959,20 @@ public class GameManager : MonoBehaviour
         selectedCardInt = num;
     }
 
+    public void setSCInt(string cardName)
+    {
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[myPlayerIndex].holster.cardList[i].card.cardName == cardName)
+            {
+                selectedCardInt = i + 1;
+                break;
+            }
+        }
+        // selectedCardInt = num;
+    }
+
     public void setOPInt(int num)
     {
         selectedOpponentInt = num;
@@ -1012,6 +1026,8 @@ public class GameManager : MonoBehaviour
     public void setLoadedInt(string cardName)
     {
         // TUTORIAL LOGIC
+        // temporarily take this out
+        /*
         if (Game.tutorial)
         {
             for (int i = 0; i < 4; i++)
@@ -1023,12 +1039,14 @@ public class GameManager : MonoBehaviour
             }
             return;
         }
+        */
 
         for(int i = 0; i < 4; i++)
         {
             if(players[myPlayerIndex].holster.cardList[i].card.cardName == cardName)
             {
                 loadedCardInt = i;
+                break;
             }
         }
     }
@@ -2837,6 +2855,9 @@ public class GameManager : MonoBehaviour
     public void preLoadPotion()
     {
         int cards = 0;
+
+        // commenting this out to test something, make sure to add it back in
+        // /*
         if (Game.multiplayer)
         {
             for (int i = 0; i < players.Length; i++)
@@ -2847,6 +2868,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        // */
 
         foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
@@ -2871,8 +2893,16 @@ public class GameManager : MonoBehaviour
 
         } else
         {
+            // OLD LOGIC
+
+            /*
             loadMenu.SetActive(true);
             displayPotions();
+            */
+
+            Debug.Log(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CardDisplay>().card.cardName +
+                " is being loaded into " + players[myPlayerIndex].holster.cardList[loadedCardInt].gameObject.GetComponent<CardDisplay>().card.cardName);
+            loadPotion();
         }
     }
 
