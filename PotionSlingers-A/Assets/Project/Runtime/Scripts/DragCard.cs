@@ -19,6 +19,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Transform parentAfterDrag;
+    private Image artifactCard;
 
     private void Awake()
     {
@@ -27,6 +28,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         originalPosition = transform.position;
         canvasGroup = GetComponent<CanvasGroup>();
         image = GetComponent<Image>();
+        artifactCard = this.transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+        // Debug.Log(artifactCard.gameObject.name);
     }
 
     /*
@@ -57,6 +60,11 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         canvasGroup.blocksRaycasts = false;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
+
+        if (artifactCard.gameObject.activeInHierarchy)
+        {
+            artifactCard.CrossFadeAlpha(0.3f, 0.3f, true);
+        }
     }
 
     /*
@@ -93,8 +101,36 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         transform.localScale = new Vector3(1f, 1f, 1f);
     }
 
+    public void findCard(string cardName)
+    {
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[i].card.cardName == cardName)
+            {
+                // Debug.Log(cardName);
+                GameManager.manager.selectedCardInt = i + 1;
+                break;
+            }
+        }
+    }
+
     public void OnDrag(PointerEventData eventData)
     {
+        // find card int here?
+        /*
+        for (int i = 0; i < 4; i++)
+        {
+            if (GameManager.manager.players[myPlayerIndex].holster.cardList[i].card.cardName == cardName)
+            {
+                GameManager.manager.loadedCardInt = i;
+                break;
+            }
+        }
+        */
+
+        findCard(this.gameObject.GetComponent<CardDisplay>().card.cardName);
+
         // transform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         // rectTransform.position = Input.mousePosition;
@@ -107,6 +143,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         grabbed = false;
         // canvasGroup.alpha = 1f;
         image.CrossFadeAlpha(1f, 0.3f, true);
+        if (artifactCard.gameObject.activeInHierarchy)
+        {
+            artifactCard.CrossFadeAlpha(1f, 0.3f, true);
+        }
         canvasGroup.blocksRaycasts = true;
         transform.SetParent(parentAfterDrag);
         transform.localScale = new Vector3(1f, 1f, 1f);

@@ -1027,7 +1027,7 @@ public class GameManager : MonoBehaviour
     {
         // TUTORIAL LOGIC
         // temporarily take this out
-        /*
+        
         if (Game.tutorial)
         {
             for (int i = 0; i < 4; i++)
@@ -1039,7 +1039,7 @@ public class GameManager : MonoBehaviour
             }
             return;
         }
-        */
+        
 
         for(int i = 0; i < 4; i++)
         {
@@ -3211,7 +3211,7 @@ public class GameManager : MonoBehaviour
                                 {
                                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                                 }
-                                else
+                                else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                                 {
                                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                                 }
@@ -3238,7 +3238,7 @@ public class GameManager : MonoBehaviour
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             }
-                            else
+                            else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                             }
@@ -3270,7 +3270,7 @@ public class GameManager : MonoBehaviour
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             }
-                            else
+                            else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                             }
@@ -3287,7 +3287,7 @@ public class GameManager : MonoBehaviour
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             }
-                            else
+                            else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                             } 
