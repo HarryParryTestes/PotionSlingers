@@ -1831,6 +1831,12 @@ public class CardPlayer : MonoBehaviour
 
     public void subHealth(int damage, string cardQuality = "")
     {
+        // If they're dead don't damage them further
+        if (dead)
+        {
+            return;
+        }
+
         hp -= damage;
 
         //Make sure that hp doesn't go below 0
@@ -1838,23 +1844,30 @@ public class CardPlayer : MonoBehaviour
         if (hp <= 0)
         {
             cubed = true;
-            if (GameManager.manager.Game.tutorial)
-            {
-                // do achievement check in here
-                // you probably want to make new UI for this so this is placeholder stuff
-
-                // hold on partner! don't do this yet
-                // GameManager.manager.pauseUI.SetActive(true);
-                GameManager.manager.dialog.endTutorialDialog();
-                return;
-            }
+            hp = 0;
         }
 
         Debug.Log("Subtracted " + damage + "from " + charName);
         Debug.Log(charName + "'s health = " + hp + " HP");
         if (cubed)
         {
-            hp = 0;
+            hpCubes--;
+            if(hpCubes == 0)
+            {
+                // check for Phlactery Sweetbitter situation but otherwise everyone else is dead
+
+                dead = true;
+                Debug.Log("Checking endgame situation");
+                GameManager.manager.checkForEndGame();
+            }
+            else
+            {
+                // animate the cube being awarded to player and refill their health bar
+
+                hp = 10;
+            }
+            
+            cubed = false;
         }
         updateHealthUI();
 

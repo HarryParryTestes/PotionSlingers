@@ -190,15 +190,72 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Debug.Log("Escape key was pressed");
-            paused = !paused;
-            if (paused)
+            // paused = !paused;
+            if (pauseUI.activeInHierarchy == false)
             {
                 pauseUI.SetActive(true);
             } else
             {
+                pauseUI.transform.GetChild(0).Find("Debug Menu").gameObject.SetActive(false);
+                pauseUI.transform.GetChild(0).Find("Graphics Menu").gameObject.SetActive(false);
+                pauseUI.transform.GetChild(0).Find("DialogText").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("RESUME").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("AUDIO").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("GRAPHICS").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("DEBUG").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("MAIN MENU").gameObject.SetActive(true);
                 pauseUI.SetActive(false);
             }
             
+        }
+    }
+
+    public void checkForEndGame()
+    {
+        Debug.Log("Checking if the game is over");
+
+        if (Game.tutorial)
+        {
+            // do achievement check in here
+            // you probably want to make new UI for this so this is placeholder stuff
+
+            // hold on partner! don't do this yet
+            // GameManager.manager.pauseUI.SetActive(true);
+            dialog.endTutorialDialog();
+            return;
+        }
+
+        int numAlive = 0;
+        int numDead = 0;
+
+        foreach (CardPlayer cp in players)
+        {
+            if (cp.dead)
+            {
+                numDead++;
+            } else if(cp.gameObject.activeInHierarchy)
+            {
+                numAlive++;
+            }
+        }
+
+        Debug.Log("Dead: " + numDead);
+        Debug.Log("Alive" + numAlive);
+
+        if (numAlive == 1 && numDead >= 1)
+        {
+            // The game is over!
+            Debug.Log("The game is over!!!");
+
+            // make animated win / loss screen here
+            // look up how to use DOTween
+
+            if (Game.storyMode)
+            {
+                // advance a stage and save the game data
+                stage++;
+                SaveSystem.SaveGameData(this);
+            }
         }
     }
 
@@ -210,6 +267,7 @@ public class GameManager : MonoBehaviour
         if (Game.storyMode)
         {
             SaveSystem.SaveGameData(this);
+            Debug.Log("Game data saved");
             SceneManager.LoadScene("TitleMenu");
             return;
         }
@@ -247,6 +305,9 @@ public class GameManager : MonoBehaviour
                 myPlayerIndex = 0;
                 Debug.Log(saveData.playerName + "!!!");
                 Debug.Log(saveData.playerCharName + "!!!");
+                Debug.Log(saveData.oppName + "!!!");
+                Debug.Log(saveData.oppCharName + "!!!");
+                Debug.Log(saveData.stage + "!!!");
                 stage = saveData.stage;
                 players[0].name = saveData.playerName;
                 players[0].charName = saveData.playerCharName;
@@ -898,6 +959,20 @@ public class GameManager : MonoBehaviour
         selectedCardInt = num;
     }
 
+    public void setSCInt(string cardName)
+    {
+
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[myPlayerIndex].holster.cardList[i].card.cardName == cardName)
+            {
+                selectedCardInt = i + 1;
+                break;
+            }
+        }
+        // selectedCardInt = num;
+    }
+
     public void setOPInt(int num)
     {
         selectedOpponentInt = num;
@@ -951,6 +1026,8 @@ public class GameManager : MonoBehaviour
     public void setLoadedInt(string cardName)
     {
         // TUTORIAL LOGIC
+        // temporarily take this out
+        
         if (Game.tutorial)
         {
             for (int i = 0; i < 4; i++)
@@ -962,12 +1039,14 @@ public class GameManager : MonoBehaviour
             }
             return;
         }
+        
 
         for(int i = 0; i < 4; i++)
         {
             if(players[myPlayerIndex].holster.cardList[i].card.cardName == cardName)
             {
                 loadedCardInt = i;
+                break;
             }
         }
     }
@@ -2344,7 +2423,7 @@ public class GameManager : MonoBehaviour
         }
 
         
-
+        /*
         foreach (CardPlayer cp in players)
         {
             if (cp.gameObject.activeInHierarchy)
@@ -2357,6 +2436,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        */
 
         // if you're saltimbocca and you're flipped
         if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.character.flipped && !Game.multiplayer)
@@ -2459,7 +2539,7 @@ public class GameManager : MonoBehaviour
                 {
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 }
-                else
+                else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                 {
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                 }
@@ -2511,7 +2591,7 @@ public class GameManager : MonoBehaviour
                     {
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     }
-                    else
+                    else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                     {
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                     }
@@ -2560,7 +2640,7 @@ public class GameManager : MonoBehaviour
                     {
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     }
-                    else
+                    else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                     {
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                     }
@@ -2776,6 +2856,9 @@ public class GameManager : MonoBehaviour
     public void preLoadPotion()
     {
         int cards = 0;
+
+        // commenting this out to test something, make sure to add it back in
+        // /*
         if (Game.multiplayer)
         {
             for (int i = 0; i < players.Length; i++)
@@ -2786,6 +2869,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        // */
 
         foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
@@ -2810,8 +2894,16 @@ public class GameManager : MonoBehaviour
 
         } else
         {
+            // OLD LOGIC
+
+            /*
             loadMenu.SetActive(true);
             displayPotions();
+            */
+
+            Debug.Log(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CardDisplay>().card.cardName +
+                " is being loaded into " + players[myPlayerIndex].holster.cardList[loadedCardInt].gameObject.GetComponent<CardDisplay>().card.cardName);
+            loadPotion();
         }
     }
 
@@ -3120,7 +3212,7 @@ public class GameManager : MonoBehaviour
                                 {
                                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                                 }
-                                else
+                                else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                                 {
                                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                                 }
@@ -3147,7 +3239,7 @@ public class GameManager : MonoBehaviour
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             }
-                            else
+                            else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                             }
@@ -3179,7 +3271,7 @@ public class GameManager : MonoBehaviour
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             }
-                            else
+                            else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                             }
@@ -3196,7 +3288,7 @@ public class GameManager : MonoBehaviour
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             }
-                            else
+                            else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                             {
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                             } 

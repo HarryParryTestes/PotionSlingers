@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 [System.Serializable]
-public class CardThrow : MonoBehaviour, IPointerDownHandler
+public class CardThrow : MonoBehaviour
 {
     [SerializeField] GameEvent _throwPotion;
     public GameManager manager;
@@ -13,14 +13,31 @@ public class CardThrow : MonoBehaviour, IPointerDownHandler
     public int id;
     public string username;
 
+    /*
     public void OnPointerDown(PointerEventData pointerEventData)
     {
-        CharacterDisplay opCharacter = this.gameObject.GetComponent<CharacterDisplay>();
-        username = opCharacter.gameObject.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text.ToString();
+        CardPlayer cp = this.gameObject.GetComponent<CardPlayer>();
+        // username = opCharacter.gameObject.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text.ToString();
+        username = cp.name;
         Debug.Log("Username: " + username);
          
-        Debug.Log("Attacking Char: " + opCharacter.character.cardName);
+        // Debug.Log("Attacking Char: " + opCharacter.character.cardName);
         manager.setOPName(username);
+        // manager.setOPInt(id);
+        Throw();
+    }
+    */
+
+    public void throwCard()
+    {
+        CardPlayer cp = this.gameObject.GetComponent<CardPlayer>();
+        // username = opCharacter.gameObject.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text.ToString();
+        username = cp.name;
+        Debug.Log("Username: " + username);
+
+        // Debug.Log("Attacking Char: " + opCharacter.character.cardName);
+        // manager.setOPName(username);
+        manager.tempPlayer = cp;
         // manager.setOPInt(id);
         Throw();
     }

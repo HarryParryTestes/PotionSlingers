@@ -24,7 +24,7 @@ public class Holster : MonoBehaviour, IPointerDownHandler
     public void OnPointerDown(PointerEventData pointerEventData)
     {
         //Output the name of the GameObject that is being clicked
-        Debug.Log(name + "Game Object Click in Progress");
+        // Debug.Log(name + "Game Object Click in Progress");
     }
 
     // Update is called once per frame

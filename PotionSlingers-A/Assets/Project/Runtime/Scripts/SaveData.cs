@@ -12,17 +12,17 @@ public class SaveData
     // public TMPro.TextMeshProUGUI saveGameText;
     public string playerName;
     public string playerCharName;
-    public int playerHealth;
-    public int playerCubes;
-    public List<string> playerDeck = new List<string>();
-    public List<string> playerHolster = new List<string>();
+    // public int playerHealth;
+    // public int playerCubes;
+    // public List<string> playerDeck = new List<string>();
+    // public List<string> playerHolster = new List<string>();
     public string oppName;
     public string oppCharName;
-    public int oppHealth;
-    public int oppCubes;
+    // public int oppHealth;
+    // public int oppCubes;
     public int stage;
-    public List<string> oppDeck = new List<string>();
-    public List<string> oppHolster = new List<string>();
+    // public List<string> oppDeck = new List<string>();
+    // public List<string> oppHolster = new List<string>();
 
     public SaveData (GameManager manager)
     {
@@ -30,9 +30,12 @@ public class SaveData
 
         playerName = manager.players[0].name;
         playerCharName = manager.players[0].charName;
-        playerHealth = manager.players[0].hp;
-        playerCubes = manager.players[0].hpCubes;
+        oppName = manager.players[1].name;
+        oppCharName = manager.players[1].charName;
+        // playerHealth = manager.players[0].hp;
+        // playerCubes = manager.players[0].hpCubes;
 
+        /*
         foreach(Card card in manager.players[0].deck.deckList)
         {
             playerDeck.Add(card.cardName);
@@ -42,10 +45,10 @@ public class SaveData
         {
             playerHolster.Add(cd.card.cardName);
         }
+
         // playerDeck = manager.players[0].deck.deckList;
         // playerHolster = manager.players[0].holster.cardList;
-        oppName = manager.players[1].name;
-        oppCharName = manager.players[1].charName;
+        
         oppHealth = manager.players[1].hp;
         oppCubes = manager.players[1].hpCubes;
         foreach (Card card in manager.players[1].deck.deckList)
@@ -57,6 +60,8 @@ public class SaveData
         {
             oppHolster.Add(cd.card.cardName);
         }
+
+        */
         // oppDeck = manager.players[2].deck.deckList;
         // oppHolster = manager.players[2].holster.cardList;
     }
