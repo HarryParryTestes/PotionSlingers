@@ -6,11 +6,12 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler
+public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private Canvas canvas;
 
     public bool grabbed = false;
+    public bool clicked = false;
     private Image image;
     private LineRenderer lineRenderer;
     private Vector3 cachedScale;
@@ -20,15 +21,21 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private CanvasGroup canvasGroup;
     private Transform parentAfterDrag;
     private Image artifactCard;
+    private Image vesselCard1;
+    private Image vesselCard2;
+    int previousSiblingIndex;
 
     private void Awake()
     {
+        previousSiblingIndex = transform.GetSiblingIndex();
         lineRenderer = GetComponent<LineRenderer>();
         rectTransform = GetComponent<RectTransform>();
         originalPosition = transform.position;
         canvasGroup = GetComponent<CanvasGroup>();
         image = GetComponent<Image>();
         artifactCard = this.transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+        vesselCard1 = this.transform.parent.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
+        vesselCard2 = this.transform.parent.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>();
         // Debug.Log(artifactCard.gameObject.name);
     }
 
@@ -51,9 +58,38 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     }
     */
 
+    public void OnPointerClick(PointerEventData pointerEventData)
+    {
+        if (!clicked)
+        {
+            clicked = true;
+            //Output to console the clicked GameObject's name and the following message. You can replace this with your own actions for when clicking the GameObject.
+            // Debug.Log(name + " Game Object Clicked!");
+            transform.SetAsLastSibling();
+            Vector3 pos = new Vector3(1000, 550, 0);
+            transform.DOScale(2f, 1f);
+            transform.DOMove(pos, 1f);
+
+        } else
+        {
+            clicked = false;
+            StartCoroutine(SibIndex());
+            transform.DOScale(1f, 1f);
+            transform.DOMove(originalPosition, 1f);
+        }
+        
+    }
+
+    public IEnumerator SibIndex()
+    {
+        yield return new WaitForSeconds(1f);
+        transform.SetSiblingIndex(previousSiblingIndex);
+    }
+
     public void OnBeginDrag(PointerEventData pointerEventData)
     {
         grabbed = true;
+        clicked = false;
         parentAfterDrag = transform.parent;
         // canvasGroup.alpha = 0.5f;
         image.CrossFadeAlpha(0.5f, 0.3f, true);
@@ -64,6 +100,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (artifactCard.gameObject.activeInHierarchy)
         {
             artifactCard.CrossFadeAlpha(0.3f, 0.3f, true);
+        }
+
+        if (vesselCard1.gameObject.activeInHierarchy)
+        {
+            vesselCard1.CrossFadeAlpha(0.3f, 0.3f, true);
+        }
+
+        if (vesselCard2.gameObject.activeInHierarchy)
+        {
+            vesselCard2.CrossFadeAlpha(0.3f, 0.3f, true);
         }
     }
 
@@ -76,7 +122,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder" && !clicked)
         {
             // switch cursor
             // Game.pointCursor();
@@ -146,6 +192,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (artifactCard.gameObject.activeInHierarchy)
         {
             artifactCard.CrossFadeAlpha(1f, 0.3f, true);
+        }
+
+        if (vesselCard1.gameObject.activeInHierarchy)
+        {
+            vesselCard1.CrossFadeAlpha(1f, 0.3f, true);
+        }
+
+        if (vesselCard2.gameObject.activeInHierarchy)
+        {
+            vesselCard2.CrossFadeAlpha(1f, 0.3f, true);
         }
         canvasGroup.blocksRaycasts = true;
         transform.SetParent(parentAfterDrag);

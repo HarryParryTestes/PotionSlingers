@@ -16041,6 +16041,9 @@ GameObject:
   - component: {fileID: 189316757}
   - component: {fileID: 189316756}
   - component: {fileID: 189316755}
+  - component: {fileID: 189316758}
+  - component: {fileID: 189316760}
+  - component: {fileID: 189316759}
   m_Layer: 5
   m_Name: CharacterCard (Top)
   m_TagString: Untagged
@@ -16126,6 +16129,111 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 189316751}
   m_CullTransparentMesh: 1
+--- !u!114 &189316758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189316751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b8718a9781deb4a8801dff5bba3d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &189316759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189316751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 2
+  username: 
+--- !u!114 &189316760
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189316751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2117502d86049049ac549d4dbe83664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: Test2
+  charName: Bolo
+  user_id: 2
+  hpCubes: 3
+  takenHPCubes: 0
+  deck: {fileID: 1885509569}
+  holster: {fileID: 81936594}
+  pips: 6
+  pipCount: 0
+  pipsUsedThisTurn: 0
+  dead: 0
+  potionsThrown: 0
+  vesselsThrown: 0
+  artifactsUsed: 0
+  uniqueArtifactsUsed: 0
+  tricks: 0
+  character: {fileID: 189316755}
+  cubed: 0
+  ringBonus: 0
+  doubleRingBonus: 0
+  bonusAmount: 0
+  cardsTrashed: 0
+  playerHP: {fileID: 691912460}
+  playerHPCubes: {fileID: 169650269}
+  playerPips: {fileID: 0}
+  currentPlayerHighlight: {fileID: 1916230032}
+  damageSign: {fileID: 2068996101}
+  damageAmount: {fileID: 1181464431}
+  healSign: {fileID: 1651675818}
+  healAmount: {fileID: 974692135}
+  hpBar: {fileID: 959363162}
+  healthText: {fileID: 691912460}
+  hitAnimation: {fileID: 210067265}
+  hitImages:
+  - {fileID: 21300000, guid: 671a52e081944d044885da2585c9292d, type: 3}
+  - {fileID: 21300000, guid: 05700878542a120488a3422fa2b751c1, type: 3}
+  - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
+  - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
+  - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  lastArtifactUsed: 
+  uniqueCards: []
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  isBolo: 0
+  isNickles: 0
+  isIsadore: 0
+  isReets: 0
+  isSaltimbocca: 0
+  isScarpetta: 0
+  isSweetbitter: 0
+  isTwins: 0
+  nicklesAction: 0
+  pluotBonusType: 
+  pluotHot: 0
+  pluotCold: 0
+  pluotWet: 0
+  pluotDry: 0
+  bottleRocketBonus: 0
+  blackRainBonus: 0
+  opponentPreventedDamage: 0
+  healBonus: 0
+  game: {fileID: 0}
 --- !u!1 &189593839
 GameObject:
   m_ObjectHideFlags: 0
@@ -78051,7 +78159,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 1901167827723679912}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CardPlayer, Assembly-CSharp
         m_MethodName: displayDeck
         m_Mode: 1
@@ -80317,8 +80425,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1317657374}
-  - component: {fileID: 1317657376}
-  - component: {fileID: 1317657375}
   m_Layer: 5
   m_Name: CharacterCard (Left)
   m_TagString: Untagged
@@ -80348,34 +80454,6 @@ RectTransform:
   m_AnchoredPosition: {x: 514, y: -559}
   m_SizeDelta: {x: 124.04999, y: 212.625}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1317657375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317657373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
-  manager: {fileID: 2083794569}
-  id: 1
-  username: 
---- !u!114 &1317657376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1317657373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a925f7c2081ec934ab2eafc6b9f51b16, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1318315315
 GameObject:
   m_ObjectHideFlags: 0
@@ -95772,7 +95850,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
-      - m_Target: {fileID: 2032181734}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CardPlayer, Assembly-CSharp
         m_MethodName: displayDeck
         m_Mode: 1
@@ -97236,6 +97314,9 @@ GameObject:
   - component: {fileID: 1624123901}
   - component: {fileID: 1624123900}
   - component: {fileID: 1624123902}
+  - component: {fileID: 1624123904}
+  - component: {fileID: 1624123903}
+  - component: {fileID: 1624123905}
   m_Layer: 5
   m_Name: TheTwins
   m_TagString: Untagged
@@ -97320,6 +97401,111 @@ MonoBehaviour:
   clicked: 0
   canBeFlipped: 0
   uniqueCardUsed: 0
+--- !u!114 &1624123903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624123898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 3
+  username: 
+--- !u!114 &1624123904
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624123898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2117502d86049049ac549d4dbe83664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: Test3
+  charName: Sweetbitter
+  user_id: 3
+  hpCubes: 3
+  takenHPCubes: 0
+  deck: {fileID: 1271437216}
+  holster: {fileID: 4964658479611669281}
+  pips: 0
+  pipCount: 0
+  pipsUsedThisTurn: 0
+  dead: 0
+  potionsThrown: 0
+  vesselsThrown: 0
+  artifactsUsed: 0
+  uniqueArtifactsUsed: 0
+  tricks: 0
+  character: {fileID: 1624123902}
+  cubed: 0
+  ringBonus: 0
+  doubleRingBonus: 0
+  bonusAmount: 0
+  cardsTrashed: 0
+  playerHP: {fileID: 379185777}
+  playerHPCubes: {fileID: 1046238518}
+  playerPips: {fileID: 0}
+  currentPlayerHighlight: {fileID: 1413486416}
+  damageSign: {fileID: 554961664}
+  damageAmount: {fileID: 807864802}
+  healSign: {fileID: 514978359}
+  healAmount: {fileID: 1859431382}
+  hpBar: {fileID: 222567432}
+  healthText: {fileID: 379185777}
+  hitAnimation: {fileID: 534466432}
+  hitImages:
+  - {fileID: 21300000, guid: 671a52e081944d044885da2585c9292d, type: 3}
+  - {fileID: 21300000, guid: 05700878542a120488a3422fa2b751c1, type: 3}
+  - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
+  - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
+  - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  lastArtifactUsed: 
+  uniqueCards: []
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  isBolo: 0
+  isNickles: 0
+  isIsadore: 0
+  isReets: 0
+  isSaltimbocca: 0
+  isScarpetta: 0
+  isSweetbitter: 0
+  isTwins: 0
+  nicklesAction: 0
+  pluotBonusType: 
+  pluotHot: 0
+  pluotCold: 0
+  pluotWet: 0
+  pluotDry: 0
+  bottleRocketBonus: 0
+  blackRainBonus: 0
+  opponentPreventedDamage: 0
+  healBonus: 0
+  game: {fileID: 0}
+--- !u!114 &1624123905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624123898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b8718a9781deb4a8801dff5bba3d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1627310747
 GameObject:
   m_ObjectHideFlags: 0
@@ -102037,6 +102223,9 @@ GameObject:
   - component: {fileID: 1714507736}
   - component: {fileID: 1714507735}
   - component: {fileID: 1714507737}
+  - component: {fileID: 1714507739}
+  - component: {fileID: 1714507738}
+  - component: {fileID: 1714507740}
   m_Layer: 5
   m_Name: Bolo
   m_TagString: Untagged
@@ -102121,6 +102310,111 @@ MonoBehaviour:
   clicked: 0
   canBeFlipped: 0
   uniqueCardUsed: 0
+--- !u!114 &1714507738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714507733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64c7a334b51e3df4da1d8c3de8cd06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _throwPotion: {fileID: 11400000, guid: f81e991e0dc78514e8d0c086d9aa4569, type: 2}
+  manager: {fileID: 2083794569}
+  id: 1
+  username: 
+--- !u!114 &1714507739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714507733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b8718a9781deb4a8801dff5bba3d21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1714507740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714507733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2117502d86049049ac549d4dbe83664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 10
+  name: Test1
+  charName: 
+  user_id: 1
+  hpCubes: 3
+  takenHPCubes: 0
+  deck: {fileID: 1595608073}
+  holster: {fileID: 286011420}
+  pips: 0
+  pipCount: 0
+  pipsUsedThisTurn: 0
+  dead: 0
+  potionsThrown: 0
+  vesselsThrown: 0
+  artifactsUsed: 0
+  uniqueArtifactsUsed: 0
+  tricks: 0
+  character: {fileID: 1714507737}
+  cubed: 0
+  ringBonus: 0
+  doubleRingBonus: 0
+  bonusAmount: 0
+  cardsTrashed: 0
+  playerHP: {fileID: 1165648472}
+  playerHPCubes: {fileID: 1825471942}
+  playerPips: {fileID: 0}
+  currentPlayerHighlight: {fileID: 629886734}
+  damageSign: {fileID: 550185180}
+  damageAmount: {fileID: 177182558}
+  healSign: {fileID: 164053555}
+  healAmount: {fileID: 48977211}
+  hpBar: {fileID: 1007990585}
+  healthText: {fileID: 1165648472}
+  hitAnimation: {fileID: 577903315}
+  hitImages:
+  - {fileID: 21300000, guid: 671a52e081944d044885da2585c9292d, type: 3}
+  - {fileID: 21300000, guid: 05700878542a120488a3422fa2b751c1, type: 3}
+  - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
+  - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
+  - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  lastArtifactUsed: 
+  uniqueCards: []
+  throwBonus: 0
+  vesselBonus: 0
+  artifactBonus: 0
+  isPluot: 0
+  isBolo: 0
+  isNickles: 0
+  isIsadore: 0
+  isReets: 0
+  isSaltimbocca: 0
+  isScarpetta: 0
+  isSweetbitter: 0
+  isTwins: 0
+  nicklesAction: 0
+  pluotBonusType: 
+  pluotHot: 0
+  pluotCold: 0
+  pluotWet: 0
+  pluotDry: 0
+  bottleRocketBonus: 0
+  blackRainBonus: 0
+  opponentPreventedDamage: 0
+  healBonus: 0
+  game: {fileID: 0}
 --- !u!1 &1718607798
 GameObject:
   m_ObjectHideFlags: 0
@@ -120807,7 +121101,6 @@ GameObject:
   - component: {fileID: 2032181731}
   - component: {fileID: 2032181733}
   - component: {fileID: 2032181732}
-  - component: {fileID: 2032181734}
   m_Layer: 5
   m_Name: EnemyArea (Left Side)
   m_TagString: Untagged
@@ -120880,83 +121173,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2032181730}
   m_CullTransparentMesh: 1
---- !u!114 &2032181734
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2032181730}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2117502d86049049ac549d4dbe83664, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 10
-  name: Test2
-  charName: 
-  user_id: 1
-  hpCubes: 3
-  takenHPCubes: 0
-  deck: {fileID: 1595608073}
-  holster: {fileID: 286011420}
-  pips: 0
-  pipCount: 0
-  pipsUsedThisTurn: 0
-  dead: 0
-  potionsThrown: 0
-  vesselsThrown: 0
-  artifactsUsed: 0
-  uniqueArtifactsUsed: 0
-  tricks: 0
-  character: {fileID: 1714507737}
-  cubed: 0
-  ringBonus: 0
-  doubleRingBonus: 0
-  bonusAmount: 0
-  cardsTrashed: 0
-  playerHP: {fileID: 1165648472}
-  playerHPCubes: {fileID: 1825471942}
-  playerPips: {fileID: 0}
-  currentPlayerHighlight: {fileID: 629886734}
-  damageSign: {fileID: 550185180}
-  damageAmount: {fileID: 177182558}
-  healSign: {fileID: 164053555}
-  healAmount: {fileID: 48977211}
-  hpBar: {fileID: 1007990585}
-  healthText: {fileID: 1165648472}
-  hitAnimation: {fileID: 577903315}
-  hitImages:
-  - {fileID: 21300000, guid: 671a52e081944d044885da2585c9292d, type: 3}
-  - {fileID: 21300000, guid: 05700878542a120488a3422fa2b751c1, type: 3}
-  - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
-  - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
-  - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
-  lastArtifactUsed: 
-  uniqueCards: []
-  throwBonus: 0
-  vesselBonus: 0
-  artifactBonus: 0
-  isPluot: 0
-  isBolo: 0
-  isNickles: 0
-  isIsadore: 0
-  isReets: 0
-  isSaltimbocca: 0
-  isScarpetta: 0
-  isSweetbitter: 0
-  isTwins: 0
-  nicklesAction: 0
-  pluotBonusType: 
-  pluotHot: 0
-  pluotCold: 0
-  pluotWet: 0
-  pluotDry: 0
-  bottleRocketBonus: 0
-  blackRainBonus: 0
-  opponentPreventedDamage: 0
-  healBonus: 0
-  game: {fileID: 0}
 --- !u!1 &2032555036
 GameObject:
   m_ObjectHideFlags: 0
@@ -124140,9 +124356,9 @@ MonoBehaviour:
   numTrashed: 0
   players:
   - {fileID: 3975660438111221350}
-  - {fileID: 2032181734}
-  - {fileID: 905353797}
-  - {fileID: 1901167827723679912}
+  - {fileID: 1714507740}
+  - {fileID: 189316760}
+  - {fileID: 1624123904}
   characters:
   - {fileID: 11400000, guid: b17c753b2a879417ba694851d644dfec, type: 2}
   - {fileID: 11400000, guid: 6f37677945eff4915957fbaf9b104512, type: 2}
@@ -128265,7 +128481,6 @@ GameObject:
   - component: {fileID: 1901167827723679905}
   - component: {fileID: 1901167827723679911}
   - component: {fileID: 1901167827723679910}
-  - component: {fileID: 1901167827723679912}
   m_Layer: 5
   m_Name: EnemyArea (Right Side)
   m_TagString: Untagged
@@ -128337,83 +128552,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1901167827723679904}
   m_CullTransparentMesh: 1
---- !u!114 &1901167827723679912
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901167827723679904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2117502d86049049ac549d4dbe83664, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hp: 10
-  name: 
-  charName: Sweetbitter
-  user_id: 3
-  hpCubes: 3
-  takenHPCubes: 0
-  deck: {fileID: 1271437216}
-  holster: {fileID: 4964658479611669281}
-  pips: 0
-  pipCount: 0
-  pipsUsedThisTurn: 0
-  dead: 0
-  potionsThrown: 0
-  vesselsThrown: 0
-  artifactsUsed: 0
-  uniqueArtifactsUsed: 0
-  tricks: 0
-  character: {fileID: 1624123902}
-  cubed: 0
-  ringBonus: 0
-  doubleRingBonus: 0
-  bonusAmount: 0
-  cardsTrashed: 0
-  playerHP: {fileID: 379185777}
-  playerHPCubes: {fileID: 1046238518}
-  playerPips: {fileID: 0}
-  currentPlayerHighlight: {fileID: 1413486416}
-  damageSign: {fileID: 554961664}
-  damageAmount: {fileID: 807864802}
-  healSign: {fileID: 514978359}
-  healAmount: {fileID: 1859431382}
-  hpBar: {fileID: 222567432}
-  healthText: {fileID: 379185777}
-  hitAnimation: {fileID: 534466432}
-  hitImages:
-  - {fileID: 21300000, guid: 671a52e081944d044885da2585c9292d, type: 3}
-  - {fileID: 21300000, guid: 05700878542a120488a3422fa2b751c1, type: 3}
-  - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
-  - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
-  - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
-  lastArtifactUsed: 
-  uniqueCards: []
-  throwBonus: 0
-  vesselBonus: 0
-  artifactBonus: 0
-  isPluot: 0
-  isBolo: 0
-  isNickles: 0
-  isIsadore: 0
-  isReets: 0
-  isSaltimbocca: 0
-  isScarpetta: 0
-  isSweetbitter: 0
-  isTwins: 0
-  nicklesAction: 0
-  pluotBonusType: 
-  pluotHot: 0
-  pluotCold: 0
-  pluotWet: 0
-  pluotDry: 0
-  bottleRocketBonus: 0
-  blackRainBonus: 0
-  opponentPreventedDamage: 0
-  healBonus: 0
-  game: {fileID: 0}
 --- !u!1 &2203842972192241850
 GameObject:
   m_ObjectHideFlags: 0

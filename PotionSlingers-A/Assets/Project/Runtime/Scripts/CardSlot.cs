@@ -7,18 +7,11 @@ using UnityEngine.EventSystems;
 public class CardSlot : MonoBehaviour, IDropHandler
 {
     CardDisplay cd;
-    CharacterDisplay chard;
 
     void Awake()
     {
         if (this.gameObject.GetComponent<CardDisplay>() != null)
             cd = this.gameObject.GetComponent<CardDisplay>();
-
-        if (this.gameObject.GetComponent<CharacterDisplay>() != null)
-            // this isn't working fix this
-
-            chard = this.gameObject.GetComponent<CharacterDisplay>();
-            // Debug.Log(chard.gameObject.name);
     }
 
    public void OnDrop(PointerEventData eventData)
@@ -32,13 +25,6 @@ public class CardSlot : MonoBehaviour, IDropHandler
         DragCard dc = heldCard.GetComponent<DragCard>();
         // grabbing the card held by the cursor
         CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
-
-        // attacking player
-        if (chard != null)
-        {
-            Debug.Log("Throw triggered?");
-            chard.gameObject.GetComponent<CardThrow>().throwCard();
-        }
 
         if (cd != null)
         {

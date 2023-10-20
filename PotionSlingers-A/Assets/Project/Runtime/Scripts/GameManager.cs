@@ -2423,7 +2423,7 @@ public class GameManager : MonoBehaviour
         }
 
         
-
+        /*
         foreach (CardPlayer cp in players)
         {
             if (cp.gameObject.activeInHierarchy)
@@ -2436,6 +2436,7 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        */
 
         // if you're saltimbocca and you're flipped
         if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.character.flipped && !Game.multiplayer)
@@ -2538,7 +2539,7 @@ public class GameManager : MonoBehaviour
                 {
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 }
-                else
+                else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                 {
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                 }
@@ -2590,7 +2591,7 @@ public class GameManager : MonoBehaviour
                     {
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     }
-                    else
+                    else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                     {
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                     }
@@ -2639,7 +2640,7 @@ public class GameManager : MonoBehaviour
                     {
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     }
-                    else
+                    else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
                     {
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                     }
