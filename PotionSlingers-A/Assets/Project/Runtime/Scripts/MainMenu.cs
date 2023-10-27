@@ -730,13 +730,13 @@ reuse, recycle!
 	public void StartNetworkGame()
     {
 		Debug.Log("Start the game!");
-		SceneManager.LoadScene("GameScene");
+		SceneManager.LoadScene("TownCenter");
         gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 
 	public void StartTutorialGame()
     {
-		SceneManager.LoadScene("GameScene");
+		SceneManager.LoadScene("TownCenter");
 	}
 
 	public void PlayGame()

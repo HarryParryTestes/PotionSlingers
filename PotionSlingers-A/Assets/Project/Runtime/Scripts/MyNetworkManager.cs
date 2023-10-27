@@ -296,7 +296,7 @@ public class MyNetworkManager : NetworkManager
         */
         animator.SetTrigger("End");
         yield return new WaitForSeconds(2);
-        ServerChangeScene("GameScene");
+        ServerChangeScene("TownCenter");
     }
 
     public void StartGame()
