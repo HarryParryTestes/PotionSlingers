@@ -17,22 +17,26 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private Vector3 cachedScale;
     private Vector2 originalPosition;
     private Vector3 startPoint;
+    private Vector3 cardRotation; 
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
     private Transform parentAfterDrag;
     private Image artifactCard;
     private Image vesselCard1;
     private Image vesselCard2;
-    int previousSiblingIndex;
+    int parentSiblingIndex;
 
     private void Awake()
     {
-        previousSiblingIndex = transform.GetSiblingIndex();
+        parentAfterDrag = transform.parent;
+        parentSiblingIndex = transform.parent.GetSiblingIndex();
         lineRenderer = GetComponent<LineRenderer>();
         rectTransform = GetComponent<RectTransform>();
         originalPosition = transform.position;
         canvasGroup = GetComponent<CanvasGroup>();
         image = GetComponent<Image>();
+        cardRotation = rectTransform.rotation.eulerAngles;
+        Debug.Log(cardRotation);
         artifactCard = this.transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
         vesselCard1 = this.transform.parent.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
         vesselCard2 = this.transform.parent.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>();
@@ -63,38 +67,50 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (!clicked)
         {
             clicked = true;
+            transform.DORotate(new Vector3(0f, 0f, 0f), 0.3f);
             //Output to console the clicked GameObject's name and the following message. You can replace this with your own actions for when clicking the GameObject.
             // Debug.Log(name + " Game Object Clicked!");
+            // parentAfterDrag = transform.parent;
+            transform.SetParent(transform.root);
             transform.SetAsLastSibling();
-            Vector3 pos = new Vector3(1000, 550, 0);
-            transform.DOScale(2f, 1f);
-            transform.DOMove(pos, 1f);
+            Vector3 pos = new Vector3(960, 550, 0);
+            transform.DOScale(2f, 0.3f);
+            transform.DOMove(pos, 0.3f);
 
         } else
         {
             clicked = false;
+            transform.SetParent(parentAfterDrag);
             StartCoroutine(SibIndex());
-            transform.DOScale(1f, 1f);
-            transform.DOMove(originalPosition, 1f);
+            transform.DOScale(1f, 0.3f);
+            transform.DORotate(cardRotation, 0.3f);
+            transform.DOMove(originalPosition, 0.3f);
         }
         
     }
 
     public IEnumerator SibIndex()
     {
-        yield return new WaitForSeconds(1f);
-        transform.SetSiblingIndex(previousSiblingIndex);
+        yield return new WaitForSeconds(0.2f);
+        transform.SetParent(parentAfterDrag);
+        // transform.localScale = new Vector3(1f, 1f, 1f);
+        transform.parent.SetSiblingIndex(parentSiblingIndex);
     }
 
     public void OnBeginDrag(PointerEventData pointerEventData)
     {
         grabbed = true;
         clicked = false;
-        parentAfterDrag = transform.parent;
+        transform.DORotate(new Vector3(0f, 0f, 0f), 0.2f);
+        transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        // parentAfterDrag = transform.parent;
         // canvasGroup.alpha = 0.5f;
         image.CrossFadeAlpha(0.5f, 0.3f, true);
         canvasGroup.blocksRaycasts = false;
-        transform.SetParent(transform.root);
+        if (transform.parent != transform.root)
+        {
+            transform.SetParent(transform.root);
+        }
         transform.SetAsLastSibling();
 
         if (artifactCard.gameObject.activeInHierarchy)
@@ -144,7 +160,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-        transform.localScale = new Vector3(1f, 1f, 1f);
+        if (!clicked && !grabbed)
+            transform.localScale = new Vector3(1f, 1f, 1f);
+        /*
+        if(!clicked && grabbed)
+            transform.DOScale(1f, 0.3f);
+        */
     }
 
     public void findCard(string cardName)
@@ -187,6 +208,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void OnEndDrag(PointerEventData eventData)
     {
         grabbed = false;
+        clicked = false;
         // canvasGroup.alpha = 1f;
         image.CrossFadeAlpha(1f, 0.3f, true);
         if (artifactCard.gameObject.activeInHierarchy)
@@ -206,7 +228,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         canvasGroup.blocksRaycasts = true;
         transform.SetParent(parentAfterDrag);
         transform.localScale = new Vector3(1f, 1f, 1f);
+        //transform.DOScale(1f, 0.3f);
         // transform.position = originalPosition;
+        transform.DORotate(cardRotation, 0.3f);
         transform.DOMove(originalPosition, 0.3f);
         // EndLine();
     }

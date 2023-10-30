@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using Steamworks;
 using Mirror;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviour
     public TrashDeck td;
     public MarketDeck md1;
     public MarketDeck md2;
+    public GameObject marketButton;
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
     public DeckMenuScroll deckMenuScroll;
@@ -120,6 +122,7 @@ public class GameManager : MonoBehaviour
     public bool replace = false;
     public bool mirrorCommand = false;
     public bool snakeBonus = false;
+    public bool marketSelected = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -208,6 +211,25 @@ public class GameManager : MonoBehaviour
             }
             
         }
+    }
+
+    public void moveMarket()
+    {
+        if (!marketSelected)
+        {
+            marketSelected = true;
+            // marketPosition = marketButton.transform.position;
+            // marketButton.transform.parent.DOMove(new Vector3(0, 0, 0), 1f);
+            marketButton.transform.DOMove(new Vector3(960, 300, 0), 1f);
+            Debug.Log("Market moved???");
+        } else
+        {
+            // marketPosition = marketButton.transform.position;
+            marketSelected = false;
+            marketButton.transform.DOMove(new Vector3(960, -10, 0), 1f);
+            Debug.Log("Market reset???");
+        }
+        
     }
 
     public void checkForEndGame()
@@ -2326,6 +2348,8 @@ public class GameManager : MonoBehaviour
             }
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
+                Debug.Log("Tutorial throw");
+
                 if(dialog.textBoxCounter == 17 || dialog.textBoxCounter == 18)
                 {
                     sendErrorMessage(19);
@@ -2336,7 +2360,7 @@ public class GameManager : MonoBehaviour
                 sendSuccessMessage(2); // Only display on thrower's client.
                 playerHolster.cardList[selectedCardInt - 1].updateCard(bolo.deck.placeholder);
                 td.addCard(playerHolster.cardList[selectedCardInt - 1]);
-                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 bolo.subHealth(damage);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                 StartCoroutine(waitThreeSeconds(dialog));
@@ -2954,7 +2978,7 @@ public class GameManager : MonoBehaviour
             if ((dialog.textBoxCounter != 5 && dialog.textBoxCounter != 17 && dialog.textBoxCounter != 18) && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(12);
-                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
@@ -2965,7 +2989,7 @@ public class GameManager : MonoBehaviour
                     if(dialog.textBoxCounter == 5)
                     {
                         sendErrorMessage(19);
-                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         return;
                     }
 
@@ -2993,7 +3017,7 @@ public class GameManager : MonoBehaviour
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
                             StartCoroutine(waitThreeSeconds(dialog));
-                            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
                             Debug.Log("Potion loaded in Vessel slot 2!");
 
@@ -3014,7 +3038,7 @@ public class GameManager : MonoBehaviour
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         StartCoroutine(waitThreeSeconds(dialog));
-                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Potion loaded in Vessel slot 1!");
 
                         // MATTEO: Add Loading potion SFX here.
@@ -3031,7 +3055,7 @@ public class GameManager : MonoBehaviour
                     if (dialog.textBoxCounter == 17 || dialog.textBoxCounter == 18)
                     {
                         sendErrorMessage(19);
-                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         return;
                     }
                     // Enable Artifact menu if it wasn't already enabled.
@@ -3044,7 +3068,7 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Artifact is fully loaded!");
                         // DONE: Insert error that displays on screen.
                         sendErrorMessage(8);
-                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     }
                     // Artifact slot is unloaded.
                     else
@@ -3055,7 +3079,7 @@ public class GameManager : MonoBehaviour
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         StartCoroutine(waitThreeSeconds(dialog));
-                        playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Potion loaded in Artifact slot!");
 
                         // MATTEO: Add Loading potion SFX here.
