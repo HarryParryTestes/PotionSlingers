@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [System.Serializable]
-public class TrashDeck : MonoBehaviour
+public class TrashDeck : MonoBehaviour, IDropHandler
 {
     public List<Card> deckList;
     public Card card;
@@ -31,6 +32,30 @@ public class TrashDeck : MonoBehaviour
             cardIndex = (int)v;
             displayCards();
         });
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        /*
+        add in implementation to distinguish between GameObjects
+        that have a CardDisplay vs a CharacterDisplay
+        */
+        // Debug.Log("Drop happened on character");
+
+        GameObject heldCard = eventData.pointerDrag;
+        DragCard dc = heldCard.GetComponent<DragCard>();
+        // grabbing the card held by the cursor
+        CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
+
+        // if the card is a card that is in your holster
+        if (!dc.market && grabbedCard != null)
+        {
+            Debug.Log("Trash triggered?");
+            // buy the card
+            Debug.Log("Trash");
+            GameManager.manager.setSCInt(grabbedCard.card.cardName);
+            GameManager.manager.trashCard();
+        }
     }
 
     public void changeTrashBool()

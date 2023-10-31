@@ -4297,7 +4297,7 @@ public class GameManager : MonoBehaviour
             }
             td.addCard(playerHolster.cardList[selectedCardInt - 1]);
             StartCoroutine(waitThreeSeconds(dialog));
-            playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(9);
             return;
         }
@@ -4335,7 +4335,8 @@ public class GameManager : MonoBehaviour
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality != "Starter")
             {
                 players[myPlayerIndex].cardsTrashed++;
-            }    
+            }
+            Debug.Log("Card Trashed");
             td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             
             if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].cardsTrashed == 4)
@@ -4348,7 +4349,7 @@ public class GameManager : MonoBehaviour
             {
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             }
-            else
+            else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
             {
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
             }

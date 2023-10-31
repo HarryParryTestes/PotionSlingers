@@ -13,6 +13,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public bool grabbed = false;
     public bool clicked = false;
     public bool market;
+    public int marketCardInt;
     private Image image;
     private LineRenderer lineRenderer;
     private Vector3 cachedScale;
@@ -137,6 +138,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // canvasGroup.alpha = 0.5f;
         image.CrossFadeAlpha(0.5f, 0.3f, true);
         canvasGroup.blocksRaycasts = false;
+        GameManager.manager.canvasGroup.blocksRaycasts = false;
         if (transform.parent != transform.root)
         {
             transform.SetParent(transform.root);
@@ -286,6 +288,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
         
         canvasGroup.blocksRaycasts = true;
+        // GameManager.manager.canvasGroup.blocksRaycasts = true;
         transform.SetParent(parentAfterDrag);
         transform.localScale = new Vector3(1f, 1f, 1f);
         //transform.DOScale(1f, 0.3f);
