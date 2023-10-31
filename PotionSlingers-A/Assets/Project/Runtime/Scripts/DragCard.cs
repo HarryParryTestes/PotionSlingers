@@ -12,6 +12,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public bool grabbed = false;
     public bool clicked = false;
+    public bool market;
     private Image image;
     private LineRenderer lineRenderer;
     private Vector3 cachedScale;
@@ -32,14 +33,24 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         parentSiblingIndex = transform.parent.GetSiblingIndex();
         lineRenderer = GetComponent<LineRenderer>();
         rectTransform = GetComponent<RectTransform>();
-        originalPosition = transform.position;
+        if (!market)
+        {
+            originalPosition = transform.position;
+        } else
+        {
+            originalPosition = transform.position + new Vector3(0, 647.5f, 0);
+        }
+        
         canvasGroup = GetComponent<CanvasGroup>();
         image = GetComponent<Image>();
         cardRotation = rectTransform.rotation.eulerAngles;
         Debug.Log(cardRotation);
-        artifactCard = this.transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
-        vesselCard1 = this.transform.parent.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
-        vesselCard2 = this.transform.parent.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>();
+        if (!market)
+        {
+            artifactCard = this.transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
+            vesselCard1 = this.transform.parent.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
+            vesselCard2 = this.transform.parent.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>();
+        }
         // Debug.Log(artifactCard.gameObject.name);
     }
 
@@ -67,41 +78,60 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (!clicked)
         {
             clicked = true;
-            transform.DORotate(new Vector3(0f, 0f, 0f), 0.3f);
+            transform.DORotate(new Vector3(0f, 0f, 0f), 0.5f).SetEase(Ease.Linear);
             //Output to console the clicked GameObject's name and the following message. You can replace this with your own actions for when clicking the GameObject.
             // Debug.Log(name + " Game Object Clicked!");
             // parentAfterDrag = transform.parent;
             transform.SetParent(transform.root);
             transform.SetAsLastSibling();
             Vector3 pos = new Vector3(960, 550, 0);
-            transform.DOScale(2f, 0.3f);
-            transform.DOMove(pos, 0.3f);
+            if (!market)
+            {
+                transform.DOScale(2.15f, 0.5f);
+            } else
+            {
+                transform.DOScale(4f, 0.5f);
+            }
+            
+            transform.DOMove(pos, 0.5f);
 
         } else
         {
             clicked = false;
-            transform.SetParent(parentAfterDrag);
-            StartCoroutine(SibIndex());
+            // transform.SetParent(parentAfterDrag);
+            // transform.parent.SetSiblingIndex(parentSiblingIndex);
+            /*
+            if (!market)
+            {
+                transform.DOScale(1f, 0.3f);
+            }
+            else
+            {
+                transform.DOScale(1.2f, 0.3f);
+            }
+            */
             transform.DOScale(1f, 0.3f);
-            transform.DORotate(cardRotation, 0.3f);
+            transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
             transform.DOMove(originalPosition, 0.3f);
+            StartCoroutine(SibIndex());
+            // transform.SetParent(parentAfterDrag);
         }
         
     }
 
     public IEnumerator SibIndex()
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.5f);
         transform.SetParent(parentAfterDrag);
         // transform.localScale = new Vector3(1f, 1f, 1f);
-        transform.parent.SetSiblingIndex(parentSiblingIndex);
+        // transform.parent.SetSiblingIndex(parentSiblingIndex);
     }
 
     public void OnBeginDrag(PointerEventData pointerEventData)
     {
         grabbed = true;
         clicked = false;
-        transform.DORotate(new Vector3(0f, 0f, 0f), 0.2f);
+        transform.DORotate(new Vector3(0f, 0f, 0f), 0.2f).SetEase(Ease.Linear);
         transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
         // parentAfterDrag = transform.parent;
         // canvasGroup.alpha = 0.5f;
@@ -113,19 +143,22 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
         transform.SetAsLastSibling();
 
-        if (artifactCard.gameObject.activeInHierarchy)
+        if (!market)
         {
-            artifactCard.CrossFadeAlpha(0.3f, 0.3f, true);
-        }
+            if (artifactCard.gameObject.activeInHierarchy)
+            {
+                artifactCard.CrossFadeAlpha(0.3f, 0.3f, true);
+            }
 
-        if (vesselCard1.gameObject.activeInHierarchy)
-        {
-            vesselCard1.CrossFadeAlpha(0.3f, 0.3f, true);
-        }
+            if (vesselCard1.gameObject.activeInHierarchy)
+            {
+                vesselCard1.CrossFadeAlpha(0.3f, 0.3f, true);
+            }
 
-        if (vesselCard2.gameObject.activeInHierarchy)
-        {
-            vesselCard2.CrossFadeAlpha(0.3f, 0.3f, true);
+            if (vesselCard2.gameObject.activeInHierarchy)
+            {
+                vesselCard2.CrossFadeAlpha(0.3f, 0.3f, true);
+            }
         }
     }
 
@@ -142,6 +175,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             // switch cursor
             // Game.pointCursor();
+            if (!market)
+                transform.position += new Vector3(0, 150, 0);
             
             float width = rectTransform.sizeDelta.x * rectTransform.localScale.x;
             float height = rectTransform.sizeDelta.y * rectTransform.localScale.y;
@@ -152,6 +187,13 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
 
+            if (!market)
+            {
+                transform.SetParent(transform.root);
+                // transform.SetAsLastSibling();
+            }
+            transform.SetAsLastSibling();
+
             // Card Hover sound effect:
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
 
@@ -160,8 +202,21 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
-        if (!clicked && !grabbed)
+        if (!clicked && !grabbed && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
+        {
+            
+            if (!market)
+            {
+                transform.position -= new Vector3(0, 150, 0);
+                
+            }
+            // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+            transform.SetParent(parentAfterDrag);
             transform.localScale = new Vector3(1f, 1f, 1f);
+
+        }   
+        // StartCoroutine(SibIndex());
+        // transform.parent.SetSiblingIndex(parentSiblingIndex);
         /*
         if(!clicked && grabbed)
             transform.DOScale(1f, 0.3f);
@@ -196,7 +251,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
         */
 
-        findCard(this.gameObject.GetComponent<CardDisplay>().card.cardName);
+        if (!market)
+            findCard(this.gameObject.GetComponent<CardDisplay>().card.cardName);
 
         // transform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
@@ -211,26 +267,30 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         clicked = false;
         // canvasGroup.alpha = 1f;
         image.CrossFadeAlpha(1f, 0.3f, true);
-        if (artifactCard.gameObject.activeInHierarchy)
+        if (!market)
         {
-            artifactCard.CrossFadeAlpha(1f, 0.3f, true);
-        }
+            if (artifactCard.gameObject.activeInHierarchy)
+            {
+                artifactCard.CrossFadeAlpha(1f, 0.3f, true);
+            }
 
-        if (vesselCard1.gameObject.activeInHierarchy)
-        {
-            vesselCard1.CrossFadeAlpha(1f, 0.3f, true);
-        }
+            if (vesselCard1.gameObject.activeInHierarchy)
+            {
+                vesselCard1.CrossFadeAlpha(1f, 0.3f, true);
+            }
 
-        if (vesselCard2.gameObject.activeInHierarchy)
-        {
-            vesselCard2.CrossFadeAlpha(1f, 0.3f, true);
+            if (vesselCard2.gameObject.activeInHierarchy)
+            {
+                vesselCard2.CrossFadeAlpha(1f, 0.3f, true);
+            }
         }
+        
         canvasGroup.blocksRaycasts = true;
         transform.SetParent(parentAfterDrag);
         transform.localScale = new Vector3(1f, 1f, 1f);
         //transform.DOScale(1f, 0.3f);
         // transform.position = originalPosition;
-        transform.DORotate(cardRotation, 0.3f);
+        transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
         transform.DOMove(originalPosition, 0.3f);
         // EndLine();
     }

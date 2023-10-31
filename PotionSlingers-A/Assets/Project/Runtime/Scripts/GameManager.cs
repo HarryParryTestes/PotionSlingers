@@ -40,7 +40,9 @@ public class GameManager : MonoBehaviour
     public TrashDeck td;
     public MarketDeck md1;
     public MarketDeck md2;
+    public GameObject market;
     public GameObject marketButton;
+    public CanvasGroup canvasGroup;
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
     public DeckMenuScroll deckMenuScroll;
@@ -213,20 +215,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public IEnumerator Button()
+    {
+        yield return new WaitForSeconds(1f);
+        marketButton.SetActive(true);
+    }
+
     public void moveMarket()
     {
         if (!marketSelected)
         {
             marketSelected = true;
+            marketButton.SetActive(false);
+            canvasGroup.blocksRaycasts = false;
             // marketPosition = marketButton.transform.position;
             // marketButton.transform.parent.DOMove(new Vector3(0, 0, 0), 1f);
-            marketButton.transform.DOMove(new Vector3(960, 300, 0), 1f);
+
+            // market.transform.DOMove(new Vector3(1010, 300, 0), 1f);
+            // marketButton.transform.DOMove(new Vector3(960, 300, 0), 1f);
+            market.transform.DOMoveY(636f, 1f);
+            // marketButton.transform.DOMoveY(300f, 1f);
             Debug.Log("Market moved???");
         } else
         {
             // marketPosition = marketButton.transform.position;
             marketSelected = false;
-            marketButton.transform.DOMove(new Vector3(960, -10, 0), 1f);
+            StartCoroutine(Button());
+            canvasGroup.blocksRaycasts = true;
+            market.transform.DOMoveY(-11.5f, 1f);
+            // marketButton.transform.DOMoveY(-300f, 1f);
             Debug.Log("Market reset???");
         }
         
