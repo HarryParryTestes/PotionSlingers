@@ -23,6 +23,7 @@ public class CardPlayer : MonoBehaviour
     public int uniqueArtifactsUsed = 0;
     public int tricks = 0;
     public CharacterDisplay character;
+    public Animator animator;
     public bool cubed = false;
     public bool ringBonus;
     public bool doubleRingBonus = false;
@@ -224,6 +225,15 @@ public class CardPlayer : MonoBehaviour
             // playerHPCubes.GetComponent<Text>().text = "Cubes: " + hpCubes.ToString();
         }
 
+        /* TODO: Add triggers for animations for each CardPlayer 
+         * Either do something with the hitImages list I made or make something else
+         * I'm taking the below code out for now
+         */
+
+        // Doesn't exactly work, fix this later
+        animator.SetTrigger("Attacked");
+
+        /*
         switch (cardQuality)
         {
             case "Hot":
@@ -250,8 +260,8 @@ public class CardPlayer : MonoBehaviour
                 hitAnimation.GetComponent<Image>().sprite = hitImages[4];
                 StartCoroutine(showHit());
                 break;
-        }
-        
+        }  
+        */
     }
 
     public IEnumerator showHit()

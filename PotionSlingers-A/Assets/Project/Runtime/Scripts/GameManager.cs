@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     GameObject obTop;
     GameObject obLeft;
     GameObject obRight;
+    public GameObject throwingHand;
     public TrashDeck td;
     public MarketDeck md1;
     public MarketDeck md2;
@@ -2337,6 +2338,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator waitThreeSecondsHand(int damage, string cardQuality = "")
+    {
+        throwingHand.SetActive(true);
+        throwingHand.GetComponent<Animator>().SetTrigger("Throw");
+        yield return new WaitForSeconds(2.5f);
+        throwingHand.SetActive(false);
+
+        if (Game.tutorial)
+        {
+            bolo.subHealth(damage);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            StartCoroutine(waitThreeSeconds(dialog));
+        } else
+        {
+            tempPlayer.subHealth(damage, cardQuality);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+        }
+    }
+
     // THROW POTION REQUEST
     public void throwPotion()
     {
@@ -2378,9 +2398,16 @@ public class GameManager : MonoBehaviour
                 playerHolster.cardList[selectedCardInt - 1].updateCard(bolo.deck.placeholder);
                 td.addCard(playerHolster.cardList[selectedCardInt - 1]);
                 // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+
+                // THROWING ANIMATION
+                StartCoroutine(waitThreeSecondsHand(damage));
+
+                // PASSING THIS LOGIC TO COROUTINE
+                /*
                 bolo.subHealth(damage);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                 StartCoroutine(waitThreeSeconds(dialog));
+                */
             } else if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
             {
                 if (playerHolster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
@@ -2586,8 +2613,11 @@ public class GameManager : MonoBehaviour
                 }
 
                 // may need to add this back in
+                StartCoroutine(waitThreeSecondsHand(damage, cardQuality));
+                /*
                 tempPlayer.subHealth(damage, cardQuality);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+                */
 
             } else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
             {

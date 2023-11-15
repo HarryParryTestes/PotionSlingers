@@ -51,7 +51,8 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
         viewCardMenu = this.transform.Find("ViewCardMenu");
         viewingCardObject = GameObject.Find("ViewingCard");
         artworkImage = this.GetComponent<Image>();
-        artworkImage.sprite = character.image;
+        // reworking this to start using animated sprites
+        // artworkImage.sprite = character.image;
         character.flipped = false;
     }
 
