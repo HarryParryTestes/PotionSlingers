@@ -65,12 +65,12 @@ public class CardMover : MonoBehaviour, IPointerDownHandler
             transform.SetSiblingIndex(transform.parent.childCount - 1);
             // transform.DOMoveX(10, 5);
 
-            Vector3[] vec = { new Vector3(-66, 0, 0) };
+            Vector3[] vec = { new Vector3(-66, 50, 0) };
 
             // TODO: change this to a Vector that is the middle of the screen, I think there's move local or move global? 
             // transform.DOMove(new Vector3(0, 5, 5), 1);
             transform.DOLocalPath(vec, speed, PathType.Linear);
-            transform.DOScale(5f, speed);
+            transform.DOScale(7f, speed);
             mask.SetActive(true);
             // mask1.color = new Color(mask1.color.r, mask1.color.g, mask1.color.b, 0f);
             // mask2.color = new Color(mask2.color.r, mask2.color.g, mask2.color.b, 0f);
