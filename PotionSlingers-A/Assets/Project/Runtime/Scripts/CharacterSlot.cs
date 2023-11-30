@@ -30,7 +30,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
         if (cardInt == 4 || cardInt == 5 || cardInt == 6)
         {
-            GameManager.manager.md1.cardInt = cardInt - 3;
+            GameManager.manager.md2.cardInt = cardInt - 3;
             GameManager.manager.bottomMarketBuy();
         }
     }
@@ -74,6 +74,11 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             }
             handleBuy(dc.marketCardInt);
             // heldObject.GetComponent<CardThrow>().throwCard();
+        } else if(this.gameObject.name == "DeckPile")
+        {
+            Debug.Log("Dropped card triggered?");
+            GameManager.manager.setSCInt(grabbedCard.card.cardName);
+            GameManager.manager.cycleCard();
         }
 
         // attacking player

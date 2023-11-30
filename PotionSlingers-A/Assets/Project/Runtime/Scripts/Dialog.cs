@@ -289,6 +289,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "Cubes will be awarded to the player that deals the killing blow!\n\n" +
                 "Try finishing me off and getting me to 0 health!";
             ActivateText(dialogBox);
+            // setting Bolo back to 10 health
+            GameManager.manager.tempPlayer.hp = 10;
+            GameManager.manager.tempPlayer.updateHealthUI();
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
         }

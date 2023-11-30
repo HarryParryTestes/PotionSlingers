@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 [System.Serializable]
 public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
@@ -89,14 +90,16 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
 
     public void menuCheck()
     {
-        if (!clicked)
-        {
-            clicked = true;
-            menu.SetActive(true);
-        } else
+        if (clicked)
         {
             clicked = false;
+            menu.SetActive(true);
+            transform.DOMoveY(250f, 0.4f);
+        } else
+        {
+            clicked = true;
             menu.SetActive(false);
+            transform.DOMoveY(50f, 0.4f);
         }
     }
 

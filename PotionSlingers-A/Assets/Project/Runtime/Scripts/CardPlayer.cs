@@ -206,6 +206,11 @@ public class CardPlayer : MonoBehaviour
         updateHealthUI();
     }
 
+    public void playIdle()
+    {
+        animator.Play("BoloIdle");
+    }
+
     public void updateHealthUI(string cardQuality = "")
     {
         if(healthText != null && hpBar != null)
@@ -231,7 +236,8 @@ public class CardPlayer : MonoBehaviour
          */
 
         // Doesn't exactly work, fix this later
-        animator.SetTrigger("Attacked");
+        animator.Play("BoloHit");
+        Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
 
         /*
         switch (cardQuality)
