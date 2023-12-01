@@ -465,13 +465,15 @@ public class GameManager : MonoBehaviour
                     switch (i)
                     {
                         case 1:
-                            players[1].charName = "Reets";
+                            players[i].charName = "Reets";
                             playerLeftName.text = players[i].charName;
                             break;
                         case 2:
+                            players[i].charName = "Isadore";
                             playerTopName.text = players[i].charName;
                             break;
                         case 3:
+                            players[i].charName = "Saltimbocca";
                             playerRightName.text = players[i].charName;
                             break;
                     }
@@ -2343,8 +2345,26 @@ public class GameManager : MonoBehaviour
     {
         throwingHand.SetActive(true);
         throwingHand.GetComponent<Animator>().SetTrigger("Throw");
-        yield return new WaitForSeconds(2.6f);
-        throwingHand.SetActive(false);
+        if(tempPlayer.user_id == 2)
+        {
+            yield return new WaitForSeconds(2.6f);
+            throwingHand.SetActive(false);
+        }
+        else if (tempPlayer.user_id == 1)
+        {
+            yield return new WaitForSeconds(1.3f);
+            throwingHand.transform.DOMoveX(470f, 1.3f);
+            yield return new WaitForSeconds(1.3f);
+            throwingHand.SetActive(false);
+        }
+        else if (tempPlayer.user_id == 3)
+        {
+            //Debug.Log("Right throw");
+            yield return new WaitForSeconds(1.3f);
+            throwingHand.transform.DOMoveX(1470f, 1.3f);
+            yield return new WaitForSeconds(1.3f);
+            throwingHand.SetActive(false);
+        }
 
         if (Game.tutorial)
         {
@@ -2618,7 +2638,10 @@ public class GameManager : MonoBehaviour
                 }
 
                 // may need to add this back in
-                StartCoroutine(waitThreeSecondsHand(damage, cardQuality));
+                if (myPlayerIndex == 0)
+                    StartCoroutine(waitThreeSecondsHand(damage, cardQuality));
+                else
+                    tempPlayer.subHealth(damage, cardQuality);
                 /*
                 tempPlayer.subHealth(damage, cardQuality);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
@@ -2646,8 +2669,13 @@ public class GameManager : MonoBehaviour
 
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                    // MATTEO: taking this out for now, may want to add back in
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
-                    tempPlayer.subHealth(damage, cardQuality);
+                    if (myPlayerIndex == 0)
+                        StartCoroutine(waitThreeSecondsHand(damage, cardQuality));
+                    else
+                        tempPlayer.subHealth(damage, cardQuality);
+                    // tempPlayer.subHealth(damage, cardQuality);
 
                     // ISADORE LOGIC
                     // change this logic to check for unique artifacts
@@ -2708,8 +2736,12 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
-                    tempPlayer.subHealth(damage, cardQuality);
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+                    if (myPlayerIndex == 0)
+                        StartCoroutine(waitThreeSecondsHand(damage, cardQuality));
+                    else
+                        tempPlayer.subHealth(damage, cardQuality);
+                    // MATTEO: taking this out for now, may want to add back in
+                    // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     sendSuccessMessage(4);
                     // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)

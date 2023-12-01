@@ -134,7 +134,8 @@ public class CardPlayer : MonoBehaviour
 
     public void checkCharacter()
     {
-        switch (character.character.cardName)
+        // switch (character.character.cardName)
+        switch (charName)
         {
             case "Pluot":
                 Debug.Log("I AM PLUOT");
@@ -151,14 +152,32 @@ public class CardPlayer : MonoBehaviour
             case "Isadore":
                 Debug.Log("I AM ISADORE");
                 isIsadore = true;
+                if (this.gameObject.name == "CharacterCard (Left)")
+                    this.transform.localScale = new Vector3(2f, 2.6f, 0);
+                if (this.gameObject.name == "CharacterCard (Top)")
+                    this.transform.localScale = new Vector3(8.2f, 10f, 0);
+                if (this.gameObject.name == "CharacterCard (Right)")
+                    this.transform.localScale = new Vector3(5.2f, 6.3f, 0);
                 break;
             case "Reets":
                 Debug.Log("I AM REETS");
                 isReets = true;
+                if (this.gameObject.name == "CharacterCard (Right)")
+                    this.transform.localScale = new Vector3(7f, 7f, 0);
+                if (this.gameObject.name == "CharacterCard (Top)")
+                    this.transform.localScale = new Vector3(11f, 11f, 0);
+                if (this.gameObject.name == "CharacterCard (Left)")
+                    this.transform.localScale = new Vector3(3f, 3f, 0);
                 break;
             case "Saltimbocca":
                 Debug.Log("I AM SALTIMBOCCA");
                 isSaltimbocca = true;
+                if (this.gameObject.name == "CharacterCard (Right)")
+                    this.transform.localScale = new Vector3(5.4f, 7f, 0);
+                if (this.gameObject.name == "CharacterCard (Top)")
+                    this.transform.localScale = new Vector3(9.1f, 11.4f, 0);
+                if (this.gameObject.name == "CharacterCard (Left)")
+                    this.transform.localScale = new Vector3(2.3f, 3f, 0);
                 break;
             case "Scarpetta":
                 Debug.Log("I AM SCARPETTA");
@@ -177,6 +196,8 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Failed to set any bools");
                 break;
         }
+        if (animator != null)
+            playIdle();
     }
 
     public void onCharacterClick(string character)
@@ -208,7 +229,90 @@ public class CardPlayer : MonoBehaviour
 
     public void playIdle()
     {
-        animator.Play("BoloIdle");
+        switch (charName)
+        {
+            case "Pluot":
+                Debug.Log("I AM PLUOT");
+                isPluot = true;
+                break;
+            case "Bolo":
+                animator.Play("BoloIdle");
+                break;
+            case "Nickles":
+                Debug.Log("I AM NICKLES");
+                isNickles = true;
+                break;
+            case "Isadore":
+                animator.Play("IsadoreIdle");
+                break;
+            case "Reets":
+                animator.Play("ReetsIdle");
+                break;
+            case "Saltimbocca":
+                animator.Play("SaltIdle");
+                break;
+            case "Scarpetta":
+                Debug.Log("I AM SCARPETTA");
+                isScarpetta = true;
+                break;
+            case "Sweetbitter":
+                Debug.Log("I AM SWEETBITTER");
+                isSweetbitter = true;
+                break;
+            case "Twins":
+                Debug.Log("I AM TWINS");
+                isTwins = true;
+                break;
+
+            default:
+                Debug.Log("Failed to set any bools");
+                break;
+        }
+    }
+
+    public void playHit()
+    {
+        switch (charName)
+        {
+            case "Pluot":
+                Debug.Log("I AM PLUOT");
+                isPluot = true;
+                break;
+            case "Bolo":
+                animator.Play("BoloHit");
+                break;
+            case "Nickles":
+                Debug.Log("I AM NICKLES");
+                isNickles = true;
+                break;
+            case "Isadore":
+                animator.Play("IsadoreHit");
+                break;
+            case "Reets":
+                animator.Play("ReetsHit");
+                break;
+            case "Saltimbocca":
+                animator.Play("SaltHit");
+                break;
+            case "Scarpetta":
+                Debug.Log("I AM SCARPETTA");
+                isScarpetta = true;
+                break;
+            case "Sweetbitter":
+                Debug.Log("I AM SWEETBITTER");
+                isSweetbitter = true;
+                break;
+            case "Twins":
+                Debug.Log("I AM TWINS");
+                isTwins = true;
+                break;
+
+            default:
+                Debug.Log("Failed to set any bools");
+                break;
+        }
+        if (animator != null)
+            Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
     public void updateHealthUI(string cardQuality = "")
@@ -236,8 +340,13 @@ public class CardPlayer : MonoBehaviour
          */
 
         // Doesn't exactly work, fix this later
+
+        /*
+         * add this to subHealth instead of updateHealthUI
         animator.Play("BoloHit");
         Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
+        */
+
 
         /*
         switch (cardQuality)
@@ -1565,8 +1674,9 @@ public class CardPlayer : MonoBehaviour
                 return damage;
             }
             // if they're not a computer player
-            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
-                && gameObject.GetComponent<ComputerPlayer>() == null)
+            // GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
+            if (gameObject.GetComponent<ComputerPlayer>() == null
+                && GameManager.manager.myPlayerIndex == 0)
             {
                 GameManager.manager.starterPotionMenu.SetActive(true);
             }
@@ -1851,6 +1961,13 @@ public class CardPlayer : MonoBehaviour
             return;
         }
 
+        /*
+         * call a function instead of this
+        animator.Play("BoloHit");
+        Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
+        */
+        if (animator != null)
+            playHit();
         hp -= damage;
 
         //Make sure that hp doesn't go below 0
