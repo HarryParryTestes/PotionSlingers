@@ -242,8 +242,9 @@ public class ComputerPlayer : CardPlayer
                 }
 
                 int number = chooseRandomPlayer();
-                GameManager.manager.selectedOpponentName = GameManager.manager.players[number].name;
-                Debug.Log("Opponent name is: " + GameManager.manager.selectedOpponentName);
+                // GameManager.manager.selectedOpponentName = GameManager.manager.players[number].name;
+                GameManager.manager.tempPlayer = GameManager.manager.players[number];
+                Debug.Log("Opponent name is: " + GameManager.manager.players[number].name);
                 GameManager.manager.selectedCardInt = i + 1;
                 GameManager.manager.throwPotion();
                 actionsList.Add("THROW");
