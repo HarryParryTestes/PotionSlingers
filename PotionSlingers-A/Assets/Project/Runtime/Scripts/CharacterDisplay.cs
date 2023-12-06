@@ -94,12 +94,18 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
         {
             clicked = false;
             menu.SetActive(true);
-            transform.DOMoveY(250f, 0.4f);
+            if (Game.tutorial)
+            {
+                transform.DOMoveY(400f, 0.6f);
+            } else
+            {
+                transform.DOMoveY(515f, 0.6f);
+            }
         } else
         {
             clicked = true;
             menu.SetActive(false);
-            transform.DOMoveY(50f, 0.4f);
+            transform.DOMoveY(50f, 0.6f);
         }
     }
 

@@ -1581,7 +1581,11 @@ public class GameManager : MonoBehaviour
     // END TURN REQUEST
     public void endTurn()
     {
-
+        // reset the market at the end of your turn
+        if (marketSelected)
+        {
+            moveMarket();
+        }
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
@@ -1687,7 +1691,8 @@ public class GameManager : MonoBehaviour
                     Debug.Log("New pip count: " + players[myPlayerIndex].pipCount);
                 }
             }
-            players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
+            // taking this out for now
+            // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
 
             int potions;
             int artifacts;
@@ -2234,7 +2239,7 @@ public class GameManager : MonoBehaviour
             dialog.nameTag.SetActive(true);
             dialog.textInfo = "Artifacts are powerful items that only require one potion\nin order to use." +
                 "\n\nTry using that artifact on me!\n\n" +
-                "Click THROW on the artifact card and choose your foe!";
+                "Drag the artifact card over your foe and let 'em have it!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 8)
@@ -2243,7 +2248,7 @@ public class GameManager : MonoBehaviour
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
             dialog.textInfo = "Artifacts can be used as many times as you want per turn!\n\n" +
-                "Whenever an artifact is used, the potion loaded into it is trashed!";
+                "Whenever an artifact is used, the loaded potion will be trashed!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 12)
@@ -2282,7 +2287,7 @@ public class GameManager : MonoBehaviour
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
             dialog.textInfo = "Excellent! Now let's buy more cards from the market.\n\n" +
-                "Buy some more cards from the market and then end your turn!";
+                "Buy some more potions from the market and then end your\nturn!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 26)
@@ -2347,11 +2352,15 @@ public class GameManager : MonoBehaviour
         throwingHand.GetComponent<Animator>().SetTrigger("Throw");
         if(tempPlayer.user_id == 2)
         {
-            yield return new WaitForSeconds(2.6f);
+            Debug.Log("Middle person");
+            yield return new WaitForSeconds(1.3f);
+            throwingHand.transform.DOMoveX(950f, 1.3f);
+            yield return new WaitForSeconds(1.3f);
             throwingHand.SetActive(false);
         }
         else if (tempPlayer.user_id == 1)
         {
+            Debug.Log("Left person");
             yield return new WaitForSeconds(1.3f);
             throwingHand.transform.DOMoveX(470f, 1.3f);
             yield return new WaitForSeconds(1.3f);
@@ -2359,7 +2368,7 @@ public class GameManager : MonoBehaviour
         }
         else if (tempPlayer.user_id == 3)
         {
-            //Debug.Log("Right throw");
+            Debug.Log("Right person");
             yield return new WaitForSeconds(1.3f);
             throwingHand.transform.DOMoveX(1470f, 1.3f);
             yield return new WaitForSeconds(1.3f);
@@ -2448,7 +2457,7 @@ public class GameManager : MonoBehaviour
                     sendSuccessMessage(3);
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
                     // StartCoroutine(waitThreeSeconds(dialog));
-                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     // MATTEO: Add Artifact using SFX here.
 
                 }
@@ -2479,8 +2488,8 @@ public class GameManager : MonoBehaviour
                     //tempPlayer.subHealth(damage);
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     sendSuccessMessage(4);
-                    StartCoroutine(waitThreeSeconds(dialog));
-                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // StartCoroutine(waitThreeSeconds(dialog));
+                    // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
                     // MATTEO: Add Vessel throw SFX here.
 
@@ -4279,7 +4288,7 @@ public class GameManager : MonoBehaviour
             if (dialog.textBoxCounter != 28 && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(19);
-                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
             cardPlayer.addPips(playerHolster.cardList[selectedCardInt - 1].card.sellPrice);

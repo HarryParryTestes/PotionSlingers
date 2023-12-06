@@ -83,6 +83,10 @@ public class SteamLobby : MonoBehaviour
     {
         SteamAPI.Shutdown();
         Application.Quit();
+        Application.Quit();
+        Application.Quit();
+        Application.Quit();
+        Application.Quit();
     }
 
     public void HostLobby()

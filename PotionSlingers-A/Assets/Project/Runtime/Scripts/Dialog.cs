@@ -57,8 +57,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
     public void initDialog()
     {
         textBoxCounter = 0;
-        textInfo = "Hello, and welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion-\n" +
-            "slinging action this game has to offer!";
+        textInfo = "Hello, and welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion-slinging\n" +
+            "action this game has to offer!";
         ActivateText(dialogBox);
         Boloidle.SetActive(false);
         Bolotalk.SetActive(true);
@@ -130,8 +130,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 4)
         {
             textInfo = "Speaking of artifacts, try loading a potion into an artifact card!\n\n" +
-                "Click on the other potion and click LOAD, then click on the\n" +
-                "artifact card!";
+                "Try dragging a potion card onto that artifact card!\n";
+                // "artifact card!";
 
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
@@ -140,23 +140,23 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 5)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on a potion card and then click\nLOAD! " +
-                "Then click on the artifact card!";
+            directionBox.text = "Drag a potion card onto the artifact card\nto load it!";
+                // "Then click on the artifact card!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 7)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on an artifact card and click THROW!\nThen click on an opponent!";
+            directionBox.text = "Drag the artifact card onto your opponent\nto use it on them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 9)
         {
-            textInfo = "Now let's try buying a few things! Take a tour of the market\n" +
-                "and buy two potions!\n\nThe top row in the market is exclusively for potions,\n" +
-                "and the bottom row is for vessels, artifacts, and rings!\n\n" +
+            textInfo = "Let's try buying a few things! Click on the market " +
+                "button to\nopen up the market and buy two potions!\n\nThe top row in the market is exclusively for potions, " +
+                "and the\nbottom row is for vessels, artifacts, and rings!\n\n" +
                 "Buy cards using your hard-earned Pips! You get 6 Pips\nat the start of your turn!";
             ActivateText(dialogBox); 
             Boloidle.SetActive(false);
@@ -165,14 +165,14 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 10)
         {
             directions.SetActive(true);
-            directionBox.text = "Buy two potions from the top row of\nthe market!";
+            directionBox.text = "Buy two potions from the top row of the\nmarket!\n\nDrag a card from the market onto your\ndeck to buy them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 13)
         {
-            textInfo = "Now let's end your turn... Click that PASS button\n" +
-                "in the lower right corner!";
+            textInfo = "Now let's end your turn... Click that PASS button " +
+                "in the\nlower right corner!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -196,15 +196,15 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 17)
         {
             directions.SetActive(true);
-            directionBox.text = "Load two potions into the starter\nvessel and throw it!";
+            directionBox.text = "Load two potions into the starter vessel\nand throw it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 21)
         {
             textInfo = "Now what do we do when we're faced with junk? We get rid\nof it!\n\n" +
-                "Try putting your artifact card in the trash!\n\n" +
-                "Click on the artifact card and click TRASH!";
+                "Try dragging your artifact card into the trash!\n\n" +
+                "It's just over there on the right!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -212,22 +212,22 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 22)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on the artifact card\nand click TRASH!";
+            directionBox.text = "Drag the artifact card into the trash can\non the right!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 24)
         {
             directions.SetActive(true);
-            directionBox.text = "Buy more potions from the\nmarket! Then click PASS!";
+            directionBox.text = "Buy more potions from the market! Then\nclick PASS!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 27)
         {
             textInfo = "Some items sell for more than what you can buy them for!\n\n" +
-                "Try selling an item in your holster! Click on a card\n" +
-                "you want to sell and click SELL!";
+                "Try selling an item in your holster! Drag a card " +
+                "you want to sell\nonto the market button to sell it!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -235,16 +235,16 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 28)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on a card in your holster\n" +
-                "and click SELL!";
+            directionBox.text = "Drag a card from your holster " +
+                "to the\nmarket button to sell it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 30)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on a card in your holster\n" +
-                "and click CYCLE!";
+            directionBox.text = "Drag a card from your holster\n" +
+                "to your deck to cycle it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -312,7 +312,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         Game.completedGame = true;
         this.gameObject.SetActive(true);
         textInfo = "Congratulations! You have completed the tutorial!\n" +
-            "What do we do after this?";
+            "Try playing a round of Potion Slingers with some of the CPU\ncharacters!";
         ActivateText(dialogBox);
         Boloidle.SetActive(false);
         Bolotalk.SetActive(true);
@@ -365,16 +365,16 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 4)
         {
             textInfo = "Speaking of artifacts, try loading a potion into an artifact card!\n\n" +
-                "Click on the other potion and click LOAD, then click on the\n" +
-                "artifact card!";
+                "Drag a potion card onto the artifact card to load it!";
+                //"artifact card!";
 
             ActivateText(dialogBox);
         }
         else if (textBoxCounter == 5)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on a potion card and then click\nLOAD! " +
-                "Then click on the artifact card!";
+            directionBox.text = "Drag a potion card onto the artifact\ncard to load it!";
+                //"Then click on the artifact card!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -396,14 +396,14 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 10)
         {
             directions.SetActive(true);
-            directionBox.text = "Buy two potions from the top row of\nthe market!";
+            directionBox.text = "Buy two potions from the top row of the\nmarket!\n\nDrag a card from the market onto your\ndeck to buy them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 13)
         {
-            textInfo = "Now let's end your turn... Click the red END TURN button\n" +
-                "in the lower right corner!";
+            textInfo = "Now let's end your turn... Click the PASS button in the\n" +
+                "lower right corner!";
             ActivateText(dialogBox);
         }
         else if (textBoxCounter == 14)
