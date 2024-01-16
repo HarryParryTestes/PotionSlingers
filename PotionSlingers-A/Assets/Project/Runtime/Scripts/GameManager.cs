@@ -2298,8 +2298,8 @@ public class GameManager : MonoBehaviour
             dialog.textInfo = "While buying cards is all fun and games, selling is where you\n" +
                 "really make the dough!\n\n" +
                 "Selling items allows you to increase your Pip total beyond\n" +
-                "6 Pips, allowing you to buy more powerful and\n" +
-                "expensive items!";
+                "6 Pips, allowing you to buy more powerful and expensive\n" +
+                "items!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 29)
@@ -2310,7 +2310,8 @@ public class GameManager : MonoBehaviour
             dialog.textInfo = "If you don't want to sell a card but you don't want it in your\n" +
                 "holster, you can cycle it to the bottom of your deck as well!\n\n" +
                 "Be aware that cycling non-potion cards costs 1 Pip!\n\n" +
-                "Try cycling a card from your holster!";
+                "Try cycling a card from your holster! Drag a card from\n" +
+                "your holster to your deck!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 31)

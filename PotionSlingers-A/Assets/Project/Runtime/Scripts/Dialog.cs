@@ -381,7 +381,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 7)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on an artifact card and click THROW!\nThen click on an opponent!";
+            directionBox.text = "Drag the artifact card onto your opponent\nto use it on them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -430,8 +430,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 21)
         {
             textInfo = "Now what do we do when we're faced with junk? We get rid\nof it!\n\n" +
-                "Try putting your artifact card in the trash!\n\n" +
-                "Click on the artifact card and click TRASH!";
+                "Try dragging your artifact card into the trash!\n\n" +
+                "It's just over there on the right!";
             ActivateText(dialogBox);
         }
         else if (textBoxCounter == 22)
@@ -458,16 +458,16 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 28)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on a card in your holster\n" +
-                "and click SELL!";
+            directionBox.text = "Drag a card from your holster " +
+                "to the\nmarket button to sell it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 30)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on a card in your holster\n" +
-                "and click CYCLE!";
+            directionBox.text = "Drag a card from your holster\n" +
+                "to your deck to cycle it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }

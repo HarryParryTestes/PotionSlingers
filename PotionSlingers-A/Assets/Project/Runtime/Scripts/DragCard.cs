@@ -76,7 +76,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        if (!clicked)
+        if (!clicked && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
             clicked = true;
             transform.DORotate(new Vector3(0f, 0f, 0f), 0.5f).SetEase(Ease.Linear);
