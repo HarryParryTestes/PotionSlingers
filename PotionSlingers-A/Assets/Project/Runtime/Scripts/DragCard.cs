@@ -28,6 +28,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private Image vesselCard2;
     int parentSiblingIndex;
 
+    void Update()
+    {
+        if(transform.position.y < 0)
+        {
+            transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+        }
+    }
+
     private void Awake()
     {
         parentAfterDrag = transform.parent;
@@ -39,6 +47,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             originalPosition = transform.position;
         } else
         {
+            // TODO: fix this so that the position changes depending on whether or not the market is selected or not
             originalPosition = transform.position + new Vector3(0, 647.5f, 0);
         }
         
@@ -73,11 +82,15 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         lineRenderer.positionCount = 0;
     }
     */
+    // TODO: make a function so that the all cards move back to their proper positions  
+    // if either the market deck is closed or if another card is clicked on
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         if (!clicked && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
+            canvasGroup.interactable = false;
+            Invoke("makeInteractable", 0.7f);
             clicked = true;
             transform.DORotate(new Vector3(0f, 0f, 0f), 0.5f).SetEase(Ease.Linear);
             //Output to console the clicked GameObject's name and the following message. You can replace this with your own actions for when clicking the GameObject.
@@ -89,9 +102,11 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             if (!market)
             {
                 transform.DOScale(2.15f, 0.5f);
-            } else
+            } else if(GameManager.manager.marketSelected)
             {
                 transform.DOScale(4f, 0.5f);
+                transform.DOMove(pos, 0.5f);
+                return;
             }
             
             transform.DOMove(pos, 0.5f);
@@ -120,10 +135,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         
     }
 
+    public void makeInteractable()
+    {
+        canvasGroup.blocksRaycasts = true;
+    }
+
     public IEnumerator SibIndex()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         transform.SetParent(parentAfterDrag);
+        Debug.Log("Sibling index changed");
         // transform.localScale = new Vector3(1f, 1f, 1f);
         // transform.parent.SetSiblingIndex(parentSiblingIndex);
     }
@@ -177,8 +198,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             // switch cursor
             // Game.pointCursor();
+
+            // originally at 150, experimenting with 200
             if (!market)
-                transform.position += new Vector3(0, 150, 0);
+                transform.position += new Vector3(0, 175, 0);
             
             float width = rectTransform.sizeDelta.x * rectTransform.localScale.x;
             float height = rectTransform.sizeDelta.y * rectTransform.localScale.y;
@@ -209,7 +232,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             
             if (!market)
             {
-                transform.position -= new Vector3(0, 150, 0);
+                transform.position -= new Vector3(0, 175, 0);
                 
             }
             // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
