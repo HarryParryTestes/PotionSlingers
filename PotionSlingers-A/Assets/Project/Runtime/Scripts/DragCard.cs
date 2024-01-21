@@ -30,7 +30,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     void Update()
     {
-        if(transform.position.y < 0)
+        if(transform.position.y < 0 && !market)
         {
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
@@ -90,7 +90,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (!clicked && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
             canvasGroup.interactable = false;
-            Invoke("makeInteractable", 0.7f);
+            Invoke("makeInteractable", 0.6f);
             clicked = true;
             transform.DORotate(new Vector3(0f, 0f, 0f), 0.5f).SetEase(Ease.Linear);
             //Output to console the clicked GameObject's name and the following message. You can replace this with your own actions for when clicking the GameObject.
@@ -114,6 +114,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         } else
         {
             clicked = false;
+
+            if(market && !GameManager.manager.marketSelected)
+            {
+                transform.DOScale(1f, 0.3f);
+                transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
+                Vector2 thing = new Vector2(0, 647.5f);
+                transform.DOMove(originalPosition - thing, 0.3f);
+                StartCoroutine(SibIndex());
+                return;
+            }
             // transform.SetParent(parentAfterDrag);
             // transform.parent.SetSiblingIndex(parentSiblingIndex);
             /*

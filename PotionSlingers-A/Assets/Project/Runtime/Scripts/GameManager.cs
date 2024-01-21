@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
 
     public List<Card> starterCards;
 
+    public GameObject tutorialArrow;
+    public GameObject tutorialArrow2;
     public GameObject pluotPotionMenu;
     public GameObject ExtraInventoryMenu;
     public GameObject nicklesUI;
@@ -227,6 +229,13 @@ public class GameManager : MonoBehaviour
         if (!marketSelected)
         {
             marketSelected = true;
+            if (dialog.textBoxCounter == 10)
+            {
+                tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+                tutorialArrow.SetActive(true);
+                tutorialArrow2.GetComponent<SecondArrowMover>().checkArrow();
+                tutorialArrow2.SetActive(true);
+            }
             marketButton.SetActive(false);
             canvasGroup.blocksRaycasts = false;
             // marketPosition = marketButton.transform.position;
@@ -2226,6 +2235,7 @@ public class GameManager : MonoBehaviour
         if (dialog.textBoxCounter == 3)
         {
             dialog.directions.gameObject.SetActive(false);
+            // tutorialArrow.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
             dialog.textInfo = "Potions are the lifeblood of this game, and you will be seeing\nthem a lot!\n\nNot only are they cheap ammunition, but they fuel " +
@@ -2256,6 +2266,8 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
+            tutorialArrow.SetActive(false);
+            tutorialArrow2.SetActive(false);
             dialog.textInfo = "Cards bought from the market appear face-up on top of\n" +
                 "your deck! The order in which you buy things is important!\n\n" +
                 "Keep in mind that any unspent Pips do not get saved,\n" +
@@ -2267,6 +2279,7 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
+            tutorialArrow.SetActive(false);
             dialog.textInfo = "Upon the start of your next turn, empty spots in your holster\n" +
                 "will be replaced by the cards on top of your deck!\n\n" +
                 "You also get 6 new Pips to start your turn with.";
@@ -2349,13 +2362,22 @@ public class GameManager : MonoBehaviour
 
     IEnumerator waitThreeSecondsHand(int damage, string cardQuality = "")
     {
+        if (tutorialArrow.activeInHierarchy)
+        {
+            tutorialArrow.SetActive(false);
+        }
+        if (tutorialArrow2.activeInHierarchy)
+        {
+            tutorialArrow2.SetActive(false);
+        }
+
         throwingHand.SetActive(true);
         throwingHand.GetComponent<Animator>().SetTrigger("Throw");
         if(tempPlayer.user_id == 2)
         {
             Debug.Log("Middle person");
             yield return new WaitForSeconds(1.3f);
-            throwingHand.transform.DOMoveX(950f, 1.3f);
+            throwingHand.transform.DOMoveX(1000f, 1.3f);
             yield return new WaitForSeconds(1.3f);
             throwingHand.SetActive(false);
         }

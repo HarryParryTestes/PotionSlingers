@@ -126,6 +126,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directions.SetActive(true);
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+            // SetActive the arrow here
+            GameManager.manager.tutorialArrow.SetActive(true);
+            GameManager.manager.tutorialArrow2.SetActive(true);
         }
         else if (textBoxCounter == 4)
         {
@@ -144,6 +147,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 // "Then click on the artifact card!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+            GameManager.manager.tutorialArrow.SetActive(true);
+            
         }
         else if (textBoxCounter == 7)
         {
@@ -168,6 +174,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directionBox.text = "Buy two potions from the top row of the\nmarket!\n\nDrag a card from the market onto your\ndeck to buy them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+            GameManager.manager.tutorialArrow.SetActive(true);
         }
         else if (textBoxCounter == 13)
         {
@@ -183,6 +191,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directionBox.text = "Click the PASS button!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+            GameManager.manager.tutorialArrow.SetActive(true);
         }
         else if (textBoxCounter == 16)
         {
@@ -377,6 +387,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 //"Then click on the artifact card!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+            GameManager.manager.tutorialArrow.SetActive(true);
         }
         else if (textBoxCounter == 7)
         {
@@ -399,6 +411,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directionBox.text = "Buy two potions from the top row of the\nmarket!\n\nDrag a card from the market onto your\ndeck to buy them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+            GameManager.manager.tutorialArrow.SetActive(true);
         }
         else if (textBoxCounter == 13)
         {
@@ -412,6 +426,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directionBox.text = "Click the END TURN button!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+            GameManager.manager.tutorialArrow.SetActive(true);
         }
         else if (textBoxCounter == 16)
         {
