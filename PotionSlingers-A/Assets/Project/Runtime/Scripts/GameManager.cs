@@ -226,6 +226,9 @@ public class GameManager : MonoBehaviour
 
     public void moveMarket()
     {
+        if (Game.tutorial && dialog.textBoxCounter < 9)
+            return;
+
         if (!marketSelected)
         {
             marketSelected = true;
@@ -3022,7 +3025,7 @@ public class GameManager : MonoBehaviour
         if(cards == 0)
         {
             sendErrorMessage(20);
-            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
+            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
             return;
         }
 
@@ -3030,7 +3033,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Not a potion, ERROR");
             sendErrorMessage(17);
-            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
+            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().cardMenu.gameObject.SetActive(false);
 
         } else
         {

@@ -522,7 +522,7 @@ public class MainMenu : MonoBehaviour
 		networkManager.storyMode = true;
 		networkManager.savedGame = false;
 
-		StartCoroutine(networkManager.LoadLevel());
+		StartCoroutine(networkManager.LoadStory());
 		// networkManager.ServerChangeScene("GameScene");
 	}
 

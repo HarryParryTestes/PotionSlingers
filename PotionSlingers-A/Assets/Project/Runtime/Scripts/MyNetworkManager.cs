@@ -299,6 +299,32 @@ public class MyNetworkManager : NetworkManager
         ServerChangeScene("TownCenter");
     }
 
+    public IEnumerator LoadStory()
+    {
+        canvas = GameObject.Find("Canvas").GetComponent<AnimationHolder>();
+
+        loadingScreen = canvas.loadingScreen;
+        loadingText = canvas.loadingText;
+
+        animator.SetTrigger("Start");
+        yield return new WaitForSeconds(1);
+        if (loadingScreen != null && loadingText != null)
+        {
+            loadingScreen.SetActive(true);
+            loadingText.SetActive(true);
+        }
+        /*
+        else
+        {
+            canvas.loadingScreen.SetActive(true);
+            canvas.loadingText.SetActive(true);
+        }
+        */
+        animator.SetTrigger("End");
+        yield return new WaitForSeconds(2);
+        ServerChangeScene("StoryMode");
+    }
+
     public void StartGame()
     {
         multiplayer = true;
