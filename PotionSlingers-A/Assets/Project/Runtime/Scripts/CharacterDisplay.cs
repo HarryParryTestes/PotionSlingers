@@ -69,6 +69,7 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
 
     public void updateCharacter(Character character)
     {
+        Debug.Log("Updating character image");
         artworkImage = this.GetComponent<Image>();
         this.character = character;
         this.artworkImage.sprite = character.image;

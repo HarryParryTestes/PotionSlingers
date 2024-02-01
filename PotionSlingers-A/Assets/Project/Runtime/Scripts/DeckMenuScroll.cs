@@ -144,6 +144,23 @@ public class DeckMenuScroll : MonoBehaviour
         slider.maxValue = 2;
 
         // menuUI.SetActive(true);
+        foreach (CardDisplay cd in cdList)
+        {
+            if (cardIndex > deckList.Count - 1)
+            {
+                Debug.Log("Reached end of trash");
+                cardIndex = 0;
+                cd.updateCard(cd.placeholder);
+            }
+            else
+            {
+                temp = deckList[cardIndex];
+                cd.updateCard(temp);
+                cardIndex++;
+            }
+        }
+
+        
         if (deckList.Count < 4)
         {
             slider.gameObject.SetActive(false);
@@ -191,6 +208,7 @@ public class DeckMenuScroll : MonoBehaviour
             temp3 = deckList[2];
             cd3.updateCard(temp3);
         }
+        
 
         
 

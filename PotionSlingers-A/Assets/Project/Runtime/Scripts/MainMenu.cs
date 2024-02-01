@@ -122,8 +122,7 @@ public class MainMenu : MonoBehaviour
 
 	public GameObject levelUpText;
 
-
-	void Awake()
+    void Awake()
     {
 		// Don't worry about this for now
 		/*
@@ -508,11 +507,16 @@ public class MainMenu : MonoBehaviour
         networkManager.multiplayer = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = false;
-		networkManager.savedGame = false;
 
 		StartCoroutine(networkManager.LoadLevel());
 		// networkManager.ServerChangeScene("GameScene");
 	}
+
+	public void changeFromStoryModeScene()
+	{
+        SceneManager.LoadScene("TownCenter");
+        //networkManager.ServerChangeScene("TownCenter");
+    }
 
 	public void StartStoryMode()
 	{
@@ -520,9 +524,10 @@ public class MainMenu : MonoBehaviour
 		networkManager.multiplayer = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = true;
-		networkManager.savedGame = false;
+		SaveSystem.setNewGame();
+        // SaveSystem.instance.savedGame = false;
 
-		StartCoroutine(networkManager.LoadStory());
+        StartCoroutine(networkManager.LoadStory());
 		// networkManager.ServerChangeScene("GameScene");
 	}
 
@@ -532,13 +537,16 @@ public class MainMenu : MonoBehaviour
 		networkManager.multiplayer = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = true;
-		networkManager.savedGame = true;
+        SaveSystem.setSaveGame();
+        // SaveSystem.instance.savedGame = false;
 
-		StartCoroutine(networkManager.LoadLevel());
-		// networkManager.ServerChangeScene("GameScene");
-	}
+        StartCoroutine(networkManager.LoadLevel());
+		// change to this after testing vvv
+        // StartCoroutine(networkManager.LoadStory());
+        // networkManager.ServerChangeScene("GameScene");
+    }
 
-	public void StartGame()
+    public void StartGame()
 	{
 		networkManager.multiplayer = true;
         networkManager.tutorial = false;

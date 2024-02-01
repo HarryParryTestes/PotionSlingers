@@ -10,28 +10,40 @@ public class SaveData
     // Gamestate info will be saved here
     // public GameManager saveManager = new GameManager();
     // public TMPro.TextMeshProUGUI saveGameText;
-    public string playerName;
+    // public string playerName;
     public string playerCharName;
     // public int playerHealth;
     // public int playerCubes;
     // public List<string> playerDeck = new List<string>();
     // public List<string> playerHolster = new List<string>();
-    public string oppName;
-    public string oppCharName;
+    // public string oppName;
+    // public string oppCharName;
     // public int oppHealth;
     // public int oppCubes;
     public int stage;
+    public bool savedGame;
     // public List<string> oppDeck = new List<string>();
     // public List<string> oppHolster = new List<string>();
+
+    public SaveData()
+    {
+
+    }
+
+    public SaveData(string playerCharName, int stage)
+    {
+        this.playerCharName = playerCharName;
+        this.stage = stage;
+    }
 
     public SaveData (GameManager manager)
     {
         stage = manager.stage;
 
-        playerName = manager.players[0].name;
+        // playerName = manager.players[0].name;
         playerCharName = manager.players[0].charName;
-        oppName = manager.players[1].name;
-        oppCharName = manager.players[1].charName;
+        // oppName = manager.players[1].name;
+        // oppCharName = manager.players[1].charName;
         // playerHealth = manager.players[0].hp;
         // playerCubes = manager.players[0].hpCubes;
 

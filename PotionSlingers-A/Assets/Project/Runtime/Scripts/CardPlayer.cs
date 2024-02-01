@@ -152,6 +152,7 @@ public class CardPlayer : MonoBehaviour
             case "Isadore":
                 Debug.Log("I AM ISADORE");
                 isIsadore = true;
+                // this.character.updateCharacter(character2);
                 if (this.gameObject.name == "CharacterCard (Left)")
                     this.transform.localScale = new Vector3(2f, 2.6f, 0);
                 if (this.gameObject.name == "CharacterCard (Top)")

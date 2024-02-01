@@ -182,8 +182,12 @@ public class GameManager : MonoBehaviour
         manager = this;
         //DontDestroyOnLoad(gameObject);
 
-        if(Game.storyMode)
+        if(!Game.tutorial)
+        {
+            tutorialArrow.SetActive(false);
+            tutorialArrow2.SetActive(false);
             numPlayers = 2;
+        } 
 
         if (Game.tutorial)
         {
@@ -254,7 +258,7 @@ public class GameManager : MonoBehaviour
             // marketPosition = marketButton.transform.position;
             marketSelected = false;
             StartCoroutine(Button());
-            canvasGroup.blocksRaycasts = true;
+            // canvasGroup.blocksRaycasts = true;
             market.transform.DOMoveY(-11.5f, 1f);
             // marketButton.transform.DOMoveY(-300f, 1f);
             Debug.Log("Market reset???");
@@ -306,7 +310,7 @@ public class GameManager : MonoBehaviour
             {
                 // advance a stage and save the game data
                 stage++;
-                SaveSystem.SaveGameData(this);
+                SaveSystem.SaveGameData(saveData);
             }
         }
     }
@@ -316,9 +320,10 @@ public class GameManager : MonoBehaviour
         Debug.Log("Going back to title menu");
         Game.tutorial = false;
 
-        if (Game.storyMode)
+        if (saveData != null)
         {
-            SaveSystem.SaveGameData(this);
+            saveData.savedGame = true;
+            SaveSystem.SaveGameData(saveData);
             Debug.Log("Game data saved");
             SceneManager.LoadScene("TitleMenu");
             return;
@@ -340,13 +345,13 @@ public class GameManager : MonoBehaviour
         if (Game.storyMode)
         {
             Debug.Log("Story mode!!!");
-
+            saveData = SaveSystem.LoadGameData();
 
             // THIS IS WHERE YOU WILL MANIPULATE GAMESTATE WITH SAVE DATA
-            if (Game.savedGame)
+            if (saveData.savedGame)
             {
                 Debug.Log("SAVED GAME!!!");
-                saveData = SaveSystem.LoadGameData();
+               
 
                 // maybe take this out, we'll see
                 md1.shuffle();
@@ -355,28 +360,27 @@ public class GameManager : MonoBehaviour
 
                 // check this
                 myPlayerIndex = 0;
-                Debug.Log(saveData.playerName + "!!!");
                 Debug.Log(saveData.playerCharName + "!!!");
-                Debug.Log(saveData.oppName + "!!!");
-                Debug.Log(saveData.oppCharName + "!!!");
                 Debug.Log(saveData.stage + "!!!");
                 stage = saveData.stage;
-                players[0].name = saveData.playerName;
+                // players[0].name = saveData.playerName;
                 players[0].charName = saveData.playerCharName;
                 players[0].character.onCharacterClick(players[0].charName);
                 players[0].checkCharacter();
-                playerBottomName.text = players[0].name;
+                // playerBottomName.text = players[0].name;
+                playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+                players[0].name = playerBottomName.text;
                 currentPlayerName = players[0].name;
                 // players[0].deck.loadDeck();
 
 
                 players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].name = saveData.oppCharName;
-                players[2].charName = saveData.oppCharName;
-                players[2].character.onCharacterClick(players[2].charName);
-                players[2].checkCharacter();
+                // players[2].name = saveData.oppCharName;
+                // players[2].charName = saveData.oppCharName;
+                // players[2].character.onCharacterClick(players[2].charName);
+                // players[2].checkCharacter();
                 // players[2].name = "Reets";
-                playerTopName.text = players[2].charName;
+                // playerTopName.text = players[2].charName;
 
                 players[1] = players[2];
                 // hardcode this lol
@@ -388,6 +392,49 @@ public class GameManager : MonoBehaviour
                 p3.SetActive(false);
                 p4.SetActive(false);
                 return;
+            } else
+            {
+                // NEW STORY MODE FILE
+                Debug.Log("New story mode file started!!!");
+                md1.shuffle();
+                md2.shuffle();
+                initDecks();
+
+                SaveData newSaveData = new SaveData(Game.storyModeCharName, stage);
+                saveData = newSaveData;
+
+                myPlayerIndex = 0;
+                Debug.Log(saveData.playerCharName + "!!!");
+                Debug.Log(saveData.stage + "!!!");
+                stage = saveData.stage;
+                // players[0].name = saveData.playerName;
+                players[0].charName = saveData.playerCharName;
+                players[0].character.onCharacterClick(players[0].charName);
+                players[0].checkCharacter();
+                // playerBottomName.text = players[0].name;
+                playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+                players[0].name = playerBottomName.text;
+                currentPlayerName = players[0].name;
+                // players[0].deck.loadDeck();
+
+
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                // players[2].name = saveData.oppCharName;
+                // players[2].charName = saveData.oppCharName;
+                // players[2].character.onCharacterClick(players[2].charName);
+                // players[2].checkCharacter();
+                // players[2].name = "Reets";
+                // playerTopName.text = players[2].charName;
+
+                players[1] = players[2];
+                // hardcode this lol
+                // playerTopName.text = Game.singlePlayerNames[1];
+                players[1].user_id = 1;
+                players[2].user_id = 1;
+
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
             }
 
             md1.shuffle();
@@ -2376,6 +2423,20 @@ public class GameManager : MonoBehaviour
 
         throwingHand.SetActive(true);
         throwingHand.GetComponent<Animator>().SetTrigger("Throw");
+
+        // hardcoded logic for two players
+        if(numPlayers == 2)
+        {
+            Debug.Log("Middle person");
+            yield return new WaitForSeconds(1.3f);
+            throwingHand.transform.DOMoveX(1000f, 1.3f);
+            yield return new WaitForSeconds(1.3f);
+            throwingHand.SetActive(false);
+            tempPlayer.subHealth(damage, cardQuality);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            yield break;
+        }
+
         if(tempPlayer.user_id == 2)
         {
             Debug.Log("Middle person");

@@ -205,7 +205,7 @@ public class MyNetworkManager : NetworkManager
         storyMode = true;
 
         // copy this code from singleplayer implementations
-        foreach (PlayerListItem item in LobbyManager.instance.playerListItems)
+        foreach (PlayerListItem item in storyModeLobby.playerListItems)
         {
             Debug.Log("Adding name");
             // GamePlayer GamePlayerInstance = Instantiate(gamePlayerPrefab, new Vector3(0, 0, 0), Quaternion.identity);

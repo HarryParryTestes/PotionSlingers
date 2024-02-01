@@ -233,7 +233,8 @@ public class ComputerPlayer : CardPlayer
                 // if two players, just hardcode throwing at player 1
                 if(GameManager.manager.numPlayers == 2)
                 {
-                    GameManager.manager.selectedOpponentName = GameManager.manager.players[0].name;
+                    // GameManager.manager.selectedOpponentName = GameManager.manager.players[0].name;
+                    GameManager.manager.tempPlayer = GameManager.manager.players[0];
                     GameManager.manager.selectedCardInt = i + 1;
                     GameManager.manager.throwPotion();
                     actionsList.Add("THROW");
