@@ -128,6 +128,7 @@ public class GameManager : MonoBehaviour
     public bool mirrorCommand = false;
     public bool snakeBonus = false;
     public bool marketSelected = false;
+    public bool holster = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -391,7 +392,7 @@ public class GameManager : MonoBehaviour
                 players[2] = players[3];
                 p3.SetActive(false);
                 p4.SetActive(false);
-                return;
+                // return;
             } else
             {
                 // NEW STORY MODE FILE
@@ -436,10 +437,11 @@ public class GameManager : MonoBehaviour
                 p3.SetActive(false);
                 p4.SetActive(false);
             }
-
+            /*
             md1.shuffle();
             md2.shuffle();
             initDecks();
+            */
 
             numPlayers = 2;
 
@@ -479,13 +481,13 @@ public class GameManager : MonoBehaviour
                     playerTopName.text = players[2].charName;
                 }
 
-                players[1] = players[2];
+                // players[1] = players[2];
                 // hardcode this lol
                 // playerTopName.text = Game.singlePlayerNames[1];
-                players[1].user_id = 1;
-                players[2].user_id = 1;
+                //players[1].user_id = 1;
+                //players[2].user_id = 1;
 
-                players[2] = players[3];
+                // players[2] = players[3];
                 p3.SetActive(false);
                 p4.SetActive(false);
             }
@@ -1331,6 +1333,20 @@ public class GameManager : MonoBehaviour
         opponentCard4.updateCard(tempPlayer.holster.cardList[3].card);
     }
 
+    public void turnHolsterOff()
+    {
+        holster = false;
+    }
+
+    public void displayOpponentHolster(CardPlayer cardPlayer)
+    {
+        holster = true;
+        opponentCard1.updateCard(cardPlayer.holster.cardList[0].card);
+        opponentCard2.updateCard(cardPlayer.holster.cardList[1].card);
+        opponentCard3.updateCard(cardPlayer.holster.cardList[2].card);
+        opponentCard4.updateCard(cardPlayer.holster.cardList[3].card);
+    }
+
     public void stealCard(string opponentName, int selectedCard)
     {
         Debug.Log("Player receiving card: " + currentPlayerName);
@@ -1399,6 +1415,9 @@ public class GameManager : MonoBehaviour
 
     public void replaceOpponentCardWithStarter(int selectedCard)
     {
+        if (holster)
+            return;
+
         if (snakeBonus)
         {
             if (Game.multiplayer)
@@ -1806,6 +1825,7 @@ public class GameManager : MonoBehaviour
             if (players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>() != null)
             {
                 Debug.Log("Computer player!");
+                Debug.Log("myPlayerIndex is " + myPlayerIndex);
                 onStartTurn(players[myPlayerIndex]);
                 players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().AICards.Clear();
                 players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().StartCoroutine(players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().waitASecBro());
@@ -4520,6 +4540,14 @@ public class GameManager : MonoBehaviour
     public void trashCardInDeck(CardDisplay cd)
     {
         deckMenuScroll.addCardToTrash(cd);
+    }
+
+    public void sendMessage(string message)
+    {
+        GameObject textbox = successMessages[21];
+        textbox.SetActive(true);
+        textbox.GetComponent<TMPro.TextMeshProUGUI>().text = message;
+        StartCoroutine(waitThreeSeconds(textbox));
     }
 
     public void sendSuccessMessage(int notif)

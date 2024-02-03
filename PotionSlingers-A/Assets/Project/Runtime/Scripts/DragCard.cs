@@ -222,7 +222,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
             // originally at 150, experimenting with 200
             if (!market)
-                transform.position += new Vector3(0, 200, 0);
+                transform.position += new Vector3(0, 190, 0);
             
             float width = rectTransform.sizeDelta.x * rectTransform.localScale.x;
             float height = rectTransform.sizeDelta.y * rectTransform.localScale.y;
@@ -253,7 +253,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             
             if (!market)
             {
-                transform.position -= new Vector3(0, 200, 0);
+                transform.position -= new Vector3(0, 190, 0);
             }
             // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             transform.SetParent(parentAfterDrag);

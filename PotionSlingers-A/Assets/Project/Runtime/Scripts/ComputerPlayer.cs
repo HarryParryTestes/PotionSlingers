@@ -123,10 +123,34 @@ public class ComputerPlayer : CardPlayer
         return numero;
     }
 
+    public void storyModeTurn()
+    {
+        Debug.Log("STORY MODE LOGIC");
+        // basic enemy that does 1-4 damage per turn
+        int damage = rng.Next(1, 5);
+
+        // make the player take damage without using throwing functions
+
+        GameManager.manager.players[0].subHealth(damage);
+        GameManager.manager.sendMessage("Took " + damage + " damage!");
+        GameManager.manager.Invoke("endTurn", 3f);
+
+    }
+
     public IEnumerator waitASecBro()
     {
         // modify this based on what difficulty the CPU is
         yield return new WaitForSeconds(2);
+
+        // story mode logic
+        if (Game.storyMode)
+        {
+            // insert appropriate logic for whatever enemies we have in here
+            storyModeTurn();
+            yield break;
+        }
+
+        // regular CPU logic
         if (easy)
         {
             AITurn();
