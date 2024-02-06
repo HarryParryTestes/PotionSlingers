@@ -87,6 +87,22 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+        /*
+        foreach (CardDisplay cd in GameManager.manager.players[0].holster.cardList)
+        {
+            if (clicked)
+            {
+                clicked = false;
+                DOTween.Pause(gameObject.name);
+                transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+                transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                StartCoroutine(SibIndex());
+                return;
+            } 
+        }
+        */
+
         if (!clicked && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
             if (market && !GameManager.manager.marketSelected)

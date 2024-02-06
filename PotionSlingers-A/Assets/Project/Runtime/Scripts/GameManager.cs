@@ -226,7 +226,8 @@ public class GameManager : MonoBehaviour
     public IEnumerator Button()
     {
         yield return new WaitForSeconds(1f);
-        marketButton.SetActive(true);
+        if (!marketSelected)
+            marketButton.SetActive(true);
     }
 
     public void moveMarket()
@@ -2780,11 +2781,17 @@ public class GameManager : MonoBehaviour
                     }
                     players[myPlayerIndex].artifactsUsed++;
                     players[myPlayerIndex].lastArtifactUsed = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName;
-                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
-                    // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
-                    // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, true, false);
+                    // code that animates the loaded cards
+                    GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform);
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+                    
+                    StartCoroutine(MoveToTrash(obj));
+                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
+
                     // MATTEO: taking this out for now, may want to add back in
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
                     if (myPlayerIndex == 0)
@@ -2845,11 +2852,23 @@ public class GameManager : MonoBehaviour
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
                     players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
                     players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                    // code that animates the loaded cards
+                    GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform);
+                    StartCoroutine(MoveToDeck(obj));
+                    GameObject obj2 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform);
+                    StartCoroutine(MoveToDeck(obj2));
+
                     players[myPlayerIndex].holster.card1.vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
                     players[myPlayerIndex].holster.card1.vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
-                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
+                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                     if (myPlayerIndex == 0)
@@ -2881,6 +2900,40 @@ public class GameManager : MonoBehaviour
             }
 
         }
+    }
+
+    public IEnumerator MoveToTrash(GameObject obj)
+    {
+        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
+        obj.transform.DOScale(0.2f, 1f);
+        obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+        yield return new WaitForSeconds(1f);
+        
+        Destroy(obj);
+        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+        td.transform.parent.DOMove(new Vector2(td.transform.parent.position.x, td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+    }
+
+    public IEnumerator MoveToDeck(GameObject obj)
+    {
+        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        // obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
+        // jump into deck
+        obj.transform.DOJump(new Vector2(1600f, 250f), 400f, 1, 1f, false);
+        obj.transform.DOScale(0.2f, 1f);
+        obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+        yield return new WaitForSeconds(0.85f);
+        // set sibling index to be behind deck
+        obj.transform.SetParent(transform.root);
+        obj.transform.SetSiblingIndex(20);
+        yield return new WaitForSeconds(0.15f);
+        Destroy(obj);
+        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.gameObject.SetActive(true);
+        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
+        players[myPlayerIndex].deck.transform.DOMove(new Vector2(players[myPlayerIndex].deck.transform.position.x, 
+            players[myPlayerIndex].deck.transform.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     public void popAllMarketCards()
@@ -3196,6 +3249,8 @@ public class GameManager : MonoBehaviour
                     // Enable Vessel menu if it wasn't already enabled.
                     Debug.Log("Vessel menu enabled.");
                     playerHolster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
+                    playerHolster.cardList[loadedCardInt].vesselSlot1.transform.gameObject.SetActive(true);
+                    playerHolster.cardList[loadedCardInt].vesselSlot2.transform.gameObject.SetActive(true);
 
                     // Check for existing loaded potion(s) if Vessel menu was already enabled.
                     if (playerHolster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
@@ -3261,6 +3316,7 @@ public class GameManager : MonoBehaviour
                     // Enable Artifact menu if it wasn't already enabled.
                     Debug.Log("Artifact menu enabled.");
                     playerHolster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+                    playerHolster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
 
                     // Check for existing loaded potion if Artifact menu was already enabled.
                     if (playerHolster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
@@ -3346,6 +3402,7 @@ public class GameManager : MonoBehaviour
                     // Enable Artifact menu if it wasn't already enabled.
                     Debug.Log("Artifact menu enabled.");
                     players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
 
                     // Check for existing loaded potion if Artifact menu was already enabled.
                     if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
@@ -3403,6 +3460,8 @@ public class GameManager : MonoBehaviour
                         // Enable Vessel menu if it wasn't already enabled.
                         Debug.Log("Vessel menu enabled.");
                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.gameObject.SetActive(true);
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.transform.gameObject.SetActive(true);
 
                         // Check for existing loaded potion(s) if Vessel menu was already enabled.
                         if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
@@ -3483,6 +3542,7 @@ public class GameManager : MonoBehaviour
                         // Enable Artifact menu if it wasn't already enabled.
                         Debug.Log("Artifact menu enabled.");
                         players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
 
                         // Check for existing loaded potion if Artifact menu was already enabled.
                         if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
@@ -3651,6 +3711,7 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
                 sendSuccessMessage(7);
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
                 // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
                 {
