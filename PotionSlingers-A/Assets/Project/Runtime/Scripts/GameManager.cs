@@ -2466,37 +2466,38 @@ public class GameManager : MonoBehaviour
         if (numPlayers == 2)
         {
             Debug.Log("Middle person");
-            yield return new WaitForSeconds(1.3f);
-            throwingHand.transform.DOMoveX(1000f, 1.3f);
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(0.9f);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            throwingHand.transform.DOMoveX(1000f, 1f);
+            yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
             tempPlayer.subHealth(damage, cardQuality);
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            
             yield break;
         }
 
         if (tempPlayer.user_id == 2)
         {
             Debug.Log("Middle person");
-            yield return new WaitForSeconds(1.3f);
-            throwingHand.transform.DOMoveX(1000f, 1.3f);
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(1f);
+            throwingHand.transform.DOMoveX(1000f, 1f);
+            yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
         else if (tempPlayer.user_id == 1)
         {
             Debug.Log("Left person");
-            yield return new WaitForSeconds(1.3f);
-            throwingHand.transform.DOMoveX(470f, 1.3f);
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(1f);
+            throwingHand.transform.DOMoveX(470f, 1f);
+            yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
         else if (tempPlayer.user_id == 3)
         {
             Debug.Log("Right person");
-            yield return new WaitForSeconds(1.3f);
-            throwingHand.transform.DOMoveX(1470f, 1.3f);
-            yield return new WaitForSeconds(1.3f);
+            yield return new WaitForSeconds(1f);
+            throwingHand.transform.DOMoveX(1470f, 1f);
+            yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
 
