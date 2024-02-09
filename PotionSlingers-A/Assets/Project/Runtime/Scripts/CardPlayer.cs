@@ -107,16 +107,16 @@ public class CardPlayer : MonoBehaviour
         // yes damage
         if (GameManager.manager.damage && name == GameManager.manager.currentPlayerName)
         {
-            foreach(CardPlayer player in GameManager.manager.players)
+            foreach (CardPlayer player in GameManager.manager.players)
             {
-                if(player.name == GameManager.manager.selectedOpponentName)
+                if (player.name == GameManager.manager.selectedOpponentName)
                 {
                     player.subHealth(2);
                     GameManager.manager.damage = false;
                 }
             }
         }
-        
+
         // no damage
         if (GameManager.manager.trash && name == GameManager.manager.currentPlayerName)
         {
@@ -192,6 +192,9 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("I AM TWINS");
                 isTwins = true;
                 break;
+            case "CrowPunk":
+                this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                break;
 
             default:
                 Debug.Log("Failed to set any bools");
@@ -218,7 +221,7 @@ public class CardPlayer : MonoBehaviour
             this.character.onCharacterClick("Bolo");
         }
 
-        
+
     }
 
     public void initHealth()
@@ -264,6 +267,10 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("I AM TWINS");
                 isTwins = true;
                 break;
+            case "CrowPunk":
+                Debug.Log("CrowPunk animation");
+                animator.Play("CrowIdle");
+                break;
 
             default:
                 Debug.Log("Failed to set any bools");
@@ -277,14 +284,14 @@ public class CardPlayer : MonoBehaviour
         {
             case "Pluot":
                 Debug.Log("I AM PLUOT");
-                isPluot = true;
+                // isPluot = true;
                 break;
             case "Bolo":
                 animator.Play("BoloHit");
                 break;
             case "Nickles":
                 Debug.Log("I AM NICKLES");
-                isNickles = true;
+                // isNickles = true;
                 break;
             case "Isadore":
                 animator.Play("IsadoreHit");
@@ -297,15 +304,19 @@ public class CardPlayer : MonoBehaviour
                 break;
             case "Scarpetta":
                 Debug.Log("I AM SCARPETTA");
-                isScarpetta = true;
+                // isScarpetta = true;
                 break;
             case "Sweetbitter":
                 Debug.Log("I AM SWEETBITTER");
-                isSweetbitter = true;
+                // isSweetbitter = true;
                 break;
             case "Twins":
                 Debug.Log("I AM TWINS");
-                isTwins = true;
+                // isTwins = true;
+                break;
+            case "CrowPunk":
+                Debug.Log("CrowPunk Hit animation");
+                animator.Play("CrowHit");
                 break;
 
             default:
@@ -318,15 +329,15 @@ public class CardPlayer : MonoBehaviour
 
     public void updateHealthUI(string cardQuality = "")
     {
-        if(healthText != null && hpBar != null)
+        if (healthText != null && hpBar != null)
         {
             healthText.GetComponent<Text>().text = hp.ToString();
             float numbers = (float)hp / 10f;
             // Debug.Log("Fill amount is: " + numbers);
             hpBar.GetComponent<Image>().fillAmount = numbers;
         }
-        
-        
+
+
         if (playerHP != null && playerHPCubes != null)
         {
             playerHP.GetComponent<Text>().text = hp.ToString();
@@ -519,7 +530,8 @@ public class CardPlayer : MonoBehaviour
                 if (doubleRingBonus)
                 {
                     pips += 4;
-                } else
+                }
+                else
                 {
                     pips += 2;
                 }
@@ -527,7 +539,7 @@ public class CardPlayer : MonoBehaviour
 
             if (cd.card.cardName == "Blacksnake Pip Sling")
             {
-                pips += 2;    
+                pips += 2;
             }
         }
         pipsUsedThisTurn = 0;
@@ -547,7 +559,7 @@ public class CardPlayer : MonoBehaviour
             nicklesAction = false;
         }
 
-       if (isSweetbitter)
+        if (isSweetbitter)
         {
             bool hasRing = false;
             int loadedItems = 0;
@@ -555,12 +567,12 @@ public class CardPlayer : MonoBehaviour
 
             foreach (CardDisplay cd in holster.cardList)
             {
-                if(cd.card.cardType == "Ring")
+                if (cd.card.cardType == "Ring")
                 {
                     hasRing = true;
                 }
 
-                if(cd.card.cardType == "Artifact" && cd.aPotion.card.cardName != "placeholder")
+                if (cd.card.cardType == "Artifact" && cd.aPotion.card.cardName != "placeholder")
                 {
                     loadedItems++;
                 }
@@ -570,13 +582,13 @@ public class CardPlayer : MonoBehaviour
                     loadedItems++;
                 }
 
-                if(cd.card.cardName == "Phylactery")
+                if (cd.card.cardName == "Phylactery")
                 {
                     hasPhlactery = true;
                 }
             }
 
-            if(hasRing && hasPhlactery && loadedItems == 2)
+            if (hasRing && hasPhlactery && loadedItems == 2)
             {
                 Debug.Log("Mega damage!");
                 GameManager.manager.dealDamageToAll(12);
@@ -610,7 +622,8 @@ public class CardPlayer : MonoBehaviour
             if (!character.character.flipped)
             {
                 subPips(2);
-            } else
+            }
+            else
             {
                 subPips(1);
             }
@@ -639,9 +652,9 @@ public class CardPlayer : MonoBehaviour
 
     public void addExtraInventory()
     {
-        foreach(CardDisplay card in holster.cardList)
+        foreach (CardDisplay card in holster.cardList)
         {
-            if(card.card.cardName == "placeholder")
+            if (card.card.cardName == "placeholder")
             {
                 card.updateCard(uniqueCards[2]);
                 GameManager.manager.sendSuccessMessage(19);
@@ -677,9 +690,9 @@ public class CardPlayer : MonoBehaviour
     public int checkRings()
     {
         int rings = 0;
-        foreach(CardDisplay cd in holster.cardList)
+        foreach (CardDisplay cd in holster.cardList)
         {
-            if(cd.card.cardType == "Ring")
+            if (cd.card.cardType == "Ring")
             {
                 rings++;
             }
@@ -707,9 +720,9 @@ public class CardPlayer : MonoBehaviour
     {
         // probably depends on what card it is and what bonus it has, might have to implement logic for certain pools of cards this way
 
-        foreach(CardPlayer cd in GameManager.manager.players)
+        foreach (CardPlayer cd in GameManager.manager.players)
         {
-            if(cd.name == GameManager.manager.currentPlayerName && cd.isIsadore)
+            if (cd.name == GameManager.manager.currentPlayerName && cd.isIsadore)
             {
                 damage++;
                 break;
@@ -718,7 +731,7 @@ public class CardPlayer : MonoBehaviour
 
         // Treasure Cloak Map
         // put a potion from the trash to the top of your deck
-        if(selectedCard.card.cardName == "Treasure Cloak Map")
+        if (selectedCard.card.cardName == "Treasure Cloak Map")
         {
             // add a check to see if a computer player triggered this and don't display the menu
             // probably just select a random card from the trash
@@ -732,7 +745,7 @@ public class CardPlayer : MonoBehaviour
         }
 
         // The Skateboard
-        if(selectedCard.card.cardName == "Skateboard")
+        if (selectedCard.card.cardName == "Skateboard")
         {
             // if a loaded potion has an additional effect, do a trick instead of damage
             // ask matteo and figure out exactly what that means lol
@@ -756,7 +769,7 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.sendSuccessMessage(16);
                 tricks++;
                 // after 4 tricks, add an essence cube to their collection
-                if(tricks == 4)
+                if (tricks == 4)
                 {
                     tricks = 0;
                     hpCubes++;
@@ -840,7 +853,8 @@ public class CardPlayer : MonoBehaviour
                 addPips(1);
                 addHealth(3);
                 return 0;
-            } else
+            }
+            else
             // if cardQuality == "None"
             {
                 addPips(3);
@@ -849,7 +863,7 @@ public class CardPlayer : MonoBehaviour
         }
 
         // The Daggerheels
-        if(selectedCard.card.cardName == "Daggerheels")
+        if (selectedCard.card.cardName == "Daggerheels")
         {
             // Cold Bonus: +1 Damage
             if (selectedCard.aPotion.card.cardQuality == "Cold")
@@ -859,17 +873,17 @@ public class CardPlayer : MonoBehaviour
         }
 
         // The Rapid Fire Caltrop Hand Cannon
-        if(selectedCard.card.cardName == "RapidFireCaltrop")
+        if (selectedCard.card.cardName == "RapidFireCaltrop")
         {
             // Dry Bonus: +2 Damage
-            if(selectedCard.aPotion.card.cardQuality == "Dry")
+            if (selectedCard.aPotion.card.cardQuality == "Dry")
             {
                 damage += 2;
             }
         }
 
         // Pewter Heart Necklace
-        if(selectedCard.card.cardName == "PewterHeartNecklace")
+        if (selectedCard.card.cardName == "PewterHeartNecklace")
         {
             addHealth(2);
             // Wet Bonus: +2 HP
@@ -899,7 +913,7 @@ public class CardPlayer : MonoBehaviour
         {
             // Wet Bonus: +2 Damage
             // 3 P: Double the damage of this artifact this turn. You may only do this once per turn.
-            if(selectedCard.aPotion.card.cardQuality == "Wet")
+            if (selectedCard.aPotion.card.cardQuality == "Wet")
             {
                 damage += 2;
                 if (bottleRocketBonus)
@@ -923,7 +937,7 @@ public class CardPlayer : MonoBehaviour
         if (isPluot)
         {
             if (pluotBonusType == selectedCard.vPotion1.card.cardQuality ||
-                pluotBonusType == selectedCard.vPotion2.card.cardQuality )
+                pluotBonusType == selectedCard.vPotion2.card.cardQuality)
             {
                 damage++;
             }
@@ -994,14 +1008,15 @@ public class CardPlayer : MonoBehaviour
                             gp.RpcTrashMenuActive();
                         }
                     }
-                } else
+                }
+                else
                 {
                     // TODO: check for computer player and disable this
 
                     GameManager.manager.numTrashed += 2;
                     GameManager.manager.trashMarketUI.SetActive(true);
                     GameManager.manager.updateTrashMarketMenu();
-                }      
+                }
             }
 
             if (selectedCard.vPotion1.card.cardQuality == "Dry" ||
@@ -1067,13 +1082,14 @@ public class CardPlayer : MonoBehaviour
                         gp.RpcTDMenuActive();
                     }
                 }
-            } else
+            }
+            else
             {
                 GameManager.manager.trashDeckBonus = true;
                 GameManager.manager.trashDeckMenu.SetActive(true);
                 GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
                 GameManager.manager.td.displayTrash();
-            }  
+            }
         }
 
         // Fragile Glass Ornament
@@ -1085,7 +1101,7 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Vessel Bonus: +2 Damage
-        if((selectedCard.vPotion1.card.cardName == "RefectionOfOnesGnarledEmotionalSelf" || selectedCard.vPotion2.card.cardName == "RefectionOfOnesGnarledEmotionalSelf") ||
+        if ((selectedCard.vPotion1.card.cardName == "RefectionOfOnesGnarledEmotionalSelf" || selectedCard.vPotion2.card.cardName == "RefectionOfOnesGnarledEmotionalSelf") ||
             (selectedCard.vPotion1.card.cardName == "SoupMadeOfGunpowder" || selectedCard.vPotion2.card.cardName == "SoupMadeOfGunpowder") ||
             (selectedCard.vPotion1.card.cardName == "PourOfReallyAngryAcid" || selectedCard.vPotion2.card.cardName == "PourOfReallyAngryAcid"))
         {
@@ -1125,7 +1141,7 @@ public class CardPlayer : MonoBehaviour
                     }
                     return damage;
                 }
-                
+
 
                 // add a check for a ComputerPlayer component
 
@@ -1148,7 +1164,7 @@ public class CardPlayer : MonoBehaviour
         // Hot Bonus: Opponent trashes 1 card. Wet Bonus: Opponent trashes 1 card.
         if (selectedCard.card.cardName == "CursedCucumella")
         {
-            if(selectedCard.vPotion1.card.cardQuality == "Hot" || selectedCard.vPotion2.card.cardQuality == "Hot")
+            if (selectedCard.vPotion1.card.cardQuality == "Hot" || selectedCard.vPotion2.card.cardQuality == "Hot")
             {
                 if (GameManager.manager.Game.multiplayer)
                 {
@@ -1161,7 +1177,8 @@ public class CardPlayer : MonoBehaviour
                             gp.RpcTrashOneCard(gp.playerName);
                         }
                     }
-                } else
+                }
+                else
                 {
                     // add a check for a ComputerPlayer component
 
@@ -1238,7 +1255,7 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
-        
+
         // Cold + Wet Bonus
         if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
             (selectedCard.vPotion2.card.cardQuality == "Cold" && selectedCard.vPotion1.card.cardQuality == "Wet"))
@@ -1249,7 +1266,7 @@ public class CardPlayer : MonoBehaviour
             {
                 // first they'll need to pick their bonus
                 GameManager.manager.trashBonusMenu.SetActive(true);
-                
+
                 //GameManager.manager.opponentHolsterMenu.SetActive(true);
                 //GameManager.manager.displayOpponentHolster();
             }
@@ -1261,7 +1278,7 @@ public class CardPlayer : MonoBehaviour
         {
             // The Boxing Flask of the Fist Wizard
             // Deal +3 damage to all other opponents
-            if(selectedCard.card.cardName == "Boxing Flask of the Fist Wizard")
+            if (selectedCard.card.cardName == "Boxing Flask of the Fist Wizard")
             {
                 // TODO: make deal3ToAll() method inside GameManager to deal 3 damage to every CardPlayer except yourself
                 GameManager.manager.deal3ToAll();
@@ -1285,7 +1302,7 @@ public class CardPlayer : MonoBehaviour
                 {
                     // maybe do something for computer
                 }
-                
+
             }
         }
 
@@ -1313,7 +1330,7 @@ public class CardPlayer : MonoBehaviour
         // Canteen Carved from a Living Meteorite
         if (selectedCard.card.cardName == "CanteenCarvedFromMeteorite")
         {
-            if(selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
             {
                 addHealth(3);
             }
@@ -1357,7 +1374,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "DrawstringPouch")
         {
             // Wet Bonus: +3 Damage
-            if(selectedCard.vPotion1.card.cardQuality == "Wet" || selectedCard.vPotion2.card.cardQuality == "Wet")
+            if (selectedCard.vPotion1.card.cardQuality == "Wet" || selectedCard.vPotion2.card.cardQuality == "Wet")
             {
                 damage += 3;
             }
@@ -1377,18 +1394,18 @@ public class CardPlayer : MonoBehaviour
 
         foreach (CardDisplay cd in holster.cardList)
         {
-            if(cd.card.cardType == "Ring")
+            if (cd.card.cardType == "Ring")
             {
                 Debug.Log(selectedCard.card.cardType);
-                if(cd.card.cardQuality == "Starter" && potionsThrown == 0 && vesselsThrown == 0 && selectedCard.card.cardType != "Artifact")
+                if (cd.card.cardQuality == "Starter" && potionsThrown == 0 && vesselsThrown == 0 && selectedCard.card.cardType != "Artifact")
                 {
                     Debug.Log("Starter ring bonus");
                     damage++;
                 }
                 // Sharpened Ring of Bauble Collector
-                if(cd.card.cardName == "Sharpened Ring of the Bauble Collector")
+                if (cd.card.cardName == "Sharpened Ring of the Bauble Collector")
                 {
-                    if(selectedCard.card.cardType == "Artifact")
+                    if (selectedCard.card.cardType == "Artifact")
                     {
                         // if the card is an artifact that does damage, +1 damage
                         if (selectedCard.card.cardName != "BubbleWand" && selectedCard.card.cardName != "PewterHeartNecklace" &&
@@ -1399,7 +1416,8 @@ public class CardPlayer : MonoBehaviour
                             if (doubleRingBonus)
                             {
                                 damage += 2;
-                            } else
+                            }
+                            else
                             {
                                 damage++;
                             }
@@ -1408,15 +1426,16 @@ public class CardPlayer : MonoBehaviour
                 }
 
                 // Finger Ring of Additional Pinkie
-                if(cd.card.cardName == "FingerRingoftheAdditionalPinkie")
+                if (cd.card.cardName == "FingerRingoftheAdditionalPinkie")
                 {
                     // Thrown potions deal +1 damage
-                    if(selectedCard.card.cardType == "Potion")
+                    if (selectedCard.card.cardType == "Potion")
                     {
                         if (doubleRingBonus)
                         {
                             damage += 2;
-                        } else
+                        }
+                        else
                         {
                             damage++;
                         }
@@ -1424,7 +1443,7 @@ public class CardPlayer : MonoBehaviour
                 }
 
                 // Glass Ring of Things That Contain Things
-                if(cd.card.cardName == "GlassRingofThingsThatContainThings")
+                if (cd.card.cardName == "GlassRingofThingsThatContainThings")
                 {
                     // All of your thrown vessels deal +3 damage
                     if (selectedCard.card.cardType == "Vessel")
@@ -1450,12 +1469,12 @@ public class CardPlayer : MonoBehaviour
         // Pluot damage bonus
         if (isPluot)
         {
-            if(pluotBonusType == selectedCard.card.cardQuality)
+            if (pluotBonusType == selectedCard.card.cardQuality)
             {
                 damage++;
             }
 
-            
+
             if (selectedCard.card.cardQuality == "Hot")
             {
                 pluotHot = true;
@@ -1477,7 +1496,7 @@ public class CardPlayer : MonoBehaviour
             }
 
             // PLUOT FLIP LOGIC
-            if(pluotHot && pluotWet && pluotCold && pluotDry)
+            if (pluotHot && pluotWet && pluotCold && pluotDry)
             {
                 character.canBeFlipped = true;
                 GameManager.manager.sendSuccessMessage(13);
@@ -1490,7 +1509,7 @@ public class CardPlayer : MonoBehaviour
 
             // GameManager.manager.deckMenu.SetActive(true);
             // GameManager.manager.displayDeck();
-            
+
             Debug.Log("Command check starting");
             if (GameManager.manager.Game.multiplayer)
             {
@@ -1502,8 +1521,9 @@ public class CardPlayer : MonoBehaviour
                         gp.RpcDisplayDeckMenu();
                     }
                 }
-                
-            } else
+
+            }
+            else
             {
                 // not networked logic
                 GameManager.manager.deckMenu.SetActive(true);
@@ -1528,9 +1548,9 @@ public class CardPlayer : MonoBehaviour
             {
                 if (cp.isIsadore)
                 {
-                    foreach(CardDisplay cd in cp.holster.cardList)
+                    foreach (CardDisplay cd in cp.holster.cardList)
                     {
-                        if(cd.card.cardName == "CherryBomb Badge")
+                        if (cd.card.cardName == "CherryBomb Badge")
                         {
                             // they should take 1 damage from CherryBomb Badge
                             subHealth(1);
@@ -1540,15 +1560,15 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
-            // Opponent trashes 1 card in their Holster
-            if (selectedCard.card.cardName == "ParticularlyFrighteningShadeofPurple" ||
-            selectedCard.card.cardName == "PhilterOfMalaise" ||
-            selectedCard.card.cardName == "MouthfulOfHair" ||
-            selectedCard.card.cardName == "PowderOfLaughingFits" ||
-            selectedCard.card.cardName == "A Jar of Mummy Finger Butter" ||
-            selectedCard.card.cardName == "A Pile of Sweat from Several Humid Days" ||
-            selectedCard.card.cardName == "A Loss of Dexterity" ||
-            selectedCard.card.cardName == "A Severe Draught That Melts Only Brains")
+        // Opponent trashes 1 card in their Holster
+        if (selectedCard.card.cardName == "ParticularlyFrighteningShadeofPurple" ||
+        selectedCard.card.cardName == "PhilterOfMalaise" ||
+        selectedCard.card.cardName == "MouthfulOfHair" ||
+        selectedCard.card.cardName == "PowderOfLaughingFits" ||
+        selectedCard.card.cardName == "A Jar of Mummy Finger Butter" ||
+        selectedCard.card.cardName == "A Pile of Sweat from Several Humid Days" ||
+        selectedCard.card.cardName == "A Loss of Dexterity" ||
+        selectedCard.card.cardName == "A Severe Draught That Melts Only Brains")
         {
             if (GameManager.manager.Game.multiplayer)
             {
@@ -1563,7 +1583,7 @@ public class CardPlayer : MonoBehaviour
                 }
                 return damage;
             }
-            
+
             // IMPORTANT: use this as template for other implementations of ComputerPlayer logic!!!
             // if they're not a computer player
             if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
@@ -1572,7 +1592,8 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("No computer players?");
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
                 GameManager.manager.displayOpponentHolster();
-            } else
+            }
+            else
             {
                 // make computer choose random player maybe?
                 // I'll figure it out, it's just calling a ComputerPlayer method
@@ -1580,7 +1601,7 @@ public class CardPlayer : MonoBehaviour
 
                 // TODO: Add method that trashes one random card from ComputerPlayer's holster
             }
-            
+
         }
 
         // Choose 1 card in an opponent's Holster and trash it
@@ -1619,10 +1640,11 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.replaceStarter = true;
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
                 GameManager.manager.displayOpponentHolster();
-            } else
+            }
+            else
             {
                 // maybe do something for computer
-            }   
+            }
         }
 
 
@@ -1637,7 +1659,7 @@ public class CardPlayer : MonoBehaviour
             GameManager.manager.trashorDamageMenu.SetActive(true);
             GameManager.manager.updateTrashMarketMenu();
             return 0;
-            
+
             // don't do this, this created an infinite loop
             /*
             while (GameManager.manager.trashOrDamage)
@@ -1698,7 +1720,8 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.numTrashed = 1;
                 GameManager.manager.trashMarketUI.SetActive(true);
                 GameManager.manager.updateTrashMarketMenu();
-            } else
+            }
+            else
             {
                 // do something else lol
                 // pick a random number and then trash a market card
@@ -1754,9 +1777,9 @@ public class CardPlayer : MonoBehaviour
             }
             Debug.Log("Tear of Black Rain Bonus");
 
-            foreach(CardDisplay cd in holster.cardList)
+            foreach (CardDisplay cd in holster.cardList)
             {
-                if(cd.card.cardName != "ATearofBlackRain")
+                if (cd.card.cardName != "ATearofBlackRain")
                 {
                     if (cd.card.cardName != "placeholder")
                     {
@@ -1792,7 +1815,7 @@ public class CardPlayer : MonoBehaviour
 
     // TODO: Check to see if opponent thrown card is Artifact.
     // TODO: Prompt targetedPlayer to trash loaded potion in Artifact with defense bonus.
-    public int checkDefensiveBonus(int damage, int selectedCardInt) 
+    public int checkDefensiveBonus(int damage, int selectedCardInt)
     {
         // Artifact: BubbleWand = May trash 1 loaded potion to prevent 2 damage.
         // Artifact: ShieldOfMouthOfTruth = May trash 1 loaded potion to prevent 3 damage.
@@ -1806,10 +1829,10 @@ public class CardPlayer : MonoBehaviour
         foreach (CardDisplay cd in holster.cardList)
         {
             cardInt++;
-            if(cd.card.cardType == "Artifact") 
+            if (cd.card.cardType == "Artifact")
             {
                 // BubbleWand
-                if(cd.card.cardName == "BubbleWand")
+                if (cd.card.cardName == "BubbleWand")
                 {
                     // if there is a loaded potion
                     if (cd.aPotion.card != cd.placeholder)
@@ -1829,10 +1852,11 @@ public class CardPlayer : MonoBehaviour
                     }
                 }
                 // Shield of the Mouth of Truth
-                else if(cd.card.cardName == "Shield of the Mouth of Truth")
+                else if (cd.card.cardName == "Shield of the Mouth of Truth")
                 {
                     // if there is a loaded potion
-                    if (cd.aPotion.card != cd.placeholder) {
+                    if (cd.aPotion.card != cd.placeholder)
+                    {
                         // May trash 1 loaded potion to prevent 3 damage.
                         if (GameManager.manager.Game.multiplayer)
                         {
@@ -1848,16 +1872,17 @@ public class CardPlayer : MonoBehaviour
                     }
                 }
             }
-            
-            else if(cd.card.cardType == "Ring")
+
+            else if (cd.card.cardType == "Ring")
             {
                 // Crusty Ring of the Crying Rusty Tears
-                if(cd.card.cardName == "Crusty Ring of the Crying Rusty Tears")
+                if (cd.card.cardName == "Crusty Ring of the Crying Rusty Tears")
                 {
                     // Opponent's ARTIFACTS prevent 2 damage.
                     // (prevents 4 damage with Ring of Rings in Holster)
                     // checks throwers hand for the artifact, to my knowledge the card is not mutated yet
-                    foreach (CardPlayer cd2 in GameManager.manager.players) {
+                    foreach (CardPlayer cd2 in GameManager.manager.players)
+                    {
                         if (cd2.name == GameManager.manager.currentPlayerName)
                         {
                             if (cd2.holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
@@ -1881,7 +1906,7 @@ public class CardPlayer : MonoBehaviour
                     }
                 }
                 // Foggy Ring of the Nearsighted Old Crone
-                else if(cd.card.cardName == "Foggy Ring of the Nearsighted Old Crone")
+                else if (cd.card.cardName == "Foggy Ring of the Nearsighted Old Crone")
                 {
                     // All items thrown at you prevent 1 damage.
                     // (prevents 2 damage with Ring of Rings in Holster)
@@ -1901,7 +1926,7 @@ public class CardPlayer : MonoBehaviour
                     }
                 }
                 // Thick Ring of the Furrowed Brow Dolt
-                else if(cd.card.cardName == "Thick Ring of the Furrowed Brow Dolt")
+                else if (cd.card.cardName == "Thick Ring of the Furrowed Brow Dolt")
                 {
                     // During each opponent turn, prevent 2 damage to your HP.
                     // (prevents 4 damage with Ring of Rings in Holster)
@@ -1922,7 +1947,7 @@ public class CardPlayer : MonoBehaviour
                                 }
                             }
                         }
-                    } 
+                    }
                 }
             }
         }
@@ -1933,12 +1958,13 @@ public class CardPlayer : MonoBehaviour
         return newDamage >= 0 ? newDamage : 0;
     }
 
-    public void addHealth(int health) 
+    public void addHealth(int health)
     {
         hp += health;
 
         //Make sure that hp cannot go above 10
-        if(hp > 10) {
+        if (hp > 10)
+        {
             hp = 10;
         }
 
@@ -1984,7 +2010,7 @@ public class CardPlayer : MonoBehaviour
         if (cubed)
         {
             hpCubes--;
-            if(hpCubes == 0)
+            if (hpCubes == 0)
             {
                 // check for Phlactery Sweetbitter situation but otherwise everyone else is dead
 
@@ -1998,7 +2024,7 @@ public class CardPlayer : MonoBehaviour
 
                 hp = 10;
             }
-            
+
             cubed = false;
         }
         updateHealthUI();
@@ -2015,7 +2041,7 @@ public class CardPlayer : MonoBehaviour
         }
         */
 
-        if(damageSign !=  null && damageAmount != null)
+        if (damageSign != null && damageAmount != null)
         {
             damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
             damageSign.SetActive(true);
@@ -2038,16 +2064,16 @@ public class CardPlayer : MonoBehaviour
         updatePipsUI();
 
         // NICKLES FLIP LOGIC
-            foreach (CardPlayer cp in GameManager.manager.players)
+        foreach (CardPlayer cp in GameManager.manager.players)
+        {
+            if (cp.isNickles && cp.pipsUsedThisTurn >= 10)
             {
-                if(cp.isNickles && cp.pipsUsedThisTurn >= 10)
-                {
-                    cp.character.canBeFlipped = true;
-                    GameManager.manager.sendSuccessMessage(13);
-                }
+                cp.character.canBeFlipped = true;
+                GameManager.manager.sendSuccessMessage(13);
             }
-            //character.canBeFlipped = true;
-            //GameManager.manager.sendSuccessMessage(13);
+        }
+        //character.canBeFlipped = true;
+        //GameManager.manager.sendSuccessMessage(13);
     }
 
     //function to call when checking on if the player is dead

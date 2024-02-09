@@ -424,7 +424,15 @@ public class GameManager : MonoBehaviour
                 // players[0].deck.loadDeck();
 
 
+                // Crow Punk is stage 1 enemy
                 players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "CrowPunk";
+                players[2].name = "CrowPunk";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("CrowPunk");
+                players[2].checkCharacter();
+                players[2].hpCubes = 2;
+                players[2].updateHealthUI();
                 // players[2].name = saveData.oppCharName;
                 // players[2].charName = saveData.oppCharName;
                 // players[2].character.onCharacterClick(players[2].charName);
@@ -456,7 +464,7 @@ public class GameManager : MonoBehaviour
                 // when implementing character selection, get info from MyNetworkManager.singlePlayerNames[0]
                 // Be sure to change the hardcoded values!!!
                 // playerTopName.text = Game.singlePlayerNames[1];
-
+                /*
                 int num = rng.Next(0, 2);
 
 
@@ -491,7 +499,7 @@ public class GameManager : MonoBehaviour
                 // playerTopName.text = Game.singlePlayerNames[1];
                 //players[1].user_id = 1;
                 //players[2].user_id = 1;
-
+                */
                 // players[2] = players[3];
                 p3.SetActive(false);
                 p4.SetActive(false);

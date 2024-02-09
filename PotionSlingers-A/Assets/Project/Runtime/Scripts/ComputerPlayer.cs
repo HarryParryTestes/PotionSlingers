@@ -24,7 +24,7 @@ public class ComputerPlayer : CardPlayer
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     public int chooseRandomPlayer()
@@ -34,7 +34,7 @@ public class ComputerPlayer : CardPlayer
         int num = rng.Next(0, GameManager.manager.numPlayers);
         Debug.Log("Number: " + num);
 
-        if(j == num)
+        if (j == num)
         {
             Debug.Log("Why are you hitting yourself???");
             chooseRandomPlayer();
@@ -67,7 +67,8 @@ public class ComputerPlayer : CardPlayer
         {
             // exclusively buy potions as ammunition
             numero = rng.Next(1, 4);
-        } else
+        }
+        else
         {
             numero = rng.Next(1, 7);
         }
@@ -133,6 +134,8 @@ public class ComputerPlayer : CardPlayer
 
         GameManager.manager.players[0].subHealth(damage);
         GameManager.manager.sendMessage("Took " + damage + " damage!");
+        this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
+        this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
         GameManager.manager.Invoke("endTurn", 3f);
 
     }
@@ -183,23 +186,23 @@ public class ComputerPlayer : CardPlayer
         potions = 0;
         vessels = 0;
         rings = 0;
-        if(actions == 0)
+        if (actions == 0)
         {
             turn++;
         }
 
         actions++;
-        if(actions > 5)
+        if (actions > 5)
         {
             actions = 0;
 
             Debug.Log("Actions done by the computer this turn:");
-            
+
             foreach (string act in actionsList)
             {
                 Debug.Log(act);
             }
-            
+
             // Debug.Log(actionsList);
             actionsList.Clear();
             GameManager.manager.endTurn();
@@ -216,8 +219,8 @@ public class ComputerPlayer : CardPlayer
             pips = gameObject.GetComponent<CardPlayer>().pips;
         }
 
-        
-        foreach(CardDisplay cd in holster.cardList)
+
+        foreach (CardDisplay cd in holster.cardList)
         {
             AICards.Add(cd.card);
             switch (cd.card.cardType)
@@ -237,7 +240,7 @@ public class ComputerPlayer : CardPlayer
             }
         }
 
-        for(int i = 0; i < AICards.Count; i++)
+        for (int i = 0; i < AICards.Count; i++)
         {
             Debug.Log(AICards[i].cardName);
 
@@ -255,7 +258,7 @@ public class ComputerPlayer : CardPlayer
                 }
 
                 // if two players, just hardcode throwing at player 1
-                if(GameManager.manager.numPlayers == 2)
+                if (GameManager.manager.numPlayers == 2)
                 {
                     // GameManager.manager.selectedOpponentName = GameManager.manager.players[0].name;
                     GameManager.manager.tempPlayer = GameManager.manager.players[0];
@@ -279,7 +282,7 @@ public class ComputerPlayer : CardPlayer
 
             for (int k = 0; k < AICards.Count; k++)
             {
-                if(AICards[i] != AICards[k])
+                if (AICards[i] != AICards[k])
                 {
                     // Throwing potions with starter ring
                     // if the potion actually does damage and doesn't heal you
@@ -332,7 +335,7 @@ public class ComputerPlayer : CardPlayer
         // Post-attack logic goes here
         // Buying
         int marketNum = chooseMarketCard();
-        
+
         switch (marketNum)
         {
             case 1:
