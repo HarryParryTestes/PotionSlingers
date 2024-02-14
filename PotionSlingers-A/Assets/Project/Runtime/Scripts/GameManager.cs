@@ -407,7 +407,9 @@ public class GameManager : MonoBehaviour
                 initDecks();
 
                 SaveData newSaveData = new SaveData(Game.storyModeCharName, stage);
+                saveData.savedGame = false;
                 saveData = newSaveData;
+                SaveSystem.SaveGameData(saveData);
 
                 myPlayerIndex = 0;
                 Debug.Log(saveData.playerCharName + "!!!");

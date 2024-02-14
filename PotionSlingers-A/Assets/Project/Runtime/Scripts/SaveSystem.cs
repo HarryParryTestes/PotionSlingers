@@ -37,6 +37,19 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     private void Awake()
     {
         if (instance == null)
@@ -83,6 +96,11 @@ public class SaveSystem : MonoBehaviour
         string path = Application.persistentDataPath + "savedata.bin";
         if (File.Exists(path))
         {
+            // deleting old save
+            Debug.Log("Deleting old save");
+            File.Delete(path);
+
+            /*
             Debug.Log("SAVE FILE EXISTS!");
 
             BinaryFormatter formatter = new BinaryFormatter();
@@ -98,8 +116,19 @@ public class SaveSystem : MonoBehaviour
 
             formatter.Serialize(stream2, data);
             stream2.Close();
-
+            */
         }
+        SaveData data = new SaveData();
+        // data.playerCharName = Game.storyModeCharName;
+        data.playerCharName = "";
+        data.stage = 1;
+        data.savedGame = false;
+
+        BinaryFormatter formatter = new BinaryFormatter();
+        // string path = Application.persistentDataPath + "savedata.bin";
+        FileStream stream = new FileStream(path, FileMode.Create);
+        formatter.Serialize(stream, data);
+        stream.Close();
     }
 
     public static void setSaveGame()
@@ -115,7 +144,7 @@ public class SaveSystem : MonoBehaviour
             SaveData data = formatter.Deserialize(stream) as SaveData;
             stream.Close();
 
-            // setting new game flag
+            // setting saved game flag
             data.savedGame = true;
 
             FileStream stream2 = new FileStream(path, FileMode.Create);
