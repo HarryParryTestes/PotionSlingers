@@ -272,6 +272,11 @@ public class CardPlayer : MonoBehaviour
                 animator.Play("CrowIdle");
                 break;
 
+            case "Fingas":
+                Debug.Log("Fingas animation");
+                animator.Play("Fingas_idle");
+                break;
+
             default:
                 Debug.Log("Failed to set any bools");
                 break;
@@ -318,13 +323,19 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("CrowPunk Hit animation");
                 animator.Play("CrowHit");
                 break;
+            case "Fingas":
+                Debug.Log("Fingas Hit animation");
+                animator.Play("Fingas_hit");
+                break;
 
             default:
                 Debug.Log("Failed to set any bools");
                 break;
         }
-        if (animator != null)
+        if (animator != null && charName != "Fingas")
             Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
+        else
+            Invoke("playIdle", 1.55f);
     }
 
     public void updateHealthUI(string cardQuality = "")

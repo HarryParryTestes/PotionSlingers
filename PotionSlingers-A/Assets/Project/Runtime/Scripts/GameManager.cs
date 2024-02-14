@@ -425,6 +425,15 @@ public class GameManager : MonoBehaviour
                 currentPlayerName = players[0].name;
                 // players[0].deck.loadDeck();
 
+                // Fingas is stage 1 enemy
+                players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].charName = "Fingas";
+                players[1].name = "Fingas";
+                playerLeftName.text = players[1].charName;
+                players[1].character.onCharacterClick("Fingas");
+                players[1].checkCharacter();
+                players[1].hpCubes = 1;
+                players[1].updateHealthUI();
 
                 // Crow Punk is stage 1 enemy
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -433,15 +442,20 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("CrowPunk");
                 players[2].checkCharacter();
-                players[2].hpCubes = 2;
+                players[2].hpCubes = 1;
                 players[2].updateHealthUI();
-                // players[2].name = saveData.oppCharName;
-                // players[2].charName = saveData.oppCharName;
-                // players[2].character.onCharacterClick(players[2].charName);
-                // players[2].checkCharacter();
-                // players[2].name = "Reets";
-                // playerTopName.text = players[2].charName;
 
+                // Fingas is stage 1 enemy
+                players[3].gameObject.AddComponent<ComputerPlayer>();
+                players[3].charName = "Fingas";
+                players[3].name = "Fingas";
+                playerRightName.text = players[3].charName;
+                players[3].character.onCharacterClick("Fingas");
+                players[3].checkCharacter();
+                players[3].hpCubes = 1;
+                players[3].updateHealthUI();
+
+                /*
                 players[1] = players[2];
                 // hardcode this lol
                 // playerTopName.text = Game.singlePlayerNames[1];
@@ -451,6 +465,7 @@ public class GameManager : MonoBehaviour
                 players[2] = players[3];
                 p3.SetActive(false);
                 p4.SetActive(false);
+                */
             }
             /*
             md1.shuffle();
@@ -458,7 +473,7 @@ public class GameManager : MonoBehaviour
             initDecks();
             */
 
-            numPlayers = 2;
+            numPlayers = 4;
 
             if (numPlayers == 2)
             {
@@ -503,11 +518,11 @@ public class GameManager : MonoBehaviour
                 //players[2].user_id = 1;
                 */
                 // players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                // p3.SetActive(false);
+                // p4.SetActive(false);
             }
 
-            numPlayers = 2;
+            numPlayers = 4;
             return;
         }
 

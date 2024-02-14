@@ -134,8 +134,18 @@ public class ComputerPlayer : CardPlayer
 
         GameManager.manager.players[0].subHealth(damage);
         GameManager.manager.sendMessage("Took " + damage + " damage!");
-        this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
-        this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+        if (this.gameObject.GetComponent<CardPlayer>().name == "CrowPunk")
+        {
+            this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
+            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+        }
+        if (this.gameObject.GetComponent<CardPlayer>().name == "Fingas")
+        {
+            this.gameObject.GetComponent<CardPlayer>().animator.Play("Fingas_attack");
+            // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
+        }
+
         GameManager.manager.Invoke("endTurn", 3f);
 
     }
