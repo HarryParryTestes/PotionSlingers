@@ -395,7 +395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11430352, guid: d1b7749dcc0beaf4f8d455f24cc4f0f7, type: 3}
       propertyPath: m_FlexibleWidth
-      value: 11.04
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 11430352, guid: d1b7749dcc0beaf4f8d455f24cc4f0f7, type: 3}
       propertyPath: m_PreferredWidth
@@ -1233,9 +1233,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1429861494}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4128fc77ee4f23e40a1ba12260d3acc5, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1620,7 +1620,7 @@ Animator:
   m_GameObject: {fileID: 1805500850}
   m_Enabled: 0
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 1e0fd879a809df947928d5893733b0ca, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1796,11 +1796,11 @@ MonoBehaviour:
     customMenuPanelOffset: {x: 0, y: 0, z: 0}
     useMenuPanelFor: 0
     portraitAnimatorController: {fileID: 9100000, guid: 1e0fd879a809df947928d5893733b0ca, type: 2}
-    setSubtitleColor: 0
+    setSubtitleColor: 1
     applyColorToPrependedName: 0
     prependActorNameSeparator: ': '
     prependActorNameFormat: '{0}{1}'
-    subtitleColor: {r: 1, g: 1, b: 1, a: 1}
+    subtitleColor: {r: 0.8773585, g: 0.10346207, b: 0.29267618, a: 1}
 --- !u!4 &2119143657
 Transform:
   m_ObjectHideFlags: 0

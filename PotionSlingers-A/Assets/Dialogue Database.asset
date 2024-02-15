@@ -770,7 +770,10 @@ MonoBehaviour:
         type: 0
         typeString: 
       - title: Sequence
-        value: 
+        value: 'required AnimatorPlay(attack,speakerportrait);
+
+          required
+          AnimatorPlay(attack,speakerportrait)@{{end}};'
         type: 0
         typeString: 
       - title: EventGuid
@@ -817,7 +820,7 @@ MonoBehaviour:
         type: 5
         typeString: CustomFieldType_Actor
       - title: Conversant
-        value: 3
+        value: -1
         type: 5
         typeString: CustomFieldType_Actor
       - title: Menu Text
@@ -835,7 +838,7 @@ MonoBehaviour:
       - title: EventGuid
         value: 8285d5e2-a455-4789-b362-1082a10cbfaf
         type: 0
-        typeString: 
+        typeString: CustomFieldType_Text
       conversationID: 1
       isRoot: 0
       isGroup: 0
