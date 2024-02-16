@@ -1864,6 +1864,12 @@ public class GameManager : MonoBehaviour
                 Debug.Log("myPlayerIndex is " + myPlayerIndex);
                 onStartTurn(players[myPlayerIndex]);
                 players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().AICards.Clear();
+                if (players[myPlayerIndex].dead)
+                {
+                    endTurn();
+                    Debug.Log("Computer player is dead!");
+                    return;
+                }
                 players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().StartCoroutine(players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().waitASecBro());
             }
             else

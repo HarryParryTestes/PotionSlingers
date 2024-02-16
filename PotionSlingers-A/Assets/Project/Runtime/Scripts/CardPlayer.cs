@@ -332,10 +332,14 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Failed to set any bools");
                 break;
         }
-        if (animator != null && charName != "Fingas")
-            Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
-        else
+        if(charName == "Fingas")
+        {
             Invoke("playIdle", 1.55f);
+            return;
+        }
+
+        if (animator != null && !dead)
+            Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
     public void updateHealthUI(string cardQuality = "")
@@ -2026,6 +2030,19 @@ public class CardPlayer : MonoBehaviour
                 // check for Phlactery Sweetbitter situation but otherwise everyone else is dead
 
                 dead = true;
+                /*
+                switch (charName)
+                {
+                    case "CrowPunk":
+                        Debug.Log("CrowPunk Hit animation");
+                        animator.Play("CrowHit");
+                        break;
+                    case "Fingas":
+                        Debug.Log("Fingas Hit animation");
+                        animator.Play("Fingas_hit");
+                        break;
+                }
+                */
                 Debug.Log("Checking endgame situation");
                 GameManager.manager.checkForEndGame();
             }

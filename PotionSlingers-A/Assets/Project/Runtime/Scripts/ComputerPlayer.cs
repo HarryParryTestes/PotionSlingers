@@ -176,7 +176,7 @@ public class ComputerPlayer : CardPlayer
 
     public void AITurn()
     {
-        if (dead)
+        if (this.gameObject.GetComponent<CardPlayer>().dead)
         {
             Debug.Log("The computer player is dead");
             GameManager.manager.endTurn();
