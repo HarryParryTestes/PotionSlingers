@@ -1,5 +1,28 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8556725436909101246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/Fingas_turn
+  m_EditorClassIdentifier: 
+  Path: event:/UI/Fingas_turn
+  guid: da7a0db2db397b4fa8aa3e4e2823931f
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 391
 --- !u!114 &-7747577602506835324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,11 +153,11 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638148723758181376
+  lastModified: 638436110895752320
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 1394
+    Value: 1732
   Exists: 1
 --- !u!114 &-3953902111405927291
 MonoBehaviour:
@@ -205,6 +228,52 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 680
+--- !u!114 &-1478650980266006780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/BGM_Wander
+  m_EditorClassIdentifier: 
+  Path: event:/Music/BGM_Wander
+  guid: 48ac774c380e5148bbe727a5ea03385d
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 60813
+--- !u!114 &-1441809986294840104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/Fingas_snap
+  m_EditorClassIdentifier: 
+  Path: event:/UI/Fingas_snap
+  guid: bd3880c098fbdf46a616ef6560a8a6c1
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1072
 --- !u!114 &-1034114711044735174
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,12 +327,19 @@ MonoBehaviour:
   - {fileID: 3836940703106385045}
   - {fileID: 57260157274554455}
   - {fileID: 6204294902170166983}
+  - {fileID: -1478650980266006780}
+  - {fileID: 5616027321607299664}
+  - {fileID: 8361729265376914206}
+  - {fileID: 6820022773023769100}
+  - {fileID: -1441809986294840104}
+  - {fileID: -8556725436909101246}
+  - {fileID: 3284503901981689033}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7030555741822606184}
   StringsBanks:
   - {fileID: -4054006693100217806}
-  stringsBankWriteTime: 638148723758181376
+  stringsBankWriteTime: 638436110895752320
   cacheVersion: 6
 --- !u!114 &57260157274554455
 MonoBehaviour:
@@ -397,6 +473,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 76591
+--- !u!114 &3284503901981689033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Crowpunk_attack
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Crowpunk_attack
+  guid: 67a1080dea66a24e9925c818195a3f1a
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1055
 --- !u!114 &3807023185243710871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +611,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 235998
+--- !u!114 &5616027321607299664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/UI_Typewriter
+  m_EditorClassIdentifier: 
+  Path: event:/UI/UI_Typewriter
+  guid: 5f17512d65a89342aa8b78cee72cd077
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 152
 --- !u!114 &5691590678742314961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -581,6 +703,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1900
+--- !u!114 &6820022773023769100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/Market_open
+  m_EditorClassIdentifier: 
+  Path: event:/UI/Market_open
+  guid: 97086e1a6f485e4180f522e042b332fe
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1742
 --- !u!114 &7030555741822606184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -596,7 +741,7 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638148723758171410
+  lastModified: 638436110895732291
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -623,6 +768,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 756
+--- !u!114 &8361729265376914206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/Market_close
+  m_EditorClassIdentifier: 
+  Path: event:/UI/Market_close
+  guid: 675732cd5a722d45b809bfadbd488b82
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1421
 --- !u!114 &8503519933277279006
 MonoBehaviour:
   m_ObjectHideFlags: 0

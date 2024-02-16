@@ -239,6 +239,7 @@ public class GameManager : MonoBehaviour
         if (!marketSelected)
         {
             marketSelected = true;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_open");
             if (dialog.textBoxCounter == 10)
             {
                 tutorialArrow.GetComponent<ArrowMover>().checkArrow();
@@ -261,6 +262,7 @@ public class GameManager : MonoBehaviour
         {
             // marketPosition = marketButton.transform.position;
             marketSelected = false;
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_close");
             StartCoroutine(Button());
             // canvasGroup.blocksRaycasts = true;
             market.transform.DOMoveY(-11.5f, 1f);

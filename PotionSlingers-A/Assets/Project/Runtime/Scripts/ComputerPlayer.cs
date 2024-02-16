@@ -137,11 +137,14 @@ public class ComputerPlayer : CardPlayer
         if (this.gameObject.GetComponent<CardPlayer>().name == "CrowPunk")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
         }
         if (this.gameObject.GetComponent<CardPlayer>().name == "Fingas")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("Fingas_attack");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_turn");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_snap");
             // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
         }
