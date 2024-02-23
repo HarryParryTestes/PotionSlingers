@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Mirror;
 using Steamworks;
 using UnityEngine.SceneManagement;
+using System;
 
 [System.Serializable]
 public class MyNetworkManager : NetworkManager
@@ -277,10 +278,25 @@ public class MyNetworkManager : NetworkManager
     {
         canvas = GameObject.Find("Canvas").GetComponent<AnimationHolder>();
 
+        try
+        {
+            // your code segment which might throw an exception
+            loadingScreen = canvas.loadingScreen;
+            loadingText = canvas.loadingText;
+
+            animator.SetTrigger("Start");
+        }
+        catch (Exception ex)
+        {
+            // Debug.LogException(ex, this);
+            ServerChangeScene("TownCenter");
+        }
+        /*
         loadingScreen = canvas.loadingScreen;
         loadingText = canvas.loadingText;
 
         animator.SetTrigger("Start");
+        */
         yield return new WaitForSeconds(1);
         if(loadingScreen != null && loadingText != null)
         {
@@ -303,10 +319,25 @@ public class MyNetworkManager : NetworkManager
     {
         canvas = GameObject.Find("Canvas").GetComponent<AnimationHolder>();
 
+        try
+        {
+            // your code segment which might throw an exception
+            loadingScreen = canvas.loadingScreen;
+            loadingText = canvas.loadingText;
+
+            animator.SetTrigger("Start");
+        }
+        catch (Exception ex)
+        {
+            // Debug.LogException(ex, this);
+            ServerChangeScene("StoryMode");
+        }
+        /*
         loadingScreen = canvas.loadingScreen;
         loadingText = canvas.loadingText;
 
         animator.SetTrigger("Start");
+        */
         yield return new WaitForSeconds(1);
         if (loadingScreen != null && loadingText != null)
         {

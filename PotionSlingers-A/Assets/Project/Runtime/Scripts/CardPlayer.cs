@@ -2022,6 +2022,7 @@ public class CardPlayer : MonoBehaviour
 
         Debug.Log("Subtracted " + damage + "from " + charName);
         Debug.Log(charName + "'s health = " + hp + " HP");
+        /*
         if (cubed)
         {
             hpCubes--;
@@ -2030,7 +2031,6 @@ public class CardPlayer : MonoBehaviour
                 // check for Phlactery Sweetbitter situation but otherwise everyone else is dead
 
                 dead = true;
-                /*
                 switch (charName)
                 {
                     case "CrowPunk":
@@ -2042,7 +2042,6 @@ public class CardPlayer : MonoBehaviour
                         animator.Play("Fingas_hit");
                         break;
                 }
-                */
                 Debug.Log("Checking endgame situation");
                 GameManager.manager.checkForEndGame();
             }
@@ -2055,6 +2054,7 @@ public class CardPlayer : MonoBehaviour
 
             cubed = false;
         }
+        */
         updateHealthUI();
 
         // Flashes damage sign

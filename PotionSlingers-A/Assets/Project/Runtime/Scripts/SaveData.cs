@@ -14,8 +14,8 @@ public class SaveData
     public string playerCharName;
     // public int playerHealth;
     // public int playerCubes;
-    // public List<string> playerDeck = new List<string>();
-    // public List<string> playerHolster = new List<string>();
+    public List<string> playerDeck = new List<string>();
+    public List<string> playerHolster = new List<string>();
     // public string oppName;
     // public string oppCharName;
     // public int oppHealth;

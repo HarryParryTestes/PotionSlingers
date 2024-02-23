@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     public int numTrashed = 0;
     public CardPlayer[] players = new CardPlayer[4];
     public Character[] characters;
+    public CardDatabase database;
     public Dialog dialog;
     public GameObject dialogBox;
     GameObject ob;
@@ -330,6 +331,19 @@ public class GameManager : MonoBehaviour
         if (saveData != null)
         {
             saveData.savedGame = true;
+            List<string> playersDeck = new List<string>();
+            List<string> playersHolster = new List<string>();
+            foreach (CardDisplay cd in players[0].holster.cardList)
+            {
+                playersHolster.Add(cd.card.name);
+            }
+            foreach (Card card in players[0].deck.deckList)
+            {
+                playersDeck.Add(card.name);
+            }
+
+            saveData.playerHolster = playersHolster;
+            saveData.playerDeck = playersDeck;
             SaveSystem.SaveGameData(saveData);
             Debug.Log("Game data saved");
             SceneManager.LoadScene("TitleMenu");
@@ -340,6 +354,43 @@ public class GameManager : MonoBehaviour
         Game.StopHost();
         SceneManager.LoadScene("TitleMenu");
         //Game.ServerChangeScene("TitleMenu");
+    }
+
+    void setStoryModeCharacters()
+    {
+        if(saveData.stage == 1)
+        {
+            // Fingas is stage 1 enemy
+            players[1].gameObject.AddComponent<ComputerPlayer>();
+            players[1].charName = "Fingas";
+            players[1].name = "Fingas";
+            playerLeftName.text = players[1].charName;
+            players[1].character.onCharacterClick("Fingas");
+            players[1].checkCharacter();
+            players[1].hpCubes = 1;
+            players[1].updateHealthUI();
+
+            // Crow Punk is stage 1 enemy
+            players[2].gameObject.AddComponent<ComputerPlayer>();
+            players[2].charName = "CrowPunk";
+            players[2].name = "CrowPunk";
+            playerTopName.text = players[2].charName;
+            players[2].character.onCharacterClick("CrowPunk");
+            players[2].checkCharacter();
+            players[2].hpCubes = 1;
+            players[2].updateHealthUI();
+
+            // Fingas is stage 1 enemy
+            players[3].gameObject.AddComponent<ComputerPlayer>();
+            players[3].charName = "Fingas";
+            players[3].name = "Fingas";
+            playerRightName.text = players[3].charName;
+            players[3].character.onCharacterClick("Fingas");
+            players[3].checkCharacter();
+            players[3].hpCubes = 1;
+            players[3].updateHealthUI();
+        }
+        
     }
 
     void Start()
@@ -358,7 +409,49 @@ public class GameManager : MonoBehaviour
             if (saveData.savedGame)
             {
                 Debug.Log("SAVED GAME!!!");
+                Debug.Log("Contents of saved holster:");
+                foreach (string s in saveData.playerHolster)
+                {
+                    Debug.Log(s);
+                }
+                Debug.Log("Contents of saved deck:");
+                foreach (string s in saveData.playerDeck)
+                {
+                    Debug.Log(s);
+                }
+                for (int i = 0; i < 4; i++)
+                {
+                    foreach (Card card in database.cardList)
+                    {
+                        if (card.name == saveData.playerHolster[i])
+                        {
+                            players[0].holster.cardList[i].updateCard(card);
+                        }
+                    }
+                }
+                players[0].deck.deckList.Clear();
 
+                /*
+                for (int i = saveData.playerDeck.Count - 1; i >= 0; i--)
+                {
+                    players[0].deck.putCardOnTop()
+                }
+
+                foreach (Card card in saveData.playerDeck)
+                {
+                    players[0].deck.putCardOnTop(card);
+                }
+                */
+                for (int i = 0; i < saveData.playerDeck.Count; i++)
+                {
+                    foreach (Card card in database.cardList)
+                    {
+                        if (card.name == saveData.playerDeck[i])
+                        {
+                            players[0].deck.putCardOnBottom(card);
+                        }
+                    }
+                }
 
                 // maybe take this out, we'll see
                 md1.shuffle();
@@ -380,7 +473,9 @@ public class GameManager : MonoBehaviour
                 currentPlayerName = players[0].name;
                 // players[0].deck.loadDeck();
 
-
+                // numPlayers = 4;
+                setStoryModeCharacters();
+                /*
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 // players[2].name = saveData.oppCharName;
                 // players[2].charName = saveData.oppCharName;
@@ -398,7 +493,8 @@ public class GameManager : MonoBehaviour
                 players[2] = players[3];
                 p3.SetActive(false);
                 p4.SetActive(false);
-                // return;
+                return;
+                */
             }
             else
             {

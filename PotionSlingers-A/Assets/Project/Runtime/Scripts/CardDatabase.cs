@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CardDatabase : MonoBehaviour
 {
-    //public static List<Card> cardList = new List<Card>();
+    public List<Card> cardList = new List<Card>();
 
     /*
     public int id;
