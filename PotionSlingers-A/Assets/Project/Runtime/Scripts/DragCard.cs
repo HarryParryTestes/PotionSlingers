@@ -182,6 +182,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnBeginDrag(PointerEventData pointerEventData)
     {
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
+            return;
+
         if (market && !GameManager.manager.marketSelected)
             return;
         DOTween.Pause(gameObject.name);
@@ -274,6 +277,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             transform.SetParent(parentAfterDrag);
             transform.localScale = new Vector3(1f, 1f, 1f);
+            if(!market)
+                transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+            /*
+            if (transform.position.y < 0)
+            {
+                transform.position = new Vector3(transform.position.x, 0, transform.position.z);
+            }
+            */
 
         }   
         // StartCoroutine(SibIndex());
@@ -311,6 +322,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             }
         }
         */
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
+            return;
 
         if (!market)
             findCard(this.gameObject.GetComponent<CardDisplay>().card.cardName);

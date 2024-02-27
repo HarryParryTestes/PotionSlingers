@@ -48,7 +48,12 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         if (this.gameObject.name == "DeckPile")
         {
             transform.position -= new Vector3(0, 100, 0);
-        }
+
+            if (transform.position.y < 31)
+            {
+                transform.position += new Vector3(0, 100, 0);
+            }
+        }   
     }
 
     public void OnDrop(PointerEventData eventData)
@@ -64,7 +69,8 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         // grabbing the card held by the cursor
         CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
 
-        if (dc.market)
+        // test this and double check
+        if (dc.market && this.gameObject.name == "DeckPile")
         {
             Debug.Log("Buy triggered?");
             if (heldCard.GetComponent<TopMarketBuy>() != null)

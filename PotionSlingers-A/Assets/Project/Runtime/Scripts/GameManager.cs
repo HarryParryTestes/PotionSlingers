@@ -1953,6 +1953,8 @@ public class GameManager : MonoBehaviour
             sendSuccessMessage(18);
             currentPlayerName = players[myPlayerIndex].name;
 
+
+
             // check if the CardPlayer gameObject has a ComputerPlayer script attached
             if (players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>() != null)
             {
@@ -3313,6 +3315,7 @@ public class GameManager : MonoBehaviour
             if (cp.name == currentPlayerName)
             {
                 cp.deck.putCardOnTop(starterPotionCard);
+                sendMessage("You put a starter potion on top of your deck!");
             }
         }
         //players[myPlayerIndex].deck.putCardOnTop(starterPotionCard);

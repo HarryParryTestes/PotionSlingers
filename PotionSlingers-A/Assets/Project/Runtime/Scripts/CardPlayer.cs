@@ -1003,6 +1003,15 @@ public class CardPlayer : MonoBehaviour
             healBonus = true;
         }
 
+        // Fragile Glass Ornament
+        // Does +1 Damage. Ignores loaded potion effects in this Vessel
+        if (selectedCard.card.cardName == "Fragile Glass Ornament")
+        {
+            // this card ignores all potion effects, so i'm returning damage + 1
+            Debug.Log("Fragile Glass Ornament damage bonus");
+            return damage + 1;
+        }
+
         // checking the potions for throw bonuses
         damage = checkBonus(damage, selectedCard.vPotion1);
         damage = checkBonus(damage, selectedCard.vPotion2);
@@ -1478,6 +1487,14 @@ public class CardPlayer : MonoBehaviour
         return damage;
     }
 
+    public IEnumerator changeAlpha(GameObject obj)
+    {
+        yield return new WaitForSeconds(2f);
+        obj.SetActive(true);
+        if(obj.GetComponent<CanvasGroup>() != null)
+            obj.GetComponent<CanvasGroup>().alpha = 0;
+    }
+
     // this will get messy quickly so actually comment things
     public int checkBonus(int damage, CardDisplay selectedCard)
     {
@@ -1716,7 +1733,8 @@ public class CardPlayer : MonoBehaviour
             if (gameObject.GetComponent<ComputerPlayer>() == null
                 && GameManager.manager.myPlayerIndex == 0)
             {
-                GameManager.manager.starterPotionMenu.SetActive(true);
+                // GameManager.manager.starterPotionMenu.SetActive(true);
+                StartCoroutine(changeAlpha(GameManager.manager.starterPotionMenu));
             }
         }
 
@@ -1733,7 +1751,8 @@ public class CardPlayer : MonoBehaviour
                 // GameManager method
                 Debug.Log("Trash One from the Market Bonus");
                 GameManager.manager.numTrashed = 1;
-                GameManager.manager.trashMarketUI.SetActive(true);
+                // GameManager.manager.trashMarketUI.SetActive(true);
+                StartCoroutine(changeAlpha(GameManager.manager.trashMarketUI));
                 GameManager.manager.updateTrashMarketMenu();
             }
             else
@@ -1863,6 +1882,15 @@ public class CardPlayer : MonoBehaviour
                                     gp.RpcBubbleWandMenu(gp.playerName, cardInt, damage);
                                 }
                             }
+                        }   else
+                        {
+                            Debug.Log("Local command for Bubble Wand");
+                            if(gameObject.GetComponent<ComputerPlayer>() == null)
+                            {
+                                GameManager.manager.bubbleWandMenu.SetActive(true);
+                                GameManager.manager.bubbleWandMenu.GetComponent<CanvasGroup>().alpha = 0;
+                            }
+                            // StartCoroutine(changeAlpha(GameManager.manager.bubbleWandMenu));
                         }
                     }
                 }
