@@ -463,6 +463,7 @@ public class CardPlayer : MonoBehaviour
                 hp = 0;
                 Debug.Log("Somebody is dead!");
                 dead = true;
+                // GameManager.manager.checkForEndGame();
                 if (GameManager.manager.Game.tutorial)
                 {
                     // do achievement check in here
@@ -474,6 +475,8 @@ public class CardPlayer : MonoBehaviour
                 }
                 else
                 {
+                    GameManager.manager.checkForEndGame();
+                    /*
                     int numDead = 0;
                     int numOfThem = 0;
                     // check if every player is dead except one
@@ -496,6 +499,7 @@ public class CardPlayer : MonoBehaviour
                             GameManager.manager.pauseUI.SetActive(true);
                         }
                     }
+                    */
                 }
             }
             updateHealthUI();
@@ -2028,6 +2032,7 @@ public class CardPlayer : MonoBehaviour
         // If they're dead don't damage them further
         if (dead)
         {
+            GameManager.manager.checkForEndGame();
             return;
         }
 
@@ -2046,6 +2051,7 @@ public class CardPlayer : MonoBehaviour
         {
             cubed = true;
             hp = 0;
+            // GameManager.manager.checkForEndGame();
         }
 
         Debug.Log("Subtracted " + damage + "from " + charName);

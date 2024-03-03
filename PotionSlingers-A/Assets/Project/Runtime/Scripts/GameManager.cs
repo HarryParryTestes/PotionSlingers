@@ -306,7 +306,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Dead: " + numDead);
         Debug.Log("Alive" + numAlive);
 
-        if (numAlive == 1 && numDead >= 1)
+        if ((numPlayers == 2 && numAlive == 1 && numDead == 1) || (numPlayers == 3 && numAlive == 1 && numDead == 2) || (numPlayers == 4 && numAlive == 1 && numDead == 3))
         {
             // The game is over!
             Debug.Log("The game is over!!!");
@@ -317,7 +317,9 @@ public class GameManager : MonoBehaviour
             if (Game.storyMode)
             {
                 // advance a stage and save the game data
-                stage++;
+                Debug.Log("Advancing a stage in story mode");
+                saveData.stage++;
+                Debug.Log("Now onto stage " + saveData.stage + "!");
                 SaveSystem.SaveGameData(saveData);
             }
         }
@@ -1790,6 +1792,7 @@ public class GameManager : MonoBehaviour
     // END TURN REQUEST
     public void endTurn()
     {
+        checkForEndGame();
         // reset the market at the end of your turn
         if (marketSelected)
         {
