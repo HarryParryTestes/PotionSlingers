@@ -318,9 +318,11 @@ public class GameManager : MonoBehaviour
             {
                 // advance a stage and save the game data
                 Debug.Log("Advancing a stage in story mode");
-                saveData.stage++;
+                saveData.stage = stage + 1;
                 Debug.Log("Now onto stage " + saveData.stage + "!");
                 SaveSystem.SaveGameData(saveData);
+                // Game.ServerChangeScene("StoryMode");
+                SceneManager.LoadScene("StoryMode");
             }
         }
     }
@@ -411,6 +413,7 @@ public class GameManager : MonoBehaviour
             if (saveData.savedGame)
             {
                 Debug.Log("SAVED GAME!!!");
+                stage = saveData.stage;
                 Debug.Log("Contents of saved holster:");
                 foreach (string s in saveData.playerHolster)
                 {
