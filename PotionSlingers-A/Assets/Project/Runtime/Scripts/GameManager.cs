@@ -273,6 +273,17 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void advanceStage()
+    {
+        Debug.Log("Advancing a stage in story mode");
+        saveData.stage++;
+        saveData.savedGame = true;
+        Debug.Log("Now onto stage " + saveData.stage + "!");
+        SaveSystem.SaveGameData(saveData);
+        // Game.ServerChangeScene("StoryMode");
+        SceneManager.LoadScene("StoryMode");
+    }
+
     public void checkForEndGame()
     {
         Debug.Log("Checking if the game is over");
@@ -319,6 +330,7 @@ public class GameManager : MonoBehaviour
                 // advance a stage and save the game data
                 Debug.Log("Advancing a stage in story mode");
                 saveData.stage = stage + 1;
+                saveData.savedGame = true;
                 Debug.Log("Now onto stage " + saveData.stage + "!");
                 SaveSystem.SaveGameData(saveData);
                 // Game.ServerChangeScene("StoryMode");

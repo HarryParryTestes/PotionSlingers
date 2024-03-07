@@ -19,6 +19,8 @@ public class StoryModeChanger : MonoBehaviour
 
     public void changeFromStoryModeScene()
     {
+        // add animation in here
+        // instantiate the card backs as a prefab and have it do the animation
         SceneManager.LoadScene("TownCenter");
         //networkManager.ServerChangeScene("TownCenter");
     }
