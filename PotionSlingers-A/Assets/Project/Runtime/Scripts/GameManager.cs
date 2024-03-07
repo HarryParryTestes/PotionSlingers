@@ -278,6 +278,19 @@ public class GameManager : MonoBehaviour
         Debug.Log("Advancing a stage in story mode");
         saveData.stage++;
         saveData.savedGame = true;
+        List<string> playersDeck = new List<string>();
+        List<string> playersHolster = new List<string>();
+        foreach (CardDisplay cd in players[0].holster.cardList)
+        {
+            playersHolster.Add(cd.card.name);
+        }
+        foreach (Card card in players[0].deck.deckList)
+        {
+            playersDeck.Add(card.name);
+        }
+
+        saveData.playerHolster = playersHolster;
+        saveData.playerDeck = playersDeck;
         Debug.Log("Now onto stage " + saveData.stage + "!");
         SaveSystem.SaveGameData(saveData);
         // Game.ServerChangeScene("StoryMode");
@@ -331,6 +344,19 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Advancing a stage in story mode");
                 saveData.stage = stage + 1;
                 saveData.savedGame = true;
+                List<string> playersDeck = new List<string>();
+                List<string> playersHolster = new List<string>();
+                foreach (CardDisplay cd in players[0].holster.cardList)
+                {
+                    playersHolster.Add(cd.card.name);
+                }
+                foreach (Card card in players[0].deck.deckList)
+                {
+                    playersDeck.Add(card.name);
+                }
+
+                saveData.playerHolster = playersHolster;
+                saveData.playerDeck = playersDeck;
                 Debug.Log("Now onto stage " + saveData.stage + "!");
                 SaveSystem.SaveGameData(saveData);
                 // Game.ServerChangeScene("StoryMode");
