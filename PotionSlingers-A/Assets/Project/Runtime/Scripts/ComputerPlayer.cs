@@ -127,13 +127,7 @@ public class ComputerPlayer : CardPlayer
     public void storyModeTurn()
     {
         Debug.Log("STORY MODE LOGIC");
-        // basic enemy that does 1-4 damage per turn
-        int damage = rng.Next(1, 5);
-
-        // make the player take damage without using throwing functions
-
-        GameManager.manager.players[0].subHealth(damage);
-        GameManager.manager.sendMessage("Took " + damage + " damage!");
+        
         if (this.gameObject.GetComponent<CardPlayer>().name == "CrowPunk")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
@@ -148,6 +142,21 @@ public class ComputerPlayer : CardPlayer
             // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
         }
+        if (this.gameObject.GetComponent<CardPlayer>().name == "Bag o' Snakes")
+        {
+            this.gameObject.GetComponent<CardPlayer>().animator.Play("BagAttack");
+            // MATTEO: Add Bag of Snakes sfx
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
+            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+        }
+
+        // basic enemy that does 1-4 damage per turn
+        int damage = rng.Next(1, 5);
+
+        // make the player take damage without using throwing functions
+
+        GameManager.manager.players[0].subHealth(damage);
+        GameManager.manager.sendMessage("Took " + damage + " damage!");
 
         GameManager.manager.Invoke("endTurn", 3f);
 
@@ -159,7 +168,7 @@ public class ComputerPlayer : CardPlayer
         yield return new WaitForSeconds(2);
 
         // story mode logic
-        if (Game.storyMode)
+        if (Game.storyMode && this.gameObject.GetComponent<CardPlayer>().name != "Saltimbocca")
         {
             // insert appropriate logic for whatever enemies we have in here
             storyModeTurn();

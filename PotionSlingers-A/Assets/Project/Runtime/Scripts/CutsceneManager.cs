@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 // using PixelCrushers;
 
@@ -9,9 +10,14 @@ public class CutsceneManager : MonoBehaviour
     public GameObject stage1Button;
     public GameObject stage2Button;
     public GameObject stage3Button;
+    public GameObject stage4Button;
+    public GameObject stage5Button;
+    public GameObject healingMessage;
     public List<GameObject> stage1Objects = new List<GameObject>();
     public List<GameObject> stage2Objects = new List<GameObject>();
     public List<GameObject> stage3Objects = new List<GameObject>();
+    public List<GameObject> stage4Objects = new List<GameObject>();
+    public List<GameObject> stage5Objects = new List<GameObject>();
     SaveData saveData;
 
     // Start is called before the first frame update
@@ -50,9 +56,21 @@ public class CutsceneManager : MonoBehaviour
         handlePath();
     }
 
+    public void healPlayer()
+    {
+        // load health and essence cubes of player and heal them back to full
+        saveData = SaveSystem.LoadGameData();
+    }
+
+    public void goBackToTitle()
+    {
+        // TODO: add some animation here
+        SceneManager.LoadScene("TitleMenu");
+    }
+
     public void moveMap()
     {
-        transform.DOMoveX(4000, 1);
+        transform.DOMoveX(35, 1);
     }
 
     public IEnumerator displayPath()
@@ -98,9 +116,10 @@ public class CutsceneManager : MonoBehaviour
 
             case 3:
                 Debug.Log("Stage 3!!!");
-                
+
                 stage2Button.SetActive(false);
                 stage1Button.SetActive(false);
+                stage4Button.SetActive(false);
                 foreach (GameObject obj in stage1Objects)
                 {
                     // yield return new WaitForSeconds(0.3f);
@@ -112,12 +131,43 @@ public class CutsceneManager : MonoBehaviour
                     // yield return new WaitForSeconds(0.3f);
                     obj.GetComponent<CanvasGroup>().alpha = 1;
                 }
-                foreach (GameObject obj in stage3Objects)
+                foreach (GameObject obj in stage4Objects)
                 {
                     yield return new WaitForSeconds(0.3f);
                     obj.GetComponent<CanvasGroup>().alpha = 1;
                 }
                 stage3Button.SetActive(true);
+                break;
+
+            case 4:
+                Debug.Log("Stage 4!!!");
+                
+                stage2Button.SetActive(false);
+                stage1Button.SetActive(false);
+                stage3Button.SetActive(false);
+                foreach (GameObject obj in stage1Objects)
+                {
+                    // yield return new WaitForSeconds(0.3f);
+                    obj.GetComponent<CanvasGroup>().alpha = 1;
+                }
+
+                foreach (GameObject obj in stage2Objects)
+                {
+                    // yield return new WaitForSeconds(0.3f);
+                    obj.GetComponent<CanvasGroup>().alpha = 1;
+                }
+                foreach (GameObject obj in stage4Objects)
+                {
+                    // yield return new WaitForSeconds(0.3f);
+                    obj.GetComponent<CanvasGroup>().alpha = 1;
+                }
+                foreach (GameObject obj in stage3Objects)
+                {
+                    yield return new WaitForSeconds(0.3f);
+                    obj.GetComponent<CanvasGroup>().alpha = 1;
+                }
+                stage4Button.SetActive(true);
+                stage5Button.SetActive(true);
                 break;
 
             default:

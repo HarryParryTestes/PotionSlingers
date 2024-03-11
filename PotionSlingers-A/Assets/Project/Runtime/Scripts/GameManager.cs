@@ -166,8 +166,8 @@ public class GameManager : MonoBehaviour
 
     public SaveData saveData;
 
-    List<string> playersDeck = new List<string>();
-    List<string> playersHolster = new List<string>();
+    public List<string> playersDeck = new List<string>();
+    public List<string> playersHolster = new List<string>();
 
     public MyNetworkManager game;
     public MyNetworkManager Game
@@ -413,8 +413,9 @@ public class GameManager : MonoBehaviour
 
     void setStoryModeCharacters()
     {
-        if(saveData.stage == 1)
+        if(saveData.stage == 3)
         {
+            numPlayers = 4;
             // Fingas is stage 1 enemy
             players[1].gameObject.AddComponent<ComputerPlayer>();
             players[1].charName = "Fingas";
@@ -445,7 +446,61 @@ public class GameManager : MonoBehaviour
             players[3].hpCubes = 1;
             players[3].updateHealthUI();
         }
-        
+        else if (saveData.stage == 4)
+        {
+            numPlayers = 2;
+            players[2].gameObject.AddComponent<ComputerPlayer>();
+            players[2].charName = "Bag o' Snakes";
+            players[2].name = "Bag o' Snakes";
+            playerTopName.text = players[2].charName;
+            players[2].character.onCharacterClick("Bag o' Snakes");
+            players[2].checkCharacter();
+            players[2].hpCubes = 2;
+            players[2].updateHealthUI();
+            players[2].user_id = 1;
+
+            players[1] = players[2];
+            players[2] = players[3];
+            p3.SetActive(false);
+            p4.SetActive(false);
+        }
+        else if (saveData.stage == 2)
+        {
+            numPlayers = 2;
+            players[2].gameObject.AddComponent<ComputerPlayer>();
+            players[2].charName = "Saltimbocca";
+            players[2].name = "Saltimbocca";
+            playerTopName.text = players[2].charName;
+            players[2].character.onCharacterClick("Saltimbocca");
+            players[2].checkCharacter();
+            players[2].hpCubes = 2;
+            players[2].updateHealthUI();
+            players[2].user_id = 1;
+
+            players[1] = players[2];
+            players[2] = players[3];
+            p3.SetActive(false);
+            p4.SetActive(false);
+        }
+        else if (saveData.stage == 1)
+        {
+            numPlayers = 2;
+            players[2].gameObject.AddComponent<ComputerPlayer>();
+            players[2].charName = "Singelotte";
+            players[2].name = "Singelotte";
+            playerTopName.text = players[2].charName;
+            players[2].character.onCharacterClick("Singelotte");
+            players[2].checkCharacter();
+            players[2].hpCubes = 2;
+            players[2].updateHealthUI();
+            players[2].user_id = 1;
+
+            players[1] = players[2];
+            players[2] = players[3];
+            p3.SetActive(false);
+            p4.SetActive(false);
+        }
+
     }
 
     void Start()
@@ -563,81 +618,10 @@ public class GameManager : MonoBehaviour
                 SaveData newSaveData = new SaveData(Game.storyModeCharName, stage);
                 saveData.savedGame = false;
                 saveData = newSaveData;
+                // initialize saved cards in case of quit out
+                saveData.playerDeck = playersDeck;
+                saveData.playerHolster = playersHolster;
                 SaveSystem.SaveGameData(saveData);
-
-                myPlayerIndex = 0;
-                Debug.Log(saveData.playerCharName + "!!!");
-                Debug.Log(saveData.stage + "!!!");
-                stage = saveData.stage;
-                // players[0].name = saveData.playerName;
-                players[0].charName = saveData.playerCharName;
-                players[0].character.onCharacterClick(players[0].charName);
-                players[0].checkCharacter();
-                // playerBottomName.text = players[0].name;
-                playerBottomName.text = SteamFriends.GetPersonaName().ToString();
-                players[0].name = playerBottomName.text;
-                currentPlayerName = players[0].name;
-                // players[0].deck.loadDeck();
-
-                // Fingas is stage 1 enemy
-                players[1].gameObject.AddComponent<ComputerPlayer>();
-                players[1].charName = "Fingas";
-                players[1].name = "Fingas";
-                playerLeftName.text = players[1].charName;
-                players[1].character.onCharacterClick("Fingas");
-                players[1].checkCharacter();
-                players[1].hpCubes = 1;
-                players[1].updateHealthUI();
-
-                // Crow Punk is stage 1 enemy
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "CrowPunk";
-                players[2].name = "CrowPunk";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("CrowPunk");
-                players[2].checkCharacter();
-                players[2].hpCubes = 1;
-                players[2].updateHealthUI();
-
-                // Fingas is stage 1 enemy
-                players[3].gameObject.AddComponent<ComputerPlayer>();
-                players[3].charName = "Fingas";
-                players[3].name = "Fingas";
-                playerRightName.text = players[3].charName;
-                players[3].character.onCharacterClick("Fingas");
-                players[3].checkCharacter();
-                players[3].hpCubes = 1;
-                players[3].updateHealthUI();
-
-                /*
-                players[1] = players[2];
-                // hardcode this lol
-                // playerTopName.text = Game.singlePlayerNames[1];
-                players[1].user_id = 1;
-                players[2].user_id = 1;
-
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
-                */
-            }
-            /*
-            md1.shuffle();
-            md2.shuffle();
-            initDecks();
-            */
-
-            numPlayers = 4;
-
-            if (numPlayers == 2)
-            {
-                // hardcoding 2-player duel, we'll be able to change the character and gamestate in here
-                // when implementing character selection, get info from MyNetworkManager.singlePlayerNames[0]
-                // Be sure to change the hardcoded values!!!
-                // playerTopName.text = Game.singlePlayerNames[1];
-                /*
-                int num = rng.Next(0, 2);
-
 
                 players[0].name = SteamFriends.GetPersonaName().ToString();
                 players[0].charName = Game.storyModeCharName;
@@ -645,38 +629,8 @@ public class GameManager : MonoBehaviour
                 players[0].checkCharacter();
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
 
-                if (num == 0)
-                {
-                    players[2].gameObject.AddComponent<ComputerPlayer>();
-                    players[2].charName = "Reets";
-                    players[2].character.onCharacterClick("Reets");
-                    players[2].checkCharacter();
-                    players[2].name = "Reets";
-                    playerTopName.text = players[2].charName;
-                }
-
-                if (num == 1)
-                {
-                    players[2].gameObject.AddComponent<ComputerPlayer>();
-                    players[2].charName = "Bolo";
-                    players[2].character.onCharacterClick("Bolo");
-                    players[2].checkCharacter();
-                    players[2].name = "Bolo";
-                    playerTopName.text = players[2].charName;
-                }
-
-                // players[1] = players[2];
-                // hardcode this lol
-                // playerTopName.text = Game.singlePlayerNames[1];
-                //players[1].user_id = 1;
-                //players[2].user_id = 1;
-                */
-                // players[2] = players[3];
-                // p3.SetActive(false);
-                // p4.SetActive(false);
+                setStoryModeCharacters();
             }
-
-            numPlayers = 4;
             return;
         }
 

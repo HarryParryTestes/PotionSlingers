@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class CardPlayer : MonoBehaviour
 {
@@ -195,6 +196,15 @@ public class CardPlayer : MonoBehaviour
             case "CrowPunk":
                 this.transform.localScale = new Vector3(16.5f, 11f, 0);
                 break;
+            case "Bag o' Snakes":
+                Debug.Log("Bag of Snakes!!!");
+                // this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                break;
+            case "Singelotte":
+                Debug.Log("Singelotte!!!");
+                this.transform.localScale = new Vector3(9f, 12.75f, 0);
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 40, this.transform.position.z);
+                break;
 
             default:
                 Debug.Log("Failed to set any bools");
@@ -277,6 +287,16 @@ public class CardPlayer : MonoBehaviour
                 animator.Play("Fingas_idle");
                 break;
 
+            case "Bag o' Snakes":
+                Debug.Log("Bag of Snakes animation");
+                animator.Play("BagIdle");
+                break;
+
+            case "Singelotte":
+                Debug.Log("Singelotte animation");
+                animator.Play("SingeIdle");
+                break;
+
             default:
                 Debug.Log("Failed to set any bools");
                 break;
@@ -322,6 +342,10 @@ public class CardPlayer : MonoBehaviour
             case "CrowPunk":
                 Debug.Log("CrowPunk Hit animation");
                 animator.Play("CrowHit");
+                break;
+            case "Bag o' Snakes":
+                Debug.Log("Bag of Snakes Hit animation");
+                animator.Play("BagHit");
                 break;
             case "Fingas":
                 Debug.Log("Fingas Hit animation");
