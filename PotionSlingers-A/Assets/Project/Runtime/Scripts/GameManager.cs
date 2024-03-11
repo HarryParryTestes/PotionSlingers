@@ -446,7 +446,7 @@ public class GameManager : MonoBehaviour
             players[3].hpCubes = 1;
             players[3].updateHealthUI();
         }
-        else if (saveData.stage == 4)
+        else if (saveData.stage == 1)
         {
             numPlayers = 2;
             players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -482,7 +482,7 @@ public class GameManager : MonoBehaviour
             p3.SetActive(false);
             p4.SetActive(false);
         }
-        else if (saveData.stage == 1)
+        else if (saveData.stage == 4)
         {
             numPlayers = 2;
             players[2].gameObject.AddComponent<ComputerPlayer>();
