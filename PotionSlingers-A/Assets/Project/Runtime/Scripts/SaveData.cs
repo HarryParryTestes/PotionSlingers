@@ -12,14 +12,18 @@ public class SaveData
     // public TMPro.TextMeshProUGUI saveGameText;
     // public string playerName;
     public string playerCharName;
-    // public int playerHealth;
-    // public int playerCubes;
+    public int playerHealth;
+    public int playerCubes;
     public List<string> playerDeck = new List<string>();
     public List<string> playerHolster = new List<string>();
     // public string oppName;
     // public string oppCharName;
-    // public int oppHealth;
-    // public int oppCubes;
+    public int opp1Health;
+    public int opp1Cubes;
+    public int opp2Health;
+    public int opp2Cubes;
+    public int opp3Health;
+    public int opp3Cubes;
     public int stage;
     public bool savedGame;
     // public List<string> oppDeck = new List<string>();
@@ -34,6 +38,8 @@ public class SaveData
     {
         this.playerCharName = playerCharName;
         this.stage = stage;
+        playerCubes = 3;
+        playerHealth = 10;
     }
 
     public SaveData (GameManager manager)

@@ -28971,7 +28971,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1732062085}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2023876843}
+        m_TargetAssemblyTypeName: CutsceneManager, Project.Runtime
+        m_MethodName: healPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1732062087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34690,7 +34702,7 @@ MonoBehaviour:
   stage3Button: {fileID: 1736386858}
   stage4Button: {fileID: 1732062084}
   stage5Button: {fileID: 1350941635}
-  healingMessage: {fileID: 0}
+  healingMessage: {fileID: 1086964985}
   stage1Objects:
   - {fileID: 885365341}
   - {fileID: 1811387878}

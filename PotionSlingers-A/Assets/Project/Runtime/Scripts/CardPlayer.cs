@@ -351,6 +351,10 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Fingas Hit animation");
                 animator.Play("Fingas_hit");
                 break;
+            case "Singelotte":
+                Debug.Log("Singe Hit animation");
+                animator.Play("SingeHit");
+                break;
 
             default:
                 Debug.Log("Failed to set any bools");

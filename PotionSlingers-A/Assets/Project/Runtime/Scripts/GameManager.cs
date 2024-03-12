@@ -75,6 +75,7 @@ public class GameManager : MonoBehaviour
     public GameObject bubbleWandMenu;
     public GameObject chooseOpponentMenu;
     public GameObject deckMenu;
+    public GameObject advanceStageUI;
     public DeckMenuScroll deckDisplay;
 
     public TMPro.TextMeshProUGUI trashText;
@@ -280,6 +281,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Advancing a stage in story mode");
         saveData = SaveSystem.LoadGameData();
+        saveGameManagerValues();
 
         saveData.stage++;
         saveData.savedGame = true;
@@ -298,12 +300,45 @@ public class GameManager : MonoBehaviour
             playersDeck.Add(card.name);
         }
 
-        saveData.playerHolster = playersHolster;
-        saveData.playerDeck = playersDeck;
+        
         Debug.Log("Now onto stage " + saveData.stage + "!");
         SaveSystem.SaveGameData(saveData);
         // Game.ServerChangeScene("StoryMode");
-        SceneManager.LoadScene("StoryMode");
+        advanceStageUI.SetActive(true);
+        StartCoroutine(goToStory());
+        // SceneManager.LoadScene("StoryMode");
+    }
+
+    public void saveGameManagerValues()
+    {
+        saveData.playerHolster = playersHolster;
+        saveData.playerDeck = playersDeck;
+        saveData.playerHealth = players[0].hp;
+        saveData.playerCubes = players[0].hpCubes;
+
+        switch (saveData.stage)
+        {
+            case 1:
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case 2:
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case 4:
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case 3:
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                saveData.opp2Health = players[2].hp;
+                saveData.opp2Cubes = players[2].hpCubes;
+                saveData.opp3Health = players[3].hp;
+                saveData.opp3Cubes = players[3].hpCubes;
+                break;
+        }
     }
 
     public void checkForEndGame()
@@ -351,6 +386,7 @@ public class GameManager : MonoBehaviour
             {
                 // advance a stage and save the game data
                 Debug.Log("Advancing a stage in story mode");
+                saveGameManagerValues();
                 saveData.stage = stage + 1;
                 saveData.savedGame = true;
                 // List<string> playersDeck = new List<string>();
@@ -365,15 +401,27 @@ public class GameManager : MonoBehaviour
                 {
                     playersDeck.Add(card.name);
                 }
-
+                /*
                 saveData.playerHolster = playersHolster;
                 saveData.playerDeck = playersDeck;
+                saveData.playerHealth = players[0].hp;
+                saveData.playerCubes = players[0].hpCubes;
+                */
                 Debug.Log("Now onto stage " + saveData.stage + "!");
                 SaveSystem.SaveGameData(saveData);
                 // Game.ServerChangeScene("StoryMode");
-                SceneManager.LoadScene("StoryMode");
+                // throw some message up on the screen saying you've completed the stage
+                advanceStageUI.SetActive(true);
+                StartCoroutine(goToStory());
+                // SceneManager.LoadScene("StoryMode");
             }
         }
+    }
+
+    public IEnumerator goToStory()
+    {
+        yield return new WaitForSeconds(4);
+        SceneManager.LoadScene("StoryMode");
     }
 
     public void ohFuckGoBack()
@@ -381,9 +429,11 @@ public class GameManager : MonoBehaviour
         Debug.Log("Going back to title menu");
         Game.tutorial = false;
 
-        if (saveData != null)
+        if (Game.storyMode && saveData != null)
         {
             saveData.savedGame = true;
+            // take this out here, saving gamestate info will occur at the end of each turn
+            // saveGameManagerValues();
             /*
             List<string> playersDeck = new List<string>();
             List<string> playersHolster = new List<string>();
@@ -396,9 +446,12 @@ public class GameManager : MonoBehaviour
                 playersDeck.Add(card.name);
             }
             */
-
+            /*
             saveData.playerHolster = playersHolster;
             saveData.playerDeck = playersDeck;
+            saveData.playerHealth = players[0].hp;
+            saveData.playerCubes = players[0].hpCubes; 
+            */
             SaveSystem.SaveGameData(saveData);
             Debug.Log("Game data saved");
             SceneManager.LoadScene("TitleMenu");
@@ -423,7 +476,12 @@ public class GameManager : MonoBehaviour
             playerLeftName.text = players[1].charName;
             players[1].character.onCharacterClick("Fingas");
             players[1].checkCharacter();
-            players[1].hpCubes = 1;
+            if (saveData.savedGame)
+            {
+                players[1].hpCubes = saveData.opp1Cubes;
+                players[1].hp = saveData.opp1Health;
+            } else
+                players[1].hpCubes = 1;
             players[1].updateHealthUI();
 
             // Crow Punk is stage 1 enemy
@@ -433,7 +491,13 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("CrowPunk");
             players[2].checkCharacter();
-            players[2].hpCubes = 1;
+            if (saveData.savedGame)
+            {
+                players[2].hpCubes = saveData.opp2Cubes;
+                players[2].hp = saveData.opp2Health;
+            }
+            else
+                players[2].hpCubes = 1;
             players[2].updateHealthUI();
 
             // Fingas is stage 1 enemy
@@ -443,7 +507,13 @@ public class GameManager : MonoBehaviour
             playerRightName.text = players[3].charName;
             players[3].character.onCharacterClick("Fingas");
             players[3].checkCharacter();
-            players[3].hpCubes = 1;
+            if (saveData.savedGame)
+            {
+                players[1].hpCubes = saveData.opp1Cubes;
+                players[1].hp = saveData.opp1Health;
+            }
+            else
+                players[3].hpCubes = 1;
             players[3].updateHealthUI();
         }
         else if (saveData.stage == 1)
@@ -455,7 +525,13 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("Bag o' Snakes");
             players[2].checkCharacter();
-            players[2].hpCubes = 2;
+            if (saveData.savedGame)
+            {
+                players[2].hpCubes = saveData.opp1Cubes;
+                players[2].hp = saveData.opp1Health;
+            }
+            else
+                players[2].hpCubes = 2;
             players[2].updateHealthUI();
             players[2].user_id = 1;
 
@@ -473,7 +549,13 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("Saltimbocca");
             players[2].checkCharacter();
-            players[2].hpCubes = 2;
+            if (saveData.savedGame)
+            {
+                players[2].hpCubes = saveData.opp2Cubes;
+                players[2].hp = saveData.opp2Health;
+            }
+            else
+                players[2].hpCubes = 2;
             players[2].updateHealthUI();
             players[2].user_id = 1;
 
@@ -491,7 +573,13 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("Singelotte");
             players[2].checkCharacter();
-            players[2].hpCubes = 2;
+            if (saveData.savedGame)
+            {
+                players[2].hpCubes = saveData.opp2Cubes;
+                players[2].hp = saveData.opp2Health;
+            }
+            else
+                players[2].hpCubes = 3;
             players[2].updateHealthUI();
             players[2].user_id = 1;
 
@@ -581,6 +669,9 @@ public class GameManager : MonoBehaviour
                 // playerBottomName.text = players[0].name;
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
                 players[0].name = playerBottomName.text;
+                players[0].hpCubes = saveData.playerCubes;
+                players[0].hp = saveData.playerHealth;
+                players[0].updateHealthUI();
                 currentPlayerName = players[0].name;
                 // players[0].deck.loadDeck();
 
@@ -628,6 +719,7 @@ public class GameManager : MonoBehaviour
                 players[0].character.onCharacterClick(players[0].charName);
                 players[0].checkCharacter();
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+                currentPlayerName = players[0].name;
 
                 setStoryModeCharacters();
             }
@@ -1188,6 +1280,9 @@ public class GameManager : MonoBehaviour
         {
             playersDeck.Add(card.name);
         }
+
+        // save the values at the end of each turn!
+        saveGameManagerValues();
 
         // this should make it not trigger every turn
         if (player.isPluot && player.name == currentPlayerName && player.gameObject.GetComponent<ComputerPlayer>() == null)

@@ -15,7 +15,7 @@ public class BonusMenuUIManager : MonoBehaviour
     void Awake()
     {
         // set alpha of canvasGroup to 0 in CardPlayer and GameManager script
-        // canvasGroup.alpha = 0;
+        canvasGroup.alpha = 0;
         // image.GetComponent<CanvasRenderer>().SetAlpha(0f);
         // Invoke("changeAlpha", 2f);
         // image.GetComponent<CanvasRenderer>().SetAlpha(0f);

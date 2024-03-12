@@ -60,9 +60,22 @@ public class CutsceneManager : MonoBehaviour
     {
         // load health and essence cubes of player and heal them back to full
         saveData = SaveSystem.LoadGameData();
+        saveData.playerCubes = 3;
+        saveData.playerHealth = 10;
+        StartCoroutine(showHealingMessage());
+        SaveSystem.SaveGameData(saveData);
     }
 
-    public void goBackToTitle()
+    public IEnumerator showHealingMessage()
+    {
+        // MATTEO: Add sfx here
+        healingMessage.SetActive(true);
+        yield return new WaitForSeconds(2f);
+        healingMessage.SetActive(false);
+
+    }
+
+        public void goBackToTitle()
     {
         // TODO: add some animation here
         SceneManager.LoadScene("TitleMenu");

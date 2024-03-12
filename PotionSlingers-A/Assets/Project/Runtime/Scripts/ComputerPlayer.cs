@@ -61,14 +61,13 @@ public class ComputerPlayer : CardPlayer
 
         if (artifacts == 0 && vessels == 0)
         {
-            numero = rng.Next(4, 7);
+            numero = rng.Next(1, 7);
         }
-        else if (potions >= 2)
+        else if ((artifacts + vessels) >= 2)
         {
             // exclusively buy potions as ammunition
             numero = rng.Next(1, 4);
-        }
-        else
+        } else
         {
             numero = rng.Next(1, 7);
         }
@@ -127,7 +126,36 @@ public class ComputerPlayer : CardPlayer
     public void storyModeTurn()
     {
         Debug.Log("STORY MODE LOGIC");
-        
+
+        if (this.gameObject.GetComponent<CardPlayer>().name == "Singelotte")
+        {
+            int attackType = rng.Next(1, 4);
+            switch (attackType)
+            {
+                case 1:
+                    GameManager.manager.players[0].subHealth(4);
+                    GameManager.manager.sendMessage("Took " + 4 + " damage!");
+                    break;
+                    // spicy holster card
+                case 2:
+                    GameManager.manager.players[0].subHealth(4);
+                    GameManager.manager.sendMessage("Took " + 4 + " damage!");
+                    break;
+                    // spicy market card
+                case 3:
+                    GameManager.manager.players[0].subHealth(4);
+                    GameManager.manager.sendMessage("Took " + 4 + " damage!");
+                    break;
+            }
+
+            this.gameObject.GetComponent<CardPlayer>().animator.Play("SingeAttack");
+            // MATTEO: Add Singelotte sfx
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
+            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            GameManager.manager.Invoke("endTurn", 3f);
+            return;
+        }
+
         if (this.gameObject.GetComponent<CardPlayer>().name == "CrowPunk")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
@@ -266,8 +294,10 @@ public class ComputerPlayer : CardPlayer
         {
             Debug.Log(AICards[i].cardName);
 
-            // Throwing artifacts
-            if (holster.cardList[i].aPotion.card.cardName != "placeholder")
+            // Throwing artifacts / vessels
+            if (holster.cardList[i].aPotion.card.cardName != "placeholder" ||
+                (holster.cardList[i].vPotion1.card.cardName != "placeholder" &&
+                holster.cardList[i].vPotion2.card.cardName != "placeholder"))
             {
                 // j is index of current player in players array
                 for (j = 0; j < GameManager.manager.numPlayers; j++)
@@ -317,10 +347,24 @@ public class ComputerPlayer : CardPlayer
                         GameManager.manager.selectedCardInt = k + 1;
                         GameManager.manager.throwPotion();
                         actionsList.Add("THROW");
+                        StartCoroutine(waitASecBro());
+                        return;
                     }
 
                     // Loading artifacts
                     if (AICards[i].cardType == "Artifact" && AICards[k].cardType == "Potion")
+                    {
+                        GameManager.manager.loadedCardInt = i;
+                        GameManager.manager.selectedCardInt = k + 1;
+                        GameManager.manager.loadPotion();
+                        actionsList.Add("LOAD");
+                        StartCoroutine(waitASecBro());
+                        return;
+                    }
+
+                    // Loading vessels
+                    // idk how to prioritize one over the other but fuck it
+                    if (AICards[i].cardType == "Vessel" && AICards[k].cardType == "Potion")
                     {
                         GameManager.manager.loadedCardInt = i;
                         GameManager.manager.selectedCardInt = k + 1;
