@@ -57,9 +57,12 @@ public class MyNetworkManager : NetworkManager
         // MAKE SURE YOU PUT THIS BACK AFTER YOU"RE DONE TESTING
 
         Cursor.SetCursor(texture, Vector2.zero, CursorMode.Auto);
-        DontDestroyOnLoad(animator);
-        DontDestroyOnLoad(sceneTransition);
-        DontDestroyOnLoad(loadingScreen);
+        if(animator != null)
+            DontDestroyOnLoad(animator);
+        if (sceneTransition != null)
+            DontDestroyOnLoad(sceneTransition);
+        if (loadingScreen != null)
+            DontDestroyOnLoad(loadingScreen);
     }
 
     public void checkCompletedTutorial()

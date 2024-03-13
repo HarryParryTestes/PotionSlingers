@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 [System.Serializable]
 public class ComputerPlayer : CardPlayer
@@ -123,9 +124,30 @@ public class ComputerPlayer : CardPlayer
         return numero;
     }
 
+    public IEnumerator MoveToTrash(GameObject obj)
+    {
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList
+            [GameManager.manager.selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
+        obj.transform.DOScale(0.2f, 1f);
+        obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList
+            [GameManager.manager.selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1].artifactSlot.SetActive(false);
+        yield return new WaitForSeconds(0.9f);
+
+        Destroy(obj);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+        GameManager.manager.td.transform.parent.DOMove(new Vector2(GameManager.manager.td.transform.parent.position.x, 
+            GameManager.manager.td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+    }
+
     public void storyModeTurn()
     {
         Debug.Log("STORY MODE LOGIC");
+        int damage;
 
         if (this.gameObject.GetComponent<CardPlayer>().name == "Singelotte")
         {
@@ -161,6 +183,38 @@ public class ComputerPlayer : CardPlayer
             this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            // basic enemy that does 1-4 damage per turn
+            damage = rng.Next(1, 5);
+
+            // make the player take damage without using throwing functions
+            if(damage == 4)
+            {
+                int cardNumber = rng.Next(1, 5);
+                GameManager.manager.selectedCardInt = cardNumber;
+
+                GameObject obj = Instantiate(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
+                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.position,
+                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.rotation,
+                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform);
+
+                GameManager.manager.StartCoroutine(MoveToTrash(obj));
+
+                GameManager.manager.td.addCard(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1]);
+
+                // GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].updateCard
+                //     (GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].placeholder);
+
+                GameManager.manager.sendMessage("CrowPunk just trashed your card!");
+
+                GameManager.manager.Invoke("endTurn", 2f);
+                return;
+            }
+
+            GameManager.manager.players[0].subHealth(damage);
+            GameManager.manager.sendMessage("Took " + damage + " damage!");
+
+            GameManager.manager.Invoke("endTurn", 2f);
+            return;
         }
         if (this.gameObject.GetComponent<CardPlayer>().name == "Fingas")
         {
@@ -169,6 +223,16 @@ public class ComputerPlayer : CardPlayer
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_snap");
             // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
+            // basic enemy that does 1-4 damage per turn
+            damage = rng.Next(1, 5);
+
+            // make the player take damage without using throwing functions
+
+            GameManager.manager.players[0].subHealth(damage);
+            GameManager.manager.sendMessage("Took " + damage + " damage!");
+
+            GameManager.manager.Invoke("endTurn", 2f);
+            return;
         }
         if (this.gameObject.GetComponent<CardPlayer>().name == "Bag o' Snakes")
         {
@@ -176,17 +240,27 @@ public class ComputerPlayer : CardPlayer
             // MATTEO: Add Bag of Snakes sfx
             // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            // basic enemy that does 1-4 damage per turn
+            damage = rng.Next(1, 5);
+
+            // make the player take damage without using throwing functions
+
+            GameManager.manager.players[0].subHealth(damage);
+            GameManager.manager.sendMessage("Took " + damage + " damage!");
+
+            GameManager.manager.Invoke("endTurn", 2f);
+            return;
         }
 
         // basic enemy that does 1-4 damage per turn
-        int damage = rng.Next(1, 5);
+        damage = rng.Next(1, 5);
 
         // make the player take damage without using throwing functions
 
         GameManager.manager.players[0].subHealth(damage);
         GameManager.manager.sendMessage("Took " + damage + " damage!");
 
-        GameManager.manager.Invoke("endTurn", 3f);
+        GameManager.manager.Invoke("endTurn", 2f);
 
     }
 

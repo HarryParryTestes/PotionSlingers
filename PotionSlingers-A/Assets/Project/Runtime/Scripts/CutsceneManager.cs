@@ -19,6 +19,8 @@ public class CutsceneManager : MonoBehaviour
     public List<GameObject> stage4Objects = new List<GameObject>();
     public List<GameObject> stage5Objects = new List<GameObject>();
     SaveData saveData;
+    public AnimationHolder holder;
+    public Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -54,6 +56,37 @@ public class CutsceneManager : MonoBehaviour
         */
 
         handlePath();
+    }
+
+    public void LoadLevel()
+    {
+        StartCoroutine(LoadStory());
+    }
+
+    public IEnumerator LoadStory()
+    {
+        /*
+        loadingScreen = canvas.loadingScreen;
+        loadingText = canvas.loadingText;
+
+        animator.SetTrigger("Start");
+        */
+        yield return new WaitForSeconds(1);
+        if (holder.loadingScreen != null && holder.loadingText != null)
+        {
+            holder.loadingScreen.SetActive(true);
+            holder.loadingText.SetActive(true);
+        }
+        /*
+        else
+        {
+            canvas.loadingScreen.SetActive(true);
+            canvas.loadingText.SetActive(true);
+        }
+        */
+        animator.SetTrigger("End");
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("TownCenter");
     }
 
     public void healPlayer()

@@ -26,6 +26,7 @@ public class SaveData
     public int opp3Cubes;
     public int stage;
     public bool savedGame;
+    public bool newStage;
     // public List<string> oppDeck = new List<string>();
     // public List<string> oppHolster = new List<string>();
 

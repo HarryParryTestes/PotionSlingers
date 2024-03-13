@@ -282,6 +282,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Advancing a stage in story mode");
         saveData = SaveSystem.LoadGameData();
         saveGameManagerValues();
+        saveData.newStage = true;
 
         saveData.stage++;
         saveData.savedGame = true;
@@ -315,7 +316,6 @@ public class GameManager : MonoBehaviour
         saveData.playerDeck = playersDeck;
         saveData.playerHealth = players[0].hp;
         saveData.playerCubes = players[0].hpCubes;
-
         switch (saveData.stage)
         {
             case 1:
@@ -386,6 +386,7 @@ public class GameManager : MonoBehaviour
             {
                 // advance a stage and save the game data
                 Debug.Log("Advancing a stage in story mode");
+                saveData.newStage = true;
                 saveGameManagerValues();
                 saveData.stage = stage + 1;
                 saveData.savedGame = true;
@@ -432,6 +433,7 @@ public class GameManager : MonoBehaviour
         if (Game.storyMode && saveData != null)
         {
             saveData.savedGame = true;
+            saveData.newStage = false;
             // take this out here, saving gamestate info will occur at the end of each turn
             // saveGameManagerValues();
             /*
@@ -476,7 +478,7 @@ public class GameManager : MonoBehaviour
             playerLeftName.text = players[1].charName;
             players[1].character.onCharacterClick("Fingas");
             players[1].checkCharacter();
-            if (saveData.savedGame)
+            if (saveData.savedGame && !saveData.newStage)
             {
                 players[1].hpCubes = saveData.opp1Cubes;
                 players[1].hp = saveData.opp1Health;
@@ -491,7 +493,7 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("CrowPunk");
             players[2].checkCharacter();
-            if (saveData.savedGame)
+            if (saveData.savedGame && !saveData.newStage)
             {
                 players[2].hpCubes = saveData.opp2Cubes;
                 players[2].hp = saveData.opp2Health;
@@ -507,7 +509,7 @@ public class GameManager : MonoBehaviour
             playerRightName.text = players[3].charName;
             players[3].character.onCharacterClick("Fingas");
             players[3].checkCharacter();
-            if (saveData.savedGame)
+            if (saveData.savedGame && !saveData.newStage)
             {
                 players[1].hpCubes = saveData.opp1Cubes;
                 players[1].hp = saveData.opp1Health;
@@ -549,7 +551,7 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("Saltimbocca");
             players[2].checkCharacter();
-            if (saveData.savedGame)
+            if (saveData.savedGame && !saveData.newStage)
             {
                 players[2].hpCubes = saveData.opp2Cubes;
                 players[2].hp = saveData.opp2Health;
@@ -573,7 +575,7 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("Singelotte");
             players[2].checkCharacter();
-            if (saveData.savedGame)
+            if (saveData.savedGame && !saveData.newStage)
             {
                 players[2].hpCubes = saveData.opp2Cubes;
                 players[2].hp = saveData.opp2Health;
@@ -3219,11 +3221,14 @@ public class GameManager : MonoBehaviour
         obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
         obj.transform.DOScale(0.2f, 1f);
         obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
-        yield return new WaitForSeconds(1f);
-
-        Destroy(obj);
+        yield return new WaitForSeconds(0.1f);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+        yield return new WaitForSeconds(0.9f);
+
+        Destroy(obj);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
         td.transform.parent.DOMove(new Vector2(td.transform.parent.position.x, td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
