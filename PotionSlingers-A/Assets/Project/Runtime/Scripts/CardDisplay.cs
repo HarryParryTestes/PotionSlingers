@@ -21,9 +21,20 @@ public class CardDisplay : MonoBehaviour
     public CardDisplay vPotion1;
     public CardDisplay vPotion2;
 
+    public GameObject flames;
+    public bool spicy;
+
     // Start is called before the first frame update
     void Start()
     {
+        /*
+        if(spicyPrefab != null)
+        {
+            GameObject obj = Instantiate(spicyPrefab, new Vector3(0, -25, 0), Quaternion.identity);
+            Debug.Log("OBJ!");
+        }
+        */
+
         artworkImage = this.GetComponent<Image>();
         if (uniqueCard != null)
         {
@@ -55,6 +66,24 @@ public class CardDisplay : MonoBehaviour
         artworkImage = this.GetComponent<Image>();
         this.card = card;
         artworkImage.sprite = card.cardSprite;
+    }
+
+    public void updateCard(CardDisplay cd)
+    {
+        artworkImage = this.GetComponent<Image>();
+        this.card = cd.card;
+        artworkImage.sprite = card.cardSprite;
+        if (cd.spicy)
+        {
+            spicy = true;
+            flames.SetActive(true);
+        }
+
+        else
+        {
+            spicy = false;
+            flames.SetActive(false);
+        }
     }
 
     public void updateCard(UniqueCard card)

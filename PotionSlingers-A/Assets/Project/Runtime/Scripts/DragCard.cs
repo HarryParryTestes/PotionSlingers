@@ -85,29 +85,40 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     // TODO: make a function so that the all cards move back to their proper positions  
     // if either the market deck is closed or if another card is clicked on
 
+    public void marketBack()
+    {
+        if (clicked && market && !GameManager.manager.marketSelected)
+        {
+            clicked = false;
+            transform.SetParent(parentAfterDrag);
+            transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+            transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+            Vector2 thing = new Vector2(0, 331.5f);
+            transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+            return;
+            // StartCoroutine(SibIndex());
+        }
+
+        if (clicked)
+        {
+            clicked = false;
+            transform.DOScale(1.4f, 0.3f).SetId(gameObject.name);
+            transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+            transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+            StartCoroutine(SibIndex());
+        }
+        
+    }
+
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        /*
-        foreach (CardDisplay cd in GameManager.manager.players[0].holster.cardList)
-        {
-            if (clicked)
-            {
-                clicked = false;
-                DOTween.Pause(gameObject.name);
-                transform.DOScale(1f, 0.3f).SetId(gameObject.name);
-                transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
-                transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
-                StartCoroutine(SibIndex());
-                return;
-            } 
-        }
-        */
+        if (market && !GameManager.manager.marketSelected)
+            return;
 
         if (!clicked && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
-            if (market && !GameManager.manager.marketSelected)
-                return;
             DOTween.Pause(gameObject.name);
+            GameManager.manager.moveMarketCards();
 
             canvasGroup.interactable = false;
             Invoke("makeInteractable", 0.6f);
@@ -176,6 +187,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         yield return new WaitForSeconds(0.3f);
         transform.SetParent(parentAfterDrag);
         Debug.Log("Sibling index changed");
+        if(!market)
+            transform.DOScale(1f, 0.1f).SetId(gameObject.name);
         // transform.localScale = new Vector3(1f, 1f, 1f);
         // transform.parent.SetSiblingIndex(parentSiblingIndex);
     }
@@ -311,6 +324,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (market && !GameManager.manager.marketSelected)
+            return;
         // find card int here?
         /*
         for (int i = 0; i < 4; i++)

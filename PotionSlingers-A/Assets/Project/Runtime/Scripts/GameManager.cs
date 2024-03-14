@@ -244,6 +244,12 @@ public class GameManager : MonoBehaviour
         if (!marketSelected)
         {
             marketSelected = true;
+            md1.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            md1.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            md1.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            md2.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            md2.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_open");
             if (dialog.textBoxCounter == 10)
             {
@@ -267,14 +273,35 @@ public class GameManager : MonoBehaviour
         {
             // marketPosition = marketButton.transform.position;
             marketSelected = false;
+            md1.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            md1.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            md1.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            md2.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            md2.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_close");
             StartCoroutine(Button());
             // canvasGroup.blocksRaycasts = true;
             market.transform.DOMoveY(-11.5f, 1f);
             // marketButton.transform.DOMoveY(-300f, 1f);
             Debug.Log("Market reset???");
+            moveMarketCards();
         }
 
+    }
+
+    public void moveMarketCards()
+    {
+        md1.cardDisplay1.GetComponent<DragCard>().marketBack();
+        md1.cardDisplay2.GetComponent<DragCard>().marketBack();
+        md1.cardDisplay3.GetComponent<DragCard>().marketBack();
+        md2.cardDisplay1.GetComponent<DragCard>().marketBack();
+        md2.cardDisplay2.GetComponent<DragCard>().marketBack();
+        md2.cardDisplay3.GetComponent<DragCard>().marketBack();
+        playerHolster.card1.GetComponent<DragCard>().marketBack();
+        playerHolster.card2.GetComponent<DragCard>().marketBack();
+        playerHolster.card3.GetComponent<DragCard>().marketBack();
+        playerHolster.card4.GetComponent<DragCard>().marketBack();
     }
 
     public void advanceStage()
