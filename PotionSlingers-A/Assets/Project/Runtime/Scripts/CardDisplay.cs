@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 [System.Serializable]
 public class CardDisplay : MonoBehaviour
@@ -61,11 +62,54 @@ public class CardDisplay : MonoBehaviour
     //     }
     // }
 
+    public void makeSpicy()
+    {
+        card.spicy = true;
+        if (flames != null)
+            flames.SetActive(true);
+    }
+
     public void updateCard(Card card)
     {
         artworkImage = this.GetComponent<Image>();
         this.card = card;
         artworkImage.sprite = card.cardSprite;
+
+        if (card.spicy)
+        {
+            if(flames != null)
+                flames.SetActive(true);
+        }
+
+        else
+        {
+            if (flames != null)
+                flames.SetActive(false);
+        }
+        // trying something
+        // might take this out for now
+        
+        if(card.cardName == "placeholder" && this.gameObject.name != "DeckPile")
+        {
+            if(GetComponent<DragCard>() != null)
+            {
+                /*
+                this.transform.position = GetComponent<DragCard>().originalPosition;
+                this.transform.DORotate(GetComponent<DragCard>().cardRotation, 0.1f).SetEase(Ease.Linear).SetId(gameObject.name);
+                if(GetComponent<CanvasGroup>() != null)
+                    GetComponent<CanvasGroup>().blocksRaycasts = true;
+                // this.transform.eulerAngles = GetComponent<DragCard>().rectTransform.rotation.eulerAngles;
+                this.transform.SetParent(GetComponent<DragCard>().parentAfterDrag);
+                */
+                GetComponent<DragCard>().beforeDisappear();
+            }
+                
+            this.gameObject.SetActive(false);
+            
+        }
+        else
+            this.gameObject.SetActive(true);
+        
     }
 
     public void updateCard(CardDisplay cd)

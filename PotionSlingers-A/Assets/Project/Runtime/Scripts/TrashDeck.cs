@@ -62,6 +62,7 @@ public class TrashDeck : MonoBehaviour, IDropHandler
     {
         trash = !trash;
 
+        /*
         Market_Hover m1 = cd1.gameObject.GetComponent<Market_Hover>();
         m1.viewCardMenu.gameObject.SetActive(false);
         m1.cardMenu.gameObject.SetActive(false);
@@ -79,6 +80,7 @@ public class TrashDeck : MonoBehaviour, IDropHandler
         m3.cardMenu.gameObject.SetActive(false);
         m3.onlyViewCardMenu.gameObject.SetActive(false);
         m3.scarpettaMenu.gameObject.SetActive(false);
+        */
     }
 
     public void addCard(Card card)

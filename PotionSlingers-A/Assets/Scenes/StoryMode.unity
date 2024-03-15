@@ -21774,7 +21774,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1086964986
 RectTransform:
   m_ObjectHideFlags: 0
@@ -34472,9 +34472,9 @@ MonoBehaviour:
     onExecute:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2023876843}
-          m_TargetAssemblyTypeName: CutsceneManager, Project.Runtime
-          m_MethodName: LoadLevel
+        - m_Target: {fileID: 2098156884}
+          m_TargetAssemblyTypeName: StoryModeChanger, Project.Runtime
+          m_MethodName: changeFromStoryModeScene
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}

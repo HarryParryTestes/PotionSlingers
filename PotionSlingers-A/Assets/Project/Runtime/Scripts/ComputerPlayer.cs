@@ -160,13 +160,41 @@ public class ComputerPlayer : CardPlayer
                     break;
                     // spicy holster card
                 case 2:
-                    GameManager.manager.players[0].subHealth(4);
-                    GameManager.manager.sendMessage("Took " + 4 + " damage!");
+                    int cardNum = rng.Next(1, 7);
+                    switch (cardNum)
+                    {
+                        case 1:
+                            GameManager.manager.md1.cardDisplay1.makeSpicy();
+                            // add DOTween animations for spicy magic here
+                            break;
+                        case 2:
+                            GameManager.manager.md1.cardDisplay2.makeSpicy();
+                            break;
+                        case 3:
+                            GameManager.manager.md1.cardDisplay3.makeSpicy();
+                            break;
+                        case 4:
+                            GameManager.manager.md2.cardDisplay1.makeSpicy();
+                            break;
+                        case 5:
+                            GameManager.manager.md2.cardDisplay2.makeSpicy();
+                            break;
+                        case 6:
+                            GameManager.manager.md2.cardDisplay3.makeSpicy();
+                            break;
+                        default:
+                            break;
+                    }
+                    GameManager.manager.sendMessage("Spiced up a card in the market!");
                     break;
                     // spicy market card
                 case 3:
-                    GameManager.manager.players[0].subHealth(4);
-                    GameManager.manager.sendMessage("Took " + 4 + " damage!");
+                    int holsterNum = rng.Next(1, 5);
+                    GameManager.manager.playerHolster.cardList[holsterNum - 1].makeSpicy();
+                    GameManager.manager.sendMessage("Spiced up a card in your holster!");
+                    break;
+
+                default:
                     break;
             }
 
@@ -174,7 +202,7 @@ public class ComputerPlayer : CardPlayer
             // MATTEO: Add Singelotte sfx
             // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
-            GameManager.manager.Invoke("endTurn", 3f);
+            GameManager.manager.Invoke("endTurn", 2f);
             return;
         }
 

@@ -216,6 +216,37 @@ public class CutsceneManager : MonoBehaviour
                 stage5Button.SetActive(true);
                 break;
 
+            case 5:
+                Debug.Log("Stage 4!!!");
+
+                stage2Button.SetActive(false);
+                stage1Button.SetActive(false);
+                stage3Button.SetActive(false);
+                foreach (GameObject obj in stage1Objects)
+                {
+                    // yield return new WaitForSeconds(0.3f);
+                    obj.GetComponent<CanvasGroup>().alpha = 1;
+                }
+
+                foreach (GameObject obj in stage2Objects)
+                {
+                    // yield return new WaitForSeconds(0.3f);
+                    obj.GetComponent<CanvasGroup>().alpha = 1;
+                }
+                foreach (GameObject obj in stage4Objects)
+                {
+                    // yield return new WaitForSeconds(0.3f);
+                    obj.GetComponent<CanvasGroup>().alpha = 1;
+                }
+                foreach (GameObject obj in stage3Objects)
+                {
+                    yield return new WaitForSeconds(0.3f);
+                    obj.GetComponent<CanvasGroup>().alpha = 1;
+                }
+                stage4Button.SetActive(true);
+                stage5Button.SetActive(true);
+                break;
+
             default:
                 break;
         }

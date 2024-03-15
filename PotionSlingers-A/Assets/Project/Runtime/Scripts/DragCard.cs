@@ -17,12 +17,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private Image image;
     private LineRenderer lineRenderer;
     private Vector3 cachedScale;
-    private Vector2 originalPosition;
+    public Vector2 originalPosition;
     private Vector3 startPoint;
-    private Vector3 cardRotation; 
-    private RectTransform rectTransform;
-    private CanvasGroup canvasGroup;
-    private Transform parentAfterDrag;
+    public Vector3 cardRotation; 
+    public RectTransform rectTransform;
+    public CanvasGroup canvasGroup;
+    public Transform parentAfterDrag;
     private Image artifactCard;
     private Image vesselCard1;
     private Image vesselCard2;
@@ -102,7 +102,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (clicked)
         {
             clicked = false;
-            transform.DOScale(1.4f, 0.3f).SetId(gameObject.name);
+            transform.DOScale(1f, 0.3f).SetId(gameObject.name);
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
             transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
             StartCoroutine(SibIndex());
@@ -113,7 +113,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void OnPointerClick(PointerEventData pointerEventData)
     {
         if (market && !GameManager.manager.marketSelected)
+        {
+            DOTween.Pause(gameObject.name);
             return;
+        } 
 
         if (!clicked && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
@@ -184,9 +187,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public IEnumerator SibIndex()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.1f);
         transform.SetParent(parentAfterDrag);
         Debug.Log("Sibling index changed");
+
         if(!market)
             transform.DOScale(1f, 0.1f).SetId(gameObject.name);
         // transform.localScale = new Vector3(1f, 1f, 1f);
@@ -209,7 +213,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // parentAfterDrag = transform.parent;
         // canvasGroup.alpha = 0.5f;
         image.CrossFadeAlpha(0.5f, 0.3f, true);
-        canvasGroup.blocksRaycasts = false;
+        if(canvasGroup != null)
+            canvasGroup.blocksRaycasts = false;
         GameManager.manager.canvasGroup.blocksRaycasts = false;
         if (transform.parent != transform.root)
         {
@@ -348,6 +353,22 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // rectTransform.position = Input.mousePosition;
         // Vector3 currentPoint = Input.mousePosition;
         // RenderLine(startPoint, currentPoint);
+    }
+
+    public void beforeDisappear()
+    {
+        DOTween.Pause(gameObject.name);
+        grabbed = false;
+        clicked = false;
+        if (canvasGroup != null)
+            canvasGroup.blocksRaycasts = true;
+        // GameManager.manager.canvasGroup.blocksRaycasts = true;
+        transform.SetParent(parentAfterDrag);
+        transform.localScale = new Vector3(1f, 1f, 1f);
+        //transform.DOScale(1f, 0.3f);
+        // transform.position = originalPosition;
+        transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+        transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
     }
 
     public void OnEndDrag(PointerEventData eventData)

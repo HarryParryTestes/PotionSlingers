@@ -18,6 +18,7 @@ public class Card : ScriptableObject
     public int buyPrice;
     public int sellPrice;
     public string desc;
+    public bool spicy;
 
     public enum TYPE
     {

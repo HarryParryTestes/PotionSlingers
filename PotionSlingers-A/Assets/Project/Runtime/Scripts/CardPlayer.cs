@@ -530,6 +530,15 @@ public class CardPlayer : MonoBehaviour
                     */
                 }
             }
+
+            }
+        // SPICY CHECK
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if (cd.card.spicy)
+            {
+                subHealth(2);
+            }
             updateHealthUI();
         }
 

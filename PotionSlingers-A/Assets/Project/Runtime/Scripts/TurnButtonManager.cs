@@ -27,6 +27,7 @@ public class TurnButtonManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(Game.storyMode)
         {
             if (GameManager.manager.myPlayerIndex != 0)
@@ -42,5 +43,19 @@ public class TurnButtonManager : MonoBehaviour
             }
             
         } 
+        */
+
+        if (GameManager.manager.myPlayerIndex != 0)
+        {
+            // this.gameObject.SetActive(false);
+            image.CrossFadeAlpha(0.25f, 0.5f, true);
+            this.GetComponent<CanvasGroup>().interactable = false;
+        }
+        else
+        {
+            // this.gameObject.SetActive(true);
+            image.CrossFadeAlpha(1, 0.5f, true);
+            this.GetComponent<CanvasGroup>().interactable = true;
+        }
     }
 }

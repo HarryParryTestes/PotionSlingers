@@ -604,11 +604,16 @@ public class GameManager : MonoBehaviour
             players[2].checkCharacter();
             if (saveData.savedGame && !saveData.newStage)
             {
-                players[2].hpCubes = saveData.opp2Cubes;
-                players[2].hp = saveData.opp2Health;
+                players[2].hpCubes = saveData.opp1Cubes;
+                players[2].hp = saveData.opp1Health;
             }
             else
+            {
                 players[2].hpCubes = 3;
+                players[2].hp = 10;
+            }
+                
+
             players[2].updateHealthUI();
             players[2].user_id = 1;
 
@@ -3118,6 +3123,7 @@ public class GameManager : MonoBehaviour
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).position,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).rotation,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform);
+
                     // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
 
                     StartCoroutine(MoveToTrash(obj));
@@ -3244,7 +3250,9 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MoveToTrash(GameObject obj)
     {
+        obj.transform.SetParent(obj.transform.parent.parent);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.gameObject.SetActive(false);
         obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
         obj.transform.DOScale(0.2f, 1f);
         obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
@@ -3749,6 +3757,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Artifact menu enabled.");
                     players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
                     players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.gameObject.SetActive(true);
 
                     // Check for existing loaded potion if Artifact menu was already enabled.
                     if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
