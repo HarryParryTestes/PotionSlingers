@@ -509,8 +509,13 @@ public class GameManager : MonoBehaviour
             {
                 players[1].hpCubes = saveData.opp1Cubes;
                 players[1].hp = saveData.opp1Health;
-            } else
+            }
+            else
+            {
                 players[1].hpCubes = 1;
+                players[1].hp = 10;
+            }
+                
             players[1].updateHealthUI();
 
             // Crow Punk is stage 1 enemy
@@ -526,7 +531,10 @@ public class GameManager : MonoBehaviour
                 players[2].hp = saveData.opp2Health;
             }
             else
+            {
                 players[2].hpCubes = 1;
+                players[2].hp = 10;
+            }
             players[2].updateHealthUI();
 
             // Fingas is stage 1 enemy
@@ -538,11 +546,14 @@ public class GameManager : MonoBehaviour
             players[3].checkCharacter();
             if (saveData.savedGame && !saveData.newStage)
             {
-                players[1].hpCubes = saveData.opp1Cubes;
-                players[1].hp = saveData.opp1Health;
+                players[3].hpCubes = saveData.opp3Cubes;
+                players[3].hp = saveData.opp3Health;
             }
             else
+            {
                 players[3].hpCubes = 1;
+                players[3].hp = 10;
+            }
             players[3].updateHealthUI();
         }
         else if (saveData.stage == 1)
@@ -609,8 +620,8 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                players[2].hpCubes = 3;
-                players[2].hp = 10;
+                players[2].hpCubes = 1;
+                players[2].hp = 33;
             }
                 
 

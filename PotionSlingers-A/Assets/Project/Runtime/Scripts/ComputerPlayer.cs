@@ -144,19 +144,50 @@ public class ComputerPlayer : CardPlayer
             GameManager.manager.td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
+    public void pickRandomHolsterCard()
+    {
+        int holsterNum = rng.Next(1, 5);
+        if(GameManager.manager.playerHolster.cardList[holsterNum - 1].card.name == "placeholder" ||
+            GameManager.manager.playerHolster.cardList[holsterNum - 1].card.spicy)
+        {
+            pickRandomHolsterCard();
+            return;
+        }
+        GameManager.manager.playerHolster.cardList[holsterNum - 1].makeSpicy();
+        GameManager.manager.sendMessage("Spiced up a card in your holster!");
+    }
+
     public void storyModeTurn()
     {
         Debug.Log("STORY MODE LOGIC");
         int damage;
+        int attackType;
 
         if (this.gameObject.GetComponent<CardPlayer>().name == "Singelotte")
         {
-            int attackType = rng.Next(1, 4);
+            int cards = 0;
+            foreach (CardDisplay cd in GameManager.manager.playerHolster.cardList)
+            {
+                if (cd.card.name == "placeholder" || cd.card.spicy)
+                    cards++;
+            }
+
+            if (cards == 4)
+            {
+                attackType = rng.Next(1, 3);
+            }
+            else 
+                attackType = rng.Next(1, 4);
             switch (attackType)
             {
                 case 1:
                     GameManager.manager.players[0].subHealth(4);
                     GameManager.manager.sendMessage("Took " + 4 + " damage!");
+                    this.gameObject.GetComponent<CardPlayer>().animator.Play("SingeYellowAttack");
+                    // MATTEO: Add Singelotte sfx
+                    // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
+                    this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.2f);
+                    GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
                     // spicy holster card
                 case 2:
@@ -186,23 +217,25 @@ public class ComputerPlayer : CardPlayer
                             break;
                     }
                     GameManager.manager.sendMessage("Spiced up a card in the market!");
+                    this.gameObject.GetComponent<CardPlayer>().animator.Play("SingePurpleAttack");
+                    // MATTEO: Add Singelotte sfx
+                    // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
+                    this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.2f);
+                    GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
                     // spicy market card
                 case 3:
-                    int holsterNum = rng.Next(1, 5);
-                    GameManager.manager.playerHolster.cardList[holsterNum - 1].makeSpicy();
-                    GameManager.manager.sendMessage("Spiced up a card in your holster!");
+                    pickRandomHolsterCard();
+                    this.gameObject.GetComponent<CardPlayer>().animator.Play("SingeAttack");
+                    // MATTEO: Add Singelotte sfx
+                    // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
+                    this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.1f);
+                    GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
 
                 default:
                     break;
             }
-
-            this.gameObject.GetComponent<CardPlayer>().animator.Play("SingeAttack");
-            // MATTEO: Add Singelotte sfx
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
-            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
-            GameManager.manager.Invoke("endTurn", 2f);
             return;
         }
 

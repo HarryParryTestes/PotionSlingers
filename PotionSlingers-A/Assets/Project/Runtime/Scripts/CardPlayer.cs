@@ -202,8 +202,9 @@ public class CardPlayer : MonoBehaviour
                 break;
             case "Singelotte":
                 Debug.Log("Singelotte!!!");
-                this.transform.localScale = new Vector3(9f, 12.75f, 0);
-                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 40, this.transform.position.z);
+                this.transform.localScale = new Vector3(29f, 19.33f, 0);
+                this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 60, this.transform.position.z);
+                this.GetComponent<Image>().raycastPadding = new Vector4(44f, 32f, 43f, 0.5f);
                 break;
 
             default:
@@ -535,7 +536,7 @@ public class CardPlayer : MonoBehaviour
         // SPICY CHECK
         foreach (CardDisplay cd in holster.cardList)
         {
-            if (cd.card.spicy)
+            if (cd.card.spicy && cd.card.name != "placeholder")
             {
                 subHealth(2);
             }
