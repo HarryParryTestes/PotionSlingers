@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
     public DeckMenuScroll deckMenuScroll;
+    public Image background;
+    public Sprite[] backgrounds;
 
     public List<Card> starterCards;
 
@@ -558,6 +560,8 @@ public class GameManager : MonoBehaviour
         }
         else if (saveData.stage == 1)
         {
+            background.sprite = backgrounds[0];
+            background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
             numPlayers = 2;
             players[2].gameObject.AddComponent<ComputerPlayer>();
             players[2].charName = "Bag o' Snakes";
@@ -582,6 +586,8 @@ public class GameManager : MonoBehaviour
         }
         else if (saveData.stage == 2)
         {
+            // background.sprite = backgrounds[0];
+            // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
             numPlayers = 2;
             players[2].gameObject.AddComponent<ComputerPlayer>();
             players[2].charName = "Saltimbocca";
@@ -606,6 +612,7 @@ public class GameManager : MonoBehaviour
         }
         else if (saveData.stage == 4)
         {
+            background.sprite = backgrounds[1];
             numPlayers = 2;
             players[2].gameObject.AddComponent<ComputerPlayer>();
             players[2].charName = "Singelotte";

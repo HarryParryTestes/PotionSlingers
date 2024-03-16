@@ -1093,15 +1093,73 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Dialogue Text
-        value: '[cracks knuckles] Yeeeep. This place is a treasure trove right now;
-          and unfortunately you now officially are interfering with my mercenary
-          work. '
+        value: '*crack* Yeeeep. This place is a treasure trove right now; and unfortunately
+          you now officially are interfering with my mercenary work. '
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
         value: 
         type: 0
         typeString: CustomFieldType_Text
+      conversationID: 2
+      isRoot: 0
+      isGroup: 0
+      nodeColor: 
+      delaySimStatus: 0
+      falseConditionAction: Block
+      conditionPriority: 2
+      outgoingLinks:
+      - originConversationID: 2
+        originDialogueID: 6
+        destinationConversationID: 2
+        destinationDialogueID: 7
+        isConnector: 0
+        priority: 2
+      conditionsString: 
+      userScript: 
+      onExecute:
+        m_PersistentCalls:
+          m_Calls: []
+      canvasRect:
+        serializedVersion: 2
+        x: 314
+        y: 120
+        width: 160
+        height: 30
+    - id: 7
+      fields:
+      - title: Title
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Description
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Actor
+        value: 2
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Conversant
+        value: 4
+        type: 5
+        typeString: CustomFieldType_Actor
+      - title: Menu Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Dialogue Text
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: Sequence
+        value: 
+        type: 0
+        typeString: CustomFieldType_Text
+      - title: EventGuid
+        value: f2afb1a1-aa22-424b-b9c8-1aa0b6a86aac
+        type: 0
+        typeString: 
       conversationID: 2
       isRoot: 0
       isGroup: 0
@@ -1118,7 +1176,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 314
-        y: 120
+        y: 170
         width: 160
         height: 30
     entryGroups: []
