@@ -3270,7 +3270,9 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
-        yield return new WaitForSeconds(0.9f);
+        yield return new WaitForSeconds(0.6f);
+        obj.GetComponent<Image>().CrossFadeAlpha(0, 0.2f, false);
+        yield return new WaitForSeconds(0.3f);
 
         Destroy(obj);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
@@ -3280,6 +3282,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MoveToDeck(GameObject obj)
     {
+        obj.transform.SetParent(obj.transform.parent.parent);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
         // obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
         // jump into deck

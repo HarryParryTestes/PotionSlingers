@@ -11,7 +11,14 @@ public class ArrowMover : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.DOMove(new Vector2(transform.position.x, transform.position.y - 50), 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine).SetId(0);
+        if (SceneManager.GetActiveScene().name == "StoryMode")
+        {
+            Debug.Log("StoryMode???");
+            transform.DOMove(new Vector2(transform.position.x, transform.position.y - 0.5f), 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine).SetId(0);
+        }
+            
+        else
+            transform.DOMove(new Vector2(transform.position.x, transform.position.y - 50), 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine).SetId(0);
     }
 
     // Update is called once per frame

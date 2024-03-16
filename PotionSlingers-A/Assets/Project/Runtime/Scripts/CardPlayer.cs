@@ -24,6 +24,7 @@ public class CardPlayer : MonoBehaviour
     public int uniqueArtifactsUsed = 0;
     public int tricks = 0;
     public CharacterDisplay character;
+    public CanvasGroup canvasGroup;
     public Animator animator;
     public bool cubed = false;
     public bool ringBonus;
@@ -456,6 +457,11 @@ public class CardPlayer : MonoBehaviour
         nicklesAction = true;
     }
 
+    public void fadeOut()
+    {
+        GetComponent<Image>().CrossFadeAlpha(0, 2f, false);
+    }
+
     public void setDefaultTurn()
     {
         currentPlayerHighlight.SetActive(true);
@@ -492,6 +498,7 @@ public class CardPlayer : MonoBehaviour
                 hp = 0;
                 Debug.Log("Somebody is dead!");
                 dead = true;
+                fadeOut();
                 // GameManager.manager.checkForEndGame();
                 if (GameManager.manager.Game.tutorial)
                 {
