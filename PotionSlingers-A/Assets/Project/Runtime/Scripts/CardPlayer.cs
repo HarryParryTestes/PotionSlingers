@@ -374,10 +374,14 @@ public class CardPlayer : MonoBehaviour
 
     public void updateHealthUI(string cardQuality = "")
     {
+        float numbers;
         if (healthText != null && hpBar != null)
         {
             healthText.GetComponent<Text>().text = hp.ToString();
-            float numbers = (float)hp / 10f;
+            if(name == "Singelotte")
+                numbers = (float)hp / 33f;
+            else
+                numbers = (float)hp / 10f;
             // Debug.Log("Fill amount is: " + numbers);
             hpBar.GetComponent<Image>().fillAmount = numbers;
         }
@@ -1782,8 +1786,8 @@ public class CardPlayer : MonoBehaviour
             if (gameObject.GetComponent<ComputerPlayer>() == null
                 && GameManager.manager.myPlayerIndex == 0)
             {
-                // GameManager.manager.starterPotionMenu.SetActive(true);
-                StartCoroutine(changeAlpha(GameManager.manager.starterPotionMenu));
+                GameManager.manager.starterPotionMenu.SetActive(true);
+                // StartCoroutine(changeAlpha(GameManager.manager.starterPotionMenu));
             }
         }
 
@@ -1800,8 +1804,8 @@ public class CardPlayer : MonoBehaviour
                 // GameManager method
                 Debug.Log("Trash One from the Market Bonus");
                 GameManager.manager.numTrashed = 1;
-                // GameManager.manager.trashMarketUI.SetActive(true);
-                StartCoroutine(changeAlpha(GameManager.manager.trashMarketUI));
+                GameManager.manager.trashMarketUI.SetActive(true);
+                // StartCoroutine(changeAlpha(GameManager.manager.trashMarketUI));
                 GameManager.manager.updateTrashMarketMenu();
             }
             else
@@ -1937,7 +1941,7 @@ public class CardPlayer : MonoBehaviour
                             if(gameObject.GetComponent<ComputerPlayer>() == null)
                             {
                                 GameManager.manager.bubbleWandMenu.SetActive(true);
-                                GameManager.manager.bubbleWandMenu.GetComponent<CanvasGroup>().alpha = 0;
+                                // GameManager.manager.bubbleWandMenu.GetComponent<CanvasGroup>().alpha = 0;
                             }
                             // StartCoroutine(changeAlpha(GameManager.manager.bubbleWandMenu));
                         }
@@ -2096,6 +2100,12 @@ public class CardPlayer : MonoBehaviour
         {
             cubed = true;
             hp = 0;
+            if(hpCubes == 1 && Game.storyMode)
+            {
+                fadeOut();
+                dead = true;
+                GameManager.manager.checkForEndGame();
+            }
             // GameManager.manager.checkForEndGame();
         }
 

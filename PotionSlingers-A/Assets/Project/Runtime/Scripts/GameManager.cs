@@ -507,6 +507,8 @@ public class GameManager : MonoBehaviour
             playerLeftName.text = players[1].charName;
             players[1].character.onCharacterClick("Fingas");
             players[1].checkCharacter();
+            players[1].hpCubes = 1;
+            players[1].hp = 10;
             if (saveData.savedGame && !saveData.newStage)
             {
                 players[1].hpCubes = saveData.opp1Cubes;
@@ -527,6 +529,8 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("CrowPunk");
             players[2].checkCharacter();
+            players[2].hpCubes = 1;
+            players[2].hp = 10;
             if (saveData.savedGame && !saveData.newStage)
             {
                 players[2].hpCubes = saveData.opp2Cubes;
@@ -546,6 +550,8 @@ public class GameManager : MonoBehaviour
             playerRightName.text = players[3].charName;
             players[3].character.onCharacterClick("Fingas");
             players[3].checkCharacter();
+            players[3].hpCubes = 1;
+            players[3].hp = 10;
             if (saveData.savedGame && !saveData.newStage)
             {
                 players[3].hpCubes = saveData.opp3Cubes;
@@ -569,13 +575,19 @@ public class GameManager : MonoBehaviour
             playerTopName.text = players[2].charName;
             players[2].character.onCharacterClick("Bag o' Snakes");
             players[2].checkCharacter();
+
             if (saveData.savedGame)
             {
                 players[2].hpCubes = saveData.opp1Cubes;
                 players[2].hp = saveData.opp1Health;
             }
             else
-                players[2].hpCubes = 2;
+            {
+                players[2].hpCubes = 1;
+                players[2].hp = 10;
+                saveData.opp1Cubes = 1;
+                saveData.opp1Health = 10;
+            }
             players[2].updateHealthUI();
             players[2].user_id = 1;
 
@@ -597,11 +609,17 @@ public class GameManager : MonoBehaviour
             players[2].checkCharacter();
             if (saveData.savedGame && !saveData.newStage)
             {
-                players[2].hpCubes = saveData.opp2Cubes;
-                players[2].hp = saveData.opp2Health;
+                players[2].hpCubes = saveData.opp1Cubes;
+                players[2].hp = saveData.opp1Health;
             }
             else
-                players[2].hpCubes = 2;
+            {
+                players[2].hpCubes = 1;
+                players[2].hp = 10;
+                saveData.opp1Cubes = 1;
+                saveData.opp1Health = 10;
+            }
+                players[2].hpCubes = 1;
             players[2].updateHealthUI();
             players[2].user_id = 1;
 
@@ -629,6 +647,8 @@ public class GameManager : MonoBehaviour
             {
                 players[2].hpCubes = 1;
                 players[2].hp = 33;
+                saveData.opp1Cubes = 1;
+                saveData.opp1Health = 33;
             }
                 
 
@@ -729,6 +749,17 @@ public class GameManager : MonoBehaviour
 
                 // numPlayers = 4;
                 setStoryModeCharacters();
+                // onStartTurn(players[0]);
+                foreach (CardDisplay cd in players[0].holster.cardList)
+                {
+                    if (players[0].deck.deckList.Count >= 1)
+                    {
+                        if (cd.card.name == "placeholder")
+                        {
+                            cd.updateCard(players[0].deck.popCard());
+                        }
+                    }
+                }
                 /*
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 // players[2].name = saveData.oppCharName;
@@ -1958,7 +1989,7 @@ public class GameManager : MonoBehaviour
     // END TURN REQUEST
     public void endTurn()
     {
-        checkForEndGame();
+        // checkForEndGame();
         // reset the market at the end of your turn
         if (marketSelected)
         {
