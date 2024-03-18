@@ -234,6 +234,7 @@ GameObject:
   - component: {fileID: 23107677}
   - component: {fileID: 23107679}
   - component: {fileID: 23107678}
+  - component: {fileID: 23107680}
   m_Layer: 5
   m_Name: Background (1)
   m_TagString: Untagged
@@ -299,6 +300,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 23107676}
   m_CullTransparentMesh: 1
+--- !u!114 &23107680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 23107676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b0e04e2572f9a940a47465f6f3c2f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  parameter: Music Select
+  TriggerEvent: 12
+  value: 0
 --- !u!1 &40550734
 GameObject:
   m_ObjectHideFlags: 0
@@ -16753,7 +16770,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &637872249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -24447,7 +24464,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CollisionTag: 
-  Event: event:/Music/BGM_Wander
+  Event: event:/Music/BGM_StoryMode
   PlayEvent: 1
   StopEvent: 2
   AllowFadeout: 1
@@ -24552,6 +24569,7 @@ GameObject:
   - component: {fileID: 1596113481}
   - component: {fileID: 1596113485}
   - component: {fileID: 1596113480}
+  - component: {fileID: 1596113486}
   m_Layer: 5
   m_Name: Singe
   m_TagString: Untagged
@@ -24768,6 +24786,22 @@ MonoBehaviour:
   m_hasFocus: 0
   m_isFocusing: 1
   m_actorOverridingPanel: {fileID: 0}
+--- !u!114 &1596113486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596113478}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b0e04e2572f9a940a47465f6f3c2f00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  parameter: Music Select
+  TriggerEvent: 11
+  value: 1
 --- !u!1 &1599403082
 GameObject:
   m_ObjectHideFlags: 0

@@ -69,6 +69,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 321
+--- !u!114 &-6349581208755006050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/BGM_Spooky
+  m_EditorClassIdentifier: 
+  Path: event:/Music/BGM_Spooky
+  guid: 51223f9c03840144a01e2724cbcce2a7
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 21454
 --- !u!114 &-6162920759811238225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +161,30 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 200729
+--- !u!114 &-4490508220211911188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/BGM_StoryMode
+  m_EditorClassIdentifier: 
+  Path: event:/Music/BGM_StoryMode
+  guid: 48ac774c380e5148bbe727a5ea03385d
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters:
+  - {fileID: -679792887780213064}
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 86454
 --- !u!114 &-4054006693100217806
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,11 +200,11 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638442092956278296
+  lastModified: 638463156177613711
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 1732
+    Value: 2116
   Exists: 1
 --- !u!114 &-3953902111405927291
 MonoBehaviour:
@@ -228,6 +275,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 680
+--- !u!114 &-2331501480181884093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Music Select
+  m_EditorClassIdentifier: 
+  Name: Music Select
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 321755867
+    data2: 3344260982
+  Exists: 1
 --- !u!114 &-1478650980266006780
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,6 +364,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 76591
+--- !u!114 &-679792887780213064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BGM_StoryMode/Story Music Select
+  m_EditorClassIdentifier: 
+  Name: Story Music Select
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,19 +414,26 @@ MonoBehaviour:
   - {fileID: 3836940703106385045}
   - {fileID: 57260157274554455}
   - {fileID: 6204294902170166983}
-  - {fileID: -1478650980266006780}
   - {fileID: 5616027321607299664}
   - {fileID: 8361729265376914206}
   - {fileID: 6820022773023769100}
   - {fileID: -1441809986294840104}
   - {fileID: -8556725436909101246}
   - {fileID: 3284503901981689033}
-  EditorParameters: []
+  - {fileID: 8917102102782793815}
+  - {fileID: -4490508220211911188}
+  - {fileID: -6349581208755006050}
+  - {fileID: 3429437367666215754}
+  - {fileID: 7944822699000234847}
+  - {fileID: 8212516974702537977}
+  - {fileID: 7445116064066804188}
+  EditorParameters:
+  - {fileID: -2331501480181884093}
   MasterBanks:
   - {fileID: 7030555741822606184}
   StringsBanks:
   - {fileID: -4054006693100217806}
-  stringsBankWriteTime: 638442092956278296
+  stringsBankWriteTime: 638463156177613711
   cacheVersion: 6
 --- !u!114 &57260157274554455
 MonoBehaviour:
@@ -387,6 +481,46 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 170
+--- !u!114 &1697653938346582472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BGM_StoryMode/Story Music Select
+  m_EditorClassIdentifier: 
+  Name: Story Music Select
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 139572245
+    data2: 1863272676
+  Exists: 0
+--- !u!114 &1724010073143459863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BGM_StoryMode/Story Music Select
+  m_EditorClassIdentifier: 
+  Name: Story Music Select
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &2026387450755041156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -496,6 +630,29 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1055
+--- !u!114 &3429437367666215754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/SFX_Bone
+  m_EditorClassIdentifier: 
+  Path: event:/UI/SFX_Bone
+  guid: 937c64b67ffe624b9e4d1eea0fcb4225
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 160
 --- !u!114 &3807023185243710871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -741,10 +898,33 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638442092956258295
+  lastModified: 638463156177583676
   LoadResult: 0
   FileSizes: []
   Exists: 1
+--- !u!114 &7445116064066804188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Snakes_Attack
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Snakes_Attack
+  guid: d933e504ec95c24181dbb63616178136
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 814
 --- !u!114 &7487205057589142717
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -768,6 +948,52 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 756
+--- !u!114 &7944822699000234847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Singe_Horns
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Singe_Horns
+  guid: ba59c7196e693e4db1a6cd8b9bfca44b
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 2190
+--- !u!114 &8212516974702537977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Singe_Spell
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Singe_Spell
+  guid: c8fa284a50f99048b2e64db449b4f742
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 810
 --- !u!114 &8361729265376914206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -837,3 +1063,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 207818
+--- !u!114 &8917102102782793815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Singe_Swing
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Singe_Swing
+  guid: 44b3de9d2eed244693853a84a7d73fa1
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 1210
