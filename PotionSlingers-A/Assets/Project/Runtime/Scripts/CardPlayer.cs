@@ -196,6 +196,7 @@ public class CardPlayer : MonoBehaviour
                 break;
             case "CrowPunk":
                 this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                this.GetComponent<Image>().raycastPadding = new Vector4(36f, 2f, 26f, 2f);
                 break;
             case "Bag o' Snakes":
                 Debug.Log("Bag of Snakes!!!");

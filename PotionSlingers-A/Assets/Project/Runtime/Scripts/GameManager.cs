@@ -231,13 +231,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public IEnumerator Button()
-    {
-        yield return new WaitForSeconds(1f);
-        if (!marketSelected)
-            marketButton.SetActive(true);
-    }
-
     public void moveMarket()
     {
         if (Game.tutorial && dialog.textBoxCounter < 9)
@@ -260,7 +253,7 @@ public class GameManager : MonoBehaviour
                 tutorialArrow2.GetComponent<SecondArrowMover>().checkArrow();
                 tutorialArrow2.SetActive(true);
             }
-            marketButton.SetActive(false);
+            // marketButton.SetActive(false);
             canvasGroup.blocksRaycasts = false;
             // marketPosition = marketButton.transform.position;
             // marketButton.transform.parent.DOMove(new Vector3(0, 0, 0), 1f);
@@ -282,7 +275,6 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = false;
             md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_close");
-            StartCoroutine(Button());
             // canvasGroup.blocksRaycasts = true;
             market.transform.DOMoveY(-11.5f, 1f);
             // marketButton.transform.DOMoveY(-300f, 1f);

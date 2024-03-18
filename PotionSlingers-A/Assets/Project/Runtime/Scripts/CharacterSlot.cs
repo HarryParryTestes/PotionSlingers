@@ -40,6 +40,10 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         if (this.gameObject.name == "DeckPile")
         {
             transform.position += new Vector3(0, 100, 0);
+            if (transform.position.y > 131)
+            {
+                transform.position -= new Vector3(0, 100, 0);
+            }
         }
     }
 
