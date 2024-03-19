@@ -11,6 +11,7 @@ public class SceneTransition : MonoBehaviour
     public GameObject card2;
     public GameObject loadingScreen;
     public GameObject text;
+    public CutsceneManager cutsceneManager;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,8 @@ public class SceneTransition : MonoBehaviour
 
     public IEnumerator doIt()
     {
+        // SaveData saveData = SaveSystem.LoadGameData();
+
         card1.transform.DOMoveX(-4.5f, 1.5f);
         card2.transform.DOMoveX(4.5f, 1.5f);
         yield return new WaitForSeconds(1.75f);
@@ -33,7 +36,11 @@ public class SceneTransition : MonoBehaviour
         card1.transform.DOMoveX(-15f, 1.5f);
         card2.transform.DOMoveX(15f, 1.5f);
         yield return new WaitForSeconds(1.6f);
-        SceneManager.LoadScene("TownCenter");
+        
+        if (cutsceneManager.saveData.stage == 5)
+            SceneManager.LoadScene("TitleMenu");
+        else
+            SceneManager.LoadScene("TownCenter");
     }
 
     public void doTransition()

@@ -157,6 +157,20 @@ public class ComputerPlayer : CardPlayer
         GameManager.manager.sendMessage("Spiced up a card in your holster!");
     }
 
+    public int pickRandomHolsterCardCrow()
+    {
+        int holsterNum = rng.Next(1, 5);
+        if (GameManager.manager.playerHolster.cardList[holsterNum - 1].card.name == "placeholder")
+        {
+            pickRandomHolsterCardCrow();
+        }
+        // GameManager.manager.trashCard(playerHolster.cardList[holsterNum - 1].card);
+        // GameManager.manager.td.addCard(playerHolster.cardList[selectedCardInt - 1]);
+
+        // GameManager.manager.sendMessage("Spiced up a card in your holster!");
+        return holsterNum;
+    }
+
     public void storyModeTurn()
     {
         Debug.Log("STORY MODE LOGIC");
@@ -184,8 +198,9 @@ public class ComputerPlayer : CardPlayer
                     GameManager.manager.players[0].subHealth(4);
                     GameManager.manager.sendMessage("Took " + 4 + " damage!");
                     this.gameObject.GetComponent<CardPlayer>().animator.Play("SingeYellowAttack");
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Singe_Swing");
                     // MATTEO: Add Singelotte sfx
-                    // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
+
                     this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.2f);
                     GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
@@ -219,7 +234,7 @@ public class ComputerPlayer : CardPlayer
                     GameManager.manager.sendMessage("Spiced up a card in the market!");
                     this.gameObject.GetComponent<CardPlayer>().animator.Play("SingePurpleAttack");
                     // MATTEO: Add Singelotte sfx
-                    // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Singe_Spell");
                     this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.2f);
                     GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
@@ -228,7 +243,7 @@ public class ComputerPlayer : CardPlayer
                     pickRandomHolsterCard();
                     this.gameObject.GetComponent<CardPlayer>().animator.Play("SingeAttack");
                     // MATTEO: Add Singelotte sfx
-                    // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Singe_Horns");
                     this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.1f);
                     GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
@@ -244,13 +259,25 @@ public class ComputerPlayer : CardPlayer
             this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
-            // basic enemy that does 1-4 damage per turn
-            damage = rng.Next(1, 5);
+            int cards = 0;
+            foreach (CardDisplay cd in GameManager.manager.playerHolster.cardList)
+            {
+                if (cd.card.name == "placeholder")
+                    cards++;
+            }
+
+            if (cards == 4)
+            {
+                damage = rng.Next(1, 4);
+            }
+            else
+                damage = rng.Next(1, 5);
+            // damage = rng.Next(1, 5);
 
             // make the player take damage without using throwing functions
             if(damage == 4)
             {
-                int cardNumber = rng.Next(1, 5);
+                int cardNumber = pickRandomHolsterCardCrow();
                 GameManager.manager.selectedCardInt = cardNumber;
 
                 GameObject obj = Instantiate(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
@@ -298,6 +325,7 @@ public class ComputerPlayer : CardPlayer
         if (this.gameObject.GetComponent<CardPlayer>().name == "Bag o' Snakes")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("BagAttack");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Snakes_Attack");
             // MATTEO: Add Bag of Snakes sfx
             // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);

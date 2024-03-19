@@ -693,6 +693,8 @@ public class GameManager : MonoBehaviour
                     }
                 }
                 players[0].deck.deckList.Clear();
+                players[0].deck.cardDisplay.updateCard(players[0].deck.placeholder);
+
 
                 /*
                 for (int i = saveData.playerDeck.Count - 1; i >= 0; i--)
@@ -1166,6 +1168,7 @@ public class GameManager : MonoBehaviour
     public void setDamageBool()
     {
         damage = true;
+        tempPlayer.subHealth(2);
     }
 
     public void checkFlip()

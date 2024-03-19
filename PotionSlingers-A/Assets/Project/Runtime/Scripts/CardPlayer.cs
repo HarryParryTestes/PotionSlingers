@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -552,8 +553,8 @@ public class CardPlayer : MonoBehaviour
             {
                 subHealth(2);
             }
-            updateHealthUI();
         }
+        updateHealthUI();
 
         cubed = false;
 
@@ -1744,7 +1745,7 @@ public class CardPlayer : MonoBehaviour
             GameManager.manager.numTrashed = 2;
             GameManager.manager.trashorDamageMenu.SetActive(true);
             GameManager.manager.updateTrashMarketMenu();
-            return 0;
+            return Math.Max(damage - 2, 0);
 
             // don't do this, this created an infinite loop
             /*

@@ -13,12 +13,13 @@ public class CutsceneManager : MonoBehaviour
     public GameObject stage4Button;
     public GameObject stage5Button;
     public GameObject healingMessage;
+    public GameObject demoOverButton;
     public List<GameObject> stage1Objects = new List<GameObject>();
     public List<GameObject> stage2Objects = new List<GameObject>();
     public List<GameObject> stage3Objects = new List<GameObject>();
     public List<GameObject> stage4Objects = new List<GameObject>();
     public List<GameObject> stage5Objects = new List<GameObject>();
-    SaveData saveData;
+    public SaveData saveData;
     public AnimationHolder holder;
     public Animator animator;
 
@@ -134,6 +135,7 @@ public class CutsceneManager : MonoBehaviour
                 {
                     yield return new WaitForSeconds(0.3f);
                     // obj.SetActive(true);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/UI/SFX_Bone");
                     obj.GetComponent<CanvasGroup>().alpha = 1;
                 }
 
@@ -155,6 +157,7 @@ public class CutsceneManager : MonoBehaviour
                 foreach (GameObject obj in stage2Objects)
                 {
                     yield return new WaitForSeconds(0.3f);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/UI/SFX_Bone");
                     obj.GetComponent<CanvasGroup>().alpha = 1;
                 }
                 stage2Button.SetActive(true);
@@ -180,6 +183,7 @@ public class CutsceneManager : MonoBehaviour
                 foreach (GameObject obj in stage4Objects)
                 {
                     yield return new WaitForSeconds(0.3f);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/UI/SFX_Bone");
                     obj.GetComponent<CanvasGroup>().alpha = 1;
                 }
                 stage3Button.SetActive(true);
@@ -210,6 +214,7 @@ public class CutsceneManager : MonoBehaviour
                 foreach (GameObject obj in stage3Objects)
                 {
                     yield return new WaitForSeconds(0.3f);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/UI/SFX_Bone");
                     obj.GetComponent<CanvasGroup>().alpha = 1;
                 }
                 stage4Button.SetActive(true);
@@ -217,34 +222,16 @@ public class CutsceneManager : MonoBehaviour
                 break;
 
             case 5:
-                Debug.Log("Stage 4!!!");
+                Debug.Log("Stage 5!!!");
 
                 stage2Button.SetActive(false);
                 stage1Button.SetActive(false);
                 stage3Button.SetActive(false);
-                foreach (GameObject obj in stage1Objects)
-                {
-                    // yield return new WaitForSeconds(0.3f);
-                    obj.GetComponent<CanvasGroup>().alpha = 1;
-                }
+                stage4Button.SetActive(false);
+                stage5Button.SetActive(false);
+                demoOverButton.SetActive(true);
 
-                foreach (GameObject obj in stage2Objects)
-                {
-                    // yield return new WaitForSeconds(0.3f);
-                    obj.GetComponent<CanvasGroup>().alpha = 1;
-                }
-                foreach (GameObject obj in stage4Objects)
-                {
-                    // yield return new WaitForSeconds(0.3f);
-                    obj.GetComponent<CanvasGroup>().alpha = 1;
-                }
-                foreach (GameObject obj in stage3Objects)
-                {
-                    yield return new WaitForSeconds(0.3f);
-                    obj.GetComponent<CanvasGroup>().alpha = 1;
-                }
-                stage4Button.SetActive(true);
-                stage5Button.SetActive(true);
+                
                 break;
 
             default:
