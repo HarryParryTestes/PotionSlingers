@@ -466,6 +466,13 @@ public class CardPlayer : MonoBehaviour
     public void fadeOut()
     {
         GetComponent<Image>().CrossFadeAlpha(0, 2f, false);
+        StartCoroutine(turnOff());
+    }
+
+    public IEnumerator turnOff()
+    {
+        yield return new WaitForSeconds(2f);
+        gameObject.SetActive(false);
     }
 
     public void setDefaultTurn()
@@ -2102,6 +2109,11 @@ public class CardPlayer : MonoBehaviour
         {
             cubed = true;
             hp = 0;
+            if (Game.tutorial)
+            {
+                GameManager.manager.dialog.endTutorialDialog();
+            }
+
             if(hpCubes == 1 && Game.storyMode)
             {
                 fadeOut();

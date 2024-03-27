@@ -29,8 +29,10 @@ public class CardSlot : MonoBehaviour, IDropHandler
         if (cd != null)
         {
             // call the events needed to get GameManager to trigger throw and load events
-            GameManager.manager.setSCInt(grabbedCard.card.cardName);
-            GameManager.manager.setLoadedInt(cd.card.cardName);
+            // GameManager.manager.setSCInt(grabbedCard.card.cardName);
+            GameManager.manager.setSCInt(grabbedCard);
+            // GameManager.manager.setLoadedInt(cd.card.cardName);
+            GameManager.manager.setLoadedInt(cd);
             GameManager.manager.preLoadPotion();
         }
     }

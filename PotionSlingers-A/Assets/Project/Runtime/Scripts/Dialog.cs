@@ -237,7 +237,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         {
             textInfo = "Some items sell for more than what you can buy them for!\n\n" +
                 "Try selling an item in your holster! Drag a card " +
-                "you want to sell\nonto the market button to sell it!";
+                "you want to sell\nonto the coin icon to sell it!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -246,7 +246,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         {
             directions.SetActive(true);
             directionBox.text = "Drag a card from your holster " +
-                "to the\nmarket button to sell it!";
+                "to the\ncoin icon to sell it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -416,14 +416,14 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 13)
         {
-            textInfo = "Now let's end your turn... Click the PASS button in the\n" +
-                "lower right corner!";
+            textInfo = "Now let's end your turn... Click the PASS button in the lower\n" +
+                "right corner!";
             ActivateText(dialogBox);
         }
         else if (textBoxCounter == 14)
         {
             directions.SetActive(true);
-            directionBox.text = "Click the END TURN button!";
+            directionBox.text = "Click the PASS button!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
             GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
@@ -453,14 +453,14 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 22)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on the artifact card\nand click TRASH!";
+            directionBox.text = "Drag the artifact card over\nto the trash can!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 24)
         {
             directions.SetActive(true);
-            directionBox.text = "Buy more potions from the\nmarket! Then click END TURN!";
+            directionBox.text = "Buy more potions from the\nmarket! Then click PASS!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -498,16 +498,16 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 33)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on the character card\n" +
-                "and click FLIP!";
+            directionBox.text = "Click on the character card and click\n" +
+                "FLIP!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 35)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on the character card\n" +
-                "and click ACTION!";
+            directionBox.text = "Click on the character card and click\n" +
+                "ACTION!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }

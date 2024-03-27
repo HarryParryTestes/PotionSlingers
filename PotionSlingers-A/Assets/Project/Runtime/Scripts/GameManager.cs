@@ -1386,6 +1386,17 @@ public class GameManager : MonoBehaviour
         selectedCardInt = num;
     }
 
+    public void setSCInt(CardDisplay cd)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            if (players[myPlayerIndex].holster.cardList[i] == cd)
+            {
+                selectedCardInt = i + 1;
+            }
+        }
+    }
+
     public void setSCInt(string cardName)
     {
 
@@ -1448,6 +1459,17 @@ public class GameManager : MonoBehaviour
             }
         }
         */
+    }
+
+    public void setLoadedInt(CardDisplay cd)
+    {
+        for(int i = 0; i < 4; i++)
+        {
+            if(players[myPlayerIndex].holster.cardList[i] == cd)
+            {
+                loadedCardInt = i;
+            }
+        }
     }
 
     public void setLoadedInt(string cardName)
@@ -1663,6 +1685,7 @@ public class GameManager : MonoBehaviour
 
     public void displayOpponentHolster(CardPlayer cardPlayer)
     {
+        tempPlayer = cardPlayer;
         holster = true;
         opponentCard1.updateCard(cardPlayer.holster.cardList[0].card);
         opponentCard2.updateCard(cardPlayer.holster.cardList[1].card);
@@ -1676,64 +1699,16 @@ public class GameManager : MonoBehaviour
         Debug.Log("Stealing card from " + opponentName);
         Debug.Log("CARDVALUE = " + selectedCard);
 
-        foreach (CardPlayer cp in players)
-        {
-            if (cp.name == currentPlayerName)
-            {
-                foreach (CardDisplay cd in cp.holster.cardList)
-                {
-                    if (cd.card.cardName == "placeholder")
-                    {
-                        foreach (CardPlayer cp2 in players)
-                        {
-                            if (cp2.name == opponentName)
-                            {
-                                Debug.Log("Code reaches here");
-                                cd.updateCard(cp2.holster.cardList[selectedCard - 1].card);
-                                Debug.Log("Code reaches here");
-                                cp2.holster.cardList[selectedCard - 1].updateCard(td.card);
-                                Debug.Log("Code reaches here");
-                                sendSuccessMessage(20);
-                                Debug.Log("Code reaches here");
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        /*
         foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
-            if (cd.card.cardName == "placeholder")
+            if(cd.card.cardName == "placeholder")
             {
-                foreach(CardPlayer cp in players)
-                {
-                    if(cp.name == opponentName)
-                    {
-                        Debug.Log("Code reaches here");
-                        cd.updateCard(cp.holster.cardList[selectedCard - 1].card);
-                        Debug.Log("Code reaches here");
-                        cp.holster.cardList[selectedCard - 1].updateCard(td.card);
-                        Debug.Log("Code reaches here");
-                        sendSuccessMessage(20);
-                        Debug.Log("Code reaches here");
-                        return;
-                    }
-                }
-                Debug.Log("Code reaches here");
                 cd.updateCard(tempPlayer.holster.cardList[selectedCard - 1].card);
-                Debug.Log("Code reaches here");
-                tempPlayer.holster.cardList[selectedCard - 1].updateCard(td.card);
-                Debug.Log("Code reaches here");
                 sendSuccessMessage(20);
-                Debug.Log("Code reaches here");
-                // break;
-                return;
+                break;
             }
         }
-        */
+        tempPlayer.holster.cardList[selectedCard - 1].updateCard(td.card);
     }
 
     public void replaceOpponentCardWithStarter(int selectedCard)

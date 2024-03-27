@@ -95,8 +95,10 @@ public class DeckMenuScroll : MonoBehaviour
                 
                 GameManager.manager.snakeBonus = true;
                 gameObject.SetActive(false);
-                GameManager.manager.chooseOpponentMenu.SetActive(true);
-                GameManager.manager.displayOpponents();
+
+                // REFACTOR THIS!!! Super old!
+                // GameManager.manager.chooseOpponentMenu.SetActive(true);
+                // GameManager.manager.displayOpponents();
                 return;
             }
         }

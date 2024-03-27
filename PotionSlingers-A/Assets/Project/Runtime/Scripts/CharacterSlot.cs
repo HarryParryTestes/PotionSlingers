@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     // CardDisplay cd;
     public CardPlayer cp;
@@ -35,12 +35,23 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         }
     }
 
+    public void OnPointerClick(PointerEventData pointerEventData)
+    {
+        if (GameManager.manager.snakeBonus)
+        {
+            Debug.Log("Snake bonus???");
+            GameManager.manager.opponentHolsterMenu.SetActive(true);
+            GameManager.manager.displayOpponentHolster(cp);
+            GameManager.manager.holster = false;
+        }
+    }
+
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         if (this.gameObject.name == "DeckPile")
         {
             transform.position += new Vector3(0, 100, 0);
-            if (transform.position.y > 131)
+            if (transform.position.y == 231)
             {
                 transform.position -= new Vector3(0, 100, 0);
             }
