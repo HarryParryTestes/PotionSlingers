@@ -397,20 +397,6 @@ public class CardPlayer : MonoBehaviour
             // playerHPCubes.GetComponent<Text>().text = "Cubes: " + hpCubes.ToString();
         }
 
-        /* TODO: Add triggers for animations for each CardPlayer 
-         * Either do something with the hitImages list I made or make something else
-         * I'm taking the below code out for now
-         */
-
-        // Doesn't exactly work, fix this later
-
-        /*
-         * add this to subHealth instead of updateHealthUI
-        animator.Play("BoloHit");
-        Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
-        */
-
-
         /*
         switch (cardQuality)
         {
@@ -2160,26 +2146,58 @@ public class CardPlayer : MonoBehaviour
         */
         updateHealthUI();
 
-        // Flashes damage sign
-        /*
-        if (damageSign.activeInHierarchy)
-        {
-            damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
-            damageSign.SetActive(true);
-            damageAmount.SetActive(true);
-            StartCoroutine(waitThreeSeconds(damageSign));
-            StartCoroutine(waitThreeSeconds(damageAmount));
-        }
-        */
-
         if (damageSign != null && damageAmount != null)
         {
             damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
             damageSign.SetActive(true);
             damageAmount.SetActive(true);
+            GameObject damageSignCopy = Instantiate(damageSign, damageSign.transform.position, damageSign.transform.rotation, damageSign.transform.parent);
+            GameObject damageAmountCopy = Instantiate(damageAmount, damageAmount.transform.position, damageAmount.transform.rotation, damageSignCopy.transform.parent);
+            damageAmountCopy.transform.SetParent(damageSignCopy.transform);
+            damageSign.SetActive(false);
+            damageAmount.SetActive(false);
+            damageSignCopy.SetActive(true);
+            damageAmountCopy.SetActive(true);
+            StartCoroutine(healthAnimation(damageSignCopy));
+            // StartCoroutine(healthAnimation(damageAmountCopy));
+            /*
+            damageSign.SetActive(true);
+            damageAmount.SetActive(true);
             StartCoroutine(waitThreeSeconds(damageSign));
             StartCoroutine(waitThreeSeconds(damageAmount));
+            */
         }
+    }
+
+    public IEnumerator healthAnimation(GameObject obj)
+    {
+        Vector3 vec = new Vector3(0, 75f, 0);
+        obj.transform.DOScale(new Vector3(4f, 4f, 4f), 0.25f).SetEase(Ease.Linear);
+        obj.transform.DOMove(obj.transform.position + vec, 1f).SetEase(Ease.Linear);
+        // yield return new WaitForSeconds(0.25f);
+        // obj.transform.DOScale(new Vector3(3f, 3f, 3f), 0.8f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.9f);
+        // obj.GetComponent<Image>().CrossFadeAlpha(0, 1f, false);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.9f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.8f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.7f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.6f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.5f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.4f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.3f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.2f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.1f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0);
+        Destroy(obj);
     }
 
     public void addPips(int morePips)
