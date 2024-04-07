@@ -2148,17 +2148,16 @@ public class CardPlayer : MonoBehaviour
 
         if (damageSign != null && damageAmount != null)
         {
-            damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = damage.ToString();
-            damageSign.SetActive(true);
-            damageAmount.SetActive(true);
-            GameObject damageSignCopy = Instantiate(damageSign, damageSign.transform.position, damageSign.transform.rotation, damageSign.transform.parent);
-            GameObject damageAmountCopy = Instantiate(damageAmount, damageAmount.transform.position, damageAmount.transform.rotation, damageSignCopy.transform.parent);
-            damageAmountCopy.transform.SetParent(damageSignCopy.transform);
-            damageSign.SetActive(false);
-            damageAmount.SetActive(false);
-            damageSignCopy.SetActive(true);
+            damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = "- " + damage.ToString();
+            // damageSign.SetActive(true);
+            // damageAmount.SetActive(true);
+            // GameObject damageSignCopy = Instantiate(damageSign, damageSign.transform.position, damageSign.transform.rotation, damageSign.transform.parent);
+            GameObject damageAmountCopy = Instantiate(damageAmount, damageAmount.transform.position, damageAmount.transform.rotation, damageAmount.transform.parent);
+            // damageAmountCopy.transform.SetParent(damageSignCopy.transform);
+            // damageSign.SetActive(false);
+            // damageAmount.SetActive(false);
             damageAmountCopy.SetActive(true);
-            StartCoroutine(healthAnimation(damageSignCopy));
+            StartCoroutine(healthAnimation(damageAmountCopy));
             // StartCoroutine(healthAnimation(damageAmountCopy));
             /*
             damageSign.SetActive(true);
@@ -2171,8 +2170,8 @@ public class CardPlayer : MonoBehaviour
 
     public IEnumerator healthAnimation(GameObject obj)
     {
-        Vector3 vec = new Vector3(0, 75f, 0);
-        obj.transform.DOScale(new Vector3(4f, 4f, 4f), 0.25f).SetEase(Ease.Linear);
+        Vector3 vec = new Vector3(0, 60f * GameManager.manager.heightRatio, 0);
+        obj.transform.DOScale(new Vector3(4f, 4f, 4f), 0.6f).SetEase(Ease.Linear);
         obj.transform.DOMove(obj.transform.position + vec, 1f).SetEase(Ease.Linear);
         // yield return new WaitForSeconds(0.25f);
         // obj.transform.DOScale(new Vector3(3f, 3f, 3f), 0.8f).SetEase(Ease.Linear);

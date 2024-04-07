@@ -167,6 +167,9 @@ public class GameManager : MonoBehaviour
     public CardDisplay opponentCard3;
     public CardDisplay opponentCard4;
 
+    public float widthRatio;
+    public float heightRatio;
+
     public SaveData saveData;
 
     public List<string> playersDeck = new List<string>();
@@ -229,6 +232,10 @@ public class GameManager : MonoBehaviour
             }
 
         }
+
+        widthRatio = Screen.width / 1920;
+        heightRatio = Screen.height / 1080;
+
     }
 
     public void moveMarket()
@@ -260,7 +267,7 @@ public class GameManager : MonoBehaviour
 
             // market.transform.DOMove(new Vector3(1010, 300, 0), 1f);
             // marketButton.transform.DOMove(new Vector3(960, 300, 0), 1f);
-            market.transform.DOMoveY(636f, 1f);
+            market.transform.DOMoveY(636f * heightRatio, 1f);
             // marketButton.transform.DOMoveY(300f, 1f);
             Debug.Log("Market moved???");
         }
@@ -276,7 +283,7 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_close");
             // canvasGroup.blocksRaycasts = true;
-            market.transform.DOMoveY(-11.5f, 1f);
+            market.transform.DOMoveY(-11.5f * heightRatio, 1f);
             // marketButton.transform.DOMoveY(-300f, 1f);
             Debug.Log("Market reset???");
             moveMarketCards();

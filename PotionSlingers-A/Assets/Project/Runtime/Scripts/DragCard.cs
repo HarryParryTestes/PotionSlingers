@@ -132,7 +132,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             // parentAfterDrag = transform.parent;
             transform.SetParent(transform.root);
             transform.SetAsLastSibling();
-            Vector3 pos = new Vector3(960, 550, 0);
+            Vector3 pos = new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0);
             if (!market)
             {
                 transform.DOScale(2.15f, 0.5f).SetId(gameObject.name);
@@ -154,8 +154,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             {
                 transform.DOScale(1f, 0.3f).SetId(gameObject.name);
                 transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+                // transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
                 Vector2 thing = new Vector2(0, 647.5f);
-                transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+                transform.DOMove((originalPosition - thing) * GameManager.manager.widthRatio, 0.3f).SetId(gameObject.name);
                 StartCoroutine(SibIndex());
                 return;
             }
@@ -173,7 +174,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             */
             transform.DOScale(1f, 0.3f).SetId(gameObject.name);
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
-            transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+            // transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
+            transform.DOMove(originalPosition * GameManager.manager.widthRatio, 0.3f).SetId(gameObject.name);
             StartCoroutine(SibIndex());
             // transform.SetParent(parentAfterDrag);
         }
@@ -259,15 +261,26 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
             // originally at 150, experimenting with 200
             if (!market)
-                transform.position += new Vector3(0, 190, 0);
-            
+            {
+                // transform.position = new Vector3(originalPosition.x, originalPosition.y + (190f * GameManager.manager.heightRatio), 0);
+                transform.DOMove(new Vector3(originalPosition.x, originalPosition.y + (190f * GameManager.manager.heightRatio), 0), 0.25f);
+            }
+
+            // transform.position += new Vector3(0, 150, 0);
+            // transform.DOMove(new Vector3(originalPosition.x, originalPosition.y + (190f * GameManager.manager.heightRatio), 0), 0.5f);
+
+
             float width = rectTransform.sizeDelta.x * rectTransform.localScale.x;
             float height = rectTransform.sizeDelta.y * rectTransform.localScale.y;
 
             // does taking this line below out change anything big?
             // this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             // transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
-            transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+            // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+            DOTween.Pause(gameObject.name);
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            transform.DOScale(1.75f, 0.25f).SetId(gameObject.name);
+
             // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
 
             if (!market)
@@ -290,13 +303,20 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             
             if (!market)
             {
-                transform.position -= new Vector3(0, 190, 0);
+                // transform.position -= new Vector3(0, 150, 0);
+                transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
             }
             // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             transform.SetParent(parentAfterDrag);
             transform.localScale = new Vector3(1f, 1f, 1f);
-            if(!market)
+            // DOTween.Pause(gameObject.name);
+            transform.DOScale(1f, 0.5f).SetId(gameObject.name);
+            if (!market)
+            {
                 transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+            }
+                
             /*
             if (transform.position.y < 0)
             {
