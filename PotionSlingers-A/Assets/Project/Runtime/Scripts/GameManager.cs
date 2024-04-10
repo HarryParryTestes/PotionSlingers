@@ -233,13 +233,26 @@ public class GameManager : MonoBehaviour
 
         }
 
-        widthRatio = Screen.width / 1920;
-        heightRatio = Screen.height / 1080;
+        widthRatio = Screen.width / 1920f;
+        heightRatio = Screen.height / 1080f;
 
+    }
+
+    public IEnumerator cardDisappear()
+    {
+        yield return new WaitForSeconds(1f);
+        md1.cardDisplay1.gameObject.SetActive(false);
+        md1.cardDisplay2.gameObject.SetActive(false);
+        md1.cardDisplay3.gameObject.SetActive(false);
+        md2.cardDisplay1.gameObject.SetActive(false);
+        md2.cardDisplay2.gameObject.SetActive(false);
+        md2.cardDisplay3.gameObject.SetActive(false);
     }
 
     public void moveMarket()
     {
+        StopCoroutine("cardDisappear");
+
         if (Game.tutorial && dialog.textBoxCounter < 9)
             return;
 
@@ -252,6 +265,13 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
             md2.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
             md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
+
+            md1.cardDisplay1.gameObject.SetActive(true);
+            md1.cardDisplay2.gameObject.SetActive(true);
+            md1.cardDisplay3.gameObject.SetActive(true);
+            md2.cardDisplay1.gameObject.SetActive(true);
+            md2.cardDisplay2.gameObject.SetActive(true);
+            md2.cardDisplay3.gameObject.SetActive(true);
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_open");
             if (dialog.textBoxCounter == 10)
             {
@@ -287,6 +307,7 @@ public class GameManager : MonoBehaviour
             // marketButton.transform.DOMoveY(-300f, 1f);
             Debug.Log("Market reset???");
             moveMarketCards();
+            StartCoroutine(cardDisappear());
         }
 
     }
@@ -3279,7 +3300,7 @@ public class GameManager : MonoBehaviour
         obj.transform.SetParent(obj.transform.parent.parent);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.gameObject.SetActive(false);
-        obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
+        obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
         obj.transform.DOScale(0.2f, 1f);
         obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
         yield return new WaitForSeconds(0.1f);
@@ -3301,7 +3322,7 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
         // obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
         // jump into deck
-        obj.transform.DOJump(new Vector2(1600f, 250f), 400f, 1, 1f, false);
+        obj.transform.DOJump(new Vector2(1600f * widthRatio, 250f * heightRatio), 400f, 1, 1f, false);
         obj.transform.DOScale(0.2f, 1f);
         obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
         yield return new WaitForSeconds(0.85f);

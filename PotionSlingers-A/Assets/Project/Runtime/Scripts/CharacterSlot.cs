@@ -9,6 +9,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     // CardDisplay cd;
     public CardPlayer cp;
     public CharacterDisplay cd;
+    public Vector2 originalPosition;
 
     void Awake()
     {
@@ -17,6 +18,11 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             cp = this.gameObject.GetComponent<CardPlayer>();
             cd = cp.character;
             Debug.Log(cp.gameObject.name);
+        }
+
+        if(this.gameObject.name == "DeckPile")
+        {
+            originalPosition = new Vector2(transform.position.x, transform.position.y);
         }
     }
 
@@ -50,11 +56,9 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     {
         if (this.gameObject.name == "DeckPile")
         {
-            transform.position += new Vector3(0, 100, 0);
-            if (transform.position.y == 231)
-            {
-                transform.position -= new Vector3(0, 100, 0);
-            }
+            // transform.position += new Vector3(0, 100, 0);
+            transform.DOMove(new Vector3(originalPosition.x, originalPosition.y + (95f * GameManager.manager.heightRatio), 0), 0.25f);
+            // Invoke("checkDeck", 0.25f);
         }
     }
 
@@ -62,12 +66,9 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     {
         if (this.gameObject.name == "DeckPile")
         {
-            transform.position -= new Vector3(0, 100, 0);
-
-            if (transform.position.y < 31)
-            {
-                transform.position += new Vector3(0, 100, 0);
-            }
+            // transform.position -= new Vector3(0, 100, 0);
+            transform.DOMove(originalPosition, 0.25f);
+            // Invoke("checkDeck", 0.25f);
         }   
     }
 

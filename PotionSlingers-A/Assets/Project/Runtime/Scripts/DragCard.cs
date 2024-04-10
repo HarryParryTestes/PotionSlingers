@@ -30,10 +30,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     void Update()
     {
+        /*
         if(transform.position.y < 0 && !market)
         {
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
+        */
     }
 
     private void Awake()
@@ -45,7 +47,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if (!market)
         {
             originalPosition = transform.position;
-        } else
+            // originalPosition = new Vector2(transform.position.x * GameManager.manager.widthRatio, transform.position.y * GameManager.manager.heightRatio);
+
+        }
+        else
         {
             // TODO: fix this so that the position changes depending on whether or not the market is selected or not
             originalPosition = transform.position + new Vector3(0, 647.5f, 0);
@@ -64,24 +69,6 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // Debug.Log(artifactCard.gameObject.name);
     }
 
-    /*
-    public void RenderLine(Vector3 startPoint, Vector3 endPoint)
-    {
-        Debug.Log("Rendering line?");
-
-        lineRenderer.positionCount = 2;
-        Vector3[] points = new Vector3[2];
-        points[0] = startPoint;
-        points[1] = endPoint;
-
-        lineRenderer.SetPositions(points);
-    }
-
-    public void EndLine()
-    {
-        lineRenderer.positionCount = 0;
-    }
-    */
     // TODO: make a function so that the all cards move back to their proper positions  
     // if either the market deck is closed or if another card is clicked on
 
@@ -93,7 +80,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.SetParent(parentAfterDrag);
             transform.DOScale(1f, 0.3f).SetId(gameObject.name);
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
-            Vector2 thing = new Vector2(0, 331.5f);
+            Vector2 thing = new Vector2(0, 331.5f * GameManager.manager.widthRatio);
             transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
             return;
             // StartCoroutine(SibIndex());
@@ -155,8 +142,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 transform.DOScale(1f, 0.3f).SetId(gameObject.name);
                 transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
                 // transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
-                Vector2 thing = new Vector2(0, 647.5f);
-                transform.DOMove((originalPosition - thing) * GameManager.manager.widthRatio, 0.3f).SetId(gameObject.name);
+                Vector2 thing = new Vector2(0, 647.5f * GameManager.manager.heightRatio);
+                transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+                // transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
                 StartCoroutine(SibIndex());
                 return;
             }
@@ -175,7 +163,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.DOScale(1f, 0.3f).SetId(gameObject.name);
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
             // transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
-            transform.DOMove(originalPosition * GameManager.manager.widthRatio, 0.3f).SetId(gameObject.name);
+            transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+            // transform.DOMove(new Vector2(originalPosition.x * GameManager.manager.widthRatio, originalPosition.y * GameManager.manager.heightRatio), 0.3f).SetId(gameObject.name);
+            // rectTransform.DOAnchorPos(originalPosition, 0.3f, false);
             StartCoroutine(SibIndex());
             // transform.SetParent(parentAfterDrag);
         }
@@ -279,7 +269,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
             DOTween.Pause(gameObject.name);
             transform.localScale = new Vector3(1f, 1f, 1f);
-            transform.DOScale(1.75f, 0.25f).SetId(gameObject.name);
+            if(!market)
+                transform.DOScale(1.75f, 0.25f).SetId(gameObject.name);
+            else
+                transform.DOScale(1.25f, 0.25f).SetId(gameObject.name);
 
             // transform.position = new Vector3(transform.position.x, height + height/2, transform.position.z);
 
@@ -370,9 +363,6 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
         // transform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-        // rectTransform.position = Input.mousePosition;
-        // Vector3 currentPoint = Input.mousePosition;
-        // RenderLine(startPoint, currentPoint);
     }
 
     public void beforeDisappear()

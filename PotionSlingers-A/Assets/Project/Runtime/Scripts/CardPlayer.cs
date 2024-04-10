@@ -159,7 +159,7 @@ public class CardPlayer : MonoBehaviour
                 if (this.gameObject.name == "CharacterCard (Left)")
                     this.transform.localScale = new Vector3(2f, 2.6f, 0);
                 if (this.gameObject.name == "CharacterCard (Top)")
-                    this.transform.localScale = new Vector3(8.2f, 10f, 0);
+                    this.transform.localScale = new Vector3(8.2f, 11f, 0);
                 if (this.gameObject.name == "CharacterCard (Right)")
                     this.transform.localScale = new Vector3(5.2f, 6.3f, 0);
                 break;
@@ -167,21 +167,37 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("I AM REETS");
                 isReets = true;
                 if (this.gameObject.name == "CharacterCard (Right)")
-                    this.transform.localScale = new Vector3(7f, 7f, 0);
+                {
+                    this.transform.localScale = new Vector3(7f, 8f, 0);
+                    this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 30, this.transform.position.z);
+                }
+                
                 if (this.gameObject.name == "CharacterCard (Top)")
-                    this.transform.localScale = new Vector3(11f, 11f, 0);
+                    this.transform.localScale = new Vector3(11f, 12.5f, 0);
                 if (this.gameObject.name == "CharacterCard (Left)")
-                    this.transform.localScale = new Vector3(3f, 3f, 0);
+                {
+                    this.transform.localScale = new Vector3(3f, 3.5f, 0);
+                    this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 30, this.transform.position.z);
+                }
+                    
                 break;
             case "Saltimbocca":
                 Debug.Log("I AM SALTIMBOCCA");
                 isSaltimbocca = true;
                 if (this.gameObject.name == "CharacterCard (Right)")
-                    this.transform.localScale = new Vector3(5.4f, 7f, 0);
+                {
+                    this.transform.localScale = new Vector3(5.4f, 7.9f, 0);
+                    this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 20, this.transform.position.z);
+                }
+                    
                 if (this.gameObject.name == "CharacterCard (Top)")
-                    this.transform.localScale = new Vector3(9.1f, 11.4f, 0);
+                    this.transform.localScale = new Vector3(9.1f, 12.5f, 0);
                 if (this.gameObject.name == "CharacterCard (Left)")
-                    this.transform.localScale = new Vector3(2.3f, 3f, 0);
+                {
+                    this.transform.localScale = new Vector3(2.3f, 3.2f, 0);
+                    this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 20, this.transform.position.z);
+                }
+                    
                 break;
             case "Scarpetta":
                 Debug.Log("I AM SCARPETTA");
