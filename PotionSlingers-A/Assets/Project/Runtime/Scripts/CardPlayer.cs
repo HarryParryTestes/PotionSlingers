@@ -33,6 +33,7 @@ public class CardPlayer : MonoBehaviour
     public int bonusAmount;
     public int cardsTrashed = 0;
     //public HealthController health;
+    public GameObject bar;
     public GameObject playerHP;
     public GameObject playerHPCubes;
     public GameObject playerPips;
@@ -2160,11 +2161,12 @@ public class CardPlayer : MonoBehaviour
             cubed = false;
         }
         */
+        StartCoroutine(barAnimation());
         updateHealthUI();
 
         if (damageSign != null && damageAmount != null)
         {
-            damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = "- " + damage.ToString();
+            damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = "-" + damage.ToString();
             // damageSign.SetActive(true);
             // damageAmount.SetActive(true);
             // GameObject damageSignCopy = Instantiate(damageSign, damageSign.transform.position, damageSign.transform.rotation, damageSign.transform.parent);
@@ -2182,6 +2184,15 @@ public class CardPlayer : MonoBehaviour
             StartCoroutine(waitThreeSeconds(damageAmount));
             */
         }
+    }
+
+    public IEnumerator barAnimation()
+    {
+        bar.transform.DOShakePosition(.2f, 30f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.2f);
+        bar.transform.DOShakePosition(.2f, 30f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.2f);
+        bar.transform.DOShakePosition(.2f, 30f).SetEase(Ease.Linear);
     }
 
     public IEnumerator healthAnimation(GameObject obj)

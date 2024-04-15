@@ -267,7 +267,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             // this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             // transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
             // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-            DOTween.Pause(gameObject.name);
+            if(!market)
+                DOTween.Pause(gameObject.name);
             transform.localScale = new Vector3(1f, 1f, 1f);
             if(!market)
                 transform.DOScale(1.75f, 0.25f).SetId(gameObject.name);
@@ -285,7 +286,13 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
             // Card Hover sound effect:
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
+            /*
+            Outline outline = gameObject.AddComponent<Outline>();
 
+            outline.OutlineMode = Outline.Mode.OutlineAll;
+            outline.OutlineColor = Color.yellow;
+            outline.OutlineWidth = 5f;
+            */
         }
     }
 

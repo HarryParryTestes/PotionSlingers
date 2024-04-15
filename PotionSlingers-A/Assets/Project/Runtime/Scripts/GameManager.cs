@@ -350,7 +350,7 @@ public class GameManager : MonoBehaviour
             playersDeck.Add(card.name);
         }
 
-        
+
         Debug.Log("Now onto stage " + saveData.stage + "!");
         SaveSystem.SaveGameData(saveData);
         // Game.ServerChangeScene("StoryMode");
@@ -434,6 +434,8 @@ public class GameManager : MonoBehaviour
             if (Game.storyMode)
             {
                 // advance a stage and save the game data
+                if (stage == 4)
+                    unSpicyCards();
                 Debug.Log("Advancing a stage in story mode");
                 saveData.newStage = true;
                 saveGameManagerValues();
@@ -517,7 +519,7 @@ public class GameManager : MonoBehaviour
 
     void setStoryModeCharacters()
     {
-        if(saveData.stage == 3)
+        if (saveData.stage == 3)
         {
             numPlayers = 4;
             // Fingas is stage 1 enemy
@@ -539,7 +541,7 @@ public class GameManager : MonoBehaviour
                 players[1].hpCubes = 1;
                 players[1].hp = 10;
             }
-                
+
             players[1].updateHealthUI();
 
             // Crow Punk is stage 1 enemy
@@ -639,7 +641,7 @@ public class GameManager : MonoBehaviour
                 saveData.opp1Cubes = 1;
                 saveData.opp1Health = 10;
             }
-                players[2].hpCubes = 1;
+            players[2].hpCubes = 1;
             players[2].updateHealthUI();
             players[2].user_id = 1;
 
@@ -670,7 +672,7 @@ public class GameManager : MonoBehaviour
                 saveData.opp1Cubes = 1;
                 saveData.opp1Health = 33;
             }
-                
+
 
             players[2].updateHealthUI();
             players[2].user_id = 1;
@@ -681,6 +683,14 @@ public class GameManager : MonoBehaviour
             p4.SetActive(false);
         }
 
+    }
+
+    public void unSpicyCards()
+    {
+        foreach (Card card in database.cardList)
+        {
+            card.spicy = false;
+        }
     }
 
     void Start()
@@ -807,6 +817,7 @@ public class GameManager : MonoBehaviour
             {
                 // NEW STORY MODE FILE
                 Debug.Log("New story mode file started!!!");
+                unSpicyCards();
                 md1.shuffle();
                 md2.shuffle();
                 initDecks();

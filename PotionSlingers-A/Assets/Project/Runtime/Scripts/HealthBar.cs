@@ -19,12 +19,12 @@ public class HealthBar : MonoBehaviour
     {
         if(redBar.fillAmount < image.fillAmount + 0.01f)
         {
-            image.fillAmount -= 0.0075f;
+            image.fillAmount -= 0.0005f;
         }
 
         if(redBar.fillAmount > image.fillAmount + 0.01f)
         {
-            image.fillAmount += 0.0075f;
+            image.fillAmount += 0.0005f;
         }
     }
 }
