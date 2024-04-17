@@ -815,13 +815,28 @@ public class CardPlayer : MonoBehaviour
         {
             // add a check to see if a computer player triggered this and don't display the menu
             // probably just select a random card from the trash
-
-            GameManager.manager.numTrashed = 1;
-            GameManager.manager.trashDeckBonus = true;
-            GameManager.manager.trashDeckMenu.SetActive(true);
-            GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
-            GameManager.manager.td.displayTrash();
-            return 0;
+            if (gameObject.GetComponent<ComputerPlayer>() == null)
+            {
+                GameManager.manager.numTrashed = 1;
+                GameManager.manager.trashDeckBonus = true;
+                GameManager.manager.trashDeckMenu.SetActive(true);
+                GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+                GameManager.manager.td.displayTrash();
+                return 0;
+            } else
+            {
+                // logic for computer player
+                for(int i = 0; i < GameManager.manager.td.deckList.Count; i++)
+                {
+                    if(GameManager.manager.td.deckList[i].cardType == "Potion")
+                    {
+                        Card cd = GameManager.manager.td.popCard(i);
+                        deck.putCardOnTop(cd);
+                        GameManager.manager.sendSuccessMessage(15);
+                    }
+                }
+            }
+            
         }
 
         // The Skateboard
@@ -1206,10 +1221,26 @@ public class CardPlayer : MonoBehaviour
             // Hot + Wet Bonus: Put 1 card from the trash to the top of your deck
             if (selectedCard.card.cardName == "Furry Flagon fromthe Hide of Hairy Leeches")
             {
-                GameManager.manager.trashDeckBonus = true;
-                GameManager.manager.trashDeckMenu.SetActive(true);
-                GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
-                GameManager.manager.td.displayTrash();
+                if (gameObject.GetComponent<ComputerPlayer>() == null)
+                {
+                    GameManager.manager.trashDeckBonus = true;
+                    GameManager.manager.trashDeckMenu.SetActive(true);
+                    GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+                    GameManager.manager.td.displayTrash();
+                } else
+                {
+                    // logic for computer player
+                    for (int i = 0; i < GameManager.manager.td.deckList.Count; i++)
+                    {
+                        if (GameManager.manager.td.deckList[i].cardType == "Potion")
+                        {
+                            Card cd = GameManager.manager.td.popCard(i);
+                            deck.putCardOnTop(cd);
+                            GameManager.manager.sendSuccessMessage(15);
+                        }
+                    }
+                }
+                
             }
 
             // Voluptuous Gallipot of Double Entendre
@@ -1281,6 +1312,13 @@ public class CardPlayer : MonoBehaviour
                     {
                         // maybe do something for computer
                         // make method that trashes a random card
+                        int holsterNum = rng.Next(1, 5);
+                        if (holster.cardList[holsterNum - 1].card.name == "placeholder")
+                        {
+                            holsterNum = rng.Next(1, 5);
+                        }
+                        GameManager.manager.selectedCardInt = holsterNum;
+                        GameManager.manager.trashCard();
                     }
 
                     // GameManager.manager.opponentHolsterMenu.SetActive(true);
@@ -1315,6 +1353,13 @@ public class CardPlayer : MonoBehaviour
                     else
                     {
                         // maybe do something for computer
+                        int holsterNum = rng.Next(1, 5);
+                        if (holster.cardList[holsterNum - 1].card.name == "placeholder")
+                        {
+                            holsterNum = rng.Next(1, 5);
+                        }
+                        GameManager.manager.selectedCardInt = holsterNum;
+                        GameManager.manager.trashCard();
                     }
                     // GameManager.manager.opponentHolsterMenu.SetActive(true);
                     // GameManager.manager.displayOpponentHolster();
@@ -1354,7 +1399,12 @@ public class CardPlayer : MonoBehaviour
             if (selectedCard.card.cardName == "PhiltyPhlegmbicAlembic")
             {
                 // first they'll need to pick their bonus
-                GameManager.manager.trashBonusMenu.SetActive(true);
+                if(gameObject.GetComponent<ComputerPlayer>() == null)
+                    GameManager.manager.trashBonusMenu.SetActive(true);
+                else
+                {
+                    Debug.Log("Add computer logic");
+                }
 
                 //GameManager.manager.opponentHolsterMenu.SetActive(true);
                 //GameManager.manager.displayOpponentHolster();
@@ -1390,6 +1440,7 @@ public class CardPlayer : MonoBehaviour
                 else
                 {
                     // maybe do something for computer
+                    Debug.Log("Add computer logic");
                 }
 
             }
@@ -2188,11 +2239,11 @@ public class CardPlayer : MonoBehaviour
 
     public IEnumerator barAnimation()
     {
-        bar.transform.DOShakePosition(.2f, 30f).SetEase(Ease.Linear);
+        bar.transform.DOShakePosition(.2f, 20f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
-        bar.transform.DOShakePosition(.2f, 30f).SetEase(Ease.Linear);
+        bar.transform.DOShakePosition(.2f, 20f).SetEase(Ease.Linear);
         yield return new WaitForSeconds(0.2f);
-        bar.transform.DOShakePosition(.2f, 30f).SetEase(Ease.Linear);
+        bar.transform.DOShakePosition(.2f, 20f).SetEase(Ease.Linear);
     }
 
     public IEnumerator healthAnimation(GameObject obj)

@@ -15,16 +15,16 @@ public class HealthBar : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if(redBar.fillAmount < image.fillAmount + 0.01f)
         {
-            image.fillAmount -= 0.0005f;
+            image.fillAmount -= 0.004f;
         }
 
         if(redBar.fillAmount > image.fillAmount + 0.01f)
         {
-            image.fillAmount += 0.0005f;
+            image.fillAmount += 0.004f;
         }
     }
 }

@@ -38,19 +38,22 @@ public class ComputerPlayer : CardPlayer
         if (j == num)
         {
             Debug.Log("Why are you hitting yourself???");
-            chooseRandomPlayer();
+            return num + 1 >= GameManager.manager.numPlayers ? 0 : num + 1;
+            // chooseRandomPlayer();
         }
         if (charName == GameManager.manager.players[num].character.character.cardName)
         {
             Debug.Log("Changing number");
-            chooseRandomPlayer();
+            return num + 1 == GameManager.manager.numPlayers ? 0 : num + 1;
+            // chooseRandomPlayer();
         }
 
         // if the player is dead, don't attack them
         if (GameManager.manager.players[num].dead)
         {
             Debug.Log("This player is dead! Changing number");
-            chooseRandomPlayer();
+            return num + 1 >= GameManager.manager.numPlayers ? 0 : num + 1;
+            // chooseRandomPlayer();
         }
         return num;
     }
@@ -504,9 +507,11 @@ public class ComputerPlayer : CardPlayer
                     if ((AICards[i].cardType == "Ring" && AICards[i].cardQuality == "Starter") &&
                         AICards[k].cardType == "Potion" && AICards[k].effectAmount > 0)
                     {
+
                         int number = chooseRandomPlayer();
                         Debug.Log("Number is: " + number);
                         GameManager.manager.selectedOpponentName = GameManager.manager.players[number].name;
+                        GameManager.manager.tempPlayer = GameManager.manager.players[number];
                         GameManager.manager.selectedCardInt = k + 1;
                         GameManager.manager.throwPotion();
                         actionsList.Add("THROW");
@@ -551,11 +556,12 @@ public class ComputerPlayer : CardPlayer
                 return;
             }
 
-            if (turn > 2 && AICards[i].cardQuality == "Starter" && AICards[i].cardType != "Ring")
+            // sell the starter ring
+            if (turn > 3 && AICards[i].cardQuality == "Starter" && AICards[i].cardType == "Ring")
             {
                 GameManager.manager.selectedCardInt = i + 1;
-                GameManager.manager.trashCard();
-                actionsList.Add("TRASH");
+                GameManager.manager.sellCard();
+                actionsList.Add("SELL");
                 StartCoroutine(waitASecBro());
                 return;
             }

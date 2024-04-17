@@ -53,8 +53,8 @@ public class PlayerLoadedCardHover : MonoBehaviour, IPointerEnterHandler, IPoint
 
         cardSelected = false;
         viewingCard = false;
-        cardMenu.gameObject.SetActive(false);
-        viewCardMenu.gameObject.SetActive(false);
+        // cardMenu.gameObject.SetActive(false);
+        // viewCardMenu.gameObject.SetActive(false);
         if (attackMenu != null)
         {
             attackMenu.gameObject.SetActive(false);

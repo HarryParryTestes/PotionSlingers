@@ -83,6 +83,19 @@ public class TrashDeck : MonoBehaviour, IDropHandler
         */
     }
 
+    public Card popCard(int index)
+    {
+        if (deckList.Count > index)
+        {
+            Card temp = deckList[index];
+            deckList.RemoveAt(index);
+            
+            return temp;
+        }
+        Debug.Log("ERROR: Card not returned!");
+        return null;
+    }
+
     public void addCard(Card card)
     {
         deckList.Add(card);
