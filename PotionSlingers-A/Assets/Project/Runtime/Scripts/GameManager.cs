@@ -321,9 +321,21 @@ public class GameManager : MonoBehaviour
         md2.cardDisplay2.GetComponent<DragCard>().marketBack();
         md2.cardDisplay3.GetComponent<DragCard>().marketBack();
         playerHolster.card1.GetComponent<DragCard>().marketBack();
+        playerHolster.card1.aPotion.GetComponent<DragCard>().marketBack();
+        playerHolster.card1.vPotion1.GetComponent<DragCard>().marketBack();
+        playerHolster.card1.vPotion2.GetComponent<DragCard>().marketBack();
         playerHolster.card2.GetComponent<DragCard>().marketBack();
+        playerHolster.card2.aPotion.GetComponent<DragCard>().marketBack();
+        playerHolster.card2.vPotion1.GetComponent<DragCard>().marketBack();
+        playerHolster.card2.vPotion2.GetComponent<DragCard>().marketBack();
         playerHolster.card3.GetComponent<DragCard>().marketBack();
+        playerHolster.card3.aPotion.GetComponent<DragCard>().marketBack();
+        playerHolster.card3.vPotion1.GetComponent<DragCard>().marketBack();
+        playerHolster.card3.vPotion2.GetComponent<DragCard>().marketBack();
         playerHolster.card4.GetComponent<DragCard>().marketBack();
+        playerHolster.card4.aPotion.GetComponent<DragCard>().marketBack();
+        playerHolster.card4.vPotion1.GetComponent<DragCard>().marketBack();
+        playerHolster.card4.vPotion2.GetComponent<DragCard>().marketBack();
     }
 
     public void advanceStage()
