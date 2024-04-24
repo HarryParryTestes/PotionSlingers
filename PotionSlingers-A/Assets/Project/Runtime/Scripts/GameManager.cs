@@ -206,6 +206,7 @@ public class GameManager : MonoBehaviour
             dialogBox.SetActive(true);
             dialog.initDialog();
         }
+        // Debug.Log(Screen.width);
     }
 
     void Update()
@@ -2818,7 +2819,7 @@ public class GameManager : MonoBehaviour
         if (numPlayers == 2)
         {
             Debug.Log("Middle person");
-            yield return new WaitForSeconds(0.9f);
+            yield return new WaitForSeconds(1f);
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             throwingHand.transform.DOMoveX(1000f, 1f);
             yield return new WaitForSeconds(1f);

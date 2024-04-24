@@ -37,6 +37,130 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.position = new Vector3(transform.position.x, 0, transform.position.z);
         }
         */
+        /*
+        if (GameManager.manager.heightRatio == 2 && GameManager.manager.widthRatio == 2)
+        {
+            // Debug.Log("Different screen resolution");
+            if (gameObject.name == "Card1Display")
+            {
+                originalPosition = new Vector3(1000f, 0, 0);
+            }
+        }
+        */
+        if (Screen.width == 2560)
+        {
+            switch (gameObject.name)
+            {
+                case "Card1Display":
+                    originalPosition = new Vector3(670f, 0, 0);
+                    break;
+                case "Card2Display":
+                    originalPosition = new Vector3(1075f, 80f, 0);
+                    break;
+                case "Card3Display":
+                    originalPosition = new Vector3(1485f, 80f, 0);
+                    break;
+                case "Card4Display":
+                    originalPosition = new Vector3(1890f, -5f, 0);
+                    break;
+                case "CardDisplay (Potion1)":
+                    originalPosition = new Vector3(1005f, 1025f, 0);
+                    break;
+                case "CardDisplay (Potion2)":
+                    originalPosition = new Vector3(1286f, 1025f, 0);
+                    break;
+                case "CardDisplay (Potion3)":
+                    originalPosition = new Vector3(1570f, 1025f, 0);
+                    break;
+                case "CardDisplay (Special1)":
+                    originalPosition = new Vector3(1005f, 621f, 0);
+                    break;
+                case "CardDisplay (Special2)":
+                    originalPosition = new Vector3(1286f, 621f, 0);
+                    break;
+                case "CardDisplay (Special3)":
+                    originalPosition = new Vector3(1570f, 621f, 0);
+                    break;
+                default:
+                    break;
+            }
+        } else if (Screen.width == 3840)
+        {
+            switch (gameObject.name)
+            {
+                case "Card1Display":
+                    originalPosition = new Vector3(1010f, -10f, 0);
+                    break;
+                case "Card2Display":
+                    originalPosition = new Vector3(1610f, 120f, 0);
+                    break;
+                case "Card3Display":
+                    originalPosition = new Vector3(2225f, 120f, 0);
+                    break;
+                case "Card4Display":
+                    originalPosition = new Vector3(2830f, -10f, 0);
+                    break;
+                case "CardDisplay (Potion1)":
+                    originalPosition = new Vector3(1510f, 1538f, 0);
+                    break;
+                case "CardDisplay (Potion2)":
+                    originalPosition = new Vector3(1926f, 1538f, 0);
+                    break;
+                case "CardDisplay (Potion3)":
+                    originalPosition = new Vector3(2355f, 1538f, 0);
+                    break;
+                case "CardDisplay (Special1)":
+                    originalPosition = new Vector3(1510f, 928f, 0);
+                    break;
+                case "CardDisplay (Special2)":
+                    originalPosition = new Vector3(1926f, 928f, 0);
+                    break;
+                case "CardDisplay (Special3)":
+                    originalPosition = new Vector3(2355f, 928f, 0);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else if (Screen.width == 1366)
+        {
+            switch (gameObject.name)
+            {
+                case "Card1Display":
+                    originalPosition = new Vector3(358f, 0, 0);
+                    break;
+                case "Card2Display":
+                    originalPosition = new Vector3(573f, 45f, 0);
+                    break;
+                case "Card3Display":
+                    originalPosition = new Vector3(793f, 45f, 0);
+                    break;
+                case "Card4Display":
+                    originalPosition = new Vector3(1008f, -3f, 0);
+                    break;
+                case "CardDisplay (Potion1)":
+                    originalPosition = new Vector3(536f, 548f, 0);
+                    break;
+                case "CardDisplay (Potion2)":
+                    originalPosition = new Vector3(689f, 548f, 0);
+                    break;
+                case "CardDisplay (Potion3)":
+                    originalPosition = new Vector3(838f, 548f, 0);
+                    break;
+                case "CardDisplay (Special1)":
+                    originalPosition = new Vector3(536f, 330f, 0);
+                    break;
+                case "CardDisplay (Special2)":
+                    originalPosition = new Vector3(689f, 330f, 0);
+                    break;
+                case "CardDisplay (Special3)":
+                    originalPosition = new Vector3(838f, 330f, 0);
+                    break;
+                default:
+                    break;
+            }
+        }
+
     }
 
     private void Awake()
@@ -77,11 +201,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         if (clicked && market && !GameManager.manager.marketSelected)
         {
+            DOTween.Pause(gameObject.name);
             clicked = false;
             transform.SetParent(parentAfterDrag);
             transform.DOScale(1f, 0.3f).SetId(gameObject.name);
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
-            Vector2 thing = new Vector2(0, 331.5f * GameManager.manager.widthRatio);
+            Vector2 thing = new Vector2(0, 333f * GameManager.manager.heightRatio);
             transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
             return;
             // StartCoroutine(SibIndex());

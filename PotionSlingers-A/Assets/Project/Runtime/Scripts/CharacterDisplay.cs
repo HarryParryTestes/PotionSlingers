@@ -97,10 +97,10 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
             menu.SetActive(true);
             if (Game.tutorial)
             {
-                transform.DOMoveY(400f, 0.6f);
+                transform.DOMoveY(400f * GameManager.manager.heightRatio, 0.6f);
             } else
             {
-                transform.DOMoveY(515f, 0.6f);
+                transform.DOMoveY(515f * GameManager.manager.heightRatio, 0.6f);
             }
         } else
         {
