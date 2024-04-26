@@ -242,17 +242,20 @@ public class GameManager : MonoBehaviour
     public IEnumerator cardDisappear()
     {
         yield return new WaitForSeconds(1f);
-        md1.cardDisplay1.gameObject.SetActive(false);
-        md1.cardDisplay2.gameObject.SetActive(false);
-        md1.cardDisplay3.gameObject.SetActive(false);
-        md2.cardDisplay1.gameObject.SetActive(false);
-        md2.cardDisplay2.gameObject.SetActive(false);
-        md2.cardDisplay3.gameObject.SetActive(false);
+        if (!marketSelected)
+        {
+            md1.cardDisplay1.gameObject.SetActive(false);
+            md1.cardDisplay2.gameObject.SetActive(false);
+            md1.cardDisplay3.gameObject.SetActive(false);
+            md2.cardDisplay1.gameObject.SetActive(false);
+            md2.cardDisplay2.gameObject.SetActive(false);
+            md2.cardDisplay3.gameObject.SetActive(false);
+        }
     }
 
     public void moveMarket()
     {
-        StopCoroutine("cardDisappear");
+        StopCoroutine(cardDisappear());
 
         if (Game.tutorial && dialog.textBoxCounter < 9)
             return;
@@ -1376,27 +1379,42 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].pluotBonusType = bonus;
     }
 
-    // if there are open spots in the holster, move cards from deck to holster
-    public void onStartTurn(CardPlayer player)
+    public IEnumerator DeckAnimation(CardDisplay cd, CardPlayer player)
     {
-        Debug.Log(player.name + "'s turn!");
-        sendSuccessMessage(18, player.name);
-        earlyBirdSpecial = false;
-        usedStarterPotion = false;
-        trash = false;
-        damage = false;
-        trashDeckBonus = false;
+        Debug.Log("Card animation starting");
+        GameObject obj = Instantiate(player.deck.gameObject, player.deck.gameObject.transform.position, player.deck.gameObject.transform.rotation, player.gameObject.transform);
+        if (player.GetComponent<ComputerPlayer>() != null)
+            obj.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+        obj.transform.DOJump(cd.gameObject.transform.position, 200f, 1, 0.5f, false);
+        Card card = player.deck.popCard();
+        if (cd.GetComponent<DragCard>() != null)
+            obj.transform.DORotate(cd.GetComponent<DragCard>().cardRotation, 0.5f);
+        // obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
+        yield return new WaitForSeconds(0.5f);
+        cd.updateCard(card);
+        obj.SetActive(false);
+        Destroy(obj);
+    }
 
+    public IEnumerator HolsterFill(CardPlayer player)
+    {
         foreach (CardDisplay cd in player.holster.cardList)
         {
             if (player.deck.deckList.Count >= 1)
             {
                 if (cd.card.name == "placeholder")
                 {
-                    cd.updateCard(player.deck.popCard());
+                    // cd.updateCard(player.deck.popCard());
+                    StartCoroutine(DeckAnimation(cd, player));
+                    yield return new WaitForSeconds(0.25f);
                 }
             }
         }
+    }
+
+    public void saveGameStuff()
+    {
+        Debug.Log("Save game stuff");
         playersHolster.Clear();
         playersDeck.Clear();
 
@@ -1413,6 +1431,23 @@ public class GameManager : MonoBehaviour
 
         // save the values at the end of each turn!
         saveGameManagerValues();
+    }
+
+    // if there are open spots in the holster, move cards from deck to holster
+    public void onStartTurn(CardPlayer player)
+    {
+        Debug.Log(player.name + "'s turn!");
+        sendSuccessMessage(18, player.name);
+        earlyBirdSpecial = false;
+        usedStarterPotion = false;
+        trash = false;
+        damage = false;
+        trashDeckBonus = false;
+
+        // This is where to make the animation that deals the cards from the deck to the holster
+        StartCoroutine(HolsterFill(player));
+
+        Invoke("saveGameStuff", 1.5f);
 
         // this should make it not trigger every turn
         if (player.isPluot && player.name == currentPlayerName && player.gameObject.GetComponent<ComputerPlayer>() == null)
@@ -3337,6 +3372,8 @@ public class GameManager : MonoBehaviour
         Destroy(obj);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+
+        // MATTEO : Add trash can thunk sfx here!
         td.transform.parent.DOMove(new Vector2(td.transform.parent.position.x, td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
