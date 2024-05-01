@@ -3446,40 +3446,48 @@ public class GameManager : MonoBehaviour
         switch (marketCard)
         {
             case 1:
+
                 td.addCard(md1.cardDisplay1);
                 Card card1 = md1.popCard();
                 md1.cardDisplay1.updateCard(card1);
                 sendSuccessMessage(9);
+                md1.cardDisplay1.GetComponent<DragCard>().marketBack();
+                
                 break;
             case 2:
                 td.addCard(md1.cardDisplay2);
                 Card card2 = md1.popCard();
                 md1.cardDisplay2.updateCard(card2);
                 sendSuccessMessage(9);
+                md1.cardDisplay2.GetComponent<DragCard>().marketBack();
                 break;
             case 3:
                 td.addCard(md1.cardDisplay3);
                 Card card3 = md1.popCard();
                 md1.cardDisplay3.updateCard(card3);
                 sendSuccessMessage(9);
+                md1.cardDisplay3.GetComponent<DragCard>().marketBack();
                 break;
             case 4:
                 td.addCard(md2.cardDisplay1);
                 Card card4 = md2.popCard();
                 md2.cardDisplay1.updateCard(card4);
                 sendSuccessMessage(9);
+                md2.cardDisplay1.GetComponent<DragCard>().marketBack();
                 break;
             case 5:
                 td.addCard(md2.cardDisplay2);
                 Card card5 = md2.popCard();
                 md2.cardDisplay2.updateCard(card5);
                 sendSuccessMessage(9);
+                md2.cardDisplay2.GetComponent<DragCard>().marketBack();
                 break;
             case 6:
                 td.addCard(md2.cardDisplay3);
                 Card card6 = md2.popCard();
                 md2.cardDisplay3.updateCard(card6);
                 sendSuccessMessage(9);
+                md2.cardDisplay3.GetComponent<DragCard>().marketBack();
                 break;
             default:
                 break;

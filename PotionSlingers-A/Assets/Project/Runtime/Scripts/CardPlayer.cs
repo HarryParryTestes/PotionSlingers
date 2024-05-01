@@ -1274,6 +1274,19 @@ public class CardPlayer : MonoBehaviour
                 else
                 {
                     // maybe do something for computer
+                    int cardNumber = rng.Next(1, 5);
+                    GameManager.manager.selectedCardInt = cardNumber;
+
+                    GameObject obj = Instantiate(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
+                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.position,
+                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.rotation,
+                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform);
+
+                    GameManager.manager.StartCoroutine(MoveToTrash(obj));
+
+                    GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]);
+
+                    GameManager.manager.sendMessage("A card in your holster just got trashed!");
                 }
 
                 return damage;
@@ -1312,13 +1325,19 @@ public class CardPlayer : MonoBehaviour
                     {
                         // maybe do something for computer
                         // make method that trashes a random card
-                        int holsterNum = rng.Next(1, 5);
-                        if (holster.cardList[holsterNum - 1].card.name == "placeholder")
-                        {
-                            holsterNum = rng.Next(1, 5);
-                        }
-                        GameManager.manager.selectedCardInt = holsterNum;
-                        GameManager.manager.trashCard();
+                        int cardNumber = rng.Next(1, 5);
+                        GameManager.manager.selectedCardInt = cardNumber;
+
+                        GameObject obj = Instantiate(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.position,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.rotation,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform);
+
+                        GameManager.manager.StartCoroutine(MoveToTrash(obj));
+
+                        GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]);
+
+                        GameManager.manager.sendMessage("A card in your holster just got trashed!");
                     }
 
                     // GameManager.manager.opponentHolsterMenu.SetActive(true);
@@ -1353,13 +1372,19 @@ public class CardPlayer : MonoBehaviour
                     else
                     {
                         // maybe do something for computer
-                        int holsterNum = rng.Next(1, 5);
-                        if (holster.cardList[holsterNum - 1].card.name == "placeholder")
-                        {
-                            holsterNum = rng.Next(1, 5);
-                        }
-                        GameManager.manager.selectedCardInt = holsterNum;
-                        GameManager.manager.trashCard();
+                        int cardNumber = rng.Next(1, 5);
+                        GameManager.manager.selectedCardInt = cardNumber;
+
+                        GameObject obj = Instantiate(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.position,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.rotation,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform);
+
+                        GameManager.manager.StartCoroutine(MoveToTrash(obj));
+
+                        GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]);
+
+                        GameManager.manager.sendMessage("A card in your holster just got trashed!");
                     }
                     // GameManager.manager.opponentHolsterMenu.SetActive(true);
                     // GameManager.manager.displayOpponentHolster();
@@ -1441,6 +1466,8 @@ public class CardPlayer : MonoBehaviour
                 {
                     // maybe do something for computer
                     Debug.Log("Add computer logic");
+                    int randomCard = rng.Next(1, 7);
+                    GameManager.manager.takeMarket(randomCard);
                 }
 
             }
@@ -1521,6 +1548,30 @@ public class CardPlayer : MonoBehaviour
         }
 
         return damage;
+    }
+
+    public IEnumerator MoveToTrash(GameObject obj)
+    {
+        obj.transform.SetParent(obj.transform.parent.parent);
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.gameObject.SetActive(false);
+        obj.transform.DOJump(new Vector2(1850f * GameManager.manager.widthRatio, 400f * GameManager.manager.heightRatio), 400f, 1, 1f, false);
+        obj.transform.DOScale(0.2f, 1f);
+        obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1].artifactSlot.SetActive(false);
+        yield return new WaitForSeconds(0.6f);
+        obj.GetComponent<Image>().CrossFadeAlpha(0, 0.2f, false);
+        yield return new WaitForSeconds(0.3f);
+
+        Destroy(obj);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+
+        // MATTEO : Add trash can thunk sfx here!
+        GameManager.manager.td.transform.parent.DOMove(new Vector2
+            (GameManager.manager.td.transform.parent.position.x, GameManager.manager.td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     /***********************

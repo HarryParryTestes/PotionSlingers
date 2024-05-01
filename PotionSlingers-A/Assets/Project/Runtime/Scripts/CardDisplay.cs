@@ -87,20 +87,12 @@ public class CardDisplay : MonoBehaviour
                 flames.SetActive(false);
         }
         // trying something
-        // might take this out for now
+        // might take this out for now.
         
         if(card.cardName == "placeholder" && this.gameObject.name != "DeckPile")
         {
-            if(GetComponent<DragCard>() != null)
+            if(GetComponent<DragCard>() != null && !GetComponent<DragCard>().market && !GetComponent<DragCard>().loaded)
             {
-                /*
-                this.transform.position = GetComponent<DragCard>().originalPosition;
-                this.transform.DORotate(GetComponent<DragCard>().cardRotation, 0.1f).SetEase(Ease.Linear).SetId(gameObject.name);
-                if(GetComponent<CanvasGroup>() != null)
-                    GetComponent<CanvasGroup>().blocksRaycasts = true;
-                // this.transform.eulerAngles = GetComponent<DragCard>().rectTransform.rotation.eulerAngles;
-                this.transform.SetParent(GetComponent<DragCard>().parentAfterDrag);
-                */
                 GetComponent<DragCard>().beforeDisappear();
             }
                 
