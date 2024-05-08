@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
 
     public List<Card> starterCards;
 
+    public GameObject gameOverScreen;
     public GameObject tutorialArrow;
     public GameObject tutorialArrow2;
     public GameObject pluotPotionMenu;
@@ -253,6 +254,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void unblockRaycasts()
+    {
+        md1.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        md1.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        md1.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        md2.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        md2.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
     public void moveMarket()
     {
         StopCoroutine(cardDisappear());
@@ -263,12 +274,14 @@ public class GameManager : MonoBehaviour
         if (!marketSelected)
         {
             marketSelected = true;
+            /*
             md1.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
             md1.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
             md1.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
             md2.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
             md2.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
             md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            */
 
             md1.cardDisplay1.gameObject.SetActive(true);
             md1.cardDisplay2.gameObject.SetActive(true);
@@ -288,6 +301,7 @@ public class GameManager : MonoBehaviour
             canvasGroup.blocksRaycasts = false;
             // marketPosition = marketButton.transform.position;
             // marketButton.transform.parent.DOMove(new Vector3(0, 0, 0), 1f);
+            Invoke("unblockRaycasts", 0.9f);
 
             // market.transform.DOMove(new Vector3(1010, 300, 0), 1f);
             // marketButton.transform.DOMove(new Vector3(960, 300, 0), 1f);
@@ -381,6 +395,8 @@ public class GameManager : MonoBehaviour
         saveData.playerDeck = playersDeck;
         saveData.playerHealth = players[0].hp;
         saveData.playerCubes = players[0].hpCubes;
+        saveData.flipped = players[0].character.character.flipped;
+        saveData.transition = false;
         switch (saveData.stage)
         {
             case 1:
@@ -421,6 +437,15 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (Game.storyMode)
+        {
+            if (players[0].dead)
+            {
+                Debug.Log("Game over, the player died");
+                gameOverScreen.SetActive(true);
+            }
+        }
+
         int numAlive = 0;
         int numDead = 0;
 
@@ -451,7 +476,11 @@ public class GameManager : MonoBehaviour
             {
                 // advance a stage and save the game data
                 if (stage == 4)
+                {
                     unSpicyCards();
+                    SteamUserStats.SetAchievement("BEAT_STAGE_1");
+                }
+                    
                 Debug.Log("Advancing a stage in story mode");
                 saveData.newStage = true;
                 saveGameManagerValues();
@@ -484,6 +513,12 @@ public class GameManager : MonoBehaviour
                 // SceneManager.LoadScene("StoryMode");
             }
         }
+    }
+
+    public IEnumerator goBackToTitle()
+    {
+        yield return new WaitForSeconds(3);
+        SceneManager.LoadScene("TitleMenu");
     }
 
     public IEnumerator goToStory()
@@ -551,6 +586,7 @@ public class GameManager : MonoBehaviour
             {
                 players[1].hpCubes = saveData.opp1Cubes;
                 players[1].hp = saveData.opp1Health;
+                players[1].hBar.image.fillAmount = 0;
             }
             else
             {
@@ -573,6 +609,7 @@ public class GameManager : MonoBehaviour
             {
                 players[2].hpCubes = saveData.opp2Cubes;
                 players[2].hp = saveData.opp2Health;
+                players[2].hBar.image.fillAmount = 0;
             }
             else
             {
@@ -594,6 +631,7 @@ public class GameManager : MonoBehaviour
             {
                 players[3].hpCubes = saveData.opp3Cubes;
                 players[3].hp = saveData.opp3Health;
+                players[3].hBar.image.fillAmount = 0;
             }
             else
             {
@@ -618,6 +656,7 @@ public class GameManager : MonoBehaviour
             {
                 players[2].hpCubes = saveData.opp1Cubes;
                 players[2].hp = saveData.opp1Health;
+                players[2].hBar.image.fillAmount = 0;
             }
             else
             {
@@ -649,6 +688,7 @@ public class GameManager : MonoBehaviour
             {
                 players[2].hpCubes = saveData.opp1Cubes;
                 players[2].hp = saveData.opp1Health;
+                players[2].hBar.image.fillAmount = 0;
             }
             else
             {
@@ -680,6 +720,7 @@ public class GameManager : MonoBehaviour
             {
                 players[2].hpCubes = saveData.opp1Cubes;
                 players[2].hp = saveData.opp1Health;
+                players[2].hBar.image.fillAmount = 0;
             }
             else
             {
@@ -791,8 +832,20 @@ public class GameManager : MonoBehaviour
                 players[0].name = playerBottomName.text;
                 players[0].hpCubes = saveData.playerCubes;
                 players[0].hp = saveData.playerHealth;
+                if(players[0].hBar != null)
+                {
+                    Debug.Log("Health bar edit");
+                    players[0].hBar.image.fillAmount = 0;
+                }
+                players[0].currentPlayerHighlight.SetActive(true);
                 players[0].updateHealthUI();
                 currentPlayerName = players[0].name;
+                if (saveData.flipped)
+                {
+                    Debug.Log("Character card should be flipped!");
+                    players[0].character.canBeFlipped = true;
+                    players[0].character.flipCard();
+                }
                 // players[0].deck.loadDeck();
 
                 // numPlayers = 4;
@@ -878,6 +931,7 @@ public class GameManager : MonoBehaviour
                 players[0].charName = "Pluot";
                 players[0].character.onCharacterClick("Pluot");
                 players[0].checkCharacter();
+                players[0].currentPlayerHighlight.SetActive(true);
                 currentPlayerName = playerBottomName.text;
                 // everyone except player 1
                 if (i > 0)
@@ -920,6 +974,8 @@ public class GameManager : MonoBehaviour
             md1.shuffle();
             md2.shuffle();
             initDecks();
+
+            players[0].currentPlayerHighlight.SetActive(true);
 
             // take this out for now, maybe put it back in
             /*
@@ -1038,6 +1094,7 @@ public class GameManager : MonoBehaviour
             playerBottomName.text = SteamFriends.GetPersonaName().ToString();
             cardPlayer.name = SteamFriends.GetPersonaName().ToString();
             currentPlayerName = playerBottomName.text;
+            players[0].currentPlayerHighlight.SetActive(true);
             playerTopName.text = "BOLO";
             players[2].hpCubes = 1;
             players[2].updateHealthUI();
@@ -1384,7 +1441,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Card animation starting");
         GameObject obj = Instantiate(player.deck.gameObject, player.deck.gameObject.transform.position, player.deck.gameObject.transform.rotation, player.gameObject.transform);
         if (player.GetComponent<ComputerPlayer>() != null)
-            obj.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+            obj.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
         obj.transform.DOJump(cd.gameObject.transform.position, 200f, 1, 0.5f, false);
         Card card = player.deck.popCard();
         if (cd.GetComponent<DragCard>() != null)
@@ -1443,6 +1500,8 @@ public class GameManager : MonoBehaviour
         trash = false;
         damage = false;
         trashDeckBonus = false;
+
+        player.currentPlayerHighlight.SetActive(true);
 
         // This is where to make the animation that deals the cards from the deck to the holster
         StartCoroutine(HolsterFill(player));
@@ -2199,6 +2258,8 @@ public class GameManager : MonoBehaviour
 
                 SteamUserStats.StoreStats();
             }
+
+            players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
 
             myPlayerIndex++;
 
@@ -4393,6 +4454,11 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay1.card.buyPrice - 1))
                     {
+                        if(md1.cardDisplay1.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        {
+                            sendErrorMessage(6);
+                            return;
+                        }
                         // All rings cost 4 logic
                         if (md1.cardDisplay1.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
                         {
@@ -4455,6 +4521,11 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay2.card.buyPrice - 1))
                     {
+                        if (md1.cardDisplay2.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        {
+                            sendErrorMessage(6);
+                            return;
+                        }
                         // All rings cost 4 logic
                         if (md1.cardDisplay2.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
                         {
@@ -4514,6 +4585,11 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay3.card.buyPrice - 1))
                     {
+                        if (md1.cardDisplay3.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        {
+                            sendErrorMessage(6);
+                            return;
+                        }
                         // All rings cost 4 logic
                         if (md1.cardDisplay3.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
                         {
@@ -4625,6 +4701,11 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay1.card.buyPrice - 1))
                     {
+                        if (md2.cardDisplay1.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        {
+                            sendErrorMessage(6);
+                            return;
+                        }
                         // All rings cost 4 logic
                         if (md2.cardDisplay1.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
                         {
@@ -4686,6 +4767,11 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay2.card.buyPrice - 1))
                     {
+                        if (md2.cardDisplay2.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        {
+                            sendErrorMessage(6);
+                            return;
+                        }
                         // All rings cost 4 logic
                         if (md2.cardDisplay2.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
                         {
@@ -4746,6 +4832,11 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay3.card.buyPrice - 1))
                     {
+                        if (md2.cardDisplay3.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        {
+                            sendErrorMessage(6);
+                            return;
+                        }
                         // All rings cost 4 logic
                         if (md2.cardDisplay3.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
                         {

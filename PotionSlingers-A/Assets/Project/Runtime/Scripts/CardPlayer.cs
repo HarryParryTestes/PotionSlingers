@@ -33,6 +33,7 @@ public class CardPlayer : MonoBehaviour
     public int bonusAmount;
     public int cardsTrashed = 0;
     //public HealthController health;
+    public HealthBar hBar;
     public GameObject bar;
     public GameObject playerHP;
     public GameObject playerHPCubes;

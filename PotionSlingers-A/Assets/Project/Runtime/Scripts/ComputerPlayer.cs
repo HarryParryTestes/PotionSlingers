@@ -359,7 +359,7 @@ public class ComputerPlayer : CardPlayer
     public IEnumerator waitASecBro()
     {
         // modify this based on what difficulty the CPU is
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1.5f);
 
         // story mode logic
         if (Game.storyMode && this.gameObject.GetComponent<CardPlayer>().name != "Saltimbocca")

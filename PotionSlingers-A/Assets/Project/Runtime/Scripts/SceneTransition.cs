@@ -26,8 +26,20 @@ public class SceneTransition : MonoBehaviour
 
     public IEnumerator doIt()
     {
-        // SaveData saveData = SaveSystem.LoadGameData();
+        SaveData saveData = SaveSystem.LoadGameData();
+        saveData.transition = true;
+        SaveSystem.SaveGameData(saveData);
 
+
+        card1.transform.DOMoveX(-4.5f, 1.5f);
+        card2.transform.DOMoveX(4.5f, 1.5f);
+        yield return new WaitForSeconds(1.5f);
+
+        if (cutsceneManager.saveData.stage == 5)
+            SceneManager.LoadScene("TitleMenu");
+        else
+            SceneManager.LoadScene("TownCenter");
+        /*
         card1.transform.DOMoveX(-4.5f, 1.5f);
         card2.transform.DOMoveX(4.5f, 1.5f);
         yield return new WaitForSeconds(1.75f);
@@ -41,6 +53,7 @@ public class SceneTransition : MonoBehaviour
             SceneManager.LoadScene("TitleMenu");
         else
             SceneManager.LoadScene("TownCenter");
+            */
     }
 
     public void doTransition()
