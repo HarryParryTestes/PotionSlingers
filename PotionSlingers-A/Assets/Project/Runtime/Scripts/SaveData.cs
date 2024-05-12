@@ -14,6 +14,7 @@ public class SaveData
     public string playerCharName;
     public int playerHealth;
     public int playerCubes;
+    public bool canBeFlipped;
     public bool flipped;
     public bool transition;
     public List<string> playerDeck = new List<string>();

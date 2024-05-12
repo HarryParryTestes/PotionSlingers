@@ -25,6 +25,11 @@ public class CardTransition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if (Game.tutorial)
+        {
+            this.gameObject.SetActive(false);
+        }
+
         SaveData saveData = SaveSystem.LoadGameData();
 
         if (Game.storyMode)

@@ -230,7 +230,11 @@ public class MainMenu : MonoBehaviour
     {
         switch (level)
         {
-			case 1:
+            case 0:
+                levelBar.maxValue = 100;
+                expMenuBar.maxValue = 100;
+                break;
+            case 1:
 				levelBar.maxValue = 100;
 				expMenuBar.maxValue = 100;
 				break;
@@ -246,9 +250,25 @@ public class MainMenu : MonoBehaviour
 				levelBar.maxValue = 400;
 				expMenuBar.maxValue = 400;
 				break;
-			default:
-				levelBar.maxValue = 200;
-				expMenuBar.maxValue = 200;
+            case 5:
+                levelBar.maxValue = 500;
+                expMenuBar.maxValue = 500;
+                break;
+            case 6:
+                levelBar.maxValue = 600;
+                expMenuBar.maxValue = 600;
+                break;
+            case 7:
+                levelBar.maxValue = 800;
+                expMenuBar.maxValue = 800;
+                break;
+            case 8:
+                levelBar.maxValue = 1000;
+                expMenuBar.maxValue = 1000;
+                break;
+            default:
+				levelBar.maxValue = 1000 + (level - 8) * 500; // 1000 + (level - 8) * 500
+				expMenuBar.maxValue = 1000 + (level - 8) * 500;
 				break;
 
 		}
@@ -256,7 +276,9 @@ public class MainMenu : MonoBehaviour
 
 	public void initExperienceMenu(int exp)
     {
-		titleMenu.SetActive(false);
+        Debug.Log("Points: " + points);
+        Debug.Log("Level: " + level);
+        titleMenu.SetActive(false);
 		logo.SetActive(false);
 		Debug.Log("Experience Menu");
 		expMenu.SetActive(true);
@@ -273,7 +295,10 @@ public class MainMenu : MonoBehaviour
 		Debug.Log("EXP: " + points);
 		SteamUserStats.SetStat("exp_points", points);
 		SteamUserStats.StoreStats();
-	}
+        networkManager.completedTutorial = false;
+        networkManager.completedGame = false;
+
+    }
 
 	public void levelUp(int level)
     {
@@ -286,7 +311,11 @@ public class MainMenu : MonoBehaviour
 
         switch (level)
         {
-			case 1:
+            case 0:
+                levelBar.maxValue = 100;
+                expMenuBar.maxValue = 100;
+                break;
+            case 1:
 				levelBar.maxValue = 100;
 				expMenuBar.maxValue = 100;
 				break;
@@ -319,9 +348,9 @@ public class MainMenu : MonoBehaviour
 				expMenuBar.maxValue = 1000;
 				break;
 			default:
-				levelBar.maxValue = 200;
-				expMenuBar.maxValue = 200;
-				break;
+                levelBar.maxValue = 1000 + (level - 8) * 500; // 1000 + (level - 8) * 500
+                expMenuBar.maxValue = 1000 + (level - 8) * 500;
+                break;
 		}
 
 		levelBar.value = points;

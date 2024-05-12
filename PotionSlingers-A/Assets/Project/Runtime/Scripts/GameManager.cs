@@ -396,6 +396,7 @@ public class GameManager : MonoBehaviour
         saveData.playerHealth = players[0].hp;
         saveData.playerCubes = players[0].hpCubes;
         saveData.flipped = players[0].character.character.flipped;
+        saveData.canBeFlipped = players[0].character.canBeFlipped;
         saveData.transition = false;
         switch (saveData.stage)
         {
@@ -443,6 +444,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Game over, the player died");
                 gameOverScreen.SetActive(true);
+                return;
             }
         }
 
@@ -511,7 +513,17 @@ public class GameManager : MonoBehaviour
                 advanceStageUI.SetActive(true);
                 StartCoroutine(goToStory());
                 // SceneManager.LoadScene("StoryMode");
+                return;
             }
+
+            if (players[0].dead)
+            {
+                Debug.Log("Game over, the player died");
+                gameOverScreen.SetActive(true);
+                return;
+            }
+            Game.completedGame = true;
+            StartCoroutine(goBackToTitle());
         }
     }
 
@@ -840,6 +852,10 @@ public class GameManager : MonoBehaviour
                 players[0].currentPlayerHighlight.SetActive(true);
                 players[0].updateHealthUI();
                 currentPlayerName = players[0].name;
+                if (saveData.canBeFlipped)
+                {
+                    players[0].character.canBeFlipped = true;
+                }
                 if (saveData.flipped)
                 {
                     Debug.Log("Character card should be flipped!");
@@ -907,6 +923,8 @@ public class GameManager : MonoBehaviour
                 currentPlayerName = players[0].name;
 
                 setStoryModeCharacters();
+
+                // do numPlayers == 3 check here
             }
             return;
         }
@@ -1009,6 +1027,19 @@ public class GameManager : MonoBehaviour
 
             if (Game.numPlayers == 3)
             {
+                // experimenting
+                players[1].gameObject.transform.parent.parent.position = new Vector3(100f, 840f, 0);
+                players[2].gameObject.transform.parent.position = new Vector3(1260f, 870f, 0);
+
+                if (Screen.width == 2560)
+                {
+                    players[1].gameObject.transform.parent.parent.position = new Vector3(150f, 1180f, 0);
+                    players[2].gameObject.transform.parent.position = new Vector3(1625f, 1305f, 0);
+                }
+                else if (Screen.width == 3840)
+                {
+
+                }
                 p4.SetActive(false);
             }
 
