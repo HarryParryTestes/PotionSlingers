@@ -157,7 +157,7 @@ namespace Map
             rt.SetAsFirstSibling();
             rt.sizeDelta = backgroundPadding;
 
-            rt.offsetMax = new Vector2(rt.offsetMax.x, 35f); // top
+            rt.offsetMax = new Vector2(200, 35f); // top
             rt.offsetMin = new Vector2(rt.offsetMin.x, -815); // bottom
 
             var image = backgroundObject.AddComponent<Image>();

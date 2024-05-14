@@ -67,6 +67,14 @@ public class SaveSystem : MonoBehaviour
 
     public static void checkGameData()
     {
+        var settings = PlayerPrefs.GetString("SaveSettings");
+        SaveData data = JsonConvert.DeserializeObject<SaveData>(settings);
+        Debug.Log(data.stage);
+        Debug.Log(data.playerCharName);
+        Debug.Log(data.savedGame);
+
+        GameObject obj = GameObject.Find("Save Data Text");
+        obj.GetComponent<TMPro.TextMeshProUGUI>().text = "Current Save Data: Stage " + data.stage;
         /*
         string path = Application.persistentDataPath + "savedata.bin";
         if (File.Exists(path))

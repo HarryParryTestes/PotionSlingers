@@ -96,7 +96,7 @@ public class CutsceneManager : MonoBehaviour
         saveData = SaveSystem.LoadGameData();
         saveData.playerCubes = 3;
         saveData.playerHealth = 10;
-        StartCoroutine(showHealingMessage());
+        // StartCoroutine(showHealingMessage());
         SaveSystem.SaveGameData(saveData);
     }
 

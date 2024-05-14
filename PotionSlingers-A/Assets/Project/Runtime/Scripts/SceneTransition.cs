@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +13,11 @@ public class SceneTransition : MonoBehaviour
     public GameObject loadingScreen;
     public GameObject text;
     public CutsceneManager cutsceneManager;
+    public Button saltButton;
+    public Button crowButton;
+    public Button singeButton;
+    public Button demoOverButton;
+    public Image background;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +28,16 @@ public class SceneTransition : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void healPlayer()
+    {
+        // load health and essence cubes of player and heal them back to full
+        SaveData saveData = SaveSystem.LoadGameData();
+        saveData.playerCubes = 3;
+        saveData.playerHealth = 10;
+        // StartCoroutine(showHealingMessage());
+        SaveSystem.SaveGameData(saveData);
     }
 
     public IEnumerator doIt()

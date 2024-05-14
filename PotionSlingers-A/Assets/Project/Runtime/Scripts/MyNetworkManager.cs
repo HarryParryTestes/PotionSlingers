@@ -315,6 +315,12 @@ public class MyNetworkManager : NetworkManager
         */
         animator.SetTrigger("End");
         yield return new WaitForSeconds(2);
+        SaveData data = SaveSystem.LoadGameData();
+        if (storyMode && data.newStage)
+        {
+            ServerChangeScene("StoryMode");
+        }
+
         ServerChangeScene("TownCenter");
     }
 

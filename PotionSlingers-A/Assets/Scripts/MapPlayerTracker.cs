@@ -2,6 +2,8 @@
 using System.Linq;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 namespace Map
 {
@@ -66,23 +68,73 @@ namespace Map
             // load appropriate scene with context based on nodeType:
             // or show appropriate GUI over the map: 
             // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
+            SaveData saveData = SaveSystem.LoadGameData();
             GameObject transition = GameObject.Find("SceneTransition");
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:
-                    transition.GetComponent<SceneTransition>().doTransition();
+                    if(saveData.stage == 1)
+                    {
+                        transition.GetComponent<SceneTransition>().doTransition();
+                        break;
+                    }
+                       
+                    else if (saveData.stage == 2)
+                    {
+                        transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                        // transition.GetComponent<SceneTransition>().doTransition();
+                        break;
+                    }
+                    else if (saveData.stage == 3)
+                    {
+                        transition.GetComponent<SceneTransition>().crowButton.onClick.Invoke();
+                        // transition.GetComponent<SceneTransition>().doTransition();
+                        break;
+                    }
+                    else if (saveData.stage == 5)
+                    {
+                        transition.GetComponent<SceneTransition>().demoOverButton.onClick.Invoke();
+                        break;
+                    }
+
                     break;
                 case NodeType.EliteEnemy:
                     break;
                 case NodeType.RestSite:
+                    transition.GetComponent<SceneTransition>().healPlayer();
                     break;
                 case NodeType.Treasure:
                     break;
                 case NodeType.Store:
                     break;
                 case NodeType.Boss:
+                    transition.GetComponent<SceneTransition>().singeButton.onClick.Invoke();
+                    if (saveData.stage == 5)
+                    {
+                        transition.GetComponent<SceneTransition>().demoOverButton.onClick.Invoke();
+                        break;
+                    }
                     break;
                 case NodeType.Mystery:
+                    // transition.GetComponent<SceneTransition>().doTransition();
+                    if (saveData.stage == 1)
+                    {
+                        transition.GetComponent<SceneTransition>().doTransition();
+                        break;
+                    }
+
+                    else if (saveData.stage == 2)
+                    {
+                        transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                        // transition.GetComponent<SceneTransition>().doTransition();
+                        break;
+                    }
+                    else if (saveData.stage == 3)
+                    {
+                        transition.GetComponent<SceneTransition>().crowButton.onClick.Invoke();
+                        // transition.GetComponent<SceneTransition>().doTransition();
+                        break;
+                    }
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
