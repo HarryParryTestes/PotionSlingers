@@ -18,6 +18,7 @@ public class SceneTransition : MonoBehaviour
     public Button singeButton;
     public Button demoOverButton;
     public Image background;
+    public GameObject treasureMenu;
     // Start is called before the first frame update
     void Start()
     {

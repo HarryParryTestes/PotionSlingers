@@ -104,10 +104,13 @@ namespace Map
                     transition.GetComponent<SceneTransition>().healPlayer();
                     break;
                 case NodeType.Treasure:
+                    transition.GetComponent<SceneTransition>().treasureMenu.SetActive(true);
                     break;
                 case NodeType.Store:
                     break;
                 case NodeType.Boss:
+                    saveData.stage = 4;
+                    SaveSystem.SaveGameData(saveData);
                     transition.GetComponent<SceneTransition>().singeButton.onClick.Invoke();
                     if (saveData.stage == 5)
                     {
