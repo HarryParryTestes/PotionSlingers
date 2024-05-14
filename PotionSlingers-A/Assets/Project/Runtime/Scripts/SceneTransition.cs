@@ -30,6 +30,8 @@ public class SceneTransition : MonoBehaviour
         saveData.transition = true;
         SaveSystem.SaveGameData(saveData);
 
+        // DialogueManager.BarkString("I'm barking this text.", this.transform);
+
 
         card1.transform.DOMoveX(-4.5f, 1.5f);
         card2.transform.DOMoveX(4.5f, 1.5f);
