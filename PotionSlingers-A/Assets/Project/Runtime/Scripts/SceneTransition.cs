@@ -54,7 +54,7 @@ public class SceneTransition : MonoBehaviour
         card2.transform.DOMoveX(4.5f, 1.5f);
         yield return new WaitForSeconds(1.5f);
 
-        if (cutsceneManager.saveData.stage == 5)
+        if (saveData.stage == 5)
             SceneManager.LoadScene("TitleMenu");
         else
             SceneManager.LoadScene("TownCenter");

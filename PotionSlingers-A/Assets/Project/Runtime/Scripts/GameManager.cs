@@ -444,6 +444,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Game over, the player died");
                 gameOverScreen.SetActive(true);
+                StartCoroutine(goBackToTitle());
                 return;
             }
         }
@@ -479,6 +480,7 @@ public class GameManager : MonoBehaviour
                 // advance a stage and save the game data
                 if (stage == 4)
                 {
+                    Debug.Log("Singelotte was just beaten... This should give the player an achievement!!!!!");
                     unSpicyCards();
                     SteamUserStats.SetAchievement("BEAT_STAGE_1");
                 }
@@ -520,6 +522,7 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Game over, the player died");
                 gameOverScreen.SetActive(true);
+                StartCoroutine(goBackToTitle());
                 return;
             }
             Game.completedGame = true;
@@ -2724,6 +2727,11 @@ public class GameManager : MonoBehaviour
 
         if (players[myPlayerIndex].isPluot)
         {
+            if (players[myPlayerIndex].pluotAction)
+            {
+                sendMessage("You already performed your action this turn!");
+                return;
+            }
             if (players[myPlayerIndex].character.character.flipped)
             {
                 // prompt ui for adding Extra Inventory into holster
@@ -2738,6 +2746,13 @@ public class GameManager : MonoBehaviour
 
         if (players[myPlayerIndex].isReets)
         {
+
+            if (players[myPlayerIndex].reetsCycle)
+            {
+               sendMessage("You already performed your action this turn!");
+                return;
+            }
+
             //Image image = reetsMenu.GetComponent<Image>();
             reetsMenu.SetActive(true);
             if (players[myPlayerIndex].character.character.flipped)
@@ -4185,7 +4200,8 @@ public class GameManager : MonoBehaviour
                 //playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
-            if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+            if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion" ||
+                playerHolster.cardList[selectedCardInt - 1].card.cardType == "Unique")
             {
                 // wasn't working, taking it out for now
                 Debug.Log("Animation triggered");
@@ -5138,6 +5154,15 @@ public class GameManager : MonoBehaviour
                 sendErrorMessage(7);
                 return;
             }
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Unique")
+            {
+                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                sendSuccessMessage(8);
+                return;
+            }
+
             // LOGIC FOR BOLO SELLING ABILITY
             // Bolo not flipped and he's selling something that's not a potion
             if (players[myPlayerIndex].isBolo && !players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")

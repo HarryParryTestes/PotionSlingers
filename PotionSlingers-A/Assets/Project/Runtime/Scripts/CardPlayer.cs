@@ -59,6 +59,8 @@ public class CardPlayer : MonoBehaviour
     public bool throwBonus;
     public bool vesselBonus;
     public bool artifactBonus;
+    public bool reetsCycle = false;
+    public bool pluotAction = false;
     public bool isPluot = false;
     public bool isBolo = false;
     public bool isNickles = false;
@@ -483,6 +485,7 @@ public class CardPlayer : MonoBehaviour
     {
         currentPlayerHighlight.SetActive(true);
 
+        reetsCycle = false;
         // check if cube should be taken
         if (cubed)
         {
@@ -688,6 +691,14 @@ public class CardPlayer : MonoBehaviour
 
     public void addReetsCard()
     {
+        if (reetsCycle)
+        {
+            GameManager.manager.sendMessage("You already performed your action this turn!");
+            return;
+        }
+
+
+        Debug.Log("Activating Reets cycle ability");
         if (deck.deckList.Count >= 1)
         {
             foreach (CardDisplay card in holster.cardList)
@@ -696,7 +707,9 @@ public class CardPlayer : MonoBehaviour
                 {
                     Card temp = deck.popCard();
                     card.updateCard(temp);
-                    return;
+                    reetsCycle = true;
+                    GameManager.manager.sendMessage("Added a card into your holster!");
+                    break;
                 }
             }
 
@@ -1770,6 +1783,7 @@ public class CardPlayer : MonoBehaviour
         selectedCard.card.cardName == "A Loss of Dexterity" ||
         selectedCard.card.cardName == "A Severe Draught That Melts Only Brains")
         {
+            /*
             if (GameManager.manager.Game.multiplayer)
             {
                 Debug.Log("Command check starting");
@@ -1782,6 +1796,32 @@ public class CardPlayer : MonoBehaviour
                     }
                 }
                 return damage;
+            }
+            */
+
+            // if the attacked player is a computer, do the trashing for them
+            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() != null)
+            {
+                Debug.Log("Computer logic!!!");
+                foreach(CardDisplay cd in GameManager.manager.tempPlayer.holster.cardList)
+                {
+                    if(cd.card.name == "placeholder")
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        GameObject obj = Instantiate(cd.gameObject,
+                        cd.gameObject.transform.position,
+                        cd.gameObject.transform.rotation,
+                        cd.gameObject.transform);
+
+                        StartCoroutine(MoveToTrash(obj));
+                        GameManager.manager.td.addCard(cd);
+                        GameManager.manager.sendMessage("Opponent just trashed a card!");
+                        return damage;
+                    }
+                }
             }
 
             // IMPORTANT: use this as template for other implementations of ComputerPlayer logic!!!
