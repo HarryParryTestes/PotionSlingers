@@ -46,6 +46,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject hpBar;
     public GameObject healthText;
     public GameObject hitAnimation;
+    public GameObject hoverBox;
     public List<Sprite> hitImages;
     private System.Random rng = new System.Random();
     public string lastArtifactUsed = "";

@@ -54,6 +54,17 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
+        if(cp != null)
+        {
+            if(pointerEventData.pointerDrag != null)
+            {
+                return;
+            }
+            // hoverbox code in here!
+            cp.hoverBox.SetActive(true);
+            cp.hoverBox.GetComponent<HoverBox>().UpdateText(cp);
+        }
+
         if (this.gameObject.name == "DeckPile")
         {
             // transform.position += new Vector3(0, 100, 0);
@@ -64,6 +75,12 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
+
+        if (cp != null)
+        {
+            // hoverbox code in here!
+            cp.hoverBox.SetActive(false);
+        }
         if (this.gameObject.name == "DeckPile")
         {
             // transform.position -= new Vector3(0, 100, 0);
