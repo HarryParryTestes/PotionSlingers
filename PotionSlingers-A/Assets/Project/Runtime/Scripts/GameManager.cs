@@ -2585,6 +2585,12 @@ public class GameManager : MonoBehaviour
 
     public void takeTrashCard(CardDisplay cd)
     {
+        if (!trashDeckBonus)
+        {
+            Debug.Log("Don't take a card reached here");
+            return;
+        }
+
         int i;
         for (i = 0; i < td.deckList.Count; i++)
         {
@@ -2611,6 +2617,8 @@ public class GameManager : MonoBehaviour
         }
         players[myPlayerIndex].deck.putCardOnTop(td.deckList[i]);
         td.deckList.RemoveAt(i);
+        trashDeckMenu.SetActive(false);
+        sendSuccessMessage(15);
     }
 
     public void buyTrashCard(CardDisplay cd)

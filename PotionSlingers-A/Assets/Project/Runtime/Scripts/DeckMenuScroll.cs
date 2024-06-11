@@ -134,11 +134,78 @@ public class DeckMenuScroll : MonoBehaviour
 
         if (deck != null)
         {
+            Debug.Log("Init with deck");
             initDecklist(deck);
-        } else
+        }
+        else
+        {
+            Debug.Log("Init without deck");
             initDecklist();
+        }
 
         Debug.Log("Decklist count:" + deckList.Count);
+
+        if (deckList.Count < 4)
+        {
+            slider.gameObject.SetActive(false);
+            slider.maxValue = 0;
+            foreach (CardDisplay cd in cdList)
+            {
+                cd.gameObject.SetActive(true);
+            }
+            if (deckList.Count == 1)
+            {
+                temp = deckList[0];
+                cd1.updateCard(temp);
+                cd2.updateCard(cd2.placeholder);
+                cd3.updateCard(cd3.placeholder);
+            }
+            else if (deckList.Count == 2)
+            {
+                temp = deckList[0];
+                cd1.updateCard(temp);
+                temp2 = deckList[1];
+                cd2.updateCard(temp2);
+                cd3.updateCard(cd3.placeholder);
+            }
+            else if (deckList.Count == 3)
+            {
+                temp = deckList[0];
+                cd1.updateCard(temp);
+                temp2 = deckList[1];
+                cd2.updateCard(temp2);
+                temp3 = deckList[2];
+                cd3.updateCard(temp3);
+            }
+            else if (deckList.Count == 0)
+            {
+                cd1.updateCard(cd1.placeholder);
+                cd2.updateCard(cd2.placeholder);
+                cd3.updateCard(cd3.placeholder);
+            }
+            return;
+        }
+
+        foreach (CardDisplay cd in cdList)
+        {
+            if (cardIndex > deckList.Count - 1)
+            {
+                Debug.Log("Reached end of trash");
+                cardIndex = 0;
+                cd.updateCard(cd.placeholder);
+                break;
+            }
+            else
+            {
+                Card temp4 = deckList[cardIndex];
+                cd.updateCard(temp4);
+                cardIndex++;
+            }
+        }
+        slider.maxValue = deckList.Count - 3;
+        slider.gameObject.SetActive(true);
+        cardIndex = 0;
+        return;
 
         cardIndex = 0;
         // trash = !trash;
