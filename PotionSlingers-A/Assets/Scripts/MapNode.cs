@@ -23,6 +23,9 @@ namespace Map
         public SpriteRenderer visitedCircle;
         public Image circleImage;
         public Image visitedCircleImage;
+        public string enemyName;
+        public GameObject textbox;
+        public GameObject textbox2;
 
         public Node Node { get; private set; }
         public NodeBlueprint Blueprint { get; private set; }
@@ -110,7 +113,15 @@ namespace Map
                         image.DOKill();
                         image.DOColor(MapView.Instance.visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
                     }
-                    
+
+                    EnemyPool enemyPool = GameObject.Find("EnemyList").GetComponent<EnemyPool>();
+
+                    if (Node.nodeType == NodeType.Boss)
+                    {
+                        enemyName = enemyPool.GetBossEnemy();
+                    } else
+                        enemyName = enemyPool.GetRandomEnemy();
+
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
@@ -130,6 +141,15 @@ namespace Map
                 image.transform.DOKill();
                 image.transform.DOScale(initialScale * HoverScaleFactor, 0.3f);
             }
+            Debug.Log("Hovering over " + enemyName);
+
+            // display enemy name in this code!
+            if(enemyName != "")
+            {
+                textbox = GameObject.Find("Fully Healed");
+                textbox2 = Instantiate(textbox, this.transform);
+                textbox2.GetComponent<TMPro.TextMeshProUGUI>().text = enemyName;
+            }
         }
 
         public void OnPointerExit(PointerEventData data)
@@ -145,6 +165,7 @@ namespace Map
                 image.transform.DOKill();
                 image.transform.DOScale(initialScale, 0.3f);
             }
+            Destroy(textbox2);
         }
 
         public void OnPointerDown(PointerEventData data)

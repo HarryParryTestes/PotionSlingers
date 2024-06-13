@@ -368,6 +368,8 @@ public class GameManager : MonoBehaviour
         // List<string> playersDeck = new List<string>();
         // List<string> playersHolster = new List<string>();
 
+        saveData.visitedEnemies.Add(saveData.currentEnemyName);
+
         playersHolster.Clear();
         playersDeck.Clear();
 
@@ -398,21 +400,21 @@ public class GameManager : MonoBehaviour
         saveData.flipped = players[0].character.character.flipped;
         saveData.canBeFlipped = players[0].character.canBeFlipped;
         saveData.transition = false;
-        switch (saveData.stage)
+        switch (saveData.currentEnemyName)
         {
-            case 1:
+            case "Bag o' Snakes":
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
                 break;
-            case 2:
+            case "Saltimbocca":
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
                 break;
-            case 4:
+            case "Singelotte":
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
                 break;
-            case 3:
+            case "Crowpunk":
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
                 saveData.opp2Health = players[2].hp;
@@ -487,6 +489,7 @@ public class GameManager : MonoBehaviour
                     
                 Debug.Log("Advancing a stage in story mode");
                 saveData.newStage = true;
+                saveData.visitedEnemies.Add(saveData.currentEnemyName);
                 saveGameManagerValues();
                 saveData.stage = stage + 1;
                 saveData.savedGame = true;
@@ -585,6 +588,174 @@ public class GameManager : MonoBehaviour
 
     void setStoryModeCharacters()
     {
+        // changing from stage number to currentEnemyName
+        switch (saveData.currentEnemyName)
+        {
+            case "Bag o' Snakes":
+                background.sprite = backgrounds[0];
+                background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Bag o' Snakes";
+                players[2].name = "Bag o' Snakes";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Bag o' Snakes");
+                players[2].checkCharacter();
+
+                if (saveData.savedGame)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 10;
+                }
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Saltimbocca":
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Saltimbocca";
+                players[2].name = "Saltimbocca";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Saltimbocca");
+                players[2].checkCharacter();
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 10;
+                }
+                players[2].hpCubes = 1;
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Crowpunk":
+                numPlayers = 4;
+                // Fingas is stage 1 enemy
+                players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].charName = "Fingas";
+                players[1].name = "Fingas";
+                playerLeftName.text = players[1].charName;
+                players[1].character.onCharacterClick("Fingas");
+                players[1].checkCharacter();
+                players[1].hpCubes = 1;
+                players[1].hp = 10;
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[1].hpCubes = saveData.opp1Cubes;
+                    players[1].hp = saveData.opp1Health;
+                    players[1].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[1].hpCubes = 1;
+                    players[1].hp = 10;
+                }
+
+                players[1].updateHealthUI();
+
+                // Crow Punk is stage 1 enemy
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "CrowPunk";
+                players[2].name = "CrowPunk";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("CrowPunk");
+                players[2].checkCharacter();
+                players[2].hpCubes = 1;
+                players[2].hp = 10;
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp2Cubes;
+                    players[2].hp = saveData.opp2Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                }
+                players[2].updateHealthUI();
+
+                // Fingas is stage 1 enemy
+                players[3].gameObject.AddComponent<ComputerPlayer>();
+                players[3].charName = "Fingas";
+                players[3].name = "Fingas";
+                playerRightName.text = players[3].charName;
+                players[3].character.onCharacterClick("Fingas");
+                players[3].checkCharacter();
+                players[3].hpCubes = 1;
+                players[3].hp = 10;
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[3].hpCubes = saveData.opp3Cubes;
+                    players[3].hp = saveData.opp3Health;
+                    players[3].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[3].hpCubes = 1;
+                    players[3].hp = 10;
+                }
+                players[3].updateHealthUI();
+                break;
+            case "Singelotte":
+                background.sprite = backgrounds[1];
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Singelotte";
+                players[2].name = "Singelotte";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Singelotte");
+                players[2].checkCharacter();
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 33;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 33;
+                }
+
+
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+        }
+        /*
         if (saveData.stage == 3)
         {
             numPlayers = 4;
@@ -754,7 +925,7 @@ public class GameManager : MonoBehaviour
             p3.SetActive(false);
             p4.SetActive(false);
         }
-
+        */
     }
 
     public void unSpicyCards()
@@ -910,7 +1081,7 @@ public class GameManager : MonoBehaviour
                 md2.shuffle();
                 initDecks();
 
-                SaveData newSaveData = new SaveData(Game.storyModeCharName, stage);
+                SaveData newSaveData = new SaveData(Game.storyModeCharName, stage, saveData.currentEnemyName);
                 saveData.savedGame = false;
                 saveData = newSaveData;
                 // initialize saved cards in case of quit out

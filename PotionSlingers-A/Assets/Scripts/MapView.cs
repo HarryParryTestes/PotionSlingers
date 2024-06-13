@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Map
 {
@@ -181,8 +182,19 @@ namespace Map
                 foreach (var point in currentNode.outgoing)
                 {
                     var mapNode = GetNode(point);
-                    if (mapNode != null)
-                        mapNode.SetState(NodeStates.Attainable);
+                    if (mapNode.Node.nodeType == NodeType.Boss)
+                    {
+                        EnemyPool enemyPool = GameObject.Find("EnemyList").GetComponent<EnemyPool>();
+
+                        mapNode.enemyName = enemyPool.GetBossEnemy();
+                    }
+                    if (mapNode.Node.nodeType == NodeType.Mystery || mapNode.Node.nodeType == NodeType.MinorEnemy)
+                    {
+                        EnemyPool enemyPool = GameObject.Find("EnemyList").GetComponent<EnemyPool>();
+
+                        mapNode.enemyName = enemyPool.GetRandomEnemy(1);
+                    }
+                    mapNode.SetState(NodeStates.Attainable);
                 }
             }
         }

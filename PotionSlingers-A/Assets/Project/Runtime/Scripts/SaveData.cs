@@ -30,12 +30,23 @@ public class SaveData
     public int stage;
     public bool savedGame;
     public bool newStage;
+    public string currentEnemyName;
+    public List<string> visitedEnemies = new List<string>();
     // public List<string> oppDeck = new List<string>();
     // public List<string> oppHolster = new List<string>();
 
     public SaveData()
     {
 
+    }
+
+    public SaveData(string playerCharName, int stage, string name)
+    {
+        this.playerCharName = playerCharName;
+        this.stage = stage;
+        this.currentEnemyName = name;
+        playerCubes = 3;
+        playerHealth = 10;
     }
 
     public SaveData(string playerCharName, int stage)

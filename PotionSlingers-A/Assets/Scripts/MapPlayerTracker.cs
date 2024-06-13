@@ -69,7 +69,39 @@ namespace Map
             // or show appropriate GUI over the map: 
             // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
             SaveData saveData = SaveSystem.LoadGameData();
+            saveData.currentEnemyName = mapNode.enemyName;
+            Debug.Log("Current enemy is " + saveData.currentEnemyName + "!!!");
+            SaveSystem.SaveGameData(saveData);
             GameObject transition = GameObject.Find("SceneTransition");
+
+            if (mapNode.Node.nodeType == NodeType.Treasure)
+            {
+                transition.GetComponent<SceneTransition>().treasureMenu.SetActive(true);
+                return;
+            }
+
+            if (mapNode.Node.nodeType == NodeType.RestSite)
+            {
+                transition.GetComponent<SceneTransition>().healPlayer();
+                return;
+            }
+
+            switch (saveData.currentEnemyName)
+            {
+                case "Bag o' Snakes":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
+                case "Saltimbocca":
+                    transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                    break;
+                case "Crowpunk":
+                    transition.GetComponent<SceneTransition>().crowButton.onClick.Invoke();
+                    break;
+                case "Singelotte":
+                    transition.GetComponent<SceneTransition>().singeButton.onClick.Invoke();
+                    break;
+            }
+            /*
             switch (mapNode.Node.nodeType)
             {
                 case NodeType.MinorEnemy:
@@ -142,6 +174,7 @@ namespace Map
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+            */
         }
 
         private void PlayWarningThatNodeCannotBeAccessed()
