@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TreasureMenu : MonoBehaviour
 {
+    public List<Card> cardPool;
+    public List<CardDisplay> cardDisplays;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -14,6 +17,16 @@ public class TreasureMenu : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void chooseCards()
+    {
+        foreach(CardDisplay cd in cardDisplays)
+        {
+            System.Random rng = new System.Random();
+            int index = rng.Next(cardPool.Count);
+            cd.updateCard(cardPool[index]);
+        }
     }
 
     public void addTreasure(CardDisplay card)

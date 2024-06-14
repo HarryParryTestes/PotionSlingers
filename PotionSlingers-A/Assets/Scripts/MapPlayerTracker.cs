@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -77,12 +79,18 @@ namespace Map
             if (mapNode.Node.nodeType == NodeType.Treasure)
             {
                 transition.GetComponent<SceneTransition>().treasureMenu.SetActive(true);
+                transition.GetComponent<SceneTransition>().treasureMenu.GetComponent<TreasureMenu>().chooseCards();
                 return;
             }
 
             if (mapNode.Node.nodeType == NodeType.RestSite)
             {
+                mapNode.textbox = GameObject.Find("Fully Healed");
+                mapNode.textbox2 = Instantiate(mapNode.textbox, mapNode.transform);
+                mapNode.textbox2.GetComponent<TMPro.TextMeshProUGUI>().text = "Fully healed!";
+                mapNode.StartCoroutine(mapNode.HideText());
                 transition.GetComponent<SceneTransition>().healPlayer();
+                
                 return;
             }
 
@@ -91,11 +99,23 @@ namespace Map
                 case "Bag o' Snakes":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
+                case "Bag o' Snakes+":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
+                case "Fingas":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
+                case "Fingas+":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
                 case "Saltimbocca":
                     transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
                     break;
                 case "Crowpunk":
                     transition.GetComponent<SceneTransition>().crowButton.onClick.Invoke();
+                    break;
+                case "Crowpunk+":
+                    transition.GetComponent<SceneTransition>().doTransition();
                     break;
                 case "Singelotte":
                     transition.GetComponent<SceneTransition>().singeButton.onClick.Invoke();

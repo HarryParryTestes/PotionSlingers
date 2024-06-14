@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -26,6 +28,7 @@ namespace Map
         public string enemyName;
         public GameObject textbox;
         public GameObject textbox2;
+        public bool attainable = false;
 
         public Node Node { get; private set; }
         public NodeBlueprint Blueprint { get; private set; }
@@ -113,19 +116,18 @@ namespace Map
                         image.DOKill();
                         image.DOColor(MapView.Instance.visitedColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
                     }
-
-                    EnemyPool enemyPool = GameObject.Find("EnemyList").GetComponent<EnemyPool>();
-
-                    if (Node.nodeType == NodeType.Boss)
-                    {
-                        enemyName = enemyPool.GetBossEnemy();
-                    } else
-                        enemyName = enemyPool.GetRandomEnemy();
+                    attainable = true;
 
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(state), state, null);
             }
+        }
+
+        public IEnumerator HideText()
+        {
+            yield return new WaitForSeconds(2f);
+            Destroy(textbox2);
         }
 
         public void OnPointerEnter(PointerEventData data)
@@ -144,12 +146,26 @@ namespace Map
             Debug.Log("Hovering over " + enemyName);
 
             // display enemy name in this code!
-            if(enemyName != "")
+            if (this.Node.nodeType == NodeType.RestSite || this.Node.nodeType == NodeType.Treasure)
+                return;
+
+            if(enemyName == "" && attainable)
             {
-                textbox = GameObject.Find("Fully Healed");
-                textbox2 = Instantiate(textbox, this.transform);
-                textbox2.GetComponent<TMPro.TextMeshProUGUI>().text = enemyName;
+                EnemyPool enemyPool = GameObject.Find("EnemyList").GetComponent<EnemyPool>();
+
+                if (Node.nodeType == NodeType.Boss)
+                {
+                    enemyName = enemyPool.GetBossEnemy();
+                }
+                else
+                    enemyName = enemyPool.GetRandomEnemy();
             }
+            /*
+            textbox = GameObject.Find("Fully Healed");
+            textbox2 = Instantiate(textbox, this.transform);
+            textbox2.GetComponent<TMPro.TextMeshProUGUI>().text = enemyName;
+            */
+            
         }
 
         public void OnPointerExit(PointerEventData data)
@@ -165,7 +181,7 @@ namespace Map
                 image.transform.DOKill();
                 image.transform.DOScale(initialScale, 0.3f);
             }
-            Destroy(textbox2);
+            // Destroy(textbox2);
         }
 
         public void OnPointerDown(PointerEventData data)

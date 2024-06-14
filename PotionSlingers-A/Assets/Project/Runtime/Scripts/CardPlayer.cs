@@ -230,6 +230,10 @@ public class CardPlayer : MonoBehaviour
                 this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 60, this.transform.position.z);
                 this.GetComponent<Image>().raycastPadding = new Vector4(44f, 32f, 43f, 0.5f);
                 break;
+            case "Fingas":
+                Debug.Log("Fingas!!!");
+                // this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                break;
 
             default:
                 Debug.Log("Failed to set any bools");

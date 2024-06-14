@@ -591,6 +591,166 @@ public class GameManager : MonoBehaviour
         // changing from stage number to currentEnemyName
         switch (saveData.currentEnemyName)
         {
+            case "Fingas":
+                background.sprite = backgrounds[0];
+                // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Fingas";
+                players[2].name = "Fingas";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Fingas");
+                players[2].checkCharacter();
+
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 10;
+                }
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Fingas+":
+                numPlayers = 3;
+                // Fingas is stage 1 enemy
+                players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].charName = "Fingas";
+                players[1].name = "Fingas";
+                playerLeftName.text = players[1].charName;
+                players[1].character.onCharacterClick("Fingas");
+                players[1].checkCharacter();
+                players[1].hpCubes = 1;
+                players[1].hp = 10;
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[1].hpCubes = saveData.opp1Cubes;
+                    players[1].hp = saveData.opp1Health;
+                    players[1].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[1].hpCubes = 1;
+                    players[1].hp = 10;
+                }
+
+                players[1].updateHealthUI();
+
+                // Crow Punk is stage 1 enemy
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Fingas";
+                players[2].name = "Fingas";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Fingas");
+                players[2].checkCharacter();
+                players[2].hpCubes = 1;
+                players[2].hp = 10;
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp2Cubes;
+                    players[2].hp = saveData.opp2Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                }
+                players[2].updateHealthUI();
+                p4.SetActive(false);
+                break;
+            case "Bag o' Snakes+":
+                numPlayers = 3;
+                // Fingas is stage 1 enemy
+                players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].charName = "Bag o' Snakes";
+                players[1].name = "Bag o' Snakes";
+                playerLeftName.text = players[1].charName;
+                players[1].character.onCharacterClick("Bag o' Snakes");
+                players[1].checkCharacter();
+                players[1].hpCubes = 1;
+                players[1].hp = 10;
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[1].hpCubes = saveData.opp1Cubes;
+                    players[1].hp = saveData.opp1Health;
+                    players[1].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[1].hpCubes = 1;
+                    players[1].hp = 10;
+                }
+
+                players[1].updateHealthUI();
+
+                // Crow Punk is stage 1 enemy
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Bag o' Snakes";
+                players[2].name = "Bag o' Snakes";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Bag o' Snakes");
+                players[2].checkCharacter();
+                players[2].hpCubes = 1;
+                players[2].hp = 10;
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp2Cubes;
+                    players[2].hp = saveData.opp2Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                }
+                players[2].updateHealthUI();
+                p4.SetActive(false);
+                break;
+            case "Singelotte":
+                background.sprite = backgrounds[1];
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Singelotte";
+                players[2].name = "Singelotte";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Singelotte");
+                players[2].checkCharacter();
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 33;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 33;
+                }
+
+
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
             case "Bag o' Snakes":
                 background.sprite = backgrounds[0];
                 background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
@@ -602,7 +762,39 @@ public class GameManager : MonoBehaviour
                 players[2].character.onCharacterClick("Bag o' Snakes");
                 players[2].checkCharacter();
 
-                if (saveData.savedGame)
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 10;
+                }
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Crowpunk":
+                background.sprite = backgrounds[0];
+                background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Crowpunk";
+                players[2].name = "Crowpunk";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Crowpunk");
+                players[2].checkCharacter();
+
+                if (saveData.savedGame && !saveData.newStage)
                 {
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
@@ -653,7 +845,7 @@ public class GameManager : MonoBehaviour
                 p3.SetActive(false);
                 p4.SetActive(false);
                 break;
-            case "Crowpunk":
+            case "Crowpunk+":
                 numPlayers = 4;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -722,6 +914,7 @@ public class GameManager : MonoBehaviour
                 }
                 players[3].updateHealthUI();
                 break;
+                /*
             case "Singelotte":
                 background.sprite = backgrounds[1];
                 numPlayers = 2;
@@ -754,6 +947,7 @@ public class GameManager : MonoBehaviour
                 p3.SetActive(false);
                 p4.SetActive(false);
                 break;
+                */
         }
         /*
         if (saveData.stage == 3)
@@ -1040,6 +1234,24 @@ public class GameManager : MonoBehaviour
 
                 // numPlayers = 4;
                 setStoryModeCharacters();
+                if (numPlayers == 3)
+                {
+                    Debug.Log("Three players!!!");
+                    // experimenting
+                    players[1].gameObject.transform.parent.parent.position = new Vector3(100f, 840f, 0);
+                    players[2].gameObject.transform.parent.position = new Vector3(1260f, 870f, 0);
+
+                    if (Screen.width == 2560)
+                    {
+                        players[1].gameObject.transform.parent.parent.position = new Vector3(150f, 1180f, 0);
+                        players[2].gameObject.transform.parent.position = new Vector3(1625f, 1305f, 0);
+                    }
+                    else if (Screen.width == 3840)
+                    {
+
+                    }
+                    p4.SetActive(false);
+                }
                 // onStartTurn(players[0]);
                 foreach (CardDisplay cd in players[0].holster.cardList)
                 {
@@ -3147,6 +3359,16 @@ public class GameManager : MonoBehaviour
             throwingHand.SetActive(false);
             tempPlayer.subHealth(damage, cardQuality);
             
+            yield break;
+        }
+
+        if (tempPlayer.user_id == 2 && numPlayers == 3)
+        {
+            Debug.Log("Right person");
+            yield return new WaitForSeconds(1f);
+            throwingHand.transform.DOMoveX(1470f, 1f);
+            yield return new WaitForSeconds(1f);
+            throwingHand.SetActive(false);
             yield break;
         }
 

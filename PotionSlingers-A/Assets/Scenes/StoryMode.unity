@@ -1449,6 +1449,11 @@ MonoBehaviour:
   - Bag o' Snakes
   - Saltimbocca
   - Crowpunk
+  - Fingas
+  level2Enemies:
+  - Crowpunk+
+  - Bag o' Snakes+
+  - Fingas+
   encounteredEnemies: []
   bosses: []
 --- !u!1 &257036381
@@ -7712,6 +7717,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e49cacb617ee14945b10e983490ba0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardPool:
+  - {fileID: 11400000, guid: 7fc95a39c450f5f46a45f24be2061c69, type: 2}
+  - {fileID: 11400000, guid: f33c12186a9ff3d418be07fae49e884e, type: 2}
+  - {fileID: 11400000, guid: 603314e1b6c2f10498fb09a42d2286e9, type: 2}
+  - {fileID: 11400000, guid: 45057be6c68a0cf428d5dd2f8a0c2fac, type: 2}
+  - {fileID: 11400000, guid: 63af26b3ff04bb44eb5ba01e8a742496, type: 2}
+  - {fileID: 11400000, guid: 44b01973cb8453142a02d0f7ac0adc8e, type: 2}
+  - {fileID: 11400000, guid: 68826573bb6def148aba066ded9d884a, type: 2}
+  - {fileID: 11400000, guid: 27fbce7db218fc448bc0f3c9256c0154, type: 2}
+  - {fileID: 11400000, guid: 3a8447f48e660864c8ef4677e056deab, type: 2}
+  - {fileID: 11400000, guid: e2e92e19e3b2dfd4882b00d1b8513004, type: 2}
+  - {fileID: 11400000, guid: 91ccc8691acea544f92e9f9e621b8f39, type: 2}
+  - {fileID: 11400000, guid: b2b18229d6eedd04eadac57ef4e3ab79, type: 2}
+  - {fileID: 11400000, guid: 80a695098a946e64cbf9e647f5df14cf, type: 2}
+  - {fileID: 11400000, guid: 293fb5204aa09fb4f905532867eb9983, type: 2}
+  - {fileID: 11400000, guid: d99c5f3a02e35ed4aa19793fda050bd1, type: 2}
+  cardDisplays:
+  - {fileID: 1055344816}
+  - {fileID: 386707792}
+  - {fileID: 386707791}
 --- !u!114 &386707791 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2887404182746375232, guid: 66014093f1e09d443825209a3eb21c41, type: 3}
@@ -20173,6 +20198,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7195115303827521090, guid: c5411475fb273d64f9bc62fb0f103680, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7195115303827521091, guid: c5411475fb273d64f9bc62fb0f103680, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -20251,7 +20280,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7195115303827521091, guid: c5411475fb273d64f9bc62fb0f103680, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 80
+      value: -55
       objectReference: {fileID: 0}
     - target: {fileID: 7195115303827521091, guid: c5411475fb273d64f9bc62fb0f103680, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -27106,6 +27135,14 @@ PrefabInstance:
       propertyPath: unitsToPixelsMultiplier
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e, type: 3}
+      propertyPath: allMapConfigs.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 911f4004870e5c249be19c0b5d380928, type: 2}
+    - target: {fileID: 3339309020100004304, guid: f3d397d8780414037811524dd988a62e, type: 3}
+      propertyPath: config
+      value: 
+      objectReference: {fileID: 11400000, guid: 911f4004870e5c249be19c0b5d380928, type: 2}
     - target: {fileID: 3339309021387442498, guid: f3d397d8780414037811524dd988a62e, type: 3}
       propertyPath: enterNodeDelay
       value: 0

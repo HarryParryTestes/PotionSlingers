@@ -50,11 +50,11 @@ public class SceneTransition : MonoBehaviour
         // DialogueManager.BarkString("I'm barking this text.", this.transform);
 
 
-        card1.transform.DOMoveX(-4.5f, 1.5f);
-        card2.transform.DOMoveX(4.5f, 1.5f);
-        yield return new WaitForSeconds(1.5f);
+        card1.transform.DOMoveX(-4.5f, 1f);
+        card2.transform.DOMoveX(4.5f, 1f);
+        yield return new WaitForSeconds(1f);
 
-        if (saveData.stage == 5)
+        if (saveData.visitedEnemies.Contains("Singelotte"))
             SceneManager.LoadScene("TitleMenu");
         else
             SceneManager.LoadScene("TownCenter");
