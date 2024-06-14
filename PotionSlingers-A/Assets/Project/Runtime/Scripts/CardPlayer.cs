@@ -164,7 +164,7 @@ public class CardPlayer : MonoBehaviour
                 if (this.gameObject.name == "CharacterCard (Left)")
                     this.transform.localScale = new Vector3(2f, 2.6f, 0);
                 if (this.gameObject.name == "CharacterCard (Top)")
-                    this.transform.localScale = new Vector3(8.2f, 11f, 0);
+                    this.transform.localScale = new Vector3(7.5f, 10f, 0);
                 if (this.gameObject.name == "CharacterCard (Right)")
                     this.transform.localScale = new Vector3(5.2f, 6.3f, 0);
                 break;
@@ -216,7 +216,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("I AM TWINS");
                 isTwins = true;
                 break;
-            case "CrowPunk":
+            case "Crowpunk":
                 this.transform.localScale = new Vector3(16.5f, 11f, 0);
                 this.GetComponent<Image>().raycastPadding = new Vector4(36f, 2f, 26f, 2f);
                 break;
@@ -306,7 +306,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("I AM TWINS");
                 isTwins = true;
                 break;
-            case "CrowPunk":
+            case "Crowpunk":
                 Debug.Log("CrowPunk animation");
                 animator.Play("CrowIdle");
                 break;
@@ -368,7 +368,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("I AM TWINS");
                 // isTwins = true;
                 break;
-            case "CrowPunk":
+            case "Crowpunk":
                 Debug.Log("CrowPunk Hit animation");
                 animator.Play("CrowHit");
                 break;

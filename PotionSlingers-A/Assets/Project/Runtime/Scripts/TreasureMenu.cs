@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TreasureMenu : MonoBehaviour
@@ -19,12 +20,36 @@ public class TreasureMenu : MonoBehaviour
         
     }
 
+    public int GetInt()
+    {
+        System.Random rng = new System.Random();
+        int i = rng.Next(cardPool.Count);
+        if (cardPool[i].name == cardDisplays[0].card.name)
+        {
+            Debug.Log("Duplicate card!");
+            return GetInt();
+        }
+            
+        if (cardPool[i].name == cardDisplays[1].card.name)
+        {
+            Debug.Log("Duplicate card!");
+            return GetInt();
+        }
+        if (cardPool[i].name == cardDisplays[2].card.name)
+        {
+            Debug.Log("Duplicate card!");
+            return GetInt();
+        }
+        return i;
+    }
+
     public void chooseCards()
     {
-        foreach(CardDisplay cd in cardDisplays)
+        
+        foreach (CardDisplay cd in cardDisplays)
         {
             System.Random rng = new System.Random();
-            int index = rng.Next(cardPool.Count);
+            int index = GetInt();
             cd.updateCard(cardPool[index]);
         }
     }

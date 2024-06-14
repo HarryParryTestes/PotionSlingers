@@ -872,10 +872,10 @@ public class GameManager : MonoBehaviour
 
                 // Crow Punk is stage 1 enemy
                 players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "CrowPunk";
-                players[2].name = "CrowPunk";
+                players[2].charName = "Crowpunk";
+                players[2].name = "Crowpunk";
                 playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("CrowPunk");
+                players[2].character.onCharacterClick("Crowpunk");
                 players[2].checkCharacter();
                 players[2].hpCubes = 1;
                 players[2].hp = 10;
@@ -2261,6 +2261,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Player receiving card: " + currentPlayerName);
         Debug.Log("Stealing card from " + opponentName);
         Debug.Log("CARDVALUE = " + selectedCard);
+        Debug.Log("MyPlayerIndex = " + myPlayerIndex);
 
         foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
@@ -3369,6 +3370,8 @@ public class GameManager : MonoBehaviour
             throwingHand.transform.DOMoveX(1470f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
+            tempPlayer.subHealth(damage, cardQuality);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             yield break;
         }
 
