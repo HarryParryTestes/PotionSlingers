@@ -642,6 +642,21 @@ public class CardPlayer : MonoBehaviour
             hotCoffee = false;
         }
 
+        // Dipstick Flicker check
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if (cd.card.cardName == "Dipstick Flicker")
+            {
+                Debug.Log("Dipstick Flicker!!!");
+                if(cd.aPotion.card.cardName == "placeholder")
+                {
+                    cd.artifactSlot.transform.parent.gameObject.SetActive(true);
+                    cd.artifactSlot.transform.gameObject.SetActive(true);
+                    cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
+                }
+            }
+        }
+
         pipsUsedThisTurn = 0;
         potionsThrown = 0;
         artifactsUsed = 0;
@@ -1249,6 +1264,11 @@ public class CardPlayer : MonoBehaviour
         if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
            (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Wet"))
         {
+            if (selectedCard.card.cardName == "Empty Ravioli")
+            {
+                addHealth(4);
+            }
+
             // Furry Flagon Made from the Hide of Hairy Leeches
             // Hot + Wet Bonus: Put 1 card from the trash to the top of your deck
             if (selectedCard.card.cardName == "Furry Flagon fromthe Hide of Hairy Leeches")
@@ -1472,6 +1492,13 @@ public class CardPlayer : MonoBehaviour
         if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
             (selectedCard.vPotion2.card.cardQuality == "Cold" && selectedCard.vPotion1.card.cardQuality == "Dry"))
         {
+            Debug.Log("Cold and Dry Bonus!");
+
+            if (selectedCard.card.cardName == "Empty Ravioli")
+            {
+                return damage + 4;
+            }
+
             // The Boxing Flask of the Fist Wizard
             // Deal +3 damage to all other opponents
             if (selectedCard.card.cardName == "Boxing Flask of the Fist Wizard")
@@ -1502,6 +1529,17 @@ public class CardPlayer : MonoBehaviour
                     GameManager.manager.takeMarket(randomCard);
                 }
 
+            }
+        }
+        // Synergy of Opposing Minds
+        if (selectedCard.card.cardName == "Synergy of Opposing Minds")
+        {
+            Debug.Log("Synergy of Opposing Minds!");
+            addHealth(2);
+            if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Hot") ||
+            (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Cold"))
+            {
+                StartCoroutine(LookAtCards());
             }
         }
 
@@ -1580,6 +1618,22 @@ public class CardPlayer : MonoBehaviour
         }
 
         return damage;
+    }
+
+    public IEnumerator LookAtCards()
+    {
+        for (int i = 0; i < GameManager.manager.numPlayers; i++)
+        {
+            foreach (CardDisplay cd in GameManager.manager.players[i].holster.cardList)
+            {
+                if (cd.card.cardName == "placeholder")
+                {
+                    GameManager.manager.players[i].subHealth(1);
+                    yield return new WaitForSeconds(0.25f);
+                }
+            }
+            // GameManager.manager.players[i].
+        }
     }
 
     public IEnumerator MoveToTrash(GameObject obj)

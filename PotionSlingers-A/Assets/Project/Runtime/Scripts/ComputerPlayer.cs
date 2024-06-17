@@ -149,6 +149,19 @@ public class ComputerPlayer : CardPlayer
 
     public void pickRandomHolsterCard()
     {
+        int f = 0;
+        foreach(CardDisplay cd in GameManager.manager.playerHolster.cardList)
+        {
+            if (cd.card.name == "placeholder")
+                f++;
+        }
+        if (f == 4)
+        {
+            GameManager.manager.sendMessage("Spiced up a card in your holster!");
+            return;
+        }
+            
+
         int holsterNum = rng.Next(1, 5);
         if(GameManager.manager.playerHolster.cardList[holsterNum - 1].card.name == "placeholder" ||
             GameManager.manager.playerHolster.cardList[holsterNum - 1].card.spicy)
@@ -162,6 +175,18 @@ public class ComputerPlayer : CardPlayer
 
     public int pickRandomHolsterCardCrow()
     {
+        int f = 0;
+        foreach (CardDisplay cd in GameManager.manager.playerHolster.cardList)
+        {
+            if (cd.card.name == "placeholder")
+                f++;
+        }
+        if (f == 4)
+        {
+            // GameManager.manager.sendMessage("Spiced up a card in your holster!");
+            return -1;
+        }
+
         int holsterNum = rng.Next(1, 5);
         if (GameManager.manager.playerHolster.cardList[holsterNum - 1].card.name == "placeholder")
         {
@@ -281,6 +306,11 @@ public class ComputerPlayer : CardPlayer
             if(damage == 4)
             {
                 int cardNumber = pickRandomHolsterCardCrow();
+                if (cardNumber == -1)
+                {
+                    GameManager.manager.Invoke("endTurn", 2f);
+                    return;
+                }
                 GameManager.manager.selectedCardInt = cardNumber;
 
                 GameObject obj = Instantiate(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,

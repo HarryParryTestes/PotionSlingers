@@ -2102,6 +2102,23 @@ public class GameManager : MonoBehaviour
             return;
         }
         // single player logic goes here
+        for (int i = 0; i < numPlayers; i++)
+        {
+            if (i == 0)
+                continue;
+
+            int cardNumber = rng.Next(1, 5);
+            selectedCardInt = cardNumber;
+
+            GameObject obj = Instantiate(players[i].holster.cardList[selectedCardInt - 1].gameObject,
+                    players[i].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
+                    players[i].holster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
+                    players[i].holster.cardList[selectedCardInt - 1].gameObject.transform);
+
+            StartCoroutine(players[i].MoveToTrash(obj));
+
+            td.addCard(players[i].holster.cardList[selectedCardInt - 1]);
+        }
     }
 
     // DONE: fix this to display properly
@@ -3806,8 +3823,19 @@ public class GameManager : MonoBehaviour
 
                     // TODO: fix bonus damage
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
-                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
-                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+
+                    // Sunday Funnies check
+                    if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Sunday Funnies")
+                    {
+                        Debug.Log("Sunday Funnies!");
+                        players[myPlayerIndex].deck.putCardOnTop(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
+                        players[myPlayerIndex].deck.putCardOnTop(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                    } else
+                    {
+                        players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
+                        players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                    }
+                    
                     // code that animates the loaded cards
                     GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).position,
