@@ -83,6 +83,8 @@ public class CardPlayer : MonoBehaviour
     public bool blackRainBonus = false;
     public bool opponentPreventedDamage = false;
     public bool healBonus = false;
+    public bool phialBonus = false;
+    public bool hotCoffee = false;
 
     public MyNetworkManager game;
     public MyNetworkManager Game
@@ -570,7 +572,8 @@ public class CardPlayer : MonoBehaviour
         {
             if (cd.card.spicy && cd.card.name != "placeholder")
             {
-                subHealth(2);
+                if (charName != "Singelotte")
+                    subHealth(2);
             }
         }
         updateHealthUI();
@@ -631,6 +634,14 @@ public class CardPlayer : MonoBehaviour
                 pips += 2;
             }
         }
+
+        if (hotCoffee)
+        {
+            Debug.Log("One damage from the coffee...");
+            subHealth(1);
+            hotCoffee = false;
+        }
+
         pipsUsedThisTurn = 0;
         potionsThrown = 0;
         artifactsUsed = 0;
@@ -642,6 +653,8 @@ public class CardPlayer : MonoBehaviour
         blackRainBonus = false;
         opponentPreventedDamage = false;
         healBonus = false;
+        phialBonus = false;
+        hotCoffee = false;
 
         if (isNickles)
         {
@@ -1681,6 +1694,27 @@ public class CardPlayer : MonoBehaviour
             obj.GetComponent<CanvasGroup>().alpha = 0;
     }
 
+    public IEnumerator AddCardToHolster()
+    {
+        yield return new WaitForSeconds(0.25f);
+        if (GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList.Count >= 1)
+        {
+            Debug.Log("Buffet Bonus!");
+
+            foreach (CardDisplay card in GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList)
+            {
+                if (card.card.cardName == "placeholder")
+                {
+                    // Card temp = deck.popCard();
+                    // card.updateCard(temp);
+                    GameManager.manager.StartCoroutine(GameManager.manager.DeckAnimation(card, GameManager.manager.players[GameManager.manager.myPlayerIndex]));
+                    GameManager.manager.sendMessage("Added a card into your holster!");
+                    break;
+                }
+            }
+        }
+    }
+
     // this will get messy quickly so actually comment things
     public int checkBonus(int damage, CardDisplay selectedCard)
     {
@@ -1748,6 +1782,89 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.displayDeck();
             }
             return damage;
+        }
+
+        // An Essence of Emotional Labor
+        if(selectedCard.card.cardName == "Essence of Emotional Labor")
+        {
+            // if GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() != null
+            if (!Game.multiplayer)
+            {
+                Debug.Log("Computer logic");
+
+                if (GameManager.manager.tempPlayer.deck.deckList.Count == 0)
+                    return damage;
+
+                // Trash a random card from their deck
+                // make method that trashes a random card
+                int cardNumber = rng.Next(0, GameManager.manager.tempPlayer.deck.deckList.Count);
+                // GameManager.manager.selectedCardInt = cardNumber;
+
+                GameObject obj = Instantiate(GameManager.manager.tempPlayer.deck.cardDisplay.gameObject,
+                        GameManager.manager.tempPlayer.deck.cardDisplay.gameObject.transform.position,
+                        GameManager.manager.tempPlayer.deck.cardDisplay.gameObject.transform.rotation,
+                        GameManager.manager.tempPlayer.deck.cardDisplay.gameObject.transform);
+
+                GameManager.manager.StartCoroutine(MoveToTrash(obj));
+
+                GameManager.manager.td.addCard(GameManager.manager.tempPlayer.deck.deckList[cardNumber]);
+                GameManager.manager.tempPlayer.deck.deckList.RemoveAt(cardNumber);
+                GameManager.manager.tempPlayer.deck.updateCardSprite();
+            }
+            else
+            {
+                // add in networked command for opponent
+            }
+        }
+
+        // A Buffet of Three Wishes
+        if (selectedCard.card.cardName == "Buffet of Three Wishes")
+        {
+            // lose 2 hp
+            subHealth(2);
+
+            // gain 2P
+            addPips(2);
+
+            // You may put the top card of your deck into your holster.
+            // make this into coroutine
+            StartCoroutine(AddCardToHolster());
+        }
+
+        // A Last Drop of Coffee
+        if (selectedCard.card.cardName == "Last Drop of Coffee")
+        {
+            Debug.Log("Hot coffee!");
+            GameManager.manager.tempPlayer.hotCoffee = true;
+        }
+
+        // A Phial of Inheritance Powder
+        if (selectedCard.card.cardName == "Phial of Inheritance Powder")
+        {
+            phialBonus = true;
+        }
+
+        // An Elephant's Round
+        if (selectedCard.card.cardName == "Elephants Round")
+        {
+            Debug.Log("Adding starter cards from Elephant");
+            // Every player creates a starter potion on the top of their deck.
+            for (int i = 0; i < GameManager.manager.numPlayers; i++)
+            {
+                // cp.deck.putCardOnTop(starterPotionCard);
+                GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCard);
+            }
+        }
+
+        // A River Dirt Cheese
+        if (selectedCard.card.cardName == "River Dirt Cheese")
+        {
+            // Deals +3 damage to your opponent if it's their last essence cube
+            if (GameManager.manager.tempPlayer.hpCubes == 1)
+            {
+                Debug.Log("River Cheese Bonus!  +3 damage!");
+                return damage + 3;
+            }    
         }
 
         if (selectedCard.card.cardName != "NorthernOquinox" && selectedCard.card.cardName != "PotionThatMakesHatsUglier" &&
@@ -2258,6 +2375,14 @@ public class CardPlayer : MonoBehaviour
         //If hp goes below 0, set it to 10 and subtract a health cube
         if (hp <= 0)
         {
+            // check for phial
+            if (GameManager.manager.players[GameManager.manager.myPlayerIndex].phialBonus)
+            {
+                Debug.Log("Phial Bonus!");
+                GameManager.manager.players[GameManager.manager.myPlayerIndex].addPips(3);
+                GameManager.manager.players[GameManager.manager.myPlayerIndex].phialBonus = false;
+            }
+
             cubed = true;
             hp = 0;
             if (Game.tutorial)
