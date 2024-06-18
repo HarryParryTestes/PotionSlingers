@@ -440,6 +440,17 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (!Game.storyMode && !Game.multiplayer && !Game.tutorial)
+        {
+            if (players[0].dead)
+            {
+                Debug.Log("Game over, the player died");
+                gameOverScreen.SetActive(true);
+                StartCoroutine(goBackToTitle());
+                return;
+            }
+        }
+
         if (Game.storyMode)
         {
             if (players[0].dead)

@@ -500,6 +500,29 @@ public class CardPlayer : MonoBehaviour
             if (hpCubes > 0)
             {
                 hp = 10;
+                // check for Echo Shard here!!!
+                foreach (Card card in deck.deckList)
+                {
+                    if(card.cardName == "Echo Shard")
+                    {
+                        Debug.Log("HP changed to 7 because of Echo Shard!");
+                        hp = 7;
+                        break;
+                    }
+                }
+
+                // safety check lol
+                foreach (CardDisplay card in holster.cardList)
+                {
+                    if (card.card.cardName == "Echo Shard")
+                    {
+                        Debug.Log("HP changed to 7 because of Echo Shard!");
+                        hp = 7;
+                        break;
+                    }
+                }
+
+
 
                 if (isSweetbitter && hpCubes == 1)
                 {
@@ -522,6 +545,50 @@ public class CardPlayer : MonoBehaviour
                         }
                     }
                 }
+
+                // check for Echo Shard here!!!
+                for (int i = 0; i < deck.deckList.Count; i++)
+                {
+                    if (deck.deckList[i].cardName == "Echo Shard")
+                    {
+                        Debug.Log("HP changed to 7 because of Echo Shard!");
+                        hpCubes = 1;
+                        hp = 7;
+                        cubed = false;
+                        updateHealthUI();
+
+                        /*
+                        GameObject obj = Instantiate(deck.gameObject,
+                        deck.gameObject.transform.position,
+                        deck.gameObject.transform.rotation,
+                        deck.gameObject.transform);
+                        */
+
+                        GameManager.manager.td.addCard(deck.deckList[i]);
+                        deck.deckList.RemoveAt(i);
+                        deck.updateCardSprite();
+                        GameManager.manager.sendMessage("The Echo Shard has been trashed!");
+                        return;
+                    }
+                }
+
+                // safety check lol
+                for (int i = 0; i < holster.cardList.Count; i++)
+                {
+                    if (holster.cardList[i].card.cardName == "Echo Shard")
+                    {
+                        Debug.Log("HP changed to 7 because of Echo Shard!");
+                        hpCubes = 1;
+                        hp = 7;
+                        cubed = false;
+                        updateHealthUI();
+
+                        GameManager.manager.td.addCard(holster.cardList[i]);
+                        GameManager.manager.sendMessage("The Echo Shard has been trashed!");
+                        return;
+                    }
+                }
+
                 hp = 0;
                 Debug.Log("Somebody is dead!");
                 dead = true;
@@ -1481,6 +1548,23 @@ public class CardPlayer : MonoBehaviour
                 else
                 {
                     Debug.Log("Add computer logic");
+                    // Target the main player on purpose lol
+                    foreach (CardDisplay cd in GameManager.manager.playerHolster.cardList)
+                    {
+                        if (cd.card.cardName != "placeholder")
+                        {
+                            GameObject obj = Instantiate(cd.gameObject,
+                            cd.gameObject.transform.position,
+                            cd.gameObject.transform.rotation,
+                            cd.gameObject.transform);
+
+                            GameManager.manager.StartCoroutine(MoveToTrash(obj));
+
+                            GameManager.manager.td.addCard(cd);
+
+                            GameManager.manager.sendMessage("A card in your holster just got trashed!");
+                        }
+                    }
                 }
 
                 //GameManager.manager.opponentHolsterMenu.SetActive(true);
@@ -1998,14 +2082,20 @@ public class CardPlayer : MonoBehaviour
                         return damage;
                     }
                 }
+            } else
+            {
+                // if the player is a human
+                Debug.Log("No computer player?");
+                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.displayOpponentHolster();
+                return damage;
             }
 
             // IMPORTANT: use this as template for other implementations of ComputerPlayer logic!!!
             // if they're not a computer player
-            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
-                && gameObject.GetComponent<ComputerPlayer>() == null)
+            if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
             {
-                Debug.Log("No computer players?");
+                Debug.Log("No computer player?");
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
                 GameManager.manager.displayOpponentHolster();
             }
@@ -2039,8 +2129,39 @@ public class CardPlayer : MonoBehaviour
                 }
                 return damage;
             }
-            GameManager.manager.opponentHolsterMenu.SetActive(true);
-            GameManager.manager.displayOpponentHolster();
+
+            if(gameObject.GetComponent<ComputerPlayer>() != null)
+            {
+                Debug.Log("Computer logic!!!");
+
+                // maybe do something for computer
+                // int cardNumber = rng.Next(1, 5);
+                // GameManager.manager.selectedCardInt = cardNumber;
+
+                foreach (CardDisplay cd in GameManager.manager.tempPlayer.holster.cardList)
+                {
+                    if (cd.card.cardName != "placeholder")
+                    {
+                        GameObject obj = Instantiate(cd.gameObject,
+                        cd.gameObject.transform.position,
+                        cd.gameObject.transform.rotation,
+                        cd.gameObject.transform);
+
+                        GameManager.manager.StartCoroutine(MoveToTrash(obj));
+
+                        GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]);
+
+                        GameManager.manager.sendMessage("A card in your holster just got trashed!");
+
+                        break;
+                    }
+                }
+
+            } else
+            {
+                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.displayOpponentHolster();
+            }
         }
 
         // Goldbricker
@@ -2444,10 +2565,59 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.dialog.endTutorialDialog();
             }
 
-            if(hpCubes == 1 && Game.storyMode)
+            // took out && Game.storyMode out of this, I believe it should be fine
+            if(hpCubes == 1)
             {
+                // make sure this doesn't fuck with the echo shard
+                for (int i = 0; i < deck.deckList.Count; i++)
+                {
+                    if (deck.deckList[i].cardName == "Echo Shard")
+                    {
+                        Debug.Log("HP changed to 7 because of Echo Shard!");
+                        hpCubes = 1;
+                        hp = 7;
+                        cubed = false;
+                        updateHealthUI();
+
+                        /*
+                        GameObject obj = Instantiate(deck.gameObject,
+                        deck.gameObject.transform.position,
+                        deck.gameObject.transform.rotation,
+                        deck.gameObject.transform);
+                        */
+
+                        GameManager.manager.td.addCard(deck.deckList[i]);
+                        deck.deckList.RemoveAt(i);
+                        deck.updateCardSprite();
+                        GameManager.manager.sendMessage("The Echo Shard has been trashed!");
+                        return;
+                    }
+                }
+
+                // safety check lol
+                for (int i = 0; i < holster.cardList.Count; i++)
+                {
+                    if (holster.cardList[i].card.cardName == "Echo Shard")
+                    {
+                        Debug.Log("HP changed to 7 because of Echo Shard!");
+                        hpCubes = 1;
+                        hp = 7;
+                        cubed = false;
+                        updateHealthUI();
+
+                        GameManager.manager.td.addCard(holster.cardList[i]);
+                        GameManager.manager.sendMessage("The Echo Shard has been trashed!");
+                        return;
+                    }
+                }
+                hpCubes = 0;
+                updateHealthUI();
                 fadeOut();
                 dead = true;
+                if (GameManager.manager.players[GameManager.manager.myPlayerIndex] == this)
+                {
+                    GameManager.manager.Invoke("endTurn", 1f);
+                }
                 GameManager.manager.checkForEndGame();
             }
             // GameManager.manager.checkForEndGame();
