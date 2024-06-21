@@ -23,7 +23,7 @@ public class BonusMenuUIManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         canvasGroup.alpha += Time.deltaTime * 1.5f;
     }

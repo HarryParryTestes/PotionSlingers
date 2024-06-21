@@ -1,14 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class CardGalleryController : MonoBehaviour
 {
     public List<CardDisplay> cardDisplays;
     public List<Card> cards;
     public List<Card> searchableCards;
+    public TMP_InputField searchBox;
     public int cardIndex = 0;
     // Start is called before the first frame update
+    public void Start()
+    {
+        initDisplays();
+    }
+
+    public void searchCardsByName()
+    {
+        if (!string.IsNullOrEmpty(searchBox.text))
+        {
+            searchableCards.Clear();
+            foreach (Card card in cards)
+            {
+                if (card != null)
+                {
+                    if (card.cardName.ToLower().Contains(searchBox.text.ToLower()))
+                    {
+                        //Debug.Log("Match found, adding card...");
+                        searchableCards.Add(card);
+                    }
+                }
+            }
+            cardIndex = 0;
+            changeCardDisplays();
+        }
+    }
 
     public void searchCards(string category)
     {

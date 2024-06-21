@@ -230,6 +230,7 @@ public class GameManager : MonoBehaviour
                 pauseUI.transform.GetChild(0).Find("GRAPHICS").gameObject.SetActive(true);
                 pauseUI.transform.GetChild(0).Find("DEBUG").gameObject.SetActive(true);
                 pauseUI.transform.GetChild(0).Find("MAIN MENU").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("Card Menu").gameObject.SetActive(false);
                 pauseUI.SetActive(false);
             }
 
@@ -387,7 +388,7 @@ public class GameManager : MonoBehaviour
         SaveSystem.SaveGameData(saveData);
         // Game.ServerChangeScene("StoryMode");
         advanceStageUI.SetActive(true);
-        StartCoroutine(goToStory());
+        // StartCoroutine(goToStory());
         // SceneManager.LoadScene("StoryMode");
     }
 
@@ -527,7 +528,7 @@ public class GameManager : MonoBehaviour
                 // Game.ServerChangeScene("StoryMode");
                 // throw some message up on the screen saying you've completed the stage
                 advanceStageUI.SetActive(true);
-                StartCoroutine(goToStory());
+                // StartCoroutine(goToStory());
                 // SceneManager.LoadScene("StoryMode");
                 return;
             }
@@ -553,6 +554,12 @@ public class GameManager : MonoBehaviour
     public IEnumerator goToStory()
     {
         yield return new WaitForSeconds(4);
+        SceneManager.LoadScene("StoryMode");
+    }
+
+    public void goToMap()
+    {
+        // yield return new WaitForSeconds(4);
         SceneManager.LoadScene("StoryMode");
     }
 
@@ -1953,6 +1960,44 @@ public class GameManager : MonoBehaviour
             pluotPotionMenu.SetActive(true);
         }
         player.setDefaultTurn();
+    }
+
+    public void addDebugCard(CardDisplay cd)
+    {
+        CardDisplay temp = playerHolster.cardList[selectedCardInt - 1];
+
+        Debug.Log("Adding " + cd.card.cardName + " to the holster!");
+        if (temp.card.cardType == "Artifact")
+        {
+            if (temp.aPotion != null && temp.aPotion.card.cardName != "placeholder")
+            {
+                // deckList.Add(cd.aPotion.card);
+                temp.aPotion.updateCard(playerDeck.placeholder);
+                temp.aPotion.gameObject.SetActive(false);
+            }
+        }
+
+        if (temp.card.cardType == "Vessel")
+        {
+            if (temp.vPotion1 != null && temp.vPotion1.card.cardName != "placeholder")
+            {
+                // deckList.Add(cd.vPotion1.card);
+                temp.vPotion1.updateCard(playerDeck.placeholder);
+                temp.vPotion1.gameObject.SetActive(false);
+                temp.vPotion2.gameObject.SetActive(false);
+
+            }
+
+            if (temp.vPotion2 != null && temp.vPotion2.card.cardName != "placeholder")
+            {
+                // deckList.Add(cd.vPotion2.card);
+                temp.vPotion2.updateCard(playerDeck.placeholder);
+                temp.vPotion1.gameObject.SetActive(false);
+                temp.vPotion2.gameObject.SetActive(false);
+
+            }
+        }
+        temp.updateCard(cd.card);
     }
 
     public void setSCInt(int num)
