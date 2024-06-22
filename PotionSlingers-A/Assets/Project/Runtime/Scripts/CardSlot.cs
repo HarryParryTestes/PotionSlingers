@@ -22,9 +22,19 @@ public class CardSlot : MonoBehaviour, IDropHandler
         */
 
         GameObject heldCard = eventData.pointerDrag;
+
         DragCard dc = heldCard.GetComponent<DragCard>();
         // grabbing the card held by the cursor
         CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
+
+        if (heldCard.GetComponent<CharacterSlot>() != null)
+        {
+            Debug.Log("Trying to load deck card!!!");
+            // GameManager.manager.setSCInt(grabbedCard);
+            GameManager.manager.setLoadedInt(cd);
+            GameManager.manager.preLoadPotion(grabbedCard);
+            return;
+        }
 
         if (cd != null)
         {

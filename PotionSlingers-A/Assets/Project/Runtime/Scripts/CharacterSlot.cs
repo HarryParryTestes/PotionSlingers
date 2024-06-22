@@ -2,17 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 using DG.Tweening;
 
-public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     // CardDisplay cd;
     public CardPlayer cp;
     public CharacterDisplay cd;
     public Vector2 originalPosition;
+    public bool grabbed = false;
+    public bool clicked = false;
+    public bool loaded;
+    public bool market;
+    public bool gauntletBonus = false;
+    public RectTransform rectTransform;
+    private Image image;
+    private Vector3 cachedScale;
+    private Vector3 startPoint;
+    public Vector3 cardRotation;
+    public CanvasGroup canvasGroup;
+    public Transform parentAfterDrag;
+    private Image artifactCard;
+    private Image vesselCard1;
+    private Image vesselCard2;
+    int parentSiblingIndex;
 
     void Awake()
     {
+        rectTransform = GetComponent<RectTransform>();
+        parentAfterDrag = transform.parent;
+        parentSiblingIndex = transform.parent.GetSiblingIndex();
+        rectTransform = GetComponent<RectTransform>();
+        canvasGroup = GetComponent<CanvasGroup>();
+        image = GetComponent<Image>();
+        cardRotation = rectTransform.rotation.eulerAngles;
+
         if (this.gameObject.GetComponent<CharacterDisplay>() != null)
         {
             cp = this.gameObject.GetComponent<CardPlayer>();
@@ -39,6 +64,87 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             GameManager.manager.md2.cardInt = cardInt - 3;
             GameManager.manager.bottomMarketBuy();
         }
+    }
+
+    public void OnBeginDrag(PointerEventData pointerEventData)
+    {
+        if (this.gameObject.name != "DeckPile")
+            return;
+
+        if (!gauntletBonus)
+            return;
+
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
+            return;
+
+        if (market && !GameManager.manager.marketSelected)
+            return;
+        DOTween.Pause(gameObject.name);
+
+        grabbed = true;
+        clicked = false;
+        transform.position = Input.mousePosition;
+        transform.DORotate(new Vector3(0f, 0f, 0f), 0.2f).SetEase(Ease.Linear).SetId(gameObject.name);
+        transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+        // parentAfterDrag = transform.parent;
+        // canvasGroup.alpha = 0.5f;
+        image.CrossFadeAlpha(0.5f, 0.3f, true);
+        if (canvasGroup != null)
+            canvasGroup.blocksRaycasts = false;
+        GameManager.manager.canvasGroup.blocksRaycasts = false;
+        if (transform.parent != transform.root)
+        {
+            transform.SetParent(transform.root);
+        }
+        transform.SetAsLastSibling();
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (!gauntletBonus)
+            return;
+
+        if (this.gameObject.name != "DeckPile")
+            return;
+        GameManager.manager.moveMarketCards();
+        
+        if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
+            return;
+
+        // findCard(this.gameObject.GetComponent<CardDisplay>().card.cardName);
+
+        // transform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if (this.gameObject.name == "DeckPile")
+        {
+            rectTransform.anchoredPosition += eventData.delta / GameObject.Find("Canvas").GetComponent<Canvas>().scaleFactor;
+        }
+        
+        
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (!gauntletBonus)
+            return;
+
+        if (this.gameObject.name != "DeckPile")
+            return;
+        DOTween.Pause(gameObject.name);
+        grabbed = false;
+        clicked = false;
+        // canvasGroup.alpha = 1f;
+        image.CrossFadeAlpha(1f, 0.3f, true);
+
+        gameObject.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        // GameManager.manager.canvasGroup.blocksRaycasts = true;
+        transform.SetParent(parentAfterDrag);
+        transform.SetSiblingIndex(1);
+        transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
+        //transform.DOScale(1f, 0.3f);
+        // transform.position = originalPosition;
+        transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+        transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+        // EndLine();
     }
 
     public void OnPointerClick(PointerEventData pointerEventData)
@@ -81,9 +187,10 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             // hoverbox code in here!
             cp.hoverBox.SetActive(false);
         }
-        if (this.gameObject.name == "DeckPile")
+        if (this.gameObject.name == "DeckPile" && !grabbed)
         {
             // transform.position -= new Vector3(0, 100, 0);
+            // Debug.Log("Pointer exited! See if this affects dragging");
             transform.DOMove(originalPosition, 0.25f);
             // Invoke("checkDeck", 0.25f);
         }   

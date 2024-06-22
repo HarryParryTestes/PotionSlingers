@@ -44,6 +44,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject healSign;
     public GameObject healAmount;
     public GameObject hpBar;
+    public GameObject pipsSign;
     public GameObject healthText;
     public GameObject hitAnimation;
     public GameObject hoverBox;
@@ -488,6 +489,23 @@ public class CardPlayer : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    public void checkGauntletBonus()
+    {
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if (cd.card.cardName == "Gauntlet Ring of the Chatelaine")
+            {
+                Debug.Log("Gauntlet Ring Bonus!!!");
+                if (deck.GetComponent<CharacterSlot>() != null)
+                    deck.GetComponent<CharacterSlot>().gauntletBonus = true;
+                return;
+            }
+        }
+        Debug.Log("Did not find the gauntlet ring!");
+        if (deck.GetComponent<CharacterSlot>() != null)
+            deck.GetComponent<CharacterSlot>().gauntletBonus = false;
+    }
+
     public void setDefaultTurn()
     {
         currentPlayerHighlight.SetActive(true);
@@ -634,13 +652,22 @@ public class CardPlayer : MonoBehaviour
             }
 
             }
+
+        deck.GetComponent<CharacterSlot>().gauntletBonus = false;
         // SPICY CHECK
+
         foreach (CardDisplay cd in holster.cardList)
         {
             if (cd.card.spicy && cd.card.name != "placeholder")
             {
                 if (charName != "Singelotte")
                     subHealth(2);
+            }
+
+            if (cd.card.cardName == "Gauntlet Ring of the Chatelaine")
+            {
+                Debug.Log("Gauntlet Ring Bonus!!!");
+                deck.GetComponent<CharacterSlot>().gauntletBonus = true;
             }
         }
         updateHealthUI();
@@ -2723,9 +2750,65 @@ public class CardPlayer : MonoBehaviour
         Destroy(obj);
     }
 
+    public IEnumerator pipAnimation(GameObject obj)
+    {
+        Vector3 vec = new Vector3(0, 30f * GameManager.manager.heightRatio, 0);
+        // obj.transform.DOScale(new Vector3(4f, 4f, 4f), 0.6f).SetEase(Ease.Linear);
+        // obj.transform.DOMove(obj.transform.position + vec, 1f).SetEase(Ease.Linear);
+        // yield return new WaitForSeconds(0.25f);
+        // obj.transform.DOScale(new Vector3(3f, 3f, 3f), 0.8f).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.9f);
+        // obj.GetComponent<Image>().CrossFadeAlpha(0, 1f, false);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.9f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.8f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.7f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.6f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.5f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.4f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.3f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.2f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0.1f);
+        yield return new WaitForSeconds(0.03f);
+        obj.GetComponent<TMPro.TextMeshProUGUI>().canvasRenderer.SetAlpha(0);
+        Destroy(obj);
+    }
+
     public void addPips(int morePips)
     {
         pips += morePips;
+        
+        if (pipsSign != null)
+        {
+            pipsSign.SetActive(true);
+
+            pipsSign.GetComponent<TMPro.TextMeshProUGUI>().text = "+ " + morePips.ToString();
+
+            GameObject obj = Instantiate(pipsSign,
+            pipsSign.transform.position,
+            pipsSign.transform.rotation,
+            this.transform);
+
+            // add coroutine
+            StartCoroutine(pipAnimation(obj));
+
+            pipsSign.SetActive(false);
+
+            /*
+            healAmount.GetComponent<TMPro.TextMeshProUGUI>().text = "+ " + morePips.ToString();
+            healSign.SetActive(true);
+            healAmount.SetActive(true);
+            StartCoroutine(waitThreeSeconds(healSign));
+            StartCoroutine(waitThreeSeconds(healAmount));
+            */
+        }
         updatePipsUI();
     }
 
