@@ -508,6 +508,7 @@ public class CardPlayer : MonoBehaviour
 
     public void setDefaultTurn()
     {
+        Debug.Log("setDefaultTurn triggered");
         currentPlayerHighlight.SetActive(true);
 
         reetsCycle = false;
@@ -653,7 +654,8 @@ public class CardPlayer : MonoBehaviour
 
             }
 
-        deck.GetComponent<CharacterSlot>().gauntletBonus = false;
+        if(deck.GetComponent<CharacterSlot>() != null)
+            deck.GetComponent<CharacterSlot>().gauntletBonus = false;
         // SPICY CHECK
 
         foreach (CardDisplay cd in holster.cardList)
@@ -667,7 +669,8 @@ public class CardPlayer : MonoBehaviour
             if (cd.card.cardName == "Gauntlet Ring of the Chatelaine")
             {
                 Debug.Log("Gauntlet Ring Bonus!!!");
-                deck.GetComponent<CharacterSlot>().gauntletBonus = true;
+                if (deck.GetComponent<CharacterSlot>() != null)
+                    deck.GetComponent<CharacterSlot>().gauntletBonus = true;
             }
         }
         updateHealthUI();

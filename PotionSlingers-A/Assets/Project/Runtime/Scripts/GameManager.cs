@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using Steamworks;
 using Mirror;
 using DG.Tweening;
+using System.Runtime.CompilerServices;
 
 public class GameManager : MonoBehaviour
 {
@@ -78,6 +79,7 @@ public class GameManager : MonoBehaviour
     public GameObject bubbleWandMenu;
     public GameObject chooseOpponentMenu;
     public GameObject deckMenu;
+    public GameObject nicklesAttackMenu;
     public GameObject advanceStageUI;
     public DeckMenuScroll deckDisplay;
 
@@ -2170,14 +2172,21 @@ public class GameManager : MonoBehaviour
             int cardNumber = rng.Next(1, 5);
             selectedCardInt = cardNumber;
 
-            GameObject obj = Instantiate(players[i].holster.cardList[selectedCardInt - 1].gameObject,
-                    players[i].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
-                    players[i].holster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
-                    players[i].holster.cardList[selectedCardInt - 1].gameObject.transform);
+            foreach(CardDisplay cd in players[i].holster.cardList)
+            {
+                if(cd.card.cardName != "placeholder")
+                {
+                    GameObject obj = Instantiate(cd.gameObject,
+                    cd.gameObject.transform.position,
+                    cd.gameObject.transform.rotation,
+                    cd.gameObject.transform);
 
-            StartCoroutine(players[i].MoveToTrash(obj));
+                    StartCoroutine(players[i].MoveToTrash(obj));
 
-            td.addCard(players[i].holster.cardList[selectedCardInt - 1]);
+                    td.addCard(cd);
+                    break;
+                }
+            }
         }
     }
 
@@ -2325,6 +2334,12 @@ public class GameManager : MonoBehaviour
 
     public void displayOpponentHolster(CardPlayer cardPlayer)
     {
+        if (nicklesAttackMenu.activeInHierarchy)
+        {
+            opponentHolsterMenu.SetActive(false);
+            return;
+        }
+
         tempPlayer = cardPlayer;
         holster = true;
         opponentCard1.updateCard(cardPlayer.holster.cardList[0].card);
@@ -3040,8 +3055,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Nickles action succeeded");
         players[myPlayerIndex].nicklesAction = true;
         nicklesDamage = damage;
-        chooseOpponentMenu.SetActive(true);
-        displayOpponents();
+        nicklesAttackMenu.SetActive(true);
+        // chooseOpponentMenu.SetActive(true);
+        // displayOpponents();
     }
 
     public void takeTrashCard(CardDisplay cd)
@@ -3290,8 +3306,8 @@ public class GameManager : MonoBehaviour
             // tutorialArrow.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "Potions are the lifeblood of this game, and you will be seeing\nthem a lot!\n\nNot only are they cheap ammunition, but they fuel " +
-                "your more\npowerful artifacts and vessels!";
+            dialog.textInfo = "Potions are the lifeblood of this game, and you will be seeing them a lot!\n\nNot only are they cheap ammunition, but they fuel " +
+                "your more powerful artifacts and vessels!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 6)
@@ -3299,7 +3315,7 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "Artifacts are powerful items that only require one potion\nin order to use." +
+            dialog.textInfo = "Artifacts are powerful items that only require one potion in order to use." +
                 "\n\nTry using that artifact on me!\n\n" +
                 "Drag the artifact card over your foe and let 'em have it!";
             dialog.ActivateText(dialog.dialogBox);
@@ -3320,9 +3336,9 @@ public class GameManager : MonoBehaviour
             dialog.nameTag.SetActive(true);
             tutorialArrow.SetActive(false);
             tutorialArrow2.SetActive(false);
-            dialog.textInfo = "Cards bought from the market appear face-up on top of\n" +
+            dialog.textInfo = "Cards bought from the market appear face-up on top of " +
                 "your deck! The order in which you buy things is important!\n\n" +
-                "Keep in mind that any unspent Pips do not get saved,\n" +
+                "Keep in mind that any unspent Pips do not get saved, " +
                 "so use 'em or lose 'em!";
             dialog.ActivateText(dialog.dialogBox);
         }
@@ -3332,7 +3348,7 @@ public class GameManager : MonoBehaviour
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
             tutorialArrow.SetActive(false);
-            dialog.textInfo = "Upon the start of your next turn, empty spots in your holster\n" +
+            dialog.textInfo = "Upon the start of your next turn, empty spots in your holster " +
                 "will be replaced by the cards on top of your deck!\n\n" +
                 "You also get 6 new Pips to start your turn with.";
             dialog.ActivateText(dialog.dialogBox);
@@ -3342,7 +3358,7 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "Good job! When a vessel is thrown, the vessel is trashed, and\n" +
+            dialog.textInfo = "Good job! When a vessel is thrown, the vessel is trashed, and " +
                 "the potions are dropped into the bottom of your deck!";
             dialog.ActivateText(dialog.dialogBox);
         }
@@ -3352,7 +3368,7 @@ public class GameManager : MonoBehaviour
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
             dialog.textInfo = "Excellent! Now let's buy more cards from the market.\n\n" +
-                "Buy some more potions from the market and then end your\nturn!";
+                "Buy some more potions from the market and then end your turn!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 26)
@@ -3360,10 +3376,10 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "While buying cards is all fun and games, selling is where you\n" +
-                "really make the dough!\n\n" +
-                "Selling items allows you to increase your Pip total beyond\n" +
-                "6 Pips, allowing you to buy more powerful and expensive\n" +
+            dialog.textInfo = "While buying cards is all fun and games, selling is where you " +
+                "really make your dough!\n\n" +
+                "Selling items allows you to increase your Pip total beyond " +
+                "6 Pips, allowing you to buy more powerful and expensive " +
                 "items!";
             dialog.ActivateText(dialog.dialogBox);
         }
@@ -3372,10 +3388,10 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "If you don't want to sell a card but you don't want it in your\n" +
+            dialog.textInfo = "If you don't want to sell a card but you don't want it in your " +
                 "holster, you can cycle it to the bottom of your deck as well!\n\n" +
                 "Be aware that cycling non-potion cards costs 1 Pip!\n\n" +
-                "Try cycling a card from your holster! Drag a card from\n" +
+                "Try cycling a card from your holster! Drag a card from " +
                 "your holster to your deck!";
             dialog.ActivateText(dialog.dialogBox);
         }
@@ -3385,9 +3401,9 @@ public class GameManager : MonoBehaviour
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
             dialog.textInfo = "Now let's talk about you! Your character that is...\n\n" +
-                "Every character has a special ability detailed on the front of\n" +
+                "Every character has a special ability detailed on the front of " +
                 "their character card!\n\n" +
-                "Additionally, the card can be flipped to reveal an upgraded\n" +
+                "Additionally, the card can be flipped to reveal an upgraded " +
                 "version of your character!";
             dialog.ActivateText(dialog.dialogBox);
         }
@@ -3405,7 +3421,7 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
-            dialog.textInfo = "Some characters have unique items that can be obtained\n" +
+            dialog.textInfo = "Some characters have unique items that can be obtained " +
                 "by using the character's flipped action!\n\n" +
                 "Try getting them all with each specific character!";
             dialog.ActivateText(dialog.dialogBox);
@@ -3654,21 +3670,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
-        /*
-        foreach (CardPlayer cp in players)
-        {
-            if (cp.gameObject.activeInHierarchy)
-            {
-                if (cp.name == selectedOpponentName)
-                {
-                    Debug.Log("Name matched");
-                    tempPlayer = cp;
-                    Debug.Log("Enemy's charName: " + tempPlayer.charName);
-                }
-            }
-        }
-        */
 
         // if you're saltimbocca and you're flipped
         if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.character.flipped && !Game.multiplayer)
@@ -3951,6 +3952,29 @@ public class GameManager : MonoBehaviour
             }
 
         }
+    }
+
+    public IEnumerator MoveToTrash(GameObject obj, CardDisplay cd)
+    {
+        obj.transform.SetParent(obj.transform.parent.parent);
+        cd.artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.gameObject.SetActive(false);
+        obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
+        obj.transform.DOScale(0.2f, 1f);
+        obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+        yield return new WaitForSeconds(0.1f);
+        cd.artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        cd.artifactSlot.SetActive(false);
+        yield return new WaitForSeconds(0.6f);
+        obj.GetComponent<Image>().CrossFadeAlpha(0, 0.2f, false);
+        yield return new WaitForSeconds(0.3f);
+
+        Destroy(obj);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+
+        // MATTEO : Add trash can thunk sfx here!
+        td.transform.parent.DOMove(new Vector2(td.transform.parent.position.x, td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     public IEnumerator MoveToTrash(GameObject obj)

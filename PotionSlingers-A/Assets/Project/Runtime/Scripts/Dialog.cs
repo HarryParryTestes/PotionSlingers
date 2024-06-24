@@ -112,7 +112,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         textBoxCounter++;
         if (textBoxCounter == 1)
         {
-            textInfo = "In each game of Potion Slingers, each player starts with the\nsame starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a\nfancy ring at the top of your deck!\n\n"
+            textInfo = "In each game of Potion Slingers, each player starts with the same starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a fancy ring at the top of your deck!\n\n"
                 + "Try throwing a starter potion at me! Take your best shot!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
@@ -133,7 +133,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 4)
         {
             textInfo = "Speaking of artifacts, try loading a potion into an artifact card!\n\n" +
-                "Try dragging a potion card onto that artifact card!\n";
+                "Try dragging a potion card onto that artifact card!";
                 // "artifact card!";
 
             ActivateText(dialogBox);
@@ -143,7 +143,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 5)
         {
             directions.SetActive(true);
-            directionBox.text = "Drag a potion card onto the artifact card\nto load it!";
+            directionBox.text = "Drag a potion card onto the artifact card to load it!";
                 // "Then click on the artifact card!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
@@ -154,16 +154,16 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 7)
         {
             directions.SetActive(true);
-            directionBox.text = "Drag the artifact card onto your opponent\nto use it on them!";
+            directionBox.text = "Drag the artifact card onto your opponent to use it on them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 9)
         {
             textInfo = "Let's try buying a few things! Click on the market " +
-                "button to\nopen up the market and buy two potions!\n\nThe top row in the market is exclusively for potions, " +
-                "and the\nbottom row is for vessels, artifacts, and rings!\n\n" +
-                "Buy cards using your hard-earned Pips! You get 6 Pips\nat the start of your turn!";
+                "button to open up the market and buy two potions!\n\nThe top row in the market is exclusively for potions, " +
+                "and the bottom row is for vessels, artifacts, and rings!\n\n" +
+                "Buy cards using your hard-earned Pips! You get 6 Pips at the start of your turn!";
             ActivateText(dialogBox); 
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -171,7 +171,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 10)
         {
             directions.SetActive(true);
-            directionBox.text = "Buy two potions from the top row of the\nmarket!\n\nDrag a card from the market onto your\ndeck to buy them!";
+            directionBox.text = "Buy two potions from the top row of the market!\n\nDrag a card from the market onto your deck to buy them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
             GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
@@ -180,7 +180,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 13)
         {
             textInfo = "Now let's end your turn... Click that PASS button " +
-                "in the\nlower right corner!";
+                "in the lower right corner!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -197,8 +197,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 16)
         {
             textInfo = "Now let's talk about vessels. Vessels require two loaded " +
-                "potions\nto use and can deal huge damage with the right set of cards!\n\n" +
-                "Load two potions into the starter vessel and sling\nit over here!";
+                "potions to use and can deal huge damage with the right set of cards!\n\n" +
+                "Load two potions into the starter vessel and sling it over here!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -206,13 +206,13 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 17)
         {
             directions.SetActive(true);
-            directionBox.text = "Load two potions into the starter vessel\nand throw it!";
+            directionBox.text = "Load two potions into the starter vessel and throw it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 21)
         {
-            textInfo = "Now what do we do when we're faced with junk? We get rid\nof it!\n\n" +
+            textInfo = "Now what do we do when we're faced with junk? We get rid of it!\n\n" +
                 "Try dragging your artifact card into the trash!\n\n" +
                 "It's just over there on the right!";
             ActivateText(dialogBox);
@@ -222,14 +222,14 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 22)
         {
             directions.SetActive(true);
-            directionBox.text = "Drag the artifact card into the trash can\non the right!";
+            directionBox.text = "Drag the artifact card into the trash can on the right!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 24)
         {
             directions.SetActive(true);
-            directionBox.text = "Buy more potions from the market! Then\nclick PASS!";
+            directionBox.text = "Buy more potions from the market! Then click PASS!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -237,7 +237,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         {
             textInfo = "Some items sell for more than what you can buy them for!\n\n" +
                 "Try selling an item in your holster! Drag a card " +
-                "you want to sell\nonto the coin icon to sell it!";
+                "you want to sell onto the coin icon to sell it!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -246,23 +246,23 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         {
             directions.SetActive(true);
             directionBox.text = "Drag a card from your holster " +
-                "to the\ncoin icon to sell it!";
+                "to the coin icon to sell it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 30)
         {
             directions.SetActive(true);
-            directionBox.text = "Drag a card from your holster\n" +
+            directionBox.text = "Drag a card from your holster " +
                 "to your deck to cycle it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 32)
         {
-            textInfo = "Usually flipping your character requires certain conditions\n" +
+            textInfo = "Usually flipping your character requires certain conditions" +
                 "to be met, but just this once, I'll let you flip for free!\n\n" +
-                "Try flipping your character! Click on the character card\n" +
+                "Try flipping your character! Click on the character card" +
                 "and click FLIP!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
@@ -271,22 +271,20 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 33)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on the character card\n" +
-                "and click FLIP!";
+            directionBox.text = "Click on the character card and click FLIP!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 35)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on the character card\n" +
-                "and click ACTION!";
+            directionBox.text = "Click on the character card and click ACTION!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
         else if (textBoxCounter == 37)
         {
-            textInfo = "The object of the game is to beat your opponents down\n" +
+            textInfo = "The object of the game is to beat your opponents down" +
                 "to 0 health and take all of their Essence Cubes!\n\n" +
                 "The last person standing is declared the winner!";
             ActivateText(dialogBox); 
@@ -295,7 +293,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 38)
         {
-            textInfo = "Once a player's health is reduced to 0, one of their Essence\n" +
+            textInfo = "Once a player's health is reduced to 0, one of their Essence " +
                 "Cubes will be awarded to the player that deals the killing blow!\n\n" +
                 "Try finishing me off and getting me to 0 health!";
             ActivateText(dialogBox);
@@ -308,8 +306,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 39)
         {
             directions.SetActive(true);
-            directionBox.text = "Use cards to reduce Bolo's\n" +
-                "health down to 0!";
+            directionBox.text = "Use cards to reduce Bolo's health down to 0!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -321,8 +318,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         Game.completedTutorial = true;
         Game.completedGame = true;
         this.gameObject.SetActive(true);
-        textInfo = "Congratulations! You have completed the tutorial!\n" +
-            "Try playing a round of Potion Slingers with some of the CPU\ncharacters!";
+        textInfo = "Congratulations! You have completed the tutorial!\n\n" +
+            "Try playing a round of Potion Slingers with some of the CPU characters!";
         ActivateText(dialogBox);
         Boloidle.SetActive(false);
         Bolotalk.SetActive(true);
@@ -383,7 +380,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 5)
         {
             directions.SetActive(true);
-            directionBox.text = "Drag a potion card onto the artifact\ncard to load it!";
+            directionBox.text = "Drag a potion card onto the artifact card to load it!";
                 //"Then click on the artifact card!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
@@ -393,7 +390,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 7)
         {
             directions.SetActive(true);
-            directionBox.text = "Drag the artifact card onto your opponent\nto use it on them!";
+            directionBox.text = "Drag the artifact card onto your opponent to use it on them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -408,7 +405,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 10)
         {
             directions.SetActive(true);
-            directionBox.text = "Buy two potions from the top row of the\nmarket!\n\nDrag a card from the market onto your\ndeck to buy them!";
+            directionBox.text = "Buy two potions from the top row of the market!\n\nDrag a card from the market onto your deck to buy them!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
             GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
@@ -520,7 +517,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 38)
         {
-            textInfo = "Once a player's health is reduced to 0, one of their Essence\n" +
+            textInfo = "Once a player's health is reduced to 0, one of their Essence " +
                 "Cubes will be awarded to the player that deals the killing blow!\n\n" +
                 "Try finishing me off and getting me to 0 health!";
             ActivateText(dialogBox);
@@ -528,7 +525,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 39)
         {
             directions.SetActive(true);
-            directionBox.text = "Use cards to reduce Bolo's\n" +
+            directionBox.text = "Use cards to reduce Bolo's " +
                 "health down to 0!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);

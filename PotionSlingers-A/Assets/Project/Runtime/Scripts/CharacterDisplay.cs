@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 [System.Serializable]
-public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
     Vector3 cachedScale; // Tracks original size of Card (for hovering as it manipulates scale of Card).
@@ -23,7 +23,8 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
     GameObject viewingCardObject;
     public GameObject parentObject;
     public GameObject menu;
-    public bool clicked = false;
+    public bool viewed = false;
+    public bool clicked;
     public bool canBeFlipped = false;
     public bool uniqueCardUsed = false;
 
@@ -55,6 +56,22 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
         // reworking this to start using animated sprites
         // artworkImage.sprite = character.image;
         character.flipped = false;
+    }
+
+    public void onView()
+    {
+        DOTween.Pause(gameObject.name);
+        viewed = true;
+        menu.SetActive(false);
+        Vector3 pos = new Vector3(960 * GameManager.manager.widthRatio, 660 * GameManager.manager.heightRatio, 0);
+        transform.DOMove(pos, 0.5f).SetId(gameObject.name);
+        transform.DOScale(1.75f, 0.5f).SetId(gameObject.name);
+    }
+
+    public void OnPointerClick(PointerEventData pointerEventData)
+    {
+        // menu.SetActive(false);
+        // transform.DOMoveY(50f, 0.6f);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -91,6 +108,15 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
 
     public void menuCheck()
     {
+        if (viewed)
+        {
+            DOTween.Pause(gameObject.name);
+            viewed = false;
+            menu.SetActive(false);
+            transform.DOMove(originalPos, 0.5f).SetId(gameObject.name);
+            transform.DOScale(1.25f, 0.5f).SetId(gameObject.name);
+        }
+
         if (clicked)
         {
             clicked = false;

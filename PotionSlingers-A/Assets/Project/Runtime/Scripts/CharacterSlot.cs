@@ -156,6 +156,40 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             GameManager.manager.displayOpponentHolster(cp);
             GameManager.manager.holster = false;
         }
+
+        if(GameManager.manager.nicklesDamage > 0 && GameManager.manager.nicklesAttackMenu.activeInHierarchy)
+        {
+            Debug.Log("Nickles damage action damaged for: " + GameManager.manager.nicklesDamage);
+            GameManager.manager.players[GameManager.manager.myPlayerIndex].subPips(GameManager.manager.nicklesDamage);
+            cp.subHealth(GameManager.manager.nicklesDamage);
+            GameManager.manager.nicklesDamage = 0;
+            GameManager.manager.nicklesAttackMenu.SetActive(false);
+            GameManager.manager.sendSuccessMessage(21);
+            return;
+        }
+
+        if (GameManager.manager.nicklesAttackMenu.activeInHierarchy)
+        {
+            // GameManager.manager.tempPlayer = cp;
+            foreach (CardDisplay cd in cp.holster.cardList)
+            {
+                if (cd.card.cardName != "placeholder")
+                {
+                    GameObject obj = Instantiate(cd.gameObject,
+                    cd.gameObject.transform.position,
+                    cd.gameObject.transform.rotation,
+                    cd.gameObject.transform);
+
+                    StartCoroutine(GameManager.manager.MoveToTrash(obj, cd));
+
+                    GameManager.manager.td.addCard(cd);
+                }
+            }
+            GameManager.manager.nicklesAttackMenu.SetActive(false);
+            GameManager.manager.sendMessage("Trashed an opponent's holster!");
+            return;
+        }
+
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData)
@@ -175,6 +209,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             // transform.position += new Vector3(0, 100, 0);
             transform.DOMove(new Vector3(originalPosition.x, originalPosition.y + (95f * GameManager.manager.heightRatio), 0), 0.25f);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
             // Invoke("checkDeck", 0.25f);
         }
     }
