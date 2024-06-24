@@ -94,6 +94,7 @@ public class DeckMenuScroll : MonoBehaviour
                 }
                 
                 GameManager.manager.snakeBonus = true;
+                GameManager.manager.nicklesAttackMenu.SetActive(true);
                 gameObject.SetActive(false);
 
                 // REFACTOR THIS!!! Super old!

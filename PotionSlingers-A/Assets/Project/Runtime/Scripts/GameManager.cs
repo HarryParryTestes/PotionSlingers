@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 using Steamworks;
 using Mirror;
 using DG.Tweening;
-using System.Runtime.CompilerServices;
 
 public class GameManager : MonoBehaviour
 {
@@ -409,6 +408,22 @@ public class GameManager : MonoBehaviour
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
                 break;
+            case "Bag o' Snakes+":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                saveData.opp2Health = players[2].hp;
+                saveData.opp2Cubes = players[2].hpCubes;
+                break;
+            case "Fingas":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Fingas+":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                saveData.opp2Health = players[2].hp;
+                saveData.opp2Cubes = players[2].hpCubes;
+                break;
             case "Saltimbocca":
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
@@ -418,6 +433,10 @@ public class GameManager : MonoBehaviour
                 saveData.opp1Cubes = players[1].hpCubes;
                 break;
             case "Crowpunk":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Crowpunk+":
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
                 saveData.opp2Health = players[2].hp;
@@ -621,6 +640,8 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Fingas");
                 players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
@@ -652,6 +673,8 @@ public class GameManager : MonoBehaviour
                 playerLeftName.text = players[1].charName;
                 players[1].character.onCharacterClick("Fingas");
                 players[1].checkCharacter();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
                 players[1].hpCubes = 1;
                 players[1].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -675,6 +698,8 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Fingas");
                 players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
                 players[2].hpCubes = 1;
                 players[2].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -700,6 +725,8 @@ public class GameManager : MonoBehaviour
                 playerLeftName.text = players[1].charName;
                 players[1].character.onCharacterClick("Bag o' Snakes");
                 players[1].checkCharacter();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
                 players[1].hpCubes = 1;
                 players[1].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -723,6 +750,8 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Bag o' Snakes");
                 players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
                 players[2].hpCubes = 1;
                 players[2].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -748,6 +777,8 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Singelotte");
                 players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
                 if (saveData.savedGame && !saveData.newStage)
                 {
                     players[2].hpCubes = saveData.opp1Cubes;
@@ -781,6 +812,8 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Bag o' Snakes");
                 players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
@@ -813,6 +846,8 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Crowpunk");
                 players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
@@ -874,6 +909,8 @@ public class GameManager : MonoBehaviour
                 playerLeftName.text = players[1].charName;
                 players[1].character.onCharacterClick("Fingas");
                 players[1].checkCharacter();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
                 players[1].hpCubes = 1;
                 players[1].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -897,6 +934,8 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Crowpunk");
                 players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
                 players[2].hpCubes = 1;
                 players[2].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -919,6 +958,8 @@ public class GameManager : MonoBehaviour
                 playerRightName.text = players[3].charName;
                 players[3].character.onCharacterClick("Fingas");
                 players[3].checkCharacter();
+                players[3].holster.gameObject.SetActive(false);
+                players[3].deck.gameObject.SetActive(false);
                 players[3].hpCubes = 1;
                 players[3].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -934,40 +975,6 @@ public class GameManager : MonoBehaviour
                 }
                 players[3].updateHealthUI();
                 break;
-                /*
-            case "Singelotte":
-                background.sprite = backgrounds[1];
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Singelotte";
-                players[2].name = "Singelotte";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Singelotte");
-                players[2].checkCharacter();
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 33;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 33;
-                }
-
-
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
-                break;
-                */
         }
         /*
         if (saveData.stage == 3)
@@ -1873,6 +1880,30 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].pluotBonusType = bonus;
     }
 
+    public IEnumerator DeckStealAnimation(CardDisplay cd, CardDisplay cardBeingStolen)
+    {
+        Debug.Log("Card animation starting");
+        GameObject obj = Instantiate(cardBeingStolen.gameObject, cardBeingStolen.gameObject.transform.position, cardBeingStolen.gameObject.transform.rotation, players[myPlayerIndex].gameObject.transform);
+        if (players[myPlayerIndex].GetComponent<ComputerPlayer>() != null)
+            obj.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
+        obj.transform.DOJump(cd.gameObject.transform.position, 200f, 1, 0.5f, false);
+        if (cd.GetComponent<DragCard>() != null)
+        {
+            obj.transform.DORotate(new Vector3(0, 0, 360f) + cd.GetComponent<DragCard>().cardRotation, 0.5f, RotateMode.FastBeyond360);
+            obj.transform.DOScale(2.3f, 0.5f);
+        }
+        // obj.transform.DORotate(cd.GetComponent<DragCard>().cardRotation, 0.5f);
+        else
+            obj.transform.DORotate(new Vector3(0, 0, 360f), 0.5f, RotateMode.FastBeyond360);
+        // obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
+        yield return new WaitForSeconds(0.5f);
+        cd.updateCard(cardBeingStolen.card);
+        cardBeingStolen.updateCard(td.card);
+        // cd.updateCard(tempPlayer.holster.cardList[selectedCard - 1].card);
+        obj.SetActive(false);
+        Destroy(obj);
+    }
+
     public IEnumerator DeckAnimation(CardDisplay cd, CardPlayer player)
     {
         Debug.Log("Card animation starting");
@@ -2187,6 +2218,7 @@ public class GameManager : MonoBehaviour
                     break;
                 }
             }
+            sendMessage("Trashed a card from each opponent!");
         }
     }
 
@@ -2359,12 +2391,14 @@ public class GameManager : MonoBehaviour
         {
             if(cd.card.cardName == "placeholder")
             {
-                cd.updateCard(tempPlayer.holster.cardList[selectedCard - 1].card);
+                // use coroutine to delay the card update until after the animation is done
+                StartCoroutine(DeckStealAnimation(cd, tempPlayer.holster.cardList[selectedCard - 1]));
+                // cd.updateCard(tempPlayer.holster.cardList[selectedCard - 1].card);
                 sendSuccessMessage(20);
                 break;
             }
         }
-        tempPlayer.holster.cardList[selectedCard - 1].updateCard(td.card);
+        // tempPlayer.holster.cardList[selectedCard - 1].updateCard(td.card);
     }
 
     public void replaceOpponentCardWithStarter(int selectedCard)
@@ -2436,6 +2470,13 @@ public class GameManager : MonoBehaviour
                 }
                 return;
             }
+
+            GameObject obj = Instantiate(tempPlayer.holster.cardList[selectedCard - 1].gameObject,
+                        tempPlayer.holster.cardList[selectedCard - 1].gameObject.transform.position,
+                        tempPlayer.holster.cardList[selectedCard - 1].gameObject.transform.rotation,
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.transform);
+
+            MoveToTrash(obj, tempPlayer.holster.cardList[selectedCard - 1]);
             td.addCard(tempPlayer.holster.cardList[selectedCard - 1]);
         }
         replaceStarter = false;
@@ -2802,38 +2843,6 @@ public class GameManager : MonoBehaviour
             {
                 onStartTurn(players[myPlayerIndex]);
             }
-
-            // Debug.Log("Request End Turn");
-
-            // ADD IN NETWORKING LATER!
-
-            //bool connected = networkManager.sendEndTurnRequest(myPlayerIndex);
-
-            /*
-            bool currentFound = false;
-            int currentIndex = -1;
-            for(int i = 0; i < numPlayers; i++)
-            {
-                if(players[i].user_id == currentPlayerId) {
-                    currentIndex = i;
-                }
-            }
-
-            int newIndex = currentIndex + 1;
-            if(newIndex >= numPlayers) {
-                newIndex = 0;
-            }
-
-            Debug.Log("Request End Turn");
-            Debug.Log("Request: Ending turn for PlayerName: " + players[currentIndex].name);
-            Debug.Log("Request: Starting turn for PlayerName: " + players[newIndex].name);
-            Debug.Log("Request: Ending turn for PlayerID: " + players[currentIndex].user_id);
-            Debug.Log("Request: Starting turn for PlayerID: " + players[newIndex].user_id);
-            int newId = players[newIndex].user_id;
-            */
-            // Sends user_id of new current player based on index of new current player
-            // in this client's players array.
-            //bool connected = networkManager.sendEndTurnRequest(newId);
 
             // MATTEO: Add End Turn SFX here.
 
@@ -3509,6 +3518,7 @@ public class GameManager : MonoBehaviour
     // THROW POTION REQUEST
     public void throwPotion()
     {
+        /*
         if (snakeBonus)
         {
             Debug.Log("SNAKE!!!");
@@ -3517,6 +3527,7 @@ public class GameManager : MonoBehaviour
             displayOpponentHolster();
             return;
         }
+        */
 
         string cardQuality = "None";
         if (!players[myPlayerIndex].nicklesAction)

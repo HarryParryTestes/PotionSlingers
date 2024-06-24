@@ -4,12 +4,20 @@ using UnityEngine;
 
 public class HoverBox : MonoBehaviour
 {
+    public CardPlayer player;
+    Vector3 originalPos;
 
     public TMPro.TextMeshProUGUI textBox;
     // Start is called before the first frame update
     void Start()
     {
-        
+        originalPos = transform.position;
+
+        if (player.charName == "Singelotte")
+        {
+            Debug.Log("Moving HoverBox for Singelotte");
+            transform.position = new Vector3(-184f * GameManager.manager.widthRatio, 0, 0) + new Vector3(transform.position.x, transform.position.y, transform.position.z);    
+        }
     }
 
     // Update is called once per frame
@@ -21,6 +29,10 @@ public class HoverBox : MonoBehaviour
     public void UpdateText(CardPlayer cp)
     {
         // update this with the characters
+        if (cp.charName == "Singelotte")
+        {   
+            textBox.text = "Attacks: \nDeal 4 damage\nSpice up a card in your holster\nSpice up a card in the market";
+        }
         if (cp.charName == "Bolo")
         {
             if (cp.character.character.flipped)

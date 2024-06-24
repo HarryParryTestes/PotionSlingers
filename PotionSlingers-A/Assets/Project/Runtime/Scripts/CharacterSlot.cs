@@ -152,9 +152,12 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         if (GameManager.manager.snakeBonus)
         {
             Debug.Log("Snake bonus???");
+            GameManager.manager.tempPlayer = cp;
+            GameManager.manager.nicklesAttackMenu.SetActive(false);
             GameManager.manager.opponentHolsterMenu.SetActive(true);
             GameManager.manager.displayOpponentHolster(cp);
             GameManager.manager.holster = false;
+            return;
         }
 
         if(GameManager.manager.nicklesDamage > 0 && GameManager.manager.nicklesAttackMenu.activeInHierarchy)

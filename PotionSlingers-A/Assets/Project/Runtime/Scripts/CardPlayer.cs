@@ -1418,7 +1418,7 @@ public class CardPlayer : MonoBehaviour
                 if (gameObject.GetComponent<ComputerPlayer>() == null)
                 {
                     GameManager.manager.opponentHolsterMenu.SetActive(true);
-                    GameManager.manager.displayOpponentHolster();
+                    GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
                 }
                 else
                 {
