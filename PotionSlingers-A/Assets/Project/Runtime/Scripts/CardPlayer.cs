@@ -2790,19 +2790,23 @@ public class CardPlayer : MonoBehaviour
         
         if (pipsSign != null)
         {
-            pipsSign.SetActive(true);
+            if (morePips > 0)
+            {
+                pipsSign.SetActive(true);
 
-            pipsSign.GetComponent<TMPro.TextMeshProUGUI>().text = "+ " + morePips.ToString();
+                pipsSign.GetComponent<TMPro.TextMeshProUGUI>().text = "+ " + morePips.ToString();
 
-            GameObject obj = Instantiate(pipsSign,
-            pipsSign.transform.position,
-            pipsSign.transform.rotation,
-            this.transform);
+                GameObject obj = Instantiate(pipsSign,
+                pipsSign.transform.position,
+                pipsSign.transform.rotation,
+                this.transform);
 
-            // add coroutine
-            StartCoroutine(pipAnimation(obj));
+                // add coroutine
 
-            pipsSign.SetActive(false);
+                StartCoroutine(pipAnimation(obj));
+
+                pipsSign.SetActive(false);
+            }
 
             /*
             healAmount.GetComponent<TMPro.TextMeshProUGUI>().text = "+ " + morePips.ToString();

@@ -1897,6 +1897,9 @@ public class GameManager : MonoBehaviour
             obj.transform.DORotate(new Vector3(0, 0, 360f), 0.5f, RotateMode.FastBeyond360);
         // obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
         yield return new WaitForSeconds(0.5f);
+
+        // MATTEO: Add holster fill sfx here!
+
         cd.updateCard(cardBeingStolen.card);
         cardBeingStolen.updateCard(td.card);
         // cd.updateCard(tempPlayer.holster.cardList[selectedCard - 1].card);
@@ -1911,11 +1914,15 @@ public class GameManager : MonoBehaviour
         if (player.GetComponent<ComputerPlayer>() != null)
             obj.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
         obj.transform.DOJump(cd.gameObject.transform.position, 200f, 1, 0.5f, false);
+
+        // MATTEO: Add holster fill sfx here!
+
         Card card = player.deck.popCard();
         if (cd.GetComponent<DragCard>() != null)
             obj.transform.DORotate(cd.GetComponent<DragCard>().cardRotation, 0.5f);
         // obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
         yield return new WaitForSeconds(0.5f);
+
         cd.updateCard(card);
         obj.SetActive(false);
         Destroy(obj);
@@ -1931,6 +1938,9 @@ public class GameManager : MonoBehaviour
                 {
                     // cd.updateCard(player.deck.popCard());
                     StartCoroutine(DeckAnimation(cd, player));
+
+                    // MATTEO: Add holster fill sfx here!
+
                     yield return new WaitForSeconds(0.25f);
                 }
             }
@@ -3447,6 +3457,8 @@ public class GameManager : MonoBehaviour
         {
             tutorialArrow2.SetActive(false);
         }
+
+        // MATTEO: we may want to remove the ThrowPotion sounds and replace them with specific vessel / artifact sounds
 
         throwingHand.SetActive(true);
         throwingHand.GetComponent<Animator>().SetTrigger("Throw");
@@ -5869,6 +5881,14 @@ public class GameManager : MonoBehaviour
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Unique")
             {
                 players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
+
+                GameObject obj2 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
+                        players[myPlayerIndex].holster.gameObject.transform);
+
+                StartCoroutine(MoveToTrash(obj2));
+
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                 sendSuccessMessage(8);
                 return;
@@ -5890,18 +5910,16 @@ public class GameManager : MonoBehaviour
                 // everyone else
                 players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             }
-            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            
+            
+            GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
+                        players[myPlayerIndex].holster.gameObject.transform);
 
-            // bool connected = networkManager.sendSellRequest(selectedCardInt, players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
-            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
-            {
-                //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-            }
-            else
-            {
-                //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
-            }
+            StartCoroutine(MoveToTrash(obj));
+
+            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
             sendSuccessMessage(8);
             players[myPlayerIndex].checkGauntletBonus();

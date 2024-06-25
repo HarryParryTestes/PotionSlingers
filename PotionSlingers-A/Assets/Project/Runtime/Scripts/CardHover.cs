@@ -23,6 +23,7 @@ public class CardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         transform.DOScale(0.9f, 0.15f).SetId(gameObject.name);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)
