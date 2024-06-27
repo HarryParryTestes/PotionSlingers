@@ -334,6 +334,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             return;
         DOTween.Pause(gameObject.name);
 
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Pickup");
+
         grabbed = true;
         clicked = false;
         transform.position = Input.mousePosition;

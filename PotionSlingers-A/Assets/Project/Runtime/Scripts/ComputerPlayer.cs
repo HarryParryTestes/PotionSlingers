@@ -71,7 +71,8 @@ public class ComputerPlayer : CardPlayer
         {
             // exclusively buy potions as ammunition
             numero = rng.Next(1, 4);
-        } else
+        }
+        else
         {
             numero = rng.Next(1, 7);
         }
@@ -143,14 +144,14 @@ public class ComputerPlayer : CardPlayer
         Destroy(obj);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
-        GameManager.manager.td.transform.parent.DOMove(new Vector2(GameManager.manager.td.transform.parent.position.x, 
+        GameManager.manager.td.transform.parent.DOMove(new Vector2(GameManager.manager.td.transform.parent.position.x,
             GameManager.manager.td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     public void pickRandomHolsterCard()
     {
         int f = 0;
-        foreach(CardDisplay cd in GameManager.manager.playerHolster.cardList)
+        foreach (CardDisplay cd in GameManager.manager.playerHolster.cardList)
         {
             if (cd.card.name == "placeholder")
                 f++;
@@ -160,10 +161,10 @@ public class ComputerPlayer : CardPlayer
             GameManager.manager.sendMessage("Spiced up a card in your holster!");
             return;
         }
-            
+
 
         int holsterNum = rng.Next(1, 5);
-        if(GameManager.manager.playerHolster.cardList[holsterNum - 1].card.name == "placeholder" ||
+        if (GameManager.manager.playerHolster.cardList[holsterNum - 1].card.name == "placeholder" ||
             GameManager.manager.playerHolster.cardList[holsterNum - 1].card.spicy)
         {
             pickRandomHolsterCard();
@@ -218,7 +219,7 @@ public class ComputerPlayer : CardPlayer
             {
                 attackType = rng.Next(1, 3);
             }
-            else 
+            else
                 attackType = rng.Next(1, 4);
             switch (attackType)
             {
@@ -232,7 +233,7 @@ public class ComputerPlayer : CardPlayer
                     this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.2f);
                     GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
-                    // spicy holster card
+                // spicy holster card
                 case 2:
                     int cardNum = rng.Next(1, 7);
                     switch (cardNum)
@@ -266,7 +267,7 @@ public class ComputerPlayer : CardPlayer
                     this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.2f);
                     GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
-                    // spicy market card
+                // spicy market card
                 case 3:
                     pickRandomHolsterCard();
                     this.gameObject.GetComponent<CardPlayer>().animator.Play("SingeAttack");
@@ -282,8 +283,9 @@ public class ComputerPlayer : CardPlayer
             return;
         }
 
-        if (this.gameObject.GetComponent<CardPlayer>().name == "CrowPunk")
+        if (this.gameObject.GetComponent<CardPlayer>().name == "Crowpunk")
         {
+            Debug.Log("Crowpunk attack");
             this.gameObject.GetComponent<CardPlayer>().animator.Play("CrowAttack");
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
@@ -303,7 +305,7 @@ public class ComputerPlayer : CardPlayer
             // damage = rng.Next(1, 5);
 
             // make the player take damage without using throwing functions
-            if(damage == 4)
+            if (damage == 4)
             {
                 int cardNumber = pickRandomHolsterCardCrow();
                 if (cardNumber == -1)
@@ -389,6 +391,7 @@ public class ComputerPlayer : CardPlayer
     public IEnumerator waitASecBro()
     {
         // modify this based on what difficulty the CPU is
+
         yield return new WaitForSeconds(1.5f);
 
         // story mode logic

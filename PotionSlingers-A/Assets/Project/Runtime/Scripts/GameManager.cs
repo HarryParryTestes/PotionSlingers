@@ -519,7 +519,7 @@ public class GameManager : MonoBehaviour
                     unSpicyCards();
                     SteamUserStats.SetAchievement("BEAT_STAGE_1");
                 }
-                    
+
                 Debug.Log("Advancing a stage in story mode");
                 saveData.newStage = true;
                 saveData.visitedEnemies.Add(saveData.currentEnemyName);
@@ -1239,7 +1239,7 @@ public class GameManager : MonoBehaviour
                 players[0].name = playerBottomName.text;
                 players[0].hpCubes = saveData.playerCubes;
                 players[0].hp = saveData.playerHealth;
-                if(players[0].hBar != null)
+                if (players[0].hBar != null)
                 {
                     Debug.Log("Health bar edit");
                     players[0].hBar.image.fillAmount = 0;
@@ -1930,6 +1930,21 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator HolsterFill(CardPlayer player)
     {
+        // MATTEO: Add holster fill sfx here!
+
+        int times = 0;
+
+        foreach (CardDisplay cd in player.holster.cardList)
+        {
+            if (cd.card.name == "placeholder")
+            {
+                times++;
+            }
+        }
+
+        if (times > 0)
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Draw");
+
         foreach (CardDisplay cd in player.holster.cardList)
         {
             if (player.deck.deckList.Count >= 1)
@@ -1938,8 +1953,6 @@ public class GameManager : MonoBehaviour
                 {
                     // cd.updateCard(player.deck.popCard());
                     StartCoroutine(DeckAnimation(cd, player));
-
-                    // MATTEO: Add holster fill sfx here!
 
                     yield return new WaitForSeconds(0.25f);
                 }
@@ -1986,9 +1999,10 @@ public class GameManager : MonoBehaviour
         player.currentPlayerHighlight.SetActive(true);
 
         // This is where to make the animation that deals the cards from the deck to the holster
-        StartCoroutine(HolsterFill(player));
+        if (player.holster.gameObject.activeInHierarchy)
+            StartCoroutine(HolsterFill(player));
 
-        Invoke("saveGameStuff", 1.5f);
+        Invoke("saveGameStuff", 1f);
 
         // this should make it not trigger every turn
         if (player.isPluot && player.name == currentPlayerName && player.gameObject.GetComponent<ComputerPlayer>() == null)
@@ -2129,9 +2143,9 @@ public class GameManager : MonoBehaviour
 
     public void setLoadedInt(CardDisplay cd)
     {
-        for(int i = 0; i < 4; i++)
+        for (int i = 0; i < 4; i++)
         {
-            if(players[myPlayerIndex].holster.cardList[i] == cd)
+            if (players[myPlayerIndex].holster.cardList[i] == cd)
             {
                 loadedCardInt = i;
             }
@@ -2213,9 +2227,9 @@ public class GameManager : MonoBehaviour
             int cardNumber = rng.Next(1, 5);
             selectedCardInt = cardNumber;
 
-            foreach(CardDisplay cd in players[i].holster.cardList)
+            foreach (CardDisplay cd in players[i].holster.cardList)
             {
-                if(cd.card.cardName != "placeholder")
+                if (cd.card.cardName != "placeholder")
                 {
                     GameObject obj = Instantiate(cd.gameObject,
                     cd.gameObject.transform.position,
@@ -2397,9 +2411,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("CARDVALUE = " + selectedCard);
         Debug.Log("MyPlayerIndex = " + myPlayerIndex);
 
-        foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
-            if(cd.card.cardName == "placeholder")
+            if (cd.card.cardName == "placeholder")
             {
                 // use coroutine to delay the card update until after the animation is done
                 StartCoroutine(DeckStealAnimation(cd, tempPlayer.holster.cardList[selectedCard - 1]));
@@ -2666,6 +2680,8 @@ public class GameManager : MonoBehaviour
     // END TURN REQUEST
     public void endTurn()
     {
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_EndTurn");
+
         // checkForEndGame();
         // reset the market at the end of your turn
         if (marketSelected)
@@ -2829,7 +2845,8 @@ public class GameManager : MonoBehaviour
                 Debug.Log("myPlayerIndex rolled over???");
                 myPlayerIndex = 0;
             }
-            sendSuccessMessage(18);
+            // sendSuccessMessage(18);
+            sendMessage(players[myPlayerIndex].name + "'s Turn!");
             currentPlayerName = players[myPlayerIndex].name;
 
 
@@ -2847,6 +2864,16 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Computer player is dead!");
                     return;
                 }
+
+                // MATTEO: I think this is a good place to call the start of turn sounds here!
+                if (players[myPlayerIndex].name == "Fingas")
+                {
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_turn");
+                }
+
+
+                // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Singe_Swing");
+
                 players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().StartCoroutine(players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().waitASecBro());
             }
             else
@@ -3253,7 +3280,7 @@ public class GameManager : MonoBehaviour
 
             if (players[myPlayerIndex].reetsCycle)
             {
-               sendMessage("You already performed your action this turn!");
+                sendMessage("You already performed your action this turn!");
                 return;
             }
 
@@ -3473,7 +3500,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
             tempPlayer.subHealth(damage, cardQuality);
-            
+
             yield break;
         }
 
@@ -3840,7 +3867,7 @@ public class GameManager : MonoBehaviour
                     GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).position,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).rotation,
-                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform);
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].transform);
 
                     // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
 
@@ -3909,17 +3936,18 @@ public class GameManager : MonoBehaviour
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
 
                     // Sunday Funnies check
-                    if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Sunday Funnies")
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Sunday Funnies")
                     {
                         Debug.Log("Sunday Funnies!");
                         players[myPlayerIndex].deck.putCardOnTop(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
                         players[myPlayerIndex].deck.putCardOnTop(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
-                    } else
+                    }
+                    else
                     {
                         players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
                         players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
                     }
-                    
+
                     // code that animates the loaded cards
                     GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).position,
@@ -3979,6 +4007,12 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MoveToTrash(GameObject obj, CardDisplay cd)
     {
+        /*
+        var instance = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/SFX_ThrowPotion");
+        instance.start();
+        instance.release();
+        */
+
         obj.transform.SetParent(obj.transform.parent.parent);
         cd.artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.gameObject.SetActive(false);
@@ -3989,14 +4023,17 @@ public class GameManager : MonoBehaviour
         cd.artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
         cd.artifactSlot.SetActive(false);
         yield return new WaitForSeconds(0.6f);
+        // instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
         obj.GetComponent<Image>().CrossFadeAlpha(0, 0.2f, false);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.15f);
 
         Destroy(obj);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
 
         // MATTEO : Add trash can thunk sfx here!
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Trash");
+        yield return new WaitForSeconds(0.15f);
         td.transform.parent.DOMove(new Vector2(td.transform.parent.position.x, td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
@@ -4013,13 +4050,15 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
         yield return new WaitForSeconds(0.6f);
         obj.GetComponent<Image>().CrossFadeAlpha(0, 0.2f, false);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.15f);
 
         Destroy(obj);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
 
         // MATTEO : Add trash can thunk sfx here!
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Trash");
+        yield return new WaitForSeconds(0.15f);
         td.transform.parent.DOMove(new Vector2(td.transform.parent.position.x, td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
@@ -4098,7 +4137,7 @@ public class GameManager : MonoBehaviour
                 md1.cardDisplay1.updateCard(card1);
                 sendSuccessMessage(9);
                 md1.cardDisplay1.GetComponent<DragCard>().marketBack();
-                
+
                 break;
             case 2:
                 td.addCard(md1.cardDisplay2);
@@ -4250,7 +4289,7 @@ public class GameManager : MonoBehaviour
 
     public void preLoadPotion(CardDisplay selectedCard = null)
     {
-        if(selectedCard != null)
+        if (selectedCard != null)
         {
             Debug.Log("Trying to load deck card!!!");
             if (selectedCard.card.cardType != "Potion")
@@ -4394,6 +4433,7 @@ public class GameManager : MonoBehaviour
                     Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionDisplay.card;
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionDisplay.card);
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                     usedStarterPotion = true;
                     // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                     sendSuccessMessage(5);
@@ -4442,6 +4482,7 @@ public class GameManager : MonoBehaviour
                             Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = cd.card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(cd.card);
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
                             sendSuccessMessage(5);
                             Debug.Log("Potion loaded in Vessel slot 2!");
@@ -4461,6 +4502,7 @@ public class GameManager : MonoBehaviour
                         Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = cd.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(cd.card);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
@@ -4498,6 +4540,7 @@ public class GameManager : MonoBehaviour
                         Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = cd.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(cd.card);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         Debug.Log("Potion loaded in Artifact slot!");
@@ -4571,6 +4614,7 @@ public class GameManager : MonoBehaviour
                             Card placeholder = playerHolster.cardList[loadedCardInt].vPotion2.card;
                             playerHolster.cardList[loadedCardInt].vPotion2.card = playerHolster.cardList[selectedCardInt - 1].card;
                             playerHolster.cardList[loadedCardInt].vPotion2.updateCard(playerHolster.cardList[selectedCardInt - 1].card);
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
@@ -4592,6 +4636,7 @@ public class GameManager : MonoBehaviour
                         Card placeholder = playerHolster.cardList[loadedCardInt].vPotion1.card;
                         playerHolster.cardList[loadedCardInt].vPotion1.card = playerHolster.cardList[selectedCardInt - 1].card;
                         playerHolster.cardList[loadedCardInt].vPotion1.updateCard(playerHolster.cardList[selectedCardInt - 1].card);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
@@ -4635,6 +4680,7 @@ public class GameManager : MonoBehaviour
                         Card placeholder = playerHolster.cardList[loadedCardInt].aPotion.card;
                         playerHolster.cardList[loadedCardInt].aPotion.card = playerHolster.cardList[selectedCardInt - 1].card;
                         playerHolster.cardList[loadedCardInt].aPotion.updateCard(playerHolster.cardList[selectedCardInt - 1].card);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         StartCoroutine(waitThreeSeconds(dialog));
@@ -4729,6 +4775,7 @@ public class GameManager : MonoBehaviour
                         Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionDisplay.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionDisplay.card);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                         usedStarterPotion = true;
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
@@ -4792,6 +4839,7 @@ public class GameManager : MonoBehaviour
                                 Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
                                 players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
                                 players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
                                 // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                                 sendSuccessMessage(5);
@@ -4819,6 +4867,7 @@ public class GameManager : MonoBehaviour
                             Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
@@ -4871,6 +4920,7 @@ public class GameManager : MonoBehaviour
                             Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
                             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
@@ -4997,7 +5047,7 @@ public class GameManager : MonoBehaviour
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
                 // wasn't working, taking it out for now
-                
+
                 Debug.Log("Animation triggered");
                 GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
@@ -5005,7 +5055,7 @@ public class GameManager : MonoBehaviour
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform);
 
                 StartCoroutine(MoveToDeck(obj));
-                
+
 
                 players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[0].holster.card1.placeholder);
@@ -5224,7 +5274,7 @@ public class GameManager : MonoBehaviour
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay1.card.buyPrice - 1))
                     {
-                        if(md1.cardDisplay1.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        if (md1.cardDisplay1.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {
                             sendErrorMessage(6);
                             return;
@@ -5910,8 +5960,8 @@ public class GameManager : MonoBehaviour
                 // everyone else
                 players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice);
             }
-            
-            
+
+
             GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
@@ -6023,6 +6073,8 @@ public class GameManager : MonoBehaviour
 
     public void sendMessage(string message)
     {
+        StopCoroutine("sendMessage");
+
         GameObject textbox = successMessages[21];
         textbox.SetActive(true);
         textbox.GetComponent<TMPro.TextMeshProUGUI>().text = message;

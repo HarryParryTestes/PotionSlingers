@@ -51,6 +51,22 @@ public class MarketDeck : NetworkBehaviour
     // wow that works so well
     public List<Card> shuffle()
     {
+        SaveData saveData = SaveSystem.LoadGameData();
+
+        // story mode check
+        // WHEN YOU ADD OTHER SLINGER NPCS CHANGE THIS!!!
+        if (GameManager.manager.Game.storyMode && (saveData.currentEnemyName != "Saltimbocca"))
+        {
+            for(int i = 0; i < deckList.Count; i++)
+            {
+                if (GameManager.manager.database.GetComponent<CardDatabase>().trashBonusCards.Contains(deckList[i]))
+                {
+                    Debug.Log("Trash card! Delete it!");
+                    deckList.RemoveAt(i);
+                }
+            }
+        }
+
         int n = deckList.Count;
         while (n > 1)
         {

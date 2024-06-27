@@ -5,6 +5,7 @@ using UnityEngine;
 public class CardDatabase : MonoBehaviour
 {
     public List<Card> cardList = new List<Card>();
+    public List<Card> trashBonusCards = new List<Card>();
 
     /*
     public int id;
