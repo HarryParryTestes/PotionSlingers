@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
     public GameObject nicklesAttackMenu;
     public GameObject advanceStageUI;
     public DeckMenuScroll deckDisplay;
+    public ExpUI expUI;
 
     public TMPro.TextMeshProUGUI trashText;
 
@@ -447,6 +448,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void setStageUI()
+    {
+        advanceStageUI.SetActive(true);
+    }
+
     public void checkForEndGame()
     {
         Debug.Log("Checking if the game is over");
@@ -548,7 +554,8 @@ public class GameManager : MonoBehaviour
                 SaveSystem.SaveGameData(saveData);
                 // Game.ServerChangeScene("StoryMode");
                 // throw some message up on the screen saying you've completed the stage
-                advanceStageUI.SetActive(true);
+                // advanceStageUI.SetActive(true);
+                Invoke("setStageUI", 3f);
                 // StartCoroutine(goToStory());
                 // SceneManager.LoadScene("StoryMode");
                 return;
@@ -1160,6 +1167,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         Debug.Log("GameManager started!!!");
+
+        // expUI.DisplayText();
 
         // just testing the new health bar
         // players[0].subHealth(5);

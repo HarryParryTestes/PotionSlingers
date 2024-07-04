@@ -481,6 +481,7 @@ public class CardPlayer : MonoBehaviour
     {
         GetComponent<Image>().CrossFadeAlpha(0, 2f, false);
         StartCoroutine(turnOff());
+        GameManager.manager.expUI.DisplayText(this);
     }
 
     public IEnumerator turnOff()
