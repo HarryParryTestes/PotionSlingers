@@ -68,6 +68,9 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnBeginDrag(PointerEventData pointerEventData)
     {
+        if (this.gameObject.name == "DeckPile")
+            cp.checkGauntletBonus();
+
         if (this.gameObject.name != "DeckPile")
             return;
 
@@ -197,7 +200,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        if(cp != null)
+        if(cp != null && this.gameObject.name != "DeckPile")
         {
             if(pointerEventData.pointerDrag != null)
             {
@@ -220,7 +223,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
 
-        if (cp != null)
+        if (cp != null && this.gameObject.name != "DeckPile")
         {
             // hoverbox code in here!
             cp.hoverBox.SetActive(false);

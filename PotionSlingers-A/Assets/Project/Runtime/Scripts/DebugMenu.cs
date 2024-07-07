@@ -36,7 +36,7 @@ public class DebugMenu : MonoBehaviour
         // TODO: add check for bonuses
         string bonus = "";
         // GameManager.manager.players[GameManager.manager.myPlayerIndex].charName
-        bonuses.text = "Bonuses: " + bonus;
+        // bonuses.text = "Bonuses: " + bonus;
 
 
     }

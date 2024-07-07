@@ -586,7 +586,8 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
 	{
-		networkManager.multiplayer = true;
+        flipCharacters();
+        networkManager.multiplayer = true;
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = false;
@@ -598,6 +599,7 @@ public class MainMenu : MonoBehaviour
     public void StartSingleplayerGame()
     {
 		// maybe use static reference to Game instead of networkManager?
+		flipCharacters();
         networkManager.multiplayer = false;
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
@@ -627,7 +629,8 @@ public class MainMenu : MonoBehaviour
 
 	public void StartQuickplayGame()
     {
-		networkManager.multiplayer = false;
+        flipCharacters();
+        networkManager.multiplayer = false;
 		networkManager.tutorial = false;
 		networkManager.quickplay = true;
 		networkManager.storyMode = false;

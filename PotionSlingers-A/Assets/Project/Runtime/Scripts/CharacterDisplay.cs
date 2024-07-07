@@ -147,9 +147,11 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
 
         if (!canBeFlipped)
         {
+            GameManager.manager.sendMessage("You can't flip your character just yet!");
             return;
         }
         character.flipped = !character.flipped;
+        
         
         if (character.flipped)
         {

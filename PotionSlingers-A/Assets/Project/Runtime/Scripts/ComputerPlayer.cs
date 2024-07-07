@@ -392,6 +392,17 @@ public class ComputerPlayer : CardPlayer
     {
         // modify this based on what difficulty the CPU is
 
+        // Hot coffee check
+        if (this.gameObject.GetComponent<CardPlayer>().hotCoffee)
+        {
+            Debug.Log("One damage from the coffee...");
+            this.gameObject.GetComponent<CardPlayer>().subHealth(1);
+            this.gameObject.GetComponent<CardPlayer>().hotCoffee = false;
+        }
+
+        if (this.gameObject.GetComponent<CardPlayer>().dead)
+            yield break;
+
         yield return new WaitForSeconds(1.5f);
 
         // story mode logic

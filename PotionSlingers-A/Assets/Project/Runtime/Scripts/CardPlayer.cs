@@ -402,6 +402,28 @@ public class CardPlayer : MonoBehaviour
             Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
     }
 
+    public void checkReetsCondition()
+    {
+        int cards = 0;
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if(cd.card.name != "placeholder")
+            {
+                cards++;
+            }
+        }
+
+        cards += deck.deckList.Count;
+
+        Debug.Log("Total number of Reets cards: " + cards);
+
+        if(cards >= 11)
+        {
+            character.canBeFlipped = true;
+            GameManager.manager.sendMessage("You can now flip your character!");
+        }
+    }
+
     public void updateHealthUI(string cardQuality = "")
     {
         float numbers;
@@ -838,7 +860,8 @@ public class CardPlayer : MonoBehaviour
                 {
                     Card temp = deck.popCard();
                     card.updateCard(temp);
-                    reetsCycle = true;
+                    // should reets cycle be infinite or limited to once per turn???
+                    // reetsCycle = true;
                     GameManager.manager.sendMessage("Added a card into your holster!");
                     break;
                 }
