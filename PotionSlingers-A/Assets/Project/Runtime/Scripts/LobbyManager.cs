@@ -136,6 +136,27 @@ public class LobbyManager : MonoBehaviour
         // instead of instantiating the objects with the LobbyManager, you want to instantiate them with the NetworkManager instead
     }
 
+    public void instantiateStoryModeItem()
+    {
+        int index = playerListItems.Count;
+
+        // potentially rework this to only add these items to playerListItems List
+        GameObject newPlayerListItem = Instantiate(PlayerListItemPrefab, Game.gameObject.transform) as GameObject;
+        DontDestroyOnLoad(newPlayerListItem);
+        PlayerListItem newPlayerListItemScript = newPlayerListItem.GetComponent<PlayerListItem>();
+        newPlayerListItem.transform.SetParent(gameObject.transform);
+        newPlayerListItem.transform.localPosition = new Vector3(-660, -415, 0);
+        // newPlayerListItem.transform.localScale = Vector3.one;
+        newPlayerListItem.transform.localScale = new Vector3(1.05f, 1.05f, 1.05f);
+        newPlayerListItemScript.NotReadyButton.SetActive(false);
+        // maybe add this back in? just tweak how it looks
+        // newPlayerListItemScript.cpuToggleObject.SetActive(true);
+        newPlayerListItemScript.SetSinglePlayerListItemValues(index);
+        playerListItems.Add(newPlayerListItemScript);
+
+        // instead of instantiating the objects with the LobbyManager, you want to instantiate them with the NetworkManager instead
+    }
+
     public void createCPU()
     {
         Debug.Log("Creating CPU");
@@ -151,6 +172,8 @@ public class LobbyManager : MonoBehaviour
     {
 
         DestroyPlayerListItems();
+        // failsafe cause I don't want things fucking up
+        Game.storyModeCharName = "Bolo";
         // playerListItems.Clear();
 
         /*
@@ -224,6 +247,7 @@ public class LobbyManager : MonoBehaviour
         StartGameButton.gameObject.SetActive(true);
 
         GameObject go = new GameObject("Player Item");
+        // go.transform.localScale = new Vector3(1f, 1f, 1f);
         go.AddComponent<PlayerListItem>();
         // go.GetComponent<PlayerListItem>().playerName = SteamFriends.GetPersonaName();
         // go.GetComponent<PlayerListItem>().PlayerNameText.text = go.GetComponent<PlayerListItem>().playerName;
@@ -231,7 +255,7 @@ public class LobbyManager : MonoBehaviour
 
         // playerListItems.Add(go.GetComponent<PlayerListItem>());
 
-        instantiateItem();
+        instantiateStoryModeItem();
 
         //createCPU();
         //createCPU();
