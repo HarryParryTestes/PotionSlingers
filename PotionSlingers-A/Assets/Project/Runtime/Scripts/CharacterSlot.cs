@@ -200,7 +200,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        if(cp != null && this.gameObject.name != "DeckPile")
+        if(cp != null && this.gameObject.name != "DeckPile" && cp.name != "Carnival")
         {
             if(pointerEventData.pointerDrag != null)
             {

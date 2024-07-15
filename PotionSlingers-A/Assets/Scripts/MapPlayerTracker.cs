@@ -71,10 +71,19 @@ namespace Map
             // or show appropriate GUI over the map: 
             // if you choose to show GUI in some of these cases, do not forget to set "Locked" in MapPlayerTracker back to false
             SaveData saveData = SaveSystem.LoadGameData();
-            saveData.currentEnemyName = mapNode.enemyName;
+            if (mapNode.Node.nodeType == NodeType.Carnival)
+                saveData.currentEnemyName = "Carnival";
+            else
+                saveData.currentEnemyName = mapNode.enemyName;
             Debug.Log("Current enemy is " + saveData.currentEnemyName + "!!!");
             SaveSystem.SaveGameData(saveData);
             GameObject transition = GameObject.Find("SceneTransition");
+
+            if (mapNode.Node.nodeType == NodeType.Carnival)
+            {
+                transition.GetComponent<SceneTransition>().doTransition();
+                return;
+            }
 
             if (mapNode.Node.nodeType == NodeType.Treasure)
             {

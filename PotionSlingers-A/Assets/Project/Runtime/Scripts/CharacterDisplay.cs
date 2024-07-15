@@ -94,6 +94,12 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
 
     public void onCharacterClick(string character)
     {
+        if (character == "Carnival")
+        {
+            Debug.Log("Add carnival sprite here!");
+            return;
+        }
+
         Debug.Log("Send CharReq");
         foreach (Character character2 in MainMenu.menu.characters)
         {

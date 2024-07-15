@@ -28,7 +28,7 @@ public class HoverBox : MonoBehaviour
 
     public void UpdateText(CardPlayer cp)
     {
-        if(cp.charName == "Crowpunk"  || cp.charName == "Crowpunk+")
+        if (cp.charName == "Crowpunk"  || cp.charName == "Crowpunk+")
         {
             textBox.text = "Attacks:\nDeal 1-4 damage\nSteal a random card from your holster";
         }

@@ -146,7 +146,7 @@ namespace Map
             Debug.Log("Hovering over " + enemyName);
 
             // display enemy name in this code!
-            if (this.Node.nodeType == NodeType.RestSite || this.Node.nodeType == NodeType.Treasure)
+            if (this.Node.nodeType == NodeType.RestSite || this.Node.nodeType == NodeType.Treasure || this.Node.nodeType == NodeType.Carnival)
                 return;
 
             if(enemyName == "" && attainable)

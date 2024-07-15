@@ -50,9 +50,11 @@ public class GameManager : MonoBehaviour
     public DeckMenuScroll deckMenuScroll;
     public Image background;
     public Sprite[] backgrounds;
+    public int carnivalTurns = 0;
 
     public List<Card> starterCards;
 
+    public GameObject carnivalUI;
     public GameObject gameOverScreen;
     public GameObject tutorialArrow;
     public GameObject tutorialArrow2;
@@ -637,6 +639,47 @@ public class GameManager : MonoBehaviour
         // changing from stage number to currentEnemyName
         switch (saveData.currentEnemyName)
         {
+            case "Carnival":
+                background.sprite = backgrounds[0];
+                // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                numPlayers = 2;
+                carnivalTurns = 2;
+                carnivalUI.SetActive(true);
+                // change this to Carnival strength game sprite instead of fingas
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Carnival";
+                players[2].name = "Carnival";
+                playerTopName.text = players[2].charName;
+                playerTopName.gameObject.transform.parent.gameObject.SetActive(false);
+                players[2].character.onCharacterClick("Fingas");
+                players[2].checkCharacter();
+                players[2].playerHP.SetActive(false);
+                players[2].playerHPCubes.SetActive(false);
+                players[2].bar.SetActive(false);
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
+
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 10;
+                }
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
             case "Fingas":
                 background.sprite = backgrounds[0];
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
@@ -2696,6 +2739,14 @@ public class GameManager : MonoBehaviour
         if (marketSelected)
         {
             moveMarket();
+        }
+
+        // carnival check
+        if (saveData.currentEnemyName == "Carnival")
+        {
+            carnivalTurns--;
+            onStartTurn(cardPlayer);
+            return;
         }
         // TUTORIAL LOGIC
         if (Game.tutorial)
