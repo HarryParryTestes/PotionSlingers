@@ -464,8 +464,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 27)
         {
             textInfo = "Some items sell for more than what you can buy them for!\n\n" +
-                "Try selling an item in your holster! Click on a card\n" +
-                "you want to sell and click SELL!";
+                "Try selling an item in your holster! Drag a card you want to sell onto the coin icon on the right to sell it!";
             ActivateText(dialogBox);
         }
         else if (textBoxCounter == 28)
