@@ -10,6 +10,7 @@ public class CardDisplay : MonoBehaviour
     public Card card;
     public UniqueCard uniqueCard;
     public Image artworkImage;
+    public SpriteRenderer sr;
     public Card placeholder;
 
     // Artifact loaded potion slot:
@@ -102,6 +103,13 @@ public class CardDisplay : MonoBehaviour
         else
             this.gameObject.SetActive(true);
         
+    }
+
+    public void colorCard()
+    {
+        // image.color = MapView.Instance.lockedColor;
+        sr.DOKill();
+        // sr.DOColor(GameManager.manager.bonusColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void updateCard(CardDisplay cd)

@@ -12,7 +12,6 @@ public class Character : ScriptableObject
     public string desc;
     public Sprite image;
     public string flipTask;
-    public bool flipped = false;
     public Sprite flippedImage;
     public string flippedDesc;
     public UniqueCard uniqueCard;

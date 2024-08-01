@@ -26,6 +26,7 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
     public bool viewed = false;
     public bool clicked;
     public bool canBeFlipped = false;
+    public bool flipped = false;
     public bool uniqueCardUsed = false;
 
     private MyNetworkManager game;
@@ -55,7 +56,7 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
         artworkImage = this.GetComponent<Image>();
         // reworking this to start using animated sprites
         // artworkImage.sprite = character.image;
-        character.flipped = false;
+        flipped = false;
     }
 
     public void onView()
@@ -156,10 +157,10 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
             GameManager.manager.sendMessage("You can't flip your character just yet!");
             return;
         }
-        character.flipped = !character.flipped;
+        flipped = !flipped;
         
         
-        if (character.flipped)
+        if (flipped)
         {
             Debug.Log("You just flipped the card!");
             this.artworkImage.sprite = character.flippedImage;
@@ -205,9 +206,9 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
     {
         if(SceneManager.GetActiveScene().name == "TitleMenu" && MainMenu.menu.flippable)
         {
-            character.flipped = !character.flipped;
+            flipped = !flipped;
             
-            if (character.flipped)
+            if (flipped)
             {
                 Debug.Log("You just flipped the card!");
                 artworkImage.sprite = character.flippedImage;

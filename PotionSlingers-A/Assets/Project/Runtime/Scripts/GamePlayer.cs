@@ -590,7 +590,7 @@ public class GamePlayer : NetworkBehaviour
                 Debug.Log("GameManager RPCThrowCard");
 
                 // if you're saltimbocca and you're flipped
-                if (cp.isSaltimbocca && cp.character.character.flipped)
+                if (cp.isSaltimbocca && cp.character.flipped)
                 {
                     damage = cp.holster.cardList[selectedCardInt - 1].card.buyPrice;
 
@@ -612,7 +612,7 @@ public class GamePlayer : NetworkBehaviour
                     Debug.Log("POTION");
                     if (cp.isTwins)
                     {
-                        if (!cp.character.character.flipped)
+                        if (!cp.character.flipped)
                         {
                             cp.addHealth(1);
                         }
@@ -751,7 +751,7 @@ public class GamePlayer : NetworkBehaviour
                                 cp.holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
                     {
                         Debug.Log("VESSEL");
-                        if (cp.isTwins && cp.character.character.flipped)
+                        if (cp.isTwins && cp.character.flipped)
                         {
                             cp.addHealth(4);
                         }
@@ -821,12 +821,12 @@ public class GamePlayer : NetworkBehaviour
             {
                 // LOGIC FOR BOLO SELLING ABILITY
                 // Bolo not flipped and he's selling something that's not a potion
-                if (cp.isBolo && !cp.character.character.flipped && cp.holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
+                if (cp.isBolo && !cp.character.flipped && cp.holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
                 {
                     cp.addPips(cp.holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
                     // Bolo flipped selling anything
                 }
-                else if (cp.isBolo && cp.character.character.flipped)
+                else if (cp.isBolo && cp.character.flipped)
                 {
                     cp.addPips(cp.holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
                 }
@@ -918,7 +918,7 @@ public class GamePlayer : NetworkBehaviour
         {
             if (cp.name == throwerName)
             {
-                if (cp.character.character.flipped)
+                if (cp.character.flipped)
                 {
                     if (cp.pips > 1)
                     {
@@ -1079,7 +1079,7 @@ public class GamePlayer : NetworkBehaviour
         {
             if(cp.name == throwerName)
             {
-                if (cp.character.character.flipped)
+                if (cp.character.flipped)
                 {
                     GameManager.manager.reetsMenuText.text = "Pay 1P to add top card of deck to Holster?";
                     GameManager.manager.reetsCard.GetComponent<Image>().sprite = GameManager.manager.sprite1;
@@ -1117,7 +1117,7 @@ public class GamePlayer : NetworkBehaviour
             {
                 if (cp.isSweetbitter)
                 {
-                    if (cp.character.character.flipped)
+                    if (cp.character.flipped)
                     {
                         GameManager.manager.sendErrorMessage(10);
                     }
@@ -1131,7 +1131,7 @@ public class GamePlayer : NetworkBehaviour
 
                 if (cp.isScarpetta)
                 {
-                    if (cp.character.character.flipped)
+                    if (cp.character.flipped)
                     {
                         GameManager.manager.sendErrorMessage(10);
                     }
@@ -1143,22 +1143,22 @@ public class GamePlayer : NetworkBehaviour
                 }
 
                 // change this to flipped and not !flipped after you test this
-                if (cp.isIsadore && cp.character.character.flipped && !cp.character.uniqueCardUsed)
+                if (cp.isIsadore && cp.character.flipped && !cp.character.uniqueCardUsed)
                 {
                     // Target RPC for Isadore Menu
                     RpcIsadoreMenu(throwerName);
                     //isadoreMenu.SetActive(true);
                 }
-                else if (cp.isIsadore && (!cp.character.character.flipped || cp.character.uniqueCardUsed))
+                else if (cp.isIsadore && (!cp.character.flipped || cp.character.uniqueCardUsed))
                 {
                     // not able to do action
                     // fix this later
                     GameManager.manager.sendErrorMessage(13);
                 }
 
-                if (cp.isPluot && cp.character.character.flipped)
+                if (cp.isPluot && cp.character.flipped)
                 {
-                    if (cp.character.character.flipped)
+                    if (cp.character.flipped)
                     {
                         // prompt ui for adding Extra Inventory into holster
                         // Target RPC for Pluot Menu
@@ -1198,7 +1198,7 @@ public class GamePlayer : NetworkBehaviour
 
                 if (cp.isNickles && !cp.nicklesAction)
                 {
-                    if (!cp.character.character.flipped)
+                    if (!cp.character.flipped)
                     {
                         // Target RPC for Nickles Menu
                         RpcNicklesMenu(throwerName);
@@ -1234,7 +1234,7 @@ public class GamePlayer : NetworkBehaviour
             {
                 // insert logic here
                 // characters that can flip back for free
-                if (cp.character.character.flipped)
+                if (cp.character.flipped)
                 {
                     if (cp.isSaltimbocca)
                     {
@@ -1286,7 +1286,7 @@ public class GamePlayer : NetworkBehaviour
                     }
                 }
 
-                if (cp.isScarpetta && cp.pipsUsedThisTurn == 0 && cp.potionsThrown == 0 && cp.artifactsUsed == 0 && cp.character.character.flipped == false)
+                if (cp.isScarpetta && cp.pipsUsedThisTurn == 0 && cp.potionsThrown == 0 && cp.artifactsUsed == 0 && cp.character.flipped == false)
                 {
                     cp.character.canBeFlipped = true;
                     cp.character.flipCard();
@@ -1826,7 +1826,7 @@ public class GamePlayer : NetworkBehaviour
         {
             if (cp.name == name)
             {
-                if(cp.isScarpetta && cp.character.character.flipped)
+                if(cp.isScarpetta && cp.character.flipped)
                 {
                     GameManager.manager.sendErrorMessage(6);
                     return;

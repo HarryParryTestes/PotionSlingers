@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public CardDatabase database;
     public Dialog dialog;
     public GameObject dialogBox;
+    public Color bonusColor;
     GameObject ob;
     GameObject obTop;
     GameObject obLeft;
@@ -402,7 +403,7 @@ public class GameManager : MonoBehaviour
         saveData.playerDeck = playersDeck;
         saveData.playerHealth = players[0].hp;
         saveData.playerCubes = players[0].hpCubes;
-        saveData.flipped = players[0].character.character.flipped;
+        saveData.flipped = players[0].character.flipped;
         saveData.canBeFlipped = players[0].character.canBeFlipped;
         saveData.transition = false;
         switch (saveData.currentEnemyName)
@@ -1306,7 +1307,8 @@ public class GameManager : MonoBehaviour
                 if (saveData.flipped)
                 {
                     Debug.Log("Character card should be flipped!");
-                    players[0].character.character.flipped = true;
+                    // check on this
+                    players[0].character.flipped = false;
                     players[0].character.flipCard();
                 }
                 // players[0].deck.loadDeck();
@@ -1814,7 +1816,7 @@ public class GameManager : MonoBehaviour
         }
 
         // characters that can flip back for free
-        if (players[myPlayerIndex].character.character.flipped)
+        if (players[myPlayerIndex].character.flipped)
         {
             if (players[myPlayerIndex].isSaltimbocca)
             {
@@ -1860,7 +1862,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (players[myPlayerIndex].isScarpetta && players[myPlayerIndex].pipsUsedThisTurn == 0 && players[myPlayerIndex].potionsThrown == 0 && players[myPlayerIndex].artifactsUsed == 0 && players[myPlayerIndex].character.character.flipped == false)
+        if (players[myPlayerIndex].isScarpetta && players[myPlayerIndex].pipsUsedThisTurn == 0 && players[myPlayerIndex].potionsThrown == 0 && players[myPlayerIndex].artifactsUsed == 0 && players[myPlayerIndex].character.flipped == false)
         {
             players[myPlayerIndex].character.canBeFlipped = true;
             players[myPlayerIndex].character.flipCard();
@@ -2841,7 +2843,7 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].deck.putCardOnBottom(cd.card);
                     cd.updateCard(cd.placeholder);
                 }
-
+                /*
                 // check for gambling ring
                 if (cd.card.cardName == "RingofGamblingMopoji" && players[myPlayerIndex].pipsUsedThisTurn == 0)
                 {
@@ -2853,6 +2855,7 @@ public class GameManager : MonoBehaviour
                     }
                     Debug.Log("New pip count: " + players[myPlayerIndex].pipCount);
                 }
+                */
             }
             // taking this out for now
             // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
@@ -3118,7 +3121,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (players[myPlayerIndex].character.character.flipped)
+        if (players[myPlayerIndex].character.flipped)
         {
             if (players[myPlayerIndex].pips >= 1)
             {
@@ -3250,7 +3253,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if (cardPlayer.character.character.flipped && dialog.textBoxCounter == 35)
+            if (cardPlayer.character.flipped && dialog.textBoxCounter == 35)
             {
                 // do Pluot action (I'll code this in later)
                 ExtraInventoryMenu.SetActive(true);
@@ -3282,7 +3285,7 @@ public class GameManager : MonoBehaviour
 
         if (players[myPlayerIndex].isScarpetta)
         {
-            if (players[myPlayerIndex].character.character.flipped)
+            if (players[myPlayerIndex].character.flipped)
             {
                 sendErrorMessage(10);
             }
@@ -3295,7 +3298,7 @@ public class GameManager : MonoBehaviour
 
         if (players[myPlayerIndex].isSweetbitter)
         {
-            if (players[myPlayerIndex].character.character.flipped)
+            if (players[myPlayerIndex].character.flipped)
             {
                 sendErrorMessage(10);
             }
@@ -3305,11 +3308,11 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].character.character.flipped && !players[myPlayerIndex].character.uniqueCardUsed)
+        if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].character.flipped && !players[myPlayerIndex].character.uniqueCardUsed)
         {
             isadoreMenu.SetActive(true);
         }
-        else if (players[myPlayerIndex].isIsadore && (!players[myPlayerIndex].character.character.flipped || players[myPlayerIndex].character.uniqueCardUsed))
+        else if (players[myPlayerIndex].isIsadore && (!players[myPlayerIndex].character.flipped || players[myPlayerIndex].character.uniqueCardUsed))
         {
             // not able to do action
             // fix this later
@@ -3323,7 +3326,7 @@ public class GameManager : MonoBehaviour
                 sendMessage("You already performed your action this turn!");
                 return;
             }
-            if (players[myPlayerIndex].character.character.flipped)
+            if (players[myPlayerIndex].character.flipped)
             {
                 // prompt ui for adding Extra Inventory into holster
                 ExtraInventoryMenu.SetActive(true);
@@ -3346,7 +3349,7 @@ public class GameManager : MonoBehaviour
 
             //Image image = reetsMenu.GetComponent<Image>();
             reetsMenu.SetActive(true);
-            if (players[myPlayerIndex].character.character.flipped)
+            if (players[myPlayerIndex].character.flipped)
             {
                 reetsMenuText.text = "Pay 1P to add top card of deck to Holster?";
                 reetsCard.GetComponent<Image>().sprite = sprite1;
@@ -3360,7 +3363,7 @@ public class GameManager : MonoBehaviour
 
         if (players[myPlayerIndex].isNickles && !players[myPlayerIndex].nicklesAction)
         {
-            if (!players[myPlayerIndex].character.character.flipped)
+            if (!players[myPlayerIndex].character.flipped)
             {
                 // unflipped Nickles UI
                 nicklesUI.SetActive(true);
@@ -3782,7 +3785,7 @@ public class GameManager : MonoBehaviour
 
 
         // if you're saltimbocca and you're flipped
-        if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.character.flipped && !Game.multiplayer)
+        if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.flipped && !Game.multiplayer)
         {
             int damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.buyPrice;
 
@@ -3832,7 +3835,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("POTION");
                 if (players[myPlayerIndex].isTwins)
                 {
-                    if (!players[myPlayerIndex].character.character.flipped)
+                    if (!players[myPlayerIndex].character.flipped)
                     {
                         players[myPlayerIndex].addHealth(1);
                     }
@@ -3980,7 +3983,7 @@ public class GameManager : MonoBehaviour
                 if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
                 {
-                    if (players[myPlayerIndex].isTwins && players[myPlayerIndex].character.character.flipped)
+                    if (players[myPlayerIndex].isTwins && players[myPlayerIndex].character.flipped)
                     {
                         players[myPlayerIndex].addHealth(4);
                     }
@@ -5228,7 +5231,7 @@ public class GameManager : MonoBehaviour
                 return;
             }
             // If this client isn't the current player, display error message.
-            if (players[myPlayerIndex].user_id != myPlayerIndex || (players[myPlayerIndex].isScarpetta && players[myPlayerIndex].character.character.flipped))
+            if (players[myPlayerIndex].user_id != myPlayerIndex || (players[myPlayerIndex].isScarpetta && players[myPlayerIndex].character.flipped))
             {
                 // "You are not the currentPlayer!"
                 sendErrorMessage(7);
@@ -5961,12 +5964,12 @@ public class GameManager : MonoBehaviour
 
             // LOGIC FOR BOLO SELLING ABILITY
             // Bolo not flipped and he's selling something that's not a potion
-            if (players[myPlayerIndex].isBolo && !players[myPlayerIndex].character.character.flipped && players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
+            if (players[myPlayerIndex].isBolo && !players[myPlayerIndex].character.flipped && players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
             {
                 players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
                 // Bolo flipped selling anything
             }
-            else if (players[myPlayerIndex].isBolo && players[myPlayerIndex].character.character.flipped)
+            else if (players[myPlayerIndex].isBolo && players[myPlayerIndex].character.flipped)
             {
                 players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
             }

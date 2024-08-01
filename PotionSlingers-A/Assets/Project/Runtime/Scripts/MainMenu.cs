@@ -212,14 +212,6 @@ public class MainMenu : MonoBehaviour
 		}
     }
 
-	public void flipCharacters()
-	{
-        foreach (Character character in characters)
-        {
-			character.flipped = false;
-        }
-    }
-
 	public void setSliderValue()
     {
 		levelBar.value = points;
@@ -562,7 +554,6 @@ public class MainMenu : MonoBehaviour
 		networkManager.quickplay = false;
 		networkManager.storyMode = true;
 		SaveSystem.setNewGame();
-		flipCharacters();
         // SaveSystem.instance.savedGame = false;
 
         StartCoroutine(networkManager.LoadStory());
@@ -586,7 +577,6 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
 	{
-        flipCharacters();
         networkManager.multiplayer = true;
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
@@ -599,7 +589,6 @@ public class MainMenu : MonoBehaviour
     public void StartSingleplayerGame()
     {
 		// maybe use static reference to Game instead of networkManager?
-		flipCharacters();
         networkManager.multiplayer = false;
         networkManager.tutorial = false;
 		networkManager.quickplay = false;
@@ -629,7 +618,6 @@ public class MainMenu : MonoBehaviour
 
 	public void StartQuickplayGame()
     {
-        flipCharacters();
         networkManager.multiplayer = false;
 		networkManager.tutorial = false;
 		networkManager.quickplay = true;

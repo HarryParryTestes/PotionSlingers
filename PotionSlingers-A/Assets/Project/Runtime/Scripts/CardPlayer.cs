@@ -722,6 +722,10 @@ public class CardPlayer : MonoBehaviour
             {
                 doubleRingBonus = true;
             }
+        }
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
 
             // check for gambling ring
             if (cd.card.cardName == "RingofGamblingMopoji" && GameManager.manager.players[GameManager.manager.myPlayerIndex].pipsUsedThisTurn == 0)
@@ -734,6 +738,9 @@ public class CardPlayer : MonoBehaviour
                     GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount *= 2;
                 }
                 Debug.Log("New pip count: " + GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount);
+                Debug.Log("New pip count: " + pipCount);
+                pips = pipCount;
+                updatePipsUI();
             }
         }
 
@@ -854,6 +861,21 @@ public class CardPlayer : MonoBehaviour
             return;
         }
 
+        int stuff = 0;
+        foreach (CardDisplay card in holster.cardList)
+        {
+            if (card.card.cardName != "placeholder")
+            {
+                stuff++;
+            }
+        }
+
+        if(stuff == 0)
+        {
+            Debug.Log("No room in your Holster!!!");
+            return;
+        }
+
 
         Debug.Log("Activating Reets cycle ability");
         if (deck.deckList.Count >= 1)
@@ -871,7 +893,7 @@ public class CardPlayer : MonoBehaviour
                 }
             }
 
-            if (!character.character.flipped)
+            if (!character.flipped)
             {
                 subPips(2);
             }
@@ -923,6 +945,8 @@ public class CardPlayer : MonoBehaviour
             if (card.card.cardName == "placeholder")
             {
                 card.updateCard(uniqueCards[0]);
+                // any time the pip sling is added to your hand, gain +2P
+                addPips(2);
                 return;
             }
         }

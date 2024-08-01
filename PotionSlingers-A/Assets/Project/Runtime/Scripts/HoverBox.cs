@@ -44,7 +44,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Bolo")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "All cards in your Holster sell for +1P.";
                 return;
@@ -54,7 +54,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Reets")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "Cycle items for free. Pay 2P to put the top card of your deck into your Holster.";
                 return;
@@ -64,7 +64,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Isadore")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "Once per turn you may create a starter potion on top of your deck.\n" +
                     "Pay 3P: Put The Cherrybomb Badge into your Holster.";
@@ -75,7 +75,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Twins")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "Potions you throw heal you +1 HP.\nVessels you throw heal you +2 HP.";
                 return;
@@ -85,7 +85,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Scarpetta")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "You can only buy cards from the trash.";
                 return;
@@ -96,7 +96,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Sweetbitter")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "At the start of your turn, if your Holster contains 1 ring, 2 loaded items, and The Phylactery, " +
                     "deal 12 damage to each player.";
@@ -107,7 +107,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Nickles")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "You may spend up to 6P per turn to deal that much damage to a player.\n" +
                     "Pay 3P: Put The Blacksnake Pip SLing into your Holster.";
@@ -118,7 +118,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Saltimbocca")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "Once per turn you may create a starter potion on top of your deck.\n" +
                     "Pay 3P: Put The Cherrybomb Badge into your Holster.";
@@ -129,7 +129,7 @@ public class HoverBox : MonoBehaviour
         }
         if (cp.charName == "Pluot")
         {
-            if (cp.character.character.flipped)
+            if (cp.character.flipped)
             {
                 textBox.text = "You may put The Extra Inventory into your Holster. If you do, flip Pluot.";
                 return;
