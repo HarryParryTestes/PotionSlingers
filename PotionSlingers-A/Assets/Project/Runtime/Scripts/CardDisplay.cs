@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
+using UnityEngine.EventSystems;
 
 [System.Serializable]
 public class CardDisplay : MonoBehaviour
@@ -10,7 +12,6 @@ public class CardDisplay : MonoBehaviour
     public Card card;
     public UniqueCard uniqueCard;
     public Image artworkImage;
-    public SpriteRenderer sr;
     public Card placeholder;
 
     // Artifact loaded potion slot:
@@ -108,8 +109,8 @@ public class CardDisplay : MonoBehaviour
     public void colorCard()
     {
         // image.color = MapView.Instance.lockedColor;
-        sr.DOKill();
-        // sr.DOColor(GameManager.manager.bonusColor, 0.5f).SetLoops(-1, LoopType.Yoyo);
+        artworkImage.DOKill();
+        artworkImage.DOColor(GameManager.manager.hotBonusColor, 1f).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void updateCard(CardDisplay cd)

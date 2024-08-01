@@ -225,6 +225,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+        // experimenting
+        // gameObject.GetComponent<CardDisplay>().colorCard();
+
         if (market && !GameManager.manager.marketSelected)
         {
             DOTween.Pause(gameObject.name);

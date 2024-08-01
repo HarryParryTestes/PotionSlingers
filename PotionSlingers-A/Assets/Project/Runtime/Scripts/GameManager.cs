@@ -34,7 +34,10 @@ public class GameManager : MonoBehaviour
     public CardDatabase database;
     public Dialog dialog;
     public GameObject dialogBox;
-    public Color bonusColor;
+    public Color hotBonusColor;
+    public Color coldBonusColor;
+    public Color wetBonusColor;
+    public Color dryBonusColor;
     GameObject ob;
     GameObject obTop;
     GameObject obLeft;
