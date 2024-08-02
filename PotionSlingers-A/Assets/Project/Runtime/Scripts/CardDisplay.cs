@@ -110,7 +110,47 @@ public class CardDisplay : MonoBehaviour
     {
         // image.color = MapView.Instance.lockedColor;
         artworkImage.DOKill();
-        artworkImage.DOColor(GameManager.manager.hotBonusColor, 1f).SetLoops(-1, LoopType.Yoyo);
+        artworkImage.DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void colorCardHot()
+    {
+        // image.color = MapView.Instance.lockedColor;
+        artworkImage.DOKill();
+        artworkImage.DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void colorCardCold()
+    {
+        // image.color = MapView.Instance.lockedColor;
+        artworkImage.DOKill();
+        artworkImage.DOColor(GameManager.manager.coldBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void colorCardWet()
+    {
+        // image.color = MapView.Instance.lockedColor;
+        artworkImage.DOKill();
+        artworkImage.DOColor(GameManager.manager.wetBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void colorCardDry()
+    {
+        // image.color = MapView.Instance.lockedColor;
+        artworkImage.DOKill();
+        artworkImage.DOColor(GameManager.manager.dryBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+    }
+
+    public void grayCard()
+    {
+        artworkImage.DOKill();
+        artworkImage.DOColor(GameManager.manager.grayedColor, 0.5f);
+    }
+
+    public void whiteCard()
+    {
+        artworkImage.DOKill();
+        artworkImage.DOColor(GameManager.manager.whiteColor, 0.5f);
     }
 
     public void updateCard(CardDisplay cd)

@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
     public Color coldBonusColor;
     public Color wetBonusColor;
     public Color dryBonusColor;
+    public Color whiteColor;
+    public Color grayedColor;
     GameObject ob;
     GameObject obTop;
     GameObject obLeft;
@@ -1751,6 +1753,7 @@ public class GameManager : MonoBehaviour
         // md2 = GameObject.Find("SpecialCardPile").GetComponent<MarketDeck>();
         md2.init();
         Debug.Log("Decks shuffled");
+        checkMarketPrice();
     }
 
     public void updateTrashMarketMenu()
@@ -2059,7 +2062,8 @@ public class GameManager : MonoBehaviour
         if (player.holster.gameObject.activeInHierarchy)
             StartCoroutine(HolsterFill(player));
 
-        Invoke("saveGameStuff", 1f);
+        if(Game.storyMode)
+            Invoke("saveGameStuff", 1f);
 
         // this should make it not trigger every turn
         if (player.isPluot && player.name == currentPlayerName && player.gameObject.GetComponent<ComputerPlayer>() == null)
@@ -2745,6 +2749,7 @@ public class GameManager : MonoBehaviour
         {
             moveMarket();
         }
+        resetMarketDecks();
 
         // carnival check
         if (saveData.currentEnemyName == "Carnival")
@@ -3855,6 +3860,8 @@ public class GameManager : MonoBehaviour
                 damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                 Debug.Log("Damage after defensive bonuses: " + damage);
 
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].whiteCard();
+
                 sendSuccessMessage(2); // Only display on thrower's client.
                 players[myPlayerIndex].potionsThrown++;
                 //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
@@ -3919,6 +3926,9 @@ public class GameManager : MonoBehaviour
                     damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = players[myPlayerIndex].checkArtifactBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
+
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].whiteCard();
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.whiteCard();
 
                     // Update response to account for trashing loaded artifact's potion and not the artifact
                     // if the artifact being used is different from the last one they used
@@ -3997,6 +4007,10 @@ public class GameManager : MonoBehaviour
                     damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
 
                     players[myPlayerIndex].vesselsThrown++;
+
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].whiteCard();
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.whiteCard();
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.whiteCard();
 
                     // TODO: fix bonus damage
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
@@ -4494,7 +4508,7 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
                 players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.gameObject.SetActive(true);
 
-                // Check for existing loaded potion if Artifact menu was already enabled.
+                // check for existing loaded potion if Artifact menu was already enabled.
                 if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card.cardName != "placeholder")
                 {
                     Debug.Log("Artifact is fully loaded!");
@@ -4511,6 +4525,7 @@ public class GameManager : MonoBehaviour
                     usedStarterPotion = true;
                     // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                     sendSuccessMessage(5);
+                    players[myPlayerIndex].checkArtifactBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
                     //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     Debug.Log("Starter potion loaded in Artifact slot!");
 
@@ -4559,6 +4574,7 @@ public class GameManager : MonoBehaviour
                             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
                             sendSuccessMessage(5);
+                            players[myPlayerIndex].checkVesselBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
                             Debug.Log("Potion loaded in Vessel slot 2!");
 
                             // MATTEO: Add Loading potion SFX here.
@@ -4580,6 +4596,7 @@ public class GameManager : MonoBehaviour
 
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
+                        players[myPlayerIndex].checkVesselBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
                         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Potion loaded in Vessel slot 1!");
 
@@ -4617,6 +4634,7 @@ public class GameManager : MonoBehaviour
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
+                        players[myPlayerIndex].checkArtifactBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
                         Debug.Log("Potion loaded in Artifact slot!");
 
                         // MATTEO: Add Loading potion SFX here.
@@ -4880,6 +4898,7 @@ public class GameManager : MonoBehaviour
 
                                 // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                                 sendSuccessMessage(5);
+                                players[myPlayerIndex].checkVesselBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
                                 // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                                 Debug.Log("Potion loaded in Vessel slot 2!");
 
@@ -4900,6 +4919,7 @@ public class GameManager : MonoBehaviour
 
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
+                            players[myPlayerIndex].checkVesselBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
                             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                             Debug.Log("Potion loaded in Vessel slot 1!");
 
@@ -4936,6 +4956,7 @@ public class GameManager : MonoBehaviour
                             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                             // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                             sendSuccessMessage(5);
+                            players[myPlayerIndex].checkArtifactBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
                             Debug.Log("Potion loaded in Artifact slot!");
 
                             // MATTEO: Add Loading potion SFX here.
@@ -5129,6 +5150,135 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void resetMarketDecks()
+    {
+        md1.cardDisplay1.whiteCard();
+        md1.cardDisplay2.whiteCard();
+        md1.cardDisplay3.whiteCard();
+        md2.cardDisplay1.whiteCard();
+        md2.cardDisplay2.whiteCard();
+        md2.cardDisplay3.whiteCard();
+    }
+
+    public void checkMarketPrice()
+    {
+        // my code is ugly and I should be ashamed of myself lmao
+        // there's so many better ways to do this than how I made it like a year ago
+        Debug.Log("Checking market price");
+
+        if (players[myPlayerIndex].isSaltimbocca)
+        {
+            if (((md1.cardDisplay1.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            {
+                md1.cardDisplay1.grayCard();
+            }
+            else
+            {
+                md1.cardDisplay1.whiteCard();
+            }
+
+            if (((md1.cardDisplay2.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            {
+                // Debug.Log("Too broke and salty!");
+                md1.cardDisplay2.grayCard();
+            }
+            else
+            {
+                md1.cardDisplay2.whiteCard();
+            }
+
+            if (((md1.cardDisplay3.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            {
+                md1.cardDisplay3.grayCard();
+            }
+            else
+            {
+                md1.cardDisplay3.whiteCard();
+            }
+
+            if (((md2.cardDisplay1.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            {
+                md2.cardDisplay1.grayCard();
+            }
+            else
+            {
+                md2.cardDisplay1.whiteCard();
+            }
+
+            if (((md2.cardDisplay2.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            {
+                md2.cardDisplay2.grayCard();
+            }
+            else
+            {
+                md2.cardDisplay2.whiteCard();
+            }
+
+            if (((md2.cardDisplay3.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            {
+                md2.cardDisplay3.grayCard();
+            }
+            else
+            {
+                md2.cardDisplay3.whiteCard();
+            }
+            return;
+        }
+
+        if((md1.cardDisplay1.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca) 
+        {
+            md1.cardDisplay1.grayCard();
+        } else
+        {
+            md1.cardDisplay1.whiteCard();
+        }
+
+        if ((md1.cardDisplay2.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
+        {
+            md1.cardDisplay2.grayCard();
+        }
+        else
+        {
+            md1.cardDisplay2.whiteCard();
+        }
+
+        if ((md1.cardDisplay3.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
+        {
+            md1.cardDisplay3.grayCard();
+        }
+        else
+        {
+            md1.cardDisplay3.whiteCard();
+        }
+
+        if ((md2.cardDisplay1.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
+        {
+            md2.cardDisplay1.grayCard();
+        }
+        else
+        {
+            md2.cardDisplay1.whiteCard();
+        }
+
+        if ((md2.cardDisplay2.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
+        {
+            md2.cardDisplay2.grayCard();
+        }
+        else
+        {
+            md2.cardDisplay2.whiteCard();
+        }
+
+        if ((md2.cardDisplay3.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
+        {
+            md2.cardDisplay3.grayCard();
+        }
+        else
+        {
+            md2.cardDisplay3.whiteCard();
+        }
+    }
+
     // TOP MARKET REQUEST
     // subtract pips, update deck display and market display
     public void topMarketBuy()
@@ -5160,6 +5310,7 @@ public class GameManager : MonoBehaviour
                         //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
                     }
                     else
@@ -5180,6 +5331,7 @@ public class GameManager : MonoBehaviour
                         //md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
                     }
                     else
@@ -5200,6 +5352,7 @@ public class GameManager : MonoBehaviour
                         //md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
                     }
                     else
@@ -5266,6 +5419,7 @@ public class GameManager : MonoBehaviour
                         //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
@@ -5306,6 +5460,7 @@ public class GameManager : MonoBehaviour
                         //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                     }
@@ -5338,6 +5493,7 @@ public class GameManager : MonoBehaviour
                         //md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
@@ -5376,6 +5532,7 @@ public class GameManager : MonoBehaviour
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                     }
@@ -5406,6 +5563,7 @@ public class GameManager : MonoBehaviour
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
@@ -5445,6 +5603,7 @@ public class GameManager : MonoBehaviour
                         // md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                     }
@@ -5526,6 +5685,7 @@ public class GameManager : MonoBehaviour
                         //md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
@@ -5565,6 +5725,7 @@ public class GameManager : MonoBehaviour
                         //md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                     }
@@ -5596,6 +5757,7 @@ public class GameManager : MonoBehaviour
                         //md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
@@ -5635,6 +5797,7 @@ public class GameManager : MonoBehaviour
                         //md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                     }
@@ -5665,6 +5828,7 @@ public class GameManager : MonoBehaviour
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
@@ -5704,6 +5868,7 @@ public class GameManager : MonoBehaviour
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
+                        checkMarketPrice();
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
                     }
@@ -5921,6 +6086,7 @@ public class GameManager : MonoBehaviour
             // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             StartCoroutine(waitThreeSeconds(dialog));
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+            checkMarketPrice();
             sendSuccessMessage(8);
             return;
         }

@@ -843,7 +843,9 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        Debug.Log("Reached end of setDefaultTurn");
         updatePipsUI();
+        GameManager.manager.checkMarketPrice();
     }
 
     public void addThePhylactery()
@@ -1319,8 +1321,8 @@ public class CardPlayer : MonoBehaviour
                 }
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Dry" ||
-                selectedCard.vPotion2.card.cardQuality == "Dry")
+            if (selectedCard.vPotion1.card.cardQuality == "Wet" ||
+                selectedCard.vPotion2.card.cardQuality == "Wet")
             {
                 if (GameManager.manager.Game.multiplayer)
                 {
@@ -2901,4 +2903,563 @@ public class CardPlayer : MonoBehaviour
         yield return new WaitForSeconds(3);
         gameObj.SetActive(false);
     }
+
+    /***************************
+     CHECK ARTIFACT BONUS
+ ***************************/
+
+    public void checkArtifactBonusAnimation(CardDisplay selectedCard)
+    {
+        // probably depends on what card it is and what bonus it has, might have to implement logic for certain pools of cards this way
+
+        // The Skateboard
+        if (selectedCard.card.cardName == "Skateboard")
+        {
+            // if a loaded potion has an additional effect, do a trick instead of damage
+            // ask matteo and figure out exactly what that means lol
+
+            // if the loaded potion does not have any card text
+            // i'm just gonna list the cards because i'm lazy
+            // this might not actually be accurate to how the card should work but i'm taking a shortcut
+            if (selectedCard.aPotion.card.cardName != "NorthernOquinox" && selectedCard.aPotion.card.cardName != "PotionThatMakesHatsUglier" &&
+                selectedCard.aPotion.card.cardName != "SeriesOfPoisonousWords" && selectedCard.aPotion.card.cardName != "VerySeriousThreat" &&
+                selectedCard.aPotion.card.cardName != "BottleOfLeastAmountOfSpiders" && selectedCard.aPotion.card.cardName != "ContainerFilledWithAngryBees" &&
+                selectedCard.aPotion.card.cardName != "CupOfNoodles" && selectedCard.aPotion.card.cardName != "PassiveAggressiveSlurry" &&
+                selectedCard.aPotion.card.cardName != "ClassicFireball" && selectedCard.aPotion.card.cardName != "ElectronicTonic" &&
+                selectedCard.aPotion.card.cardName != "LossOfOnesIntimatePossesions" && selectedCard.aPotion.card.cardName != "ShotOfWillOWisp" &&
+                selectedCard.aPotion.card.cardName != "BoldBundleOfLightning" && selectedCard.aPotion.card.cardName != "CupfulOfRealm" &&
+                selectedCard.aPotion.card.cardName != "GoopGasAttack" && selectedCard.aPotion.card.cardName != "ScreechingCry" &&
+                selectedCard.aPotion.card.cardName != "ATearofBlackRain" && selectedCard.aPotion.card.cardName != "QuartOfLemonade" &&
+                selectedCard.aPotion.card.cardName != "VintageAromaticKate" && selectedCard.aPotion.card.cardName != "JarFullOfGlitter" &&
+                selectedCard.aPotion.card.cardName != "KissFromTheLipsOfAnAncientLove" && selectedCard.aPotion.card.cardName != "HumblingGlimpse")
+            {
+                // do animation
+                selectedCard.colorCardHot();
+                selectedCard.aPotion.colorCardHot();
+            }
+        }
+
+        // Hammer of Engagement
+        if (selectedCard.card.cardName == "HammerOfEnagagment")
+        {
+            /*
+             * Hot Bonus: +2 Damage.
+               Holster Bonus: +1 Damage if a ring is in your Holster.
+             */
+            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.aPotion.colorCardHot();
+            }
+        }
+
+        // Paperweight of Bauble Collector
+        // very similar to hammer of engagement
+        if (selectedCard.card.cardName == "PaperweightOfTheBaubleCollector")
+        {
+            /*
+             * Hot Bonus: +1 Damage.
+               Holster Bonus: +1 Damage for each Ring in your Holster.
+             */
+            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.aPotion.colorCardHot();
+            }
+        }
+
+        // Gauntlet Mounted Trebuchet
+        // this card text is definitely bad lol sorry i don't make the rules
+        if (selectedCard.card.cardName == "GauntletMountedTrebuchet")
+        {
+            // Dry Bonus: Double potion damage
+            // what they meant was "double the loaded potion's damage and add it to the artifact damage"
+            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.aPotion.colorCardDry();
+            }
+        }
+
+        // Tablet Containing All Knowledge
+        if (selectedCard.card.cardName == "Tablet Containing All Knowledge")
+        {
+            // Dry Bonus: +2 Damage
+            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.aPotion.colorCardDry();
+            }
+            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.aPotion.colorCardHot();
+            }
+            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.aPotion.colorCardWet();
+            }
+            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.aPotion.colorCardCold();
+            }
+
+        }
+
+        // The Daggerheels
+        if (selectedCard.card.cardName == "Daggerheels")
+        {
+            // Cold Bonus: +1 Damage
+            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.aPotion.colorCardCold();
+            }
+        }
+
+        // The Rapid Fire Caltrop Hand Cannon
+        if (selectedCard.card.cardName == "RapidFireCaltrop")
+        {
+            // Dry Bonus: +2 Damage
+            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.aPotion.colorCardDry();
+            }
+        }
+
+        // Pewter Heart Necklace
+        if (selectedCard.card.cardName == "PewterHeartNecklace")
+        {
+            // Wet Bonus: +2 HP
+            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.aPotion.colorCardCold();
+            }
+            // this card doesn't damage anyone
+            return;
+        }
+
+        // Wooden Dryad's Kiss
+        if (selectedCard.card.cardName == "WoodenDryadsKiss")
+        {
+            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.aPotion.colorCardWet();
+            }
+            // this card doesn't damage anyone
+            return;
+        }
+
+        // The Bottle Rocket
+        if (selectedCard.card.cardName == "BottleRocket")
+        {
+            // Wet Bonus: +2 Damage
+            // 3 P: Double the damage of this artifact this turn. You may only do this once per turn.
+            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.aPotion.colorCardWet();
+            }
+        }
+
+        // return;
+    }
+
+    /*************************
+    CHECK VESSEL BONUS
+*************************/
+
+    public void checkVesselBonusAnimation(CardDisplay selectedCard)
+    {
+
+        // Squeezebox
+        if (selectedCard.card.cardName == "Squeezebox")
+        {
+            // maybe add a check for any cards that have healing effects
+            if (selectedCard.vPotion1.card.cardName == "QuartOfLemonade" ||
+            selectedCard.vPotion1.card.cardName == "ThimbleOfHoney" ||
+            selectedCard.vPotion1.card.cardName == "KissFromTheLipsOfAnAncientLove" ||
+            selectedCard.vPotion1.card.cardName == "TallDrinkOfWater" ||
+            selectedCard.vPotion1.card.cardName == "ATearofBlackRain")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.vPotion1.colorCardCold();
+            }
+
+            if (selectedCard.vPotion2.card.cardName == "QuartOfLemonade" ||
+            selectedCard.vPotion2.card.cardName == "ThimbleOfHoney" ||
+            selectedCard.vPotion2.card.cardName == "KissFromTheLipsOfAnAncientLove" ||
+            selectedCard.vPotion2.card.cardName == "TallDrinkOfWater" ||
+            selectedCard.vPotion1.card.cardName == "ATearofBlackRain")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.vPotion2.colorCardCold();
+            }
+        }
+
+        // Drinking Horn of a Sea Unicorn's Tooth
+        if (selectedCard.card.cardName == "Drinking Horn of a Sea Unicorn's Tooth")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.vPotion1.colorCardCold();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.vPotion2.colorCardCold();
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.vPotion1.colorCardWet();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.vPotion2.colorCardWet();
+            }
+        }
+
+        // Vessel Bonus: +2 Damage
+        if (selectedCard.vPotion1.card.cardName == "RefectionOfOnesGnarledEmotionalSelf"  ||
+            selectedCard.vPotion1.card.cardName == "SoupMadeOfGunpowder"  ||
+            selectedCard.vPotion1.card.cardName == "PourOfReallyAngryAcid")
+        {
+            // check each loaded potion individually and apply the bonus to the one with the vessel bonus
+            selectedCard.colorCardHot();
+            selectedCard.vPotion1.colorCardHot();
+        }
+
+        if (selectedCard.vPotion2.card.cardName == "RefectionOfOnesGnarledEmotionalSelf" ||
+            selectedCard.vPotion2.card.cardName == "SoupMadeOfGunpowder" ||
+            selectedCard.vPotion2.card.cardName == "PourOfReallyAngryAcid")
+        {
+            // check each loaded potion individually and apply the bonus to the one with the vessel bonus
+            selectedCard.colorCardHot();
+            selectedCard.vPotion2.colorCardHot();
+        }
+
+        // Hot + Wet Bonus
+        // It's only two cards
+        // three cards with DLC lol
+        if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
+           (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Wet"))
+        {
+            if (selectedCard.card.cardName == "Empty Ravioli" ||
+                selectedCard.card.cardName == "Furry Flagon fromthe Hide of Hairy Leeches" ||
+                selectedCard.card.cardName == "VoluptuousGallipot")
+            {
+                // addHealth(4);
+                if (selectedCard.vPotion1.card.cardQuality == "Hot")
+                {
+                    selectedCard.colorCardHot();
+                    selectedCard.vPotion1.colorCardHot();
+                }
+
+                if (selectedCard.vPotion2.card.cardQuality == "Hot")
+                {
+                    selectedCard.colorCardHot();
+                    selectedCard.vPotion2.colorCardHot();
+                }
+
+                if (selectedCard.vPotion1.card.cardQuality == "Wet")
+                {
+                    selectedCard.colorCardWet();
+                    selectedCard.vPotion1.colorCardWet();
+                }
+
+                if (selectedCard.vPotion2.card.cardQuality == "Wet")
+                {
+                    selectedCard.colorCardWet();
+                    selectedCard.vPotion2.colorCardWet();
+                }
+            }
+
+            /*
+            // Furry Flagon Made from the Hide of Hairy Leeches
+            // Hot + Wet Bonus: Put 1 card from the trash to the top of your deck
+            if (selectedCard.card.cardName == "Furry Flagon fromthe Hide of Hairy Leeches")
+            {
+                
+            }
+
+            // Voluptuous Gallipot of Double Entendre
+            // come back to this
+            if (selectedCard.card.cardName == "VoluptuousGallipot")
+            {
+
+            }
+            */
+        }
+
+        // Cursed Cucumella of Clumsy Acidic Coffee
+        // Hot Bonus: Opponent trashes 1 card. Wet Bonus: Opponent trashes 1 card.
+        if (selectedCard.card.cardName == "CursedCucumella")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.vPotion1.colorCardHot();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.vPotion2.colorCardHot();
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.vPotion1.colorCardWet();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.vPotion2.colorCardWet();
+            }
+        }
+
+        // Hot + Dry Bonus
+        // Filthy Urn Holding the Ashes of 60k
+        // Hot + Dry Bonus: +4 Damage
+        if (selectedCard.card.cardName == "FilthyUrn" ||
+            selectedCard.card.cardName == "DualRhyton")
+        {
+            // damage += 4;
+            if (selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.vPotion1.colorCardHot();
+                selectedCard.vPotion2.colorCardDry();
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Dry" && selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.vPotion1.colorCardDry();
+                selectedCard.vPotion2.colorCardHot();
+            }
+        }
+
+
+        // Cold + Wet Bonus
+        // Philty Phlegmbic Alembic of Philters Polemic
+        //  1 opponent trashes all cards in their holster, or all opponents trash 1 card 
+        if (selectedCard.card.cardName == "PhiltyPhlegmbicAlembic")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.vPotion1.colorCardCold();
+                selectedCard.vPotion2.colorCardWet();
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Wet" && selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.vPotion1.colorCardWet();
+                selectedCard.vPotion2.colorCardCold();
+            }
+        }
+        
+
+        // Cold + Dry Bonus
+        if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
+            (selectedCard.vPotion2.card.cardQuality == "Cold" && selectedCard.vPotion1.card.cardQuality == "Dry"))
+        {
+            Debug.Log("Cold and Dry Bonus!");
+
+            if (selectedCard.card.cardName == "Empty Ravioli")
+            {
+                // return damage + 4;
+                if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry")
+                {
+                    selectedCard.colorCardCold();
+                    selectedCard.vPotion1.colorCardCold();
+                    selectedCard.vPotion2.colorCardDry();
+                }
+
+                if (selectedCard.vPotion1.card.cardQuality == "Dry" && selectedCard.vPotion2.card.cardQuality == "Cold")
+                {
+                    selectedCard.colorCardDry();
+                    selectedCard.vPotion1.colorCardDry();
+                    selectedCard.vPotion2.colorCardCold();
+                }
+            }
+
+            // The Boxing Flask of the Fist Wizard
+            // Deal +3 damage to all other opponents
+            if (selectedCard.card.cardName == "Boxing Flask of the Fist Wizard")
+            {
+                if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry")
+                {
+                    selectedCard.colorCardCold();
+                    selectedCard.vPotion1.colorCardCold();
+                    selectedCard.vPotion2.colorCardDry();
+                }
+
+                if (selectedCard.vPotion1.card.cardQuality == "Dry" && selectedCard.vPotion2.card.cardQuality == "Cold")
+                {
+                    selectedCard.colorCardDry();
+                    selectedCard.vPotion1.colorCardDry();
+                    selectedCard.vPotion2.colorCardCold();
+                }
+            }
+
+            // The Vinyl Demijohn of Tunes and Libation
+            // Put a market card on the top of your deck
+            if (selectedCard.card.cardName == "VinylDemijohnofTunesandLibation")
+            {
+                if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry")
+                {
+                    selectedCard.colorCardCold();
+                    selectedCard.vPotion1.colorCardCold();
+                    selectedCard.vPotion2.colorCardDry();
+                }
+
+                if (selectedCard.vPotion1.card.cardQuality == "Dry" && selectedCard.vPotion2.card.cardQuality == "Cold")
+                {
+                    selectedCard.colorCardDry();
+                    selectedCard.vPotion1.colorCardDry();
+                    selectedCard.vPotion2.colorCardCold();
+                }
+            }
+        }
+        // Synergy of Opposing Minds
+        if (selectedCard.card.cardName == "Synergy of Opposing Minds")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.vPotion1.colorCardCold();
+                selectedCard.vPotion2.colorCardHot();
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.vPotion1.colorCardHot();
+                selectedCard.vPotion2.colorCardCold();
+            }
+        }
+
+        // Shining Reliquary of Bleeding Liquid Gold
+        if (selectedCard.card.cardName == "ShiningReliquary")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.vPotion1.colorCardHot();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.vPotion2.colorCardHot();
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.vPotion1.colorCardDry();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.vPotion2.colorCardDry();
+            }
+        }
+
+        // Canteen Carved from a Living Meteorite
+        if (selectedCard.card.cardName == "CanteenCarvedFromMeteorite")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.vPotion1.colorCardCold();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.vPotion2.colorCardCold();
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.vPotion1.colorCardDry();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.vPotion2.colorCardDry();
+            }
+        }
+
+        // Silken Hanky with a Cool Delicate Heartbeat
+        if (selectedCard.card.cardName == "SilkenHanky")
+        {
+            // Hot Bonus: +3 Damage
+            if (selectedCard.vPotion1.card.cardQuality == "Hot" || selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                // damage += 3;
+                selectedCard.colorCardHot();
+                selectedCard.vPotion2.colorCardHot();
+            }
+        }
+
+        // Sandpaper Gunnysack with a Wire Drawstring
+        if (selectedCard.card.cardName == "SandpaperGunnysack")
+        {
+            // Dry Bonus: +3 Damage
+            if (selectedCard.vPotion1.card.cardQuality == "Dry" || selectedCard.vPotion2.card.cardQuality == "Dry")
+            {
+                // damage += 3;
+                selectedCard.colorCardDry();
+                selectedCard.vPotion2.colorCardDry();
+            }
+        }
+
+        // Cooled Carafe for the Shipwrecked Spirit
+        if (selectedCard.card.cardName == "CooledCarafe")
+        {
+            // Cold Bonus: +3 Damage
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            {
+                // damage += 3;
+                selectedCard.colorCardCold();
+                selectedCard.vPotion2.colorCardCold();
+            }
+        }
+
+        // Drawstring Pouch of a Broken Umbrella
+        if (selectedCard.card.cardName == "DrawstringPouch")
+        {
+            // Wet Bonus: +3 Damage
+            if (selectedCard.vPotion1.card.cardQuality == "Wet" || selectedCard.vPotion2.card.cardQuality == "Wet")
+            {
+                // damage += 3;
+                selectedCard.colorCardWet();
+                selectedCard.vPotion2.colorCardWet();
+            }
+        }
+
+        // return damage;
+    }
+
 }
