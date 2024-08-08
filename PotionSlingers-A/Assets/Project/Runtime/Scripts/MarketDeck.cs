@@ -19,6 +19,18 @@ public class MarketDeck : NetworkBehaviour
     private Sprite sprite;
     private static System.Random rng = new System.Random();
 
+    /*
+    void Start()
+    {
+        Debug.Log("This triggered");
+        foreach (Card card in deckList)
+        {
+            tempDeckList.Add(card);
+        }
+        tempDeckList = shuffle(deckList);
+    }
+    */
+
     public Card popCard()
     {
         if (deckList.Count > 1)
@@ -33,8 +45,44 @@ public class MarketDeck : NetworkBehaviour
             }
             return temp;
         }
-        Debug.Log("ERROR: Card not returned!");
-        return cardDisplay1.card;
+        else
+        {
+            // implement refilling the deck here
+            Debug.Log("ERROR: Card not returned!");
+
+            Debug.Log("This triggered");
+            foreach (Card card in tempDeckList)
+            {
+                deckList.Add(card);
+            }
+            deckList = shuffle(deckList);
+            Card temp = deckList[0];
+            deckList.RemoveAt(0);
+            //Debug.Log("Card popped: ");
+            // Early Bird Special logic
+            if (temp.cardName == "EarlyBirdSpecial")
+            {
+                GameManager.manager.earlyBirdSpecial = true;
+            }
+            return temp;
+            // return cardDisplay1.card;
+        } 
+    }
+
+    public List<Card> shuffle(List<Card> list)
+    {
+
+        int n = list.Count;
+        while (n > 1)
+        {
+            n--;
+            int k = rng.Next(n + 1);
+            Card value = list[k];
+            list[k] = list[n];
+            list[n] = value;
+        }
+
+        return list;
     }
 
     /*
@@ -82,6 +130,13 @@ public class MarketDeck : NetworkBehaviour
 
     public void initCardDisplays()
     {
+        Debug.Log("This triggered");
+        foreach (Card card in deckList)
+        {
+            tempDeckList.Add(card);
+        }
+        tempDeckList = shuffle(tempDeckList);
+
         Card card1 = popCard();
         Card card2 = popCard();
         Card card3 = popCard();

@@ -247,7 +247,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             // Debug.Log(name + " Game Object Clicked!");
             // parentAfterDrag = transform.parent;
             transform.SetParent(transform.root);
-            transform.SetAsLastSibling();
+            rectTransform.SetSiblingIndex(17);
+            // transform.SetAsLastSibling();
             Vector3 pos = new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0);
             if (loaded)
             {
@@ -354,7 +355,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             transform.SetParent(transform.root);
         }
-        transform.SetAsLastSibling();
+        transform.SetSiblingIndex(17);
+        // transform.SetAsLastSibling();
 
         if (!market && !loaded)
         {
@@ -430,7 +432,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 transform.SetParent(transform.root);
                 // transform.SetAsLastSibling();
             }
-            transform.SetAsLastSibling();
+            transform.SetSiblingIndex(18);
+            // transform.SetAsLastSibling();
 
             // Card Hover sound effect:
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");

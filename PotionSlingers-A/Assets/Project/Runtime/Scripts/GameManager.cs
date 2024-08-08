@@ -2438,6 +2438,9 @@ public class GameManager : MonoBehaviour
 
     public void displayOpponentHolster()
     {
+        // refactor this to not use four hardcoded indices
+        // there will be enemies we design that use more than four cards
+
         opponentCard1.updateCard(tempPlayer.holster.cardList[0].card);
         opponentCard2.updateCard(tempPlayer.holster.cardList[1].card);
         opponentCard3.updateCard(tempPlayer.holster.cardList[2].card);

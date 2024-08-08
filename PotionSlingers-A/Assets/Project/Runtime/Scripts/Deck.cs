@@ -86,8 +86,12 @@ public class Deck : MonoBehaviour
             updateCardSprite();
             return temp;
         }
-        Debug.Log("ERROR: Card not returned!");
-        return cardDisplay.card;
+        else
+        {
+            // implement refilling the deck here
+            Debug.Log("ERROR: Card not returned!");
+            return cardDisplay.card;
+        }  
     }
 
     /*

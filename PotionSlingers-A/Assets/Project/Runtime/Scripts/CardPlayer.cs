@@ -2870,6 +2870,7 @@ public class CardPlayer : MonoBehaviour
             StartCoroutine(waitThreeSeconds(healAmount));
             */
         }
+        GameManager.manager.checkMarketPrice();
         updatePipsUI();
     }
 
@@ -2878,6 +2879,7 @@ public class CardPlayer : MonoBehaviour
         pips -= lessPips;
         pipsUsedThisTurn += lessPips;
         updatePipsUI();
+        GameManager.manager.checkMarketPrice();
 
         // NICKLES FLIP LOGIC
         foreach (CardPlayer cp in GameManager.manager.players)
