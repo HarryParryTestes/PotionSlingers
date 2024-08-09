@@ -34,6 +34,7 @@ public class CardPlayer : MonoBehaviour
     public int cardsTrashed = 0;
     //public HealthController health;
     public HealthBar hBar;
+    public GameObject username;
     public GameObject bar;
     public GameObject playerHP;
     public GameObject playerHPCubes;
@@ -505,15 +506,59 @@ public class CardPlayer : MonoBehaviour
 
     public void fadeOut()
     {
-        GetComponent<Image>().CrossFadeAlpha(0, 2f, false);
+        // fix this and make sure you properly fade everything out
+        // also this is a fucking mess
+
+        // GetComponent<Image>().CrossFadeAlpha(0, 2f, false);
+        GetComponent<Image>().DOFade(0, 1.5f);
+        playerHP.GetComponent<Image>().DOFade(0, 1.5f);
+        playerHPCubes.GetComponent<Image>().DOFade(0, 1.5f);
+        bar.GetComponent<Image>().DOFade(0, 1.5f);
+        bar.transform.GetChild(0).GetComponent<Image>().DOFade(0, 1.5f);
+        hpBar.GetComponent<Image>().DOFade(0, 1.5f);
+        holster.GetComponent<Image>().DOFade(0, 1.5f);
+        holster.transform.GetChild(0).GetComponent<Image>().DOFade(0, 1.5f);
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            cd.fadeCard();
+        }
+        deck.GetComponent<Image>().DOFade(0, 1.5f);
+        username.transform.GetChild(0).GetComponent<Image>().DOFade(0, 1.5f);
+        username.transform.GetChild(1).GetComponent<Image>().DOFade(0, 1.5f);
+        username.transform.GetChild(2).GetComponent<Image>().DOFade(0, 1.5f);
+        playerHP.GetComponent<Image>().DOFade(0, 1.5f);
+        playerHP.gameObject.SetActive(false);
+        playerHPCubes.GetComponent<Image>().DOFade(0, 1.5f);
+        playerHPCubes.gameObject.SetActive(false);
+        playerHPCubes.transform.GetChild(0).GetComponent<Image>().DOFade(0, 1.5f);
+        // playerHPCubes.transform.GetChild(0).gameObject.SetActive(false);
+        // playerTopName.gameObject.transform.parent.gameObject.SetActive(false);
         StartCoroutine(turnOff());
         GameManager.manager.expUI.DisplayText(this);
+
     }
 
     public IEnumerator turnOff()
     {
-        yield return new WaitForSeconds(2f);
+        // yield return new WaitForSeconds(1f);
+        username.transform.GetChild(2).gameObject.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
         gameObject.SetActive(false);
+        playerHP.SetActive(false);
+        playerHPCubes.SetActive(false);
+        hpBar.SetActive(false);
+        bar.SetActive(false);
+        bar.transform.GetChild(0).gameObject.SetActive(false);
+        holster.gameObject.SetActive(false);
+        deck.gameObject.SetActive(false);
+        playerHP.gameObject.SetActive(false);
+        playerHPCubes.gameObject.SetActive(false);
+        playerHPCubes.transform.GetChild(0).gameObject.SetActive(false);
+        username.SetActive(false);
+        username.transform.GetChild(0).gameObject.SetActive(false);
+        username.transform.GetChild(1).gameObject.SetActive(false);
+        username.transform.GetChild(2).gameObject.SetActive(false);
+        // GameManager.manager.playerTopName.gameObject.transform.parent.gameObject.SetActive(false);
     }
 
     public void checkGauntletBonus()
@@ -783,7 +828,9 @@ public class CardPlayer : MonoBehaviour
                 {
                     cd.artifactSlot.transform.parent.gameObject.SetActive(true);
                     cd.artifactSlot.transform.gameObject.SetActive(true);
-                    cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
+                    int random = GameManager.manager.rng.Next(0, GameManager.manager.starterPotionCards.Count);
+                    cd.aPotion.updateCard(GameManager.manager.starterPotionCards[random]);
+                    // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
                 }
             }
         }
@@ -2074,7 +2121,9 @@ public class CardPlayer : MonoBehaviour
             for (int i = 0; i < GameManager.manager.numPlayers; i++)
             {
                 // cp.deck.putCardOnTop(starterPotionCard);
-                GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCard);
+                int random = GameManager.manager.rng.Next(0, GameManager.manager.starterPotionCards.Count);
+                GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCards[random]);
+                // GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCard);
             }
         }
 

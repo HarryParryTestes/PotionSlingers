@@ -152,6 +152,7 @@ public class GameManager : MonoBehaviour
     public Sprite sprite2;
 
     public Card starterPotionCard;
+    public List<Card> starterPotionCards;
 
     GameObject mainMenu;
     MainMenu mainMenuScript;
@@ -1213,6 +1214,27 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void resetDurability()
+    {
+        /*
+        foreach (Card card in database.cardList)
+        {
+            if(card.cardType == "Artifact")
+            {
+                card.durability = 3;
+            }
+        }
+        */
+
+        foreach (CardDisplay cd in playerHolster.cardList)
+        {
+            if (cd.card.cardType == "Artifact")
+            {
+                cd.durability = 3;
+            }
+        }
+    }
+
     void Start()
     {
         Debug.Log("GameManager started!!!");
@@ -1254,19 +1276,7 @@ public class GameManager : MonoBehaviour
                 }
                 players[0].deck.deckList.Clear();
                 players[0].deck.cardDisplay.updateCard(players[0].deck.placeholder);
-
-
-                /*
-                for (int i = saveData.playerDeck.Count - 1; i >= 0; i--)
-                {
-                    players[0].deck.putCardOnTop()
-                }
-
-                foreach (Card card in saveData.playerDeck)
-                {
-                    players[0].deck.putCardOnTop(card);
-                }
-                */
+           
                 for (int i = 0; i < saveData.playerDeck.Count; i++)
                 {
                     foreach (Card card in database.cardList)
@@ -1375,6 +1385,7 @@ public class GameManager : MonoBehaviour
                 // NEW STORY MODE FILE
                 Debug.Log("New story mode file started!!!");
                 unSpicyCards();
+                resetDurability();
                 md1.shuffle();
                 md2.shuffle();
                 initDecks();
@@ -1404,6 +1415,8 @@ public class GameManager : MonoBehaviour
         // check for quickplay
         if (Game.quickplay)
         {
+            unSpicyCards();
+            resetDurability();
             Debug.Log("Quickplay started");
             md1.shuffle();
             md2.shuffle();
@@ -1458,6 +1471,9 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("So that happened...");
             // changing this to 4 just to test for now, remember to take this out
+
+            unSpicyCards();
+            resetDurability();
 
             Debug.Log(Game.GamePlayers.Count);
 
@@ -1978,6 +1994,13 @@ public class GameManager : MonoBehaviour
         // MATTEO: Add holster fill sfx here!
 
         Card card = player.deck.popCard();
+
+        // CHECK ARTIFACT DURABILITY HERE!!!
+        // Come back to this to not just hardcode a value
+        // make another variable on the scriptable objects that represents their max durability
+        if (card.cardType == "Artifact")
+            cd.durability = 3;
+
         if (cd.GetComponent<DragCard>() != null)
             obj.transform.DORotate(cd.GetComponent<DragCard>().cardRotation, 0.5f);
         // obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
@@ -2523,7 +2546,9 @@ public class GameManager : MonoBehaviour
         {
             if (tempPlayer.holster.cardList[selectedCard - 1].card.cardType == "Potion")
             {
-                tempPlayer.holster.cardList[selectedCard - 1].updateCard(starterCards[2]);
+                // random starter potion
+                int random = rng.Next(0, starterPotionCards.Count);               
+                tempPlayer.holster.cardList[selectedCard - 1].updateCard(starterPotionCards[random]);
             }
 
             if (tempPlayer.holster.cardList[selectedCard - 1].card.cardType == "Artifact")
@@ -3704,6 +3729,20 @@ public class GameManager : MonoBehaviour
 
                     StartCoroutine(MoveToTrash(obj));
                     td.addCard(playerHolster.cardList[selectedCardInt - 1].aPotion);
+
+                    playerHolster.cardList[selectedCardInt - 1].durability--;
+                    if(playerHolster.cardList[selectedCardInt - 1].durability <= 0)
+                    {
+                        // trash the artifact
+                        GameObject obj2 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
+                        playerHolster.cardList[selectedCardInt - 1].transform.position,
+                        playerHolster.cardList[selectedCardInt - 1].transform.rotation,
+                        playerHolster.cardList[selectedCardInt - 1].transform);
+
+                        StartCoroutine(MoveToTrash(obj2));
+                        td.addCard(playerHolster.cardList[selectedCardInt - 1].card);
+                        playerHolster.cardList[selectedCardInt - 1].updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);
+                    }
                     // playerHolster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
                     // THROWING ANIMATION
@@ -3953,6 +3992,22 @@ public class GameManager : MonoBehaviour
                     StartCoroutine(MoveToTrash(obj));
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
 
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability--;
+                    Debug.Log("Durability is now " + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability);
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability <= 0)
+                    {
+                        // trash the artifact
+                        Debug.Log("Trashing artifact!");                       
+                        GameObject obj2 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].transform.position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].transform.rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].transform);
+
+                        StartCoroutine(MoveToTrash(obj2));
+                        td.addCard(playerHolster.cardList[selectedCardInt - 1].card);
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                    }
+
                     // MATTEO: taking this out for now, may want to add back in
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
                     if (myPlayerIndex == 0)
@@ -4095,6 +4150,15 @@ public class GameManager : MonoBehaviour
         instance.start();
         instance.release();
         */
+        Debug.Log("That triggered!");
+        if (obj.GetComponent<CanvasGroup>() != null)
+        {
+            Debug.Log("This triggered!");
+            GetComponent<CanvasGroup>().interactable = false;
+            Destroy(obj.GetComponent<DragCard>());
+            // obj.GetComponent<DragCard>().currentlyBeingThrown = true;
+            // Destroy(obj.GetComponent<DragCard>());
+        }
 
         obj.transform.SetParent(obj.transform.parent.parent);
         cd.artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
@@ -4122,6 +4186,16 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MoveToTrash(GameObject obj)
     {
+        Debug.Log("That triggered!");
+        if (obj.GetComponent<CanvasGroup>() != null)
+        {
+            Debug.Log("This triggered!");
+            obj.GetComponent<CanvasGroup>().interactable = false;
+            Destroy(obj.GetComponent<DragCard>());
+            // obj.GetComponent<DragCard>().currentlyBeingThrown = true;
+            // Destroy(obj.GetComponent<DragCard>());
+        }
+
         obj.transform.SetParent(obj.transform.parent.parent);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
         // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.gameObject.SetActive(false);
@@ -4147,6 +4221,16 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator MoveToDeck(GameObject obj)
     {
+        Debug.Log("That triggered!");
+        if (obj.GetComponent<CanvasGroup>() != null)
+        {
+            Debug.Log("This triggered!");
+            obj.GetComponent<CanvasGroup>().interactable = false;
+            Destroy(obj.GetComponent<DragCard>());
+            // obj.GetComponent<DragCard>().currentlyBeingThrown = true;
+            // Destroy(obj.GetComponent<DragCard>());
+        }
+
         obj.transform.SetParent(obj.transform.parent.parent);
         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
         // obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
@@ -4358,7 +4442,9 @@ public class GameManager : MonoBehaviour
         {
             if (cp.name == currentPlayerName)
             {
-                cp.deck.putCardOnTop(starterPotionCard);
+                int random = rng.Next(0, starterPotionCards.Count);
+                cp.deck.putCardOnTop(starterPotionCards[random]);
+                // cp.deck.putCardOnTop(starterPotionCard);
                 sendMessage("You put a starter potion on top of your deck!");
             }
         }
@@ -4521,9 +4607,16 @@ public class GameManager : MonoBehaviour
                 // Artifact slot is unloaded.
                 else
                 {
+                    /*
                     Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionDisplay.card;
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionDisplay.card);
+                    */
+                    int random = rng.Next(0, starterPotionCards.Count);              
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionCards[random];
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionCards[random]);
+
+
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                     usedStarterPotion = true;
                     // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
@@ -4851,9 +4944,10 @@ public class GameManager : MonoBehaviour
                     // Artifact slot is unloaded.
                     else
                     {
-                        Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
-                        players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionDisplay.card;
-                        players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionDisplay.card);
+                        
+                        int random = rng.Next(0, starterPotionCards.Count);
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionCards[random];
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionCards[random]);
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
                         usedStarterPotion = true;
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);

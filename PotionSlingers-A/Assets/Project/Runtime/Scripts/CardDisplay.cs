@@ -26,6 +26,7 @@ public class CardDisplay : MonoBehaviour
 
     public GameObject flames;
     public bool spicy;
+    public int durability = 3;
 
     // Start is called before the first frame update
     void Start()
@@ -90,6 +91,12 @@ public class CardDisplay : MonoBehaviour
         }
         // trying something
         // might take this out for now.
+
+        // durability check?
+        if(card.cardType == "Artifact")
+        {
+            durability = 3;
+        }
         
         if(card.cardName == "placeholder" && this.gameObject.name != "DeckPile")
         {
@@ -104,6 +111,20 @@ public class CardDisplay : MonoBehaviour
         else
             this.gameObject.SetActive(true);
         
+    }
+
+    public void fadeCard()
+    {
+        // image.color = MapView.Instance.lockedColor;
+        artworkImage.DOKill();
+        artworkImage.DOFade(0, 1.5f);
+        // null check
+        if(aPotion != null)
+            aPotion.fadeCard();
+        if(vPotion1 != null) 
+            vPotion1.fadeCard();
+        if (vPotion2 != null)
+            vPotion2.fadeCard();
     }
 
     public void colorCard()
@@ -158,6 +179,11 @@ public class CardDisplay : MonoBehaviour
         artworkImage = this.GetComponent<Image>();
         this.card = cd.card;
         artworkImage.sprite = card.cardSprite;
+        // durability check?
+        if (card.cardType == "Artifact")
+        {
+            cd.durability = 3;
+        }
         if (cd.spicy)
         {
             spicy = true;
