@@ -271,14 +271,32 @@ public class GameManager : MonoBehaviour
         md1.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
         md1.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
         md1.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        md1.cardDisplay4.GetComponent<CanvasGroup>().blocksRaycasts = true;
         md2.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
         md2.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = true;
         md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = true;
+        md2.cardDisplay4.GetComponent<CanvasGroup>().blocksRaycasts = true;
+    }
+
+    public void updateMarketDeckDisplay()
+    {
+        // Debug.Log("Updating fourth market card displays with current top card of market decks!");
+        // let's not cause an infinite loop lmao
+        // md1.cardDisplay4.updateCard(md1.deckList[0]);
+        if(md1.cardDisplay4.artworkImage != null)
+            md1.cardDisplay4.artworkImage.sprite = md1.deckList[0].cardSprite;
+        // md2.cardDisplay4.updateCard(md2.deckList[0]);
+        if (md2.cardDisplay4.artworkImage != null)
+            md2.cardDisplay4.artworkImage.sprite = md2.deckList[0].cardSprite;
     }
 
     public void moveMarket()
     {
         StopCoroutine(cardDisappear());
+
+        // REMEMBER THAT THE DECODER RING LOGIC IS CHECKED HERE!!!
+
+        players[myPlayerIndex].checkDecoderBonus();
 
         if (Game.tutorial && dialog.textBoxCounter < 9)
             return;
@@ -328,9 +346,11 @@ public class GameManager : MonoBehaviour
             md1.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = false;
             md1.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = false;
             md1.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            md1.cardDisplay4.GetComponent<CanvasGroup>().blocksRaycasts = false;
             md2.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = false;
             md2.cardDisplay2.GetComponent<CanvasGroup>().blocksRaycasts = false;
             md2.cardDisplay3.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            md2.cardDisplay4.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_close");
             // canvasGroup.blocksRaycasts = true;
             market.transform.DOMoveY(-11.5f * heightRatio, 1f);
@@ -350,22 +370,16 @@ public class GameManager : MonoBehaviour
         md2.cardDisplay1.GetComponent<DragCard>().marketBack();
         md2.cardDisplay2.GetComponent<DragCard>().marketBack();
         md2.cardDisplay3.GetComponent<DragCard>().marketBack();
-        playerHolster.card1.GetComponent<DragCard>().marketBack();
-        playerHolster.card1.aPotion.GetComponent<DragCard>().marketBack();
-        playerHolster.card1.vPotion1.GetComponent<DragCard>().marketBack();
-        playerHolster.card1.vPotion2.GetComponent<DragCard>().marketBack();
-        playerHolster.card2.GetComponent<DragCard>().marketBack();
-        playerHolster.card2.aPotion.GetComponent<DragCard>().marketBack();
-        playerHolster.card2.vPotion1.GetComponent<DragCard>().marketBack();
-        playerHolster.card2.vPotion2.GetComponent<DragCard>().marketBack();
-        playerHolster.card3.GetComponent<DragCard>().marketBack();
-        playerHolster.card3.aPotion.GetComponent<DragCard>().marketBack();
-        playerHolster.card3.vPotion1.GetComponent<DragCard>().marketBack();
-        playerHolster.card3.vPotion2.GetComponent<DragCard>().marketBack();
-        playerHolster.card4.GetComponent<DragCard>().marketBack();
-        playerHolster.card4.aPotion.GetComponent<DragCard>().marketBack();
-        playerHolster.card4.vPotion1.GetComponent<DragCard>().marketBack();
-        playerHolster.card4.vPotion2.GetComponent<DragCard>().marketBack();
+
+        foreach(CardDisplay card in playerHolster.cardList)
+        {
+            card.GetComponent<DragCard>().marketBack();
+            card.aPotion.GetComponent<DragCard>().marketBack();
+            card.vPotion1.GetComponent<DragCard>().marketBack();
+            card.vPotion2.GetComponent<DragCard>().marketBack();
+            card.vPotion3.GetComponent<DragCard>().marketBack();
+            card.vPotion4.GetComponent<DragCard>().marketBack();
+        }        
     }
 
     public void advanceStage()
@@ -1235,6 +1249,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void turnOffCards()
+    {
+        md1.cardDisplay4.gameObject.SetActive(false);
+        md2.cardDisplay4.gameObject.SetActive(false);
+    }
+
     void Start()
     {
         Debug.Log("GameManager started!!!");
@@ -1243,6 +1263,9 @@ public class GameManager : MonoBehaviour
 
         // just testing the new health bar
         // players[0].subHealth(5);
+
+        // see if this works lol
+        Invoke("turnOffCards", 0.3f);
 
         if (Game.storyMode)
         {
@@ -2142,6 +2165,13 @@ public class GameManager : MonoBehaviour
 
             }
         }
+
+        if (temp.card.cardType == "Ring")
+        {
+            Debug.Log("Upadting a ring");
+            temp.updateCard(cd.card);
+        }
+
         temp.updateCard(cd.card);
     }
 
@@ -4596,6 +4626,7 @@ public class GameManager : MonoBehaviour
     public void loadPotion(CardDisplay cd)
     {
         players[myPlayerIndex].checkGauntletBonus();
+        players[myPlayerIndex].checkDecoderBonus();
 
         // If this client isn't the current player, display error message.
         if (players[myPlayerIndex].user_id != myPlayerIndex)
@@ -5387,6 +5418,8 @@ public class GameManager : MonoBehaviour
                 */
 
                 sendSuccessMessage(7);
+                players[myPlayerIndex].checkDecoderBonus();
+                players[myPlayerIndex].checkGauntletBonus();
 
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
@@ -5875,6 +5908,82 @@ public class GameManager : MonoBehaviour
                         //md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                     }
                     break;
+                case 7:
+                    if (players[myPlayerIndex].pips >= md1.cardDisplay4.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
+                    {
+                        // All rings cost 4 logic
+                        if (md1.cardDisplay4.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
+                        {
+                            md1.cardDisplay4.card.buyPrice = 4;
+                        }
+
+                        // if The Early Bird Special was drawn this turn
+                        if (md1.cardDisplay4.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md1.cardDisplay4.card.buyPrice = 3;
+                        }
+                        players[myPlayerIndex].subPips(md1.cardDisplay4.card.buyPrice);
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay4.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay4.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                        sendSuccessMessage(1);
+                        checkMarketPrice();
+                        players[myPlayerIndex].decoderBonus = true;
+                        players[myPlayerIndex].checkDecoderBonus();
+
+
+                        if (players[myPlayerIndex].isReets)
+                            players[myPlayerIndex].checkReetsCondition();
+                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
+                    }
+                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay4.card.buyPrice - 1))
+                    {
+                        if (md1.cardDisplay4.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        {
+                            sendErrorMessage(6);
+                            return;
+                        }
+                        // All rings cost 4 logic
+                        if (md1.cardDisplay4.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
+                        {
+                            md1.cardDisplay4.card.buyPrice = 4;
+                        }
+
+                        // if The Early Bird Special was drawn this turn
+                        if (md1.cardDisplay4.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md1.cardDisplay4.card.buyPrice = 3;
+                        }
+
+                        if (md1.cardDisplay4.card.buyPrice - 1 == 0)
+                        {
+                            players[myPlayerIndex].subPips(md1.cardDisplay4.card.buyPrice);
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].subPips(md1.cardDisplay4.card.buyPrice - 1);
+                        }
+                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay4.card);
+                        Card card = md1.popCard();
+                        md1.cardDisplay4.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                        sendSuccessMessage(1);
+                        checkMarketPrice();
+                        if (players[myPlayerIndex].isReets)
+                            players[myPlayerIndex].checkReetsCondition();
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                        //md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                    }
+                    break;
                 default:
                     Debug.Log("MarketDeck Error!");
                     break;
@@ -6126,6 +6235,80 @@ public class GameManager : MonoBehaviour
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
                         Card card = md2.popCard();
                         md2.cardDisplay3.updateCard(card);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                        sendSuccessMessage(1);
+                        checkMarketPrice();
+                        if (players[myPlayerIndex].isReets)
+                            players[myPlayerIndex].checkReetsCondition();
+                    }
+                    else
+                    {
+                        sendErrorMessage(6);
+                        //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                    }
+                    break;
+                case 8:
+                    if (players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
+                    {
+                        // All rings cost 4 logic
+                        if (md2.cardDisplay4.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
+                        {
+                            md2.cardDisplay4.card.buyPrice = 4;
+                        }
+                        // if The Early Bird Special was drawn this turn
+                        if (md2.cardDisplay4.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md2.cardDisplay4.card.buyPrice = 3;
+                        }
+                        players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4.card);
+                        Card card = md2.popCard();
+                        md2.cardDisplay4.updateCard(card);
+                        //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                        sendSuccessMessage(1);
+                        checkMarketPrice();
+                        players[myPlayerIndex].decoderBonus = true;
+                        players[myPlayerIndex].checkDecoderBonus();
+
+                        if (players[myPlayerIndex].isReets)
+                            players[myPlayerIndex].checkReetsCondition();
+                        // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
+                    }
+                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay4.card.buyPrice - 1))
+                    {
+                        if (md2.cardDisplay4.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                        {
+                            sendErrorMessage(6);
+                            return;
+                        }
+                        // All rings cost 4 logic
+                        if (md2.cardDisplay4.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
+                        {
+                            md2.cardDisplay4.card.buyPrice = 4;
+                        }
+
+                        // if The Early Bird Special was drawn this turn
+                        if (md2.cardDisplay4.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                        {
+                            // it buys for 3 pips
+                            md2.cardDisplay4.card.buyPrice = 3;
+                        }
+
+                        if (md2.cardDisplay4.card.buyPrice - 1 == 0)
+                        {
+                            players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
+                        }
+                        else
+                        {
+                            players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice - 1);
+                        }
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4.card);
+                        Card card = md2.popCard();
+                        md2.cardDisplay4.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
@@ -6422,6 +6605,7 @@ public class GameManager : MonoBehaviour
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
             sendSuccessMessage(8);
             players[myPlayerIndex].checkGauntletBonus();
+            players[myPlayerIndex].checkDecoderBonus();
             // MATTEO: Add sell SFX here.
         }
     }
@@ -6512,6 +6696,7 @@ public class GameManager : MonoBehaviour
             }
             sendSuccessMessage(9);
             players[myPlayerIndex].checkGauntletBonus();
+            players[myPlayerIndex].checkDecoderBonus();
         }
     }
 

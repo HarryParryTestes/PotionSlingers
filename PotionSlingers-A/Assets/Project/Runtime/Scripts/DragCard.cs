@@ -236,12 +236,17 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             DOTween.Pause(gameObject.name);
             return;
-        } 
+        }       
 
         if (!clicked && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
             DOTween.Pause(gameObject.name);
             GameManager.manager.moveMarketCards();
+
+            if (market)
+            {
+                GetComponent<CardDisplay>().whiteCard();
+            }
 
             canvasGroup.interactable = false;
             Invoke("makeInteractable", 0.6f);
@@ -277,6 +282,18 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             clicked = false;
             DOTween.Pause(gameObject.name);
+
+            if (market)
+            {
+                if (gameObject.name == "CardDisplay (Special4)" ||
+                    gameObject.name == "CardDisplay (Potion4)")
+                {
+                    GetComponent<CardDisplay>().fadeMarketCard();
+                }
+                else
+                    GameManager.manager.checkMarketPrice();
+                    // GetComponent<CardDisplay>().whiteCard();
+            }
 
             if (market && !GameManager.manager.marketSelected)
             {

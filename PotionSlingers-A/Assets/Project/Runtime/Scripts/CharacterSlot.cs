@@ -53,16 +53,25 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void handleBuy(int cardInt)
     {
-        if (cardInt == 1 || cardInt == 2 || cardInt == 3)
+        if (cardInt == 1 || cardInt == 2 || cardInt == 3 || cardInt == 7)
         {
             GameManager.manager.md1.cardInt = cardInt;
             GameManager.manager.topMarketBuy();
         }
 
-        if (cardInt == 4 || cardInt == 5 || cardInt == 6)
+        if (cardInt == 4 || cardInt == 5 || cardInt == 6 || cardInt == 8)
         {
-            GameManager.manager.md2.cardInt = cardInt - 3;
-            GameManager.manager.bottomMarketBuy();
+            if (cardInt == 8)
+            {
+                // Debug.Log("Fourth special market card");
+                GameManager.manager.md2.cardInt = cardInt;
+                GameManager.manager.bottomMarketBuy();
+            } else
+            {
+                GameManager.manager.md2.cardInt = cardInt - 3;
+                GameManager.manager.bottomMarketBuy();
+            }
+            
         }
     }
 

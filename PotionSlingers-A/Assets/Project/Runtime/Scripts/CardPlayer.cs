@@ -87,6 +87,7 @@ public class CardPlayer : MonoBehaviour
     public bool healBonus = false;
     public bool phialBonus = false;
     public bool hotCoffee = false;
+    public bool decoderBonus = false;
 
     public MyNetworkManager game;
     public MyNetworkManager Game
@@ -578,6 +579,60 @@ public class CardPlayer : MonoBehaviour
             deck.GetComponent<CharacterSlot>().gauntletBonus = false;
     }
 
+    public void checkDecoderBonus()
+    {
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // && decoderBonus == false
+            if (cd.card.cardName == "Decoder Ring" && decoderBonus == false)
+            {
+                Debug.Log("Decoder Ring Bonus!!!");
+                /*
+                if (!GameManager.manager.md1.cardDisplay4.gameObject.activeInHierarchy)
+                {
+                    Color newColor = GameManager.manager.md1.cardDisplay4.artworkImage.color;
+                    newColor.a = 0;
+                    GameManager.manager.md1.cardDisplay4.artworkImage.color = newColor;
+                    GameManager.manager.md1.cardDisplay4.artworkImage.DOKill();
+                    GameManager.manager.md1.cardDisplay4.gameObject.SetActive(true);
+                    GameManager.manager.md1.cardDisplay4.artworkImage.DOFade(1, 0.5f);
+                }
+
+                if (!GameManager.manager.md2.cardDisplay4.gameObject.activeInHierarchy)
+                {
+                    Color newColor2 = GameManager.manager.md2.cardDisplay4.artworkImage.color;
+                    newColor2.a = 0;
+                    GameManager.manager.md2.cardDisplay4.artworkImage.color = newColor2;
+                    GameManager.manager.md2.cardDisplay4.artworkImage.DOKill();
+                    GameManager.manager.md2.cardDisplay4.gameObject.SetActive(true);
+                    GameManager.manager.md2.cardDisplay4.artworkImage.DOFade(1, 0.5f);
+                }
+                */
+
+                GameManager.manager.md1.cardDisplay4.gameObject.SetActive(true);
+                GameManager.manager.md1.cardDisplay4.fadeMarketCard();
+                GameManager.manager.md2.cardDisplay4.gameObject.SetActive(true);
+                GameManager.manager.md2.cardDisplay4.fadeMarketCard();
+                return;
+            }
+        }
+        Debug.Log("Did not find the decoder ring!");
+        // fade out then setactive false
+
+        // GameManager.manager.md1.cardDisplay4.gameObject.SetActive(false);
+        // GameManager.manager.md2.cardDisplay4.gameObject.SetActive(false);
+        StartCoroutine(turnOffCards(GameManager.manager.md1.cardDisplay4.gameObject));
+        StartCoroutine(turnOffCards(GameManager.manager.md2.cardDisplay4.gameObject));
+    }
+
+    public IEnumerator turnOffCards(GameObject obj)
+    {
+        obj.GetComponent<Image>().DOKill();
+        obj.GetComponent<Image>().DOFade(0, 0.5f);
+        yield return new WaitForSeconds(0.5f);
+        obj.SetActive(false);
+    }
+
     public void setDefaultTurn()
     {
         Debug.Log("setDefaultTurn triggered");
@@ -848,6 +903,7 @@ public class CardPlayer : MonoBehaviour
         healBonus = false;
         phialBonus = false;
         hotCoffee = false;
+        decoderBonus = false;
 
         if (isNickles)
         {
@@ -1052,6 +1108,16 @@ public class CardPlayer : MonoBehaviour
                 damage++;
                 break;
             }
+        }
+
+        // The Game : Card Game
+        if (selectedCard.card.cardName == "The Game Card Game")
+        {
+            // this should set a random target for the damage
+            int num = rng.Next(0, GameManager.manager.numPlayers);
+            Debug.Log("Random person being hit is: " + GameManager.manager.players[num].charName);
+            GameManager.manager.tempPlayer = GameManager.manager.players[num];
+            return damage;
         }
 
         // Treasure Cloak Map
@@ -1642,7 +1708,7 @@ public class CardPlayer : MonoBehaviour
                     if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
                     {
                         GameManager.manager.opponentHolsterMenu.SetActive(true);
-                        GameManager.manager.displayOpponentHolster();
+                        GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
                     }
                     else
                     {
@@ -1690,7 +1756,7 @@ public class CardPlayer : MonoBehaviour
                     if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
                     {
                         GameManager.manager.opponentHolsterMenu.SetActive(true);
-                        GameManager.manager.displayOpponentHolster();
+                        GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
                     }
                     else
                     {
@@ -2300,7 +2366,7 @@ public class CardPlayer : MonoBehaviour
                 // if the player is a human
                 Debug.Log("No computer player?");
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
-                GameManager.manager.displayOpponentHolster();
+                GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
                 return damage;
             }
 
@@ -2310,7 +2376,7 @@ public class CardPlayer : MonoBehaviour
             {
                 Debug.Log("No computer player?");
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
-                GameManager.manager.displayOpponentHolster();
+                GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
             }
             else
             {
@@ -2373,7 +2439,7 @@ public class CardPlayer : MonoBehaviour
             } else
             {
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
-                GameManager.manager.displayOpponentHolster();
+                GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
             }
         }
 
@@ -2389,7 +2455,7 @@ public class CardPlayer : MonoBehaviour
             {
                 GameManager.manager.replaceStarter = true;
                 GameManager.manager.opponentHolsterMenu.SetActive(true);
-                GameManager.manager.displayOpponentHolster();
+                GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
             }
             else
             {

@@ -16,20 +16,15 @@ public class MarketDeck : NetworkBehaviour
     public CardDisplay cardDisplay1;
     public CardDisplay cardDisplay2;
     public CardDisplay cardDisplay3;
+    public CardDisplay cardDisplay4;
     private Sprite sprite;
     private static System.Random rng = new System.Random();
-
-    /*
+   
     void Start()
     {
-        Debug.Log("This triggered");
-        foreach (Card card in deckList)
-        {
-            tempDeckList.Add(card);
-        }
-        tempDeckList = shuffle(deckList);
+
     }
-    */
+    
 
     public Card popCard()
     {
@@ -143,6 +138,8 @@ public class MarketDeck : NetworkBehaviour
         cardDisplay1.updateCard(card1);
         cardDisplay2.updateCard(card2);
         cardDisplay3.updateCard(card3);
+        cardDisplay4.updateCard(deckList[0]);
+        cardDisplay4.fadeMarketCard();
     }
 
     // Start is called before the first frame update

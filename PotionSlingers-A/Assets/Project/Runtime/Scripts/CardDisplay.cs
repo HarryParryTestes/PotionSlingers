@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class CardDisplay : MonoBehaviour
@@ -114,7 +115,19 @@ public class CardDisplay : MonoBehaviour
         }
         else
             this.gameObject.SetActive(true);
-        
+        if(SceneManager.GetActiveScene().name == "TownCenter")
+            GameManager.manager.updateMarketDeckDisplay();
+    }
+
+    public void fadeMarketCard()
+    {
+        artworkImage.DOKill();
+        Color newColor = artworkImage.color;
+        newColor.a = 1;
+        artworkImage.color = newColor;
+        //artworkImage.color.a = 1f;         
+        artworkImage.DOFade(0.5f, 1f).SetLoops(-1, LoopType.Yoyo);
+        // artworkImage.DOColor(GameManager.manager.fadedDryColor, 1f).SetLoops(-1, LoopType.Yoyo);
     }
 
     public void fadeCard()
@@ -134,7 +147,7 @@ public class CardDisplay : MonoBehaviour
     public void colorCard()
     {
         // image.color = MapView.Instance.lockedColor;
-        artworkImage.DOKill();
+        artworkImage.DOKill();        
         artworkImage.DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
     }
 
