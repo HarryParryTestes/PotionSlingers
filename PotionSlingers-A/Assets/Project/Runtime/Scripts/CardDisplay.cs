@@ -21,8 +21,12 @@ public class CardDisplay : MonoBehaviour
     // Vessel loaded potion slots:
     public GameObject vesselSlot1;
     public GameObject vesselSlot2;
+    public GameObject vesselSlot3;
+    public GameObject vesselSlot4;
     public CardDisplay vPotion1;
     public CardDisplay vPotion2;
+    public CardDisplay vPotion3;
+    public CardDisplay vPotion4;
 
     public GameObject flames;
     public bool spicy;

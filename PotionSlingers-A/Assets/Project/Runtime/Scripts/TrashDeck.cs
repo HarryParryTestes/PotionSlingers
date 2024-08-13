@@ -61,6 +61,7 @@ public class TrashDeck : MonoBehaviour, IDropHandler
     public void changeTrashBool()
     {
         trash = !trash;
+        GameManager.manager.trashDeckBonus = false;
 
         /*
         Market_Hover m1 = cd1.gameObject.GetComponent<Market_Hover>();
@@ -121,7 +122,6 @@ public class TrashDeck : MonoBehaviour, IDropHandler
                 cd.vPotion1.updateCard(card);
                 cd.vPotion1.gameObject.SetActive(false);
                 cd.vPotion2.gameObject.SetActive(false);
-
             }
 
             if (cd.vPotion2 != null && cd.vPotion2.card.cardName != "placeholder")
@@ -130,8 +130,31 @@ public class TrashDeck : MonoBehaviour, IDropHandler
                 cd.vPotion2.updateCard(card);
                 cd.vPotion1.gameObject.SetActive(false);
                 cd.vPotion2.gameObject.SetActive(false);
-
             }
+
+            if(cd.card.cardEffect == "FourLoad")
+            {
+                if (cd.vPotion3 != null && cd.vPotion3.card.cardName != "placeholder")
+                {
+                    deckList.Add(cd.vPotion3.card);
+                    cd.vPotion3.updateCard(card);
+                    cd.vPotion1.gameObject.SetActive(false);
+                    cd.vPotion2.gameObject.SetActive(false);
+                    cd.vPotion3.gameObject.SetActive(false);
+                    cd.vPotion4.gameObject.SetActive(false);
+                }
+
+                if (cd.vPotion4 != null && cd.vPotion4.card.cardName != "placeholder")
+                {
+                    deckList.Add(cd.vPotion4.card);
+                    cd.vPotion4.updateCard(card);
+                    cd.vPotion1.gameObject.SetActive(false);
+                    cd.vPotion2.gameObject.SetActive(false);
+                    cd.vPotion3.gameObject.SetActive(false);
+                    cd.vPotion4.gameObject.SetActive(false);
+                }
+            }
+
         }
         cd.updateCard(card);
     }

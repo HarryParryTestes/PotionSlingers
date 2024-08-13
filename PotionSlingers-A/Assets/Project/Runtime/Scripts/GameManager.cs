@@ -4059,7 +4059,14 @@ public class GameManager : MonoBehaviour
                         players[myPlayerIndex].addHealth(4);
                     }
                     //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
-                    damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
+                    if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardEffect == "FourLoad")
+                    {
+                        damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + 
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount +
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card.effectAmount +
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card.effectAmount;
+                    } else 
+                        damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
                     damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = players[myPlayerIndex].checkVesselBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
@@ -4069,6 +4076,8 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].whiteCard();
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.whiteCard();
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.whiteCard();
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.whiteCard();
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.whiteCard();
 
                     // TODO: fix bonus damage
                     //damage = players[throwerIndex].checkBonus(damage, selectedCardInt);
@@ -4084,6 +4093,11 @@ public class GameManager : MonoBehaviour
                     {
                         players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
                         players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardEffect == "FourLoad")
+                        {
+                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card);
+                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card);
+                        }
                     }
 
                     // code that animates the loaded cards
@@ -4098,8 +4112,24 @@ public class GameManager : MonoBehaviour
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform);
                     StartCoroutine(MoveToDeck(obj2));
 
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardEffect == "FourLoad")
+                    {
+                        GameObject obj4 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform);
+                        StartCoroutine(MoveToDeck(obj4));
+                        GameObject obj5 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).gameObject,
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).position,
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).rotation,
+                            players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform);
+                        StartCoroutine(MoveToDeck(obj5));
+                    }
+
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
 
                     GameObject obj3 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
@@ -4110,6 +4140,8 @@ public class GameManager : MonoBehaviour
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).gameObject.SetActive(false);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).gameObject.SetActive(false);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).gameObject.SetActive(false);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).gameObject.SetActive(false);
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                     if (myPlayerIndex == 0)
@@ -4648,8 +4680,18 @@ public class GameManager : MonoBehaviour
                     // Enable Vessel menu if it wasn't already enabled.
                     Debug.Log("Vessel menu enabled.");
                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
-                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.gameObject.SetActive(true);
-                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.transform.gameObject.SetActive(true);
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(false);
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(false);
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot4.SetActive(false);
+
+                    if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardEffect == "FourLoad")
+                    {
+                        Debug.Log("Four slot logic");
+                        // Do these when they're actually loaded in the vessel I think
+                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
+                        // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot4.SetActive(true);
+                    }
 
                     // Check for existing loaded potion(s) if Vessel menu was already enabled.
                     if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
@@ -4657,6 +4699,60 @@ public class GameManager : MonoBehaviour
                         // If Vessel slot 2 is filled.
                         if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
                         {
+                            // insert logic for loading the third and fourth potion here                                
+                            if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardEffect == "FourLoad")
+                            {
+                                Debug.Log("Reached here in 3 4 slot");
+                                if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card.cardName != "placeholder")
+                                {
+                                    // Fill Vessel slot 4 with loaded potion.
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);                                   
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot4.SetActive(true);
+                                    Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion4.card;
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion4.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion4.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+                                    // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                    sendSuccessMessage(5);
+                                    players[myPlayerIndex].checkVesselBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
+                                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                    Debug.Log("Potion loaded in Vessel slot 4!");
+
+                                    // MATTEO: Add Loading potion SFX here.
+
+                                    // // Updates Holster card to be empty.
+                                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                }
+                                else
+                                {
+                                    // Fill Vessel slot 3 with loaded potion.
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
+                                    Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card;
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+                                    // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                    sendSuccessMessage(5);
+                                    players[myPlayerIndex].checkVesselBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
+                                    // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                    Debug.Log("Potion loaded in Vessel slot 3!");
+
+                                    // MATTEO: Add Loading potion SFX here.
+
+                                    // // Updates Holster card to be empty.
+                                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                }
+                                return;
+                            }
+
                             Debug.Log("Vessel is fully loaded!");
                             // DONE: Insert error that displays on screen.
                             sendErrorMessage(9);
@@ -4664,6 +4760,8 @@ public class GameManager : MonoBehaviour
                         else
                         {
                             // Fill Vessel slot 2 with loaded potion.
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
                             Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = cd.card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(cd.card);
@@ -4785,6 +4883,8 @@ public class GameManager : MonoBehaviour
                     playerHolster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
                     playerHolster.cardList[loadedCardInt].vesselSlot1.transform.gameObject.SetActive(true);
                     playerHolster.cardList[loadedCardInt].vesselSlot2.transform.gameObject.SetActive(true);
+                    playerHolster.cardList[loadedCardInt].vesselSlot3.transform.gameObject.SetActive(false);
+                    playerHolster.cardList[loadedCardInt].vesselSlot4.transform.gameObject.SetActive(false);
 
                     // Check for existing loaded potion(s) if Vessel menu was already enabled.
                     if (playerHolster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
@@ -4972,8 +5072,15 @@ public class GameManager : MonoBehaviour
                         // Enable Vessel menu if it wasn't already enabled.
                         Debug.Log("Vessel menu enabled.");
                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
-                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.gameObject.SetActive(true);
-                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.transform.gameObject.SetActive(true);
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(false);
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(false);
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot4.SetActive(false);
+
+                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardEffect == "FourLoad")
+                        {
+                            Debug.Log("Four slot logic");                                                       
+                        }
 
                         // Check for existing loaded potion(s) if Vessel menu was already enabled.
                         if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card.cardName != "placeholder")
@@ -4981,6 +5088,59 @@ public class GameManager : MonoBehaviour
                             // If Vessel slot 2 is filled.
                             if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
                             {
+                                // insert logic for loading the third and fourth potion here                                
+                                if(players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardEffect == "FourLoad")
+                                {
+                                    Debug.Log("Reached here in 3 4 slot");
+                                    if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card.cardName != "placeholder")
+                                    {
+                                        // Fill Vessel slot 4 with loaded potion.
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot4.SetActive(true);
+                                        Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion4.card;
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion4.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion4.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+                                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                        sendSuccessMessage(5);
+                                        players[myPlayerIndex].checkVesselBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
+                                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                        Debug.Log("Potion loaded in Vessel slot 4!");
+
+                                        // MATTEO: Add Loading potion SFX here.
+
+                                        // // Updates Holster card to be empty.
+                                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                    } else
+                                    {
+                                        // Fill Vessel slot 3 with loaded potion.
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
+                                        Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card;
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
+                                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+                                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                        sendSuccessMessage(5);
+                                        players[myPlayerIndex].checkVesselBonusAnimation(players[myPlayerIndex].holster.cardList[loadedCardInt]);
+                                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                        Debug.Log("Potion loaded in Vessel slot 3!");
+
+                                        // MATTEO: Add Loading potion SFX here.
+
+                                        // // Updates Holster card to be empty.
+                                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                    }
+                                    return;
+                                }         
+
                                 Debug.Log("Vessel is fully loaded!");
                                 // DONE: Insert error that displays on screen.
                                 sendErrorMessage(9);
@@ -4988,6 +5148,8 @@ public class GameManager : MonoBehaviour
                             else
                             {
                                 // Fill Vessel slot 2 with loaded potion.
+                                players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                                players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
                                 Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
                                 players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
                                 players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
@@ -5009,6 +5171,7 @@ public class GameManager : MonoBehaviour
                         // Vessel slot 1 is unloaded.
                         else
                         {
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                             Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card);
@@ -5228,6 +5391,8 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.parent.gameObject.SetActive(false);
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.parent.gameObject.SetActive(false);
 
                 // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)

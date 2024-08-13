@@ -1284,25 +1284,33 @@ public class CardPlayer : MonoBehaviour
 
 
             if (selectedCard.vPotion1.card.cardQuality == "Hot" ||
-                selectedCard.vPotion2.card.cardQuality == "Hot")
+                selectedCard.vPotion2.card.cardQuality == "Hot" ||
+                selectedCard.vPotion3.card.cardQuality == "Hot" ||
+                selectedCard.vPotion4.card.cardQuality == "Hot")
             {
                 pluotHot = true;
             }
 
             if (selectedCard.vPotion1.card.cardQuality == "Wet" ||
-                selectedCard.vPotion2.card.cardQuality == "Wet")
+                selectedCard.vPotion2.card.cardQuality == "Wet" ||
+                selectedCard.vPotion3.card.cardQuality == "Wet" ||
+                selectedCard.vPotion4.card.cardQuality == "Wet")
             {
                 pluotWet = true;
             }
 
             if (selectedCard.vPotion1.card.cardQuality == "Cold" ||
-                selectedCard.vPotion2.card.cardQuality == "Cold")
+                selectedCard.vPotion2.card.cardQuality == "Cold" ||
+                selectedCard.vPotion3.card.cardQuality == "Cold" ||
+                selectedCard.vPotion4.card.cardQuality == "Cold")
             {
                 pluotCold = true;
             }
 
             if (selectedCard.vPotion1.card.cardQuality == "Dry" ||
-                selectedCard.vPotion2.card.cardQuality == "Dry")
+                selectedCard.vPotion2.card.cardQuality == "Dry" ||
+                selectedCard.vPotion3.card.cardQuality == "Dry" ||
+                selectedCard.vPotion4.card.cardQuality == "Dry")
             {
                 pluotDry = true;
             }
@@ -1312,6 +1320,62 @@ public class CardPlayer : MonoBehaviour
             {
                 character.canBeFlipped = true;
                 GameManager.manager.sendSuccessMessage(13);
+            }
+        }
+
+        if (selectedCard.card.cardName == "Tanktown Burrito")
+        {
+            bool hot = false;
+            bool cold = false;
+            bool wet = false;
+            bool dry = false;
+
+            // check all four vessel slots
+            if (selectedCard.vPotion1.card.cardQuality == "Hot" ||
+                selectedCard.vPotion2.card.cardQuality == "Hot" ||
+                selectedCard.vPotion3.card.cardQuality == "Hot" ||
+                selectedCard.vPotion4.card.cardQuality == "Hot")
+            {
+                hot = true;
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Wet" ||
+                selectedCard.vPotion2.card.cardQuality == "Wet" ||
+                selectedCard.vPotion3.card.cardQuality == "Wet" ||
+                selectedCard.vPotion4.card.cardQuality == "Wet")
+            {
+                wet = true;
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Cold" ||
+                selectedCard.vPotion2.card.cardQuality == "Cold" ||
+                selectedCard.vPotion3.card.cardQuality == "Cold" ||
+                selectedCard.vPotion4.card.cardQuality == "Cold")
+            {
+                cold = true;
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Dry" ||
+                selectedCard.vPotion2.card.cardQuality == "Dry" ||
+                selectedCard.vPotion3.card.cardQuality == "Dry" ||
+                selectedCard.vPotion4.card.cardQuality == "Dry")
+            {
+                dry = true;
+            }
+
+            if(hot && cold && wet && dry)
+            {
+                // add an essence cube and update the UI
+                Debug.Log("Bonus triggered! Adding an essence cube!");
+                Debug.Log("Add a animation for this!!!");
+                // probably doesn't matter
+                // GameManager.manager.sendMessage("You just gained an essence cube!");
+
+                // make an animation of gaining an essence cube
+
+                hpCubes++;
+                updateHealthUI();
+                return damage;
             }
         }
 
@@ -1340,6 +1404,11 @@ public class CardPlayer : MonoBehaviour
         // checking the potions for throw bonuses
         damage = checkBonus(damage, selectedCard.vPotion1);
         damage = checkBonus(damage, selectedCard.vPotion2);
+        if (selectedCard.card.cardEffect == "FourLoad")
+        {
+            damage = checkBonus(damage, selectedCard.vPotion3);
+            damage = checkBonus(damage, selectedCard.vPotion4);
+        }
 
         // Drinking Horn of a Sea Unicorn's Tooth
         if (selectedCard.card.cardName == "Drinking Horn of a Sea Unicorn's Tooth")
@@ -1416,10 +1485,13 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Vessel Bonus: Put any potion from the trash to the top of your deck
-        if ((selectedCard.vPotion1.card.cardName == "A Squeeze of Wheezyfish" || selectedCard.vPotion2.card.cardName == "A Squeeze of Wheezyfish") ||
+        /*
+         * (selectedCard.vPotion1.card.cardName == "A Squeeze of Wheezyfish" || selectedCard.vPotion2.card.cardName == "A Squeeze of Wheezyfish") ||
             (selectedCard.vPotion1.card.cardName == "A Swig of Regained Burning Appetite" || selectedCard.vPotion2.card.cardName == "A Swig of Regained Burning Appetite") ||
             (selectedCard.vPotion1.card.cardName == "TinctureOfMeltedMarble" || selectedCard.vPotion2.card.cardName == "TinctureOfMeltedMarble") ||
-            (selectedCard.vPotion1.card.cardName == "A Freshly Caught and Distilled Sickness" || selectedCard.vPotion2.card.cardName == "A Freshly Caught and Distilled Sickness"))
+            (selectedCard.vPotion1.card.cardName == "A Freshly Caught and Distilled Sickness" || selectedCard.vPotion2.card.cardName == "A Freshly Caught and Distilled Sickness")
+        */
+        if (selectedCard.vPotion1.card.cardEffect == "Put any potion from trash to top of your deck" || selectedCard.vPotion2.card.cardEffect == "Put any potion from trash to top of your deck")
         {
             if (GameManager.manager.Game.multiplayer)
             {
@@ -1436,7 +1508,8 @@ public class CardPlayer : MonoBehaviour
             {
                 GameManager.manager.trashDeckBonus = true;
                 GameManager.manager.trashDeckMenu.SetActive(true);
-                GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+                // GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+                GameManager.manager.trashText.text = "Take a potion from the trash!";
                 GameManager.manager.td.displayTrash();
             }
         }
@@ -2061,6 +2134,13 @@ public class CardPlayer : MonoBehaviour
             {
                 Debug.Log("Computer logic");
 
+                // you need to make a menu for a human tempPlayer to discard a card from their deck
+                if(GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
+                {
+                    // make a menu for this
+                    Debug.Log("Make a menu for someone to choose the card they want to discard");
+                }
+
                 if (GameManager.manager.tempPlayer.deck.deckList.Count == 0)
                     return damage;
 
@@ -2324,6 +2404,15 @@ public class CardPlayer : MonoBehaviour
             selectedCard.card.cardName == "An Example of What Not to Do" ||
             selectedCard.card.cardName == "A Confident Throw Into the Garbage")
         {
+            // Computer check needed! Just make it do 2 damage and don't worry about the choice lol
+            if(gameObject.GetComponent<ComputerPlayer>() != null)
+            {
+                Debug.Log("Computer player triggered this!");
+                // like I don't give a fuck lol
+                return damage;
+            }
+
+
             //GameManager.manager.trashOrDamage = true;
             GameManager.manager.numTrashed = 2;
             GameManager.manager.trashorDamageMenu.SetActive(true);

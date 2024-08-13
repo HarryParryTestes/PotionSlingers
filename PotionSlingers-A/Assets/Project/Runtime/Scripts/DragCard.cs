@@ -27,6 +27,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private Image artifactCard;
     private Image vesselCard1;
     private Image vesselCard2;
+    private Image vesselCard3;
+    private Image vesselCard4;
     int parentSiblingIndex;
 
     void Update()
@@ -179,7 +181,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             // TODO: fix this so that the position changes depending on whether or not the market is selected or not
             originalPosition = transform.position + new Vector3(0, 647.5f, 0);
-        }
+        }       
         
         canvasGroup = GetComponent<CanvasGroup>();
         image = GetComponent<Image>();
@@ -190,6 +192,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             artifactCard = this.transform.parent.GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
             vesselCard1 = this.transform.parent.GetChild(1).GetChild(0).GetChild(0).GetComponent<Image>();
             vesselCard2 = this.transform.parent.GetChild(1).GetChild(1).GetChild(0).GetComponent<Image>();
+            vesselCard3 = this.transform.parent.GetChild(1).GetChild(2).GetChild(0).GetComponent<Image>();
+            vesselCard4 = this.transform.parent.GetChild(1).GetChild(3).GetChild(0).GetComponent<Image>();
         }
         // Debug.Log(artifactCard.gameObject.name);
     }
@@ -373,6 +377,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             if (vesselCard2.gameObject.activeInHierarchy)
             {
                 vesselCard2.CrossFadeAlpha(0.3f, 0.3f, true);
+            }
+
+            if (vesselCard3.gameObject.activeInHierarchy)
+            {
+                vesselCard3.CrossFadeAlpha(0.3f, 0.3f, true);
+            }
+
+            if (vesselCard4.gameObject.activeInHierarchy)
+            {
+                vesselCard4.CrossFadeAlpha(0.3f, 0.3f, true);
             }
         }
     }
@@ -563,6 +577,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             if (vesselCard2.gameObject.activeInHierarchy)
             {
                 vesselCard2.CrossFadeAlpha(1f, 0.3f, true);
+            }
+
+            if (vesselCard3.gameObject.activeInHierarchy)
+            {
+                vesselCard3.CrossFadeAlpha(1f, 0.3f, true);
+            }
+
+            if (vesselCard4.gameObject.activeInHierarchy)
+            {
+                vesselCard4.CrossFadeAlpha(1f, 0.3f, true);
             }
         }
         
