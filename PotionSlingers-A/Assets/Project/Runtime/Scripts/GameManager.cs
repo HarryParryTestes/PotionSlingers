@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     public string currentPlayerName;
     public int loadedCardInt;
     public int myPlayerIndex = 0; // used to be currentPlayer
+    public int tempIndex;
     public int currentPlayerId = 0;
     public int nicklesDamage = 0;
     public int numTrashed = 0;
@@ -87,7 +88,9 @@ public class GameManager : MonoBehaviour
     public GameObject chooseOpponentMenu;
     public GameObject deckMenu;
     public GameObject nicklesAttackMenu;
+    public GameObject cardGameTheGameMenu;
     public GameObject advanceStageUI;
+    public GameObject endTurnButton;
     public DeckMenuScroll deckDisplay;
     public ExpUI expUI;
 
@@ -144,6 +147,7 @@ public class GameManager : MonoBehaviour
     public bool snakeBonus = false;
     public bool marketSelected = false;
     public bool holster = false;
+    public bool cardGameBonus = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -229,7 +233,8 @@ public class GameManager : MonoBehaviour
             // paused = !paused;
             if (pauseUI.activeInHierarchy == false)
             {
-                pauseUI.SetActive(true);
+                // pauseUI.SetActive(true);
+                FadeIn(pauseUI);
             }
             else
             {
@@ -412,7 +417,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("Now onto stage " + saveData.stage + "!");
         SaveSystem.SaveGameData(saveData);
         // Game.ServerChangeScene("StoryMode");
-        advanceStageUI.SetActive(true);
+        // advanceStageUI.SetActive(true);
+        FadeIn(advanceStageUI);
         // StartCoroutine(goToStory());
         // SceneManager.LoadScene("StoryMode");
     }
@@ -473,7 +479,8 @@ public class GameManager : MonoBehaviour
 
     public void setStageUI()
     {
-        advanceStageUI.SetActive(true);
+        // advanceStageUI.SetActive(true);
+        FadeIn(advanceStageUI);
     }
 
     public void checkForEndGame()
@@ -496,7 +503,8 @@ public class GameManager : MonoBehaviour
             if (players[0].dead)
             {
                 Debug.Log("Game over, the player died");
-                gameOverScreen.SetActive(true);
+                // gameOverScreen.SetActive(true);
+                FadeIn(gameOverScreen);
                 StartCoroutine(goBackToTitle());
                 return;
             }
@@ -507,7 +515,8 @@ public class GameManager : MonoBehaviour
             if (players[0].dead)
             {
                 Debug.Log("Game over, the player died");
-                gameOverScreen.SetActive(true);
+                // gameOverScreen.SetActive(true);
+                FadeIn(gameOverScreen);
                 StartCoroutine(goBackToTitle());
                 return;
             }
@@ -587,7 +596,8 @@ public class GameManager : MonoBehaviour
             if (players[0].dead)
             {
                 Debug.Log("Game over, the player died");
-                gameOverScreen.SetActive(true);
+                // gameOverScreen.SetActive(true);
+                FadeIn(gameOverScreen);
                 StartCoroutine(goBackToTitle());
                 return;
             }
@@ -1527,7 +1537,8 @@ public class GameManager : MonoBehaviour
             {
                 players[1] = players[2];
                 // hardcode this lol
-                playerTopName.text = Game.singlePlayerNames[1];
+                if(Game.singlePlayerNames.Count > 0)
+                    playerTopName.text = Game.singlePlayerNames[1];
                 players[1].user_id = 1;
                 players[2].user_id = 1;
 
@@ -1954,6 +1965,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void useCardGameCard()
+    {
+        Debug.Log("Card Game Bonus activated");
+        tempIndex = myPlayerIndex;
+        myPlayerIndex = 0;
+        for (int i = 0; i < players[myPlayerIndex].holster.cardList.Count; i++)
+        {
+            if (players[myPlayerIndex].holster.cardList[i].card.cardName == "The Game Card Game")
+            {
+                CardDisplay cd = players[myPlayerIndex].holster.cardList[i];
+                Debug.Log("Found the card");
+                selectedCardInt = i + 1;
+                if(cd.aPotion.card.cardName == "placeholder")
+                {
+                    // add potion to artifact if there isn't one
+                    int numer = rng.Next(0, starterPotionCards.Count);
+                    cd.aPotion.updateCard(starterPotionCards[numer]);
+                }                
+                int num = rng.Next(0, numPlayers);
+                Debug.Log("Random person being hit is: " + players[num].charName);
+                tempPlayer = players[num];
+                cardGameBonus = true;
+                // store myPlayerIndex in tempIndex               
+                throwPotion();
+
+                Invoke("endTurn", 4f);
+            }
+        }
+    }
+
     public void SetPluotBonus(string bonus)
     {
         if (Game.tutorial)
@@ -2125,7 +2166,8 @@ public class GameManager : MonoBehaviour
                 }
                 return;
             }
-            pluotPotionMenu.SetActive(true);
+            // pluotPotionMenu.SetActive(true);
+            FadeIn(pluotPotionMenu);
         }
         // player.setDefaultTurn();
     }
@@ -2796,6 +2838,207 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void handleTurnButton()
+    {
+        if (myPlayerIndex != 0)
+        {
+            // this.gameObject.SetActive(false);
+            endTurnButton.GetComponent<Image>().CrossFadeAlpha(0.25f, 0.5f, true);
+            endTurnButton.GetComponent<CanvasGroup>().interactable = false;
+        }
+        else
+        {
+            // this.gameObject.SetActive(true);
+            endTurnButton.GetComponent<Image>().CrossFadeAlpha(1, 0.5f, true);
+            endTurnButton.GetComponent<CanvasGroup>().interactable = true;
+        }
+    }
+
+    public void endCardGameTurn()
+    {
+        Debug.Log("Ending turn without using that artifact");
+
+        if (Game.multiplayer)
+        {
+            /*
+            if (numPlayers == 2 && Game.GamePlayers[0].playerName == currentPlayerName && players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
+
+            if (numPlayers == 2 && Game.GamePlayers[1].playerName == currentPlayerName && players[myPlayerIndex].user_id == myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
+            */
+            // end turn mirror command
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdEndTurn");
+                    // do the Mirror Command
+                    gp.CmdEndTurn(gp.playerName);
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("Local command");
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
+
+            // END TURN BUTTON UI LOGIC!
+            handleTurnButton();
+
+            // Logic to check for end of turn effect ring
+            foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+            {
+                if (cd.card.cardName == "Vengeful Ring of the Cursed Mutterings")
+                {
+                    if (players[myPlayerIndex].doubleRingBonus)
+                    {
+                        dealDamageToAll(4);
+                    }
+                    else
+                    {
+                        dealDamageToAll(2);
+                    }
+                }
+
+                // check for Blacksnake Pip Sling
+                if (cd.card.cardName == "Blacksnake Pip Sling")
+                {
+                    players[myPlayerIndex].deck.putCardOnBottom(cd.card);
+                    cd.updateCard(cd.placeholder);
+                }
+                /*
+                // check for gambling ring
+                if (cd.card.cardName == "RingofGamblingMopoji" && players[myPlayerIndex].pipsUsedThisTurn == 0)
+                {
+                    players[myPlayerIndex].pipCount = rng.Next(1, 11);
+                    if (players[myPlayerIndex].doubleRingBonus)
+                    {
+                        Debug.Log("Double ring bonus");
+                        players[myPlayerIndex].pipCount *= 2;
+                    }
+                    Debug.Log("New pip count: " + players[myPlayerIndex].pipCount);
+                }
+                */
+            }
+            // taking this out for now
+            // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
+
+            int potions;
+            int artifacts;
+            int pips;
+
+
+            // if character's name matches your Steam username
+            if (SteamFriends.GetPersonaName().ToString() == players[myPlayerIndex].name)
+            {
+                SteamUserStats.GetStat("potions_thrown", out potions);
+                SteamUserStats.GetStat("artifacts_used", out artifacts);
+                SteamUserStats.GetStat("pips_spent", out pips);
+
+
+                potions += players[myPlayerIndex].potionsThrown;
+                artifacts += players[myPlayerIndex].artifactsUsed;
+                pips += players[myPlayerIndex].pipsUsedThisTurn;
+
+                if (potions >= 10)
+                {
+                    SteamUserStats.SetAchievement("THROW_10_POTIONS");
+                }
+
+                if (artifacts >= 10)
+                {
+                    SteamUserStats.SetAchievement("USE_10_ARTIFACTS");
+                }
+
+                if (pips >= 100)
+                {
+                    SteamUserStats.SetAchievement("SPEND_100_PIPS");
+                }
+
+                SteamUserStats.SetStat("potions_thrown", potions);
+                SteamUserStats.SetStat("artifacts_used", artifacts);
+                SteamUserStats.SetStat("pips_spent", pips);
+
+                SteamUserStats.StoreStats();
+            }
+
+            players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
+
+            myPlayerIndex++;
+
+            if (myPlayerIndex >= numPlayers)
+            {
+                Debug.Log("myPlayerIndex rolled over???");
+                myPlayerIndex = 0;
+            }
+            // sendSuccessMessage(18);
+            sendMessage(players[myPlayerIndex].name + "'s Turn!");
+            currentPlayerName = players[myPlayerIndex].name;
+
+
+
+            // check if the CardPlayer gameObject has a ComputerPlayer script attached
+            if (players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>() != null)
+            {
+                Debug.Log("Computer player!");
+                Debug.Log("myPlayerIndex is " + myPlayerIndex);
+                onStartTurn(players[myPlayerIndex]);
+                players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().AICards.Clear();
+                if (players[myPlayerIndex].dead)
+                {
+                    endTurn();
+                    Debug.Log("Computer player is dead!");
+                    return;
+                }
+
+                // MATTEO: I think this is a good place to call the start of turn sounds here!
+                if (players[myPlayerIndex].name == "Fingas")
+                {
+                    FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_turn");
+                }
+
+
+                // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Singe_Swing");
+
+                players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().StartCoroutine(players[myPlayerIndex].gameObject.GetComponent<ComputerPlayer>().waitASecBro());
+            }
+            else
+            {
+                onStartTurn(players[myPlayerIndex]);
+            }
+
+            // MATTEO: Add End Turn SFX here.
+
+        }
+
+        // endTurn();
+    }
+
+    public void FadeIn(GameObject obj)
+    {
+        obj.SetActive(true);
+        if (obj.GetComponent<BonusMenuUIManager>() == null)
+            obj.AddComponent<BonusMenuUIManager>();
+        if (obj.GetComponent<CanvasGroup>() == null)
+            obj.AddComponent<CanvasGroup>();
+        obj.GetComponent<BonusMenuUIManager>().setAlphaZero();
+    }
+
     // END TURN REQUEST
     public void endTurn()
     {
@@ -2888,6 +3131,40 @@ public class GameManager : MonoBehaviour
                 sendErrorMessage(7);
                 return;
             }
+
+            // Check for Card Game The Game first before doing anything else
+            if (!cardGameBonus)
+            {
+                foreach (CardDisplay cd in playerHolster.cardList)
+                {
+                    if (cd.card.cardName == "The Game Card Game")
+                    {
+                        // make this fade in and fade out after you test it
+                        Debug.Log("Card Bonus activated");
+                        moveMarketCards();
+                        /*
+                        cardGameTheGameMenu.SetActive(true);
+                        if (cardGameTheGameMenu.GetComponent<CanvasGroup>() == null)
+                            cardGameTheGameMenu.AddComponent<CanvasGroup>();
+                        cardGameTheGameMenu.GetComponent<BonusMenuUIManager>().setAlphaZero(); 
+                        */
+                        FadeIn(cardGameTheGameMenu);
+                        endTurnButton.GetComponent<Image>().CrossFadeAlpha(0.25f, 0.5f, false);
+                        endTurnButton.GetComponent<CanvasGroup>().interactable = false;
+                        return;
+                    }
+                }               
+            } else
+            {
+                // bonus was used, reset myPlayerIndex and cardGameBonus bool
+                Debug.Log("Resetting values");
+                myPlayerIndex = tempIndex;
+                cardGameBonus = false;
+            }
+
+            // END TURN BUTTON UI LOGIC!
+            handleTurnButton();
+
             // Logic to check for end of turn effect ring
             foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
             {
@@ -3230,7 +3507,8 @@ public class GameManager : MonoBehaviour
         Debug.Log("Nickles action succeeded");
         players[myPlayerIndex].nicklesAction = true;
         nicklesDamage = damage;
-        nicklesAttackMenu.SetActive(true);
+        // nicklesAttackMenu.SetActive(true);
+        FadeIn(nicklesAttackMenu);
         // chooseOpponentMenu.SetActive(true);
         // displayOpponents();
     }
@@ -3322,7 +3600,8 @@ public class GameManager : MonoBehaviour
             if (cardPlayer.character.flipped && dialog.textBoxCounter == 35)
             {
                 // do Pluot action (I'll code this in later)
-                ExtraInventoryMenu.SetActive(true);
+                // ExtraInventoryMenu.SetActive(true);
+                FadeIn(ExtraInventoryMenu);
 
             }
             else
@@ -3358,7 +3637,8 @@ public class GameManager : MonoBehaviour
             else if (players[myPlayerIndex].pips >= 2)
             {
                 players[myPlayerIndex].subPips(2);
-                scarpettaMenu.SetActive(true);
+                // scarpettaMenu.SetActive(true);
+                FadeIn(scarpettaMenu);
             }
         }
 
@@ -3370,13 +3650,15 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                sweetbitterMenu.SetActive(true);
+                // sweetbitterMenu.SetActive(true);
+                FadeIn(sweetbitterMenu);
             }
         }
 
         if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].character.flipped && !players[myPlayerIndex].character.uniqueCardUsed)
         {
-            isadoreMenu.SetActive(true);
+            // isadoreMenu.SetActive(true);
+            FadeIn(isadoreMenu);
         }
         else if (players[myPlayerIndex].isIsadore && (!players[myPlayerIndex].character.flipped || players[myPlayerIndex].character.uniqueCardUsed))
         {
@@ -3395,7 +3677,8 @@ public class GameManager : MonoBehaviour
             if (players[myPlayerIndex].character.flipped)
             {
                 // prompt ui for adding Extra Inventory into holster
-                ExtraInventoryMenu.SetActive(true);
+                // ExtraInventoryMenu.SetActive(true);
+                FadeIn(ExtraInventoryMenu);
             }
             else
             {
@@ -3414,7 +3697,8 @@ public class GameManager : MonoBehaviour
             }
 
             //Image image = reetsMenu.GetComponent<Image>();
-            reetsMenu.SetActive(true);
+            // reetsMenu.SetActive(true);
+            FadeIn(reetsMenu);
             if (players[myPlayerIndex].character.flipped)
             {
                 reetsMenuText.text = "Pay 1P to add top card of deck to Holster?";
@@ -3432,12 +3716,14 @@ public class GameManager : MonoBehaviour
             if (!players[myPlayerIndex].character.flipped)
             {
                 // unflipped Nickles UI
-                nicklesUI.SetActive(true);
+                // nicklesUI.SetActive(true);
+                FadeIn(nicklesUI);
             }
             else
             {
                 // flipped Nickles UI
-                flippedNicklesUI.SetActive(true);
+                // flippedNicklesUI.SetActive(true);
+                FadeIn(flippedNicklesUI);
             }
         }
         else if (players[myPlayerIndex].isNickles && players[myPlayerIndex].nicklesAction)
@@ -3605,6 +3891,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator waitThreeSecondsHand(int damage, string cardQuality = "")
     {
+        CardPlayer cp = tempPlayer;
+
         if (tutorialArrow.activeInHierarchy)
         {
             tutorialArrow.SetActive(false);
@@ -3628,24 +3916,24 @@ public class GameManager : MonoBehaviour
             throwingHand.transform.DOMoveX(1000f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
-            tempPlayer.subHealth(damage, cardQuality);
+            cp.subHealth(damage, cardQuality);
 
             yield break;
         }
 
-        if (tempPlayer.user_id == 2 && numPlayers == 3)
+        if (cp.user_id == 2 && numPlayers == 3)
         {
             Debug.Log("Right person");
             yield return new WaitForSeconds(1f);
             throwingHand.transform.DOMoveX(1470f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
-            tempPlayer.subHealth(damage, cardQuality);
+            cp.subHealth(damage, cardQuality);
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             yield break;
         }
 
-        if (tempPlayer.user_id == 2)
+        if (cp.user_id == 2)
         {
             Debug.Log("Middle person");
             yield return new WaitForSeconds(1f);
@@ -3653,7 +3941,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
-        else if (tempPlayer.user_id == 1)
+        else if (cp.user_id == 1)
         {
             Debug.Log("Left person");
             yield return new WaitForSeconds(1f);
@@ -3661,7 +3949,7 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
-        else if (tempPlayer.user_id == 3)
+        else if (cp.user_id == 3)
         {
             Debug.Log("Right person");
             yield return new WaitForSeconds(1f);
@@ -3672,13 +3960,13 @@ public class GameManager : MonoBehaviour
 
         if (Game.tutorial)
         {
-            tempPlayer.subHealth(damage, cardQuality);
+            cp.subHealth(damage, cardQuality);
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             StartCoroutine(waitThreeSeconds(dialog));
         }
         else
         {
-            tempPlayer.subHealth(damage, cardQuality);
+            cp.subHealth(damage, cardQuality);
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
         }
     }
@@ -4618,7 +4906,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            chooseOpponentMenu.SetActive(true);
+            // chooseOpponentMenu.SetActive(true);
+            FadeIn(chooseOpponentMenu);
             displayOpponents();
         }
     }
@@ -6352,7 +6641,8 @@ public class GameManager : MonoBehaviour
         if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "BottleRocket")
         {
             // SetActive the UI
-            bottleRocketMenu.SetActive(true);
+            // bottleRocketMenu.SetActive(true);
+            FadeIn(bottleRocketMenu);
         }
     }
 

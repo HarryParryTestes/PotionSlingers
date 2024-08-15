@@ -111,7 +111,7 @@ public class MarketDeck : NetworkBehaviour
         }
 
         int n = deckList.Count;
-        while (n > 1)
+        while (n > 0)
         {
             n--;
             int k = rng.Next(n + 1);

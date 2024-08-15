@@ -133,7 +133,8 @@ public class CardPlayer : MonoBehaviour
         // no damage
         if (GameManager.manager.trash && name == GameManager.manager.currentPlayerName)
         {
-            GameManager.manager.trashMarketUI.SetActive(true);
+            // GameManager.manager.trashMarketUI.SetActive(true);
+            GameManager.manager.FadeIn(GameManager.manager.trashMarketUI);
             GameManager.manager.updateTrashMarketMenu();
             GameManager.manager.trash = false;
 
@@ -1130,7 +1131,8 @@ public class CardPlayer : MonoBehaviour
             {
                 GameManager.manager.numTrashed = 1;
                 GameManager.manager.trashDeckBonus = true;
-                GameManager.manager.trashDeckMenu.SetActive(true);
+                // GameManager.manager.trashDeckMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.trashDeckMenu);
                 GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
                 GameManager.manager.td.displayTrash();
                 return 0;
@@ -1498,7 +1500,8 @@ public class CardPlayer : MonoBehaviour
                     // TODO: check for computer player and disable this
 
                     GameManager.manager.numTrashed += 2;
-                    GameManager.manager.trashMarketUI.SetActive(true);
+                    // GameManager.manager.trashMarketUI.SetActive(true);
+                    GameManager.manager.FadeIn(GameManager.manager.trashMarketUI);
                     GameManager.manager.updateTrashMarketMenu();
                 }
             }
@@ -1520,7 +1523,8 @@ public class CardPlayer : MonoBehaviour
                 else
                 {
                     GameManager.manager.numTrashed += 2;
-                    GameManager.manager.trashMarketUI.SetActive(true);
+                    // GameManager.manager.trashMarketUI.SetActive(true);
+                    GameManager.manager.FadeIn(GameManager.manager.trashMarketUI);
                     GameManager.manager.updateTrashMarketMenu();
                 }
             }
@@ -1545,7 +1549,8 @@ public class CardPlayer : MonoBehaviour
             }
             else
             {
-                GameManager.manager.takeMarketMenu.SetActive(true);
+                // GameManager.manager.takeMarketMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.takeMarketMenu);
                 GameManager.manager.updateTakeMarketMenu();
             }
         }
@@ -1573,7 +1578,8 @@ public class CardPlayer : MonoBehaviour
             else
             {
                 GameManager.manager.trashDeckBonus = true;
-                GameManager.manager.trashDeckMenu.SetActive(true);
+                // GameManager.manager.trashDeckMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.trashDeckMenu);
                 // GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
                 GameManager.manager.trashText.text = "Take a potion from the trash!";
                 GameManager.manager.td.displayTrash();
@@ -1613,7 +1619,8 @@ public class CardPlayer : MonoBehaviour
                 if (gameObject.GetComponent<ComputerPlayer>() == null)
                 {
                     GameManager.manager.trashDeckBonus = true;
-                    GameManager.manager.trashDeckMenu.SetActive(true);
+                    // GameManager.manager.trashDeckMenu.SetActive(true);
+                    GameManager.manager.FadeIn(GameManager.manager.trashDeckMenu);
                     GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
                     GameManager.manager.td.displayTrash();
                 } else
@@ -1657,7 +1664,8 @@ public class CardPlayer : MonoBehaviour
                 // if they're not a computer player
                 if (gameObject.GetComponent<ComputerPlayer>() == null)
                 {
-                    GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
                     GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
                 }
                 else
@@ -1707,7 +1715,8 @@ public class CardPlayer : MonoBehaviour
                     // if the ememy is not a computer player
                     if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
                     {
-                        GameManager.manager.opponentHolsterMenu.SetActive(true);
+                        // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                        GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
                         GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
                     }
                     else
@@ -1755,7 +1764,8 @@ public class CardPlayer : MonoBehaviour
                     // if they're not a computer player
                     if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
                     {
-                        GameManager.manager.opponentHolsterMenu.SetActive(true);
+                        // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                        GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
                         GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
                     }
                     else
@@ -1814,7 +1824,8 @@ public class CardPlayer : MonoBehaviour
             {
                 // first they'll need to pick their bonus
                 if(gameObject.GetComponent<ComputerPlayer>() == null)
-                    GameManager.manager.trashBonusMenu.SetActive(true);
+                    GameManager.manager.FadeIn(GameManager.manager.trashBonusMenu);
+                // GameManager.manager.trashBonusMenu.SetActive(true);
                 else
                 {
                     Debug.Log("Add computer logic");
@@ -1872,7 +1883,8 @@ public class CardPlayer : MonoBehaviour
                 if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null
                     && gameObject.GetComponent<ComputerPlayer>() == null)
                 {
-                    GameManager.manager.takeMarketMenu.SetActive(true);
+                    // GameManager.manager.takeMarketMenu.SetActive(true);
+                    GameManager.manager.FadeIn(GameManager.manager.takeMarketMenu);
                     GameManager.manager.updateTakeMarketMenu();
                 }
                 else
@@ -2186,7 +2198,8 @@ public class CardPlayer : MonoBehaviour
             else
             {
                 // not networked logic
-                GameManager.manager.deckMenu.SetActive(true);
+                // GameManager.manager.deckMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.deckMenu);
                 GameManager.manager.displayDeck();
             }
             return damage;
@@ -2365,7 +2378,8 @@ public class CardPlayer : MonoBehaviour
             {
                 // if the player is a human
                 Debug.Log("No computer player?");
-                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
                 GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
                 return damage;
             }
@@ -2375,7 +2389,8 @@ public class CardPlayer : MonoBehaviour
             if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
             {
                 Debug.Log("No computer player?");
-                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
                 GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
             }
             else
@@ -2438,7 +2453,8 @@ public class CardPlayer : MonoBehaviour
 
             } else
             {
-                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
                 GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
             }
         }
@@ -2454,7 +2470,8 @@ public class CardPlayer : MonoBehaviour
                 && gameObject.GetComponent<ComputerPlayer>() == null)
             {
                 GameManager.manager.replaceStarter = true;
-                GameManager.manager.opponentHolsterMenu.SetActive(true);
+                // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
                 GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
             }
             else
@@ -2481,7 +2498,8 @@ public class CardPlayer : MonoBehaviour
 
             //GameManager.manager.trashOrDamage = true;
             GameManager.manager.numTrashed = 2;
-            GameManager.manager.trashorDamageMenu.SetActive(true);
+            GameManager.manager.FadeIn(GameManager.manager.trashorDamageMenu);
+            // GameManager.manager.trashorDamageMenu.SetActive(true);
             GameManager.manager.updateTrashMarketMenu();
             return Math.Max(damage - 2, 0);
 
@@ -2526,7 +2544,8 @@ public class CardPlayer : MonoBehaviour
             if (gameObject.GetComponent<ComputerPlayer>() == null
                 && GameManager.manager.myPlayerIndex == 0)
             {
-                GameManager.manager.starterPotionMenu.SetActive(true);
+                // GameManager.manager.starterPotionMenu.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.starterPotionMenu);
                 // StartCoroutine(changeAlpha(GameManager.manager.starterPotionMenu));
             }
         }
@@ -2544,7 +2563,8 @@ public class CardPlayer : MonoBehaviour
                 // GameManager method
                 Debug.Log("Trash One from the Market Bonus");
                 GameManager.manager.numTrashed = 1;
-                GameManager.manager.trashMarketUI.SetActive(true);
+                GameManager.manager.FadeIn(GameManager.manager.trashMarketUI);
+                // GameManager.manager.trashMarketUI.SetActive(true);
                 // StartCoroutine(changeAlpha(GameManager.manager.trashMarketUI));
                 GameManager.manager.updateTrashMarketMenu();
             }
@@ -2680,7 +2700,8 @@ public class CardPlayer : MonoBehaviour
                             Debug.Log("Local command for Bubble Wand");
                             if(gameObject.GetComponent<ComputerPlayer>() == null)
                             {
-                                GameManager.manager.bubbleWandMenu.SetActive(true);
+                                // GameManager.manager.bubbleWandMenu.SetActive(true);
+                                GameManager.manager.FadeIn(GameManager.manager.bubbleWandMenu);
                                 // GameManager.manager.bubbleWandMenu.GetComponent<CanvasGroup>().alpha = 0;
                             }
                             // StartCoroutine(changeAlpha(GameManager.manager.bubbleWandMenu));
