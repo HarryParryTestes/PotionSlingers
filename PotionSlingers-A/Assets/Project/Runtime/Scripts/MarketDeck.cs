@@ -23,8 +23,7 @@ public class MarketDeck : NetworkBehaviour
     void Start()
     {
 
-    }
-    
+    }     
 
     public Card popCard()
     {
@@ -37,7 +36,8 @@ public class MarketDeck : NetworkBehaviour
             if(temp.cardName == "EarlyBirdSpecial")
             {
                 GameManager.manager.earlyBirdSpecial = true;
-            }
+            }            
+
             return temp;
         }
         else

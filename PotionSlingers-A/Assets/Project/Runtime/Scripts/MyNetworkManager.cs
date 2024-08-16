@@ -318,9 +318,12 @@ public class MyNetworkManager : NetworkManager
         SaveData data = SaveSystem.LoadGameData();
         if (storyMode && data.newStage)
         {
+            Debug.Log("Going to story mode scene");
             ServerChangeScene("StoryMode");
+            yield break;
         }
 
+        Debug.Log("Going to town center scene");
         ServerChangeScene("TownCenter");
     }
 

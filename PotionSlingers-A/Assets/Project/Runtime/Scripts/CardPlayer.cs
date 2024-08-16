@@ -2199,6 +2199,15 @@ public class CardPlayer : MonoBehaviour
             {
                 // not networked logic
                 // GameManager.manager.deckMenu.SetActive(true);
+
+                // computer player check to prevent the menu from popping up
+                if(gameObject.GetComponent<ComputerPlayer>() != null)
+                {
+                    Debug.Log("Computer just triggered the snake! Code in this logic later!");
+                    Debug.Log("Or don't it's fine!");
+                    return damage;
+                }
+
                 GameManager.manager.FadeIn(GameManager.manager.deckMenu);
                 GameManager.manager.displayDeck();
             }

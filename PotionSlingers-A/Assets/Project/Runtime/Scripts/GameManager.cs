@@ -186,6 +186,8 @@ public class GameManager : MonoBehaviour
     public float widthRatio;
     public float heightRatio;
 
+    public Card crucibleCard;
+
     public SaveData saveData;
 
     public List<string> playersDeck = new List<string>();
@@ -5881,6 +5883,8 @@ public class GameManager : MonoBehaviour
             }
             switch (md1.cardInt)
             {
+                // Change this to just grab the CardDisplay at the start and then just have one code block instead of 4
+                // CardDisplay cd = md1.cardDisplay1;
                 case 1:
                     if (cardPlayer.pips >= md1.cardDisplay1.card.buyPrice)
                     {
@@ -6340,8 +6344,23 @@ public class GameManager : MonoBehaviour
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                        Card card = md2.popCard();
-                        md2.cardDisplay1.updateCard(card);
+                        if(md2.cardDisplay1.crucibleCards.Count > 0)
+                        {
+                            Debug.Log("Crucible card is being popped out of list");
+                            Card card = md2.cardDisplay1.crucibleCards[0];
+                            md2.cardDisplay1.crucibleCards.RemoveAt(0);
+                            if (card.cardName == "Crucible")
+                            {
+                                md2.cardDisplay1.card = card;
+                                md2.cardDisplay1.artworkImage.sprite = card.cardSprite;
+                            }
+                            else
+                                md2.cardDisplay1.updateCard(card);
+                        } else
+                        {
+                            Card card = md2.popCard();
+                            md2.cardDisplay1.updateCard(card);
+                        }                       
                         //md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
@@ -6378,9 +6397,28 @@ public class GameManager : MonoBehaviour
                         {
                             players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice - 1);
                         }
+                        
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                        Card card = md2.popCard();
-                        md2.cardDisplay1.updateCard(card);
+                        if (md2.cardDisplay1.crucibleCards.Count > 0)
+                        {
+                            Debug.Log("Crucible card is being popped out of list");
+                            Card card = md2.cardDisplay1.crucibleCards[0];
+                            md2.cardDisplay1.crucibleCards.RemoveAt(0);
+                            if (card.cardName == "Crucible")
+                            {
+                                md2.cardDisplay1.card = card;
+                                md2.cardDisplay1.artworkImage.sprite = card.cardSprite;
+                            }
+                            else
+                                md2.cardDisplay1.updateCard(card);
+                        }
+                        else
+                        {
+                            Card card = md2.popCard();
+                            md2.cardDisplay1.updateCard(card);
+                        }
+                        // Card card = md2.popCard();
+                        // md2.cardDisplay1.updateCard(card);
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         //md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
@@ -6412,8 +6450,25 @@ public class GameManager : MonoBehaviour
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                        Card card = md2.popCard();
-                        md2.cardDisplay2.updateCard(card);
+
+                        if (md2.cardDisplay2.crucibleCards.Count > 0)
+                        {
+                            Debug.Log("Crucible card is being popped out of list");
+                            Card card = md2.cardDisplay2.crucibleCards[0];
+                            md2.cardDisplay2.crucibleCards.RemoveAt(0);
+                            if (card.cardName == "Crucible")
+                            {
+                                md2.cardDisplay2.card = card;
+                                md2.cardDisplay2.artworkImage.sprite = card.cardSprite;
+                            }
+                            else
+                                md2.cardDisplay2.updateCard(card);
+                        }
+                        else
+                        {
+                            Card card = md2.popCard();
+                            md2.cardDisplay2.updateCard(card);
+                        }
                         //md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
@@ -6451,8 +6506,24 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice - 1);
                         }
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                        Card card = md2.popCard();
-                        md2.cardDisplay2.updateCard(card);
+                        if (md2.cardDisplay2.crucibleCards.Count > 0)
+                        {
+                            Debug.Log("Crucible card is being popped out of list");
+                            Card card = md2.cardDisplay2.crucibleCards[0];
+                            md2.cardDisplay2.crucibleCards.RemoveAt(0);
+                            if (card.cardName == "Crucible")
+                            {
+                                md2.cardDisplay2.card = card;
+                                md2.cardDisplay2.artworkImage.sprite = card.cardSprite;
+                            }
+                            else
+                                md2.cardDisplay2.updateCard(card);
+                        }
+                        else
+                        {
+                            Card card = md2.popCard();
+                            md2.cardDisplay2.updateCard(card);
+                        }
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         //md2.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
@@ -6483,8 +6554,24 @@ public class GameManager : MonoBehaviour
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                        Card card = md2.popCard();
-                        md2.cardDisplay3.updateCard(card);
+                        if (md2.cardDisplay3.crucibleCards.Count > 0)
+                        {
+                            Debug.Log("Crucible card is being popped out of list");
+                            Card card = md2.cardDisplay3.crucibleCards[0];
+                            md2.cardDisplay3.crucibleCards.RemoveAt(0);
+                            if (card.cardName == "Crucible")
+                            {
+                                md2.cardDisplay3.card = card;
+                                md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
+                            }
+                            else
+                                md2.cardDisplay3.updateCard(card);
+                        }
+                        else
+                        {
+                            Card card = md2.popCard();
+                            md2.cardDisplay3.updateCard(card);
+                        }
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
@@ -6522,8 +6609,23 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice - 1);
                         }
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                        Card card = md2.popCard();
-                        md2.cardDisplay3.updateCard(card);
+                        if (md2.cardDisplay3.crucibleCards.Count > 0)
+                        {
+                            Debug.Log("Crucible card is being popped out of list");
+                            Card card = md2.cardDisplay3.crucibleCards[0];
+                            md2.cardDisplay3.crucibleCards.RemoveAt(0);
+                            if(card.cardName == "Crucible")
+                            {
+                                md2.cardDisplay3.card = card;
+                                md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
+                            } else
+                                md2.cardDisplay3.updateCard(card);
+                        }
+                        else
+                        {
+                            Card card = md2.popCard();
+                            md2.cardDisplay3.updateCard(card);
+                        }
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
@@ -6554,8 +6656,24 @@ public class GameManager : MonoBehaviour
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4.card);
-                        Card card = md2.popCard();
-                        md2.cardDisplay4.updateCard(card);
+                        if (md2.cardDisplay4.crucibleCards.Count > 0)
+                        {
+                            Debug.Log("Crucible card is being popped out of list");
+                            Card card = md2.cardDisplay4.crucibleCards[0];
+                            md2.cardDisplay4.crucibleCards.RemoveAt(0);
+                            if (card.cardName == "Crucible")
+                            {
+                                md2.cardDisplay4.card = card;
+                                md2.cardDisplay4.artworkImage.sprite = card.cardSprite;
+                            }
+                            else
+                                md2.cardDisplay4.updateCard(card);
+                        }
+                        else
+                        {
+                            Card card = md2.popCard();
+                            md2.cardDisplay4.updateCard(card);
+                        }
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
@@ -6596,8 +6714,24 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice - 1);
                         }
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4.card);
-                        Card card = md2.popCard();
-                        md2.cardDisplay4.updateCard(card);
+                        if (md2.cardDisplay4.crucibleCards.Count > 0)
+                        {
+                            Debug.Log("Crucible card is being popped out of list");
+                            Card card = md2.cardDisplay4.crucibleCards[0];
+                            md2.cardDisplay4.crucibleCards.RemoveAt(0);
+                            if (card.cardName == "Crucible")
+                            {
+                                md2.cardDisplay4.card = card;
+                                md2.cardDisplay4.artworkImage.sprite = card.cardSprite;
+                            }
+                            else
+                                md2.cardDisplay4.updateCard(card);
+                        }
+                        else
+                        {
+                            Card card = md2.popCard();
+                            md2.cardDisplay4.updateCard(card);
+                        }
                         //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");

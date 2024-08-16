@@ -15,6 +15,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public bool loaded;
     public bool market;
     public int marketCardInt;
+    public GameObject obj;
+    public GameObject obj2;
     private Image image;
     private LineRenderer lineRenderer;
     private Vector3 cachedScale;
@@ -258,6 +260,86 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.SetParent(transform.root);
             rectTransform.SetSiblingIndex(17);
             // transform.SetAsLastSibling();
+
+            if (gameObject.GetComponent<CardDisplay>().crucibleCards.Count == 1)
+            {
+                if (obj != null)
+                    Destroy(obj);
+
+                if (obj2 != null)
+                    Destroy(obj2);
+                // LOGIC FOR TWO CARDS ON TOP OF CRUCIBLE
+                transform.DOScale(4f, 0.5f).SetId(gameObject.name);
+                // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
+                transform.DOMove(new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0), 0.5f).SetId(gameObject.name);
+
+                obj = Instantiate(GameManager.manager.md1.cardDisplay2.transform.parent.gameObject,
+                        this.transform.parent.gameObject.transform.position,
+                        this.transform.parent.gameObject.transform.rotation,
+                        this.transform.parent.gameObject.transform);
+
+                obj.transform.SetParent(transform.root);
+                obj.transform.SetSiblingIndex(17);
+                Destroy(obj.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                // obj.transform.GetChild(0).gameObject.GetComponent<DragCard>().clicked = true;
+                obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[0].cardSprite;
+                obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[0];
+                obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
+                obj.transform.DOScale(4f, 0.5f).SetId(gameObject.name);
+                // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
+                // new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
+                obj.transform.DOMove(new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
+                    550 * GameManager.manager.heightRatio, 0), 0.5f).SetId(gameObject.name);
+
+                return;
+            }
+
+            if (gameObject.GetComponent<CardDisplay>().crucibleCards.Count == 2)
+            {
+                if (obj != null)
+                    Destroy(obj);
+
+                if (obj2 != null)
+                    Destroy(obj2);
+                // LOGIC FOR TWO CARDS ON TOP OF CRUCIBLE
+                transform.DOScale(4f, 0.5f).SetId(gameObject.name);
+                // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
+                transform.DOMove(new Vector3((960 * GameManager.manager.widthRatio) + (600 * GameManager.manager.widthRatio),
+                    550 * GameManager.manager.heightRatio, 0), 0.5f).SetId(gameObject.name);
+
+                obj = Instantiate(GameManager.manager.md1.cardDisplay2.transform.parent.gameObject,
+                        this.transform.parent.gameObject.transform.position,
+                        this.transform.parent.gameObject.transform.rotation,
+                        this.transform.parent.gameObject.transform);
+
+                obj2 = Instantiate(GameManager.manager.md1.cardDisplay2.transform.parent.gameObject,
+                        this.transform.parent.gameObject.transform.position,
+                        this.transform.parent.gameObject.transform.rotation,
+                        this.transform.parent.gameObject.transform);
+
+                obj.transform.SetParent(transform.root);
+                obj.transform.SetSiblingIndex(17);
+                Destroy(obj.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[1].cardSprite;
+                obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[1];
+                obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
+                obj.transform.DOScale(4f, 0.5f).SetId(gameObject.name);
+                // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
+                // new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
+                obj.transform.DOMove(new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
+                    550 * GameManager.manager.heightRatio, 0), 0.5f).SetId(gameObject.name);
+
+                obj2.transform.SetParent(transform.root);
+                obj2.transform.SetSiblingIndex(17);
+                Destroy(obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[0].cardSprite;
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[0];
+                obj2.transform.DOScale(4f, 0.5f).SetId(gameObject.name);
+                obj2.transform.DOMove(new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0), 0.5f).SetId(gameObject.name);
+                return;
+            }
+
             Vector3 pos = new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0);
             if (loaded)
             {
@@ -301,6 +383,19 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
                 // transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
                 Vector2 thing = new Vector2(0, 647.5f * GameManager.manager.heightRatio);
+                if(obj != null)
+                {
+                    obj.transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+                    obj.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                    Destroy(obj, 0.3f);
+                }
+
+                if (obj2 != null)
+                {
+                    obj2.transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+                    obj2.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                    Destroy(obj2, 0.3f);
+                }
                 transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
                 // transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
                 StartCoroutine(SibIndex());
@@ -322,6 +417,20 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
             // transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
             transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+
+            if (obj != null)
+            {
+                obj.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                obj.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj, 0.3f);
+            }
+
+            if (obj2 != null)
+            {
+                obj2.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                obj2.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj2, 0.3f);
+            }
             // transform.DOMove(new Vector2(originalPosition.x * GameManager.manager.widthRatio, originalPosition.y * GameManager.manager.heightRatio), 0.3f).SetId(gameObject.name);
             // rectTransform.DOAnchorPos(originalPosition, 0.3f, false);
             StartCoroutine(SibIndex());
@@ -339,6 +448,17 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         yield return new WaitForSeconds(0.1f);
         transform.SetParent(parentAfterDrag);
+        if (obj != null)
+        {
+            obj.transform.SetParent(parentAfterDrag);
+            obj.transform.SetSiblingIndex(0);
+        }
+
+        if (obj2 != null)
+        {
+            obj2.transform.SetParent(parentAfterDrag);
+            obj2.transform.SetSiblingIndex(0);
+        }
         Debug.Log("Sibling index changed");
 
         if(!market)
@@ -360,6 +480,18 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         DOTween.Pause(gameObject.name);
 
         FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Pickup");
+
+        if (obj != null)
+        {
+            obj.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().DOFade(0, 0.3f);
+            Destroy(obj, 0.3f);
+        }
+
+        if (obj2 != null)
+        {
+            obj2.transform.GetChild(0).gameObject.GetComponent<CanvasGroup>().DOFade(0, 0.3f);
+            Destroy(obj2, 0.3f);
+        }
 
         grabbed = true;
         clicked = false;
@@ -616,6 +748,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
         transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
         // EndLine();
+        GameManager.manager.checkMarketPrice();
     }
 
 }
