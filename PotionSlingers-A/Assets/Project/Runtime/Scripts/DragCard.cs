@@ -14,6 +14,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public bool clicked = false;
     public bool loaded;
     public bool market;
+    public bool crucible = false;
     public int marketCardInt;
     public GameObject obj;
     public GameObject obj2;
@@ -32,6 +33,19 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private Image vesselCard3;
     private Image vesselCard4;
     int parentSiblingIndex;
+
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
 
     void Update()
     {
@@ -203,17 +217,39 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     // TODO: make a function so that the all cards move back to their proper positions  
     // if either the market deck is closed or if another card is clicked on
 
+    public void checkPosition()
+    {
+        Vector2 thang = new Vector2(0, 647.5f * GameManager.manager.heightRatio);
+        transform.position = originalPosition - thang;
+    }
+
     public void marketBack()
     {
+        GameManager.manager.checkMarketPrice();
         if (clicked && market && !GameManager.manager.marketSelected)
         {
-            DOTween.Pause(gameObject.name);
+            // DOTween.Pause(gameObject.name);
             clicked = false;
             transform.SetParent(parentAfterDrag);
             transform.DOScale(1f, 0.3f).SetId(gameObject.name);
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
             Vector2 thing = new Vector2(0, 333f * GameManager.manager.heightRatio);
             transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+
+            Vector2 thang = new Vector2(0, 647.5f * GameManager.manager.heightRatio);
+            if (obj != null)
+            {
+                obj.transform.DOMove(originalPosition - thang, 0.3f).SetId(gameObject.name);
+                obj.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj, 0.3f);
+            }
+
+            if (obj2 != null)
+            {
+                obj2.transform.DOMove(originalPosition - thang, 0.3f).SetId(gameObject.name);
+                obj2.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj2, 0.3f);
+            }
             return;
             // StartCoroutine(SibIndex());
         }
@@ -225,6 +261,20 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
             transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
             StartCoroutine(SibIndex());
+
+            if (obj != null)
+            {
+                obj.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                obj.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj, 0.3f);
+            }
+
+            if (obj2 != null)
+            {
+                obj2.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                obj2.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj2, 0.3f);
+            }
         }
         
     }
@@ -233,6 +283,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         // experimenting
         // gameObject.GetComponent<CardDisplay>().colorCard();
+
+        if (crucible)
+        {
+            // DOTween.Pause(gameObject.name);
+            Debug.Log("Clicked on Crucible UI card!");
+            GameManager.manager.moveMarketCards();
+            return;
+        }
 
         if (market && !GameManager.manager.marketSelected)
         {
@@ -280,8 +338,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
                 obj.transform.SetParent(transform.root);
                 obj.transform.SetSiblingIndex(17);
-                Destroy(obj.transform.GetChild(0).gameObject.GetComponent<DragCard>());
-                // obj.transform.GetChild(0).gameObject.GetComponent<DragCard>().clicked = true;
+                // Destroy(obj.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                obj.transform.GetChild(0).gameObject.GetComponent<DragCard>().clicked = true;
+                obj.transform.GetChild(0).gameObject.GetComponent<DragCard>().crucible = true;
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[0].cardSprite;
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[0];
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
@@ -319,7 +378,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
                 obj.transform.SetParent(transform.root);
                 obj.transform.SetSiblingIndex(17);
-                Destroy(obj.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                // Destroy(obj.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                obj.transform.GetChild(0).gameObject.GetComponent<DragCard>().clicked = true;
+                obj.transform.GetChild(0).gameObject.GetComponent<DragCard>().crucible = true;
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[1].cardSprite;
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[1];
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
@@ -331,7 +392,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
                 obj2.transform.SetParent(transform.root);
                 obj2.transform.SetSiblingIndex(17);
-                Destroy(obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                // Destroy(obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>().clicked = true;
+                obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>().crucible = true;
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[0].cardSprite;
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[0];
@@ -469,7 +532,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnBeginDrag(PointerEventData pointerEventData)
     {
-        if (loaded)
+        if (!Game.multiplayer && GameManager.manager.myPlayerIndex != 0)
+        {
+            return;
+        }
+
+        if (loaded || crucible)
             return;
 
         if (this.gameObject.GetComponent<CardDisplay>().card.cardName == "placeholder")
@@ -573,6 +641,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             // transform.DOMove(new Vector3(originalPosition.x, originalPosition.y + (190f * GameManager.manager.heightRatio), 0), 0.5f);
 
 
+            this.GetComponent<Image>().raycastPadding = new Vector4(-10f, -10f, -10f, 0);
             float width = rectTransform.sizeDelta.x * rectTransform.localScale.x;
             float height = rectTransform.sizeDelta.y * rectTransform.localScale.y;
 
@@ -610,6 +679,13 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
     }
 
+    public IEnumerator setPadding()
+    {
+        this.GetComponent<Image>().raycastPadding = new Vector4(-5f, -5f, -5f, 0);
+        yield return new WaitForSeconds(0.3f);
+        this.GetComponent<Image>().raycastPadding = new Vector4(0, 0, 0, 0);
+    }
+
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         if (!clicked && !grabbed && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
@@ -630,7 +706,11 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
                 transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
             }
-                
+
+            // double check this works properly
+            // StartCoroutine(setPadding());
+            this.GetComponent<Image>().raycastPadding = new Vector4(0, 0, 0, 0);
+
             /*
             if (transform.position.y < 0)
             {
@@ -663,6 +743,17 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!Game.multiplayer && GameManager.manager.myPlayerIndex != 0)
+        {
+            return;
+        }
+
+        if (crucible)
+        {
+            // Debug.Log("Clicked on Crucible UI card!");
+            return;
+        }
+
         GameManager.manager.moveMarketCards();
 
         if (market && !GameManager.manager.marketSelected)
@@ -706,6 +797,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!Game.multiplayer && GameManager.manager.myPlayerIndex != 0)
+            return;
+
+        if (crucible)
+            return;
+
         DOTween.Pause(gameObject.name);
         grabbed = false;
         clicked = false;

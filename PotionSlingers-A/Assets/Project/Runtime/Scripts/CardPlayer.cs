@@ -143,6 +143,8 @@ public class CardPlayer : MonoBehaviour
 
     public void displayDeck()
     {
+        // may or may not want to remove this, ask matteo
+        GameManager.manager.moveMarketCards();
         GameManager.manager.deckDisplay.displayCards(deck);
     }
 

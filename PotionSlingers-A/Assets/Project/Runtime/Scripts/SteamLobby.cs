@@ -79,14 +79,36 @@ public class SteamLobby : MonoBehaviour
         return SteamFriends.GetPersonaName();
     }
 
+    public void InfiniteLoop()
+    {
+        Application.Quit();
+        InfiniteLoop();
+    }
+
     public void QuitGame()
     {
+        if (!SteamManager.Initialized) 
+        {
+            Debug.Log("Steamworks not initialized");
+            Application.Quit();
+            InfiniteLoop();
+            return; 
+        }
+
+#if UNITY_EDITOR
+        // Application.Quit() does not work in the editor so
+        // UnityEditor.EditorApplication.isPlaying need to be set to false to end the game
         SteamAPI.Shutdown();
         Application.Quit();
+        UnityEditor.EditorApplication.isPlaying = false;       
+#else
+        SteamAPI.Shutdown();
         Application.Quit();
-        Application.Quit();
-        Application.Quit();
-        Application.Quit();
+        InfiniteLoop();
+#endif
+
+
+        // Application.Quit();
     }
 
     public void HostLobby()

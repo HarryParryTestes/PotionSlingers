@@ -261,15 +261,38 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator cardDisappear()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.1f);
         if (!marketSelected)
         {
             md1.cardDisplay1.gameObject.SetActive(false);
             md1.cardDisplay2.gameObject.SetActive(false);
             md1.cardDisplay3.gameObject.SetActive(false);
+            md1.cardDisplay4.gameObject.SetActive(false);
             md2.cardDisplay1.gameObject.SetActive(false);
             md2.cardDisplay2.gameObject.SetActive(false);
             md2.cardDisplay3.gameObject.SetActive(false);
+            md2.cardDisplay4.gameObject.SetActive(false);
+            md1.cardDisplay1.GetComponent<DragCard>().checkPosition();
+            md1.cardDisplay2.GetComponent<DragCard>().checkPosition();
+            md1.cardDisplay3.GetComponent<DragCard>().checkPosition();
+            md1.cardDisplay4.GetComponent<DragCard>().checkPosition();
+            md2.cardDisplay1.GetComponent<DragCard>().checkPosition();
+            md2.cardDisplay2.GetComponent<DragCard>().checkPosition();
+            md2.cardDisplay3.GetComponent<DragCard>().checkPosition();
+            md2.cardDisplay4.GetComponent<DragCard>().checkPosition();
+        } else
+        {
+            /*
+            Debug.Log("Checking for market card position");
+            md1.cardDisplay1.GetComponent<DragCard>().checkPosition();
+            md1.cardDisplay2.GetComponent<DragCard>().checkPosition();
+            md1.cardDisplay3.GetComponent<DragCard>().checkPosition();
+            md1.cardDisplay4.GetComponent<DragCard>().checkPosition();
+            md2.cardDisplay1.GetComponent<DragCard>().checkPosition();
+            md2.cardDisplay2.GetComponent<DragCard>().checkPosition();
+            md2.cardDisplay3.GetComponent<DragCard>().checkPosition();
+            md2.cardDisplay4.GetComponent<DragCard>().checkPosition();
+            */
         }
     }
 
@@ -295,6 +318,18 @@ public class GameManager : MonoBehaviour
         // md2.cardDisplay4.updateCard(md2.deckList[0]);
         if (md2.cardDisplay4.artworkImage != null)
             md2.cardDisplay4.artworkImage.sprite = md2.deckList[0].cardSprite;
+    }
+
+    public void checkPosition()
+    {
+        md1.cardDisplay1.GetComponent<DragCard>().checkPosition();
+        md1.cardDisplay2.GetComponent<DragCard>().checkPosition();
+        md1.cardDisplay3.GetComponent<DragCard>().checkPosition();
+        md1.cardDisplay4.GetComponent<DragCard>().checkPosition();
+        md2.cardDisplay1.GetComponent<DragCard>().checkPosition();
+        md2.cardDisplay2.GetComponent<DragCard>().checkPosition();
+        md2.cardDisplay3.GetComponent<DragCard>().checkPosition();
+        md2.cardDisplay4.GetComponent<DragCard>().checkPosition();
     }
 
     public void moveMarket()
@@ -323,9 +358,11 @@ public class GameManager : MonoBehaviour
             md1.cardDisplay1.gameObject.SetActive(true);
             md1.cardDisplay2.gameObject.SetActive(true);
             md1.cardDisplay3.gameObject.SetActive(true);
+            // md1.cardDisplay4.gameObject.SetActive(true);
             md2.cardDisplay1.gameObject.SetActive(true);
             md2.cardDisplay2.gameObject.SetActive(true);
             md2.cardDisplay3.gameObject.SetActive(true);
+            // md2.cardDisplay4.gameObject.SetActive(true);
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_open");
             if (dialog.textBoxCounter == 10)
             {
@@ -342,7 +379,8 @@ public class GameManager : MonoBehaviour
 
             // market.transform.DOMove(new Vector3(1010, 300, 0), 1f);
             // marketButton.transform.DOMove(new Vector3(960, 300, 0), 1f);
-            market.transform.DOMoveY(636f * heightRatio, 1f);
+            market.transform.DOMoveY(636f * heightRatio, 1f).OnComplete(() => moveMarketCards());
+            // unlocked.DOSizeDelta(Vector2.one, .3f).SetEase(Ease.InBack).onComplete(() => ResetUnlock());
             // marketButton.transform.DOMoveY(300f, 1f);
             Debug.Log("Market moved???");
         }
@@ -360,7 +398,7 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay4.GetComponent<CanvasGroup>().blocksRaycasts = false;
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_close");
             // canvasGroup.blocksRaycasts = true;
-            market.transform.DOMoveY(-11.5f * heightRatio, 1f);
+            market.transform.DOMoveY(-11.5f * heightRatio, 1f).OnComplete(() => moveMarketCards());
             // marketButton.transform.DOMoveY(-300f, 1f);
             Debug.Log("Market reset???");
             moveMarketCards();
@@ -4647,13 +4685,30 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Card card;
+
         switch (marketCard)
         {
-            case 1:
+            case 1:               
+                if (md1.cardDisplay1.crucibleCards.Count > 0)
+                {
+                    td.addCard(md1.cardDisplay1);
+                    card = md1.cardDisplay1.crucibleCards[0];
+                    md1.cardDisplay1.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible")
+                    {
+                        md1.cardDisplay1.card = card;
+                        md1.cardDisplay1.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md1.cardDisplay1.updateCard(card);
+                } else
+                {
+                    td.addCard(md1.cardDisplay1);
+                    card = md1.popCard();
+                    md1.cardDisplay1.updateCard(card);                    
+                }
 
-                td.addCard(md1.cardDisplay1);
-                Card card1 = md1.popCard();
-                md1.cardDisplay1.updateCard(card1);
                 sendSuccessMessage(9);
                 md1.cardDisplay1.GetComponent<DragCard>().marketBack();
 
@@ -4672,24 +4727,77 @@ public class GameManager : MonoBehaviour
                 sendSuccessMessage(9);
                 md1.cardDisplay3.GetComponent<DragCard>().marketBack();
                 break;
-            case 4:
+            case 4:                
+                if (md2.cardDisplay1.crucibleCards.Count > 0)
+                {
+                    td.addCard(md2.cardDisplay1);
+                    card = md2.cardDisplay1.crucibleCards[0];
+                    md2.cardDisplay1.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible")
+                    {
+                        md2.cardDisplay1.card = card;
+                        md2.cardDisplay1.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md2.cardDisplay1.updateCard(card);
+                }
+                else
+                {
+                    td.addCard(md2.cardDisplay1);
+                    card = md2.popCard();
+                    md2.cardDisplay1.updateCard(card);
+                }               
+                /*
                 td.addCard(md2.cardDisplay1);
                 Card card4 = md2.popCard();
                 md2.cardDisplay1.updateCard(card4);
+                */
                 sendSuccessMessage(9);
                 md2.cardDisplay1.GetComponent<DragCard>().marketBack();
                 break;
             case 5:
-                td.addCard(md2.cardDisplay2);
-                Card card5 = md2.popCard();
-                md2.cardDisplay2.updateCard(card5);
+                if (md2.cardDisplay2.crucibleCards.Count > 0)
+                {
+                    td.addCard(md2.cardDisplay2);
+                    card = md2.cardDisplay2.crucibleCards[0];
+                    md2.cardDisplay2.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible")
+                    {
+                        md2.cardDisplay2.card = card;
+                        md2.cardDisplay2.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md2.cardDisplay2.updateCard(card);
+                }
+                else
+                {
+                    td.addCard(md2.cardDisplay2);
+                    card = md2.popCard();
+                    md2.cardDisplay2.updateCard(card);
+                }
                 sendSuccessMessage(9);
                 md2.cardDisplay2.GetComponent<DragCard>().marketBack();
                 break;
             case 6:
-                td.addCard(md2.cardDisplay3);
-                Card card6 = md2.popCard();
-                md2.cardDisplay3.updateCard(card6);
+                if (md2.cardDisplay3.crucibleCards.Count > 0)
+                {
+                    td.addCard(md2.cardDisplay3);
+                    card = md2.cardDisplay3.crucibleCards[0];
+                    md2.cardDisplay3.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible")
+                    {
+                        md2.cardDisplay3.card = card;
+                        md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md2.cardDisplay3.updateCard(card);
+                }
+                else
+                {
+                    td.addCard(md2.cardDisplay3);
+                    card = md2.popCard();
+                    md2.cardDisplay3.updateCard(card);
+                }
                 sendSuccessMessage(9);
                 md2.cardDisplay3.GetComponent<DragCard>().marketBack();
                 break;
@@ -4728,6 +4836,8 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        Card card;
+
         switch (marketCard)
         {
             case 1:
@@ -4749,21 +4859,78 @@ public class GameManager : MonoBehaviour
                 sendSuccessMessage(17);
                 break;
             case 4:
-                players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
-                Card card4 = md2.popCard();
-                md2.cardDisplay1.updateCard(card4);
+                // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                if (md2.cardDisplay1.crucibleCards.Count > 0)
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                    card = md2.cardDisplay1.crucibleCards[0];
+                    md2.cardDisplay1.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible")
+                    {
+                        md2.cardDisplay1.card = card;
+                        md2.cardDisplay1.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md2.cardDisplay1.updateCard(card);
+                }
+                else
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                    card = md2.popCard();
+                    md2.cardDisplay1.updateCard(card);
+                }
+                // Card card4 = md2.popCard();
+                // md2.cardDisplay1.updateCard(card4);
                 sendSuccessMessage(17);
                 break;
             case 5:
-                players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
-                Card card5 = md2.popCard();
-                md2.cardDisplay2.updateCard(card5);
+                if (md2.cardDisplay2.crucibleCards.Count > 0)
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                    card = md2.cardDisplay2.crucibleCards[0];
+                    md2.cardDisplay1.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible")
+                    {
+                        md2.cardDisplay2.card = card;
+                        md2.cardDisplay2.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md2.cardDisplay2.updateCard(card);
+                }
+                else
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                    card = md2.popCard();
+                    md2.cardDisplay2.updateCard(card);
+                }
                 sendSuccessMessage(17);
                 break;
             case 6:
-                players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
-                Card card6 = md2.popCard();
-                md2.cardDisplay3.updateCard(card6);
+                if (md2.cardDisplay3.crucibleCards.Count > 0)
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                    card = md2.cardDisplay3.crucibleCards[0];
+                    md2.cardDisplay3.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible")
+                    {
+                        md2.cardDisplay3.card = card;
+                        md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md2.cardDisplay3.updateCard(card);
+                }
+                else
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                    card = md2.popCard();
+                    md2.cardDisplay3.updateCard(card);
+                }
                 sendSuccessMessage(17);
                 break;
             default:
@@ -5750,7 +5917,7 @@ public class GameManager : MonoBehaviour
     {
         // my code is ugly and I should be ashamed of myself lmao
         // there's so many better ways to do this than how I made it like a year ago
-        Debug.Log("Checking market price");
+        // Debug.Log("Checking market price");
 
         if (players[myPlayerIndex].isSaltimbocca)
         {
