@@ -137,6 +137,7 @@ public class GameManager : MonoBehaviour
     public bool usedStarterPotion = false;
     public bool isadoreAction = true;
     public bool earlyBirdSpecial = false;
+    public bool holsterEarlyBirdSpecial = false;
     //public bool trashOrDamage = false;
     public bool trash = false;
     public bool damage = false;
@@ -433,6 +434,7 @@ public class GameManager : MonoBehaviour
         saveData = SaveSystem.LoadGameData();
         saveGameManagerValues();
         saveData.newStage = true;
+        saveData.selectedStage = false;
 
         saveData.stage++;
         saveData.savedGame = true;
@@ -461,6 +463,53 @@ public class GameManager : MonoBehaviour
         FadeIn(advanceStageUI);
         // StartCoroutine(goToStory());
         // SceneManager.LoadScene("StoryMode");
+    }
+
+    public void saveEnemyHealth()
+    {
+        switch (saveData.currentEnemyName)
+        {
+            case "Bag o' Snakes":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Bag o' Snakes+":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                saveData.opp2Health = players[2].hp;
+                saveData.opp2Cubes = players[2].hpCubes;
+                break;
+            case "Fingas":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Fingas+":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                saveData.opp2Health = players[2].hp;
+                saveData.opp2Cubes = players[2].hpCubes;
+                break;
+            case "Saltimbocca":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Singelotte":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Crowpunk":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Crowpunk+":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                saveData.opp2Health = players[2].hp;
+                saveData.opp2Cubes = players[2].hpCubes;
+                saveData.opp3Health = players[3].hp;
+                saveData.opp3Cubes = players[3].hpCubes;
+                break;
+        }
     }
 
     public void saveGameManagerValues()
@@ -604,6 +653,7 @@ public class GameManager : MonoBehaviour
                 saveGameManagerValues();
                 saveData.stage = stage + 1;
                 saveData.savedGame = true;
+                saveData.selectedStage = false;
                 // List<string> playersDeck = new List<string>();
                 // List<string> playersHolster = new List<string>();
                 playersHolster.Clear();
@@ -673,6 +723,8 @@ public class GameManager : MonoBehaviour
         {
             saveData.savedGame = true;
             saveData.newStage = false;
+            saveData.selectedStage = true;
+            saveEnemyHealth();
             // take this out here, saving gamestate info will occur at the end of each turn
             // saveGameManagerValues();
             /*
@@ -2099,6 +2151,11 @@ public class GameManager : MonoBehaviour
 
         Card card = player.deck.popCard();
 
+        if(card.cardName == "EarlyBirdSpecial")
+        {
+            holsterEarlyBirdSpecial = true;
+        }
+
         // CHECK ARTIFACT DURABILITY HERE!!!
         // Come back to this to not just hardcode a value
         // make another variable on the scriptable objects that represents their max durability
@@ -2167,6 +2224,7 @@ public class GameManager : MonoBehaviour
         {
             playersDeck.Add(card.name);
         }
+        // make something to store and save the data of the loaded cards in the holster
 
         // save the values at the end of each turn!
         saveGameManagerValues();
@@ -2178,6 +2236,7 @@ public class GameManager : MonoBehaviour
         Debug.Log(player.name + "'s turn!");
         sendSuccessMessage(18, player.name);
         earlyBirdSpecial = false;
+        holsterEarlyBirdSpecial = false;
         usedStarterPotion = false;
         trash = false;
         damage = false;
@@ -2189,7 +2248,7 @@ public class GameManager : MonoBehaviour
         if (player.holster.gameObject.activeInHierarchy)
             StartCoroutine(HolsterFill(player));
 
-        if(Game.storyMode)
+        if(Game.storyMode && myPlayerIndex == 0)
             Invoke("saveGameStuff", 1f);
 
         // this should make it not trigger every turn
@@ -2250,7 +2309,7 @@ public class GameManager : MonoBehaviour
 
         if (temp.card.cardType == "Ring")
         {
-            Debug.Log("Upadting a ring");
+            Debug.Log("Updating a ring");
             temp.updateCard(cd.card);
         }
 
@@ -4425,6 +4484,7 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card.effectAmount;
                     } else 
                         damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
+
                     damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = players[myPlayerIndex].checkVesselBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                     damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);

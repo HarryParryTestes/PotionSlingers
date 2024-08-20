@@ -30,6 +30,7 @@ public class SaveData
     public int stage;
     public bool savedGame;
     public bool newStage;
+    public bool selectedStage;
     public string currentEnemyName;
     public List<string> visitedEnemies = new List<string>();
     // public List<string> oppDeck = new List<string>();

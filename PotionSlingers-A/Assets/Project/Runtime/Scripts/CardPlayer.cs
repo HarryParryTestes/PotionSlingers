@@ -435,6 +435,8 @@ public class CardPlayer : MonoBehaviour
 
     public void updateHealthUI(string cardQuality = "")
     {
+        // refactor tihis to incorporate max health instead of hardcoded 10 value
+
         float numbers;
         if (healthText != null && hpBar != null)
         {
@@ -1113,6 +1115,18 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Early Bird Special
+        if (selectedCard.card.cardName == "EarlyBirdSpecial")
+        {
+            if (GameManager.manager.holsterEarlyBirdSpecial)
+            {
+                Debug.Log("Early Bird Special Bonus!");
+                return damage + 1;
+            }
+            else
+                return damage;
+        }
+
         // The Game : Card Game
         if (selectedCard.card.cardName == "The Game Card Game")
         {
@@ -1261,7 +1275,10 @@ public class CardPlayer : MonoBehaviour
             else if (selectedCard.aPotion.card.cardQuality == "Wet" || selectedCard.aPotion.card.cardQuality == "Cold")
             {
                 addPips(1);
-                addHealth(3);
+                if(healBonus)
+                    addHealth(6);
+                else
+                    addHealth(3);
                 return 0;
             }
             else
@@ -2830,6 +2847,7 @@ public class CardPlayer : MonoBehaviour
     {
         hp += health;
 
+        // refactor this at some point to allow for HP to go up to max health
         //Make sure that hp cannot go above 10
         if (hp > 10)
         {

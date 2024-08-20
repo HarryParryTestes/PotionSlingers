@@ -92,6 +92,20 @@ namespace Map
                     break;
                 case MapOrientation.LeftToRight:
                     scrollRectHorizontal.normalizedPosition = Vector2.zero;
+                    /*
+                    // set the position of the scrollbar to change depending on the number of stages cleared
+                    SaveData saveData = SaveSystem.LoadGameData();
+                    switch (saveData.stage)
+                    {
+                        case 1:
+                            scrollRectHorizontal.normalizedPosition = new Vector2(0, (saveData.stage * 0.1f));
+                            break;
+                        default:
+                            scrollRectHorizontal.normalizedPosition = new Vector2(0, (saveData.stage * 0.1f));
+                            // scrollRectHorizontal.normalizedPosition = Vector2.zero;
+                            break;
+                    }
+                    */
                     break;
                 default:
                     break;

@@ -19,10 +19,24 @@ public class SceneTransition : MonoBehaviour
     public Button demoOverButton;
     public Image background;
     public GameObject treasureMenu;
+    public Scrollbar scrollRectHorizontal;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Debug.Log("Scene Transition Start is triggering!");
+        // set the position of the scrollbar to change depending on the number of stages cleared
+        SaveData saveData = SaveSystem.LoadGameData();
+        // scrollRectHorizontal.normalizedPosition = new Vector2(0, (saveData.stage * 0.1f));
+        switch (saveData.stage)
+        {
+            case 1:
+                scrollRectHorizontal.value = 0;
+                break;
+            default:
+                scrollRectHorizontal.value = saveData.stage * 0.08f;
+                // scrollRectHorizontal.normalizedPosition = Vector2.zero;
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -46,6 +60,7 @@ public class SceneTransition : MonoBehaviour
     {
         SaveData saveData = SaveSystem.LoadGameData();
         saveData.transition = true;
+        saveData.selectedStage = true;
         SaveSystem.SaveGameData(saveData);
 
         // DialogueManager.BarkString("I'm barking this text.", this.transform);

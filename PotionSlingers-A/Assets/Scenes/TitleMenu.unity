@@ -24482,10 +24482,16 @@ MonoBehaviour:
   aPotion: {fileID: 0}
   vesselSlot1: {fileID: 0}
   vesselSlot2: {fileID: 0}
+  vesselSlot3: {fileID: 0}
+  vesselSlot4: {fileID: 0}
   vPotion1: {fileID: 0}
   vPotion2: {fileID: 0}
+  vPotion3: {fileID: 0}
+  vPotion4: {fileID: 0}
+  crucibleCards: []
   flames: {fileID: 0}
   spicy: 0
+  durability: 3
 --- !u!114 &772891733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -54913,7 +54919,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_text
-      value: Play
+      value: 'Bolo is an adept salesman. He will always be able to upsell his items,
+        and can even trade useless baubles for powerful treasure!
+
+
+        Front:
+
+        You
+        gain +1P when you sell a non-potion card.
+
+
+        Back:
+
+        All cards
+        in your Holster sell for +1P.'
       objectReference: {fileID: 0}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_fontSize

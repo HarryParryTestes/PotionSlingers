@@ -216,8 +216,11 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
                 return;
             }
             // hoverbox code in here!
-            cp.hoverBox.SetActive(true);
-            cp.hoverBox.GetComponent<HoverBox>().UpdateText(cp);
+            if (cp.hoverBox != null)
+            {
+                cp.hoverBox.SetActive(true);
+                cp.hoverBox.GetComponent<HoverBox>().UpdateText(cp);
+            }               
         }
 
         if (this.gameObject.name == "DeckPile")
@@ -235,7 +238,8 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         if (cp != null && this.gameObject.name != "DeckPile")
         {
             // hoverbox code in here!
-            cp.hoverBox.SetActive(false);
+            if(cp.hoverBox != null)
+                cp.hoverBox.SetActive(false);
         }
         if (this.gameObject.name == "DeckPile" && !grabbed)
         {

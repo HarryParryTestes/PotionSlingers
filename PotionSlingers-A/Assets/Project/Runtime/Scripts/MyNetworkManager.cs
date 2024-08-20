@@ -316,7 +316,7 @@ public class MyNetworkManager : NetworkManager
         animator.SetTrigger("End");
         yield return new WaitForSeconds(2);
         SaveData data = SaveSystem.LoadGameData();
-        if (storyMode && data.newStage)
+        if (storyMode && !data.selectedStage)
         {
             Debug.Log("Going to story mode scene");
             ServerChangeScene("StoryMode");

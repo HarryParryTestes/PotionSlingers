@@ -136,6 +136,7 @@ public class SaveSystem : MonoBehaviour
         data.playerCharName = "";
         data.stage = 1;
         data.savedGame = false;
+        data.selectedStage = false;
 
         var json = JsonConvert.SerializeObject(data, Formatting.Indented,
                 new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore });
