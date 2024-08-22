@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using DG.Tweening;
 
@@ -162,15 +163,27 @@ public class ComputerPlayer : CardPlayer
             return;
         }
 
+        var exclude = new HashSet<int>() { };
+        for (int i = 0; i < GameManager.manager.playerHolster.cardList.Count; i++)
+        {
+            if (GameManager.manager.playerHolster.cardList[i].card.cardName == "placeholder" ||
+            GameManager.manager.playerHolster.cardList[i].card.spicy)
+            {
+                exclude.Add(i);
+            }
+        }
 
-        int holsterNum = rng.Next(1, 5);
-        if (GameManager.manager.playerHolster.cardList[holsterNum - 1].card.name == "placeholder" ||
-            GameManager.manager.playerHolster.cardList[holsterNum - 1].card.spicy)
+        var range = Enumerable.Range(0, GameManager.manager.playerHolster.cardList.Count).Where(i => !exclude.Contains(i));
+        int index = rng.Next(0, GameManager.manager.playerHolster.cardList.Count - exclude.Count);
+        int holsterNum = range.ElementAt(index);
+        // int holsterNum = rng.Next(1, 5);
+        if (GameManager.manager.playerHolster.cardList[holsterNum].card.name == "placeholder" ||
+            GameManager.manager.playerHolster.cardList[holsterNum].card.spicy)
         {
             pickRandomHolsterCard();
             return;
         }
-        GameManager.manager.playerHolster.cardList[holsterNum - 1].makeSpicy();
+        GameManager.manager.playerHolster.cardList[holsterNum].makeSpicy();
         GameManager.manager.sendMessage("Spiced up a card in your holster!");
     }
 
@@ -185,11 +198,22 @@ public class ComputerPlayer : CardPlayer
         if (f == 4)
         {
             // GameManager.manager.sendMessage("Spiced up a card in your holster!");
-            return -1;
+            return 0;
         }
 
-        int holsterNum = rng.Next(1, 5);
-        if (GameManager.manager.playerHolster.cardList[holsterNum - 1].card.name == "placeholder")
+        var exclude = new HashSet<int>() { };
+        for (int i = 0; i < GameManager.manager.playerHolster.cardList.Count; i++)
+        {
+            if (GameManager.manager.playerHolster.cardList[i].card.cardName == "placeholder")
+            {
+                exclude.Add(i);
+            }
+        }
+
+        var range = Enumerable.Range(0, GameManager.manager.playerHolster.cardList.Count).Where(i => !exclude.Contains(i));
+        int index = rng.Next(0, GameManager.manager.playerHolster.cardList.Count - exclude.Count);
+        int holsterNum = range.ElementAt(index);
+        if (GameManager.manager.playerHolster.cardList[holsterNum].card.name == "placeholder")
         {
             pickRandomHolsterCardCrow();
         }
@@ -315,14 +339,14 @@ public class ComputerPlayer : CardPlayer
                 }
                 GameManager.manager.selectedCardInt = cardNumber;
 
-                GameObject obj = Instantiate(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
-                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.position,
-                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.rotation,
-                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform);
+                GameObject obj = Instantiate(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt].gameObject,
+                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt].gameObject.transform.position,
+                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt].gameObject.transform.rotation,
+                        GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt].gameObject.transform);
 
                 GameManager.manager.StartCoroutine(MoveToTrash(obj));
 
-                GameManager.manager.td.addCard(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1]);
+                GameManager.manager.td.addCard(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt]);
 
                 // GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].updateCard
                 //     (GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].placeholder);

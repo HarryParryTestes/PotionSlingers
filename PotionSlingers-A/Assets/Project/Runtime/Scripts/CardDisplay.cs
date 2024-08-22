@@ -32,7 +32,7 @@ public class CardDisplay : MonoBehaviour
 
     public GameObject flames;
     public bool spicy;
-    public int durability = 3;
+    public int durability = 5;
 
     // Start is called before the first frame update
     void Start()
@@ -145,7 +145,7 @@ public class CardDisplay : MonoBehaviour
         // durability check?
         if (card.cardType == "Artifact")
         {
-            durability = 3;
+            durability = 5;
         }
         
         if(card.cardName == "placeholder" && this.gameObject.name != "DeckPile")
@@ -244,7 +244,7 @@ public class CardDisplay : MonoBehaviour
         // durability check?
         if (card.cardType == "Artifact")
         {
-            cd.durability = 3;
+            cd.durability = 5;
         }
         if (cd.spicy)
         {

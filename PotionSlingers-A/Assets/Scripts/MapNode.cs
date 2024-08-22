@@ -160,12 +160,6 @@ namespace Map
                 else
                     enemyName = enemyPool.GetRandomEnemy();
             }
-            /*
-            textbox = GameObject.Find("Fully Healed");
-            textbox2 = Instantiate(textbox, this.transform);
-            textbox2.GetComponent<TMPro.TextMeshProUGUI>().text = enemyName;
-            */
-            
         }
 
         public void OnPointerExit(PointerEventData data)

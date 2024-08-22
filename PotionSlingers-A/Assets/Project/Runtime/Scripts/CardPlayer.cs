@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
@@ -1690,17 +1691,30 @@ public class CardPlayer : MonoBehaviour
                 else
                 {
                     // maybe do something for computer
-                    int cardNumber = rng.Next(1, 5);
-                    GameManager.manager.selectedCardInt = cardNumber;
+                    var exclude = new HashSet<int>() { };
+                    for (int i = 0; i < GameManager.manager.tempPlayer.holster.cardList.Count; i++)
+                    {                       
+                        if (GameManager.manager.tempPlayer.holster.cardList[i].card.cardName == "placeholder")
+                        {
+                            exclude.Add(i);
+                        }
+                    }
 
-                    GameObject obj = Instantiate(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
-                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.position,
-                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.rotation,
-                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform);
+                    var range = Enumerable.Range(0, GameManager.manager.tempPlayer.holster.cardList.Count).Where(i => !exclude.Contains(i));
+                    int index = rng.Next(0, GameManager.manager.tempPlayer.holster.cardList.Count - exclude.Count);
+                    // return range.ElementAt(index);
+
+                    // int cardNumber = rng.Next(1, 5);
+                    GameManager.manager.selectedCardInt = range.ElementAt(index);
+
+                    GameObject obj = Instantiate(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt].gameObject,
+                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt].gameObject.transform.position,
+                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt].gameObject.transform.rotation,
+                            GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt].gameObject.transform);
 
                     GameManager.manager.StartCoroutine(MoveToTrash(obj));
 
-                    GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]);
+                    GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt]);
 
                     GameManager.manager.sendMessage("A card in your holster just got trashed!");
                 }
@@ -1742,17 +1756,30 @@ public class CardPlayer : MonoBehaviour
                     {
                         // maybe do something for computer
                         // make method that trashes a random card
-                        int cardNumber = rng.Next(1, 5);
-                        GameManager.manager.selectedCardInt = cardNumber;
+                        // int cardNumber = rng.Next(1, 5);
+                        // GameManager.manager.selectedCardInt = cardNumber;
 
-                        GameObject obj = Instantiate(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
-                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.position,
-                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.rotation,
-                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform);
+                        var exclude = new HashSet<int>() { };
+                        for (int i = 0; i < GameManager.manager.tempPlayer.holster.cardList.Count; i++)
+                        {
+                            if (GameManager.manager.tempPlayer.holster.cardList[i].card.cardName == "placeholder")
+                            {
+                                exclude.Add(i);
+                            }
+                        }
+
+                        var range = Enumerable.Range(0, GameManager.manager.tempPlayer.holster.cardList.Count).Where(i => !exclude.Contains(i));
+                        int index = rng.Next(0, GameManager.manager.tempPlayer.holster.cardList.Count - exclude.Count);
+                        GameManager.manager.selectedCardInt = range.ElementAt(index);
+
+                        GameObject obj = Instantiate(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt].gameObject,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt].gameObject.transform.position,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt].gameObject.transform.rotation,
+                                GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt].gameObject.transform);
 
                         GameManager.manager.StartCoroutine(MoveToTrash(obj));
 
-                        GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]);
+                        GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt]);
 
                         GameManager.manager.sendMessage("A card in your holster just got trashed!");
                     }
@@ -1790,8 +1817,20 @@ public class CardPlayer : MonoBehaviour
                     else
                     {
                         // maybe do something for computer
-                        int cardNumber = rng.Next(1, 5);
-                        GameManager.manager.selectedCardInt = cardNumber;
+                        // int cardNumber = rng.Next(1, 5);
+                        // GameManager.manager.selectedCardInt = cardNumber;
+                        var exclude = new HashSet<int>() { };
+                        for (int i = 0; i < GameManager.manager.tempPlayer.holster.cardList.Count; i++)
+                        {
+                            if (GameManager.manager.tempPlayer.holster.cardList[i].card.cardName == "placeholder")
+                            {
+                                exclude.Add(i);
+                            }
+                        }
+
+                        var range = Enumerable.Range(0, GameManager.manager.tempPlayer.holster.cardList.Count).Where(i => !exclude.Contains(i));
+                        int index = rng.Next(0, GameManager.manager.tempPlayer.holster.cardList.Count - exclude.Count);
+                        GameManager.manager.selectedCardInt = range.ElementAt(index);
 
                         GameObject obj = Instantiate(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject,
                                 GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1].gameObject.transform.position,

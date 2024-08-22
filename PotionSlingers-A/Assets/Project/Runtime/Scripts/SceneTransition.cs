@@ -50,8 +50,8 @@ public class SceneTransition : MonoBehaviour
         // load health and essence cubes of player and heal them back to full
         // CHANGING THIS TO ONLY GIVE YOU ONE ESSENCE CUBE BACK
         SaveData saveData = SaveSystem.LoadGameData();
-        saveData.playerCubes++;
-        // saveData.playerHealth = 10;
+        // saveData.playerCubes++;
+        saveData.playerHealth = 10;
         // StartCoroutine(showHealingMessage());
         SaveSystem.SaveGameData(saveData);
     }

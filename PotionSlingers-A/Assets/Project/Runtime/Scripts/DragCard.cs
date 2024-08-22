@@ -90,6 +90,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 case "CardDisplay (Potion3)":
                     originalPosition = new Vector3(1570f, 1025f, 0);
                     break;
+                case "CardDisplay (Potion4)":
+                    originalPosition = new Vector3(1853f, 1025f, 0);
+                    break;
                 case "CardDisplay (Special1)":
                     originalPosition = new Vector3(1005f, 621f, 0);
                     break;
@@ -98,6 +101,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                     break;
                 case "CardDisplay (Special3)":
                     originalPosition = new Vector3(1570f, 621f, 0);
+                    break;
+                case "CardDisplay (Special4)":
+                    originalPosition = new Vector3(1853f, 621f, 0);
                     break;
                 default:
                     break;
@@ -127,6 +133,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 case "CardDisplay (Potion3)":
                     originalPosition = new Vector3(2355f, 1538f, 0);
                     break;
+                case "CardDisplay (Potion4)":
+                    originalPosition = new Vector3(2784f, 1538f, 0);
+                    break;
                 case "CardDisplay (Special1)":
                     originalPosition = new Vector3(1510f, 928f, 0);
                     break;
@@ -135,6 +144,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                     break;
                 case "CardDisplay (Special3)":
                     originalPosition = new Vector3(2355f, 928f, 0);
+                    break;
+                case "CardDisplay (Special4)":
+                    originalPosition = new Vector3(2784f, 928f, 0);
                     break;
                 default:
                     break;
@@ -165,6 +177,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 case "CardDisplay (Potion3)":
                     originalPosition = new Vector3(838f, 548f, 0);
                     break;
+                case "CardDisplay (Potion4)":
+                    originalPosition = new Vector3(987f, 548f, 0);
+                    break;
                 case "CardDisplay (Special1)":
                     originalPosition = new Vector3(536f, 330f, 0);
                     break;
@@ -173,6 +188,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                     break;
                 case "CardDisplay (Special3)":
                     originalPosition = new Vector3(838f, 330f, 0);
+                    break;
+                case "CardDisplay (Special4)":
+                    originalPosition = new Vector3(987f, 330f, 0);
                     break;
                 default:
                     break;
@@ -329,7 +347,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 // LOGIC FOR TWO CARDS ON TOP OF CRUCIBLE
                 transform.DOScale(4f, 0.5f).SetId(gameObject.name);
                 // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
-                transform.DOMove(new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0), 0.5f).SetId(gameObject.name);
+                transform.DOMove(new Vector3(960 * GameManager.manager.widthRatio + (300 * GameManager.manager.widthRatio), 550 * GameManager.manager.heightRatio, 0),
+                    0.5f).SetId(gameObject.name);
 
                 obj = Instantiate(GameManager.manager.md1.cardDisplay2.transform.parent.gameObject,
                         this.transform.parent.gameObject.transform.position,
@@ -347,7 +366,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 obj.transform.DOScale(4f, 0.5f).SetId(gameObject.name);
                 // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
                 // new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
-                obj.transform.DOMove(new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
+                obj.transform.DOMove(new Vector3((960 * GameManager.manager.widthRatio) - (300 * GameManager.manager.widthRatio),
                     550 * GameManager.manager.heightRatio, 0), 0.5f).SetId(gameObject.name);
 
                 return;

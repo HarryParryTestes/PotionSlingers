@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -2479,24 +2480,30 @@ public class GameManager : MonoBehaviour
             if (i == 0)
                 continue;
 
-            int cardNumber = rng.Next(1, 5);
-            selectedCardInt = cardNumber;
-
-            foreach (CardDisplay cd in players[i].holster.cardList)
+            var exclude = new HashSet<int>() { };
+            for (int j = 0; j < players[i].holster.cardList.Count; j++)
             {
-                if (cd.card.cardName != "placeholder")
+                if (players[i].holster.cardList[j].card.cardName == "placeholder")
                 {
-                    GameObject obj = Instantiate(cd.gameObject,
-                    cd.gameObject.transform.position,
-                    cd.gameObject.transform.rotation,
-                    cd.gameObject.transform);
-
-                    StartCoroutine(players[i].MoveToTrash(obj));
-
-                    td.addCard(cd);
-                    break;
+                    exclude.Add(j);
                 }
             }
+
+            var range = Enumerable.Range(0, players[i].holster.cardList.Count).Where(j => !exclude.Contains(j));
+            int index = rng.Next(0, players[i].holster.cardList.Count - exclude.Count);
+            // return range.ElementAt(index);
+
+            // int cardNumber = rng.Next(1, 5);
+            selectedCardInt = range.ElementAt(index);
+
+            GameObject obj = Instantiate(players[i].holster.cardList[selectedCardInt].gameObject,
+                    players[i].holster.cardList[selectedCardInt].gameObject.transform.position,
+                    players[i].holster.cardList[selectedCardInt].gameObject.transform.rotation,
+                    players[i].holster.cardList[selectedCardInt].gameObject.transform);
+
+            StartCoroutine(players[i].MoveToTrash(obj));
+
+            td.addCard(players[i].holster.cardList[selectedCardInt]);
             sendMessage("Trashed a card from each opponent!");
         }
     }
@@ -7077,7 +7084,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (players[myPlayerIndex].pips >= 3 || players[myPlayerIndex].bottleRocketBonus)
+        if (players[myPlayerIndex].pips >= 3 && !players[myPlayerIndex].bottleRocketBonus)
         {
             players[myPlayerIndex].bottleRocketBonus = true;
             // add some success message but change what you initially put here lol
