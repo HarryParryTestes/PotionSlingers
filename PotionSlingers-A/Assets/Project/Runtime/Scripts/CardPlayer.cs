@@ -1341,15 +1341,16 @@ public class CardPlayer : MonoBehaviour
         {
             // Wet Bonus: +2 Damage
             // 3 P: Double the damage of this artifact this turn. You may only do this once per turn.
+            Debug.Log("Damage is " + damage);
+
             if (selectedCard.aPotion.card.cardQuality == "Wet")
-            {
                 damage += 2;
-                if (bottleRocketBonus)
-                {
-                    // double this bitch
-                    damage = damage * 2;
-                }
-            }
+
+            // double this bitch
+            if (bottleRocketBonus)
+                damage = damage * 2;
+
+            bottleRocketBonus = false;
         }
 
         return damage;
@@ -3355,6 +3356,11 @@ public class CardPlayer : MonoBehaviour
         {
             // Wet Bonus: +2 Damage
             // 3 P: Double the damage of this artifact this turn. You may only do this once per turn.
+            if (bottleRocketBonus)
+            {
+                selectedCard.colorCardWet();
+            }
+
             if (selectedCard.aPotion.card.cardQuality == "Wet")
             {
                 selectedCard.colorCardWet();

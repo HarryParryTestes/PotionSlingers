@@ -18,6 +18,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public int marketCardInt;
     public GameObject obj;
     public GameObject obj2;
+    public GameObject button;
     private Image image;
     private LineRenderer lineRenderer;
     private Vector3 cachedScale;
@@ -244,6 +245,15 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public void marketBack()
     {
         GameManager.manager.checkMarketPrice();
+
+        if (button != null)
+        {
+            // button.transform.SetParent(transform.parent);
+            button.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+            button.transform.DOScale(0.1f, 0.3f).SetId(gameObject.name);
+            Destroy(button, 0.3f);
+        }
+
         if (clicked && market && !GameManager.manager.marketSelected)
         {
             // DOTween.Pause(gameObject.name);
@@ -442,6 +452,33 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             
             transform.DOMove(pos, 0.5f).SetId(gameObject.name);
 
+            if (button != null)
+                Destroy(button);
+
+            // check for Bottle Rocket card here and Instantiate button to pay 3P
+            if (GetComponent<CardDisplay>().card.cardName == "BottleRocket" && !market && !loaded 
+                && !GameManager.manager.players[GameManager.manager.myPlayerIndex].bottleRocketBonus &&
+                !GameManager.manager.rocketBonusUsed)
+            {
+                Debug.Log("Bottle Rocket Button!!!");
+                // instantiate the button
+                if (button != null)
+                    Destroy(button);
+
+                // new Vector3(350f * GameManager.manager.widthRatio, 100f * GameManager.manager.heightRatio, 0)
+                button = Instantiate(GameManager.manager.payButton,
+                    this.transform.position,
+                        this.transform.rotation,
+                        this.transform);
+
+                button.SetActive(true);
+                // take this out for now, it fucks with the TMP objects
+                // GameManager.manager.FadeIn(button);
+                button.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+                // 350f * GameManager.manager.widthRatio, 0, 0
+                button.transform.DOMove(pos + new Vector3(350f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+            }
+
         } else
         {
             clicked = false;
@@ -499,6 +536,15 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
             // transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
             transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+
+            if (button != null)
+            {
+                // button.transform.SetParent(transform.parent);
+                button.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                button.transform.DOScale(0.1f, 0.3f).SetId(gameObject.name);
+                Destroy(button, 0.3f);
+            }
+                    
 
             if (obj != null)
             {

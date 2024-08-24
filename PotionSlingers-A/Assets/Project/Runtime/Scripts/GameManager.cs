@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
     public GameObject cardGameTheGameMenu;
     public GameObject advanceStageUI;
     public GameObject endTurnButton;
+    public GameObject payButton;
     public DeckMenuScroll deckDisplay;
     public ExpUI expUI;
 
@@ -150,6 +151,7 @@ public class GameManager : MonoBehaviour
     public bool marketSelected = false;
     public bool holster = false;
     public bool cardGameBonus = false;
+    public bool rocketBonusUsed = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -2236,6 +2238,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log(player.name + "'s turn!");
         sendSuccessMessage(18, player.name);
+        rocketBonusUsed = false;
         earlyBirdSpecial = false;
         holsterEarlyBirdSpecial = false;
         usedStarterPotion = false;
@@ -7084,9 +7087,14 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (Game.storyMode && myPlayerIndex != 0)
+            return;
+
         if (players[myPlayerIndex].pips >= 3 && !players[myPlayerIndex].bottleRocketBonus)
         {
             players[myPlayerIndex].bottleRocketBonus = true;
+            players[myPlayerIndex].subPips(3);
+            rocketBonusUsed = true;
             // add some success message but change what you initially put here lol
             sendSuccessMessage(14);
             // reset card
