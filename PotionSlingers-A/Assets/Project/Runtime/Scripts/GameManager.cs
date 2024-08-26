@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -517,7 +518,48 @@ public class GameManager : MonoBehaviour
 
     public void saveGameManagerValues()
     {
-        saveData.playerHolster = playersHolster;
+        // saveData.playerHolster = playersHolster;
+        saveData.cardDurabilities.Clear();
+        saveData.playerHolsterDictionary.Clear();
+        int dummyCount = 1;
+        foreach (CardDisplay cd in playerHolster.cardList)
+        {       
+            string[] things = new string[4] {"placeholder", "placeholder", "placeholder", "placeholder" };
+            if (cd.card.cardType == "Artifact")
+            {
+                things[0] = cd.aPotion.card.cardName;
+            }
+
+            if(cd.card.cardType == "Vessel")
+            {
+                if(cd.vPotion1.card.cardName != "placeholder")
+                {
+                    things[0] = cd.vPotion1.card.cardName;
+                }
+                if (cd.vPotion2.card.cardName != "placeholder")
+                {
+                    things[1] = cd.vPotion2.card.cardName;
+                }
+                if (cd.vPotion3.card.cardName != "placeholder")
+                {
+                    things[2] = cd.vPotion3.card.cardName;
+                }
+                if (cd.vPotion4.card.cardName != "placeholder")
+                {
+                    things[3] = cd.vPotion4.card.cardName;
+                }
+            }
+
+            Debug.Log(cd.card.cardName + "!!!");
+            saveData.cardDurabilities.Add(cd.durability);
+            if (cd.card.cardName == "placeholder")
+            {
+                saveData.playerHolsterDictionary.Add("dummy" + dummyCount, things);
+                dummyCount++;
+            } else
+                saveData.playerHolsterDictionary.Add(cd.card.cardName, things);
+        }
+
         saveData.playerDeck = playersDeck;
         saveData.playerHealth = players[0].hp;
         saveData.playerCubes = players[0].hpCubes;
@@ -653,6 +695,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Advancing a stage in story mode");
                 saveData.newStage = true;
                 saveData.visitedEnemies.Add(saveData.currentEnemyName);
+                saveData.playerHolsterDictionary.Clear();
                 saveGameManagerValues();
                 saveData.stage = stage + 1;
                 saveData.savedGame = true;
@@ -1360,6 +1403,266 @@ public class GameManager : MonoBehaviour
         md2.cardDisplay4.gameObject.SetActive(false);
     }
 
+    public void loadIt(CardDisplay cd, Card card)
+    {
+        Debug.Log("Load Potion");
+
+        // DONE?: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
+        // test for protocol, must replace parameters later
+        // bool connected = networkManager.sendLoadRequest(0, 0);
+
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (currentPlayerName == gp.playerName)
+                {
+                    Debug.Log("Starting Mirror CmdLoadCard");
+                    // do the Mirror Command
+                    gp.CmdLoadCard(currentPlayerName, selectedCardInt, loadedCardInt);
+                }
+            }
+        }
+        // It is this player's turn.
+        else
+        {
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                // sendErrorMessage(7);
+                return;
+            }
+
+            // Isadore logic
+            if (starterPotion && !usedStarterPotion)
+            {
+                // Loading a Vessel:
+                if (cd.card.cardType == "Vessel")
+                {
+                    // TODO: Make another error message
+                    Debug.Log("This error message???");
+                    // sendErrorMessage(12);
+                }
+                else if (cd.card.cardType == "Artifact")
+                {
+                    // Enable Artifact menu if it wasn't already enabled.
+                    Debug.Log("Artifact menu enabled.");
+                    cd.artifactSlot.transform.parent.gameObject.SetActive(true);
+                    cd.artifactSlot.transform.gameObject.SetActive(true);
+                    cd.aPotion.gameObject.SetActive(true);
+
+                    // Check for existing loaded potion if Artifact menu was already enabled.
+                    if (cd.aPotion.card.cardName != "placeholder")
+                    {
+                        Debug.Log("Artifact is fully loaded!");
+                        // DONE: Insert error that displays on screen.
+                        // sendErrorMessage(8);
+                    }
+                    // Artifact slot is unloaded.
+                    else
+                    {
+
+                        int random = rng.Next(0, starterPotionCards.Count);
+                        cd.aPotion.card = starterPotionCards[random];
+                        cd.aPotion.updateCard(starterPotionCards[random]);
+                        // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+                        usedStarterPotion = true;
+                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                        // sendSuccessMessage(5);
+                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        // Debug.Log("Starter potion loaded in Artifact slot!");
+
+                        // MATTEO: Add Loading potion SFX here.
+                    }
+                }
+                starterPotion = false;
+                return;
+            }
+            else
+            {
+                // if it's an artifact or vessel
+                if (card.cardType == "Potion")
+                {
+                    // Loading a Vessel:
+                    if (cd.card.cardType == "Vessel")
+                    {
+                        // Enable Vessel menu if it wasn't already enabled.
+                        Debug.Log("Vessel menu enabled.");
+                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                        cd.vesselSlot1.SetActive(true);
+                        cd.vesselSlot2.SetActive(false);
+                        cd.vesselSlot3.SetActive(false);
+                        cd.vesselSlot4.SetActive(false);
+
+                        if (cd.card.cardEffect == "FourLoad")
+                        {
+                            Debug.Log("Four slot logic");
+                        }
+
+                        // Check for existing loaded potion(s) if Vessel menu was already enabled.
+                        if (cd.vPotion1.card.cardName != "placeholder")
+                        {
+                            // If Vessel slot 2 is filled.
+                            if (cd.vPotion2.card.cardName != "placeholder")
+                            {
+                                // insert logic for loading the third and fourth potion here                                
+                                if (cd.card.cardEffect == "FourLoad")
+                                {
+                                    Debug.Log("Reached here in 3 4 slot");
+                                    if (cd.vPotion3.card.cardName != "placeholder")
+                                    {
+                                        // Fill Vessel slot 4 with loaded potion.
+                                        cd.vesselSlot1.SetActive(true);
+                                        cd.vesselSlot2.SetActive(true);
+                                        cd.vesselSlot3.SetActive(true);
+                                        cd.vesselSlot4.SetActive(true);
+                                        Card placeholder = card;
+                                        cd.vPotion4.card = card;
+                                        cd.vPotion4.updateCard(card);
+                                        // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+                                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                        // sendSuccessMessage(5);
+                                        players[myPlayerIndex].checkVesselBonusAnimation(cd);
+                                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                        Debug.Log("Potion loaded in Vessel slot 4!");
+
+                                        // MATTEO: Add Loading potion SFX here.
+
+                                        // // Updates Holster card to be empty.
+                                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                    }
+                                    else
+                                    {
+                                        // Fill Vessel slot 3 with loaded potion.
+                                        cd.vesselSlot1.SetActive(true);
+                                        cd.vesselSlot2.SetActive(true);
+                                        cd.vesselSlot3.SetActive(true);
+                                        Card placeholder = cd.vPotion3.card;
+                                        cd.vPotion3.card = card;
+                                        cd.vPotion3.updateCard(card);
+                                        // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+                                        // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                        // sendSuccessMessage(5);
+                                        players[myPlayerIndex].checkVesselBonusAnimation(cd);
+                                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                        Debug.Log("Potion loaded in Vessel slot 3!");
+
+                                        // MATTEO: Add Loading potion SFX here.
+
+                                        // // Updates Holster card to be empty.
+                                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                                        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                    }
+                                    return;
+                                }
+
+                                // Debug.Log("Vessel is fully loaded!");
+                                // DONE: Insert error that displays on screen.
+                                // sendErrorMessage(9);
+                            }
+                            else
+                            {
+                                // Fill Vessel slot 2 with loaded potion.
+                                cd.vesselSlot1.SetActive(true);
+                                cd.vesselSlot2.SetActive(true);
+                                Card placeholder = cd.vPotion2.card;
+                                cd.vPotion2.card = card;
+                                cd.vPotion2.updateCard(card);
+                                // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+                                // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                                // sendSuccessMessage(5);
+                                players[myPlayerIndex].checkVesselBonusAnimation(cd);
+                                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                                Debug.Log("Potion loaded in Vessel slot 2!");
+
+                                // MATTEO: Add Loading potion SFX here.
+
+                                // // Updates Holster card to be empty.
+                                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                                // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                            }
+                        }
+                        // Vessel slot 1 is unloaded.
+                        else
+                        {
+                            cd.vesselSlot1.SetActive(true);
+                            Card placeholder = cd.vPotion1.card;
+                            cd.vPotion1.card = card;
+                            cd.vPotion1.updateCard(card);
+                            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+                            // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                            // sendSuccessMessage(5);
+                            players[myPlayerIndex].checkVesselBonusAnimation(cd);
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                            Debug.Log("Potion loaded in Vessel slot 1!");
+
+                            // MATTEO: Add Loading potion SFX here.
+
+                            // // Updates Holster card to be empty.
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                        }
+                    }
+
+                    // Loading an Artifact:
+                    else if (cd.card.cardType == "Artifact")
+                    {
+                        // Enable Artifact menu if it wasn't already enabled.
+                        Debug.Log("Artifact menu enabled.");
+                        cd.artifactSlot.transform.parent.gameObject.SetActive(true);
+                        cd.artifactSlot.transform.gameObject.SetActive(true);
+
+                        // Check for existing loaded potion if Artifact menu was already enabled.
+                        if (cd.aPotion.card.cardName != "placeholder")
+                        {
+                            Debug.Log("Artifact is fully loaded!");
+                            // DONE: Insert error that displays on screen.
+                            // sendErrorMessage(8);
+                            // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                        }
+                        // Artifact slot is unloaded.
+                        else
+                        {
+                            Card placeholder = cd.aPotion.card;
+                            cd.aPotion.card = card;
+                            cd.aPotion.updateCard(card);
+                            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+                            // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
+                            // sendSuccessMessage(5);
+                            players[myPlayerIndex].checkArtifactBonusAnimation(cd);
+                            Debug.Log("Potion loaded in Artifact slot!");
+
+                            // MATTEO: Add Loading potion SFX here.
+
+                            // // Updates Holster card to be empty.
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
+                            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                        }
+                    }
+                }
+                else
+                {
+                    // add error message
+                    Debug.Log("That error message...");
+                    // sendErrorMessage(12);
+                }
+            }
+        }
+
+        /*
+        loadedCardInt = loadedInt;
+        loadPotion(card);
+        Destroy(cardDisplay, 0.2f);
+        */
+    }
+
     void Start()
     {
         Debug.Log("GameManager started!!!");
@@ -1392,6 +1695,47 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log(s);
                 }
+                // rework this
+                // CardDisplay cd in playerHolster.cardList
+                for (int i = 0; i < playerHolster.cardList.Count; i++)
+                {
+
+                    try
+                    {
+                        Debug.Log(saveData.playerHolsterDictionary.ElementAt(i).Key);
+                    }
+                    catch (ArgumentOutOfRangeException e)
+                    {
+                        break;
+                    }
+
+                    foreach (Card card in database.cardList)
+                    {
+
+                        if (card.cardName.Contains("dummy"))
+                        {
+                            // update with placeholder
+                            playerHolster.cardList[i].updateCard(players[0].deck.placeholder);
+                        }
+                            if (card.cardName == saveData.playerHolsterDictionary.ElementAt(i).Key)
+                            {
+                                playerHolster.cardList[i].updateCard(card);
+                                // add durability here
+                                playerHolster.cardList[i].durability = saveData.cardDurabilities[i];
+                            }
+
+                            foreach(string things in saveData.playerHolsterDictionary.ElementAt(i).Value)
+                            {
+
+                                if (things != "placeholder" && card.cardName == things)
+                                {
+                                    Debug.Log("updating saved loaded card");
+                                    loadIt(playerHolster.cardList[i], card);
+                                }
+                            }
+                    }
+                }
+
                 for (int i = 0; i < 4; i++)
                 {
                     foreach (Card card in database.cardList)
@@ -1399,6 +1743,7 @@ public class GameManager : MonoBehaviour
                         if (card.name == saveData.playerHolster[i])
                         {
                             players[0].holster.cardList[i].updateCard(card);
+                            // add durability here
                         }
                     }
                 }
@@ -7097,6 +7442,10 @@ public class GameManager : MonoBehaviour
             rocketBonusUsed = true;
             // add some success message but change what you initially put here lol
             sendSuccessMessage(14);
+
+            // make sure to unselect the card and move it back to it's spot
+            moveMarketCards();
+
             // reset card
             // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)

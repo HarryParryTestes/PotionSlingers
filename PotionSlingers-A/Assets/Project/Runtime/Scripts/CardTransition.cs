@@ -36,7 +36,9 @@ public class CardTransition : MonoBehaviour
 
         if (Game.storyMode)
         {
-            if(!saveData.transition)
+            if (!saveData.transition)
+                this.gameObject.SetActive(false);
+            if(saveData.selectedStage)
                 this.gameObject.SetActive(false);
         } else
         {
