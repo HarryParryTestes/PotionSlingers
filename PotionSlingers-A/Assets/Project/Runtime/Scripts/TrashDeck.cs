@@ -53,8 +53,8 @@ public class TrashDeck : MonoBehaviour, IDropHandler
             Debug.Log("Trash triggered?");
             // buy the card
             Debug.Log("Trash");
-            GameManager.manager.setSCInt(grabbedCard.card.cardName);
-            GameManager.manager.trashCard();
+            // GameManager.manager.setSCInt(grabbedCard.card.cardName);
+            GameManager.manager.trashCard(grabbedCard);
         }
     }
 

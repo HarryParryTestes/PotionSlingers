@@ -9,6 +9,7 @@ using DG.Tweening;
 public class CardPlayer : MonoBehaviour
 {
     public int hp;
+    public int maxHp = 10;
     public string name;
     public string charName;
     public int user_id;
@@ -274,7 +275,7 @@ public class CardPlayer : MonoBehaviour
 
     public void initHealth()
     {
-        hp = 10;
+        hp = maxHp;
         hpCubes = 3;
         updateHealthUI();
     }
@@ -445,7 +446,7 @@ public class CardPlayer : MonoBehaviour
             if(name == "Singelotte")
                 numbers = (float)hp / 33f;
             else
-                numbers = (float)hp / 10f;
+                numbers = (float)hp / (float)maxHp;
             // Debug.Log("Fill amount is: " + numbers);
             hpBar.GetComponent<Image>().fillAmount = numbers;
         }
@@ -651,7 +652,7 @@ public class CardPlayer : MonoBehaviour
             hpCubes--;
             if (hpCubes > 0)
             {
-                hp = 10;
+                hp = maxHp;
                 // check for Echo Shard here!!!
                 foreach (Card card in deck.deckList)
                 {
@@ -2889,9 +2890,9 @@ public class CardPlayer : MonoBehaviour
 
         // refactor this at some point to allow for HP to go up to max health
         //Make sure that hp cannot go above 10
-        if (hp > 10)
+        if (hp > maxHp)
         {
-            hp = 10;
+            hp = maxHp;
         }
 
         if (healSign != null && healAmount != null)
@@ -3147,7 +3148,7 @@ public class CardPlayer : MonoBehaviour
                 GameObject obj = Instantiate(pipsSign,
                 pipsSign.transform.position,
                 pipsSign.transform.rotation,
-                this.transform);
+                pipsSign.transform.parent);
 
                 // add coroutine
 

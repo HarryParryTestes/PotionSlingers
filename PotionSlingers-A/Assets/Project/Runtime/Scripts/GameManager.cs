@@ -62,6 +62,9 @@ public class GameManager : MonoBehaviour
     public int carnivalTurns = 0;
 
     public List<Card> starterCards;
+    public List<Card> starterArtifacts;
+    public List<Card> starterVessels;
+    public List<Card> starterRings;
 
     public GameObject carnivalUI;
     public GameObject gameOverScreen;
@@ -417,11 +420,13 @@ public class GameManager : MonoBehaviour
         md1.cardDisplay1.GetComponent<DragCard>().marketBack();
         md1.cardDisplay2.GetComponent<DragCard>().marketBack();
         md1.cardDisplay3.GetComponent<DragCard>().marketBack();
+        md1.cardDisplay4.GetComponent<DragCard>().marketBack();
         md2.cardDisplay1.GetComponent<DragCard>().marketBack();
         md2.cardDisplay2.GetComponent<DragCard>().marketBack();
         md2.cardDisplay3.GetComponent<DragCard>().marketBack();
+        md2.cardDisplay4.GetComponent<DragCard>().marketBack();
 
-        foreach(CardDisplay card in playerHolster.cardList)
+        foreach (CardDisplay card in playerHolster.cardList)
         {
             card.GetComponent<DragCard>().marketBack();
             card.aPotion.GetComponent<DragCard>().marketBack();
@@ -520,7 +525,8 @@ public class GameManager : MonoBehaviour
     {
         // saveData.playerHolster = playersHolster;
         saveData.cardDurabilities.Clear();
-        saveData.playerHolsterDictionary.Clear();
+        saveData.playerHolster.Clear();
+        saveData.playerLoadedCards.Clear();
         int dummyCount = 1;
         foreach (CardDisplay cd in playerHolster.cardList)
         {       
@@ -554,14 +560,22 @@ public class GameManager : MonoBehaviour
             saveData.cardDurabilities.Add(cd.durability);
             if (cd.card.cardName == "placeholder")
             {
-                saveData.playerHolsterDictionary.Add("dummy" + dummyCount, things);
+                saveData.playerHolster.Add("dummy" + dummyCount);
+                saveData.playerLoadedCards.Add(things);
                 dummyCount++;
-            } else
-                saveData.playerHolsterDictionary.Add(cd.card.cardName, things);
+            }
+            else
+            {
+                saveData.playerHolster.Add(cd.card.cardName);
+                saveData.playerLoadedCards.Add(things);
+            }
+                
         }
 
         saveData.playerDeck = playersDeck;
         saveData.playerHealth = players[0].hp;
+        saveData.maxHealth = players[0].maxHp;
+        saveData.pipCount = players[0].pipCount;
         saveData.playerCubes = players[0].hpCubes;
         saveData.flipped = players[0].character.flipped;
         saveData.canBeFlipped = players[0].character.canBeFlipped;
@@ -695,7 +709,9 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Advancing a stage in story mode");
                 saveData.newStage = true;
                 saveData.visitedEnemies.Add(saveData.currentEnemyName);
-                saveData.playerHolsterDictionary.Clear();
+                saveData.cardDurabilities.Clear();
+                saveData.playerHolster.Clear();
+                saveData.playerLoadedCards.Clear();
                 saveGameManagerValues();
                 saveData.stage = stage + 1;
                 saveData.savedGame = true;
@@ -1663,6 +1679,31 @@ public class GameManager : MonoBehaviour
         */
     }
 
+    public void randomizeStarterCards()
+    {
+        // first starter potion
+        int numba = rng.Next(0, starterPotionCards.Count);
+        playerHolster.cardList[0].updateCard(starterPotionCards[numba]);
+
+        // second starter potion
+        numba = rng.Next(0, starterPotionCards.Count);
+        playerHolster.cardList[3].updateCard(starterPotionCards[numba]);
+
+        // starter artifact
+        numba = rng.Next(0, starterArtifacts.Count);
+        playerHolster.cardList[1].updateCard(starterArtifacts[numba]);
+
+        // starter vessel
+        numba = rng.Next(0, starterVessels.Count);
+        playerHolster.cardList[2].updateCard(starterVessels[numba]);
+
+        // starter ring
+        numba = rng.Next(0, starterRings.Count);
+        playerDeck.cardDisplay.updateCard(starterRings[numba]);
+        playerDeck.deckList.RemoveAt(0);
+        playerDeck.putCardOnBottom(starterRings[numba]);
+    }
+
     void Start()
     {
         Debug.Log("GameManager started!!!");
@@ -1702,9 +1743,9 @@ public class GameManager : MonoBehaviour
 
                     try
                     {
-                        Debug.Log(saveData.playerHolsterDictionary.ElementAt(i).Key);
+                        Debug.Log(saveData.playerHolster[i]);
                     }
-                    catch (ArgumentOutOfRangeException e)
+                    catch (ArgumentException e)
                     {
                         break;
                     }
@@ -1717,22 +1758,22 @@ public class GameManager : MonoBehaviour
                             // update with placeholder
                             playerHolster.cardList[i].updateCard(players[0].deck.placeholder);
                         }
-                            if (card.cardName == saveData.playerHolsterDictionary.ElementAt(i).Key)
-                            {
-                                playerHolster.cardList[i].updateCard(card);
-                                // add durability here
-                                playerHolster.cardList[i].durability = saveData.cardDurabilities[i];
-                            }
 
-                            foreach(string things in saveData.playerHolsterDictionary.ElementAt(i).Value)
-                            {
+                        if (card.cardName == saveData.playerHolster[i])
+                        {
+                            playerHolster.cardList[i].updateCard(card);
+                            // add durability here
+                            playerHolster.cardList[i].durability = saveData.cardDurabilities[i];
+                        }
 
-                                if (things != "placeholder" && card.cardName == things)
-                                {
-                                    Debug.Log("updating saved loaded card");
-                                    loadIt(playerHolster.cardList[i], card);
-                                }
+                        foreach (string thang in saveData.playerLoadedCards[i])
+                        {
+                            if (thang != "placeholder" && card.cardName == thang)
+                            {
+                                Debug.Log("updating saved loaded card " + card.cardName + " in card number " + (i + 1));
+                                loadIt(playerHolster.cardList[i], card);
                             }
+                        }
                     }
                 }
 
@@ -1780,6 +1821,8 @@ public class GameManager : MonoBehaviour
                 players[0].name = playerBottomName.text;
                 players[0].hpCubes = saveData.playerCubes;
                 players[0].hp = saveData.playerHealth;
+                players[0].maxHp = saveData.maxHealth;
+                players[0].pipCount = saveData.pipCount;
                 if (players[0].hBar != null)
                 {
                     Debug.Log("Health bar edit");
@@ -1787,6 +1830,7 @@ public class GameManager : MonoBehaviour
                 }
                 players[0].currentPlayerHighlight.SetActive(true);
                 players[0].updateHealthUI();
+                players[0].updatePipsUI();
                 currentPlayerName = players[0].name;
                 if (saveData.canBeFlipped)
                 {
@@ -1859,6 +1903,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("New story mode file started!!!");
                 unSpicyCards();
                 resetDurability();
+                randomizeStarterCards();
                 md1.shuffle();
                 md2.shuffle();
                 initDecks();
@@ -1890,6 +1935,7 @@ public class GameManager : MonoBehaviour
         {
             unSpicyCards();
             resetDurability();
+            randomizeStarterCards();
             Debug.Log("Quickplay started");
             md1.shuffle();
             md2.shuffle();
@@ -1947,6 +1993,7 @@ public class GameManager : MonoBehaviour
 
             unSpicyCards();
             resetDurability();
+            randomizeStarterCards();
 
             Debug.Log(Game.GamePlayers.Count);
 
@@ -7708,6 +7755,73 @@ public class GameManager : MonoBehaviour
             else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>() != null)
             {
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
+            }
+            sendSuccessMessage(9);
+            players[myPlayerIndex].checkGauntletBonus();
+            players[myPlayerIndex].checkDecoderBonus();
+        }
+    }
+
+    public void trashCard(CardDisplay cd)
+    {
+        Debug.Log("Trash Card");
+
+        if (Game.multiplayer)
+        {
+            foreach (GamePlayer gp in Game.GamePlayers)
+            {
+                // if the steam usernames match
+                if (gp.playerName == currentPlayerName)
+                {
+                    Debug.Log("Starting Mirror CmdTrashCard");
+                    // do the Mirror Command
+                    gp.CmdTrashCard(currentPlayerName, selectedCardInt);
+                }
+            }
+        }
+        // It is this player's turn.
+        else
+        {
+            // If this client isn't the current player, display error message.
+            if (players[myPlayerIndex].user_id != myPlayerIndex)
+            {
+                // "You are not the currentPlayer!"
+                sendErrorMessage(7);
+                return;
+            }
+
+            // Savory Layer Cake logic
+            if (cd.card.cardName == "SavoryLayerCake")
+            {
+                // Heals for +3 HP if trashed
+                players[myPlayerIndex].addHealth(3);
+            }
+            if (cd.card.cardQuality != "Starter")
+            {
+                players[myPlayerIndex].cardsTrashed++;
+            }
+            Debug.Log("Card Trashed");
+            GameObject obj = Instantiate(cd.gameObject,
+                        cd.gameObject.transform.position,
+                        cd.gameObject.transform.rotation,
+                        cd.gameObject.transform);
+
+            StartCoroutine(MoveToTrash(obj));
+            td.addCard(cd);
+
+            if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].cardsTrashed == 4)
+            {
+                sendSuccessMessage(15);
+                players[myPlayerIndex].character.canBeFlipped = true;
+            }
+            // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            if (cd.gameObject.GetComponent<Hover_Card>() != null)
+            {
+                cd.gameObject.GetComponent<Hover_Card>().resetCard();
+            }
+            else if (cd.gameObject.GetComponent<CPUHoverCard>() != null)
+            {
+                cd.gameObject.GetComponent<CPUHoverCard>().resetCard();
             }
             sendSuccessMessage(9);
             players[myPlayerIndex].checkGauntletBonus();

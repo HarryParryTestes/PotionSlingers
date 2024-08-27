@@ -235,6 +235,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     // TODO: make a function so that the all cards move back to their proper positions  
     // if either the market deck is closed or if another card is clicked on
+    public void checkPositionUp()
+    {
+        transform.position = originalPosition;
+    }
 
     public void checkPosition()
     {
@@ -244,6 +248,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void marketBack()
     {
+        // DOTween.Pause(gameObject.name);
         GameManager.manager.checkMarketPrice();
 
         if (button != null)
@@ -262,7 +267,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             transform.DOScale(1f, 0.3f).SetId(gameObject.name);
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
             Vector2 thing = new Vector2(0, 333f * GameManager.manager.heightRatio);
-            transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+            transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name); //.OnComplete(() => checkPositionUp());
 
             Vector2 thang = new Vector2(0, 647.5f * GameManager.manager.heightRatio);
             if (obj != null)
@@ -287,7 +292,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             clicked = false;
             transform.DOScale(1f, 0.3f).SetId(gameObject.name);
             transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
-            transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+            transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name); // .OnComplete(() => checkPositionUp());
             StartCoroutine(SibIndex());
 
             if (obj != null)
@@ -591,6 +596,61 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
         if(!market)
             transform.DOScale(1f, 0.1f).SetId(gameObject.name);
+
+        if(market && !GameManager.manager.marketSelected)
+        {
+            // DOTween.Pause(gameObject.name);
+            clicked = false;
+            transform.SetParent(parentAfterDrag);
+            transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+            transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+            Vector2 thing = new Vector2(0, 333f * GameManager.manager.heightRatio);
+            transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+
+            Vector2 thang = new Vector2(0, 647.5f * GameManager.manager.heightRatio);
+            if (obj != null)
+            {
+                obj.transform.DOMove(originalPosition - thang, 0.3f).SetId(gameObject.name);
+                obj.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj, 0.3f);
+            }
+
+            if (obj2 != null)
+            {
+                obj2.transform.DOMove(originalPosition - thang, 0.3f).SetId(gameObject.name);
+                obj2.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj2, 0.3f);
+            }
+            yield break;
+            // StartCoroutine(SibIndex());
+        }
+
+        if (market && GameManager.manager.marketSelected)
+        {
+            // DOTween.Pause(gameObject.name);
+            clicked = false;
+            transform.SetParent(parentAfterDrag);
+            transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+            transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+            transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+
+            Vector2 thang = new Vector2(0, 647.5f * GameManager.manager.heightRatio);
+            if (obj != null)
+            {
+                obj.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                obj.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj, 0.3f);
+            }
+
+            if (obj2 != null)
+            {
+                obj2.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                obj2.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                Destroy(obj2, 0.3f);
+            }
+            yield break;
+            // StartCoroutine(SibIndex());
+        }
         // transform.localScale = new Vector3(1f, 1f, 1f);
         // transform.parent.SetSiblingIndex(parentSiblingIndex);
     }
@@ -792,14 +852,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         */
     }
 
-    public void findCard(string cardName)
+    public void findCard(CardDisplay cd)
     {
-
+        // Debug.Log("Finding card");
         for (int i = 0; i < 4; i++)
         {
-            if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[i].card.cardName == cardName)
+            if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[i] == cd)
             {
-                // Debug.Log(cardName);
+                // Debug.Log("Card Number  " + (i+1));
                 GameManager.manager.selectedCardInt = i + 1;
                 break;
             }
@@ -838,7 +898,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             return;
 
         if (!market)
-            findCard(this.gameObject.GetComponent<CardDisplay>().card.cardName);
+            findCard(this.gameObject.GetComponent<CardDisplay>());
 
         // transform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;

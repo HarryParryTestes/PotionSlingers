@@ -13,13 +13,16 @@ public class SaveData
     // public string playerName;
     public string playerCharName;
     public int playerHealth;
+    public int maxHealth;
+    public int pipCount;
     public int playerCubes;
     public bool canBeFlipped;
     public bool flipped;
     public bool transition;
     public List<string> playerDeck = new List<string>();
     public List<string> playerHolster = new List<string>();
-    public Dictionary<string, string[]> playerHolsterDictionary = new Dictionary<string, string[]>();
+    public List<string[]> playerLoadedCards = new List<string[]>();
+    // public Dictionary<string, string[]> playerHolsterDictionary = new Dictionary<string, string[]>();
     public List<int> cardDurabilities = new List<int>();
     // public string oppName;
     // public string oppCharName;

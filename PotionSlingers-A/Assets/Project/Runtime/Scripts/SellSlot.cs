@@ -34,7 +34,7 @@ public class SellSlot : MonoBehaviour, IDropHandler
         if (!dc.market)
         {
             Debug.Log("Selling card triggered?");
-            GameManager.manager.setSCInt(grabbedCard.card.cardName);
+            // GameManager.manager.setSCInt(grabbedCard.card.cardName);
             GameManager.manager.sellCard();
         }
     }

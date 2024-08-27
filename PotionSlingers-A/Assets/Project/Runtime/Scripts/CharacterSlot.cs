@@ -277,7 +277,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         } else if(this.gameObject.name == "DeckPile")
         {
             Debug.Log("Dropped card triggered?");
-            GameManager.manager.setSCInt(grabbedCard.card.cardName);
+            // GameManager.manager.setSCInt(grabbedCard.card.cardName);
             GameManager.manager.cycleCard();
         }
 
