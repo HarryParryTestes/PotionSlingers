@@ -322,10 +322,17 @@ public class GameManager : MonoBehaviour
         // let's not cause an infinite loop lmao
         // md1.cardDisplay4.updateCard(md1.deckList[0]);
         if(md1.cardDisplay4.artworkImage != null)
+        {
             md1.cardDisplay4.artworkImage.sprite = md1.deckList[0].cardSprite;
+            md1.cardDisplay4.card = md1.deckList[0];
+        }            
         // md2.cardDisplay4.updateCard(md2.deckList[0]);
         if (md2.cardDisplay4.artworkImage != null)
+        {
             md2.cardDisplay4.artworkImage.sprite = md2.deckList[0].cardSprite;
+            md2.cardDisplay4.card = md2.deckList[0];
+        }
+            
     }
 
     public void checkPosition()
@@ -3579,6 +3586,19 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if(Game.storyMode && players[1].charName == "Singelotte" && dialog.directions.activeInHierarchy)
+        {
+            Debug.Log("Turning off spicy card description box!!!");
+            dialog.directions.SetActive(false);
+        }
+        // show off spicy card direction box after Singelotte's first attack
+        else if(Game.storyMode && players[1].charName == "Singelotte" && players[1].gameObject.GetComponent<ComputerPlayer>().turn == 1)
+        {
+            Debug.Log("Spicy card description box!!!");
+            dialog.directions.SetActive(true);
+            dialog.directionBox.text = "Spicy cards in your holster do 2 damage to you at the start of your turn!\n\nTrash or throw the cards to get rid of them!";
+        }
+
         // If this client isn't the current player, display error message.
         // Player can't end turn if it isn't their turn.
         // (to change this to maybe disable endTurn button or grey it out?? turn it from button to image when not currentPlayer?)
@@ -4390,6 +4410,25 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator doDamage (int damage, string cardQuality = "")
+    {
+        CardPlayer cp = tempPlayer;
+
+        yield return new WaitForSeconds(2f);
+
+        if (Game.tutorial)
+        {
+            cp.subHealth(damage, cardQuality);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            StartCoroutine(waitThreeSeconds(dialog));
+        }
+        else
+        {
+            cp.subHealth(damage, cardQuality);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+        }
+    }
+
     IEnumerator waitThreeSecondsHand(int damage, string cardQuality = "")
     {
         CardPlayer cp = tempPlayer;
@@ -4413,12 +4452,11 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Middle person");
             yield return new WaitForSeconds(1f);
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             throwingHand.transform.DOMoveX(1000f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
-            cp.subHealth(damage, cardQuality);
-
+            // cp.subHealth(damage, cardQuality);
             yield break;
         }
 
@@ -4426,11 +4464,12 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Right person");
             yield return new WaitForSeconds(1f);
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             throwingHand.transform.DOMoveX(1470f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
-            cp.subHealth(damage, cardQuality);
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            // cp.subHealth(damage, cardQuality);
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             yield break;
         }
 
@@ -4438,6 +4477,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Middle person");
             yield return new WaitForSeconds(1f);
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             throwingHand.transform.DOMoveX(1000f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
@@ -4446,6 +4486,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Left person");
             yield return new WaitForSeconds(1f);
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             throwingHand.transform.DOMoveX(470f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
@@ -4454,11 +4495,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Right person");
             yield return new WaitForSeconds(1f);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             throwingHand.transform.DOMoveX(1470f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
 
+        /*
         if (Game.tutorial)
         {
             cp.subHealth(damage, cardQuality);
@@ -4470,6 +4513,7 @@ public class GameManager : MonoBehaviour
             cp.subHealth(damage, cardQuality);
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
         }
+        */
     }
 
     // THROW POTION REQUEST
@@ -4524,7 +4568,10 @@ public class GameManager : MonoBehaviour
                 // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
                 // THROWING ANIMATION
+                StopCoroutine("waitThreeSecondsHand");
+                throwingHand.SetActive(false);
                 StartCoroutine(waitThreeSecondsHand(damage));
+                StartCoroutine(doDamage(damage));
 
                 // PASSING THIS LOGIC TO COROUTINE
                 /*
@@ -4565,7 +4612,10 @@ public class GameManager : MonoBehaviour
                     // playerHolster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
                     // THROWING ANIMATION
+                    StopCoroutine("waitThreeSecondsHand");
+                    throwingHand.SetActive(false);
                     StartCoroutine(waitThreeSecondsHand(damage));
+                    StartCoroutine(doDamage(damage));
                     //tempPlayer.subHealth(damage);
                     sendSuccessMessage(3);
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
@@ -4612,7 +4662,10 @@ public class GameManager : MonoBehaviour
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                     // THROWING ANIMATION
+                    StopCoroutine("waitThreeSecondsHand");
+                    throwingHand.SetActive(false);
                     StartCoroutine(waitThreeSecondsHand(damage));
+                    StartCoroutine(doDamage(damage));
                     //tempPlayer.subHealth(damage);
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     sendSuccessMessage(4);
@@ -4770,7 +4823,12 @@ public class GameManager : MonoBehaviour
 
                 // may need to add this back in
                 if (myPlayerIndex == 0)
-                    StartCoroutine(waitThreeSecondsHand(damage, cardQuality));
+                {
+                    StopCoroutine("waitThreeSecondsHand");
+                    throwingHand.SetActive(false);
+                    StartCoroutine(waitThreeSecondsHand(damage));
+                    StartCoroutine(doDamage(damage));
+                }
                 else
                     tempPlayer.subHealth(damage, cardQuality);
                 /*
@@ -4830,7 +4888,12 @@ public class GameManager : MonoBehaviour
                     // MATTEO: taking this out for now, may want to add back in
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
                     if (myPlayerIndex == 0)
-                        StartCoroutine(waitThreeSecondsHand(damage, cardQuality));
+                    {
+                        StopCoroutine("waitThreeSecondsHand");
+                        throwingHand.SetActive(false);
+                        StartCoroutine(waitThreeSecondsHand(damage));
+                        StartCoroutine(doDamage(damage));
+                    }
                     else
                         tempPlayer.subHealth(damage, cardQuality);
                     // tempPlayer.subHealth(damage, cardQuality);
@@ -4965,7 +5028,12 @@ public class GameManager : MonoBehaviour
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                     if (myPlayerIndex == 0)
-                        StartCoroutine(waitThreeSecondsHand(damage, cardQuality));
+                    {
+                        StopCoroutine("waitThreeSecondsHand");
+                        throwingHand.SetActive(false);
+                        StartCoroutine(waitThreeSecondsHand(damage));
+                        StartCoroutine(doDamage(damage));
+                    }
                     else
                         tempPlayer.subHealth(damage, cardQuality);
                     // MATTEO: taking this out for now, may want to add back in

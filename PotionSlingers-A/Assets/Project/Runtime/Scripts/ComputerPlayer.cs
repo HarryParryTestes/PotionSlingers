@@ -232,6 +232,9 @@ public class ComputerPlayer : CardPlayer
 
         if (this.gameObject.GetComponent<CardPlayer>().name == "Singelotte")
         {
+            // increment turns!
+            turn++;
+
             int cards = 0;
             foreach (CardDisplay cd in GameManager.manager.playerHolster.cardList)
             {
