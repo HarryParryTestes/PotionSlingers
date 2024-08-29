@@ -167,7 +167,7 @@ public class ComputerPlayer : CardPlayer
         for (int i = 0; i < GameManager.manager.playerHolster.cardList.Count; i++)
         {
             if (GameManager.manager.playerHolster.cardList[i].card.cardName == "placeholder" ||
-            GameManager.manager.playerHolster.cardList[i].card.spicy)
+            GameManager.manager.playerHolster.cardList[i].spicy)
             {
                 exclude.Add(i);
             }
@@ -178,7 +178,7 @@ public class ComputerPlayer : CardPlayer
         int holsterNum = range.ElementAt(index);
         // int holsterNum = rng.Next(1, 5);
         if (GameManager.manager.playerHolster.cardList[holsterNum].card.name == "placeholder" ||
-            GameManager.manager.playerHolster.cardList[holsterNum].card.spicy)
+            GameManager.manager.playerHolster.cardList[holsterNum].spicy)
         {
             pickRandomHolsterCard();
             return;
@@ -238,7 +238,7 @@ public class ComputerPlayer : CardPlayer
             int cards = 0;
             foreach (CardDisplay cd in GameManager.manager.playerHolster.cardList)
             {
-                if (cd.card.name == "placeholder" || cd.card.spicy)
+                if (cd.card.name == "placeholder" || cd.spicy)
                     cards++;
             }
 

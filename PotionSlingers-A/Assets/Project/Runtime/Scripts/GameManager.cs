@@ -454,6 +454,18 @@ public class GameManager : MonoBehaviour
 
         saveData.stage++;
         saveData.savedGame = true;
+        // just add 1 for now we'll figure it out later
+        saveData.currencyCubes++;
+
+        if (players[1].charName == "Singelotte")
+        {
+            saveData.cardStatuses.Clear();
+            foreach (CardDisplay cd in playerHolster.cardList)
+            {
+                saveData.cardStatuses.Add("none");
+            }
+        }
+        
         // List<string> playersDeck = new List<string>();
         // List<string> playersHolster = new List<string>();
 
@@ -532,11 +544,17 @@ public class GameManager : MonoBehaviour
     {
         // saveData.playerHolster = playersHolster;
         saveData.cardDurabilities.Clear();
+        saveData.cardStatuses.Clear();
         saveData.playerHolster.Clear();
         saveData.playerLoadedCards.Clear();
         int dummyCount = 1;
         foreach (CardDisplay cd in playerHolster.cardList)
-        {       
+        {
+            if (cd.spicy)
+                saveData.cardStatuses.Add("spicy");
+            else
+                saveData.cardStatuses.Add("none");
+
             string[] things = new string[4] {"placeholder", "placeholder", "placeholder", "placeholder" };
             if (cd.card.cardType == "Artifact")
             {
@@ -706,10 +724,9 @@ public class GameManager : MonoBehaviour
             if (Game.storyMode)
             {
                 // advance a stage and save the game data
-                if (stage == 4)
+                if (players[1].charName == "Singelotte")
                 {
                     Debug.Log("Singelotte was just beaten... This should give the player an achievement!!!!!");
-                    unSpicyCards();
                     SteamUserStats.SetAchievement("BEAT_STAGE_1");
                 }
 
@@ -717,14 +734,23 @@ public class GameManager : MonoBehaviour
                 saveData.newStage = true;
                 saveData.visitedEnemies.Add(saveData.currentEnemyName);
                 saveData.cardDurabilities.Clear();
+                saveData.cardStatuses.Clear();
                 saveData.playerHolster.Clear();
                 saveData.playerLoadedCards.Clear();
                 saveGameManagerValues();
                 saveData.stage = stage + 1;
                 saveData.savedGame = true;
                 saveData.selectedStage = false;
-                // List<string> playersDeck = new List<string>();
-                // List<string> playersHolster = new List<string>();
+                saveData.currencyCubes++;
+                // reset cards back to normal after defeating Singelotte
+                if (players[1].charName == "Singelotte")
+                {
+                    saveData.cardStatuses.Clear();
+                    foreach (CardDisplay cd in playerHolster.cardList)
+                    {
+                        saveData.cardStatuses.Add("none");
+                    }
+                }
                 playersHolster.Clear();
                 playersDeck.Clear();
                 foreach (CardDisplay cd in players[0].holster.cardList)
@@ -1391,14 +1417,6 @@ public class GameManager : MonoBehaviour
         */
     }
 
-    public void unSpicyCards()
-    {
-        foreach (Card card in database.cardList)
-        {
-            card.spicy = false;
-        }
-    }
-
     public void resetDurability()
     {
         /*
@@ -1757,6 +1775,11 @@ public class GameManager : MonoBehaviour
                         break;
                     }
 
+                    if (saveData.cardStatuses[i] == "spicy")
+                    {
+                        playerHolster.cardList[i].makeSpicy();
+                    }
+
                     foreach (Card card in database.cardList)
                     {
 
@@ -1908,7 +1931,6 @@ public class GameManager : MonoBehaviour
             {
                 // NEW STORY MODE FILE
                 Debug.Log("New story mode file started!!!");
-                unSpicyCards();
                 resetDurability();
                 randomizeStarterCards();
                 md1.shuffle();
@@ -1940,7 +1962,6 @@ public class GameManager : MonoBehaviour
         // check for quickplay
         if (Game.quickplay)
         {
-            unSpicyCards();
             resetDurability();
             randomizeStarterCards();
             Debug.Log("Quickplay started");
@@ -1998,7 +2019,6 @@ public class GameManager : MonoBehaviour
             Debug.Log("So that happened...");
             // changing this to 4 just to test for now, remember to take this out
 
-            unSpicyCards();
             resetDurability();
             randomizeStarterCards();
 

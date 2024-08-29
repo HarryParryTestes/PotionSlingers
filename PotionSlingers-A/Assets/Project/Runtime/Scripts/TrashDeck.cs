@@ -104,6 +104,7 @@ public class TrashDeck : MonoBehaviour, IDropHandler
 
     public void addCard(CardDisplay cd)
     {
+        cd.spicy = false;
         deckList.Add(cd.card);
         if (cd.card.cardType == "Artifact")
         {

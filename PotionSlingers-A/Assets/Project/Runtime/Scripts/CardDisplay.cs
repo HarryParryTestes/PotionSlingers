@@ -73,7 +73,7 @@ public class CardDisplay : MonoBehaviour
 
     public void makeSpicy()
     {
-        card.spicy = true;
+        spicy = true;
         if (flames != null)
             flames.SetActive(true);
     }
@@ -114,7 +114,7 @@ public class CardDisplay : MonoBehaviour
         this.card = card;
         artworkImage.sprite = card.cardSprite;
 
-        if (card.spicy)
+        if (spicy)
         {
             if(flames != null)
                 flames.SetActive(true);

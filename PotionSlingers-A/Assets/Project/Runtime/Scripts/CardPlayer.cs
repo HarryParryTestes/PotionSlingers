@@ -794,7 +794,7 @@ public class CardPlayer : MonoBehaviour
 
         foreach (CardDisplay cd in holster.cardList)
         {
-            if (cd.card.spicy && cd.card.name != "placeholder")
+            if (cd.spicy && cd.card.name != "placeholder")
             {
                 if (charName != "Singelotte")
                     subHealth(2);

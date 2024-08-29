@@ -16,6 +16,7 @@ public class SaveData
     public int maxHealth;
     public int pipCount;
     public int playerCubes;
+    public int currencyCubes = 0;
     public bool canBeFlipped;
     public bool flipped;
     public bool transition;
@@ -24,6 +25,7 @@ public class SaveData
     public List<string[]> playerLoadedCards = new List<string[]>();
     // public Dictionary<string, string[]> playerHolsterDictionary = new Dictionary<string, string[]>();
     public List<int> cardDurabilities = new List<int>();
+    public List<string> cardStatuses = new List<string>();
     // public string oppName;
     // public string oppCharName;
     public int opp1Health;
