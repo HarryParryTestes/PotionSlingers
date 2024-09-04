@@ -12,10 +12,10 @@ public class SaveData
     // public TMPro.TextMeshProUGUI saveGameText;
     // public string playerName;
     public string playerCharName;
-    public int playerHealth;
-    public int maxHealth;
-    public int pipCount;
-    public int playerCubes;
+    public int playerHealth = 10;
+    public int maxHealth = 10;
+    public int pipCount = 6;
+    public int playerCubes = 3;
     public int currencyCubes = 0;
     public bool canBeFlipped;
     public bool flipped;

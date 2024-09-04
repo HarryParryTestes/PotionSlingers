@@ -118,15 +118,18 @@ namespace Map
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
                 case "Saltimbocca":
+                    transition.GetComponent<SceneTransition>().hideUI();
                     transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
                     break;
                 case "Crowpunk":
+                    transition.GetComponent<SceneTransition>().hideUI();
                     transition.GetComponent<SceneTransition>().crowButton.onClick.Invoke();
                     break;
                 case "Crowpunk+":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
                 case "Singelotte":
+                    transition.GetComponent<SceneTransition>().hideUI();
                     transition.GetComponent<SceneTransition>().singeButton.onClick.Invoke();
                     break;
             }

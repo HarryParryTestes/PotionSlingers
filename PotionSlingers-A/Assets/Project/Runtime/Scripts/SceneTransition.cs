@@ -20,6 +20,10 @@ public class SceneTransition : MonoBehaviour
     public Image background;
     public GameObject treasureMenu;
     public Scrollbar scrollRectHorizontal;
+    public TMPro.TextMeshProUGUI currencyCubes;
+    public TMPro.TextMeshProUGUI healthCubes;
+    public TMPro.TextMeshProUGUI health;
+    public List<GameObject> objects = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +31,11 @@ public class SceneTransition : MonoBehaviour
         // set the position of the scrollbar to change depending on the number of stages cleared
         SaveData saveData = SaveSystem.LoadGameData();
         // scrollRectHorizontal.normalizedPosition = new Vector2(0, (saveData.stage * 0.1f));
+        currencyCubes.text = saveData.currencyCubes.ToString();
+        healthCubes.text = saveData.playerCubes.ToString();
+        health.text = saveData.playerHealth.ToString();
+
+
         switch (saveData.stage)
         {
             case 1:
@@ -42,7 +51,7 @@ public class SceneTransition : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void healPlayer()
@@ -56,6 +65,14 @@ public class SceneTransition : MonoBehaviour
         SaveSystem.SaveGameData(saveData);
     }
 
+    public void hideUI()
+    {
+        foreach (GameObject obj in objects)
+        {
+            obj.SetActive(false);
+        }
+    }
+
     public IEnumerator doIt()
     {
         SaveData saveData = SaveSystem.LoadGameData();
@@ -64,6 +81,12 @@ public class SceneTransition : MonoBehaviour
         SaveSystem.SaveGameData(saveData);
 
         // DialogueManager.BarkString("I'm barking this text.", this.transform);
+        /*
+        foreach (GameObject obj in objects) 
+        { 
+            obj.SetActive(false);
+        }
+        */
 
 
         card1.transform.DOMoveX(-4.5f, 1f);

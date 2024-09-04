@@ -1853,6 +1853,8 @@ public class GameManager : MonoBehaviour
                 players[0].hp = saveData.playerHealth;
                 players[0].maxHp = saveData.maxHealth;
                 players[0].pipCount = saveData.pipCount;
+                players[0].pips = players[0].pipCount;
+                Debug.Log("Save data pip count is " + saveData.pipCount);
                 if (players[0].hBar != null)
                 {
                     Debug.Log("Health bar edit");
