@@ -1491,6 +1491,8 @@ public class CardPlayer : MonoBehaviour
             return damage + 1;
         }
 
+        // Stone Ring logic will simply pass the damage of the potion(s) without checking any of the card text effects
+
         // checking the potions for throw bonuses
         damage = checkBonus(damage, selectedCard.vPotion1);
         damage = checkBonus(damage, selectedCard.vPotion2);
@@ -2233,6 +2235,75 @@ public class CardPlayer : MonoBehaviour
                 character.canBeFlipped = true;
                 GameManager.manager.sendSuccessMessage(13);
             }
+        }
+
+        if (selectedCard.card.cardName == "Cube of Skeleton Jelly")
+        {
+            // check for unique card qualities in both holster and deck
+            bool cHot = false;
+            bool cCold = false;
+            bool cWet = false;
+            bool cDry = false;
+            int localDamage = 0;
+         
+            foreach (CardDisplay cd in holster.cardList)
+            {
+                // don't include itself in the calculation
+                if (cd.card.cardName == "Cube of Skeleton Jelly")
+                    continue;
+
+                switch (cd.card.cardQuality)
+                {
+                    case "Hot":
+                        cHot = true;
+                        break;
+                    case "Wet":
+                        cWet = true;
+                        break;
+                    case "Cold":
+                        cCold = true;
+                        break;
+                    case "Dry":
+                        cDry = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (Card card in deck.deckList)
+            {               
+
+                switch (card.cardQuality)
+                {
+                    case "Hot":
+                        cHot = true;
+                        break;
+                    case "Wet":
+                        cWet = true;
+                        break;
+                    case "Cold":
+                        cCold = true;
+                        break;
+                    case "Dry":
+                        cDry = true;
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (cHot)
+                localDamage++;
+            if (cWet)
+                localDamage++;
+            if (cDry)
+                localDamage++;
+            if (cCold)
+                localDamage++;
+
+            Debug.Log("Found " + localDamage + " unique card qualities!");
+            return localDamage;
         }
 
         // snakey motherfucker

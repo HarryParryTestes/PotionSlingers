@@ -78,7 +78,7 @@ public class CardDisplay : MonoBehaviour
             flames.SetActive(true);
     }
 
-    public IEnumerator updateCrucibleCards(GameObject obj)
+    public IEnumerator updateCrucibleCards(GameObject obj, string cardName)
     {
         yield return new WaitForSeconds(.10f);
         foreach (Card cd in crucibleCards)
@@ -101,11 +101,15 @@ public class CardDisplay : MonoBehaviour
             obj2.transform.DOJump(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y), 400f, 1, 1f, false);
             obj2.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
             yield return new WaitForSeconds(1f);
-            obj.transform.DOMove(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+            // Might remove this to stop some UI bugs from happening, you should maybe reimplement this at some point
+            // obj.transform.DOMove(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
             obj.GetComponent<CardDisplay>().updateCard(cd);
             Destroy(obj2);
         }
-        crucibleCards[1] = GameManager.manager.crucibleCard;
+        if(cardName == "Crucible")
+            crucibleCards[1] = GameManager.manager.crucibleCard;
+        if (cardName == "Spoonful of Ambrosia")
+            crucibleCards[1] = GameManager.manager.ambrosiaCard;
     }
 
     public void updateCard(Card card)
@@ -129,7 +133,7 @@ public class CardDisplay : MonoBehaviour
         // might take this out for now.
         if(gameObject.GetComponent<DragCard>() != null)
         {
-            if (card.cardName == "Crucible" && gameObject.GetComponent<DragCard>().market)
+            if ((card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia") && gameObject.GetComponent<DragCard>().market)
             {
                 Debug.Log("CRUCIBLE CRUCIBLE CRUCIBLE CRUCIBLE CRUCIBLE");
                 // Add two cards to display on top of market card display
@@ -137,7 +141,7 @@ public class CardDisplay : MonoBehaviour
                 crucibleCards.Add(GameManager.manager.md2.popCard());
                 // we'll see how this ends up working
                 // StartCoroutine(updateCrucibleCards(gameObject));
-                StartCoroutine(updateCrucibleCards(gameObject));
+                StartCoroutine(updateCrucibleCards(gameObject, card.cardName));
 
             }
         }      

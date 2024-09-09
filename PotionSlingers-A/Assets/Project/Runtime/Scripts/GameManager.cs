@@ -195,6 +195,7 @@ public class GameManager : MonoBehaviour
     public float heightRatio;
 
     public Card crucibleCard;
+    public Card ambrosiaCard;
 
     public SaveData saveData;
 
@@ -4791,6 +4792,9 @@ public class GameManager : MonoBehaviour
                 damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.effectAmount;
                 Debug.Log("Original damage: " + damage);
                 damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+
+                // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
+
                 damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                 Debug.Log("Damage after thrower bonuses: " + damage);
                 damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
@@ -5247,7 +5251,7 @@ public class GameManager : MonoBehaviour
                     td.addCard(md1.cardDisplay1);
                     card = md1.cardDisplay1.crucibleCards[0];
                     md1.cardDisplay1.crucibleCards.RemoveAt(0);
-                    if (card.cardName == "Crucible")
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                     {
                         md1.cardDisplay1.card = card;
                         md1.cardDisplay1.artworkImage.sprite = card.cardSprite;
@@ -5266,16 +5270,50 @@ public class GameManager : MonoBehaviour
 
                 break;
             case 2:
-                td.addCard(md1.cardDisplay2);
-                Card card2 = md1.popCard();
-                md1.cardDisplay2.updateCard(card2);
+                if (md1.cardDisplay2.crucibleCards.Count > 0)
+                {
+                    td.addCard(md1.cardDisplay2);
+                    card = md1.cardDisplay2.crucibleCards[0];
+                    md1.cardDisplay2.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        md1.cardDisplay2.card = card;
+                        md1.cardDisplay2.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md1.cardDisplay2.updateCard(card);
+                }
+                else
+                {
+                    td.addCard(md1.cardDisplay2);
+                    card = md1.popCard();
+                    md1.cardDisplay2.updateCard(card);
+                }
+
                 sendSuccessMessage(9);
                 md1.cardDisplay2.GetComponent<DragCard>().marketBack();
                 break;
             case 3:
-                td.addCard(md1.cardDisplay3);
-                Card card3 = md1.popCard();
-                md1.cardDisplay3.updateCard(card3);
+                if (md1.cardDisplay3.crucibleCards.Count > 0)
+                {
+                    td.addCard(md1.cardDisplay3);
+                    card = md1.cardDisplay3.crucibleCards[0];
+                    md1.cardDisplay3.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        md1.cardDisplay3.card = card;
+                        md1.cardDisplay3.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md1.cardDisplay3.updateCard(card);
+                }
+                else
+                {
+                    td.addCard(md1.cardDisplay3);
+                    card = md1.popCard();
+                    md1.cardDisplay3.updateCard(card);
+                }
+
                 sendSuccessMessage(9);
                 md1.cardDisplay3.GetComponent<DragCard>().marketBack();
                 break;
@@ -5285,7 +5323,7 @@ public class GameManager : MonoBehaviour
                     td.addCard(md2.cardDisplay1);
                     card = md2.cardDisplay1.crucibleCards[0];
                     md2.cardDisplay1.crucibleCards.RemoveAt(0);
-                    if (card.cardName == "Crucible")
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                     {
                         md2.cardDisplay1.card = card;
                         md2.cardDisplay1.artworkImage.sprite = card.cardSprite;
@@ -5313,7 +5351,7 @@ public class GameManager : MonoBehaviour
                     td.addCard(md2.cardDisplay2);
                     card = md2.cardDisplay2.crucibleCards[0];
                     md2.cardDisplay2.crucibleCards.RemoveAt(0);
-                    if (card.cardName == "Crucible")
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                     {
                         md2.cardDisplay2.card = card;
                         md2.cardDisplay2.artworkImage.sprite = card.cardSprite;
@@ -5336,7 +5374,7 @@ public class GameManager : MonoBehaviour
                     td.addCard(md2.cardDisplay3);
                     card = md2.cardDisplay3.crucibleCards[0];
                     md2.cardDisplay3.crucibleCards.RemoveAt(0);
-                    if (card.cardName == "Crucible")
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                     {
                         md2.cardDisplay3.card = card;
                         md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
@@ -5393,21 +5431,74 @@ public class GameManager : MonoBehaviour
         switch (marketCard)
         {
             case 1:
-                players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                Card card1 = md1.popCard();
-                md1.cardDisplay1.updateCard(card1);
-                sendSuccessMessage(17);
+                if (md1.cardDisplay1.crucibleCards.Count > 0)
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                    card = md1.cardDisplay1.crucibleCards[0];
+                    md1.cardDisplay1.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        md1.cardDisplay1.card = card;
+                        md1.cardDisplay1.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md1.cardDisplay1.updateCard(card);
+                }
+                else
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                    card = md1.popCard();
+                    md1.cardDisplay1.updateCard(card);
+                }
                 break;
             case 2:
-                players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                Card card2 = md1.popCard();
-                md1.cardDisplay2.updateCard(card2);
+                if (md1.cardDisplay2.crucibleCards.Count > 0)
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                    card = md1.cardDisplay2.crucibleCards[0];
+                    md1.cardDisplay2.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        md1.cardDisplay2.card = card;
+                        md1.cardDisplay2.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md1.cardDisplay2.updateCard(card);
+                }
+                else
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                    card = md1.popCard();
+                    md1.cardDisplay2.updateCard(card);
+                }
                 sendSuccessMessage(17);
                 break;
             case 3:
-                players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                Card card3 = md1.popCard();
-                md1.cardDisplay3.updateCard(card3);
+                if (md1.cardDisplay3.crucibleCards.Count > 0)
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                    card = md1.cardDisplay3.crucibleCards[0];
+                    md1.cardDisplay3.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        md1.cardDisplay3.card = card;
+                        md1.cardDisplay3.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        md1.cardDisplay3.updateCard(card);
+                }
+                else
+                {
+                    // td.addCard(md2.cardDisplay1);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                    card = md1.popCard();
+                    md1.cardDisplay3.updateCard(card);
+                }
                 sendSuccessMessage(17);
                 break;
             case 4:
@@ -5418,7 +5509,7 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
                     card = md2.cardDisplay1.crucibleCards[0];
                     md2.cardDisplay1.crucibleCards.RemoveAt(0);
-                    if (card.cardName == "Crucible")
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                     {
                         md2.cardDisplay1.card = card;
                         md2.cardDisplay1.artworkImage.sprite = card.cardSprite;
@@ -5443,8 +5534,8 @@ public class GameManager : MonoBehaviour
                     // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
                     card = md2.cardDisplay2.crucibleCards[0];
-                    md2.cardDisplay1.crucibleCards.RemoveAt(0);
-                    if (card.cardName == "Crucible")
+                    md2.cardDisplay2.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                     {
                         md2.cardDisplay2.card = card;
                         md2.cardDisplay2.artworkImage.sprite = card.cardSprite;
@@ -5468,7 +5559,7 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
                     card = md2.cardDisplay3.crucibleCards[0];
                     md2.cardDisplay3.crucibleCards.RemoveAt(0);
-                    if (card.cardName == "Crucible")
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                     {
                         md2.cardDisplay3.card = card;
                         md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
@@ -7068,7 +7159,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay1.crucibleCards[0];
                             md2.cardDisplay1.crucibleCards.RemoveAt(0);
-                            if (card.cardName == "Crucible")
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay1.card = card;
                                 md2.cardDisplay1.artworkImage.sprite = card.cardSprite;
@@ -7123,7 +7214,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay1.crucibleCards[0];
                             md2.cardDisplay1.crucibleCards.RemoveAt(0);
-                            if (card.cardName == "Crucible")
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay1.card = card;
                                 md2.cardDisplay1.artworkImage.sprite = card.cardSprite;
@@ -7175,7 +7266,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay2.crucibleCards[0];
                             md2.cardDisplay2.crucibleCards.RemoveAt(0);
-                            if (card.cardName == "Crucible")
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay2.card = card;
                                 md2.cardDisplay2.artworkImage.sprite = card.cardSprite;
@@ -7230,7 +7321,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay2.crucibleCards[0];
                             md2.cardDisplay2.crucibleCards.RemoveAt(0);
-                            if (card.cardName == "Crucible")
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay2.card = card;
                                 md2.cardDisplay2.artworkImage.sprite = card.cardSprite;
@@ -7278,7 +7369,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay3.crucibleCards[0];
                             md2.cardDisplay3.crucibleCards.RemoveAt(0);
-                            if (card.cardName == "Crucible")
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay3.card = card;
                                 md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
@@ -7333,7 +7424,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay3.crucibleCards[0];
                             md2.cardDisplay3.crucibleCards.RemoveAt(0);
-                            if(card.cardName == "Crucible")
+                            if(card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay3.card = card;
                                 md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
@@ -7380,7 +7471,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay4.crucibleCards[0];
                             md2.cardDisplay4.crucibleCards.RemoveAt(0);
-                            if (card.cardName == "Crucible")
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay4.card = card;
                                 md2.cardDisplay4.artworkImage.sprite = card.cardSprite;
@@ -7438,7 +7529,7 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay4.crucibleCards[0];
                             md2.cardDisplay4.crucibleCards.RemoveAt(0);
-                            if (card.cardName == "Crucible")
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay4.card = card;
                                 md2.cardDisplay4.artworkImage.sprite = card.cardSprite;
