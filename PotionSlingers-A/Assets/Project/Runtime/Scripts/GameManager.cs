@@ -6679,6 +6679,8 @@ public class GameManager : MonoBehaviour
     // subtract pips, update deck display and market display
     public void topMarketBuy()
     {
+        // CardDisplay cd;
+
         Debug.Log("Top Market Buy");
 
         // TUTORIAL LOGIC
@@ -6792,305 +6794,208 @@ public class GameManager : MonoBehaviour
                 return;
             }
             // cardInt based on position of card in Top Market (position 1, 2, or 3)
+            CardDisplay cd = null;
+
             switch (md1.cardInt)
             {
                 case 1:
-                    if (players[myPlayerIndex].pips >= md1.cardDisplay1.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
-                    {
-                        // All rings cost 4 logic
-                        if (md1.cardDisplay1.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
-                        {
-                            md1.cardDisplay1.card.buyPrice = 4;
-                        }
-
-                        // if The Early Bird Special was drawn this turn
-                        if (md1.cardDisplay1.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
-                        {
-                            // it buys for 3 pips
-                            md1.cardDisplay1.card.buyPrice = 3;
-                        }
-                        players[myPlayerIndex].subPips(md1.cardDisplay1.card.buyPrice);
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay1.updateCard(card);
-                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
-                        sendSuccessMessage(1);
-                        checkMarketPrice();
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
-                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
-                        // SALTIMBOCCA LOGIC
-                    }
-                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay1.card.buyPrice - 1))
-                    {
-                        if (md1.cardDisplay1.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
-                        {
-                            sendErrorMessage(6);
-                            return;
-                        }
-                        // All rings cost 4 logic
-                        if (md1.cardDisplay1.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
-                        {
-                            md1.cardDisplay1.card.buyPrice = 4;
-                        }
-
-                        // if The Early Bird Special was drawn this turn
-                        if (md1.cardDisplay1.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
-                        {
-                            // it buys for 3 pips
-                            md1.cardDisplay1.card.buyPrice = 3;
-                        }
-
-                        if (md1.cardDisplay1.card.buyPrice == 1)
-                        {
-                            players[myPlayerIndex].subPips(md1.cardDisplay1.card.buyPrice);
-                        }
-                        else
-                        {
-                            players[myPlayerIndex].subPips(md1.cardDisplay1.card.buyPrice - 1);
-                        }
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay1.updateCard(card);
-                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
-                        sendSuccessMessage(1);
-                        checkMarketPrice();
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
-                    }
-                    else
-                    {
-                        sendErrorMessage(6);
-                        //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
-                    }
+                    cd = md1.cardDisplay1;
                     break;
                 case 2:
-                    if (players[myPlayerIndex].pips >= md1.cardDisplay2.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
-                    {
-                        // All rings cost 4 logic
-                        if (md1.cardDisplay2.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
-                        {
-                            md1.cardDisplay2.card.buyPrice = 4;
-                        }
-
-                        // if The Early Bird Special was drawn this turn
-                        if (md1.cardDisplay2.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
-                        {
-                            // it buys for 3 pips
-                            md1.cardDisplay2.card.buyPrice = 3;
-                        }
-                        players[myPlayerIndex].subPips(md1.cardDisplay2.card.buyPrice);
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay2.updateCard(card);
-                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        //md1.cardDisplay2.gameObject.GetComponent<Market_Hover>().resetCard();
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
-                        sendSuccessMessage(1);
-                        checkMarketPrice();
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
-                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay2.card.buyPrice, 1);
-                    }
-                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay2.card.buyPrice - 1))
-                    {
-                        if (md1.cardDisplay2.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
-                        {
-                            sendErrorMessage(6);
-                            return;
-                        }
-                        // All rings cost 4 logic
-                        if (md1.cardDisplay2.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
-                        {
-                            md1.cardDisplay2.card.buyPrice = 4;
-                        }
-
-                        // if The Early Bird Special was drawn this turn
-                        if (md1.cardDisplay2.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
-                        {
-                            // it buys for 3 pips
-                            md1.cardDisplay2.card.buyPrice = 3;
-                        }
-
-                        if (md1.cardDisplay2.card.buyPrice - 1 == 0)
-                        {
-                            players[myPlayerIndex].subPips(md1.cardDisplay2.card.buyPrice);
-                        }
-                        else
-                        {
-                            players[myPlayerIndex].subPips(md1.cardDisplay2.card.buyPrice - 1);
-                        }
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay2.updateCard(card);
-                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
-                        sendSuccessMessage(1);
-                        checkMarketPrice();
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
-                    }
-                    else
-                    {
-                        sendErrorMessage(6);
-                    }
+                    cd = md1.cardDisplay2;
                     break;
                 case 3:
-                    if (players[myPlayerIndex].pips >= md1.cardDisplay3.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
-                    {
-                        // All rings cost 4 logic
-                        if (md1.cardDisplay3.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
-                        {
-                            md1.cardDisplay3.card.buyPrice = 4;
-                        }
-
-                        // if The Early Bird Special was drawn this turn
-                        if (md1.cardDisplay3.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
-                        {
-                            // it buys for 3 pips
-                            md1.cardDisplay3.card.buyPrice = 3;
-                        }
-                        players[myPlayerIndex].subPips(md1.cardDisplay3.card.buyPrice);
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay3.updateCard(card);
-                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
-                        sendSuccessMessage(1);
-                        checkMarketPrice();
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
-                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
-                    }
-                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay3.card.buyPrice - 1))
-                    {
-                        if (md1.cardDisplay3.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
-                        {
-                            sendErrorMessage(6);
-                            return;
-                        }
-                        // All rings cost 4 logic
-                        if (md1.cardDisplay3.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
-                        {
-                            md1.cardDisplay3.card.buyPrice = 4;
-                        }
-
-                        // if The Early Bird Special was drawn this turn
-                        if (md1.cardDisplay3.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
-                        {
-                            // it buys for 3 pips
-                            md1.cardDisplay3.card.buyPrice = 3;
-                        }
-
-                        if (md1.cardDisplay3.card.buyPrice - 1 == 0)
-                        {
-                            players[myPlayerIndex].subPips(md1.cardDisplay3.card.buyPrice);
-                        }
-                        else
-                        {
-                            players[myPlayerIndex].subPips(md1.cardDisplay3.card.buyPrice - 1);
-                        }
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay3.updateCard(card);
-                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        // md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
-                        sendSuccessMessage(1);
-                        checkMarketPrice();
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
-                    }
-                    else
-                    {
-                        sendErrorMessage(6);
-                        //md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
-                    }
+                    cd = md1.cardDisplay3;
                     break;
                 case 7:
-                    if (players[myPlayerIndex].pips >= md1.cardDisplay4.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
-                    {
-                        // All rings cost 4 logic
-                        if (md1.cardDisplay4.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
-                        {
-                            md1.cardDisplay4.card.buyPrice = 4;
-                        }
-
-                        // if The Early Bird Special was drawn this turn
-                        if (md1.cardDisplay4.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
-                        {
-                            // it buys for 3 pips
-                            md1.cardDisplay4.card.buyPrice = 3;
-                        }
-                        players[myPlayerIndex].subPips(md1.cardDisplay4.card.buyPrice);
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay4.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay4.updateCard(card);
-                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
-                        sendSuccessMessage(1);
-                        checkMarketPrice();
-                        players[myPlayerIndex].decoderBonus = true;
-                        players[myPlayerIndex].checkDecoderBonus();
-
-
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
-                        // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
-                    }
-                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md1.cardDisplay4.card.buyPrice - 1))
-                    {
-                        if (md1.cardDisplay4.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
-                        {
-                            sendErrorMessage(6);
-                            return;
-                        }
-                        // All rings cost 4 logic
-                        if (md1.cardDisplay4.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
-                        {
-                            md1.cardDisplay4.card.buyPrice = 4;
-                        }
-
-                        // if The Early Bird Special was drawn this turn
-                        if (md1.cardDisplay4.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
-                        {
-                            // it buys for 3 pips
-                            md1.cardDisplay4.card.buyPrice = 3;
-                        }
-
-                        if (md1.cardDisplay4.card.buyPrice - 1 == 0)
-                        {
-                            players[myPlayerIndex].subPips(md1.cardDisplay4.card.buyPrice);
-                        }
-                        else
-                        {
-                            players[myPlayerIndex].subPips(md1.cardDisplay4.card.buyPrice - 1);
-                        }
-                        players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay4.card);
-                        Card card = md1.popCard();
-                        md1.cardDisplay4.updateCard(card);
-                        //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
-                        // md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
-                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
-                        sendSuccessMessage(1);
-                        checkMarketPrice();
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
-                    }
-                    else
-                    {
-                        sendErrorMessage(6);
-                        //md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
-                    }
+                    cd = md1.cardDisplay4;
                     break;
                 default:
                     Debug.Log("MarketDeck Error!");
                     break;
             }
+
+            if (players[myPlayerIndex].pips >= cd.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
+            {
+                // All rings cost 4 logic
+                if (cd.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
+                {
+                    cd.card.buyPrice = 4;
+                }
+
+                // if The Early Bird Special was drawn this turn
+                if (cd.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                {
+                    // it buys for 3 pips
+                    cd.card.buyPrice = 3;
+                }
+                players[myPlayerIndex].subPips(cd.card.buyPrice);
+                players[myPlayerIndex].deck.putCardOnTop(cd.card);
+                Card card = md1.popCard();
+                if ((card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia") && md1.cardInt == 7)
+                {
+                    cd.card = card;
+                    cd.artworkImage.sprite = card.cardSprite;
+                }
+                else
+                    cd.updateCard(card);
+                //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                sendSuccessMessage(1);
+                checkMarketPrice();
+                if(md1.cardInt == 7)
+                    players[myPlayerIndex].decoderBonus = true;
+                players[myPlayerIndex].checkDecoderBonus();
+
+
+                if (players[myPlayerIndex].isReets)
+                    players[myPlayerIndex].checkReetsCondition();
+                // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay3.card.buyPrice, 1);
+            }
+            else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (cd.card.buyPrice - 1))
+            {
+                if (cd.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                {
+                    sendErrorMessage(6);
+                    return;
+                }
+                // All rings cost 4 logic
+                if (cd.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
+                {
+                    cd.card.buyPrice = 4;
+                }
+
+                // if The Early Bird Special was drawn this turn
+                if (cd.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                {
+                    // it buys for 3 pips
+                    cd.card.buyPrice = 3;
+                }
+
+                if (cd.card.buyPrice - 1 == 0)
+                {
+                    players[myPlayerIndex].subPips(cd.card.buyPrice);
+                }
+                else
+                {
+                    players[myPlayerIndex].subPips(cd.card.buyPrice - 1);
+                }
+                players[myPlayerIndex].deck.putCardOnTop(cd.card);
+                if (cd.crucibleCards.Count > 0)
+                {
+                    Debug.Log("Crucible card is being popped out of list");
+                    Card card = cd.crucibleCards[0];
+                    cd.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        cd.card = card;
+                        cd.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        cd.updateCard(card);
+                }
+                else
+                {
+                    Card card = cd.card;
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        cd.card = card;
+                        cd.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                    {
+                        card = md1.popCard();
+                        cd.updateCard(card);
+                    }
+                }
+                //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                sendSuccessMessage(1);
+                checkMarketPrice();
+                if (players[myPlayerIndex].isReets)
+                    players[myPlayerIndex].checkReetsCondition();
+            }
+            else
+            {
+                sendErrorMessage(6);
+                //md1.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
+            }
+
+            /*
+            if (players[myPlayerIndex].pips >= cd.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
+            {
+                // All rings cost 4 logic
+                if (cd.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
+                {
+                    cd.card.buyPrice = 4;
+                }
+
+                // if The Early Bird Special was drawn this turn
+                if (cd.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                {
+                    // it buys for 3 pips
+                    cd.card.buyPrice = 3;
+                }
+                players[myPlayerIndex].subPips(cd.card.buyPrice);
+                players[myPlayerIndex].deck.putCardOnTop(cd.card);
+                Card card = md1.popCard();
+                md1.cardDisplay1.updateCard(card);
+                //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                sendSuccessMessage(1);
+                checkMarketPrice();
+                if (players[myPlayerIndex].isReets)
+                    players[myPlayerIndex].checkReetsCondition();
+                // bool connected = networkManager.sendBuyRequest(md1.cardInt, md1.cardDisplay1.card.buyPrice, 1);
+                // SALTIMBOCCA LOGIC
+            }
+            else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (cd.card.buyPrice - 1))
+            {
+                if (cd.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
+                {
+                    sendErrorMessage(6);
+                    return;
+                }
+                // All rings cost 4 logic
+                if (cd.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
+                {
+                    cd.card.buyPrice = 4;
+                }
+
+                // if The Early Bird Special was drawn this turn
+                if (cd.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
+                {
+                    // it buys for 3 pips
+                    cd.card.buyPrice = 3;
+                }
+
+                if (cd.card.buyPrice == 1)
+                {
+                    players[myPlayerIndex].subPips(cd.card.buyPrice);
+                }
+                else
+                {
+                    players[myPlayerIndex].subPips(cd.card.buyPrice - 1);
+                }
+                players[myPlayerIndex].deck.putCardOnTop(cd.card);
+                Card card = md1.popCard();
+                cd.updateCard(card);
+                //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+                sendSuccessMessage(1);
+                checkMarketPrice();
+                if (players[myPlayerIndex].isReets)
+                    players[myPlayerIndex].checkReetsCondition();
+            }
+            else
+            {
+                sendErrorMessage(6);
+                //md1.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
+            }
+            */
         }
     }
 
@@ -7480,9 +7385,15 @@ public class GameManager : MonoBehaviour
                                 md2.cardDisplay4.updateCard(card);
                         }
                         else
-                        {
+                        {                            
                             Card card = md2.popCard();
-                            md2.cardDisplay4.updateCard(card);
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                            {
+                                md2.cardDisplay4.card = card;
+                                md2.cardDisplay4.artworkImage.sprite = card.cardSprite;
+                            }
+                            else
+                                md2.cardDisplay4.updateCard(card);                         
                         }
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
@@ -7908,8 +7819,17 @@ public class GameManager : MonoBehaviour
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SavoryLayerCake")
             {
                 // Heals for +3 HP if trashed
+                Debug.Log("Savory Layer Cake bonus triggered!!!");
                 players[myPlayerIndex].addHealth(3);
             }
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Spoonful of Ambrosia")
+            {
+                Debug.Log("Spoonful of Ambrosia bonus triggered!!!");
+                players[myPlayerIndex].hpCubes++;
+                players[myPlayerIndex].updateHealthUI();
+            }
+
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality != "Starter")
             {
                 players[myPlayerIndex].cardsTrashed++;
@@ -7977,6 +7897,14 @@ public class GameManager : MonoBehaviour
                 // Heals for +3 HP if trashed
                 players[myPlayerIndex].addHealth(3);
             }
+
+            if (cd.card.cardName == "Spoonful of Ambrosia")
+            {
+                Debug.Log("Spoonful of Ambrosia bonus triggered!!!");
+                players[myPlayerIndex].hpCubes++;
+                players[myPlayerIndex].updateHealthUI();
+            }
+
             if (cd.card.cardQuality != "Starter")
             {
                 players[myPlayerIndex].cardsTrashed++;

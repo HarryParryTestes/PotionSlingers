@@ -80,31 +80,60 @@ public class CardDisplay : MonoBehaviour
 
     public IEnumerator updateCrucibleCards(GameObject obj, string cardName)
     {
+        // GameObject obj2;
+
         yield return new WaitForSeconds(.10f);
         foreach (Card cd in crucibleCards)
         {
             // cd.updateCard(GameManager.manager.md2.popCard());
-            Debug.Log("Animation happening");
+            Debug.Log("Animation happening");           
 
             // GameManager.manager.playerHolster.cardList[0].gameObject
-            GameObject obj2 = Instantiate(GameManager.manager.md1.cardDisplay2.transform.parent.gameObject,
+            if (cardName == "Crucible")
+            {
+                GameObject obj2 = Instantiate(GameManager.manager.md1.cardDisplay2.transform.parent.gameObject,
                         GameManager.manager.md2.cardDisplay4.transform.parent.gameObject.transform.position,
                         GameManager.manager.md2.cardDisplay4.transform.parent.gameObject.transform.rotation,
                         GameManager.manager.md2.cardDisplay4.transform.parent.gameObject.transform);
-            // obj2.SetActive(true);
-            obj2.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
-            GameManager.manager.FadeIn(obj2);
-            obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().updateCard(cd);
-            obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().artworkImage.color = GameManager.manager.whiteColor;
 
-            // obj2.transform.localScale = new Vector3(0.2f, 0.2f, -0.2f);
-            obj2.transform.DOJump(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y), 400f, 1, 1f, false);
-            obj2.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
-            yield return new WaitForSeconds(1f);
-            // Might remove this to stop some UI bugs from happening, you should maybe reimplement this at some point
-            // obj.transform.DOMove(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
-            obj.GetComponent<CardDisplay>().updateCard(cd);
-            Destroy(obj2);
+                // obj2.SetActive(true);
+                obj2.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
+                GameManager.manager.FadeIn(obj2);
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().updateCard(cd);
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().artworkImage.color = GameManager.manager.whiteColor;
+
+                // obj2.transform.localScale = new Vector3(0.2f, 0.2f, -0.2f);
+                obj2.transform.DOJump(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y), 400f, 1, 1f, false);
+                obj2.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+                yield return new WaitForSeconds(1f);
+                // Might remove this to stop some UI bugs from happening, you should maybe reimplement this at some point
+                // obj.transform.DOMove(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+                obj.GetComponent<CardDisplay>().updateCard(cd);
+                Destroy(obj2);
+            }
+
+            if (cardName == "Spoonful of Ambrosia")
+            {
+                GameObject obj2 = Instantiate(GameManager.manager.md2.cardDisplay2.transform.parent.gameObject,
+                        GameManager.manager.md1.cardDisplay4.transform.parent.gameObject.transform.position,
+                        GameManager.manager.md1.cardDisplay4.transform.parent.gameObject.transform.rotation,
+                        GameManager.manager.md1.cardDisplay4.transform.parent.gameObject.transform);
+
+                // obj2.SetActive(true);
+                obj2.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
+                GameManager.manager.FadeIn(obj2);
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().updateCard(cd);
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().artworkImage.color = GameManager.manager.whiteColor;
+
+                // obj2.transform.localScale = new Vector3(0.2f, 0.2f, -0.2f);
+                obj2.transform.DOJump(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y), 400f, 1, 1f, false);
+                obj2.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+                yield return new WaitForSeconds(1f);
+                // Might remove this to stop some UI bugs from happening, you should maybe reimplement this at some point
+                // obj.transform.DOMove(new Vector2(obj.transform.parent.position.x, obj.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+                obj.GetComponent<CardDisplay>().updateCard(cd);
+                Destroy(obj2);
+            }            
         }
         if(cardName == "Crucible")
             crucibleCards[1] = GameManager.manager.crucibleCard;
@@ -137,8 +166,17 @@ public class CardDisplay : MonoBehaviour
             {
                 Debug.Log("CRUCIBLE CRUCIBLE CRUCIBLE CRUCIBLE CRUCIBLE");
                 // Add two cards to display on top of market card display
-                crucibleCards.Add(GameManager.manager.md2.popCard());
-                crucibleCards.Add(GameManager.manager.md2.popCard());
+                if (card.cardName == "Crucible")
+                {
+                    crucibleCards.Add(GameManager.manager.md2.popCard());
+                    crucibleCards.Add(GameManager.manager.md2.popCard());
+                }
+
+                if (card.cardName == "Spoonful of Ambrosia")
+                {
+                    crucibleCards.Add(GameManager.manager.md1.popCard());
+                    crucibleCards.Add(GameManager.manager.md1.popCard());
+                }
                 // we'll see how this ends up working
                 // StartCoroutine(updateCrucibleCards(gameObject));
                 StartCoroutine(updateCrucibleCards(gameObject, card.cardName));

@@ -1626,6 +1626,15 @@ public class CardPlayer : MonoBehaviour
             damage += 2;
         }
 
+        // Vessel Bonus : Heal 3 HP
+        if ((selectedCard.vPotion1.card.cardName == "Fountainous Ale" || selectedCard.vPotion2.card.cardName == "Fountainous Ale"))
+        {
+            if (healBonus)
+                addHealth(6);
+            else
+                addHealth(3);
+        }
+
         // Hot + Wet Bonus
         // It's only two cards
         if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
@@ -2733,6 +2742,14 @@ public class CardPlayer : MonoBehaviour
             addHealth(3);
         }
 
+        if (selectedCard.card.cardName == "Fountainous Ale")
+        {
+            if (healBonus)
+                addHealth(4);
+            else
+                addHealth(2);
+        }
+
         // Throw Bonus: +1 Pip
         if (selectedCard.card.cardName == "VintageAromaticKate" ||
             selectedCard.card.cardName == "JarFullOfGlitter" ||
@@ -2955,6 +2972,7 @@ public class CardPlayer : MonoBehaviour
         return newDamage >= 0 ? newDamage : 0;
     }
 
+    // WHEN YOU IMPLEMENT HATS THAT CHANGE HOW THINGS HEAL, DO IT HERE!!!
     public void addHealth(int health)
     {
         hp += health;

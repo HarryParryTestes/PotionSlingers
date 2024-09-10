@@ -359,7 +359,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
                 if (obj2 != null)
                     Destroy(obj2);
-                // LOGIC FOR TWO CARDS ON TOP OF CRUCIBLE
+                // LOGIC FOR ONE CARD ON TOP OF CRUCIBLE
                 transform.DOScale(4f, 0.5f).SetId(gameObject.name);
                 // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
                 transform.DOMove(new Vector3(960 * GameManager.manager.widthRatio + (300 * GameManager.manager.widthRatio), 550 * GameManager.manager.heightRatio, 0),

@@ -107,6 +107,7 @@ public class Deck : MonoBehaviour
     {
         if(deckList.Count >= 1)
         {
+            // this triggers ambrosia and crucible?
             cardDisplay.updateCard(deckList[0]);
         }
         else
