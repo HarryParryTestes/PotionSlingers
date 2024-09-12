@@ -4793,9 +4793,27 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Original damage: " + damage);
                 damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
-                // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
+                bool stone = false;
 
-                damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
+                foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
+                {
+                    if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
+                        stone = true;
+                }
+
+                if(!stone)
+                    damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                else
+                {
+                    Debug.Log("STONE STONE STONE STONE STONE");
+
+                    // there are only two potions so far that heal instead of doing base damage
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "ATearofBlackRain" ||
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Fountainous Ale")
+                        players[myPlayerIndex].addHealth(2);
+                }                   
+
                 Debug.Log("Damage after thrower bonuses: " + damage);
                 damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
                 Debug.Log("Damage after defensive bonuses: " + damage);

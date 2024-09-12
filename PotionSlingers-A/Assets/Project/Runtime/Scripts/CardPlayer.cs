@@ -591,30 +591,17 @@ public class CardPlayer : MonoBehaviour
         foreach (CardDisplay cd in holster.cardList)
         {
             // && decoderBonus == false
+            // make sure you don't trigger it if a computer player has it in their holster
             if (cd.card.cardName == "Decoder Ring" && decoderBonus == false)
             {
                 Debug.Log("Decoder Ring Bonus!!!");
-                /*
-                if (!GameManager.manager.md1.cardDisplay4.gameObject.activeInHierarchy)
+                if(GetComponent<ComputerPlayer>() != null)
                 {
-                    Color newColor = GameManager.manager.md1.cardDisplay4.artworkImage.color;
-                    newColor.a = 0;
-                    GameManager.manager.md1.cardDisplay4.artworkImage.color = newColor;
-                    GameManager.manager.md1.cardDisplay4.artworkImage.DOKill();
-                    GameManager.manager.md1.cardDisplay4.gameObject.SetActive(true);
-                    GameManager.manager.md1.cardDisplay4.artworkImage.DOFade(1, 0.5f);
+                    // Computer player, make sure to disable these
+                    GameManager.manager.md1.cardDisplay4.gameObject.SetActive(false);
+                    GameManager.manager.md2.cardDisplay4.gameObject.SetActive(false);
+                    return;
                 }
-
-                if (!GameManager.manager.md2.cardDisplay4.gameObject.activeInHierarchy)
-                {
-                    Color newColor2 = GameManager.manager.md2.cardDisplay4.artworkImage.color;
-                    newColor2.a = 0;
-                    GameManager.manager.md2.cardDisplay4.artworkImage.color = newColor2;
-                    GameManager.manager.md2.cardDisplay4.artworkImage.DOKill();
-                    GameManager.manager.md2.cardDisplay4.gameObject.SetActive(true);
-                    GameManager.manager.md2.cardDisplay4.artworkImage.DOFade(1, 0.5f);
-                }
-                */
 
                 GameManager.manager.md1.cardDisplay4.gameObject.SetActive(true);
                 GameManager.manager.md1.cardDisplay4.fadeMarketCard();
@@ -1492,15 +1479,30 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Stone Ring logic will simply pass the damage of the potion(s) without checking any of the card text effects
+        bool stone = false;
 
-        // checking the potions for throw bonuses
-        damage = checkBonus(damage, selectedCard.vPotion1);
-        damage = checkBonus(damage, selectedCard.vPotion2);
-        if (selectedCard.card.cardEffect == "FourLoad")
+        // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
+        foreach (CardDisplay cd in holster.cardList)
         {
-            damage = checkBonus(damage, selectedCard.vPotion3);
-            damage = checkBonus(damage, selectedCard.vPotion4);
+            if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
+                stone = true;
         }
+
+        if (!stone)
+        {
+            // checking the potions for throw bonuses
+            damage = checkBonus(damage, selectedCard.vPotion1);
+            damage = checkBonus(damage, selectedCard.vPotion2);
+            if (selectedCard.card.cardEffect == "FourLoad")
+            {
+                damage = checkBonus(damage, selectedCard.vPotion3);
+                damage = checkBonus(damage, selectedCard.vPotion4);
+            }
+        } else
+        {
+            Debug.Log("STONE STONE STONE STONE STONE");
+        }
+
 
         // Drinking Horn of a Sea Unicorn's Tooth
         if (selectedCard.card.cardName == "Drinking Horn of a Sea Unicorn's Tooth")
@@ -1621,7 +1623,8 @@ public class CardPlayer : MonoBehaviour
         // Vessel Bonus: +2 Damage
         if ((selectedCard.vPotion1.card.cardName == "RefectionOfOnesGnarledEmotionalSelf" || selectedCard.vPotion2.card.cardName == "RefectionOfOnesGnarledEmotionalSelf") ||
             (selectedCard.vPotion1.card.cardName == "SoupMadeOfGunpowder" || selectedCard.vPotion2.card.cardName == "SoupMadeOfGunpowder") ||
-            (selectedCard.vPotion1.card.cardName == "PourOfReallyAngryAcid" || selectedCard.vPotion2.card.cardName == "PourOfReallyAngryAcid"))
+            (selectedCard.vPotion1.card.cardName == "PourOfReallyAngryAcid" || selectedCard.vPotion2.card.cardName == "PourOfReallyAngryAcid") ||
+            (selectedCard.vPotion1.card.cardName == "PureNoiseInLiquidForm" || selectedCard.vPotion2.card.cardName == "PureNoiseInLiquidForm"))
         {
             damage += 2;
         }
@@ -2430,7 +2433,11 @@ public class CardPlayer : MonoBehaviour
             {
                 // cp.deck.putCardOnTop(starterPotionCard);
                 int random = GameManager.manager.rng.Next(0, GameManager.manager.starterPotionCards.Count);
-                GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCards[random]);
+                if (Game.storyMode && GameManager.manager.players[i].GetComponent<ComputerPlayer>() != null
+                    && GameManager.manager.players[i].charName != "Saltimbocca")
+                    continue;
+                else
+                    GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCards[random]);
                 // GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCard);
             }
         }
