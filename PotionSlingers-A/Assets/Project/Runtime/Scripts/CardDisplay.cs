@@ -71,6 +71,14 @@ public class CardDisplay : MonoBehaviour
     //     }
     // }
 
+    public string checkStatus()
+    {
+        if (spicy)
+            return "spicy";
+        else
+            return "none";
+    }
+
     public void makeSpicy()
     {
         spicy = true;
@@ -99,7 +107,9 @@ public class CardDisplay : MonoBehaviour
                 // obj2.SetActive(true);
                 obj2.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
                 GameManager.manager.FadeIn(obj2);
-                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().updateCard(cd);
+                // obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().updateCard(cd);
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = cd;
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().artworkImage.sprite = cd.cardSprite;
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().artworkImage.color = GameManager.manager.whiteColor;
 
                 // obj2.transform.localScale = new Vector3(0.2f, 0.2f, -0.2f);
@@ -122,7 +132,9 @@ public class CardDisplay : MonoBehaviour
                 // obj2.SetActive(true);
                 obj2.transform.localScale = new Vector3(0.95f, 0.95f, 0.95f);
                 GameManager.manager.FadeIn(obj2);
-                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().updateCard(cd);
+                // obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().updateCard(cd);
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = cd;
+                obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().artworkImage.sprite = cd.cardSprite;
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().artworkImage.color = GameManager.manager.whiteColor;
 
                 // obj2.transform.localScale = new Vector3(0.2f, 0.2f, -0.2f);
@@ -141,7 +153,7 @@ public class CardDisplay : MonoBehaviour
             crucibleCards[1] = GameManager.manager.ambrosiaCard;
     }
 
-    public void updateCard(Card card)
+    public void updateCard(Card card, string status = null)
     {
         artworkImage = this.GetComponent<Image>();
         this.card = card;
@@ -158,6 +170,23 @@ public class CardDisplay : MonoBehaviour
             if (flames != null)
                 flames.SetActive(false);
         }
+
+        if(status != null)
+        {
+            if(status == "spicy")
+            {
+                spicy = true;
+                if (flames != null)
+                    flames.SetActive(true);
+            }
+
+            if (status == "none")
+            {
+                spicy = false;
+                if (flames != null)
+                    flames.SetActive(false);
+            }
+        }
         // trying something
         // might take this out for now.
         if(gameObject.GetComponent<DragCard>() != null)
@@ -165,22 +194,29 @@ public class CardDisplay : MonoBehaviour
             if ((card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia") && gameObject.GetComponent<DragCard>().market)
             {
                 Debug.Log("CRUCIBLE CRUCIBLE CRUCIBLE CRUCIBLE CRUCIBLE");
-                // Add two cards to display on top of market card display
-                if (card.cardName == "Crucible")
-                {
-                    crucibleCards.Add(GameManager.manager.md2.popCard());
-                    crucibleCards.Add(GameManager.manager.md2.popCard());
-                }
 
-                if (card.cardName == "Spoonful of Ambrosia")
+                if (gameObject.name == "CardDisplay (Special4)" ||
+                    gameObject.name == "CardDisplay (Potion4)")
                 {
-                    crucibleCards.Add(GameManager.manager.md1.popCard());
-                    crucibleCards.Add(GameManager.manager.md1.popCard());
-                }
-                // we'll see how this ends up working
-                // StartCoroutine(updateCrucibleCards(gameObject));
-                StartCoroutine(updateCrucibleCards(gameObject, card.cardName));
+                    Debug.Log("Crucible stuff occurred in fourth card");
+                } else
+                {
+                    // Add two cards to display on top of market card display
+                    if (card.cardName == "Crucible")
+                    {
+                        crucibleCards.Add(GameManager.manager.md2.popCard());
+                        crucibleCards.Add(GameManager.manager.md2.popCard());
+                    }
 
+                    if (card.cardName == "Spoonful of Ambrosia")
+                    {
+                        crucibleCards.Add(GameManager.manager.md1.popCard());
+                        crucibleCards.Add(GameManager.manager.md1.popCard());
+                    }
+                    // we'll see how this ends up working
+                    // StartCoroutine(updateCrucibleCards(gameObject));
+                    StartCoroutine(updateCrucibleCards(gameObject, card.cardName));
+                }
             }
         }      
 
@@ -196,6 +232,8 @@ public class CardDisplay : MonoBehaviour
             {
                 GetComponent<DragCard>().beforeDisappear();
             }
+
+            spicy = false;
                 
             this.gameObject.SetActive(false);
             

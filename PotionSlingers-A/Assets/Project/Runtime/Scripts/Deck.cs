@@ -9,6 +9,7 @@ public class Deck : MonoBehaviour
 {
     // the deck is uninitialized to begin with
     public List<Card> deckList;
+    public List<string> statuses;
     public CardDisplay cardDisplay;
     private Sprite sprite;
     public Card placeholder;
@@ -55,13 +56,33 @@ public class Deck : MonoBehaviour
     }
 
     // puts a card on the bottom of the deck
-    public void putCardOnBottom(Card card)
+    public void putCardOnBottom(Card card, string status = null)
     {
         deckList.Add(card);
         if(deckList.Count == 1)
         {
             updateCardSprite();
         }
+
+        if(status != null)
+        {
+            statuses.Add(status);
+        } else
+        {
+            statuses.Add("none");
+        }
+    }
+
+    public void putCardOnBottom(CardDisplay cd)
+    {
+        deckList.Add(cd.card);
+        if (deckList.Count == 1)
+        {
+            updateCardSprite();
+        }
+
+        statuses.Add(cd.checkStatus());
+        cd.spicy = false;
     }
 
     // puts a card on top of deck
@@ -70,20 +91,32 @@ public class Deck : MonoBehaviour
     {
         deckList.Insert(0, card);
         updateCardSprite();
+        statuses.Insert(0, "none");
     }
+
+    public void putCardOnTop(CardDisplay cd)
+    {
+        deckList.Insert(0, cd.card);
+        updateCardSprite();
+        statuses.Insert(0, cd.checkStatus());
+        cd.spicy = false;
+    }
+
     public Card popCard()
     {
         if (deckList.Count >= 1)
         {
             Card temp = deckList[0];
             deckList.RemoveAt(0);
+            string thing = statuses[0];
+            statuses.RemoveAt(0);
             if (temp.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
             {
                 // +1 damage if put in holster this turn
                 temp.effectAmount = 4;
             }
             //Debug.Log("Card popped: ");
-            updateCardSprite();
+            updateCardSprite(thing);
             return temp;
         }
         else
@@ -103,12 +136,28 @@ public class Deck : MonoBehaviour
     */
 
     // makes the sprite of the cardDisplay match the top card in the list
-    public void updateCardSprite()
+    public void updateCardSprite(string thing = null)
     {
         if(deckList.Count >= 1)
         {
-            // this triggers ambrosia and crucible?
-            cardDisplay.updateCard(deckList[0]);
+            if (thing == "spicy")
+            {
+                cardDisplay.spicy = true;
+                if(cardDisplay.flames != null)
+                {
+                    cardDisplay.flames.SetActive(true);
+                }
+            }
+            else
+            {
+                cardDisplay.spicy = false;
+                if (cardDisplay.flames != null)
+                {
+                    cardDisplay.flames.SetActive(false);
+                }
+            }
+
+            cardDisplay.updateCard(deckList[0]);            
         }
         else
         {
@@ -122,6 +171,10 @@ public class Deck : MonoBehaviour
     void Start()
     {
         buildDeck();
+        if (statuses.Count > 0)
+        {
+            statuses.RemoveAt(0);
+        }
     }
 
     // Update is called once per frame

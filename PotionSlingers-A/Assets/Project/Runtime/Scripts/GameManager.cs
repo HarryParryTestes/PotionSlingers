@@ -541,14 +541,82 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void handleSavedMarketStatuses()
+    {
+        // i'm too lazy to put these in lists lol
+        // this is very stupid
+        if (saveData.marketStatuses[0] == "spicy")
+            md1.cardDisplay1.makeSpicy();
+
+        if (saveData.marketStatuses[1] == "spicy")
+            md1.cardDisplay2.makeSpicy();
+
+        if (saveData.marketStatuses[2] == "spicy")
+            md1.cardDisplay3.makeSpicy();
+
+        if (saveData.marketStatuses[3] == "spicy")
+            md2.cardDisplay1.makeSpicy();
+
+        if (saveData.marketStatuses[4] == "spicy")
+            md2.cardDisplay2.makeSpicy();
+
+        if (saveData.marketStatuses[5] == "spicy")
+            md2.cardDisplay3.makeSpicy();
+    }
+
+    public void handleMarketStatuses()
+    {
+        saveData.marketStatuses.Clear();
+
+        // i'm too lazy to put these in lists lol
+        if (md1.cardDisplay1.spicy)
+            saveData.marketStatuses.Add("spicy");
+        else
+            saveData.marketStatuses.Add("none");
+
+        if (md1.cardDisplay2.spicy)
+            saveData.marketStatuses.Add("spicy");
+        else
+            saveData.marketStatuses.Add("none");
+
+        if (md1.cardDisplay3.spicy)
+            saveData.marketStatuses.Add("spicy");
+        else
+            saveData.marketStatuses.Add("none");
+
+        if (md2.cardDisplay1.spicy)
+            saveData.marketStatuses.Add("spicy");
+        else
+            saveData.marketStatuses.Add("none");
+
+        if (md2.cardDisplay2.spicy)
+            saveData.marketStatuses.Add("spicy");
+        else
+            saveData.marketStatuses.Add("none");
+
+        if (md2.cardDisplay3.spicy)
+            saveData.marketStatuses.Add("spicy");
+        else
+            saveData.marketStatuses.Add("none");
+    }
+
     public void saveGameManagerValues()
     {
         // saveData.playerHolster = playersHolster;
         saveData.cardDurabilities.Clear();
         saveData.cardStatuses.Clear();
+        saveData.deckStatuses.Clear();
         saveData.playerHolster.Clear();
         saveData.playerLoadedCards.Clear();
         int dummyCount = 1;
+
+        handleMarketStatuses();
+
+        foreach(string thing in players[0].deck.statuses)
+        {
+            saveData.deckStatuses.Add(thing);
+        }
+
         foreach (CardDisplay cd in playerHolster.cardList)
         {
             if (cd.spicy)
@@ -1762,6 +1830,9 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log(s);
                 }
+
+                handleSavedMarketStatuses();
+
                 // rework this
                 // CardDisplay cd in playerHolster.cardList
                 for (int i = 0; i < playerHolster.cardList.Count; i++)
@@ -1828,7 +1899,7 @@ public class GameManager : MonoBehaviour
                     {
                         if (card.name == saveData.playerDeck[i])
                         {
-                            players[0].deck.putCardOnBottom(card);
+                            players[0].deck.putCardOnBottom(card, saveData.deckStatuses[i]);
                         }
                     }
                 }
@@ -2568,12 +2639,28 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Card animation starting");
         GameObject obj = Instantiate(player.deck.gameObject, player.deck.gameObject.transform.position, player.deck.gameObject.transform.rotation, player.gameObject.transform);
+        /*
+        if (player.deck.statuses[0] == "spicy")
+        {
+            if (obj.GetComponent<CardDisplay>().flames != null)
+            {
+                obj.GetComponent<CardDisplay>().flames.SetActive(true);
+            }
+        } else
+        {
+            if (obj.GetComponent<CardDisplay>().flames != null)
+            {
+                obj.GetComponent<CardDisplay>().flames.SetActive(false);
+            }
+        }
+        */
+
         if (player.GetComponent<ComputerPlayer>() != null)
             obj.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
         obj.transform.DOJump(cd.gameObject.transform.position, 200f, 1, 0.5f, false);
 
         // MATTEO: Add holster fill sfx here!
-
+        string status = player.deck.statuses[0];
         Card card = player.deck.popCard();
 
         if(card.cardName == "EarlyBirdSpecial")
@@ -2585,14 +2672,14 @@ public class GameManager : MonoBehaviour
         // Come back to this to not just hardcode a value
         // make another variable on the scriptable objects that represents their max durability
         if (card.cardType == "Artifact")
-            cd.durability = 3;
+            cd.durability = 5;
 
         if (cd.GetComponent<DragCard>() != null)
             obj.transform.DORotate(cd.GetComponent<DragCard>().cardRotation, 0.5f);
         // obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
         yield return new WaitForSeconds(0.5f);
 
-        cd.updateCard(card);
+        cd.updateCard(card, status);
         obj.SetActive(false);
         Destroy(obj);
     }
@@ -2649,6 +2736,7 @@ public class GameManager : MonoBehaviour
         {
             playersDeck.Add(card.name);
         }
+
         // make something to store and save the data of the loaded cards in the holster
 
         // save the values at the end of each turn!
@@ -5013,17 +5101,17 @@ public class GameManager : MonoBehaviour
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Sunday Funnies")
                     {
                         Debug.Log("Sunday Funnies!");
-                        players[myPlayerIndex].deck.putCardOnTop(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
-                        players[myPlayerIndex].deck.putCardOnTop(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                        players[myPlayerIndex].deck.putCardOnTop(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1);
+                        players[myPlayerIndex].deck.putCardOnTop(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2);
                     }
                     else
                     {
-                        players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
-                        players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                        players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1);
+                        players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2);
                         if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardEffect == "FourLoad")
                         {
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card);
-                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card);
+                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3);
+                            players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4);
                         }
                     }
 
@@ -5452,7 +5540,7 @@ public class GameManager : MonoBehaviour
                 if (md1.cardDisplay1.crucibleCards.Count > 0)
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1);
                     card = md1.cardDisplay1.crucibleCards[0];
                     md1.cardDisplay1.crucibleCards.RemoveAt(0);
                     if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
@@ -5466,7 +5554,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1);
                     card = md1.popCard();
                     md1.cardDisplay1.updateCard(card);
                 }
@@ -5475,7 +5563,7 @@ public class GameManager : MonoBehaviour
                 if (md1.cardDisplay2.crucibleCards.Count > 0)
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2);
                     card = md1.cardDisplay2.crucibleCards[0];
                     md1.cardDisplay2.crucibleCards.RemoveAt(0);
                     if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
@@ -5489,7 +5577,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2);
                     card = md1.popCard();
                     md1.cardDisplay2.updateCard(card);
                 }
@@ -5499,7 +5587,7 @@ public class GameManager : MonoBehaviour
                 if (md1.cardDisplay3.crucibleCards.Count > 0)
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3);
                     card = md1.cardDisplay3.crucibleCards[0];
                     md1.cardDisplay3.crucibleCards.RemoveAt(0);
                     if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
@@ -5513,7 +5601,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3);
                     card = md1.popCard();
                     md1.cardDisplay3.updateCard(card);
                 }
@@ -5524,7 +5612,7 @@ public class GameManager : MonoBehaviour
                 if (md2.cardDisplay1.crucibleCards.Count > 0)
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
                     card = md2.cardDisplay1.crucibleCards[0];
                     md2.cardDisplay1.crucibleCards.RemoveAt(0);
                     if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
@@ -5538,7 +5626,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
                     card = md2.popCard();
                     md2.cardDisplay1.updateCard(card);
                 }
@@ -5550,7 +5638,7 @@ public class GameManager : MonoBehaviour
                 if (md2.cardDisplay2.crucibleCards.Count > 0)
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2);
                     card = md2.cardDisplay2.crucibleCards[0];
                     md2.cardDisplay2.crucibleCards.RemoveAt(0);
                     if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
@@ -5564,7 +5652,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2);
                     card = md2.popCard();
                     md2.cardDisplay2.updateCard(card);
                 }
@@ -5574,7 +5662,7 @@ public class GameManager : MonoBehaviour
                 if (md2.cardDisplay3.crucibleCards.Count > 0)
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3);
                     card = md2.cardDisplay3.crucibleCards[0];
                     md2.cardDisplay3.crucibleCards.RemoveAt(0);
                     if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
@@ -5588,7 +5676,7 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     // td.addCard(md2.cardDisplay1);
-                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                    players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3);
                     card = md2.popCard();
                     md2.cardDisplay3.updateCard(card);
                 }
@@ -6720,7 +6808,7 @@ public class GameManager : MonoBehaviour
                     {
                         // players[myPlayerIndex].pips -= md1.cardDisplay1.card.buyPrice;
                         cardPlayer.subPips(md1.cardDisplay1.card.buyPrice);
-                        playerDeck.putCardOnTop(md1.cardDisplay1.card);
+                        playerDeck.putCardOnTop(md1.cardDisplay1);
                         Card card = md1.popCard();
                         md1.cardDisplay1.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
@@ -6741,7 +6829,7 @@ public class GameManager : MonoBehaviour
                     if (cardPlayer.pips >= md1.cardDisplay2.card.buyPrice)
                     {
                         cardPlayer.subPips(md1.cardDisplay2.card.buyPrice);
-                        playerDeck.putCardOnTop(md1.cardDisplay2.card);
+                        playerDeck.putCardOnTop(md1.cardDisplay2);
                         Card card = md1.popCard();
                         md1.cardDisplay2.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
@@ -6762,7 +6850,7 @@ public class GameManager : MonoBehaviour
                     if (cardPlayer.pips >= md1.cardDisplay3.card.buyPrice)
                     {
                         cardPlayer.subPips(md1.cardDisplay3.card.buyPrice);
-                        playerDeck.putCardOnTop(md1.cardDisplay3.card);
+                        playerDeck.putCardOnTop(md1.cardDisplay3);
                         Card card = md1.popCard();
                         md1.cardDisplay3.updateCard(card);
                         StartCoroutine(waitThreeSeconds(dialog));
@@ -6848,7 +6936,10 @@ public class GameManager : MonoBehaviour
                     cd.card.buyPrice = 3;
                 }
                 players[myPlayerIndex].subPips(cd.card.buyPrice);
-                players[myPlayerIndex].deck.putCardOnTop(cd.card);
+                players[myPlayerIndex].deck.putCardOnTop(cd);
+                cd.spicy = false;
+                if (cd.flames != null)
+                    cd.flames.SetActive(false);
                 Card card = md1.popCard();
                 if ((card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia") && md1.cardInt == 7)
                 {
@@ -6898,7 +6989,7 @@ public class GameManager : MonoBehaviour
                 {
                     players[myPlayerIndex].subPips(cd.card.buyPrice - 1);
                 }
-                players[myPlayerIndex].deck.putCardOnTop(cd.card);
+                players[myPlayerIndex].deck.putCardOnTop(cd);
                 if (cd.crucibleCards.Count > 0)
                 {
                     Debug.Log("Crucible card is being popped out of list");
@@ -7076,7 +7167,7 @@ public class GameManager : MonoBehaviour
                             md2.cardDisplay1.card.buyPrice = 3;
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
                         if(md2.cardDisplay1.crucibleCards.Count > 0)
                         {
                             Debug.Log("Crucible card is being popped out of list");
@@ -7131,7 +7222,7 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice - 1);
                         }
                         
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
                         if (md2.cardDisplay1.crucibleCards.Count > 0)
                         {
                             Debug.Log("Crucible card is being popped out of list");
@@ -7182,7 +7273,7 @@ public class GameManager : MonoBehaviour
                             md2.cardDisplay2.card.buyPrice = 3;
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2);
 
                         if (md2.cardDisplay2.crucibleCards.Count > 0)
                         {
@@ -7238,7 +7329,7 @@ public class GameManager : MonoBehaviour
                         {
                             players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice - 1);
                         }
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2.card);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2);
                         if (md2.cardDisplay2.crucibleCards.Count > 0)
                         {
                             Debug.Log("Crucible card is being popped out of list");
@@ -7286,7 +7377,7 @@ public class GameManager : MonoBehaviour
                             md2.cardDisplay3.card.buyPrice = 3;
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3);
                         if (md2.cardDisplay3.crucibleCards.Count > 0)
                         {
                             Debug.Log("Crucible card is being popped out of list");
@@ -7341,7 +7432,7 @@ public class GameManager : MonoBehaviour
                         {
                             players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice - 1);
                         }
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3.card);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3);
                         if (md2.cardDisplay3.crucibleCards.Count > 0)
                         {
                             Debug.Log("Crucible card is being popped out of list");
@@ -7388,7 +7479,7 @@ public class GameManager : MonoBehaviour
                             md2.cardDisplay4.card.buyPrice = 3;
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4.card);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4);
                         if (md2.cardDisplay4.crucibleCards.Count > 0)
                         {
                             Debug.Log("Crucible card is being popped out of list");
@@ -7452,7 +7543,7 @@ public class GameManager : MonoBehaviour
                         {
                             players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice - 1);
                         }
-                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4.card);
+                        players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4);
                         if (md2.cardDisplay4.crucibleCards.Count > 0)
                         {
                             Debug.Log("Crucible card is being popped out of list");
