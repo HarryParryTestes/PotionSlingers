@@ -1899,7 +1899,10 @@ public class GameManager : MonoBehaviour
                     {
                         if (card.name == saveData.playerDeck[i])
                         {
-                            players[0].deck.putCardOnBottom(card, saveData.deckStatuses[i]);
+                            if(saveData.deckStatuses[i] == null)
+                                players[0].deck.putCardOnBottom(card, "none");
+                            else 
+                                players[0].deck.putCardOnBottom(card, saveData.deckStatuses[i]);
                         }
                     }
                 }
