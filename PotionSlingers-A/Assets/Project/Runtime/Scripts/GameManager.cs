@@ -6937,18 +6937,45 @@ public class GameManager : MonoBehaviour
                 }
                 players[myPlayerIndex].subPips(cd.card.buyPrice);
                 players[myPlayerIndex].deck.putCardOnTop(cd);
+
                 cd.spicy = false;
                 if (cd.flames != null)
                     cd.flames.SetActive(false);
-                Card card = md1.popCard();
-                if ((card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia") && md1.cardInt == 7)
+                // Card card = md1.popCard();
+
+                if (cd.crucibleCards.Count > 0)
                 {
-                    cd.card = card;
-                    cd.artworkImage.sprite = card.cardSprite;
+                    Debug.Log("Crucible card is being popped out of list");
+                    Card card = cd.crucibleCards[0];
+                    cd.crucibleCards.RemoveAt(0);
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        cd.card = card;
+                        cd.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                        cd.updateCard(card);
                 }
                 else
+                {
+
+                    Card card = md1.popCard();
                     cd.updateCard(card);
-                //players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    /*
+                    Card card = cd.card;
+                    if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                    {
+                        cd.card = card;
+                        cd.artworkImage.sprite = card.cardSprite;
+                    }
+                    else
+                    {
+                        card = md1.popCard();
+                        cd.updateCard(card);
+                    }
+                    */
+                }
+
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                 sendSuccessMessage(1);
                 checkMarketPrice();
@@ -7883,10 +7910,13 @@ public class GameManager : MonoBehaviour
             if (dialog.textBoxCounter != 22 && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(19);
-                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
             // add animation here
+
+            Debug.Log("Triggering trash in tutorial!");
+
             GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
                         playerHolster.cardList[selectedCardInt - 1].gameObject.transform.position,
                         playerHolster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
@@ -7975,6 +8005,31 @@ public class GameManager : MonoBehaviour
     public void trashCard(CardDisplay cd)
     {
         Debug.Log("Trash Card");
+
+        if (Game.tutorial)
+        {
+            if (dialog.textBoxCounter != 22 && dialog.textBoxCounter < 39)
+            {
+                sendErrorMessage(19);
+                // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                return;
+            }
+            // add animation here
+
+            Debug.Log("Triggering trash in tutorial!");
+
+            GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.transform.position,
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
+                        playerHolster.cardList[selectedCardInt - 1].gameObject.transform);
+
+            StartCoroutine(MoveToTrash(obj));
+            td.addCard(cd);
+            StartCoroutine(waitThreeSeconds(dialog));
+            // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+            sendSuccessMessage(9);
+            return;
+        }
 
         if (Game.multiplayer)
         {

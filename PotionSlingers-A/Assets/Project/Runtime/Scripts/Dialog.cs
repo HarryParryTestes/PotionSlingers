@@ -284,7 +284,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 37)
         {
-            textInfo = "The object of the game is to beat your opponents down" +
+            textInfo = "The object of the game is to beat your opponents down " +
                 "to 0 health and take all of their Essence Cubes!\n\n" +
                 "The last person standing is declared the winner!";
             ActivateText(dialogBox); 
