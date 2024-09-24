@@ -543,30 +543,76 @@ public class GameManager : MonoBehaviour
 
     public void handleSavedMarketStatuses()
     {
+        Card card = null;
         // i'm too lazy to put these in lists lol
         // this is very stupid
         if (saveData.marketStatuses[0] == "spicy")
             md1.cardDisplay1.makeSpicy();
 
+        card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCards[0]);
+        // do it this way to not retrigger crucible or spoonful of ambrosia
+        if (card != null)
+        {
+            md1.cardDisplay1.GetComponent<Image>().sprite = card.cardSprite;
+            md1.cardDisplay1.card = card;
+        }
+            
+
         if (saveData.marketStatuses[1] == "spicy")
             md1.cardDisplay2.makeSpicy();
+
+        card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCards[1]);
+        if (card != null)
+        {
+            md1.cardDisplay2.GetComponent<Image>().sprite = card.cardSprite;
+            md1.cardDisplay2.card = card;
+        }
 
         if (saveData.marketStatuses[2] == "spicy")
             md1.cardDisplay3.makeSpicy();
 
+        card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCards[2]);
+        if (card != null)
+        {
+            md1.cardDisplay3.GetComponent<Image>().sprite = card.cardSprite;
+            md1.cardDisplay3.card = card;
+        }
+
         if (saveData.marketStatuses[3] == "spicy")
             md2.cardDisplay1.makeSpicy();
+
+        card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCards[3]);
+        if (card != null)
+        {
+            md2.cardDisplay1.GetComponent<Image>().sprite = card.cardSprite;
+            md2.cardDisplay1.card = card;
+        }
 
         if (saveData.marketStatuses[4] == "spicy")
             md2.cardDisplay2.makeSpicy();
 
+        card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCards[4]);
+        if (card != null)
+        {
+            md2.cardDisplay2.GetComponent<Image>().sprite = card.cardSprite;
+            md2.cardDisplay2.card = card;
+        }
+
         if (saveData.marketStatuses[5] == "spicy")
             md2.cardDisplay3.makeSpicy();
+
+        card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCards[5]);
+        if (card != null)
+        {
+            md2.cardDisplay3.GetComponent<Image>().sprite = card.cardSprite;
+            md2.cardDisplay3.card = card;
+        }
     }
 
     public void handleMarketStatuses()
     {
         saveData.marketStatuses.Clear();
+        saveData.marketCards.Clear();
 
         // i'm too lazy to put these in lists lol
         if (md1.cardDisplay1.spicy)
@@ -574,30 +620,231 @@ public class GameManager : MonoBehaviour
         else
             saveData.marketStatuses.Add("none");
 
+        saveData.marketCards.Add(md1.cardDisplay1.card.cardName);
+
         if (md1.cardDisplay2.spicy)
             saveData.marketStatuses.Add("spicy");
         else
             saveData.marketStatuses.Add("none");
+
+        saveData.marketCards.Add(md1.cardDisplay2.card.cardName);
 
         if (md1.cardDisplay3.spicy)
             saveData.marketStatuses.Add("spicy");
         else
             saveData.marketStatuses.Add("none");
 
+        saveData.marketCards.Add(md1.cardDisplay3.card.cardName);
+
         if (md2.cardDisplay1.spicy)
             saveData.marketStatuses.Add("spicy");
         else
             saveData.marketStatuses.Add("none");
+
+        saveData.marketCards.Add(md2.cardDisplay1.card.cardName);
 
         if (md2.cardDisplay2.spicy)
             saveData.marketStatuses.Add("spicy");
         else
             saveData.marketStatuses.Add("none");
 
+        saveData.marketCards.Add(md2.cardDisplay2.card.cardName);
+
         if (md2.cardDisplay3.spicy)
             saveData.marketStatuses.Add("spicy");
         else
             saveData.marketStatuses.Add("none");
+
+        saveData.marketCards.Add(md2.cardDisplay3.card.cardName);
+    }
+
+    public void handleMarketCrucibleCards()
+    {
+        Debug.Log("handling crucible cards!!!");
+        saveData.marketCrucibleCards.Clear();
+
+        if (md1.cardDisplay1.crucibleCards.Count > 1)
+        {
+            string[] stuff = new string[] {" ", " "};
+            if (md1.cardDisplay1.crucibleCards[0] != null)
+                stuff[0] = md1.cardDisplay1.crucibleCards[0].cardName;
+
+            if (md1.cardDisplay1.crucibleCards[1] != null)
+                stuff[1] = md1.cardDisplay1.crucibleCards[1].cardName;
+            saveData.marketCrucibleCards.Add(stuff);
+        }           
+        else
+            saveData.marketCrucibleCards.Add(new string[] {" ", " "});
+
+        if (md1.cardDisplay2.crucibleCards.Count > 1)
+        {
+            string[] stuff = new string[] { " ", " " };
+            if (md1.cardDisplay2.crucibleCards[0] != null)
+                stuff[0] = md1.cardDisplay2.crucibleCards[0].cardName;
+
+            if (md1.cardDisplay2.crucibleCards[1] != null)
+                stuff[1] = md1.cardDisplay2.crucibleCards[1].cardName;
+            saveData.marketCrucibleCards.Add(stuff);
+        }
+        else
+            saveData.marketCrucibleCards.Add(new string[] {" ", " "});
+
+        if (md1.cardDisplay3.crucibleCards.Count > 1)
+        {
+            string[] stuff = new string[] { " ", " " };
+            if (md1.cardDisplay3.crucibleCards[0] != null)
+                stuff[0] = md1.cardDisplay3.crucibleCards[0].cardName;
+
+            if (md1.cardDisplay3.crucibleCards[1] != null)
+                stuff[1] = md1.cardDisplay3.crucibleCards[1].cardName;
+            saveData.marketCrucibleCards.Add(stuff);
+        }
+        else
+            saveData.marketCrucibleCards.Add(new string[] {" ", " "});
+
+        if (md2.cardDisplay1.crucibleCards.Count > 1)
+        {
+            string[] stuff = new string[] { " ", " " };
+            if (md2.cardDisplay1.crucibleCards[0] != null)
+                stuff[0] = md2.cardDisplay1.crucibleCards[0].cardName;
+
+            if (md2.cardDisplay1.crucibleCards[1] != null)
+                stuff[1] = md2.cardDisplay1.crucibleCards[1].cardName;
+            saveData.marketCrucibleCards.Add(stuff);
+        }
+        else
+            saveData.marketCrucibleCards.Add(new string[] {" ", " "});
+
+        if (md2.cardDisplay2.crucibleCards.Count > 1)
+        {
+            string[] stuff = new string[] { " ", " " };
+            if (md2.cardDisplay2.crucibleCards[0] != null)
+                stuff[0] = md2.cardDisplay2.crucibleCards[0].cardName;
+
+            if (md2.cardDisplay2.crucibleCards[1] != null)
+                stuff[1] = md2.cardDisplay2.crucibleCards[1].cardName;
+            saveData.marketCrucibleCards.Add(stuff);
+        }
+        else
+            saveData.marketCrucibleCards.Add(new string[] {" ", " " });
+
+        if (md2.cardDisplay3.crucibleCards.Count > 1)
+        {
+            string[] stuff = new string[] {" ", " " };
+            if (md2.cardDisplay3.crucibleCards[0] != null)
+                stuff[0] = md2.cardDisplay3.crucibleCards[0].cardName;
+
+            if (md2.cardDisplay3.crucibleCards[1] != null)
+                stuff[1] = md2.cardDisplay3.crucibleCards[1].cardName;
+            saveData.marketCrucibleCards.Add(stuff);
+        }
+        else
+            saveData.marketCrucibleCards.Add(new string[] {" ", " " });
+    }
+
+    public void handleSavedMarketCrucibleCards()
+    {
+        Debug.Log("handling saved crucible cards!!!");
+
+        if (saveData.marketCrucibleCards[0][1] != " ")
+        {
+            Debug.Log("There is a card to be added!!!");
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[0][1]);
+            if(card != null)
+            {
+                md1.cardDisplay1.crucibleCards.Add(card);
+            } else
+                Debug.Log("Card was null!");
+
+        }
+        if (saveData.marketCrucibleCards[0][0] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[0][0]);
+            if (card != null)
+                md1.cardDisplay1.crucibleCards.Add(card);
+        }
+
+        if (saveData.marketCrucibleCards[1][1] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[1][1]);
+            if (card != null)
+                md1.cardDisplay2.crucibleCards.Add(card);
+        }
+        if (saveData.marketCrucibleCards[1][0] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[1][0]);
+            if (card != null)
+                md1.cardDisplay2.crucibleCards.Add(card);
+        }
+
+        if (saveData.marketCrucibleCards[2][1] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[2][1]);
+            if (card != null)
+                md1.cardDisplay3.crucibleCards.Add(card);
+        }
+        if (saveData.marketCrucibleCards[2][0] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[2][0]);
+            if (card != null)
+                md1.cardDisplay3.crucibleCards.Add(card);
+        }
+
+        if (saveData.marketCrucibleCards[3][1] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[3][1]);
+            if (card != null)
+                md2.cardDisplay1.crucibleCards.Add(card);
+        }
+        if (saveData.marketCrucibleCards[3][0] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[3][0]);
+            if (card != null)
+                md2.cardDisplay1.crucibleCards.Add(card);
+        }
+
+        if (saveData.marketCrucibleCards[4][1] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[4][1]);
+            if (card != null)
+                md2.cardDisplay2.crucibleCards.Add(card);
+        }
+        if (saveData.marketCrucibleCards[4][0] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[4][0]);
+            if (card != null)
+                md2.cardDisplay2.crucibleCards.Add(card);
+        }
+
+        if (saveData.marketCrucibleCards[5][1] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[5][1]);
+            if (card != null)
+                md2.cardDisplay3.crucibleCards.Add(card);
+        }
+        if (saveData.marketCrucibleCards[5][0] != " ")
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[5][0]);
+            if (card != null)
+                md2.cardDisplay3.crucibleCards.Add(card);
+        }
+
+    }
+
+    public void handleMarketDecks()
+    {
+        saveData.potionDeck.Clear();
+        saveData.itemDeck.Clear();
+
+        foreach (Card card in md1.deckList)
+        {
+            saveData.potionDeck.Add(card.cardName);
+        }
+
+        foreach (Card card in md2.deckList)
+        {
+            saveData.itemDeck.Add(card.cardName);
+        }
     }
 
     public void saveGameManagerValues()
@@ -608,14 +855,13 @@ public class GameManager : MonoBehaviour
         saveData.deckStatuses.Clear();
         saveData.playerHolster.Clear();
         saveData.playerLoadedCards.Clear();
+        saveData.potionDeck.Clear();
+        saveData.itemDeck.Clear();
         int dummyCount = 1;
 
         handleMarketStatuses();
-
-        foreach(string thing in players[0].deck.statuses)
-        {
-            saveData.deckStatuses.Add(thing);
-        }
+        handleMarketCrucibleCards();
+        handleMarketDecks();
 
         foreach (CardDisplay cd in playerHolster.cardList)
         {
@@ -674,49 +920,7 @@ public class GameManager : MonoBehaviour
         saveData.flipped = players[0].character.flipped;
         saveData.canBeFlipped = players[0].character.canBeFlipped;
         saveData.transition = false;
-        switch (saveData.currentEnemyName)
-        {
-            case "Bag o' Snakes":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                break;
-            case "Bag o' Snakes+":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                saveData.opp2Health = players[2].hp;
-                saveData.opp2Cubes = players[2].hpCubes;
-                break;
-            case "Fingas":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                break;
-            case "Fingas+":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                saveData.opp2Health = players[2].hp;
-                saveData.opp2Cubes = players[2].hpCubes;
-                break;
-            case "Saltimbocca":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                break;
-            case "Singelotte":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                break;
-            case "Crowpunk":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                break;
-            case "Crowpunk+":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                saveData.opp2Health = players[2].hp;
-                saveData.opp2Cubes = players[2].hpCubes;
-                saveData.opp3Health = players[3].hp;
-                saveData.opp3Cubes = players[3].hpCubes;
-                break;
-        }
+        saveEnemyHealth();
     }
 
     public void setStageUI()
@@ -888,27 +1092,18 @@ public class GameManager : MonoBehaviour
             saveData.savedGame = true;
             saveData.newStage = false;
             saveData.selectedStage = true;
-            saveEnemyHealth();
+            // I think I should take this out for now, I might put this back in
+            // saveEnemyHealth();
             // take this out here, saving gamestate info will occur at the end of each turn
             // saveGameManagerValues();
-            /*
-            List<string> playersDeck = new List<string>();
-            List<string> playersHolster = new List<string>();
-            foreach (CardDisplay cd in players[0].holster.cardList)
+
+            // make sure to initialize values to be saved if you haven't ended the first turn
+            if(!saveData.potionDeck.Any())
             {
-                playersHolster.Add(cd.card.name);
+                Debug.Log("First turn, save stuff!");
+                saveGameStuff();
             }
-            foreach (Card card in players[0].deck.deckList)
-            {
-                playersDeck.Add(card.name);
-            }
-            */
-            /*
-            saveData.playerHolster = playersHolster;
-            saveData.playerDeck = playersDeck;
-            saveData.playerHealth = players[0].hp;
-            saveData.playerCubes = players[0].hpCubes; 
-            */
+
             SaveSystem.SaveGameData(saveData);
             Debug.Log("Game data saved");
             SceneManager.LoadScene("TitleMenu");
@@ -1798,6 +1993,42 @@ public class GameManager : MonoBehaviour
         playerDeck.putCardOnBottom(starterRings[numba]);
     }
 
+    public void handleSavedMarketDecks()
+    {
+        foreach (Card card in md1.deckList)
+        {
+            md1.tempDeckList.Add(card);
+        }
+        md1.tempDeckList = md1.shuffle(md1.tempDeckList);
+
+        foreach (Card card in md2.deckList)
+        {
+            md2.tempDeckList.Add(card);
+        }
+        md2.tempDeckList = md2.shuffle(md2.tempDeckList);
+
+        md1.deckList.Clear();
+        md2.deckList.Clear();
+
+        foreach(string thing in saveData.potionDeck)
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == thing);
+            if(card != null)
+            {
+                md1.deckList.Add(card);
+            }
+        }
+
+        foreach (string thing in saveData.itemDeck)
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == thing);
+            if (card != null)
+            {
+                md2.deckList.Add(card);
+            }
+        }
+    }
+
     void Start()
     {
         Debug.Log("GameManager started!!!");
@@ -1832,6 +2063,8 @@ public class GameManager : MonoBehaviour
                 }
 
                 handleSavedMarketStatuses();
+                handleSavedMarketCrucibleCards();
+                handleSavedMarketDecks();
 
                 // rework this
                 // CardDisplay cd in playerHolster.cardList
@@ -1899,18 +2132,29 @@ public class GameManager : MonoBehaviour
                     {
                         if (card.name == saveData.playerDeck[i])
                         {
-                            if(saveData.deckStatuses[i] == null)
+                            try
+                            {
+                                if (saveData.deckStatuses[i] == null)
+                                    players[0].deck.putCardOnBottom(card, "none");
+                                else
+                                    players[0].deck.putCardOnBottom(card, saveData.deckStatuses[i]);
+                            }
+                            catch (ArgumentOutOfRangeException e)
+                            {
                                 players[0].deck.putCardOnBottom(card, "none");
-                            else 
-                                players[0].deck.putCardOnBottom(card, saveData.deckStatuses[i]);
+                            }
+                            
                         }
                     }
                 }
 
                 // maybe take this out, we'll see
+                // double check on this later
+                /*
                 md1.shuffle();
                 md2.shuffle();
                 initDecks();
+                */
 
                 // check this
                 myPlayerIndex = 0;
@@ -2704,6 +2948,9 @@ public class GameManager : MonoBehaviour
         if (times > 0)
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Draw");
 
+        // set default turn BEFORE YOU ADD CARDS IN!
+        player.setDefaultTurn();
+
         foreach (CardDisplay cd in player.holster.cardList)
         {
             if (player.deck.deckList.Count >= 1)
@@ -2720,7 +2967,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         // check to see if this changes anything!!!
         Debug.Log("Checking player bonuses!");
-        player.setDefaultTurn();
+        // player.setDefaultTurn();
     }
 
     public void saveGameStuff()
@@ -2728,6 +2975,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Save game stuff");
         playersHolster.Clear();
         playersDeck.Clear();
+        saveData.deckStatuses.Clear();
 
         // CARDS GET PUT INTO HOLSTER FROM DECK IN THIS METHOD
         // SAVE STORY MODE DATA HERE!
@@ -2738,6 +2986,10 @@ public class GameManager : MonoBehaviour
         foreach (Card card in players[0].deck.deckList)
         {
             playersDeck.Add(card.name);
+        }
+        foreach (string thing in players[0].deck.statuses)
+        {
+            saveData.deckStatuses.Add(thing);
         }
 
         // make something to store and save the data of the loaded cards in the holster

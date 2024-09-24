@@ -138,7 +138,9 @@ public class MarketDeck : NetworkBehaviour
         cardDisplay1.updateCard(card1);
         cardDisplay2.updateCard(card2);
         cardDisplay3.updateCard(card3);
-        cardDisplay4.updateCard(deckList[0]);
+        // cardDisplay4.updateCard(deckList[0]);
+        cardDisplay4.artworkImage.sprite = deckList[0].cardSprite;
+        cardDisplay4.card = deckList[0];
         cardDisplay4.fadeMarketCard();
     }
 
