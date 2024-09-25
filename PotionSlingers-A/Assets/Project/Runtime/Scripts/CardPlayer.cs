@@ -155,6 +155,10 @@ public class CardPlayer : MonoBehaviour
         // switch (character.character.cardName)
         switch (charName)
         {
+            case "Carnival":
+                Debug.Log("CARNIVAL TIME!!!");
+                animator.enabled = false;
+                return;
             case "Pluot":
                 Debug.Log("I AM PLUOT");
                 isPluot = true;
@@ -3020,6 +3024,40 @@ public class CardPlayer : MonoBehaviour
         if (animator != null)
             playHit();
         hp -= damage;
+
+        if (charName == "Carnival")
+        {
+            Debug.Log("Implement carnival game slider animation here!!!");
+            GameManager.manager.slider.value = damage;
+
+            if (damageSign != null && damageAmount != null)
+            {
+                damageAmount.GetComponent<TMPro.TextMeshProUGUI>().text = "-" + damage.ToString();
+                // damageSign.SetActive(true);
+                // damageAmount.SetActive(true);
+                // GameObject damageSignCopy = Instantiate(damageSign, damageSign.transform.position, damageSign.transform.rotation, damageSign.transform.parent);
+                GameObject damageAmountCopy = Instantiate(damageAmount, damageAmount.transform.position, damageAmount.transform.rotation, damageAmount.transform.parent);
+                // damageAmountCopy.transform.SetParent(damageSignCopy.transform);
+                // damageSign.SetActive(false);
+                // damageAmount.SetActive(false);
+                damageAmountCopy.SetActive(true);
+                StartCoroutine(healthAnimation(damageAmountCopy));
+                // StartCoroutine(healthAnimation(damageAmountCopy));
+                /*
+                damageSign.SetActive(true);
+                damageAmount.SetActive(true);
+                StartCoroutine(waitThreeSeconds(damageSign));
+                StartCoroutine(waitThreeSeconds(damageAmount));
+                */
+            }
+
+            if (damage >= GameManager.manager.carnivalTargetScore)
+            {
+                Debug.Log("You won! Make sure you advance the stage in code!");
+                // GameManager.manager.advanceStage();
+                return;
+            }
+        }
 
         //Make sure that hp doesn't go below 0
         //If hp goes below 0, set it to 10 and subtract a health cube

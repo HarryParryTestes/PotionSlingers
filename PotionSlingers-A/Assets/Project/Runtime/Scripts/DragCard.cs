@@ -15,6 +15,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public bool loaded;
     public bool market;
     public bool crucible = false;
+    public bool dontMoveThis = false;
     public int marketCardInt;
     public GameObject obj;
     public GameObject obj2;
@@ -316,6 +317,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         // experimenting
         // gameObject.GetComponent<CardDisplay>().colorCard();
+
+        if (dontMoveThis)
+            return;
 
         if (crucible)
         {

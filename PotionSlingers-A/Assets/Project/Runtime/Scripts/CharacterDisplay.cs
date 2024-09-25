@@ -98,6 +98,8 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
         if (character == "Carnival")
         {
             Debug.Log("Add carnival sprite here!");
+            artworkImage = this.GetComponent<Image>();
+            artworkImage.sprite = GameManager.manager.carnivalSprite;
             return;
         }
 
@@ -143,6 +145,14 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
         }
     }
 
+    public void flipCardToBack()
+    {
+        flipped = true;
+        Debug.Log("You just flipped the card!");
+        this.artworkImage.sprite = character.flippedImage;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Character_Flip");
+    }
+
     public void flipCard()
     {
         if (Game.tutorial)
@@ -157,8 +167,12 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
             GameManager.manager.sendMessage("You can't flip your character just yet!");
             return;
         }
-        flipped = !flipped;
-        
+        // flipped = !flipped;
+
+        if (flipped)
+            flipped = false;
+        else
+            flipped = true;
         
         if (flipped)
         {

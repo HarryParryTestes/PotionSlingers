@@ -89,6 +89,7 @@ public class CardDisplay : MonoBehaviour
     public IEnumerator updateCrucibleCards(GameObject obj, string cardName)
     {
         // GameObject obj2;
+        obj.GetComponent<DragCard>().dontMoveThis = true;
 
         yield return new WaitForSeconds(.10f);
         foreach (Card cd in crucibleCards)
@@ -151,6 +152,9 @@ public class CardDisplay : MonoBehaviour
             crucibleCards[1] = GameManager.manager.crucibleCard;
         if (cardName == "Spoonful of Ambrosia")
             crucibleCards[1] = GameManager.manager.ambrosiaCard;
+
+        yield return new WaitForSeconds(0.5f);
+        obj.GetComponent<DragCard>().dontMoveThis = false;
     }
 
     public void updateCard(Card card, string status = null)

@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     public int currentPlayerId = 0;
     public int nicklesDamage = 0;
     public int numTrashed = 0;
+    public int carnivalTargetScore;
     public CardPlayer[] players = new CardPlayer[4];
     public Character[] characters;
     public CardDatabase database;
@@ -57,9 +58,11 @@ public class GameManager : MonoBehaviour
     public List<GameObject> successMessages;
     public List<GameObject> errorMessages;
     public DeckMenuScroll deckMenuScroll;
+    public Sprite carnivalSprite;
     public Image background;
     public Sprite[] backgrounds;
     public int carnivalTurns = 0;
+    public Slider slider;
 
     public List<Card> starterCards;
     public List<Card> starterArtifacts;
@@ -543,6 +546,12 @@ public class GameManager : MonoBehaviour
 
     public void handleSavedMarketStatuses()
     {
+        if (!saveData.marketStatuses.Any())
+            return;
+
+        if (!saveData.marketCards.Any())
+            return;
+
         Card card = null;
         // i'm too lazy to put these in lists lol
         // this is very stupid
@@ -1127,14 +1136,19 @@ public class GameManager : MonoBehaviour
                 numPlayers = 2;
                 carnivalTurns = 2;
                 carnivalUI.SetActive(true);
+                carnivalTargetScore = rng.Next(3, 7);
+                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize!";
                 // change this to Carnival strength game sprite instead of fingas
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Carnival";
                 players[2].name = "Carnival";
                 playerTopName.text = players[2].charName;
                 playerTopName.gameObject.transform.parent.gameObject.SetActive(false);
-                players[2].character.onCharacterClick("Fingas");
+                players[2].character.onCharacterClick("Carnival");
                 players[2].checkCharacter();
+                // instantiate slider
+                slider.gameObject.SetActive(true);
+                slider.maxValue = carnivalTargetScore;
                 players[2].playerHP.SetActive(false);
                 players[2].playerHPCubes.SetActive(false);
                 players[2].bar.SetActive(false);
@@ -2192,7 +2206,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Character card should be flipped!");
                     // check on this
                     players[0].character.flipped = false;
-                    players[0].character.flipCard();
+                    players[0].character.flipCardToBack();
                 }
                 // players[0].deck.loadDeck();
 
