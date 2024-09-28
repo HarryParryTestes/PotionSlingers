@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
     public Image background;
     public Sprite[] backgrounds;
     public int carnivalTurns = 0;
-    public Slider slider;
+    public CarnivalSlider carnivalSlider;
 
     public List<Card> starterCards;
     public List<Card> starterArtifacts;
@@ -1147,8 +1147,8 @@ public class GameManager : MonoBehaviour
                 players[2].character.onCharacterClick("Carnival");
                 players[2].checkCharacter();
                 // instantiate slider
-                slider.gameObject.SetActive(true);
-                slider.maxValue = carnivalTargetScore;
+                carnivalSlider.gameObject.SetActive(true);
+                carnivalSlider.setTargetScore(carnivalTargetScore);
                 players[2].playerHP.SetActive(false);
                 players[2].playerHPCubes.SetActive(false);
                 players[2].bar.SetActive(false);

@@ -3027,8 +3027,10 @@ public class CardPlayer : MonoBehaviour
 
         if (charName == "Carnival")
         {
+            hp += damage;
             Debug.Log("Implement carnival game slider animation here!!!");
-            GameManager.manager.slider.value = damage;
+            GameManager.manager.carnivalSlider.setDamage(damage);
+            // GameManager.manager.slider.value = damage;
 
             if (damageSign != null && damageAmount != null)
             {
