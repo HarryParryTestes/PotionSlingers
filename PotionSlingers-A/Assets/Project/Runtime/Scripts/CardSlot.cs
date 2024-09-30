@@ -28,18 +28,22 @@ public class CardSlot : MonoBehaviour, IDropHandler
         CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
 
         // test this and double check
-        if (dc.market)
+        if(dc != null)
         {
-            Debug.Log("Buy triggered?");
-            if (heldCard.GetComponent<TopMarketBuy>() != null)
+            if (dc.market)
             {
-                // buy the card
-                Debug.Log("Buy");
+                Debug.Log("Buy triggered?");
+                if (heldCard.GetComponent<TopMarketBuy>() != null)
+                {
+                    // buy the card
+                    Debug.Log("Buy");
+                }
+                handleBuy(dc.marketCardInt);
+                return;
+                // heldObject.GetComponent<CardThrow>().throwCard();
             }
-            handleBuy(dc.marketCardInt);
-            return;
-            // heldObject.GetComponent<CardThrow>().throwCard();
         }
+        
 
         if (heldCard.GetComponent<CharacterSlot>() != null)
         {

@@ -100,6 +100,8 @@ public class MarketDeck : NetworkBehaviour
         // WHEN YOU ADD OTHER SLINGER NPCS CHANGE THIS!!!
         if (GameManager.manager.Game.storyMode && (saveData.currentEnemyName != "Saltimbocca"))
         {
+            Debug.Log("Removing trash bonus cards!");
+
             for(int i = 0; i < deckList.Count; i++)
             {
                 if (GameManager.manager.database.GetComponent<CardDatabase>().trashBonusCards.Contains(deckList[i]))

@@ -452,6 +452,11 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Advancing a stage in story mode");
         saveData = SaveSystem.LoadGameData();
+        saveData.visitedEnemies.Add(saveData.currentEnemyName);
+        saveData.cardDurabilities.Clear();
+        saveData.cardStatuses.Clear();
+        saveData.playerHolster.Clear();
+        saveData.playerLoadedCards.Clear();
         saveGameManagerValues();
         saveData.newStage = true;
         saveData.selectedStage = false;
@@ -473,7 +478,7 @@ public class GameManager : MonoBehaviour
         // List<string> playersDeck = new List<string>();
         // List<string> playersHolster = new List<string>();
 
-        saveData.visitedEnemies.Add(saveData.currentEnemyName);
+        
 
         playersHolster.Clear();
         playersDeck.Clear();
@@ -754,6 +759,9 @@ public class GameManager : MonoBehaviour
     public void handleSavedMarketCrucibleCards()
     {
         Debug.Log("handling saved crucible cards!!!");
+
+        if (!saveData.marketCrucibleCards.Any())
+            return;
 
         if (saveData.marketCrucibleCards[0][1] != " ")
         {
@@ -1137,7 +1145,7 @@ public class GameManager : MonoBehaviour
                 carnivalTurns = 2;
                 carnivalUI.SetActive(true);
                 carnivalTargetScore = rng.Next(3, 7);
-                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize!";
+                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize! 2 turns left!";
                 // change this to Carnival strength game sprite instead of fingas
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Carnival";
@@ -2099,17 +2107,25 @@ public class GameManager : MonoBehaviour
                         playerHolster.cardList[i].makeSpicy();
                     }
 
+                    if (saveData.playerHolster[i].Contains("dummy"))
+                    {
+                        Debug.Log("Dummy card, adding placeholder");
+                        playerHolster.cardList[i].updateCard(players[0].deck.placeholder);
+                    }
+
                     foreach (Card card in database.cardList)
                     {
 
                         if (card.cardName.Contains("dummy"))
                         {
                             // update with placeholder
+                            Debug.Log("Dummy card, adding placeholder");
                             playerHolster.cardList[i].updateCard(players[0].deck.placeholder);
                         }
 
                         if (card.cardName == saveData.playerHolster[i])
                         {
+                            Debug.Log("Adding legit card");
                             playerHolster.cardList[i].updateCard(card);
                             // add durability here
                             playerHolster.cardList[i].durability = saveData.cardDurabilities[i];
@@ -3564,16 +3580,18 @@ public class GameManager : MonoBehaviour
         loadMenu.transform.Find("Card (Left)").gameObject.SetActive(true);
         loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(true);
         loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
+        loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(true);
         CardDisplay left = loadMenu.transform.Find("Card (Left)").GetComponent<CardDisplay>();
         CardDisplay middle = loadMenu.transform.Find("Card (Middle)").GetComponent<CardDisplay>();
         CardDisplay right = loadMenu.transform.Find("Card (Right)").GetComponent<CardDisplay>();
+        CardDisplay farRight = loadMenu.transform.Find("Card (Far Right)").GetComponent<CardDisplay>();
 
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
             foreach (CardDisplay cd in playerHolster.cardList)
             {
-                if (cd.card.cardType.ToLower() == "artifact" || cd.card.cardType.ToLower() == "vessel")
+                if (cd.card.cardType.ToLower() == "artifact")
                 {
                     Debug.Log("CardName is: " + cd.card.cardName);
                     switch (set)
@@ -3594,6 +3612,12 @@ public class GameManager : MonoBehaviour
                             right.card = cd.card;
                             Debug.Log("Right Card: " + right.card.cardName);
                             right.updateCard(cd.card);
+                            set++;
+                            break;
+                        case 3:
+                            farRight.card = cd.card;
+                            Debug.Log("Far Right Card: " + farRight.card.cardName);
+                            farRight.updateCard(cd.card);
                             break;
                         default:
                             break;
@@ -3606,11 +3630,18 @@ public class GameManager : MonoBehaviour
                 // right.updateCard(players[myPlayerIndex].deck.placeholder);
                 loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(false);
                 loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+                loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
             }
             if (set == 2)
             {
                 // right.updateCard(players[myPlayerIndex].deck.placeholder);
                 loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+                loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
+            }
+            if (set == 3)
+            {
+                // right.updateCard(players[myPlayerIndex].deck.placeholder);
+                loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
             }
             return;
         }
@@ -3624,7 +3655,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (CardDisplay cd in cp.holster.cardList)
                     {
-                        if (cd.card.cardType.ToLower() == "artifact" || cd.card.cardType.ToLower() == "vessel")
+                        if (cd.card.cardType.ToLower() == "artifact")
                         {
                             Debug.Log("CardName is: " + cd.card.cardName);
                             switch (set)
@@ -3647,6 +3678,12 @@ public class GameManager : MonoBehaviour
                                     right.updateCard(cd.card);
                                     set++;
                                     break;
+                                case 3:
+                                    farRight.card = cd.card;
+                                    Debug.Log("Far Right Card: " + farRight.card.cardName);
+                                    farRight.updateCard(cd.card);
+                                    set++;
+                                    break;
                                 default:
                                     break;
                             }
@@ -3658,17 +3695,27 @@ public class GameManager : MonoBehaviour
                         // right.updateCard(players[myPlayerIndex].deck.placeholder);
                         loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(false);
                         loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+                        loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
                     }
                     if (set == 2)
                     {
                         // right.updateCard(players[myPlayerIndex].deck.placeholder);
                         loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+                        loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
                     }
                     if (set == 3)
                     {
                         loadMenu.transform.Find("Card (Left)").gameObject.SetActive(true);
                         loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(true);
                         loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
+                        loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
+                    }
+                    if (set == 4)
+                    {
+                        loadMenu.transform.Find("Card (Left)").gameObject.SetActive(true);
+                        loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(true);
+                        loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
+                        loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(true);
                     }
                 }
             }
@@ -3680,7 +3727,7 @@ public class GameManager : MonoBehaviour
         {
             // Debug.Log("CardName is: " + cd.card.cardName + ". CardType is: " + cd.card.cardType);
             // if(cd.card.cardType.ToLower() == "potion")
-            if (cd.card.cardType.ToLower() == "artifact" || cd.card.cardType.ToLower() == "vessel")
+            if (cd.card.cardType.ToLower() == "artifact")
             {
                 Debug.Log("CardName is: " + cd.card.cardName);
                 switch (set)
@@ -3703,6 +3750,12 @@ public class GameManager : MonoBehaviour
                         right.updateCard(cd.card);
                         set++;
                         break;
+                    case 3:
+                        farRight.card = cd.card;
+                        Debug.Log("Far Right Card: " + farRight.card.cardName);
+                        farRight.updateCard(cd.card);
+                        set++;
+                        break;
                     default:
                         break;
                 }
@@ -3714,15 +3767,19 @@ public class GameManager : MonoBehaviour
             // right.updateCard(players[myPlayerIndex].deck.placeholder);
             loadMenu.transform.Find("Card (Middle)").gameObject.SetActive(false);
             loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+            loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
         }
         if (set == 2)
         {
             // right.updateCard(players[myPlayerIndex].deck.placeholder);
             loadMenu.transform.Find("Card (Right)").gameObject.SetActive(false);
+            loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
         }
         if (set == 3)
         {
+            // right.updateCard(players[myPlayerIndex].deck.placeholder);
             loadMenu.transform.Find("Card (Right)").gameObject.SetActive(true);
+            loadMenu.transform.Find("Card (Far Right)").gameObject.SetActive(false);
         }
     }
 
@@ -3944,6 +4001,20 @@ public class GameManager : MonoBehaviour
         if (saveData.currentEnemyName == "Carnival")
         {
             carnivalTurns--;
+            if(carnivalTurns == 1)
+                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize! " + carnivalTurns + " turn left!";
+            else
+                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize! " + carnivalTurns + " turns left!";
+
+            if(carnivalTurns == 0)
+            {
+                Debug.Log("Out of turns! Game over you did not win!");
+                advanceStageUI.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "Too bad! No prize!";
+                // using this for testing the mode out
+                // advanceStageUI.SetActive(true);
+                advanceStage();
+                return;
+            }
             onStartTurn(cardPlayer);
             return;
         }

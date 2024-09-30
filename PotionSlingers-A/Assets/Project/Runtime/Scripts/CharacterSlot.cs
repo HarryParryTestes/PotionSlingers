@@ -264,28 +264,33 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
 
         // test this and double check
-        if (dc.market && this.gameObject.name == "DeckPile")
+        if(dc != null)
         {
-            Debug.Log("Buy triggered?");
-            if (heldCard.GetComponent<TopMarketBuy>() != null)
+            if (dc.market && this.gameObject.name == "DeckPile")
             {
-                // buy the card
-                Debug.Log("Buy");
+                Debug.Log("Buy triggered?");
+                if (heldCard.GetComponent<TopMarketBuy>() != null)
+                {
+                    // buy the card
+                    Debug.Log("Buy");
+                }
+                handleBuy(dc.marketCardInt);
+                // heldObject.GetComponent<CardThrow>().throwCard();
             }
-            handleBuy(dc.marketCardInt);
-            // heldObject.GetComponent<CardThrow>().throwCard();
-        } else if(this.gameObject.name == "DeckPile")
-        {
-            Debug.Log("Dropped card triggered?");
-            // GameManager.manager.setSCInt(grabbedCard.card.cardName);
-            GameManager.manager.cycleCard();
-        }
+            else if (this.gameObject.name == "DeckPile")
+            {
+                Debug.Log("Dropped card triggered?");
+                // GameManager.manager.setSCInt(grabbedCard.card.cardName);
+                GameManager.manager.cycleCard();
+            }
 
-        // attacking player
-        if (cd != null && !dc.market)
-        {
-            Debug.Log("Throw triggered?");
-            cd.gameObject.GetComponent<CardThrow>().throwCard();
+            // attacking player
+            if (cd != null && !dc.market)
+            {
+                Debug.Log("Throw triggered?");
+                cd.gameObject.GetComponent<CardThrow>().throwCard();
+            }
         }
+        
     }
 }

@@ -2612,10 +2612,18 @@ public class CardPlayer : MonoBehaviour
                 }
 
             } else
-            {
-                // GameManager.manager.opponentHolsterMenu.SetActive(true);
-                GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
-                GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
+            {               
+                try
+                {
+                    // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
+                    GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    Debug.Log("Something fucked up, just gonna ignore it");
+                    GameManager.manager.opponentHolsterMenu.SetActive(false);
+                }
             }
         }
 

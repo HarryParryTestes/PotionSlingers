@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class UICardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class UICardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
     Vector3 scaled;
@@ -20,6 +20,11 @@ public class UICardHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     void Update()
     {
 
+    }
+
+    public void OnPointerClick(PointerEventData pointerEventData)
+    {
+        transform.DOScale(scaled, 0.01f).SetId(gameObject.name);
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData)
