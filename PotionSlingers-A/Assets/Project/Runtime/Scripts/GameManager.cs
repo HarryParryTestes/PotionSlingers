@@ -292,7 +292,8 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay2.GetComponent<DragCard>().checkPosition();
             md2.cardDisplay3.GetComponent<DragCard>().checkPosition();
             md2.cardDisplay4.GetComponent<DragCard>().checkPosition();
-        } else
+        }
+        else
         {
             /*
             Debug.Log("Checking for market card position");
@@ -325,18 +326,18 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Updating fourth market card displays with current top card of market decks!");
         // let's not cause an infinite loop lmao
         // md1.cardDisplay4.updateCard(md1.deckList[0]);
-        if(md1.cardDisplay4.artworkImage != null)
+        if (md1.cardDisplay4.artworkImage != null)
         {
             md1.cardDisplay4.artworkImage.sprite = md1.deckList[0].cardSprite;
             md1.cardDisplay4.card = md1.deckList[0];
-        }            
+        }
         // md2.cardDisplay4.updateCard(md2.deckList[0]);
         if (md2.cardDisplay4.artworkImage != null)
         {
             md2.cardDisplay4.artworkImage.sprite = md2.deckList[0].cardSprite;
             md2.cardDisplay4.card = md2.deckList[0];
         }
-            
+
     }
 
     public void checkPosition()
@@ -445,7 +446,7 @@ public class GameManager : MonoBehaviour
             card.vPotion2.GetComponent<DragCard>().marketBack();
             card.vPotion3.GetComponent<DragCard>().marketBack();
             card.vPotion4.GetComponent<DragCard>().marketBack();
-        }        
+        }
     }
 
     public void advanceStage()
@@ -474,11 +475,11 @@ public class GameManager : MonoBehaviour
                 saveData.cardStatuses.Add("none");
             }
         }
-        
+
         // List<string> playersDeck = new List<string>();
         // List<string> playersHolster = new List<string>();
 
-        
+
 
         playersHolster.Clear();
         playersDeck.Clear();
@@ -570,7 +571,7 @@ public class GameManager : MonoBehaviour
             md1.cardDisplay1.GetComponent<Image>().sprite = card.cardSprite;
             md1.cardDisplay1.card = card;
         }
-            
+
 
         if (saveData.marketStatuses[1] == "spicy")
             md1.cardDisplay2.makeSpicy();
@@ -679,16 +680,16 @@ public class GameManager : MonoBehaviour
 
         if (md1.cardDisplay1.crucibleCards.Count > 1)
         {
-            string[] stuff = new string[] {" ", " "};
+            string[] stuff = new string[] { " ", " " };
             if (md1.cardDisplay1.crucibleCards[0] != null)
                 stuff[0] = md1.cardDisplay1.crucibleCards[0].cardName;
 
             if (md1.cardDisplay1.crucibleCards[1] != null)
                 stuff[1] = md1.cardDisplay1.crucibleCards[1].cardName;
             saveData.marketCrucibleCards.Add(stuff);
-        }           
+        }
         else
-            saveData.marketCrucibleCards.Add(new string[] {" ", " "});
+            saveData.marketCrucibleCards.Add(new string[] { " ", " " });
 
         if (md1.cardDisplay2.crucibleCards.Count > 1)
         {
@@ -701,7 +702,7 @@ public class GameManager : MonoBehaviour
             saveData.marketCrucibleCards.Add(stuff);
         }
         else
-            saveData.marketCrucibleCards.Add(new string[] {" ", " "});
+            saveData.marketCrucibleCards.Add(new string[] { " ", " " });
 
         if (md1.cardDisplay3.crucibleCards.Count > 1)
         {
@@ -714,7 +715,7 @@ public class GameManager : MonoBehaviour
             saveData.marketCrucibleCards.Add(stuff);
         }
         else
-            saveData.marketCrucibleCards.Add(new string[] {" ", " "});
+            saveData.marketCrucibleCards.Add(new string[] { " ", " " });
 
         if (md2.cardDisplay1.crucibleCards.Count > 1)
         {
@@ -727,7 +728,7 @@ public class GameManager : MonoBehaviour
             saveData.marketCrucibleCards.Add(stuff);
         }
         else
-            saveData.marketCrucibleCards.Add(new string[] {" ", " "});
+            saveData.marketCrucibleCards.Add(new string[] { " ", " " });
 
         if (md2.cardDisplay2.crucibleCards.Count > 1)
         {
@@ -740,11 +741,11 @@ public class GameManager : MonoBehaviour
             saveData.marketCrucibleCards.Add(stuff);
         }
         else
-            saveData.marketCrucibleCards.Add(new string[] {" ", " " });
+            saveData.marketCrucibleCards.Add(new string[] { " ", " " });
 
         if (md2.cardDisplay3.crucibleCards.Count > 1)
         {
-            string[] stuff = new string[] {" ", " " };
+            string[] stuff = new string[] { " ", " " };
             if (md2.cardDisplay3.crucibleCards[0] != null)
                 stuff[0] = md2.cardDisplay3.crucibleCards[0].cardName;
 
@@ -753,7 +754,7 @@ public class GameManager : MonoBehaviour
             saveData.marketCrucibleCards.Add(stuff);
         }
         else
-            saveData.marketCrucibleCards.Add(new string[] {" ", " " });
+            saveData.marketCrucibleCards.Add(new string[] { " ", " " });
     }
 
     public void handleSavedMarketCrucibleCards()
@@ -767,10 +768,11 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("There is a card to be added!!!");
             Card card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCrucibleCards[0][1]);
-            if(card != null)
+            if (card != null)
             {
                 md1.cardDisplay1.crucibleCards.Add(card);
-            } else
+            }
+            else
                 Debug.Log("Card was null!");
 
         }
@@ -887,15 +889,15 @@ public class GameManager : MonoBehaviour
             else
                 saveData.cardStatuses.Add("none");
 
-            string[] things = new string[4] {"placeholder", "placeholder", "placeholder", "placeholder" };
+            string[] things = new string[4] { "placeholder", "placeholder", "placeholder", "placeholder" };
             if (cd.card.cardType == "Artifact")
             {
                 things[0] = cd.aPotion.card.cardName;
             }
 
-            if(cd.card.cardType == "Vessel")
+            if (cd.card.cardType == "Vessel")
             {
-                if(cd.vPotion1.card.cardName != "placeholder")
+                if (cd.vPotion1.card.cardName != "placeholder")
                 {
                     things[0] = cd.vPotion1.card.cardName;
                 }
@@ -926,7 +928,7 @@ public class GameManager : MonoBehaviour
                 saveData.playerHolster.Add(cd.card.cardName);
                 saveData.playerLoadedCards.Add(things);
             }
-                
+
         }
 
         saveData.playerDeck = playersDeck;
@@ -1115,7 +1117,7 @@ public class GameManager : MonoBehaviour
             // saveGameManagerValues();
 
             // make sure to initialize values to be saved if you haven't ended the first turn
-            if(!saveData.potionDeck.Any())
+            if (!saveData.potionDeck.Any())
             {
                 Debug.Log("First turn, save stuff!");
                 saveGameStuff();
@@ -2032,10 +2034,10 @@ public class GameManager : MonoBehaviour
         md1.deckList.Clear();
         md2.deckList.Clear();
 
-        foreach(string thing in saveData.potionDeck)
+        foreach (string thing in saveData.potionDeck)
         {
             Card card = database.cardList.FirstOrDefault(name => name.cardName == thing);
-            if(card != null)
+            if (card != null)
             {
                 md1.deckList.Add(card);
             }
@@ -2155,7 +2157,7 @@ public class GameManager : MonoBehaviour
                 }
                 players[0].deck.deckList.Clear();
                 players[0].deck.cardDisplay.updateCard(players[0].deck.placeholder);
-           
+
                 for (int i = 0; i < saveData.playerDeck.Count; i++)
                 {
                     foreach (Card card in database.cardList)
@@ -2173,7 +2175,7 @@ public class GameManager : MonoBehaviour
                             {
                                 players[0].deck.putCardOnBottom(card, "none");
                             }
-                            
+
                         }
                     }
                 }
@@ -2402,7 +2404,7 @@ public class GameManager : MonoBehaviour
             {
                 players[1] = players[2];
                 // hardcode this lol
-                if(Game.singlePlayerNames.Count > 0)
+                if (Game.singlePlayerNames.Count > 0)
                     playerTopName.text = Game.singlePlayerNames[1];
                 players[1].user_id = 1;
                 players[2].user_id = 1;
@@ -2842,12 +2844,12 @@ public class GameManager : MonoBehaviour
                 CardDisplay cd = players[myPlayerIndex].holster.cardList[i];
                 Debug.Log("Found the card");
                 selectedCardInt = i + 1;
-                if(cd.aPotion.card.cardName == "placeholder")
+                if (cd.aPotion.card.cardName == "placeholder")
                 {
                     // add potion to artifact if there isn't one
                     int numer = rng.Next(0, starterPotionCards.Count);
                     cd.aPotion.updateCard(starterPotionCards[numer]);
-                }                
+                }
                 int num = rng.Next(0, numPlayers);
                 Debug.Log("Random person being hit is: " + players[num].charName);
                 tempPlayer = players[num];
@@ -2940,7 +2942,7 @@ public class GameManager : MonoBehaviour
         string status = player.deck.statuses[0];
         Card card = player.deck.popCard();
 
-        if(card.cardName == "EarlyBirdSpecial")
+        if (card.cardName == "EarlyBirdSpecial")
         {
             holsterEarlyBirdSpecial = true;
         }
@@ -2959,6 +2961,26 @@ public class GameManager : MonoBehaviour
         cd.updateCard(card, status);
         obj.SetActive(false);
         Destroy(obj);
+    }
+
+    public void checkSpicy(CardPlayer player)
+    {
+        foreach (CardDisplay cd in player.holster.cardList)
+        {
+            if (cd.spicy && cd.card.name != "placeholder")
+            {
+                if (player.charName != "Singelotte")
+                    player.subHealth(2);
+            }
+
+            if (cd.card.cardName == "Gauntlet Ring of the Chatelaine")
+            {
+                Debug.Log("Gauntlet Ring Bonus!!!");
+                if (player.deck.GetComponent<CharacterSlot>() != null)
+                    player.deck.GetComponent<CharacterSlot>().gauntletBonus = true;
+            }
+        }
+        player.updateHealthUI();
     }
 
     public IEnumerator HolsterFill(CardPlayer player)
@@ -2997,6 +3019,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         // check to see if this changes anything!!!
         Debug.Log("Checking player bonuses!");
+        checkSpicy(player);
         // player.setDefaultTurn();
     }
 
@@ -3047,7 +3070,7 @@ public class GameManager : MonoBehaviour
         if (player.holster.gameObject.activeInHierarchy)
             StartCoroutine(HolsterFill(player));
 
-        if(Game.storyMode && myPlayerIndex == 0)
+        if (Game.storyMode && myPlayerIndex == 0)
             Invoke("saveGameStuff", 1f);
 
         // this should make it not trigger every turn
@@ -3523,7 +3546,7 @@ public class GameManager : MonoBehaviour
             if (tempPlayer.holster.cardList[selectedCard - 1].card.cardType == "Potion")
             {
                 // random starter potion
-                int random = rng.Next(0, starterPotionCards.Count);               
+                int random = rng.Next(0, starterPotionCards.Count);
                 tempPlayer.holster.cardList[selectedCard - 1].updateCard(starterPotionCards[random]);
             }
 
@@ -4001,12 +4024,12 @@ public class GameManager : MonoBehaviour
         if (saveData.currentEnemyName == "Carnival")
         {
             carnivalTurns--;
-            if(carnivalTurns == 1)
+            if (carnivalTurns == 1)
                 carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize! " + carnivalTurns + " turn left!";
             else
                 carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize! " + carnivalTurns + " turns left!";
 
-            if(carnivalTurns == 0)
+            if (carnivalTurns == 0)
             {
                 Debug.Log("Out of turns! Game over you did not win!");
                 advanceStageUI.transform.GetChild(2).GetComponent<TMPro.TextMeshProUGUI>().text = "Too bad! No prize!";
@@ -4037,13 +4060,13 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if(Game.storyMode && players[1].charName == "Singelotte" && dialog.directions.activeInHierarchy)
+        if (Game.storyMode && players[1].charName == "Singelotte" && dialog.directions.activeInHierarchy)
         {
             Debug.Log("Turning off spicy card description box!!!");
             dialog.directions.SetActive(false);
         }
         // show off spicy card direction box after Singelotte's first attack
-        else if(Game.storyMode && players[1].charName == "Singelotte" && players[1].gameObject.GetComponent<ComputerPlayer>().turn == 1)
+        else if (Game.storyMode && players[1].charName == "Singelotte" && players[1].gameObject.GetComponent<ComputerPlayer>().turn == 1)
         {
             Debug.Log("Spicy card description box!!!");
             dialog.directions.SetActive(true);
@@ -4125,8 +4148,9 @@ public class GameManager : MonoBehaviour
                         endTurnButton.GetComponent<CanvasGroup>().interactable = false;
                         return;
                     }
-                }               
-            } else
+                }
+            }
+            else
             {
                 // bonus was used, reset myPlayerIndex and cardGameBonus bool
                 Debug.Log("Resetting values");
@@ -4861,7 +4885,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    IEnumerator doDamage (int damage, string cardQuality = "")
+    IEnumerator doDamage(int damage, string cardQuality = "")
     {
         CardPlayer cp = tempPlayer;
 
@@ -5048,7 +5072,7 @@ public class GameManager : MonoBehaviour
                     td.addCard(playerHolster.cardList[selectedCardInt - 1].aPotion);
 
                     playerHolster.cardList[selectedCardInt - 1].durability--;
-                    if(playerHolster.cardList[selectedCardInt - 1].durability <= 0)
+                    if (playerHolster.cardList[selectedCardInt - 1].durability <= 0)
                     {
                         // trash the artifact
                         GameObject obj2 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
@@ -5158,10 +5182,13 @@ public class GameManager : MonoBehaviour
 
 
         // if you're saltimbocca and you're flipped
-        if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.flipped && !Game.multiplayer)
+        if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].character.flipped)
         {
+            Debug.Log("Flipped Saltimbocca logic!!!");
+
             int damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.buyPrice;
 
+            /*
             foreach (CardPlayer cp in players)
             {
                 if (cp.name == selectedOpponentName)
@@ -5174,6 +5201,29 @@ public class GameManager : MonoBehaviour
                     return;
                 }
             }
+            */
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
+            {
+                // check for bonus on potions even if you're using the buy cost as damage
+                damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            }
+
+            GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform);
+
+            StartCoroutine(MoveToTrash(obj));
+
+            StartCoroutine(waitThreeSecondsHand(damage));
+            StartCoroutine(doDamage(damage));
+            // tempPlayer.subHealth(damage);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+            // maybe add a notif idk
+            sendSuccessMessage(2);
+            return;
         }
 
         if (Game.multiplayer)
@@ -5224,13 +5274,13 @@ public class GameManager : MonoBehaviour
                 bool stone = false;
 
                 // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
-                foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
+                foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
                 {
                     if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
                         stone = true;
                 }
 
-                if(!stone)
+                if (!stone)
                     damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                 else
                 {
@@ -5240,7 +5290,7 @@ public class GameManager : MonoBehaviour
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "ATearofBlackRain" ||
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Fountainous Ale")
                         players[myPlayerIndex].addHealth(2);
-                }                   
+                }
 
                 Debug.Log("Damage after thrower bonuses: " + damage);
                 damage = tempPlayer.checkDefensiveBonus(damage, selectedCardInt);
@@ -5346,7 +5396,7 @@ public class GameManager : MonoBehaviour
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability <= 0)
                     {
                         // trash the artifact
-                        Debug.Log("Trashing artifact!");                       
+                        Debug.Log("Trashing artifact!");
                         GameObject obj2 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].transform.position,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].transform.rotation,
@@ -5374,10 +5424,11 @@ public class GameManager : MonoBehaviour
                     // change this logic to check for unique artifacts
                     if (players[myPlayerIndex].isIsadore && players[myPlayerIndex].uniqueArtifactsUsed == 2)
                     {
+                        if (!players[myPlayerIndex].character.canBeFlipped)
+                        {
+                            sendSuccessMessage(13);
+                        }
                         players[myPlayerIndex].character.canBeFlipped = true;
-                        // add success message for "You can now flip your card!" or something
-                        sendSuccessMessage(13);
-
                     }
                     else
                     {
@@ -5413,13 +5464,14 @@ public class GameManager : MonoBehaviour
                         players[myPlayerIndex].addHealth(4);
                     }
                     //int damage = players[throwerIndex].holster.card1.vPotion1.card.effectAmount + players[throwerIndex].holster.card1.vPotion2.card.effectAmount;
-                    if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardEffect == "FourLoad")
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardEffect == "FourLoad")
                     {
-                        damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + 
+                        damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount +
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount +
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card.effectAmount +
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card.effectAmount;
-                    } else 
+                    }
+                    else
                         damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
 
                     damage = players[myPlayerIndex].checkRingBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
@@ -5691,7 +5743,7 @@ public class GameManager : MonoBehaviour
 
         switch (marketCard)
         {
-            case 1:               
+            case 1:
                 if (md1.cardDisplay1.crucibleCards.Count > 0)
                 {
                     td.addCard(md1.cardDisplay1);
@@ -5704,11 +5756,12 @@ public class GameManager : MonoBehaviour
                     }
                     else
                         md1.cardDisplay1.updateCard(card);
-                } else
+                }
+                else
                 {
                     td.addCard(md1.cardDisplay1);
                     card = md1.popCard();
-                    md1.cardDisplay1.updateCard(card);                    
+                    md1.cardDisplay1.updateCard(card);
                 }
 
                 sendSuccessMessage(9);
@@ -5763,7 +5816,7 @@ public class GameManager : MonoBehaviour
                 sendSuccessMessage(9);
                 md1.cardDisplay3.GetComponent<DragCard>().marketBack();
                 break;
-            case 4:                
+            case 4:
                 if (md2.cardDisplay1.crucibleCards.Count > 0)
                 {
                     td.addCard(md2.cardDisplay1);
@@ -5782,7 +5835,7 @@ public class GameManager : MonoBehaviour
                     td.addCard(md2.cardDisplay1);
                     card = md2.popCard();
                     md2.cardDisplay1.updateCard(card);
-                }               
+                }
                 /*
                 td.addCard(md2.cardDisplay1);
                 Card card4 = md2.popCard();
@@ -6222,7 +6275,7 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionDisplay.card;
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionDisplay.card);
                     */
-                    int random = rng.Next(0, starterPotionCards.Count);              
+                    int random = rng.Next(0, starterPotionCards.Count);
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionCards[random];
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionCards[random]);
 
@@ -6286,7 +6339,7 @@ public class GameManager : MonoBehaviour
                                     // Fill Vessel slot 4 with loaded potion.
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
-                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);                                   
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot4.SetActive(true);
                                     Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion4.card;
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion4.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
@@ -6622,7 +6675,7 @@ public class GameManager : MonoBehaviour
                     // Artifact slot is unloaded.
                     else
                     {
-                        
+
                         int random = rng.Next(0, starterPotionCards.Count);
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = starterPotionCards[random];
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(starterPotionCards[random]);
@@ -6657,7 +6710,7 @@ public class GameManager : MonoBehaviour
 
                         if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardEffect == "FourLoad")
                         {
-                            Debug.Log("Four slot logic");                                                       
+                            Debug.Log("Four slot logic");
                         }
 
                         // Check for existing loaded potion(s) if Vessel menu was already enabled.
@@ -6667,7 +6720,7 @@ public class GameManager : MonoBehaviour
                             if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card.cardName != "placeholder")
                             {
                                 // insert logic for loading the third and fourth potion here                                
-                                if(players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardEffect == "FourLoad")
+                                if (players[myPlayerIndex].holster.cardList[loadedCardInt].card.cardEffect == "FourLoad")
                                 {
                                     Debug.Log("Reached here in 3 4 slot");
                                     if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card.cardName != "placeholder")
@@ -6693,7 +6746,8 @@ public class GameManager : MonoBehaviour
                                         // // Updates Holster card to be empty.
                                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
                                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
-                                    } else
+                                    }
+                                    else
                                     {
                                         // Fill Vessel slot 3 with loaded potion.
                                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
@@ -6717,7 +6771,7 @@ public class GameManager : MonoBehaviour
                                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
                                     }
                                     return;
-                                }         
+                                }
 
                                 Debug.Log("Vessel is fully loaded!");
                                 // DONE: Insert error that displays on screen.
@@ -7067,10 +7121,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if((md1.cardDisplay1.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca) 
+        if ((md1.cardDisplay1.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
         {
             md1.cardDisplay1.grayCard();
-        } else
+        }
+        else
         {
             md1.cardDisplay1.whiteCard();
         }
@@ -7319,7 +7374,7 @@ public class GameManager : MonoBehaviour
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                 sendSuccessMessage(1);
                 checkMarketPrice();
-                if(md1.cardInt == 7)
+                if (md1.cardInt == 7)
                     players[myPlayerIndex].decoderBonus = true;
                 players[myPlayerIndex].checkDecoderBonus();
 
@@ -7535,7 +7590,7 @@ public class GameManager : MonoBehaviour
                         }
                         players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
-                        if(md2.cardDisplay1.crucibleCards.Count > 0)
+                        if (md2.cardDisplay1.crucibleCards.Count > 0)
                         {
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay1.crucibleCards[0];
@@ -7547,11 +7602,12 @@ public class GameManager : MonoBehaviour
                             }
                             else
                                 md2.cardDisplay1.updateCard(card);
-                        } else
+                        }
+                        else
                         {
                             Card card = md2.popCard();
                             md2.cardDisplay1.updateCard(card);
-                        }                       
+                        }
                         //md2.cardDisplay1.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
@@ -7588,7 +7644,7 @@ public class GameManager : MonoBehaviour
                         {
                             players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice - 1);
                         }
-                        
+
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
                         if (md2.cardDisplay1.crucibleCards.Count > 0)
                         {
@@ -7805,11 +7861,12 @@ public class GameManager : MonoBehaviour
                             Debug.Log("Crucible card is being popped out of list");
                             Card card = md2.cardDisplay3.crucibleCards[0];
                             md2.cardDisplay3.crucibleCards.RemoveAt(0);
-                            if(card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
+                            if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
                                 md2.cardDisplay3.card = card;
                                 md2.cardDisplay3.artworkImage.sprite = card.cardSprite;
-                            } else
+                            }
+                            else
                                 md2.cardDisplay3.updateCard(card);
                         }
                         else
@@ -7861,7 +7918,7 @@ public class GameManager : MonoBehaviour
                                 md2.cardDisplay4.updateCard(card);
                         }
                         else
-                        {                            
+                        {
                             Card card = md2.popCard();
                             if (card.cardName == "Crucible" || card.cardName == "Spoonful of Ambrosia")
                             {
@@ -7869,7 +7926,7 @@ public class GameManager : MonoBehaviour
                                 md2.cardDisplay4.artworkImage.sprite = card.cardSprite;
                             }
                             else
-                                md2.cardDisplay4.updateCard(card);                         
+                                md2.cardDisplay4.updateCard(card);
                         }
                         //md2.cardDisplay3.gameObject.GetComponent<Market_Hover>().resetCard();
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
@@ -8313,6 +8370,53 @@ public class GameManager : MonoBehaviour
             {
                 players[myPlayerIndex].cardsTrashed++;
             }
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
+            {
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion != null &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder" &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardQuality != "Starter")
+                {
+                    players[myPlayerIndex].cardsTrashed++;
+                }
+            }
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
+            {
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1 != null &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.cardQuality != "Starter")
+                {
+                    players[myPlayerIndex].cardsTrashed++;
+                }
+
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2 != null &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder" &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.cardQuality != "Starter")
+                {
+                    players[myPlayerIndex].cardsTrashed++;
+                }
+
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardEffect == "FourLoad")
+                {
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3 != null &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card.cardName != "placeholder" &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card.cardQuality != "Starter")
+                    {
+                        players[myPlayerIndex].cardsTrashed++;
+                    }
+
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4 != null &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card.cardName != "placeholder" &&
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card.cardQuality != "Starter")
+                    {
+                        players[myPlayerIndex].cardsTrashed++;
+                    }
+                }
+            }
+
+            Debug.Log("Number of cards trashed: " + players[myPlayerIndex].cardsTrashed);
+
             Debug.Log("Card Trashed");
             GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
@@ -8413,6 +8517,52 @@ public class GameManager : MonoBehaviour
             {
                 players[myPlayerIndex].cardsTrashed++;
             }
+
+            if (cd.card.cardType == "Artifact")
+            {
+                if (cd.aPotion != null &&
+                    cd.aPotion.card.cardName != "placeholder" &&
+                    cd.aPotion.card.cardQuality != "Starter")
+                {
+                    players[myPlayerIndex].cardsTrashed++;
+                }
+            }
+
+            if (cd.card.cardType == "Vessel")
+            {
+                if (cd.vPotion1 != null &&
+                    cd.vPotion1.card.cardName != "placeholder" &&
+                    cd.vPotion1.card.cardQuality != "Starter")
+                {
+                    players[myPlayerIndex].cardsTrashed++;
+                }
+
+                if (cd.vPotion2 != null &&
+                    cd.vPotion2.card.cardName != "placeholder" &&
+                    cd.vPotion2.card.cardQuality != "Starter")
+                {
+                    players[myPlayerIndex].cardsTrashed++;
+                }
+
+                if (cd.card.cardEffect == "FourLoad")
+                {
+                    if (cd.vPotion3 != null &&
+                    cd.vPotion3.card.cardName != "placeholder" &&
+                    cd.vPotion3.card.cardQuality != "Starter")
+                    {
+                        players[myPlayerIndex].cardsTrashed++;
+                    }
+
+                    if (cd.vPotion4 != null &&
+                    cd.vPotion4.card.cardName != "placeholder" &&
+                    cd.vPotion4.card.cardQuality != "Starter")
+                    {
+                        players[myPlayerIndex].cardsTrashed++;
+                    }
+                }
+            }
+            Debug.Log("Number of cards trashed: " + players[myPlayerIndex].cardsTrashed);
+
             Debug.Log("Card Trashed");
             GameObject obj = Instantiate(cd.gameObject,
                         cd.gameObject.transform.position,

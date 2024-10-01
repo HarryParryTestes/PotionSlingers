@@ -190,7 +190,7 @@ public class CardPlayer : MonoBehaviour
                     this.transform.localScale = new Vector3(7f, 8f, 0);
                     this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 30, this.transform.position.z);
                 }
-                
+
                 if (this.gameObject.name == "CharacterCard (Top)")
                     this.transform.localScale = new Vector3(11f, 12.5f, 0);
                 if (this.gameObject.name == "CharacterCard (Left)")
@@ -198,7 +198,7 @@ public class CardPlayer : MonoBehaviour
                     this.transform.localScale = new Vector3(3f, 3.5f, 0);
                     this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 30, this.transform.position.z);
                 }
-                    
+
                 break;
             case "Saltimbocca":
                 Debug.Log("I AM SALTIMBOCCA");
@@ -208,7 +208,7 @@ public class CardPlayer : MonoBehaviour
                     this.transform.localScale = new Vector3(5.4f, 7.9f, 0);
                     this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 20, this.transform.position.z);
                 }
-                    
+
                 if (this.gameObject.name == "CharacterCard (Top)")
                     this.transform.localScale = new Vector3(9.1f, 12.5f, 0);
                 if (this.gameObject.name == "CharacterCard (Left)")
@@ -216,7 +216,7 @@ public class CardPlayer : MonoBehaviour
                     this.transform.localScale = new Vector3(2.3f, 3.2f, 0);
                     this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y + 20, this.transform.position.z);
                 }
-                    
+
                 break;
             case "Scarpetta":
                 Debug.Log("I AM SCARPETTA");
@@ -407,7 +407,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Failed to set any bools");
                 break;
         }
-        if(charName == "Fingas")
+        if (charName == "Fingas")
         {
             Invoke("playIdle", 1.55f);
             return;
@@ -422,7 +422,7 @@ public class CardPlayer : MonoBehaviour
         int cards = 0;
         foreach (CardDisplay cd in holster.cardList)
         {
-            if(cd.card.name != "placeholder")
+            if (cd.card.name != "placeholder")
             {
                 cards++;
             }
@@ -432,7 +432,7 @@ public class CardPlayer : MonoBehaviour
 
         Debug.Log("Total number of Reets cards: " + cards);
 
-        if(cards >= 11)
+        if (cards >= 11)
         {
             character.canBeFlipped = true;
             GameManager.manager.sendMessage("You can now flip your character!");
@@ -447,7 +447,7 @@ public class CardPlayer : MonoBehaviour
         if (healthText != null && hpBar != null)
         {
             healthText.GetComponent<Text>().text = hp.ToString();
-            if(name == "Singelotte")
+            if (name == "Singelotte")
                 numbers = (float)hp / 33f;
             else
                 numbers = (float)hp / (float)maxHp;
@@ -599,7 +599,7 @@ public class CardPlayer : MonoBehaviour
             if (cd.card.cardName == "Decoder Ring" && decoderBonus == false)
             {
                 Debug.Log("Decoder Ring Bonus!!!");
-                if(GetComponent<ComputerPlayer>() != null)
+                if (GetComponent<ComputerPlayer>() != null)
                 {
                     // Computer player, make sure to disable these
                     GameManager.manager.md1.cardDisplay4.gameObject.SetActive(false);
@@ -647,7 +647,7 @@ public class CardPlayer : MonoBehaviour
                 // check for Echo Shard here!!!
                 foreach (Card card in deck.deckList)
                 {
-                    if(card.cardName == "Echo Shard")
+                    if (card.cardName == "Echo Shard")
                     {
                         Debug.Log("HP changed to 7 because of Echo Shard!");
                         hp = 7;
@@ -777,12 +777,12 @@ public class CardPlayer : MonoBehaviour
                 }
             }
 
-            }
+        }
 
-        if(deck.GetComponent<CharacterSlot>() != null)
+        if (deck.GetComponent<CharacterSlot>() != null)
             deck.GetComponent<CharacterSlot>().gauntletBonus = false;
         // SPICY CHECK
-
+        /*
         foreach (CardDisplay cd in holster.cardList)
         {
             if (cd.spicy && cd.card.name != "placeholder")
@@ -798,6 +798,7 @@ public class CardPlayer : MonoBehaviour
                     deck.GetComponent<CharacterSlot>().gauntletBonus = true;
             }
         }
+        */
         updateHealthUI();
 
         cubed = false;
@@ -877,7 +878,7 @@ public class CardPlayer : MonoBehaviour
             if (cd.card.cardName == "Dipstick Flicker")
             {
                 Debug.Log("Dipstick Flicker!!!");
-                if(cd.aPotion.card.cardName == "placeholder")
+                if (cd.aPotion.card.cardName == "placeholder")
                 {
                     cd.artifactSlot.transform.parent.gameObject.SetActive(true);
                     cd.artifactSlot.transform.gameObject.SetActive(true);
@@ -973,7 +974,7 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
-        if(stuff == 0)
+        if (stuff == 0)
         {
             Debug.Log("No room in your Holster!!!");
             return;
@@ -1145,12 +1146,13 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
                 GameManager.manager.td.displayTrash();
                 return 0;
-            } else
+            }
+            else
             {
                 // logic for computer player
-                for(int i = 0; i < GameManager.manager.td.deckList.Count; i++)
+                for (int i = 0; i < GameManager.manager.td.deckList.Count; i++)
                 {
-                    if(GameManager.manager.td.deckList[i].cardType == "Potion")
+                    if (GameManager.manager.td.deckList[i].cardType == "Potion")
                     {
                         Card cd = GameManager.manager.td.popCard(i);
                         deck.putCardOnTop(cd);
@@ -1158,7 +1160,7 @@ public class CardPlayer : MonoBehaviour
                     }
                 }
             }
-            
+
         }
 
         // The Skateboard
@@ -1268,7 +1270,7 @@ public class CardPlayer : MonoBehaviour
             else if (selectedCard.aPotion.card.cardQuality == "Wet" || selectedCard.aPotion.card.cardQuality == "Cold")
             {
                 addPips(1);
-                if(healBonus)
+                if (healBonus)
                     addHealth(6);
                 else
                     addHealth(3);
@@ -1444,7 +1446,7 @@ public class CardPlayer : MonoBehaviour
                 dry = true;
             }
 
-            if(hot && cold && wet && dry)
+            if (hot && cold && wet && dry)
             {
                 // add an essence cube and update the UI
                 Debug.Log("Bonus triggered! Adding an essence cube!");
@@ -1502,7 +1504,8 @@ public class CardPlayer : MonoBehaviour
                 damage = checkBonus(damage, selectedCard.vPotion3);
                 damage = checkBonus(damage, selectedCard.vPotion4);
             }
-        } else
+        }
+        else
         {
             Debug.Log("STONE STONE STONE STONE STONE");
         }
@@ -1663,7 +1666,8 @@ public class CardPlayer : MonoBehaviour
                     GameManager.manager.FadeIn(GameManager.manager.trashDeckMenu);
                     GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
                     GameManager.manager.td.displayTrash();
-                } else
+                }
+                else
                 {
                     // logic for computer player
                     for (int i = 0; i < GameManager.manager.td.deckList.Count; i++)
@@ -1676,7 +1680,7 @@ public class CardPlayer : MonoBehaviour
                         }
                     }
                 }
-                
+
             }
 
             // Voluptuous Gallipot of Double Entendre
@@ -1713,7 +1717,7 @@ public class CardPlayer : MonoBehaviour
                     // maybe do something for computer
                     var exclude = new HashSet<int>() { };
                     for (int i = 0; i < GameManager.manager.tempPlayer.holster.cardList.Count; i++)
-                    {                       
+                    {
                         if (GameManager.manager.tempPlayer.holster.cardList[i].card.cardName == "placeholder")
                         {
                             exclude.Add(i);
@@ -1901,7 +1905,7 @@ public class CardPlayer : MonoBehaviour
             if (selectedCard.card.cardName == "PhiltyPhlegmbicAlembic")
             {
                 // first they'll need to pick their bonus
-                if(gameObject.GetComponent<ComputerPlayer>() == null)
+                if (gameObject.GetComponent<ComputerPlayer>() == null)
                     GameManager.manager.FadeIn(GameManager.manager.trashBonusMenu);
                 // GameManager.manager.trashBonusMenu.SetActive(true);
                 else
@@ -2188,7 +2192,7 @@ public class CardPlayer : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         obj.SetActive(true);
-        if(obj.GetComponent<CanvasGroup>() != null)
+        if (obj.GetComponent<CanvasGroup>() != null)
             obj.GetComponent<CanvasGroup>().alpha = 0;
     }
 
@@ -2261,7 +2265,7 @@ public class CardPlayer : MonoBehaviour
             bool cWet = false;
             bool cDry = false;
             int localDamage = 0;
-         
+
             foreach (CardDisplay cd in holster.cardList)
             {
                 // don't include itself in the calculation
@@ -2288,7 +2292,7 @@ public class CardPlayer : MonoBehaviour
             }
 
             foreach (Card card in deck.deckList)
-            {               
+            {
 
                 switch (card.cardQuality)
                 {
@@ -2348,7 +2352,7 @@ public class CardPlayer : MonoBehaviour
                 // GameManager.manager.deckMenu.SetActive(true);
 
                 // computer player check to prevent the menu from popping up
-                if(gameObject.GetComponent<ComputerPlayer>() != null)
+                if (gameObject.GetComponent<ComputerPlayer>() != null)
                 {
                     Debug.Log("Computer just triggered the snake! Code in this logic later!");
                     Debug.Log("Or don't it's fine!");
@@ -2362,7 +2366,7 @@ public class CardPlayer : MonoBehaviour
         }
 
         // An Essence of Emotional Labor
-        if(selectedCard.card.cardName == "Essence of Emotional Labor")
+        if (selectedCard.card.cardName == "Essence of Emotional Labor")
         {
             // if GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() != null
             if (!Game.multiplayer)
@@ -2370,7 +2374,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Computer logic");
 
                 // you need to make a menu for a human tempPlayer to discard a card from their deck
-                if(GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
+                if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
                 {
                     // make a menu for this
                     Debug.Log("Make a menu for someone to choose the card they want to discard");
@@ -2454,7 +2458,7 @@ public class CardPlayer : MonoBehaviour
             {
                 Debug.Log("River Cheese Bonus!  +3 damage!");
                 return damage + 3;
-            }    
+            }
         }
 
         if (selectedCard.card.cardName != "NorthernOquinox" && selectedCard.card.cardName != "PotionThatMakesHatsUglier" &&
@@ -2515,9 +2519,9 @@ public class CardPlayer : MonoBehaviour
             if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() != null)
             {
                 Debug.Log("Computer logic!!!");
-                foreach(CardDisplay cd in GameManager.manager.tempPlayer.holster.cardList)
+                foreach (CardDisplay cd in GameManager.manager.tempPlayer.holster.cardList)
                 {
-                    if(cd.card.name == "placeholder")
+                    if (cd.card.name == "placeholder")
                     {
                         continue;
                     }
@@ -2534,7 +2538,8 @@ public class CardPlayer : MonoBehaviour
                         return damage;
                     }
                 }
-            } else
+            }
+            else
             {
                 // if the player is a human
                 Debug.Log("No computer player?");
@@ -2584,7 +2589,7 @@ public class CardPlayer : MonoBehaviour
                 return damage;
             }
 
-            if(gameObject.GetComponent<ComputerPlayer>() != null)
+            if (gameObject.GetComponent<ComputerPlayer>() != null)
             {
                 Debug.Log("Computer logic!!!");
 
@@ -2611,8 +2616,9 @@ public class CardPlayer : MonoBehaviour
                     }
                 }
 
-            } else
-            {               
+            }
+            else
+            {
                 try
                 {
                     // GameManager.manager.opponentHolsterMenu.SetActive(true);
@@ -2656,7 +2662,7 @@ public class CardPlayer : MonoBehaviour
             selectedCard.card.cardName == "A Confident Throw Into the Garbage")
         {
             // Computer check needed! Just make it do 2 damage and don't worry about the choice lol
-            if(gameObject.GetComponent<ComputerPlayer>() != null)
+            if (gameObject.GetComponent<ComputerPlayer>() != null)
             {
                 Debug.Log("Computer player triggered this!");
                 // like I don't give a fuck lol
@@ -2871,10 +2877,11 @@ public class CardPlayer : MonoBehaviour
                                     gp.RpcBubbleWandMenu(gp.playerName, cardInt, damage);
                                 }
                             }
-                        }   else
+                        }
+                        else
                         {
                             Debug.Log("Local command for Bubble Wand");
-                            if(gameObject.GetComponent<ComputerPlayer>() == null)
+                            if (gameObject.GetComponent<ComputerPlayer>() == null)
                             {
                                 // GameManager.manager.bubbleWandMenu.SetActive(true);
                                 GameManager.manager.FadeIn(GameManager.manager.bubbleWandMenu);
@@ -3089,7 +3096,7 @@ public class CardPlayer : MonoBehaviour
             }
 
             // took out && Game.storyMode out of this, I believe it should be fine
-            if(hpCubes == 1)
+            if (hpCubes == 1)
             {
                 // make sure this doesn't fuck with the echo shard
                 for (int i = 0; i < deck.deckList.Count; i++)
@@ -3280,7 +3287,7 @@ public class CardPlayer : MonoBehaviour
     public void addPips(int morePips)
     {
         pips += morePips;
-        
+
         if (pipsSign != null)
         {
             if (morePips > 0)
@@ -3577,8 +3584,8 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Vessel Bonus: +2 Damage
-        if (selectedCard.vPotion1.card.cardName == "RefectionOfOnesGnarledEmotionalSelf"  ||
-            selectedCard.vPotion1.card.cardName == "SoupMadeOfGunpowder"  ||
+        if (selectedCard.vPotion1.card.cardName == "RefectionOfOnesGnarledEmotionalSelf" ||
+            selectedCard.vPotion1.card.cardName == "SoupMadeOfGunpowder" ||
             selectedCard.vPotion1.card.cardName == "PourOfReallyAngryAcid")
         {
             // check each loaded potion individually and apply the bonus to the one with the vessel bonus
@@ -3719,7 +3726,7 @@ public class CardPlayer : MonoBehaviour
                 selectedCard.vPotion2.colorCardCold();
             }
         }
-        
+
 
         // Cold + Dry Bonus
         if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
