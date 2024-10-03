@@ -90,6 +90,7 @@ public class CardPlayer : MonoBehaviour
     public bool phialBonus = false;
     public bool hotCoffee = false;
     public bool decoderBonus = false;
+    public bool dumpsterBonus = false;
 
     public MyNetworkManager game;
     public MyNetworkManager Game
@@ -889,6 +890,36 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Liquid Cornucopia check
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if (cd.card.cardName == "LiquidCornucopia")
+            {
+                Debug.Log("Liquid Cornucopia!!!");
+                if (cd.vPotion1.card.cardName == "placeholder")
+                {
+                    Debug.Log("Triggering in first vessel slot!");
+                    // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
+                    // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                    cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                    cd.vesselSlot1.SetActive(true);
+                    cd.vesselSlot2.SetActive(false);
+                    cd.vesselSlot3.SetActive(false);
+                    cd.vesselSlot4.SetActive(false);
+
+                    Card card = GameManager.manager.md1.popCard();
+                    cd.vPotion1.updateCard(card);
+                    // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
+                } else if (cd.vPotion2.card.cardName == "placeholder")
+                {
+                    Debug.Log("Triggering in second vessel slot!");
+                    cd.vesselSlot2.SetActive(true);
+                    Card card = GameManager.manager.md1.popCard();
+                    cd.vPotion2.updateCard(card);
+                }
+            }
+        }
+
         pipsUsedThisTurn = 0;
         potionsThrown = 0;
         artifactsUsed = 0;
@@ -903,6 +934,7 @@ public class CardPlayer : MonoBehaviour
         phialBonus = false;
         hotCoffee = false;
         decoderBonus = false;
+        dumpsterBonus = false;
 
         if (isNickles)
         {
@@ -1106,6 +1138,36 @@ public class CardPlayer : MonoBehaviour
             {
                 damage++;
                 break;
+            }
+        }
+
+        // Cuckoo Bellows
+        if (selectedCard.card.cardName == "CuckooBellows")
+        {
+            // will need to make UI to select which effect you want, will also need to check if the opponent has a deck to interact with
+            Debug.Log("TODO: Make UI menu for Cuckoo Bellows");
+        }
+
+        // Loofah Launcher
+        if (selectedCard.card.cardName == "LoofahLauncher")
+        {
+            // Wet Bonus
+            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            { 
+
+            foreach (CardDisplay cd in holster.cardList)
+            {
+                if (deck.deckList.Count >= 1)
+                {
+                    if (cd.card.name == "placeholder")
+                        {
+                        // cd.updateCard(player.deck.popCard());
+                        GameManager.manager.StartCoroutine(GameManager.manager.DeckAnimation(cd, this));
+                        Debug.Log("Loofah bonus triggered!");
+                        break;
+                        }
+                    }
+                }
             }
         }
 
@@ -1406,6 +1468,54 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Hollowed Out Skull of Higyoude
+        if (selectedCard.card.cardName == "HollowedOutSkull")
+        {
+            // does 6 damage, ignores all potion effects
+            return 6;
+        }
+
+        // Squeezebox
+        if (selectedCard.card.cardName == "Squeezebox")
+        {
+            healBonus = true;
+        }
+
+        // Fragile Glass Ornament
+        // Does +1 Damage. Ignores loaded potion effects in this Vessel
+        if (selectedCard.card.cardName == "Fragile Glass Ornament")
+        {
+            // this card ignores all potion effects, so i'm returning damage + 1
+            Debug.Log("Fragile Glass Ornament damage bonus");
+            return damage + 1;
+        }
+
+        // Stone Ring logic will simply pass the damage of the potion(s) without checking any of the card text effects
+        bool stone = false;
+
+        // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
+                stone = true;
+        }
+
+        if (!stone)
+        {
+            // checking the potions for throw bonuses
+            damage = checkBonus(damage, selectedCard.vPotion1);
+            damage = checkBonus(damage, selectedCard.vPotion2);
+            if (selectedCard.card.cardEffect == "FourLoad")
+            {
+                damage = checkBonus(damage, selectedCard.vPotion3);
+                damage = checkBonus(damage, selectedCard.vPotion4);
+            }
+        }
+        else
+        {
+            Debug.Log("STONE STONE STONE STONE STONE");
+        }
+
         if (selectedCard.card.cardName == "Tanktown Burrito")
         {
             bool hot = false;
@@ -1462,54 +1572,21 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
-        // Hollowed Out Skull of Higyoude
-        if (selectedCard.card.cardName == "HollowedOutSkull")
+        // Calculating Convector
+        if (selectedCard.card.cardName == "CalculatingConvector")
         {
-            // does 6 damage, ignores all potion effects
-            return 6;
-        }
-
-        // Squeezebox
-        if (selectedCard.card.cardName == "Squeezebox")
-        {
-            healBonus = true;
-        }
-
-        // Fragile Glass Ornament
-        // Does +1 Damage. Ignores loaded potion effects in this Vessel
-        if (selectedCard.card.cardName == "Fragile Glass Ornament")
-        {
-            // this card ignores all potion effects, so i'm returning damage + 1
-            Debug.Log("Fragile Glass Ornament damage bonus");
-            return damage + 1;
-        }
-
-        // Stone Ring logic will simply pass the damage of the potion(s) without checking any of the card text effects
-        bool stone = false;
-
-        // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
-        foreach (CardDisplay cd in holster.cardList)
-        {
-            if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
-                stone = true;
-        }
-
-        if (!stone)
-        {
-            // checking the potions for throw bonuses
-            damage = checkBonus(damage, selectedCard.vPotion1);
-            damage = checkBonus(damage, selectedCard.vPotion2);
-            if (selectedCard.card.cardEffect == "FourLoad")
+            if ((selectedCard.vPotion1.card.cardQuality == "Wet" ||
+                selectedCard.vPotion2.card.cardQuality == "Wet") ||
+                (selectedCard.vPotion1.card.cardQuality == "Hot" ||
+                selectedCard.vPotion2.card.cardQuality == "Hot"))
             {
-                damage = checkBonus(damage, selectedCard.vPotion3);
-                damage = checkBonus(damage, selectedCard.vPotion4);
+                if(selectedCard.vPotion1.card.effectAmount == selectedCard.vPotion2.card.effectAmount)
+                {
+                    Debug.Log("Convector Bonus!");
+                    return damage + 3;
+                }
             }
         }
-        else
-        {
-            Debug.Log("STONE STONE STONE STONE STONE");
-        }
-
 
         // Drinking Horn of a Sea Unicorn's Tooth
         if (selectedCard.card.cardName == "Drinking Horn of a Sea Unicorn's Tooth")
@@ -3387,6 +3464,17 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Loofah Launcher
+        if (selectedCard.card.cardName == "LoofahLauncher")
+        {
+            // Wet Bonus
+            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.aPotion.colorCardWet();
+            }
+        }
+
         // Hammer of Engagement
         if (selectedCard.card.cardName == "HammerOfEnagagment")
         {
@@ -3568,6 +3656,34 @@ public class CardPlayer : MonoBehaviour
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion2.colorCardCold();
+            }
+
+            if (selectedCard.vPotion1.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.vPotion1.colorCardWet();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Wet")
+            {
+                selectedCard.colorCardWet();
+                selectedCard.vPotion2.colorCardWet();
+            }
+        }
+
+        // Calculating Convector
+        if (selectedCard.card.cardName == "CalculatingConvector")
+        {
+            if (selectedCard.vPotion1.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.vPotion1.colorCardHot();
+            }
+
+            if (selectedCard.vPotion2.card.cardQuality == "Hot")
+            {
+                selectedCard.colorCardHot();
+                selectedCard.vPotion2.colorCardHot();
             }
 
             if (selectedCard.vPotion1.card.cardQuality == "Wet")

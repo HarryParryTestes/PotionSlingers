@@ -333,13 +333,15 @@ public class CardDisplay : MonoBehaviour
         if (cd.spicy)
         {
             spicy = true;
-            flames.SetActive(true);
+            if(flames != null)
+                flames.SetActive(true);
         }
 
         else
         {
             spicy = false;
-            flames.SetActive(false);
+            if (flames != null)
+                flames.SetActive(false);
         }
     }
 

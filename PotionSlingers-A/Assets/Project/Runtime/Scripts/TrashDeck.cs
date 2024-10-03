@@ -62,6 +62,7 @@ public class TrashDeck : MonoBehaviour, IDropHandler
     {
         trash = !trash;
         GameManager.manager.trashDeckBonus = false;
+        GameManager.manager.dumpsterBonus = false;
 
         /*
         Market_Hover m1 = cd1.gameObject.GetComponent<Market_Hover>();

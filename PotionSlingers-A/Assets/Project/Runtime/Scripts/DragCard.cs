@@ -333,7 +333,24 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             DOTween.Pause(gameObject.name);
             return;
-        }       
+        }
+
+        /*
+        if (gameObject.name == "Card1Display")
+        {
+            GameManager.manager.selectedCardInt = 1;
+        }
+        else if (gameObject.name == "Card4Display")
+        {
+            GameManager.manager.selectedCardInt = 4;
+        }
+        else if (gameObject.name == "Card3Display")
+        {
+            GameManager.manager.selectedCardInt = 3;
+        }
+        else
+            GameManager.manager.selectedCardInt = 2;
+        */
 
         if (!clicked && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
@@ -485,7 +502,54 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 // GameManager.manager.FadeIn(button);
                 button.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
                 // 350f * GameManager.manager.widthRatio, 0, 0
-                button.transform.DOMove(pos + new Vector3(350f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                if (gameObject.name == "Card1Display")
+                {
+                    button.transform.DOMove(pos + new Vector3(375f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                }
+                else if (gameObject.name == "Card4Display")
+                {
+                    button.transform.DOMove(pos + new Vector3(550f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                }
+                else if (gameObject.name == "Card3Display")
+                {
+                    button.transform.DOMove(pos + new Vector3(475f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                }
+                else
+                    button.transform.DOMove(pos + new Vector3(450f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+            }
+
+            // check for Bottle Rocket card here and Instantiate button to load from the trash
+            if (GetComponent<CardDisplay>().card.cardName == "PocketDumpster" && !market && !loaded)
+            {
+                Debug.Log("Pocket Dumpster Button!!!");
+                // instantiate the button
+                if (button != null)
+                    Destroy(button);
+
+                // new Vector3(350f * GameManager.manager.widthRatio, 100f * GameManager.manager.heightRatio, 0)
+                button = Instantiate(GameManager.manager.trashLoadButton,
+                    this.transform.position,
+                        this.transform.rotation,
+                        this.transform);
+
+                button.SetActive(true);
+                // take this out for now, it fucks with the TMP objects
+                // GameManager.manager.FadeIn(button);
+                button.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+                // 350f * GameManager.manager.widthRatio, 0, 0
+                if (gameObject.name == "Card1Display")
+                {
+                    button.transform.DOMove(pos + new Vector3(375f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                } else if (gameObject.name == "Card4Display")
+                {
+                    button.transform.DOMove(pos + new Vector3(550f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                } else if (gameObject.name == "Card3Display")
+                {
+                    button.transform.DOMove(pos + new Vector3(475f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                } else
+                    button.transform.DOMove(pos + new Vector3(450f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+
+                // button.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Load";
             }
 
         } else

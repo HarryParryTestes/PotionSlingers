@@ -100,6 +100,7 @@ public class GameManager : MonoBehaviour
     public GameObject advanceStageUI;
     public GameObject endTurnButton;
     public GameObject payButton;
+    public GameObject trashLoadButton;
     public DeckMenuScroll deckDisplay;
     public ExpUI expUI;
 
@@ -159,6 +160,7 @@ public class GameManager : MonoBehaviour
     public bool holster = false;
     public bool cardGameBonus = false;
     public bool rocketBonusUsed = false;
+    public bool dumpsterBonus = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -4511,6 +4513,54 @@ public class GameManager : MonoBehaviour
 
     public void takeTrashCard(CardDisplay cd)
     {
+        CardDisplay whatever = null;
+
+        if (dumpsterBonus)
+        {
+            if (cd.card.cardType != "Potion")
+                return;
+
+            foreach (CardDisplay cdis in players[myPlayerIndex].holster.cardList)
+            {
+                if(cdis.card.cardName == "PocketDumpster")
+                {
+                    whatever = cdis;
+                    break;
+                }
+            }
+
+            dumpsterBonus = false;
+
+            if (whatever.vPotion1.card.cardName == "placeholder")
+            {
+                Debug.Log("Triggering in first vessel slot!");
+                // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
+                // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
+                whatever.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                whatever.vesselSlot1.SetActive(true);
+                whatever.vesselSlot2.SetActive(false);
+                whatever.vesselSlot3.SetActive(false);
+                whatever.vesselSlot4.SetActive(false);
+
+                // Card card = GameManager.manager.md1.popCard();
+                whatever.vPotion1.updateCard(cd);
+                sendMessage("Loaded a card!");
+                // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
+            }
+            else if (cd.vPotion2.card.cardName == "placeholder")
+            {
+                Debug.Log("Triggering in second vessel slot!");
+                whatever.vesselSlot2.SetActive(true);
+                // Card card = GameManager.manager.md1.popCard();
+                whatever.vPotion2.updateCard(cd);
+            }
+            // whatever.updateCard(cd);
+            players[myPlayerIndex].dumpsterBonus = true;
+            dumpsterBonus = false;
+            td.menuUI.SetActive(false);
+            return;
+        }
+
         if (!trashDeckBonus)
         {
             Debug.Log("Don't take a card reached here");
@@ -5188,25 +5238,23 @@ public class GameManager : MonoBehaviour
 
             int damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.buyPrice;
 
-            /*
-            foreach (CardPlayer cp in players)
-            {
-                if (cp.name == selectedOpponentName)
-                {
-                    cp.subHealth(damage);
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-                    td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
-                    // maybe add a notif idk
-                    sendSuccessMessage(2);
-                    return;
-                }
-            }
-            */
+            
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
+                bool stone = false;
+
+                // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
+                foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+                {
+                    if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
+                        stone = true;
+                }
+
+                if (!stone)
+                    damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
                 // check for bonus on potions even if you're using the buy cost as damage
-                damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+                // damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             }
 
             GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
@@ -8085,6 +8133,17 @@ public class GameManager : MonoBehaviour
                 // correct this logic in a little bit
             }
         }
+    }
+
+    public void setDumpsterBonus()
+    {
+        // trashDeckMenu.SetActive(true);
+        if (!players[myPlayerIndex].dumpsterBonus)
+        {
+            td.displayTrash();
+            dumpsterBonus = true;           
+        }
+        moveMarketCards();
     }
 
     public void setBottleRocketBonus()
