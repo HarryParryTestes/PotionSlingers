@@ -94,6 +94,7 @@ public class GameManager : MonoBehaviour
     public GameObject shieldMenu;
     public GameObject bubbleWandMenu;
     public GameObject chooseOpponentMenu;
+    public GameObject potionMarketMenu;
     public GameObject deckMenu;
     public GameObject nicklesAttackMenu;
     public GameObject cardGameTheGameMenu;
@@ -176,6 +177,10 @@ public class GameManager : MonoBehaviour
 
     GameObject player1Area;
     GameObject player2Area;
+
+    public CardDisplay pm1;
+    public CardDisplay pm2;
+    public CardDisplay pm3;
 
     public CardDisplay tm1;
     public CardDisplay tm2;
@@ -2673,6 +2678,13 @@ public class GameManager : MonoBehaviour
         md2.init();
         Debug.Log("Decks shuffled");
         checkMarketPrice();
+    }
+
+    public void updatePotionMarketMenu()
+    {
+        pm1.updateCard(md1.cardDisplay1.card);
+        pm2.updateCard(md1.cardDisplay2.card);
+        pm3.updateCard(md1.cardDisplay3.card);
     }
 
     public void updateTrashMarketMenu()
@@ -6128,6 +6140,7 @@ public class GameManager : MonoBehaviour
         }
 
         takeMarketMenu.SetActive(false);
+        potionMarketMenu.SetActive(false);
 
     }
 
@@ -6266,8 +6279,9 @@ public class GameManager : MonoBehaviour
         else
         {
             // chooseOpponentMenu.SetActive(true);
-            FadeIn(chooseOpponentMenu);
-            displayOpponents();
+            // FadeIn(chooseOpponentMenu);
+            // displayOpponents();
+            Debug.Log("I somehow reached inside of here...");
         }
     }
 
@@ -8724,6 +8738,12 @@ public class GameManager : MonoBehaviour
      * other is overloaded to take in a Dialog to handle
      * the tutorial text
      */
+
+    public IEnumerator DelayedFade(GameObject gameObj)
+    {
+        yield return new WaitForSeconds(2.25f);
+        FadeIn(gameObj);
+    }
 
     IEnumerator waitThreeSeconds(GameObject gameObj)
     {
