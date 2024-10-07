@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
     public GameObject trashDeckMenu;
     public GameObject takeMarketMenu;
     public GameObject opponentHolsterMenu;
+    public GameObject cuckooBellowsMenu;
     public GameObject trashBonusMenu;
     public GameObject trashPlayerMenu;
     public GameObject faisalMenu;
@@ -162,6 +163,7 @@ public class GameManager : MonoBehaviour
     public bool cardGameBonus = false;
     public bool rocketBonusUsed = false;
     public bool dumpsterBonus = false;
+    public bool moveToDeck = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -3471,7 +3473,6 @@ public class GameManager : MonoBehaviour
             opRightText.text = players[3].name;
         }
     }
-
     public void displayOpponentHolster()
     {
         // refactor this to not use four hardcoded indices
@@ -3486,6 +3487,7 @@ public class GameManager : MonoBehaviour
     public void turnHolsterOff()
     {
         holster = false;
+        moveToDeck = false;
     }
 
     public void displayOpponentHolster(CardPlayer cardPlayer)
@@ -3525,8 +3527,34 @@ public class GameManager : MonoBehaviour
         // tempPlayer.holster.cardList[selectedCard - 1].updateCard(td.card);
     }
 
+    public void deckMove()
+    {
+        moveToDeck = true;
+        opponentHolsterMenu.SetActive(true);
+        displayOpponentHolster(tempPlayer);               
+    }
+
+    public void bottomMove()
+    {
+        Card card = tempPlayer.deck.popCard();
+        tempPlayer.deck.putCardOnBottom(card);
+        sendMessage("Put top card of their deck on the bottom!");
+    }
+
     public void replaceOpponentCardWithStarter(int selectedCard)
     {
+        if (moveToDeck)
+        {
+            Debug.Log("Moving holstered card to deck!!!");
+            moveToDeck = false;
+            Card card = tempPlayer.holster.cardList[selectedCard - 1].card;
+            tempPlayer.holster.cardList[selectedCard - 1].updatePlaceholder(tempPlayer.holster.cardList[selectedCard - 1]);
+            tempPlayer.deck.putCardOnTop(card);
+            sendMessage("Moved card to the top of their deck!");
+            opponentHolsterMenu.SetActive(false);
+            return;
+        }
+
         if (holster)
             return;
 

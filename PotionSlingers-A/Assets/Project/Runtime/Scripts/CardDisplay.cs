@@ -157,6 +157,59 @@ public class CardDisplay : MonoBehaviour
         obj.GetComponent<DragCard>().dontMoveThis = false;
     }
 
+    public void updatePlaceholder(CardDisplay cd)
+    {
+        cd.updateCard(GameManager.manager.td.card);
+
+        if (cd.card.cardType == "Artifact")
+        {
+            if (cd.aPotion != null && cd.aPotion.card.cardName != "placeholder")
+            {
+                cd.aPotion.updateCard(GameManager.manager.td.card);
+                cd.aPotion.gameObject.SetActive(false);
+            }
+        }
+
+        if (cd.card.cardType == "Vessel")
+        {
+            cd.updateCard(GameManager.manager.td.card);
+            if (cd.vPotion1 != null && cd.vPotion1.card.cardName != "placeholder")
+            {
+                cd.vPotion1.updateCard(GameManager.manager.td.card);
+                cd.vPotion1.gameObject.SetActive(false);
+                cd.vPotion2.gameObject.SetActive(false);
+            }
+
+            if (cd.vPotion2 != null && cd.vPotion2.card.cardName != "placeholder")
+            {
+                cd.vPotion2.updateCard(GameManager.manager.td.card);
+                cd.vPotion1.gameObject.SetActive(false);
+                cd.vPotion2.gameObject.SetActive(false);
+            }
+
+            if (cd.card.cardEffect == "FourLoad")
+            {
+                if (cd.vPotion3 != null && cd.vPotion3.card.cardName != "placeholder")
+                {
+                    cd.vPotion3.updateCard(GameManager.manager.td.card);
+                    cd.vPotion1.gameObject.SetActive(false);
+                    cd.vPotion2.gameObject.SetActive(false);
+                    cd.vPotion3.gameObject.SetActive(false);
+                    cd.vPotion4.gameObject.SetActive(false);
+                }
+
+                if (cd.vPotion4 != null && cd.vPotion4.card.cardName != "placeholder")
+                {
+                    cd.vPotion4.updateCard(GameManager.manager.td.card);
+                    cd.vPotion1.gameObject.SetActive(false);
+                    cd.vPotion2.gameObject.SetActive(false);
+                    cd.vPotion3.gameObject.SetActive(false);
+                    cd.vPotion4.gameObject.SetActive(false);
+                }
+            }
+        }
+    }
+
     public void updateCard(Card card, string status = null)
     {
         artworkImage = this.GetComponent<Image>();

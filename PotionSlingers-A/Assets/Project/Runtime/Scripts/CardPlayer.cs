@@ -1157,12 +1157,18 @@ public class CardPlayer : MonoBehaviour
         {
             // will need to make UI to select which effect you want, will also need to check if the opponent has a deck to interact with
             Debug.Log("TODO: Make UI menu for Cuckoo Bellows");
+            // fix this for later
+            if(Game.storyMode && GameManager.manager.saveData.currentEnemyName != "Saltimbocca")
+                return damage;
+
+            StartCoroutine(DelayedFade(GameManager.manager.cuckooBellowsMenu));
         }
 
         if (selectedCard.card.cardQuality.Contains("Dry") && selectedCard.aPotion.card.cardName == "PowderkegGazogene")
         {
             Debug.Log("Powderkeg Bonus!!!");
             damage += 2;
+
         }
 
         // Loofah Launcher
@@ -2412,6 +2418,7 @@ public class CardPlayer : MonoBehaviour
             {
                 if(cd.card.cardQuality == "Dry")
                 {
+                    Debug.Log("Found a dry card!!!");
                     times++;
                 }
             }
