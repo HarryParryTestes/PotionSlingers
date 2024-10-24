@@ -20,6 +20,7 @@ public class CardPlayer : MonoBehaviour
     public int pips;
     public int pipCount = 6;
     public int pipsUsedThisTurn = 0;
+    public int shields = 0;
     public bool dead;           //Does the player still have health left?
     public int potionsThrown = 0;
     public int vesselsThrown = 0;
@@ -47,9 +48,12 @@ public class CardPlayer : MonoBehaviour
     public GameObject healSign;
     public GameObject healAmount;
     public GameObject hpBar;
+    public GameObject shieldBar;
     public GameObject pipsSign;
     public GameObject healthText;
     public GameObject hitAnimation;
+    public GameObject shieldsIcon;
+    public GameObject shieldsNum;
     public GameObject hoverBox;
     public List<Sprite> hitImages;
     private System.Random rng = new System.Random();
@@ -444,6 +448,7 @@ public class CardPlayer : MonoBehaviour
     public void updateHealthUI(string cardQuality = "")
     {
         // refactor tihis to incorporate max health instead of hardcoded 10 value
+        // add shield bar code
 
         float numbers;
         if (healthText != null && hpBar != null)
@@ -457,6 +462,27 @@ public class CardPlayer : MonoBehaviour
             hpBar.GetComponent<Image>().fillAmount = numbers;
         }
 
+        if(shieldBar != null)
+        {
+            // this will usually be 0 unless shields are added or damage is done
+            numbers = (float)shields / (float)maxHp;
+            shieldBar.GetComponent<Image>().fillAmount = numbers;
+        }
+
+        if(shieldsNum != null && shieldsIcon != null)
+        {
+            if (shields > 0)
+            {
+                shieldsIcon.SetActive(true);
+                shieldsNum.SetActive(true);
+                shieldsNum.GetComponent<Text>().text = shields.ToString();
+            }
+            else
+            {
+                shieldsIcon.SetActive(false);
+                shieldsNum.SetActive(false);
+            }
+        }        
 
         if (playerHP != null && playerHPCubes != null)
         {
@@ -3198,6 +3224,13 @@ public class CardPlayer : MonoBehaviour
         updateHealthUI();
     }
 
+    public int checkShields(int damage)
+    {
+        int tempShields = shields;
+        shields = Math.Max(0, shields - damage);
+        return Math.Max(0, damage - tempShields);
+    }
+
     public void subHealth(int damage, string cardQuality = "")
     {
         // If they're dead don't damage them further
@@ -3205,6 +3238,18 @@ public class CardPlayer : MonoBehaviour
         {
             GameManager.manager.checkForEndGame();
             return;
+        }
+
+        // check for shields before subtracting any health
+        if(shields > 0)
+        {
+            Debug.Log("Shields are " + shields);
+            Debug.Log("Damage to be dealt is " + damage);
+
+            damage = checkShields(damage);
+
+            Debug.Log("Shields are now " + shields);
+            Debug.Log("Remaining damage to be dealt is " + damage);
         }
 
         /*
