@@ -24,6 +24,7 @@ public class SceneTransition : MonoBehaviour
     public TMPro.TextMeshProUGUI healthCubes;
     public TMPro.TextMeshProUGUI health;
     public List<GameObject> objects = new List<GameObject>();
+    public List<string> slingerPool = new List<string>();
     // Start is called before the first frame update
     void Start()
     {

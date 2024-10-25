@@ -17,6 +17,7 @@ public class SaveData
     public int pipCount = 6;
     public int playerCubes = 3;
     public int currencyCubes = 0;
+    public int shields = 0;
     public bool canBeFlipped;
     public bool flipped;
     public bool transition;
@@ -41,10 +42,12 @@ public class SaveData
     public int opp3Health;
     public int opp3Cubes;
     public int stage;
+    public int slingerEncounter;
     public bool savedGame;
     public bool newStage;
     public bool selectedStage;
     public string currentEnemyName;
+    public string slingerName;
     public List<string> visitedEnemies = new List<string>();
     // public List<string> oppDeck = new List<string>();
     // public List<string> oppHolster = new List<string>();

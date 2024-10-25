@@ -15,6 +15,7 @@ namespace Map
         public float enterNodeDelay = 1f;
         public MapManager mapManager;
         public MapView view;
+        public static System.Random rng = new System.Random();
 
         public static MapPlayerTracker Instance;
 
@@ -117,9 +118,67 @@ namespace Map
                 case "Fingas+":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
-                case "Saltimbocca":
-                    transition.GetComponent<SceneTransition>().hideUI();
-                    transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                case "Slinger":
+
+                    if (saveData.slingerName == null)
+                    {
+                        Debug.Log("Slinger not picked yet!!!");
+                        int num = rng.Next(0, transition.GetComponent<SceneTransition>().slingerPool.Count);
+                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Salitmbocca")
+                        {
+                            transition.GetComponent<SceneTransition>().hideUI();
+                            transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                            saveData.currentEnemyName = "Saltimbocca";
+                            saveData.slingerName = saveData.currentEnemyName;
+                            saveData.slingerEncounter = 1;
+                        }
+                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Reets")
+                        {
+                            Debug.Log("Implement Reets!!!");
+                            transition.GetComponent<SceneTransition>().hideUI();
+                            transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                            saveData.currentEnemyName = "Saltimbocca";
+                            saveData.slingerName = saveData.currentEnemyName;
+                            saveData.slingerEncounter = 1;
+                        }
+                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Nickles")
+                        {
+                            Debug.Log("Implement Nickles!!!");
+                            transition.GetComponent<SceneTransition>().hideUI();
+                            transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                            saveData.currentEnemyName = "Saltimbocca";
+                            saveData.slingerName = saveData.currentEnemyName;
+                            saveData.slingerEncounter = 1;
+                        }
+                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Isadore")
+                        {
+                            Debug.Log("Implement Isadore!!!");
+                            transition.GetComponent<SceneTransition>().hideUI();
+                            transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                            saveData.currentEnemyName = "Saltimbocca";
+                            saveData.slingerName = saveData.currentEnemyName;
+                            saveData.slingerEncounter = 1;
+                        }
+                        SaveSystem.SaveGameData(saveData);
+                    } else
+                    {
+                        // 2nd encounter with the slinger during the story mode
+                        Debug.Log("2nd+ Encounter!!!");
+                        switch (saveData.slingerName)
+                        {
+                            case "Saltimbocca":
+                                if(saveData.slingerEncounter == 1)
+                                {
+                                    transition.GetComponent<SceneTransition>().hideUI();
+                                    transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
+                                    saveData.currentEnemyName = saveData.slingerName;
+                                    saveData.slingerEncounter++;
+                                }                               
+                                break;
+                        }
+                        SaveSystem.SaveGameData(saveData);
+                    }
+                    
                     break;
                 case "Crowpunk":
                     transition.GetComponent<SceneTransition>().hideUI();

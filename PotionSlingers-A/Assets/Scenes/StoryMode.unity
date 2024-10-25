@@ -172,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -119.278564, y: 0.000030517578}
+  m_AnchoredPosition: {x: -119.278564, y: 300.00003}
   m_SizeDelta: {x: 119.2791, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &13354376 stripped
@@ -1727,6 +1727,11 @@ MonoBehaviour:
   objects:
   - {fileID: 993742899}
   - {fileID: 5283088080993187826}
+  slingerPool:
+  - Saltimbocca
+  - Nickles
+  - Reets
+  - Isadore
 --- !u!114 &228522196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1893,7 +1898,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level1Enemies:
   - Bag o' Snakes
-  - Saltimbocca
+  - Slinger
   - Crowpunk
   - Fingas
   level2Enemies:
@@ -49431,13 +49436,19 @@ MonoBehaviour:
     pipCount: 0
     playerCubes: 0
     currencyCubes: 0
+    shields: 0
     canBeFlipped: 0
     flipped: 0
     transition: 0
     playerDeck: []
     playerHolster: []
+    potionDeck: []
+    itemDeck: []
     cardDurabilities: 
     cardStatuses: []
+    marketStatuses: []
+    marketCards: []
+    deckStatuses: []
     opp1Health: 0
     opp1Cubes: 0
     opp2Health: 0
@@ -49449,6 +49460,7 @@ MonoBehaviour:
     newStage: 0
     selectedStage: 0
     currentEnemyName: 
+    slingerName: 
     visitedEnemies: []
   holder: {fileID: 2023876844}
   animator: {fileID: 0}
