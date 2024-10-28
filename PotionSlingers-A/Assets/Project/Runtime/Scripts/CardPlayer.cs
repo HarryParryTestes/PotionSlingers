@@ -49,6 +49,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject healAmount;
     public GameObject hpBar;
     public GameObject shieldBar;
+    public GameObject shieldCount;
     public GameObject pipsSign;
     public GameObject healthText;
     public GameObject hitAnimation;
@@ -1176,6 +1177,15 @@ public class CardPlayer : MonoBehaviour
                 damage++;
                 break;
             }
+        }
+
+        // Stone Barricade Wand
+        if (selectedCard.card.cardName == "BarricadeWand")
+        {
+            Debug.Log("Starter shield bonus!!!");
+            // int random = GameManager.manager.rng.Next(0, GameManager.manager.starterShields.Count);           
+            deck.putCardOnTop(GameManager.manager.starterShields[GameManager.manager.rng.Next(0, GameManager.manager.starterShields.Count)]);
+            GameManager.manager.sendMessage("Added a shield to the top of your Deck!");
         }
 
         // Cuckoo Bellows
@@ -3198,6 +3208,20 @@ public class CardPlayer : MonoBehaviour
         // If damage taken is negative (below 0), return 0 damage taken.
         int newDamage = damage - preventedDamage;
         return newDamage >= 0 ? newDamage : 0;
+    }
+
+    public void addShields(int shieldAmount)
+    {
+        // add gray number animation for shields
+        shields += shieldAmount;
+        // add sfx and animation of numbers and shield bar
+        if (shieldCount != null)
+        {
+            shieldCount.GetComponent<TMPro.TextMeshProUGUI>().text = "+ " + shieldAmount.ToString();
+            shieldCount.SetActive(true);
+            StartCoroutine(waitThreeSeconds(shieldCount));
+        }
+        updateHealthUI();
     }
 
     // WHEN YOU IMPLEMENT HATS THAT CHANGE HOW THINGS HEAL, DO IT HERE!!!

@@ -68,6 +68,7 @@ public class GameManager : MonoBehaviour
     public List<Card> starterArtifacts;
     public List<Card> starterVessels;
     public List<Card> starterRings;
+    public List<Card> starterShields;
 
     public GameObject carnivalUI;
     public GameObject gameOverScreen;
@@ -2999,6 +3000,20 @@ public class GameManager : MonoBehaviour
         player.updateHealthUI();
     }
 
+    public void checkShield(CardPlayer player)
+    {
+        if (player.deck.deckList.Count >= 1)
+        {
+            if (player.deck.deckList[0].cardType == "Shield")
+            {
+                Debug.Log("SHIELD CARD DRAWN FROM DECK!!!");
+                Card card = player.deck.popCard();
+                player.addShields(2);
+                checkShield(player);
+            }
+        }       
+    }
+
     public IEnumerator HolsterFill(CardPlayer player)
     {
         // MATTEO: Add holster fill sfx here!
@@ -3025,6 +3040,8 @@ public class GameManager : MonoBehaviour
             {
                 if (cd.card.name == "placeholder")
                 {
+                    checkShield(player);
+
                     // cd.updateCard(player.deck.popCard());
                     StartCoroutine(DeckAnimation(cd, player));
 
