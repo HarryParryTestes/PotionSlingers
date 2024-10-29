@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
     public GameObject endTurnButton;
     public GameObject payButton;
     public GameObject trashLoadButton;
+    public GameObject durabilitySign;
     public DeckMenuScroll deckDisplay;
     public ExpUI expUI;
 
@@ -944,6 +945,7 @@ public class GameManager : MonoBehaviour
         saveData.playerDeck = playersDeck;
         saveData.playerHealth = players[0].hp;
         saveData.maxHealth = players[0].maxHp;
+        saveData.shields = players[0].shields;
         saveData.pipCount = players[0].pipCount;
         saveData.playerCubes = players[0].hpCubes;
         saveData.flipped = players[0].character.flipped;
@@ -2100,6 +2102,8 @@ public class GameManager : MonoBehaviour
                 handleSavedMarketCrucibleCards();
                 handleSavedMarketDecks();
 
+                players[0].shields = saveData.shields;
+
                 // rework this
                 // CardDisplay cd in playerHolster.cardList
                 for (int i = 0; i < playerHolster.cardList.Count; i++)
@@ -2126,8 +2130,7 @@ public class GameManager : MonoBehaviour
                     }
 
                     foreach (Card card in database.cardList)
-                    {
-
+                    {                       
                         if (card.cardName.Contains("dummy"))
                         {
                             // update with placeholder
@@ -2141,6 +2144,13 @@ public class GameManager : MonoBehaviour
                             playerHolster.cardList[i].updateCard(card);
                             // add durability here
                             playerHolster.cardList[i].durability = saveData.cardDurabilities[i];
+                        }
+
+                        if (card.cardName == saveData.playerHolster[i] && card.cardType == "Shield")
+                        {
+                            Debug.Log("Destroying shield card");
+                            playerHolster.cardList[i].updateCard(players[0].deck.placeholder);
+                            players[0].shields += 2;
                         }
 
                         foreach (string thang in saveData.playerLoadedCards[i])
@@ -2190,6 +2200,21 @@ public class GameManager : MonoBehaviour
                     }
                 }
 
+                // check for any shields that were gotten rid of
+                foreach (CardDisplay cd in players[0].holster.cardList)
+                {
+                    if (players[0].deck.deckList.Count >= 1)
+                    {
+                        if (cd.card.name == "placeholder")
+                        {
+                            checkShield(players[0]);
+
+                            // cd.updateCard(player.deck.popCard());
+                            StartCoroutine(DeckAnimation(cd, players[0]));
+                        }
+                    }
+                }
+
                 // maybe take this out, we'll see
                 // double check on this later
                 /*
@@ -2210,7 +2235,7 @@ public class GameManager : MonoBehaviour
                 // playerBottomName.text = players[0].name;
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
                 players[0].name = playerBottomName.text;
-                players[0].hpCubes = saveData.playerCubes;
+                players[0].hpCubes = saveData.playerCubes;              
                 players[0].hp = saveData.playerHealth;
                 players[0].maxHp = saveData.maxHealth;
                 players[0].pipCount = saveData.pipCount;

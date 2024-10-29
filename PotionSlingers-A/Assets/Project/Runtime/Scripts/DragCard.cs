@@ -20,6 +20,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     public GameObject obj;
     public GameObject obj2;
     public GameObject button;
+    public GameObject durabilitySign;
     private Image image;
     private LineRenderer lineRenderer;
     private Vector3 cachedScale;
@@ -256,8 +257,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             // button.transform.SetParent(transform.parent);
             button.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
-            button.transform.DOScale(0.1f, 0.3f).SetId(gameObject.name);
+            button.transform.DOScale(0.01f, 0.3f).SetId(gameObject.name);
             Destroy(button, 0.3f);
+        }
+
+        if (durabilitySign != null)
+        {
+            // button.transform.SetParent(transform.parent);
+            durabilitySign.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+            durabilitySign.transform.DOScale(0.01f, 0.3f).SetId(gameObject.name);
+            Destroy(durabilitySign, 0.3f);
         }
 
         if (clicked && market && !GameManager.manager.marketSelected)
@@ -399,7 +408,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[0].cardSprite;
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[0];
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
-                obj.transform.DOScale(4f, 0.5f).SetId(gameObject.name);
+                obj.transform.DOScale(3.5f, 0.5f).SetId(gameObject.name);
                 // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
                 // new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
                 obj.transform.DOMove(new Vector3((960 * GameManager.manager.widthRatio) - (300 * GameManager.manager.widthRatio),
@@ -439,7 +448,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[1].cardSprite;
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[1];
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
-                obj.transform.DOScale(4f, 0.5f).SetId(gameObject.name);
+                obj.transform.DOScale(3f, 0.5f).SetId(gameObject.name);
                 // new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0)
                 // new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
                 obj.transform.DOMove(new Vector3((960 * GameManager.manager.widthRatio) - (600 * GameManager.manager.widthRatio),
@@ -453,7 +462,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[0].cardSprite;
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().card = GetComponent<CardDisplay>().crucibleCards[0];
-                obj2.transform.DOScale(4f, 0.5f).SetId(gameObject.name);
+                obj2.transform.DOScale(3.5f, 0.5f).SetId(gameObject.name);
                 obj2.transform.DOMove(new Vector3(960 * GameManager.manager.widthRatio, 550 * GameManager.manager.heightRatio, 0), 0.5f).SetId(gameObject.name);
                 return;
             }
@@ -481,6 +490,11 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             if (button != null)
                 Destroy(button);
 
+            if (durabilitySign != null)
+            {
+                Destroy(durabilitySign);
+            }
+
             // check for Bottle Rocket card here and Instantiate button to pay 3P
             if (GetComponent<CardDisplay>().card.cardName == "BottleRocket" && !market && !loaded 
                 && !GameManager.manager.players[GameManager.manager.myPlayerIndex].bottleRocketBonus &&
@@ -489,7 +503,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 Debug.Log("Bottle Rocket Button!!!");
                 // instantiate the button
                 if (button != null)
-                    Destroy(button);
+                    Destroy(button);               
 
                 // new Vector3(350f * GameManager.manager.widthRatio, 100f * GameManager.manager.heightRatio, 0)
                 button = Instantiate(GameManager.manager.payButton,
@@ -550,6 +564,42 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                     button.transform.DOMove(pos + new Vector3(450f * GameManager.manager.widthRatio, 0, 0), 0.3f);
 
                 // button.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Load";
+            }
+
+            // artifact durability UI
+            if (GetComponent<CardDisplay>().card.cardType == "Artifact" && !market && !loaded)
+            {
+                Debug.Log("Artifact durability!!!");
+
+                if(durabilitySign != null)
+                    Destroy(durabilitySign);
+
+                durabilitySign = Instantiate(GameManager.manager.durabilitySign,
+                    this.transform.position,
+                        this.transform.rotation,
+                        this.transform);
+
+                durabilitySign.SetActive(true);
+
+                durabilitySign.transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = GetComponent<CardDisplay>().durability.ToString() + " uses left";
+                // take this out for now, it fucks with the TMP objects
+                // GameManager.manager.FadeIn(button);
+                durabilitySign.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+
+                if (gameObject.name == "Card1Display")
+                {
+                    durabilitySign.transform.DOMove(pos + new Vector3(-375f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                }
+                else if (gameObject.name == "Card4Display")
+                {
+                    durabilitySign.transform.DOMove(pos + new Vector3(-550f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                }
+                else if (gameObject.name == "Card3Display")
+                {
+                    durabilitySign.transform.DOMove(pos + new Vector3(-475f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                }
+                else
+                    durabilitySign.transform.DOMove(pos + new Vector3(-450f * GameManager.manager.widthRatio, 0, 0), 0.3f);
             }
 
         } else
@@ -614,10 +664,18 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             {
                 // button.transform.SetParent(transform.parent);
                 button.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
-                button.transform.DOScale(0.1f, 0.3f).SetId(gameObject.name);
+                button.transform.DOScale(0.01f, 0.3f).SetId(gameObject.name);
                 Destroy(button, 0.3f);
             }
-                    
+
+            if (durabilitySign != null)
+            {
+                // button.transform.SetParent(transform.parent);
+                durabilitySign.transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
+                durabilitySign.transform.DOScale(0.01f, 0.3f).SetId(gameObject.name);
+                Destroy(durabilitySign, 0.3f);
+            }
+
 
             if (obj != null)
             {

@@ -463,14 +463,14 @@ public class CardPlayer : MonoBehaviour
             hpBar.GetComponent<Image>().fillAmount = numbers;
         }
 
-        if(shieldBar != null)
+        if (shieldBar != null)
         {
             // this will usually be 0 unless shields are added or damage is done
             numbers = (float)shields / (float)maxHp;
             shieldBar.GetComponent<Image>().fillAmount = numbers;
         }
 
-        if(shieldsNum != null && shieldsIcon != null)
+        if (shieldsNum != null && shieldsIcon != null)
         {
             if (shields > 0)
             {
@@ -483,7 +483,7 @@ public class CardPlayer : MonoBehaviour
                 shieldsIcon.SetActive(false);
                 shieldsNum.SetActive(false);
             }
-        }        
+        }
 
         if (playerHP != null && playerHPCubes != null)
         {
@@ -938,7 +938,8 @@ public class CardPlayer : MonoBehaviour
                     Card card = GameManager.manager.md1.popCard();
                     cd.vPotion1.updateCard(card);
                     // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
-                } else if (cd.vPotion2.card.cardName == "placeholder")
+                }
+                else if (cd.vPotion2.card.cardName == "placeholder")
                 {
                     Debug.Log("Triggering in second vessel slot!");
                     cd.vesselSlot2.SetActive(true);
@@ -1158,6 +1159,37 @@ public class CardPlayer : MonoBehaviour
         GameManager.manager.FadeIn(gameObj);
     }
 
+    public IEnumerator MoveDeckToTrash(GameObject obj)
+    {
+        Debug.Log("That triggered!");
+        if (obj.GetComponent<CanvasGroup>() != null)
+        {
+            Debug.Log("This triggered!");
+            obj.GetComponent<CanvasGroup>().interactable = false;
+            Destroy(obj.GetComponent<DragCard>());
+            // obj.GetComponent<DragCard>().currentlyBeingThrown = true;
+            // Destroy(obj.GetComponent<DragCard>());
+        }
+
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.gameObject.SetActive(false);
+        obj.transform.DOJump(new Vector2(1850f * GameManager.manager.widthRatio, 400f * GameManager.manager.heightRatio), 400f, 1, 1f, false);
+        obj.transform.DOScale(0.1f, 1f);
+        obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+        yield return new WaitForSeconds(0.7f);
+        obj.GetComponent<Image>().CrossFadeAlpha(0, 0.3f, false);
+        yield return new WaitForSeconds(0.15f);
+
+        Destroy(obj);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+
+        // MATTEO : Add trash can thunk sfx here!
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Trash");
+        yield return new WaitForSeconds(0.15f);
+        GameManager.manager.td.transform.parent.DOMove(new Vector2(GameManager.manager.td.transform.parent.position.x,
+            GameManager.manager.td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+    }
+
     /***************************
         CHECK ARTIFACT BONUS
     ***************************/
@@ -1169,13 +1201,26 @@ public class CardPlayer : MonoBehaviour
             damage++;
 
         // Ringifact gives artifacts +1 damage
-        foreach(CardDisplay cd in holster.cardList)
+        foreach (CardDisplay cd in holster.cardList)
         {
-            if(cd.card.cardName == "Ringifact")
+            if (cd.card.cardName == "Ringifact")
             {
                 Debug.Log("Ringifact Bonus!!!");
                 damage++;
                 break;
+            }
+        }
+
+        // A Bangle That Fires Ethereal Fists
+        if (selectedCard.card.cardName == "Bangle")
+        {
+            Debug.Log("Trashing card cause of Bangle!!!");
+            if (deck.deckList.Count >= 1)
+            {
+                GameObject obj = Instantiate(deck.gameObject, deck.gameObject.transform.position, deck.gameObject.transform.rotation, holster.gameObject.transform);
+                StartCoroutine(MoveDeckToTrash(obj));
+                Card card = deck.popCard();
+                GameManager.manager.td.addCard(card);
             }
         }
 
@@ -1194,7 +1239,7 @@ public class CardPlayer : MonoBehaviour
             // will need to make UI to select which effect you want, will also need to check if the opponent has a deck to interact with
             Debug.Log("TODO: Make UI menu for Cuckoo Bellows");
             // fix this for later
-            if(Game.storyMode && GameManager.manager.saveData.currentEnemyName != "Saltimbocca")
+            if (Game.storyMode && GameManager.manager.saveData.currentEnemyName != "Saltimbocca")
                 return damage;
 
             StartCoroutine(DelayedFade(GameManager.manager.cuckooBellowsMenu));
@@ -1212,18 +1257,18 @@ public class CardPlayer : MonoBehaviour
         {
             // Wet Bonus
             if (selectedCard.aPotion.card.cardQuality == "Wet")
-            { 
-
-            foreach (CardDisplay cd in holster.cardList)
             {
-                if (deck.deckList.Count >= 1)
+
+                foreach (CardDisplay cd in holster.cardList)
                 {
-                    if (cd.card.name == "placeholder")
+                    if (deck.deckList.Count >= 1)
+                    {
+                        if (cd.card.name == "placeholder")
                         {
-                        // cd.updateCard(player.deck.popCard());
-                        GameManager.manager.StartCoroutine(GameManager.manager.DeckAnimation(cd, this));
-                        Debug.Log("Loofah bonus triggered!");
-                        break;
+                            // cd.updateCard(player.deck.popCard());
+                            GameManager.manager.StartCoroutine(GameManager.manager.DeckAnimation(cd, this));
+                            Debug.Log("Loofah bonus triggered!");
+                            break;
                         }
                     }
                 }
@@ -1596,8 +1641,8 @@ public class CardPlayer : MonoBehaviour
         {
             Debug.Log("STONE STONE STONE STONE STONE");
         }
-        
-        if(selectedCard.card.cardQuality.Contains("Dry") && 
+
+        if (selectedCard.card.cardQuality.Contains("Dry") &&
             (selectedCard.vPotion1.card.cardName == "PowderkegGazogene" || selectedCard.vPotion2.card.cardName == "PowderkegGazogene"))
         {
             Debug.Log("Powderkeg Bonus!!!");
@@ -1682,7 +1727,7 @@ public class CardPlayer : MonoBehaviour
                 (selectedCard.vPotion1.card.cardQuality == "Hot" ||
                 selectedCard.vPotion2.card.cardQuality == "Hot"))
             {
-                if(selectedCard.vPotion1.card.effectAmount == selectedCard.vPotion2.card.effectAmount)
+                if (selectedCard.vPotion1.card.effectAmount == selectedCard.vPotion2.card.effectAmount)
                 {
                     Debug.Log("Convector Bonus!");
                     return damage + 3;
@@ -2450,9 +2495,9 @@ public class CardPlayer : MonoBehaviour
             Debug.Log("Powderkeg Potion Bonus!!!");
 
             int times = 0;
-            foreach(CardDisplay cd in GameManager.manager.tempPlayer.holster.cardList)
+            foreach (CardDisplay cd in GameManager.manager.tempPlayer.holster.cardList)
             {
-                if(cd.card.cardQuality == "Dry")
+                if (cd.card.cardQuality == "Dry")
                 {
                     Debug.Log("Found a dry card!!!");
                     times++;
@@ -3265,7 +3310,7 @@ public class CardPlayer : MonoBehaviour
         }
 
         // check for shields before subtracting any health
-        if(shields > 0)
+        if (shields > 0)
         {
             Debug.Log("Shields are " + shields);
             Debug.Log("Damage to be dealt is " + damage);
