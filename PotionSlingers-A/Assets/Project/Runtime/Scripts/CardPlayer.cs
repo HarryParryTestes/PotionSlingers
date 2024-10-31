@@ -1224,6 +1224,13 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Soaked Standard
+        if (selectedCard.card.cardName == "SoakedStandard")
+        {
+            if (selectedCard.aPotion.card.cardQuality == "Wet")
+                damage++;
+        }
+
         // Stone Barricade Wand
         if (selectedCard.card.cardName == "BarricadeWand")
         {

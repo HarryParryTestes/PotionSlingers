@@ -579,9 +579,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                         this.transform.rotation,
                         this.transform);
 
-                durabilitySign.SetActive(true);
+                durabilitySign.SetActive(true);               
 
-                durabilitySign.transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = GetComponent<CardDisplay>().durability.ToString() + " uses left";
+                if(GetComponent<CardDisplay>().durability == 1)
+                    durabilitySign.transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = GetComponent<CardDisplay>().durability.ToString() + " use left";
+                else
+                    durabilitySign.transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = GetComponent<CardDisplay>().durability.ToString() + " uses left";
                 // take this out for now, it fucks with the TMP objects
                 // GameManager.manager.FadeIn(button);
                 durabilitySign.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
