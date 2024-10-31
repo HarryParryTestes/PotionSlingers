@@ -2989,6 +2989,14 @@ public class GameManager : MonoBehaviour
             holsterEarlyBirdSpecial = true;
         }
 
+        // When this enters your Holster, deal 2 damage to a random opponent
+        if(card.cardName == "SoakedStandard")
+        {
+            Debug.Log("Soaked Standard Bonus");
+            int rand = rng.Next(1, numPlayers);
+            players[rand].subHealth(2);
+        }
+
         // CHECK ARTIFACT DURABILITY HERE!!!
         // Come back to this to not just hardcode a value
         // make another variable on the scriptable objects that represents their max durability
@@ -7316,6 +7324,20 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Top Market Buy");
 
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            // Ring of the Rings
+            // Double all ring effects, your rings cost 4 pips
+            if (cd.card.cardName == "BargainRing")
+            {
+                players[myPlayerIndex].bargainBonus = true;
+                Debug.Log("Bargain Bonus!!!");
+                break;
+            }
+            players[myPlayerIndex].bargainBonus = false;
+            Debug.Log("No Bargain Bonus!!!");
+        }
+
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
@@ -7462,7 +7484,9 @@ public class GameManager : MonoBehaviour
                     // it buys for 3 pips
                     cd.card.buyPrice = 3;
                 }
+
                 players[myPlayerIndex].subPips(cd.card.buyPrice);
+
                 players[myPlayerIndex].deck.putCardOnTop(cd);
 
                 cd.spicy = false;
@@ -7522,26 +7546,28 @@ public class GameManager : MonoBehaviour
                     sendErrorMessage(6);
                     return;
                 }
+                int buyPrice = cd.card.buyPrice;
                 // All rings cost 4 logic
                 if (cd.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
                 {
-                    cd.card.buyPrice = 4;
+                    buyPrice = 4;
                 }
 
                 // if The Early Bird Special was drawn this turn
                 if (cd.card.cardName == "EarlyBirdSpecial" && earlyBirdSpecial)
                 {
                     // it buys for 3 pips
-                    cd.card.buyPrice = 3;
+                    buyPrice = 3;
                 }
+                buyPrice -= 1;
 
-                if (cd.card.buyPrice - 1 == 0)
+                if (buyPrice <= 0)
                 {
-                    players[myPlayerIndex].subPips(cd.card.buyPrice);
+                    players[myPlayerIndex].subPips(1);
                 }
                 else
-                {
-                    players[myPlayerIndex].subPips(cd.card.buyPrice - 1);
+                {    
+                    players[myPlayerIndex].subPips(buyPrice);
                 }
                 players[myPlayerIndex].deck.putCardOnTop(cd);
                 if (cd.crucibleCards.Count > 0)
@@ -7667,6 +7693,20 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Bottom Market Buy");
 
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            // Ring of the Rings
+            // Double all ring effects, your rings cost 4 pips
+            if (cd.card.cardName == "BargainRing")
+            {
+                Debug.Log("Bargain Bonus!!!");
+                players[myPlayerIndex].bargainBonus = true;
+                break;
+            }
+            players[myPlayerIndex].bargainBonus = false;
+            Debug.Log("No Bargain Bonus!!!");
+        }
+
         if (Game.tutorial)
         {
             if (dialog.textBoxCounter < 38)
@@ -7703,11 +7743,14 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
+            // (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 1 || ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus))
+
             switch (md2.cardInt)
             {
                 // cardInt based on position of card in Top Market (position 1, 2, or 3)
                 case 1:
-                    if (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
+                    if ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice 
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus)) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
                         if (md2.cardDisplay1.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
@@ -7720,7 +7763,18 @@ public class GameManager : MonoBehaviour
                             // it buys for 3 pips
                             md2.cardDisplay1.card.buyPrice = 3;
                         }
-                        players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
+                        if (players[myPlayerIndex].bargainBonus)
+                        {
+                            if (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel")
+                            {
+                                if (players[myPlayerIndex].doubleRingBonus)
+                                    players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay1.card.buyPrice - 4, 0));
+                                else
+                                    players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay1.card.buyPrice - 2, 0));
+                            }
+                        }
+                        else
+                            players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
                         if (md2.cardDisplay1.crucibleCards.Count > 0)
                         {
@@ -7748,7 +7802,8 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                     }
-                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay1.card.buyPrice - 1))
+                    else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 1 || 
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus)))
                     {
                         if (md2.cardDisplay1.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {
@@ -7768,13 +7823,40 @@ public class GameManager : MonoBehaviour
                             md2.cardDisplay1.card.buyPrice = 3;
                         }
 
-                        if (md2.cardDisplay1.card.buyPrice - 1 == 0)
+                        int buyPrice = md2.cardDisplay1.card.buyPrice;
+
+                        buyPrice--;
+
+                        if (buyPrice <= 0)
                         {
-                            players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
+                            players[myPlayerIndex].subPips(1);
                         }
                         else
                         {
-                            players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice - 1);
+                            /*
+                            if (players[myPlayerIndex].bargainBonus)
+                            {
+                                if (cd.card.cardType != "Potion" && cd.card.cardType != "Vessel")
+                                {
+                                    if (players[myPlayerIndex].doubleRingBonus)
+                                        buyPrice = Math.Max(1, buyPrice - 4);
+                                    else
+                                        buyPrice = Math.Max(1, buyPrice - 2);
+                                }
+                            }
+                            */
+
+                            if (players[myPlayerIndex].bargainBonus)
+                            {
+                                if (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel")
+                                {
+                                    if (players[myPlayerIndex].doubleRingBonus)
+                                        buyPrice = Math.Max(1, buyPrice - 4);
+                                    else
+                                        buyPrice = Math.Max(1, buyPrice - 2);
+                                }
+                            }
+                            players[myPlayerIndex].subPips(buyPrice);
                         }
 
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
@@ -7813,7 +7895,8 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 2:
-                    if (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
+                    if ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus)) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
                         if (md2.cardDisplay2.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
@@ -7827,7 +7910,19 @@ public class GameManager : MonoBehaviour
                             // it buys for 3 pips
                             md2.cardDisplay2.card.buyPrice = 3;
                         }
-                        players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
+
+                        if (players[myPlayerIndex].bargainBonus)
+                        {
+                            if (md2.cardDisplay2.card.cardType != "Potion" && md2.cardDisplay2.card.cardType != "Vessel")
+                            {
+                                if (players[myPlayerIndex].doubleRingBonus)
+                                    players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay2.card.buyPrice - 4, 0));
+                                else
+                                    players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay2.card.buyPrice - 2, 0));
+                            }
+                        }
+                        else
+                            players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2);
 
                         if (md2.cardDisplay2.crucibleCards.Count > 0)
@@ -7856,7 +7951,8 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                     }
-                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay2.card.buyPrice - 1))
+                    else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 1 ||
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus)))
                     {
                         if (md2.cardDisplay2.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {
@@ -7876,13 +7972,27 @@ public class GameManager : MonoBehaviour
                             md2.cardDisplay2.card.buyPrice = 3;
                         }
 
-                        if (md2.cardDisplay2.card.buyPrice - 1 == 0)
+                        int buyPrice = md2.cardDisplay2.card.buyPrice;
+
+                        buyPrice--;
+
+                        if (buyPrice <= 0)
                         {
-                            players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
+                            players[myPlayerIndex].subPips(1);
                         }
                         else
                         {
-                            players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice - 1);
+                            if (players[myPlayerIndex].bargainBonus)
+                            {
+                                if (md2.cardDisplay2.card.cardType != "Potion" && md2.cardDisplay2.card.cardType != "Vessel")
+                                {
+                                    if (players[myPlayerIndex].doubleRingBonus)
+                                        buyPrice = Math.Max(1, buyPrice - 4);
+                                    else
+                                        buyPrice = Math.Max(1, buyPrice - 2);
+                                }
+                            }
+                            players[myPlayerIndex].subPips(buyPrice);
                         }
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2);
                         if (md2.cardDisplay2.crucibleCards.Count > 0)
@@ -7918,7 +8028,8 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 3:
-                    if (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
+                    if ((players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus)) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
                         if (md2.cardDisplay3.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
@@ -7931,7 +8042,18 @@ public class GameManager : MonoBehaviour
                             // it buys for 3 pips
                             md2.cardDisplay3.card.buyPrice = 3;
                         }
-                        players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
+                        if (players[myPlayerIndex].bargainBonus)
+                        {
+                            if (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel")
+                            {
+                                if (players[myPlayerIndex].doubleRingBonus)
+                                    players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay3.card.buyPrice - 4, 0));
+                                else
+                                    players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay3.card.buyPrice - 2, 0));
+                            }
+                        }
+                        else
+                            players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3);
                         if (md2.cardDisplay3.crucibleCards.Count > 0)
                         {
@@ -7959,7 +8081,8 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }
-                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay3.card.buyPrice - 1))
+                    else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice - 1 ||
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus)))
                     {
                         if (md2.cardDisplay3.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {
@@ -7979,13 +8102,27 @@ public class GameManager : MonoBehaviour
                             md2.cardDisplay3.card.buyPrice = 3;
                         }
 
-                        if (md2.cardDisplay3.card.buyPrice - 1 == 0)
+                        int buyPrice = md2.cardDisplay3.card.buyPrice;
+
+                        buyPrice--;
+
+                        if (buyPrice <= 0)
                         {
-                            players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
+                            players[myPlayerIndex].subPips(1);
                         }
                         else
-                        {
-                            players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice - 1);
+                        {                          
+                                if (players[myPlayerIndex].bargainBonus)
+                                {
+                                    if (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel")
+                                    {
+                                        if (players[myPlayerIndex].doubleRingBonus)
+                                            buyPrice = Math.Max(1, buyPrice - 4);
+                                        else
+                                            buyPrice = Math.Max(1, buyPrice - 2);
+                                    }
+                                }
+                                players[myPlayerIndex].subPips(buyPrice);
                         }
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3);
                         if (md2.cardDisplay3.crucibleCards.Count > 0)
@@ -8021,7 +8158,8 @@ public class GameManager : MonoBehaviour
                     }
                     break;
                 case 8:
-                    if (players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice && !players[myPlayerIndex].isSaltimbocca)
+                    if ((players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus)) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
                         if (md2.cardDisplay4.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
@@ -8034,7 +8172,18 @@ public class GameManager : MonoBehaviour
                             // it buys for 3 pips
                             md2.cardDisplay4.card.buyPrice = 3;
                         }
-                        players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
+                        if (players[myPlayerIndex].bargainBonus)
+                        {
+                            if (md2.cardDisplay4.card.cardType != "Potion" && md2.cardDisplay4.card.cardType != "Vessel")
+                            {
+                                if (players[myPlayerIndex].doubleRingBonus)
+                                    players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay4.card.buyPrice - 4, 0));
+                                else
+                                    players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay4.card.buyPrice - 2, 0));
+                            }
+                        }
+                        else
+                            players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4);
                         if (md2.cardDisplay4.crucibleCards.Count > 0)
                         {
@@ -8071,7 +8220,8 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }
-                    else if (players[myPlayerIndex].isSaltimbocca && players[myPlayerIndex].pips >= (md2.cardDisplay4.card.buyPrice - 1))
+                    else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 1 ||
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus)))
                     {
                         if (md2.cardDisplay4.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {
@@ -8091,13 +8241,27 @@ public class GameManager : MonoBehaviour
                             md2.cardDisplay4.card.buyPrice = 3;
                         }
 
-                        if (md2.cardDisplay4.card.buyPrice - 1 == 0)
+                        int buyPrice = md2.cardDisplay4.card.buyPrice;
+
+                        buyPrice--;
+
+                        if (buyPrice <= 0)
                         {
-                            players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
+                            players[myPlayerIndex].subPips(1);
                         }
                         else
                         {
-                            players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice - 1);
+                            if (players[myPlayerIndex].bargainBonus)
+                            {
+                                if (md2.cardDisplay4.card.cardType != "Potion" && md2.cardDisplay4.card.cardType != "Vessel")
+                                {
+                                    if (players[myPlayerIndex].doubleRingBonus)
+                                        buyPrice = Math.Max(1, buyPrice - 4);
+                                    else
+                                        buyPrice = Math.Max(1, buyPrice - 2);
+                                }
+                            }
+                            players[myPlayerIndex].subPips(buyPrice);
                         }
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay4);
                         if (md2.cardDisplay4.crucibleCards.Count > 0)
@@ -8465,6 +8629,18 @@ public class GameManager : MonoBehaviour
             StartCoroutine(MoveToTrash(obj));
             td.addCard(playerHolster.cardList[selectedCardInt - 1]);
             StartCoroutine(waitThreeSeconds(dialog));
+
+            foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+            {
+                // Ring of the Rings
+                // Double all ring effects, your rings cost 4 pips
+                if (cd.card.cardName == "RingoftheRings")
+                {
+                    players[myPlayerIndex].doubleRingBonus = true;
+                    break;
+                }
+                players[myPlayerIndex].doubleRingBonus = false;
+            }
             // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(9);
             return;

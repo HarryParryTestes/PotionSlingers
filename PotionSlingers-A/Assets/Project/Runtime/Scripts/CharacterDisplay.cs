@@ -153,6 +153,15 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
         FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Character_Flip");
     }
 
+    public void flipCardToFront()
+    {
+        flipped = false;
+        canBeFlipped = false;
+        Debug.Log("You just flipped back to the front!");
+        this.artworkImage.sprite = character.image;
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Character_Flip");
+    }
+
     public void flipCard()
     {
         if (Game.tutorial)

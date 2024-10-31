@@ -33,6 +33,7 @@ public class CardPlayer : MonoBehaviour
     public bool cubed = false;
     public bool ringBonus;
     public bool doubleRingBonus = false;
+    public bool bargainBonus;
     public int bonusAmount;
     public int cardsTrashed = 0;
     //public HealthController health;
@@ -842,58 +843,6 @@ public class CardPlayer : MonoBehaviour
 
         pips = pipCount;
 
-        foreach (CardDisplay cd in holster.cardList)
-        {
-            // Ring of the Rings
-            // Double all ring effects, your rings cost 4 pips
-            if (cd.card.cardName == "RingoftheRings")
-            {
-                doubleRingBonus = true;
-            }
-        }
-
-        foreach (CardDisplay cd in holster.cardList)
-        {
-
-            // check for gambling ring
-            if (cd.card.cardName == "RingofGamblingMopoji" && GameManager.manager.players[GameManager.manager.myPlayerIndex].pipsUsedThisTurn == 0)
-            {
-                Debug.Log("It's gambling time...");
-                GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount = rng.Next(1, 11);
-                if (GameManager.manager.players[GameManager.manager.myPlayerIndex].doubleRingBonus)
-                {
-                    Debug.Log("Double ring bonus");
-                    GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount *= 2;
-                }
-                Debug.Log("New pip count: " + GameManager.manager.players[GameManager.manager.myPlayerIndex].pipCount);
-                Debug.Log("New pip count: " + pipCount);
-                pips = pipCount;
-                updatePipsUI();
-            }
-        }
-
-        foreach (CardDisplay cd in holster.cardList)
-        {
-            // Tiny Ring of Extra Coin Purse
-            // Start your turn with +2 pips
-            if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
-            {
-                if (doubleRingBonus)
-                {
-                    pips += 4;
-                }
-                else
-                {
-                    pips += 2;
-                }
-            }
-
-            if (cd.card.cardName == "Blacksnake Pip Sling")
-            {
-                pips += 2;
-            }
-        }
-
         if (hotCoffee)
         {
             Debug.Log("One damage from the coffee...");
@@ -949,7 +898,6 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
-        pipsUsedThisTurn = 0;
         potionsThrown = 0;
         artifactsUsed = 0;
         vesselsThrown = 0;
@@ -964,6 +912,61 @@ public class CardPlayer : MonoBehaviour
         hotCoffee = false;
         decoderBonus = false;
         dumpsterBonus = false;
+        doubleRingBonus = false;
+        bargainBonus = false;
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // Ring of the Rings
+            // Double all ring effects, your rings cost 4 pips
+            if (cd.card.cardName == "RingoftheRings")
+            {
+                doubleRingBonus = true;
+            }
+        }
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+
+            // check for gambling ring
+            if (cd.card.cardName == "RingofGamblingMopoji" && pipsUsedThisTurn == 0)
+            {
+                Debug.Log("It's gambling time...");
+                pipCount = rng.Next(1, 11);
+                if (doubleRingBonus)
+                {
+                    Debug.Log("Double ring bonus");
+                    pipCount *= 2;
+                }
+                Debug.Log("New pip count: " + pipCount);
+                pips = pipCount;
+                updatePipsUI();
+            }
+        }
+
+        pipsUsedThisTurn = 0;
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            // Tiny Ring of Extra Coin Purse
+            // Start your turn with +2 pips
+            if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
+            {
+                if (doubleRingBonus)
+                {
+                    pips += 4;
+                }
+                else
+                {
+                    pips += 2;
+                }
+            }
+
+            if (cd.card.cardName == "Blacksnake Pip Sling")
+            {
+                pips += 2;
+            }
+        }
 
         if (isNickles)
         {
@@ -1222,6 +1225,20 @@ public class CardPlayer : MonoBehaviour
                 Card card = deck.popCard();
                 GameManager.manager.td.addCard(card);
             }
+        }
+
+        // Rubber Spatula
+        if (selectedCard.card.cardName == "RubberSpatula")
+        {
+            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            {
+                Debug.Log("Spatula Bonus!!!");
+                for (int i = 0; i < GameManager.manager.numPlayers; i++)
+                {
+                    GameManager.manager.players[i].character.flipCardToFront();
+                }
+            }
+            
         }
 
         // Soaked Standard
@@ -3684,8 +3701,18 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // Rubber Spatula
+        if (selectedCard.card.cardName == "RubberSpatula")
+        {
+            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            {
+                selectedCard.colorCardDry();
+                selectedCard.aPotion.colorCardDry();
+            }
+        }
+
         // Loofah Launcher
-        if (selectedCard.card.cardName == "LoofahLauncher")
+        if (selectedCard.card.cardName == "LoofahLauncher" || selectedCard.card.cardName == "SoakedStandard")
         {
             // Wet Bonus
             if (selectedCard.aPotion.card.cardQuality == "Wet")
