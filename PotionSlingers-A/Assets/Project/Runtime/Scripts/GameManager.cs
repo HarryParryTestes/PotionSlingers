@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
     public bool rocketBonusUsed = false;
     public bool dumpsterBonus = false;
     public bool moveToDeck = false;
+    public bool spicyExplanation = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -4152,6 +4153,13 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // turn the direction box off after you've taken a turn to explain it
+        if (spicyExplanation && dialog.directions.activeInHierarchy)
+        {
+            Debug.Log("Turning off spicy card description box!!!");
+            dialog.directions.SetActive(false);
+        }
+
         if (Game.storyMode && players[1].charName == "Singelotte" && dialog.directions.activeInHierarchy)
         {
             Debug.Log("Turning off spicy card description box!!!");
@@ -7202,6 +7210,35 @@ public class GameManager : MonoBehaviour
         // there's so many better ways to do this than how I made it like a year ago
         // Debug.Log("Checking market price");
 
+        // check for rings
+
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            // Ring of the Rings
+            // Double all ring effects, your rings cost 4 pips
+            if (cd.card.cardName == "BargainRing")
+            {
+                players[myPlayerIndex].bargainBonus = true;
+                Debug.Log("Bargain bonus in market check");
+                break;
+            }
+            players[myPlayerIndex].bargainBonus = false;
+        }
+
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            // Ring of the Rings
+            // Double all ring effects, your rings cost 4 pips
+            if (cd.card.cardName == "RingoftheRings")
+            {
+                players[myPlayerIndex].doubleRingBonus = true;
+                Debug.Log("Double ring bonus in market check");
+                break;
+            }
+            players[myPlayerIndex].doubleRingBonus = false;
+        }
+
+
         if (players[myPlayerIndex].isSaltimbocca)
         {
             if (((md1.cardDisplay1.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
@@ -7232,7 +7269,10 @@ public class GameManager : MonoBehaviour
                 md1.cardDisplay3.whiteCard();
             }
 
-            if (((md2.cardDisplay1.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            if ((md2.cardDisplay1.card.buyPrice - 1 > players[myPlayerIndex].pips ||
+                (players[myPlayerIndex].bargainBonus && md2.cardDisplay1.card.buyPrice - 3 > players[myPlayerIndex].pips && (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel")) ||
+                (players[myPlayerIndex].bargainBonus && players[myPlayerIndex].doubleRingBonus && md2.cardDisplay1.card.buyPrice - 5 > players[myPlayerIndex].pips && 
+                (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))) && players[myPlayerIndex].isSaltimbocca)
             {
                 md2.cardDisplay1.grayCard();
             }
@@ -7241,7 +7281,10 @@ public class GameManager : MonoBehaviour
                 md2.cardDisplay1.whiteCard();
             }
 
-            if (((md2.cardDisplay2.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            if ((md2.cardDisplay2.card.buyPrice - 1 > players[myPlayerIndex].pips ||
+                (players[myPlayerIndex].bargainBonus && md2.cardDisplay2.card.buyPrice - 3 > players[myPlayerIndex].pips && (md2.cardDisplay2.card.cardType != "Potion" && md2.cardDisplay2.card.cardType != "Vessel")) ||
+                (players[myPlayerIndex].bargainBonus && players[myPlayerIndex].doubleRingBonus && md2.cardDisplay2.card.buyPrice - 5 > players[myPlayerIndex].pips &&
+                (md2.cardDisplay2.card.cardType != "Potion" && md2.cardDisplay2.card.cardType != "Vessel"))) && players[myPlayerIndex].isSaltimbocca)
             {
                 md2.cardDisplay2.grayCard();
             }
@@ -7250,7 +7293,10 @@ public class GameManager : MonoBehaviour
                 md2.cardDisplay2.whiteCard();
             }
 
-            if (((md2.cardDisplay3.card.buyPrice - 1) > players[myPlayerIndex].pips) && players[myPlayerIndex].isSaltimbocca)
+            if ((md2.cardDisplay3.card.buyPrice - 1 > players[myPlayerIndex].pips ||
+                (players[myPlayerIndex].bargainBonus && md2.cardDisplay3.card.buyPrice - 3 > players[myPlayerIndex].pips && (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel")) ||
+                (players[myPlayerIndex].bargainBonus && players[myPlayerIndex].doubleRingBonus && md2.cardDisplay3.card.buyPrice - 5 > players[myPlayerIndex].pips &&
+                (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel"))) && players[myPlayerIndex].isSaltimbocca)
             {
                 md2.cardDisplay3.grayCard();
             }
@@ -7288,7 +7334,10 @@ public class GameManager : MonoBehaviour
             md1.cardDisplay3.whiteCard();
         }
 
-        if ((md2.cardDisplay1.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
+        if ((md2.cardDisplay1.card.buyPrice > players[myPlayerIndex].pips ||
+                (players[myPlayerIndex].bargainBonus && md2.cardDisplay1.card.buyPrice - 2 > players[myPlayerIndex].pips && (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel")) ||
+                (players[myPlayerIndex].bargainBonus && players[myPlayerIndex].doubleRingBonus && md2.cardDisplay1.card.buyPrice - 4 > players[myPlayerIndex].pips &&
+                (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
         {
             md2.cardDisplay1.grayCard();
         }
@@ -7297,7 +7346,10 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay1.whiteCard();
         }
 
-        if ((md2.cardDisplay2.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
+        if ((md2.cardDisplay2.card.buyPrice > players[myPlayerIndex].pips ||
+                (players[myPlayerIndex].bargainBonus && md2.cardDisplay2.card.buyPrice - 2 > players[myPlayerIndex].pips && (md2.cardDisplay2.card.cardType != "Potion" && md2.cardDisplay2.card.cardType != "Vessel")) ||
+                (players[myPlayerIndex].bargainBonus && players[myPlayerIndex].doubleRingBonus && md2.cardDisplay2.card.buyPrice - 4 > players[myPlayerIndex].pips &&
+                (md2.cardDisplay2.card.cardType != "Potion" && md2.cardDisplay2.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
         {
             md2.cardDisplay2.grayCard();
         }
@@ -7306,7 +7358,10 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay2.whiteCard();
         }
 
-        if ((md2.cardDisplay3.card.buyPrice > players[myPlayerIndex].pips) && !players[myPlayerIndex].isSaltimbocca)
+        if ((md2.cardDisplay3.card.buyPrice > players[myPlayerIndex].pips ||
+                (players[myPlayerIndex].bargainBonus && md2.cardDisplay3.card.buyPrice - 2 > players[myPlayerIndex].pips && (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel")) ||
+                (players[myPlayerIndex].bargainBonus && players[myPlayerIndex].doubleRingBonus && md2.cardDisplay3.card.buyPrice - 4 > players[myPlayerIndex].pips &&
+                (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
         {
             md2.cardDisplay3.grayCard();
         }
@@ -7695,8 +7750,6 @@ public class GameManager : MonoBehaviour
 
         foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
-            // Ring of the Rings
-            // Double all ring effects, your rings cost 4 pips
             if (cd.card.cardName == "BargainRing")
             {
                 Debug.Log("Bargain Bonus!!!");
@@ -7705,6 +7758,18 @@ public class GameManager : MonoBehaviour
             }
             players[myPlayerIndex].bargainBonus = false;
             Debug.Log("No Bargain Bonus!!!");
+        }
+
+        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        {
+            // Ring of the Rings
+            // Double all ring effects, your rings cost 4 pips
+            if (cd.card.cardName == "RingoftheRings")
+            {
+                players[myPlayerIndex].doubleRingBonus = true;
+                break;
+            }
+            players[myPlayerIndex].doubleRingBonus = false;
         }
 
         if (Game.tutorial)
@@ -7750,7 +7815,8 @@ public class GameManager : MonoBehaviour
                 // cardInt based on position of card in Top Market (position 1, 2, or 3)
                 case 1:
                     if ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice 
-                        || ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus)) && !players[myPlayerIndex].isSaltimbocca)
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus && 
+                        (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
                         if (md2.cardDisplay1.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
@@ -7772,6 +7838,8 @@ public class GameManager : MonoBehaviour
                                 else
                                     players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay1.card.buyPrice - 2, 0));
                             }
+                            else
+                                players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
                         }
                         else
                             players[myPlayerIndex].subPips(md2.cardDisplay1.card.buyPrice);
@@ -7803,7 +7871,8 @@ public class GameManager : MonoBehaviour
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 1 || 
-                        ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus)))
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus && 
+                        (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))))
                     {
                         if (md2.cardDisplay1.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {
@@ -7896,7 +7965,8 @@ public class GameManager : MonoBehaviour
                     break;
                 case 2:
                     if ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice
-                        || ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus)) && !players[myPlayerIndex].isSaltimbocca)
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus && 
+                        (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
                         if (md2.cardDisplay2.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
@@ -7919,7 +7989,8 @@ public class GameManager : MonoBehaviour
                                     players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay2.card.buyPrice - 4, 0));
                                 else
                                     players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay2.card.buyPrice - 2, 0));
-                            }
+                            } else
+                                players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
                         }
                         else
                             players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
@@ -7952,7 +8023,8 @@ public class GameManager : MonoBehaviour
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay2.card.buyPrice, 0);
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 1 ||
-                        ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus)))
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus &&
+                        (md2.cardDisplay2.card.cardType != "Potion" && md2.cardDisplay2.card.cardType != "Vessel"))))
                     {
                         if (md2.cardDisplay2.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {
@@ -8029,7 +8101,8 @@ public class GameManager : MonoBehaviour
                     break;
                 case 3:
                     if ((players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice
-                        || ((players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus)) && !players[myPlayerIndex].isSaltimbocca)
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus &&
+                        (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
                         if (md2.cardDisplay3.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
@@ -8051,6 +8124,8 @@ public class GameManager : MonoBehaviour
                                 else
                                     players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay3.card.buyPrice - 2, 0));
                             }
+                            else
+                                players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
                         }
                         else
                             players[myPlayerIndex].subPips(md2.cardDisplay3.card.buyPrice);
@@ -8082,7 +8157,8 @@ public class GameManager : MonoBehaviour
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice - 1 ||
-                        ((players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus)))
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay3.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus &&
+                        (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel"))))
                     {
                         if (md2.cardDisplay3.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {
@@ -8121,7 +8197,7 @@ public class GameManager : MonoBehaviour
                                         else
                                             buyPrice = Math.Max(1, buyPrice - 2);
                                     }
-                                }
+                            }
                                 players[myPlayerIndex].subPips(buyPrice);
                         }
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3);
@@ -8159,7 +8235,8 @@ public class GameManager : MonoBehaviour
                     break;
                 case 8:
                     if ((players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice
-                        || ((players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus)) && !players[myPlayerIndex].isSaltimbocca)
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus &&
+                        (md2.cardDisplay4.card.cardType != "Potion" && md2.cardDisplay4.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
                         if (md2.cardDisplay4.card.cardType == "Ring" && players[myPlayerIndex].doubleRingBonus)
@@ -8181,6 +8258,8 @@ public class GameManager : MonoBehaviour
                                 else
                                     players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay4.card.buyPrice - 2, 0));
                             }
+                            else
+                                players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
                         }
                         else
                             players[myPlayerIndex].subPips(md2.cardDisplay4.card.buyPrice);
@@ -8221,7 +8300,8 @@ public class GameManager : MonoBehaviour
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 1 ||
-                        ((players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus)))
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus &&
+                        (md2.cardDisplay4.card.cardType != "Potion" && md2.cardDisplay4.card.cardType != "Vessel"))))
                     {
                         if (md2.cardDisplay4.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
                         {

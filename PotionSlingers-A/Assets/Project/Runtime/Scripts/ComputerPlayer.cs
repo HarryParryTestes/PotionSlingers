@@ -180,6 +180,7 @@ public class ComputerPlayer : CardPlayer
         if (GameManager.manager.playerHolster.cardList[holsterNum].card.name == "placeholder" ||
             GameManager.manager.playerHolster.cardList[holsterNum].spicy)
         {
+            Debug.Log("Something went wrong lol");
             pickRandomHolsterCard();
             return;
         }

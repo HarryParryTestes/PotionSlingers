@@ -1562,6 +1562,45 @@ public class CardPlayer : MonoBehaviour
         }
     }
 
+    public void pickRandomHolsterCard(CardPlayer cp)
+    {
+        int f = 0;
+        foreach (CardDisplay cd in cp.holster.cardList)
+        {
+            if (cd.card.name == "placeholder" || cd.spicy)
+                f++;
+        }
+        if (f == 4)
+        {
+            // GameManager.manager.sendMessage("Spiced up a card in your holster!");
+            Debug.Log("All card slots are either empty or spicy!!!");
+            return;
+        }
+
+        var exclude = new HashSet<int>() { };
+        for (int i = 0; i < cp.holster.cardList.Count; i++)
+        {
+            if (cp.holster.cardList[i].card.cardName == "placeholder" || cp.holster.cardList[i].spicy)
+            {
+                exclude.Add(i);
+            }
+        }
+
+        var range = Enumerable.Range(0, cp.holster.cardList.Count).Where(i => !exclude.Contains(i));
+        int index = rng.Next(0, cp.holster.cardList.Count - exclude.Count);
+        int holsterNum = range.ElementAt(index);
+        
+        cp.holster.cardList[holsterNum].makeSpicy();
+
+        if(!GameManager.manager.spicyExplanation)
+        {
+            GameManager.manager.spicyExplanation = true;
+            GameManager.manager.dialog.directions.SetActive(true);
+            GameManager.manager.dialog.directionBox.text = "Spicy cards in your holster do 2 damage to you at the start of your turn!\n\nTrash or throw the cards to get rid of them!";
+        }
+        // GameManager.manager.sendMessage("Spiced up a card in your holster!");
+    }
+
     /*************************
         CHECK VESSEL BONUS
     *************************/
@@ -1886,6 +1925,15 @@ public class CardPlayer : MonoBehaviour
             (selectedCard.vPotion1.card.cardName == "PureNoiseInLiquidForm" || selectedCard.vPotion2.card.cardName == "PureNoiseInLiquidForm"))
         {
             damage += 2;
+        }
+
+        // Vessel Bonus: Spice up to 2 cards in your opponent's Holster.
+        if ((selectedCard.vPotion1.card.cardName == "DeathSauce" || selectedCard.vPotion2.card.cardName == "DeathSauce"))
+        {
+            // just call it twice???
+            Debug.Log("Death sauce triggered!!!");
+            pickRandomHolsterCard(GameManager.manager.tempPlayer);
+            pickRandomHolsterCard(GameManager.manager.tempPlayer);
         }
 
         // Vessel Bonus : Heal 3 HP
@@ -2511,6 +2559,15 @@ public class CardPlayer : MonoBehaviour
             {
                 character.canBeFlipped = true;
                 GameManager.manager.sendSuccessMessage(13);
+            }
+        }
+
+        if (selectedCard.card.cardName == "DecanteredLastGasp")
+        {
+            // +5 damage if you're at 4 HP or less
+            if(hp <= 4)
+            {
+                damage += 5;
             }
         }
 
