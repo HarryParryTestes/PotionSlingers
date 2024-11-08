@@ -162,6 +162,7 @@ public class GameManager : MonoBehaviour
     public bool snakeBonus = false;
     public bool marketSelected = false;
     public bool holster = false;
+    public bool glove = false;
     public bool cardGameBonus = false;
     public bool rocketBonusUsed = false;
     public bool dumpsterBonus = false;
@@ -3539,6 +3540,7 @@ public class GameManager : MonoBehaviour
     {
         holster = false;
         moveToDeck = false;
+        glove = false;
     }
 
     public void displayOpponentHolster(CardPlayer cardPlayer)
@@ -3594,6 +3596,18 @@ public class GameManager : MonoBehaviour
 
     public void replaceOpponentCardWithStarter(int selectedCard)
     {
+        if (glove)
+        {
+            Debug.Log("Glove bonus!!!");
+            players[myPlayerIndex].deck.putCardOnTop(tempPlayer.holster.cardList[selectedCard - 1]);
+
+            tempPlayer.holster.cardList[selectedCard - 1]
+                .updatePlaceholder(tempPlayer.holster.cardList[selectedCard - 1]);
+            sendMessage("Moved card to the top of your deck!");
+            opponentHolsterMenu.SetActive(false);
+            return;
+        }
+
         if (moveToDeck)
         {
             Debug.Log("Moving holstered card to deck!!!");

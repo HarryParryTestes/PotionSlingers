@@ -1244,7 +1244,7 @@ public class CardPlayer : MonoBehaviour
         // Soaked Standard
         if (selectedCard.card.cardName == "SoakedStandard")
         {
-            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            if (selectedCard.aPotion.card.cardQuality == "Cold")
                 damage++;
         }
 
@@ -1703,6 +1703,72 @@ public class CardPlayer : MonoBehaviour
         else
         {
             Debug.Log("STONE STONE STONE STONE STONE");
+        }
+
+        // Choose 1 card in an opponent's Holster and place it on top of your deck
+        if (selectedCard.card.cardName == "RubberGlove")
+        {
+            // Command check starting
+            if (GameManager.manager.Game.multiplayer)
+            {
+                foreach (GamePlayer gp in GameManager.manager.Game.GamePlayers)
+                {
+                    if (gp.playerName == GameManager.manager.currentPlayerName)
+                    {
+                        Debug.Log("Target RPC, TrashOpponentMenu Active");
+                        gp.RpcTrashOneCard(GameManager.manager.tempPlayer.name);
+                    }
+                }
+                return damage;
+            }
+
+            if (gameObject.GetComponent<ComputerPlayer>() != null)
+            {
+                Debug.Log("Computer logic!!!");
+
+                // maybe do something for computer
+                // int cardNumber = rng.Next(1, 5);
+                // GameManager.manager.selectedCardInt = cardNumber;
+
+                foreach (CardDisplay cd in GameManager.manager.tempPlayer.holster.cardList)
+                {
+                    if (cd.card.cardName != "placeholder")
+                    {
+                        GameObject obj = Instantiate(cd.gameObject,
+                        cd.gameObject.transform.position,
+                        cd.gameObject.transform.rotation,
+                        cd.gameObject.transform);
+
+                        GameManager.manager.StartCoroutine(MoveToTrash(obj));
+
+                        deck.putCardOnTop(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]);
+
+                        GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]
+                            .updatePlaceholder(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt - 1]);
+
+                        GameManager.manager.sendMessage("A card in your holster just got trashed!");
+
+                        break;
+                    }
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    // GameManager.manager.opponentHolsterMenu.SetActive(true);
+                    // GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
+                    StartCoroutine(DelayedFade(GameManager.manager.opponentHolsterMenu));
+                    GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
+                    GameManager.manager.glove = true;
+                }
+                catch (ArgumentOutOfRangeException e)
+                {
+                    Debug.Log("Something fucked up, just gonna ignore it");
+                    GameManager.manager.opponentHolsterMenu.SetActive(false);
+                }
+            }
         }
 
         if (selectedCard.card.cardQuality.Contains("Dry") &&
@@ -2564,8 +2630,8 @@ public class CardPlayer : MonoBehaviour
 
         if (selectedCard.card.cardName == "DecanteredLastGasp")
         {
-            // +5 damage if you're at 4 HP or less
-            if(hp <= 4)
+            // +5 damage if you're less than 4 HP
+            if(hp < 4)
             {
                 damage += 5;
             }
@@ -2587,6 +2653,13 @@ public class CardPlayer : MonoBehaviour
             return damage + times;
         }
 
+        // mirror droplet
+        if (selectedCard.card.cardName == "Droplet")
+        {
+            Debug.Log("Make Droplet UI!!!");
+            // StartCoroutine(DelayedFade(GameManager.manager.dropletMenu));
+        }
+
         if (selectedCard.card.cardName == "Cube of Skeleton Jelly")
         {
             // check for unique card qualities in both holster and deck
@@ -2599,8 +2672,10 @@ public class CardPlayer : MonoBehaviour
             foreach (CardDisplay cd in holster.cardList)
             {
                 // don't include itself in the calculation
+                /*
                 if (cd.card.cardName == "Cube of Skeleton Jelly")
                     continue;
+                */
 
                 switch (cd.card.cardQuality)
                 {
@@ -3769,13 +3844,23 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Loofah Launcher
-        if (selectedCard.card.cardName == "LoofahLauncher" || selectedCard.card.cardName == "SoakedStandard")
+        if (selectedCard.card.cardName == "LoofahLauncher")
         {
             // Wet Bonus
             if (selectedCard.aPotion.card.cardQuality == "Wet")
             {
                 selectedCard.colorCardWet();
                 selectedCard.aPotion.colorCardWet();
+            }
+        }
+
+        if (selectedCard.card.cardName == "SoakedStandard")
+        {
+            // Wet Bonus
+            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            {
+                selectedCard.colorCardCold();
+                selectedCard.aPotion.colorCardCold();
             }
         }
 
