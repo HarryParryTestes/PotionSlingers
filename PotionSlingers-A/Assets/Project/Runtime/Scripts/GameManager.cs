@@ -2999,6 +2999,13 @@ public class GameManager : MonoBehaviour
             players[rand].subHealth(2);
         }
 
+        // When this enters your Holster, gain 3 HP
+        if (card.cardName == "BoostSpirit")
+        {
+            Debug.Log("Boost Spirit Bonus");
+            player.addHealth(3);
+        }
+
         // CHECK ARTIFACT DURABILITY HERE!!!
         // Come back to this to not just hardcode a value
         // make another variable on the scriptable objects that represents their max durability
