@@ -98,6 +98,9 @@ public class GameManager : MonoBehaviour
     public GameObject chooseOpponentMenu;
     public GameObject potionMarketMenu;
     public GameObject deckMenu;
+    public GameObject minerMenu;
+    public GameObject dropletMenu;
+    public GameObject eyedropperMenu;
     public GameObject nicklesAttackMenu;
     public GameObject cardGameTheGameMenu;
     public GameObject advanceStageUI;
@@ -153,6 +156,9 @@ public class GameManager : MonoBehaviour
     public bool earlyBirdSpecial = false;
     public bool holsterEarlyBirdSpecial = false;
     //public bool trashOrDamage = false;
+    public bool miner = false;
+    public bool droplet = false;
+    public bool pemmican = false;
     public bool trash = false;
     public bool damage = false;
     public bool trashDeckBonus = false;
@@ -3332,6 +3338,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void showMeMyDeck()
+    {
+        miner = true;
+        players[myPlayerIndex].subHealth(3);
+        deckMenu.SetActive(true);
+        deckMenuScroll.displayCards();
+    }
+
     public void displayDeck()
     {
         deckMenuScroll.displayCards();
@@ -4630,9 +4644,34 @@ public class GameManager : MonoBehaviour
         // displayOpponents();
     }
 
+    public void dropletOn()
+    {
+        droplet = true;
+    }
+
     public void takeTrashCard(CardDisplay cd)
     {
         CardDisplay whatever = null;
+
+        if (droplet)
+        {
+            int j;
+            for (j = 0; j < td.deckList.Count; j++)
+            {
+                if (td.deckList[j].cardName == cd.card.cardName)
+                {
+                    Debug.Log("Card found in trash");
+                    break;
+                }
+            }
+            players[myPlayerIndex].deck.putCardOnTop(td.deckList[j]);
+            td.deckList.RemoveAt(j);
+            sendMessage("Added a card on top of your Deck!");
+            droplet = false;
+            trashDeckMenu.SetActive(false);
+            td.trash = false;
+            return;
+        }
 
         if (dumpsterBonus)
         {
@@ -5238,6 +5277,7 @@ public class GameManager : MonoBehaviour
                         playerHolster.cardList[selectedCardInt - 1].artifactSlot.transform);
 
                     StartCoroutine(MoveToTrash(obj));
+
                     td.addCard(playerHolster.cardList[selectedCardInt - 1].aPotion);
 
                     playerHolster.cardList[selectedCardInt - 1].durability--;
@@ -5556,6 +5596,14 @@ public class GameManager : MonoBehaviour
                     // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
 
                     StartCoroutine(MoveToTrash(obj));
+
+                    // hot dog check
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName == "HotDogMug")
+                        players[myPlayerIndex].hotDogBonus = true;
+
+                    // eyedropper check
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName == "SeeingEyedropper")
+                        StartCoroutine(DelayedFade(eyedropperMenu));
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
 
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability--;
@@ -6546,9 +6594,18 @@ public class GameManager : MonoBehaviour
 
                                     // MATTEO: Add Loading potion SFX here.
 
-                                    // // Updates Holster card to be empty.
+                                    // Updates Holster card to be empty.
+                                    if (cd.card.cardName == "Pemmican" && !pemmican)
+                                    {
+                                        Debug.Log("Pemmican logic!");
+                                        pemmican = true;
+                                        loadPotion(cd);
+                                        return;
+                                    }
+
                                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
                                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                    pemmican = false;
                                 }
                                 return;
                             }
@@ -6573,11 +6630,19 @@ public class GameManager : MonoBehaviour
 
                             // MATTEO: Add Loading potion SFX here.
 
-                            // // Updates Holster card to be empty.
+                            // Updates Holster card to be empty.
+                            if (cd.card.cardName == "Pemmican" && !pemmican)
+                            {
+                                Debug.Log("Pemmican logic!");
+                                pemmican = true;
+                                loadPotion(cd);
+                                return;
+                            }
                             Card card = players[myPlayerIndex].deck.popCard();
                             cd.card = card;
                             cd.updateCard(card);
                             players[myPlayerIndex].deck.updateCardSprite();
+                            pemmican = false;
                         }
                     }
                     // Vessel slot 1 is unloaded.
@@ -6596,11 +6661,20 @@ public class GameManager : MonoBehaviour
 
                         // MATTEO: Add Loading potion SFX here.
 
-                        // // Updates Holster card to be empty.
+                        // Updates Holster card to be empty.
+                        if (cd.card.cardName == "Pemmican" && !pemmican)
+                        {
+                            Debug.Log("Pemmican logic!");
+                            pemmican = true;
+                            loadPotion(cd);
+                            return;
+                        }
+
                         Card card = players[myPlayerIndex].deck.popCard();
                         cd.card = card;
                         cd.updateCard(card);
                         players[myPlayerIndex].deck.updateCardSprite();
+                        pemmican = false;
                     }
                 }
 
@@ -6936,8 +7010,17 @@ public class GameManager : MonoBehaviour
                                         // MATTEO: Add Loading potion SFX here.
 
                                         // // Updates Holster card to be empty.
+                                        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Pemmican" && !pemmican)
+                                        {
+                                            Debug.Log("Pemmican logic!");
+                                            pemmican = true;
+                                            loadPotion();
+                                            return;
+                                        }
+
                                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
                                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                        pemmican = false;
                                     }
                                     return;
                                 }
@@ -6965,8 +7048,17 @@ public class GameManager : MonoBehaviour
                                 // MATTEO: Add Loading potion SFX here.
 
                                 // // Updates Holster card to be empty.
+                                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Pemmican" && !pemmican)
+                                {
+                                    Debug.Log("Pemmican logic!");
+                                    pemmican = true;
+                                    loadPotion();
+                                    return;
+                                }
+
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
                                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                                pemmican = false;
                             }
                         }
                         // Vessel slot 1 is unloaded.
@@ -6987,8 +7079,17 @@ public class GameManager : MonoBehaviour
                             // MATTEO: Add Loading potion SFX here.
 
                             // // Updates Holster card to be empty.
+                            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Pemmican" && !pemmican)
+                            {
+                                Debug.Log("Pemmican logic!");
+                                pemmican = true;
+                                loadPotion();
+                                return;
+                            }
+
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card = placeholder;
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(placeholder);
+                            pemmican = false;
                         }
                     }
 
@@ -8786,6 +8887,15 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].updateHealthUI();
             }
 
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "HotDogMug")
+            {
+                Debug.Log("Hot Dog Mug bonus triggered!!!");
+                players[myPlayerIndex].hotDogBonus = true;
+            }
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SeeingEyedropper")
+                StartCoroutine(DelayedFade(eyedropperMenu));
+
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality != "Starter")
             {
                 players[myPlayerIndex].cardsTrashed++;
@@ -9010,6 +9120,11 @@ public class GameManager : MonoBehaviour
             players[myPlayerIndex].checkGauntletBonus();
             players[myPlayerIndex].checkDecoderBonus();
         }
+    }
+
+    public void minerOff()
+    {
+        miner = false;
     }
 
     public void trashCardInDeck(CardDisplay cd)

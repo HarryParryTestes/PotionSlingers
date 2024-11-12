@@ -59,6 +59,30 @@ public class DeckMenuScroll : MonoBehaviour
     {
         Debug.Log(cd.card.cardName);
 
+        if (GameManager.manager.miner)
+        {
+            for (int i = 0; i < GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList.Count; i++)
+            {
+                if (GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList[i].cardName == cd.card.cardName)
+                {
+                    Debug.Log("Card found");
+
+                    Card card = GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList[i];
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.deckList.RemoveAt(i);
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.putCardOnTop(card);
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].deck.updateCardSprite();
+
+
+                    GameManager.manager.miner = false;
+                    // GameManager.manager.nicklesAttackMenu.SetActive(true);
+                    gameObject.SetActive(false);
+                    GameManager.manager.sendMessage("Added a card on top of your Deck!");
+                    return;
+                }
+            }
+            return;
+        }
+
         // Check if it's a starter card
         if(cd.card.cardQuality == "Starter")
         {
@@ -129,6 +153,13 @@ public class DeckMenuScroll : MonoBehaviour
 
     public void displayCards(Deck deck = null)
     {
+        if (GameManager.manager.miner)
+            if(menuUI != null)
+                menuUI.GetComponent<TMPro.TextMeshProUGUI>().text = "Put a card on top of your Deck?";           
+        else
+            if (menuUI != null)
+                menuUI.GetComponent<TMPro.TextMeshProUGUI>().text = "Trash a non-starter card?";
+
         Card temp;
         Card temp2;
         Card temp3;

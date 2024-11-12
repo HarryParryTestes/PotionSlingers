@@ -34,6 +34,8 @@ public class CardPlayer : MonoBehaviour
     public bool ringBonus;
     public bool doubleRingBonus = false;
     public bool bargainBonus;
+    public bool hotDogBonus = false;
+    public bool spiritBonus = false;
     public int bonusAmount;
     public int cardsTrashed = 0;
     //public HealthController health;
@@ -914,6 +916,7 @@ public class CardPlayer : MonoBehaviour
         dumpsterBonus = false;
         doubleRingBonus = false;
         bargainBonus = false;
+        spiritBonus = false;
 
         foreach (CardDisplay cd in holster.cardList)
         {
@@ -1201,6 +1204,15 @@ public class CardPlayer : MonoBehaviour
     {
         // +1 damage on artifacts for Isadore
         if (isIsadore)
+            damage++;
+
+        if (GameManager.manager.tempPlayer.hotDogBonus)
+        {
+            GameManager.manager.tempPlayer.hotDogBonus = false;
+            return damage;
+        }
+
+        if (spiritBonus)
             damage++;
 
         // Ringifact gives artifacts +1 damage
@@ -1679,6 +1691,12 @@ public class CardPlayer : MonoBehaviour
             return damage + 1;
         }
 
+        if (GameManager.manager.tempPlayer.hotDogBonus)
+        {
+            GameManager.manager.tempPlayer.hotDogBonus = false;
+            return damage;
+        }
+
         // Stone Ring logic will simply pass the damage of the potion(s) without checking any of the card text effects
         bool stone = false;
 
@@ -1701,9 +1719,7 @@ public class CardPlayer : MonoBehaviour
             }
         }
         else
-        {
-            Debug.Log("STONE STONE STONE STONE STONE");
-        }
+            Debug.Log("STONE STONE STONE STONE");
 
         // Choose 1 card in an opponent's Holster and place it on top of your deck
         if (selectedCard.card.cardName == "RubberGlove")
@@ -1993,8 +2009,14 @@ public class CardPlayer : MonoBehaviour
             damage += 2;
         }
 
+        // Vessel Bonus: Artifacts get +1 damage until the end of your turn
+        if (selectedCard.vPotion1.card.cardName == "BoostSpirit" || selectedCard.vPotion2.card.cardName == "BoostSpirit")
+        {
+            spiritBonus = true;
+        }
+
         // Vessel Bonus: Spice up to 2 cards in your opponent's Holster.
-        if ((selectedCard.vPotion1.card.cardName == "DeathSauce" || selectedCard.vPotion2.card.cardName == "DeathSauce"))
+        if (selectedCard.vPotion1.card.cardName == "DeathSauce" || selectedCard.vPotion2.card.cardName == "DeathSauce")
         {
             // just call it twice???
             Debug.Log("Death sauce triggered!!!");
@@ -2628,6 +2650,23 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        if (GameManager.manager.tempPlayer.hotDogBonus)
+        {
+            GameManager.manager.tempPlayer.hotDogBonus = false;
+            return damage;
+        }
+
+        // if you're at full health, set HP to 1 and gain an essence cube
+        if (selectedCard.card.cardName == "AioliRamekin")
+        {
+            if(hp == maxHp)
+            {
+                hp = 1;
+                hpCubes++;
+                updateHealthUI();
+            }
+        }
+
         if (selectedCard.card.cardName == "DecanteredLastGasp")
         {
             // +5 damage if you're less than 4 HP
@@ -2656,8 +2695,27 @@ public class CardPlayer : MonoBehaviour
         // mirror droplet
         if (selectedCard.card.cardName == "Droplet")
         {
+            // if computer pick it for them
+            if (GetComponent<ComputerPlayer>() != null)
+            {
+                // make method that picks a random card
+                int cardNumber = rng.Next(0, GameManager.manager.td.deckList.Count);
+
+                Card card = GameManager.manager.td.deckList[cardNumber];
+                GameManager.manager.td.deckList.RemoveAt(cardNumber);
+                deck.putCardOnTop(card);
+                deck.updateCardSprite();
+            }
+            else
+            {
+                // if the player is a human
+                Debug.Log("No computer player?");
+                // pull a menu up
+                StartCoroutine(DelayedFade(GameManager.manager.dropletMenu));
+                return damage;
+            }
             Debug.Log("Make Droplet UI!!!");
-            // StartCoroutine(DelayedFade(GameManager.manager.dropletMenu));
+            
         }
 
         if (selectedCard.card.cardName == "Cube of Skeleton Jelly")
@@ -2836,6 +2894,35 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "Phial of Inheritance Powder")
         {
             phialBonus = true;
+        }
+
+        // A Miner Flight
+        // pay 3HP to put any item in your deck on top
+        if (selectedCard.card.cardName == "MinerFlight")
+        {
+            // if computer pick it for them
+            if (GetComponent<ComputerPlayer>() != null)
+            {
+                if (deck.deckList.Count > 1 && hp > 3)
+                {
+                    // make method that picks a random card
+                    subHealth(3);
+                    int cardNumber = rng.Next(0, deck.deckList.Count);
+
+                    Card card = deck.deckList[cardNumber];
+                    deck.deckList.RemoveAt(cardNumber);
+                    deck.putCardOnTop(card);
+                    deck.updateCardSprite();
+                }               
+            }
+            else
+            {
+                // if the player is a human
+                Debug.Log("No computer player?");
+                // pull a menu up
+                StartCoroutine(DelayedFade(GameManager.manager.minerMenu));
+                return damage;
+            }
         }
 
         // An Elephant's Round
