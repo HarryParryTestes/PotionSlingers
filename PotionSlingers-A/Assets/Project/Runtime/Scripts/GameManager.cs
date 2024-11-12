@@ -3067,12 +3067,19 @@ public class GameManager : MonoBehaviour
         // MATTEO: Add holster fill sfx here!
 
         int times = 0;
+        bool boxing = false;
 
         foreach (CardDisplay cd in player.holster.cardList)
         {
             if (cd.card.name == "placeholder")
             {
                 times++;
+            }
+
+            if (cd.card.cardName == "BoxingRing")
+            {
+                Debug.Log("Boxing Ring!!!");
+                boxing = true;
             }
         }
 
@@ -3095,12 +3102,27 @@ public class GameManager : MonoBehaviour
 
                     yield return new WaitForSeconds(0.25f);
                 }
-            }
+            } 
         }
         yield return new WaitForSeconds(0.3f);
         // check to see if this changes anything!!!
         Debug.Log("Checking player bonuses!");
         checkSpicy(player);
+
+        if (boxing && player.deck.deckList.Count == 0)
+        {
+            Debug.Log("Boxing Ring Damage!!!");
+            if (player.doubleRingBonus)
+            {
+                Debug.Log("Boxing Ring Bonus!!!");
+                dealDamageToAll(6);
+            }
+            else
+            {
+                Debug.Log("Boxing Ring Bonus!!!");
+                deal3ToAll();
+            }
+        }
         // player.setDefaultTurn();
     }
 
@@ -5603,7 +5625,11 @@ public class GameManager : MonoBehaviour
 
                     // eyedropper check
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName == "SeeingEyedropper")
+                    {
+                        Debug.Log("Eyedropper!!!");
                         StartCoroutine(DelayedFade(eyedropperMenu));
+                        marketTopDeck();
+                    }                       
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
 
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability--;
@@ -8658,7 +8684,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (CardPlayer cp in players)
         {
-            if (cp.name != currentPlayerName)
+            if (cp.name != currentPlayerName && cp.gameObject.activeInHierarchy)
             {
                 cp.subHealth(3);
             }
@@ -8669,7 +8695,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (CardPlayer cp in players)
         {
-            if (cp.name != currentPlayerName)
+            if (cp.name != currentPlayerName && cp.gameObject.activeInHierarchy)
             {
                 cp.subHealth(1);
             }
@@ -8680,7 +8706,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (CardPlayer cp in players)
         {
-            if (cp.name != currentPlayerName)
+            if (cp.name != currentPlayerName && cp.gameObject.activeInHierarchy)
             {
                 cp.subHealth(damage);
             }
@@ -8894,7 +8920,11 @@ public class GameManager : MonoBehaviour
             }
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SeeingEyedropper")
+            {
+                Debug.Log("Eyedropper!!!");
                 StartCoroutine(DelayedFade(eyedropperMenu));
+                marketTopDeck();
+            }
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality != "Starter")
             {
@@ -8976,6 +9006,35 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void chooseTopDeckCard(int choice)
+    {
+        // top market deck
+        if(choice == 2)
+        {
+            players[myPlayerIndex].deck.putCardOnTop(eyedropperMenu.transform.GetChild(2).gameObject.GetComponent<CardDisplay>());
+            td.addCard(eyedropperMenu.transform.GetChild(3).gameObject.GetComponent<CardDisplay>());
+        }
+
+        // bottom market deck
+        if (choice == 1)
+        {
+            players[myPlayerIndex].deck.putCardOnTop(eyedropperMenu.transform.GetChild(3).gameObject.GetComponent<CardDisplay>());
+            td.addCard(eyedropperMenu.transform.GetChild(2).gameObject.GetComponent<CardDisplay>());
+        }
+
+        sendMessage("Added a card to the top of your Deck!");
+
+        eyedropperMenu.SetActive(false);
+    }
+
+    public void marketTopDeck()
+    {
+        Card card1 = md1.popCard();
+        Card card2 = md2.popCard();
+        eyedropperMenu.transform.GetChild(2).gameObject.GetComponent<CardDisplay>().updateCard(card1);
+        eyedropperMenu.transform.GetChild(3).gameObject.GetComponent<CardDisplay>().updateCard(card2);
+    }
+
     public void trashCard(CardDisplay cd)
     {
         Debug.Log("Trash Card");
@@ -9041,6 +9100,19 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Spoonful of Ambrosia bonus triggered!!!");
                 players[myPlayerIndex].hpCubes++;
                 players[myPlayerIndex].updateHealthUI();
+            }
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "HotDogMug")
+            {
+                Debug.Log("Hot Dog Mug bonus triggered!!!");
+                players[myPlayerIndex].hotDogBonus = true;
+            }
+
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SeeingEyedropper")
+            {
+                Debug.Log("Eyedropper!!!");
+                StartCoroutine(DelayedFade(eyedropperMenu));
+                marketTopDeck();
             }
 
             if (cd.card.cardQuality != "Starter")

@@ -866,7 +866,7 @@ public class CardPlayer : MonoBehaviour
                     cd.aPotion.updateCard(GameManager.manager.starterPotionCards[random]);
                     // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
                 }
-            }
+            }            
         }
 
         // Liquid Cornucopia check
@@ -1024,6 +1024,25 @@ public class CardPlayer : MonoBehaviour
         deck.putCardOnTop(uniqueCards[3]);
     }
 
+    public void boxingRingCheck()
+    {
+        // check for boxing ring
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if (cd.card.cardName == "BoxingRing" && deck.deckList.Count == 0)
+            {
+                if (doubleRingBonus)
+                {
+                    GameManager.manager.dealDamageToAll(6);
+                }
+                else
+                {
+                    GameManager.manager.dealDamageToAll(3);
+                }
+            }
+        }
+    }
+
     public void addReetsCard()
     {
         if (reetsCycle)
@@ -1079,6 +1098,22 @@ public class CardPlayer : MonoBehaviour
 
             // TODO: make error message that signifies that you cannot do action
             GameManager.manager.sendErrorMessage(14);
+        }
+
+        // check for boxing ring
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            if (cd.card.cardName == "BoxingRing" && deck.deckList.Count == 0)
+            {
+                if (doubleRingBonus)
+                {
+                    GameManager.manager.dealDamageToAll(6);
+                }
+                else
+                {
+                    GameManager.manager.dealDamageToAll(3);
+                }
+            }
         }
     }
 
@@ -1308,6 +1343,7 @@ public class CardPlayer : MonoBehaviour
                         }
                     }
                 }
+                boxingRingCheck();
             }
         }
 
@@ -2881,6 +2917,8 @@ public class CardPlayer : MonoBehaviour
             // You may put the top card of your deck into your holster.
             // make this into coroutine
             StartCoroutine(AddCardToHolster());
+
+            Invoke("boxingRingCheck", 0.3);
         }
 
         // A Last Drop of Coffee
