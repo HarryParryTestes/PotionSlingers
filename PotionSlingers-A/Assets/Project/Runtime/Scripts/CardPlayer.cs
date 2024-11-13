@@ -2918,7 +2918,7 @@ public class CardPlayer : MonoBehaviour
             // make this into coroutine
             StartCoroutine(AddCardToHolster());
 
-            Invoke("boxingRingCheck", 0.3);
+            Invoke("boxingRingCheck", 0.3f);
         }
 
         // A Last Drop of Coffee
