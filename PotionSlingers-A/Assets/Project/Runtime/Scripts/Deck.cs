@@ -127,6 +127,31 @@ public class Deck : MonoBehaviour
         }  
     }
 
+    public Card popCardOffBottom()
+    {
+        if (deckList.Count >= 1)
+        {
+            Card temp = deckList[deckList.Count - 1];
+            deckList.RemoveAt(deckList.Count - 1);
+            string thing = statuses[statuses.Count - 1];
+            statuses.RemoveAt(statuses.Count - 1);
+            if (temp.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
+            {
+                // +1 damage if put in holster this turn
+                temp.effectAmount = 4;
+            }
+            //Debug.Log("Card popped: ");
+            updateCardSprite(thing);
+            return temp;
+        }
+        else
+        {
+            // implement refilling the deck here
+            Debug.Log("ERROR: Card not returned!");
+            return cardDisplay.card;
+        }
+    }
+
     /*
     public void OnPointerDown(PointerEventData pointerEventData)
     {

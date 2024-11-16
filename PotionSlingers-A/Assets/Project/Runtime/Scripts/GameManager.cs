@@ -2966,8 +2966,24 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DeckAnimation(CardDisplay cd, CardPlayer player)
     {
+        bool jester = false;
+
+        foreach (CardDisplay cds in player.holster.cardList)
+        {            
+            if (cds.card.cardName == "JesterRing")
+            {
+                Debug.Log("Jester Ring!!!");
+                jester = true;
+            }
+        }
+
         Debug.Log("Card animation starting");
         GameObject obj = Instantiate(player.deck.gameObject, player.deck.gameObject.transform.position, player.deck.gameObject.transform.rotation, player.gameObject.transform);
+        if (jester)
+        {
+            Debug.Log("Use different sprite for jester!");
+            obj.GetComponent<Image>().sprite = player.deck.deckList[player.deck.deckList.Count - 1].cardSprite;
+        }
         /*
         if (player.deck.statuses[0] == "spicy")
         {
@@ -2988,9 +3004,20 @@ public class GameManager : MonoBehaviour
             obj.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
         obj.transform.DOJump(cd.gameObject.transform.position, 200f, 1, 0.5f, false);
 
+        Card card;
+        string status = "none";
+
         // MATTEO: Add holster fill sfx here!
-        string status = player.deck.statuses[0];
-        Card card = player.deck.popCard();
+        if (jester)
+        {
+            status = player.deck.statuses[player.deck.statuses.Count - 1];
+            card = player.deck.popCardOffBottom();
+        } else
+        {
+            if(player.deck.statuses[0] != null)
+                status = player.deck.statuses[0];
+            card = player.deck.popCard();
+        }      
 
         if (card.cardName == "EarlyBirdSpecial")
         {
@@ -3059,6 +3086,94 @@ public class GameManager : MonoBehaviour
                 player.addShields(2);
                 checkShield(player);
             }
+
+            // slapshot butt check
+            if (player.deck.deckList[0].cardName == "SlapshotButt")
+            {
+                Card butt;
+
+                Debug.Log("BUTT BUTT BUTT!!!");
+                foreach (CardDisplay cd in player.holster.cardList)
+                {
+                    if(cd.card.cardType == "Artifact" && cd.aPotion.card.cardName == "placeholder")
+                    {
+                        Debug.Log("Artifact found!!!");
+                        butt = player.deck.popCard();
+                        cd.artifactSlot.transform.parent.gameObject.SetActive(true);
+                        cd.artifactSlot.transform.gameObject.SetActive(true);
+                        cd.aPotion.updateCard(butt);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+                        player.checkArtifactBonusAnimation(cd);
+                        checkShield(player);
+                        break;
+                    }
+
+                    if (cd.card.cardType == "Vessel" && cd.vPotion1.card.cardName == "placeholder")
+                    {
+                        Debug.Log("Vessel found!!!");
+                        butt = player.deck.popCard();
+                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);                       
+                        cd.vesselSlot1.SetActive(true);
+                        cd.vesselSlot2.SetActive(false);
+                        cd.vesselSlot3.SetActive(false);
+                        cd.vesselSlot4.SetActive(false);
+                        // cd.vesselSlot2.SetActive(true);
+                        cd.vPotion1.updateCard(butt);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+                        player.checkVesselBonusAnimation(cd);
+                        checkShield(player);
+                        break;
+                    }
+
+                    if (cd.card.cardType == "Vessel" && cd.vPotion2.card.cardName == "placeholder")
+                    {
+                        Debug.Log("Vessel found!!!");
+                        butt = player.deck.popCard();
+                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                        cd.vesselSlot1.SetActive(true);
+                        cd.vesselSlot2.SetActive(true);
+                        cd.vesselSlot3.SetActive(false);
+                        cd.vesselSlot4.SetActive(false);
+                        cd.vPotion2.updateCard(butt);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+                        player.checkVesselBonusAnimation(cd);
+                        checkShield(player);
+                        break;
+                    }
+
+                    if (cd.card.cardType == "Vessel" && cd.card.cardEffect == "FourLoad" && cd.vPotion3.card.cardName == "placeholder")
+                    {
+                        Debug.Log("Vessel found!!!");
+                        butt = player.deck.popCard();
+                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                        cd.vesselSlot1.SetActive(true);
+                        cd.vesselSlot2.SetActive(true);
+                        cd.vesselSlot3.SetActive(true);
+                        cd.vesselSlot4.SetActive(false);
+                        cd.vPotion3.updateCard(butt);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+                        player.checkVesselBonusAnimation(cd);
+                        checkShield(player);
+                        break;
+                    }
+
+                    if (cd.card.cardType == "Vessel" && cd.card.cardEffect == "FourLoad" && cd.vPotion4.card.cardName == "placeholder")
+                    {
+                        Debug.Log("Vessel found!!!");
+                        butt = player.deck.popCard();
+                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                        cd.vesselSlot1.SetActive(true);
+                        cd.vesselSlot2.SetActive(true);
+                        cd.vesselSlot3.SetActive(true);
+                        cd.vesselSlot4.SetActive(true);
+                        cd.vPotion4.updateCard(butt);
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+                        player.checkVesselBonusAnimation(cd);
+                        checkShield(player);
+                        break;
+                    }
+                }                
+            }
         }       
     }
 
@@ -3068,6 +3183,7 @@ public class GameManager : MonoBehaviour
 
         int times = 0;
         bool boxing = false;
+        bool jester = false;
 
         foreach (CardDisplay cd in player.holster.cardList)
         {
