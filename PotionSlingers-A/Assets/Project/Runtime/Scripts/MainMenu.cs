@@ -177,6 +177,19 @@ public class MainMenu : MonoBehaviour
         if (!SteamManager.Initialized) { return; }
     }
 
+    public void InfiniteLoop()
+    {
+        // Application.Quit();
+        InfiniteLoop();
+    }
+
+    public void QuitGame()
+	{
+        // SteamAPI.Shutdown();
+        Application.Quit();
+		Invoke("InfiniteLoop", 2f);
+	}
+
 	void Update()
     {
         if (networkManager == null)
