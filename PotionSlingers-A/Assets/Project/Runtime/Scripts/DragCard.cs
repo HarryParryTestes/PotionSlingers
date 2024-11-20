@@ -591,11 +591,11 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
                 if (gameObject.name == "Card1Display")
                 {
-                    durabilitySign.transform.DOMove(pos + new Vector3(-375f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                    durabilitySign.transform.DOMove(pos + new Vector3(-550f * GameManager.manager.widthRatio, 0, 0), 0.3f);
                 }
                 else if (gameObject.name == "Card4Display")
                 {
-                    durabilitySign.transform.DOMove(pos + new Vector3(-550f * GameManager.manager.widthRatio, 0, 0), 0.3f);
+                    durabilitySign.transform.DOMove(pos + new Vector3(-450f * GameManager.manager.widthRatio, 0, 0), 0.3f);
                 }
                 else if (gameObject.name == "Card3Display")
                 {

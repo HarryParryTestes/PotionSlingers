@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     // Later change to be however many players joined when the GameScene loads in.
     // (Maybe transferring numPlayers from MainMenu script to here? Maybe get from server?)
     public int numPlayers = 2;
+    public int defeatedEnemies = 0;
     public int selectedCardInt;
     public int selectedOpponentInt;
     public int opponentCardInt;
@@ -983,6 +984,26 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (Game.endless)
+        {
+            if (players[0].dead)
+            {
+                Debug.Log("Game over, the player died");
+                // gameOverScreen.SetActive(true);
+                FadeIn(gameOverScreen);
+                StartCoroutine(goBackToTitle());
+                return;
+            }
+
+            if(numPlayers == 2 && players[1].dead)
+            {
+                Debug.Log("Setting up new endless mode enemy");
+                defeatedEnemies++;
+                Invoke("setEndlessModeCharacters", 3f);
+            }
+            return;
+        }
+
         if (!Game.storyMode && !Game.multiplayer && !Game.tutorial)
         {
             if (players[0].dead)
@@ -1153,6 +1174,104 @@ public class GameManager : MonoBehaviour
         Game.StopHost();
         SceneManager.LoadScene("TitleMenu");
         //Game.ServerChangeScene("TitleMenu");
+    }
+
+    void setEndlessModeCharacters()
+    {
+        Debug.Log("Setting up characters");
+        switch (defeatedEnemies)
+        {
+            // Bolo to start
+            case 0:
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Bolo";
+                players[2].name = "Bolo";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Bolo");
+                players[2].checkCharacter();
+                // update this however you see fit
+                players[2].hpCubes = 1;
+                players[2].updateHealthUI();
+                // players[2].holster.gameObject.SetActive(false);
+                // players[2].deck.gameObject.SetActive(false);
+
+                players[2].user_id = 1;
+                players[1] = players[2];
+                // players[1].dead = true;
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case 1:
+                numPlayers = 2;
+                // players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].turnOn();
+                players[1].charName = "Fingas";
+                players[1].name = "Fingas";
+                playerTopName.text = players[1].charName;
+                players[1].character.onCharacterClick("Fingas");
+                players[1].checkCharacter();
+                // update this however you see fit
+                players[1].hpCubes = 1;
+                players[1].hp = 10;
+                players[1].updateHealthUI();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
+                p2.SetActive(true);
+                break;
+            case 2:
+                numPlayers = 2;
+                // players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].turnOn();
+                players[1].charName = "Bag o' Snakes";
+                players[1].name = "Bag o' Snakes";
+                playerTopName.text = players[1].charName;
+                players[1].character.onCharacterClick("Bag o' Snakes");
+                players[1].checkCharacter();
+                // update this however you see fit
+                players[1].hpCubes = 1;
+                players[1].hp = 10;
+                players[1].updateHealthUI();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
+                p2.SetActive(true);
+                break;
+            case 3:
+                numPlayers = 2;
+                // players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].turnOn();
+                players[1].charName = "Crowpunk";
+                players[1].name = "Crowpunk";
+                playerTopName.text = players[1].charName;
+                players[1].character.onCharacterClick("Crowpunk");
+                players[1].checkCharacter();
+                // update this however you see fit
+                players[1].hpCubes = 1;
+                players[1].hp = 10;
+                players[1].updateHealthUI();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
+                p2.SetActive(true);
+                break;
+            default:
+                numPlayers = 2;
+                // players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].turnOn();
+                players[1].charName = "Crowpunk";
+                players[1].name = "Crowpunk";
+                playerTopName.text = players[1].charName;
+                players[1].character.onCharacterClick("Crowpunk");
+                players[1].checkCharacter();
+                // update this however you see fit
+                players[1].hpCubes = 2;
+                players[1].hp = 10;
+                players[1].updateHealthUI();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
+                p2.SetActive(true);
+                break;
+        }
     }
 
     void setStoryModeCharacters()
@@ -2084,6 +2203,29 @@ public class GameManager : MonoBehaviour
 
         // see if this works lol
         Invoke("turnOffCards", 0.3f);
+
+        // set up endless mode in here
+        if (Game.endless)
+        {
+            Debug.Log("Endless!!!");
+            resetDurability();
+            randomizeStarterCards();
+            Debug.Log("Endless mode started");
+            md1.shuffle();
+            md2.shuffle();
+            initDecks();
+            numPlayers = 2;
+            players[0].name = SteamFriends.GetPersonaName().ToString();
+            players[0].charName = Game.storyModeCharName;
+            players[0].character.onCharacterClick(players[0].charName);
+            players[0].checkCharacter();
+            playerBottomName.text = SteamFriends.GetPersonaName().ToString();
+            currentPlayerName = players[0].name;
+
+            setEndlessModeCharacters();
+
+            return;
+        }
 
         if (Game.storyMode)
         {

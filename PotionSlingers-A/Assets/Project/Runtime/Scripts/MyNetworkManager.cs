@@ -14,6 +14,7 @@ public class MyNetworkManager : NetworkManager
     [SerializeField] private GameObject PlayerListItemPrefab;
     [SerializeField] public int minPlayers = 2;
     [SerializeField] public int numPlayers = 2;
+    public bool endless = false;
     public bool tutorial = false;
     public bool multiplayer = false;
     public bool quickplay = false;

@@ -10,7 +10,7 @@ public class StoryModeLobbyUI : MonoBehaviour
 {
     public TMPro.TextMeshProUGUI nameBox;
     public TMPro.TextMeshProUGUI infoBox;
-    public string[] infoQuotes;
+    public string[] infoQuotes = new string[9];
 
     private MyNetworkManager game;
     private MyNetworkManager Game

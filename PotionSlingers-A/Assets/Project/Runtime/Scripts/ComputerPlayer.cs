@@ -441,6 +441,21 @@ public class ComputerPlayer : CardPlayer
             yield break;
         }
 
+        // story mode logic
+        if (Game.endless && (this.gameObject.GetComponent<CardPlayer>().name != "Saltimbocca" &&
+            this.gameObject.GetComponent<CardPlayer>().name != "Bolo" &&
+            this.gameObject.GetComponent<CardPlayer>().name != "Isadore" &&
+            this.gameObject.GetComponent<CardPlayer>().name != "Reets"))
+        {
+            // insert appropriate logic for whatever enemies we have in here
+            storyModeTurn();
+            yield break;
+        } else
+        {
+            AITurn();
+            yield break;
+        }
+
         // regular CPU logic
         if (easy)
         {

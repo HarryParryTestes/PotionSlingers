@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
 
 	public int numPlayers;
 	public bool flippable = false;
+	public bool endless = false;
     private bool privacy = false;
 	private GameObject playButton;
 	private GameObject loginButton;
@@ -212,7 +213,17 @@ public class MainMenu : MonoBehaviour
 		}
     }
 
-	public void setSliderValue()
+	public void disableEndlessMode()
+	{
+		endless = false;
+	}
+
+    public void enableEndlessMode()
+    {
+        endless = true;
+    }
+
+    public void setSliderValue()
     {
 		levelBar.value = points;
 		expText.text = points + " / " + levelBar.maxValue;
@@ -549,6 +560,19 @@ public class MainMenu : MonoBehaviour
 
 	public void StartStoryMode()
 	{
+		// endless mode check cause i'm lazy
+		if (endless)
+		{
+			Debug.Log("Endless!!!");
+            networkManager.tutorial = false;
+            networkManager.multiplayer = false;
+            networkManager.quickplay = false;
+            networkManager.storyMode = false;
+            networkManager.endless = true;
+            StartCoroutine(networkManager.LoadLevel());
+            return;
+		}
+
 		networkManager.tutorial = false;
 		networkManager.multiplayer = false;
 		networkManager.quickplay = false;

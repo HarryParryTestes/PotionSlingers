@@ -124,13 +124,14 @@ namespace Map
                     {
                         Debug.Log("Slinger not picked yet!!!");
                         int num = rng.Next(0, transition.GetComponent<SceneTransition>().slingerPool.Count);
-                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Salitmbocca")
+                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Saltimbocca")
                         {
                             transition.GetComponent<SceneTransition>().hideUI();
                             transition.GetComponent<SceneTransition>().saltButton.onClick.Invoke();
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
+                            break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Reets")
                         {
@@ -140,6 +141,7 @@ namespace Map
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
+                            break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Nickles")
                         {
@@ -149,6 +151,7 @@ namespace Map
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
+                            break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Isadore")
                         {
@@ -158,6 +161,7 @@ namespace Map
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
+                            break;
                         }
                         SaveSystem.SaveGameData(saveData);
                     } else

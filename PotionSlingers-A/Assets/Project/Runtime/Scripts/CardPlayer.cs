@@ -582,6 +582,51 @@ public class CardPlayer : MonoBehaviour
 
     }
 
+    public void turnOn()
+    {
+        Debug.Log("Turning on!");
+        dead = false;
+        cubed = false;
+        gameObject.SetActive(true);
+        playerHP.SetActive(true);
+        playerHPCubes.SetActive(true);
+        hpBar.SetActive(true);
+        bar.SetActive(true);
+        bar.transform.GetChild(0).gameObject.SetActive(true);
+        holster.gameObject.SetActive(true);
+        deck.gameObject.SetActive(true);
+        healthText.SetActive(true);
+        playerHP.gameObject.SetActive(true);
+        playerHPCubes.gameObject.SetActive(true);
+        playerHPCubes.transform.GetChild(0).gameObject.SetActive(true);
+        username.SetActive(true);
+        username.transform.GetChild(0).gameObject.SetActive(true);
+        username.transform.GetChild(1).gameObject.SetActive(true);
+        username.transform.GetChild(2).gameObject.SetActive(true);
+
+        GetComponent<Image>().DOFade(1, 1.5f);
+        playerHP.GetComponent<Image>().DOFade(1, 1.5f);
+        playerHPCubes.GetComponent<Image>().DOFade(1, 1.5f);
+        bar.GetComponent<Image>().DOFade(1, 1.5f);
+        bar.transform.GetChild(0).GetComponent<Image>().DOFade(1, 1.5f);
+        hpBar.GetComponent<Image>().DOFade(1, 1.5f);
+        holster.GetComponent<Image>().DOFade(1, 1.5f);
+        holster.transform.GetChild(0).GetComponent<Image>().DOFade(1, 1.5f);
+        foreach (CardDisplay cd in holster.cardList)
+        {
+            cd.GetComponent<Image>().DOFade(1, 1.5f);
+        }
+        deck.GetComponent<Image>().DOFade(1, 1.5f);
+        username.transform.GetChild(0).GetComponent<Image>().DOFade(1, 1.5f);
+        username.transform.GetChild(1).GetComponent<Image>().DOFade(1, 1.5f);
+        username.transform.GetChild(2).GetComponent<Image>().DOFade(1, 1.5f);
+        playerHP.GetComponent<Image>().DOFade(1, 1.5f);
+        // playerHP.gameObject.SetActive(false);
+        playerHPCubes.GetComponent<Image>().DOFade(1, 1.5f);
+        // playerHPCubes.gameObject.SetActive(false);
+        playerHPCubes.transform.GetChild(0).GetComponent<Image>().DOFade(1, 1.5f);
+    }
+
     public IEnumerator turnOff()
     {
         // yield return new WaitForSeconds(1f);
