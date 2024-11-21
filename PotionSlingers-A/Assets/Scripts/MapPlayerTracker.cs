@@ -131,6 +131,7 @@ namespace Map
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
+                            SaveSystem.SaveGameData(saveData);
                             break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Reets")
@@ -141,6 +142,7 @@ namespace Map
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
+                            SaveSystem.SaveGameData(saveData);
                             break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Nickles")
@@ -151,6 +153,7 @@ namespace Map
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
+                            SaveSystem.SaveGameData(saveData);
                             break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Isadore")
@@ -161,9 +164,9 @@ namespace Map
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
+                            SaveSystem.SaveGameData(saveData);
                             break;
                         }
-                        SaveSystem.SaveGameData(saveData);
                     } else
                     {
                         // 2nd encounter with the slinger during the story mode
