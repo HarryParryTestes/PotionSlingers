@@ -205096,6 +205096,7 @@ GameObject:
   - component: {fileID: 2083794569}
   - component: {fileID: 2083794571}
   - component: {fileID: 2083794572}
+  - component: {fileID: 2083794573}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -205604,6 +205605,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2083794573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083794568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4409e7891bce7854493ea0e65676f64e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  resolutionChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  allowFullscreen: 1
+  aspectRatioWidth: 16
+  aspectRatioHeight: 9
+  minWidthPixel: 512
+  minHeightPixel: 512
+  maxWidthPixel: 2048
+  maxHeightPixel: 2048
 --- !u!1 &2083827295
 GameObject:
   m_ObjectHideFlags: 0
