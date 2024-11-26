@@ -63,7 +63,7 @@ public class CardPlayer : MonoBehaviour
     private System.Random rng = new System.Random();
     public string lastArtifactUsed = "";
 
-
+    public List<Card> fashion;
     // TODO: Refactor methods that use UniqueCard and replace them all with Card
     // also, make ScriptableObjects that are regular Cards and not UniqueCards
     public List<Card> uniqueCards;
@@ -1016,6 +1016,8 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        checkHatBonuses();
+
         if (isNickles)
         {
             nicklesAction = false;
@@ -1643,6 +1645,26 @@ public class CardPlayer : MonoBehaviour
         return damage;
     }
 
+    public void checkHatBonuses()
+    {
+        foreach(Card card in fashion)
+        {
+            if(card.cardName == "TroutTickler")
+            {
+                Debug.Log("Trout Tickler!!!");
+                pips++;
+                updatePipsUI();
+            }
+
+            if (card.cardName == "Ding-a-Ling Clochet")
+            {
+                Debug.Log("Ding-a-Ling Clochet!!!");
+                shields += 2;
+                updateHealthUI();
+            }
+        }
+    }
+
     public void lanturnAttack()
     {
         for (int i = 0; i < GameManager.manager.numPlayers; i++)
@@ -1747,6 +1769,16 @@ public class CardPlayer : MonoBehaviour
             {
                 character.canBeFlipped = true;
                 GameManager.manager.sendSuccessMessage(13);
+            }
+        }
+
+        // gormless check
+        // +2 damage for vessels
+        foreach (Card card in fashion)
+        {
+            if (card.cardName == "GormlessPileus")
+            {
+                damage += 2;
             }
         }
 

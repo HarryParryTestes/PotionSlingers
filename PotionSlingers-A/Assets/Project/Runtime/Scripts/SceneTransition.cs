@@ -64,6 +64,10 @@ public class SceneTransition : MonoBehaviour
         saveData.playerHealth = 10;
         // StartCoroutine(showHealingMessage());
         SaveSystem.SaveGameData(saveData);
+
+        currencyCubes.text = saveData.currencyCubes.ToString();
+        healthCubes.text = saveData.playerCubes.ToString();
+        health.text = saveData.playerHealth.ToString();
     }
 
     public void hideUI()

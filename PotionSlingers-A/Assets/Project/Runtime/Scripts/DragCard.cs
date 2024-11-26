@@ -443,6 +443,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 obj.transform.SetParent(transform.root);
                 obj.transform.SetSiblingIndex(17);
                 // Destroy(obj.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                if (obj.transform.GetChild(0).gameObject.GetComponent<DragCard>() == null)
+                {
+                    obj.transform.GetChild(0).gameObject.AddComponent<DragCard>();
+                }
                 obj.transform.GetChild(0).gameObject.GetComponent<DragCard>().clicked = true;
                 obj.transform.GetChild(0).gameObject.GetComponent<DragCard>().crucible = true;
                 obj.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().GetComponent<Image>().sprite = GetComponent<CardDisplay>().crucibleCards[1].cardSprite;
@@ -457,6 +461,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 obj2.transform.SetParent(transform.root);
                 obj2.transform.SetSiblingIndex(17);
                 // Destroy(obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>());
+                if (obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>() == null)
+                {
+                    obj2.transform.GetChild(0).gameObject.AddComponent<DragCard>();
+                }
                 obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>().clicked = true;
                 obj2.transform.GetChild(0).gameObject.GetComponent<DragCard>().crucible = true;
                 obj2.transform.GetChild(0).gameObject.GetComponent<CardDisplay>().whiteCard();

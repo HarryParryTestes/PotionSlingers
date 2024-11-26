@@ -58,7 +58,13 @@ public class TreasureMenu : MonoBehaviour
     {
         Debug.Log("Adding card...");
         SaveData data = SaveSystem.LoadGameData();
-        data.playerDeck.Add(card.card.name);
+
+        if(card.card.cardType == "Fashion")
+        {
+            Debug.Log("Adding fashion!!!");
+            data.playerFashion.Add(card.card.name);
+        } else
+            data.playerDeck.Add(card.card.name);
         SaveSystem.SaveGameData(data);
     }
 }

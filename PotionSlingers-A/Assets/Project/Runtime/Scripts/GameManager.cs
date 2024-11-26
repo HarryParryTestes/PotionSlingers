@@ -62,6 +62,7 @@ public class GameManager : MonoBehaviour
     public Sprite carnivalSprite;
     public Image background;
     public Sprite[] backgrounds;
+    public Sprite[] fashionImages;
     public int carnivalTurns = 0;
     public CarnivalSlider carnivalSlider;
 
@@ -71,6 +72,7 @@ public class GameManager : MonoBehaviour
     public List<Card> starterRings;
     public List<Card> starterShields;
 
+    public GameObject fashionUI;
     public GameObject carnivalUI;
     public GameObject gameOverScreen;
     public GameObject tutorialArrow;
@@ -568,6 +570,25 @@ public class GameManager : MonoBehaviour
                 saveData.opp3Cubes = players[3].hpCubes;
                 break;
         }
+    }
+
+    public void handleFashion()
+    {
+        if (!saveData.playerFashion.Any())
+            return;
+
+        foreach(string name in saveData.playerFashion)
+        {
+            foreach(Card card in database.cardList)
+            {
+                if(card.cardName == name)
+                {
+                    Debug.Log("Fashion found!");
+                    players[0].fashion.Add(card);
+                    break;
+                }                
+            }
+        }      
     }
 
     public void handleSavedMarketStatuses()
@@ -2251,6 +2272,7 @@ public class GameManager : MonoBehaviour
                 handleSavedMarketStatuses();
                 handleSavedMarketCrucibleCards();
                 handleSavedMarketDecks();
+                handleFashion();
 
                 players[0].shields = saveData.shields;
 
@@ -2397,6 +2419,10 @@ public class GameManager : MonoBehaviour
                     players[0].hBar.image.fillAmount = 0;
                 }
                 players[0].currentPlayerHighlight.SetActive(true);
+
+                // handle fashion
+                players[0].checkHatBonuses();
+
                 players[0].updateHealthUI();
                 players[0].updatePipsUI();
                 currentPlayerName = players[0].name;

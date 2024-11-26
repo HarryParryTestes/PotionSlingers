@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427fc92928c31468884b9f596ff8bc38, type: 3}
+  m_Name: Scarpetta
+  m_EditorClassIdentifier: 
+  id: 0
+  cardName: Scarpetta
+  desc: 'You may only buy non-potion cards if they are in the trash. 2P: Trash any
+    card in the Market.'
+  image: {fileID: 21300000, guid: f392de1b7c7ac3d4e82a80ece398d996, type: 3}
+  flipTask: At the beginning of any turn.
+  flipped: 0
+  flippedImage: {fileID: 21300000, guid: b284b51432ded3242b6e760f58cc475d, type: 3}
+  flippedDesc: You only buy cards from the Trash

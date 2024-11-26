@@ -15,6 +15,7 @@ public class Card : ScriptableObject
     public string cardQuality; // Cold, Dry, Wet, Hot, None
     //public Image cardImage; // Ex: PS_AS_BasicBattleBaster.png
     public Sprite cardSprite;
+    public Sprite cardlessSprite;
     public int buyPrice;
     public int sellPrice;
     public string desc;

@@ -23,6 +23,7 @@ public class SaveData
     public bool transition;
     public List<string> playerDeck = new List<string>();
     public List<string> playerHolster = new List<string>();
+    public List<string> playerFashion = new List<string>();
     public List<string> potionDeck = new List<string>();
     public List<string> itemDeck = new List<string>();
     public List<string[]> playerLoadedCards = new List<string[]>();

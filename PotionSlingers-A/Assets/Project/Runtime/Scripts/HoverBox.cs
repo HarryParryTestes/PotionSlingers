@@ -26,6 +26,24 @@ public class HoverBox : MonoBehaviour
         
     }
 
+    public void UpdateText(Card card)
+    {
+        if (card.cardName == "TroutTickler")
+        {
+            textBox.text = "Gain +1P at the start of your turn.";
+        }
+
+        if (card.cardName == "Ding-a-Ling Clochet")
+        {
+            textBox.text = "Gain +2 Shields at the start of your turn.";
+        }
+
+        if (card.cardName == "GormlessPileus")
+        {
+            textBox.text = "Your vessels do +2 damage.";
+        }
+    }
+
     public void UpdateText(CardPlayer cp)
     {
         if (cp.charName == "Crowpunk"  || cp.charName == "Crowpunk+")

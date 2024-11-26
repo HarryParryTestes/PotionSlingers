@@ -218,6 +218,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             // hoverbox code in here!
             if (cp.hoverBox != null)
             {
+                GameManager.manager.fashionUI.transform.SetSiblingIndex(3);
                 cp.hoverBox.SetActive(true);
                 cp.hoverBox.GetComponent<HoverBox>().UpdateText(cp);
             }               
@@ -239,7 +240,11 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         {
             // hoverbox code in here!
             if(cp.hoverBox != null)
+            {
                 cp.hoverBox.SetActive(false);
+                GameManager.manager.fashionUI.transform.SetSiblingIndex(7);
+            }
+                
         }
         if (this.gameObject.name == "DeckPile" && !grabbed)
         {

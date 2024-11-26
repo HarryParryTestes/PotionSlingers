@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 427fc92928c31468884b9f596ff8bc38, type: 3}
+  m_Name: Nickles
+  m_EditorClassIdentifier: 
+  id: 0
+  cardName: Nickles
+  desc: You may spend up to 4P per turn to deal that much damage to a player
+  image: {fileID: 21300000, guid: 306cefca3e61db24caebcfadaede71d5, type: 3}
+  flipTask: Use over 10P in 1 turn
+  flipped: 0
+  flippedImage: {fileID: 21300000, guid: 2533119a59d38a74e84b317a1560b5db, type: 3}
+  flippedDesc: 'You may spend any amount of P to damage a player that amount spent.
+    Pay 3P: Put "The Blacksnake Pip Sling" into your Holster'
