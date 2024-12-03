@@ -21,6 +21,7 @@ public class SaveData
     public bool canBeFlipped;
     public bool flipped;
     public bool transition;
+    public bool carnivalWin = false;
     public List<string> playerDeck = new List<string>();
     public List<string> playerHolster = new List<string>();
     public List<string> playerFashion = new List<string>();

@@ -71609,7 +71609,7 @@ RectTransform:
   m_GameObject: {fileID: 637142832}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 19.9, y: 7, z: 1}
+  m_LocalScale: {x: 20, y: 7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 805108109}
@@ -118859,7 +118859,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Do 7 damage to win a prize!
+  m_text: Do 7 damage in one throw to win a prize! 2 turns left!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cac496df2b966644aa0013ac461a993c, type: 2}
   m_sharedMaterial: {fileID: 8557940270208330022, guid: cac496df2b966644aa0013ac461a993c, type: 2}
@@ -118886,8 +118886,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 32
+  m_fontSizeBase: 32
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -207123,6 +207123,7 @@ MonoBehaviour:
     canBeFlipped: 0
     flipped: 0
     transition: 0
+    carnivalWin: 0
     playerDeck: []
     playerHolster: []
     playerFashion: []

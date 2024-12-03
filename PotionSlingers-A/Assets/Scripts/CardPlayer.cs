@@ -818,7 +818,7 @@ public class CardPlayer : MonoBehaviour
             GameManager.manager.numTrashed = 2;
             GameManager.manager.trashorDamageMenu.SetActive(true);
             GameManager.manager.updateTrashMarketMenu();
-            return 0;
+            return damage - 2;
             
             // don't do this, this created an infinite loop
             /*

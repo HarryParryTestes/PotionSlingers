@@ -36,6 +36,13 @@ public class SceneTransition : MonoBehaviour
         healthCubes.text = saveData.playerCubes.ToString();
         health.text = saveData.playerHealth.ToString();
 
+        // if you won the carnival game, allow them to pick a hat
+        if (saveData.carnivalWin)
+        {
+            Debug.Log("You won the carnival game! Choose your prize!");
+            treasureMenu.SetActive(true);
+            treasureMenu.GetComponent<TreasureMenu>().chooseHats();
+        }
 
         switch (saveData.stage)
         {

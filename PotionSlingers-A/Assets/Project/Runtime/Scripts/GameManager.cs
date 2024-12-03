@@ -1313,7 +1313,7 @@ public class GameManager : MonoBehaviour
                 carnivalTurns = 2;
                 carnivalUI.SetActive(true);
                 carnivalTargetScore = rng.Next(3, 7);
-                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize! 2 turns left!";
+                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage in one throw to win a prize! 2 turns left!";
                 // change this to Carnival strength game sprite instead of fingas
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Carnival";
@@ -4470,9 +4470,9 @@ public class GameManager : MonoBehaviour
         {
             carnivalTurns--;
             if (carnivalTurns == 1)
-                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize! " + carnivalTurns + " turn left!";
+                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage in one throw to win a prize! " + carnivalTurns + " turn left!";
             else
-                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage to win a prize! " + carnivalTurns + " turns left!";
+                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage in one throw to win a prize! " + carnivalTurns + " turns left!";
 
             if (carnivalTurns == 0)
             {

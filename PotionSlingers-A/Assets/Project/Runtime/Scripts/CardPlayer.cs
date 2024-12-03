@@ -2108,7 +2108,9 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.trashDeckBonus = true;
                 // GameManager.manager.trashDeckMenu.SetActive(true);
                 // GameManager.manager.FadeIn(GameManager.manager.trashDeckMenu);
-                StartCoroutine(DelayedFade(GameManager.manager.trashDeckMenu));
+                // take this out for now I think
+
+                // StartCoroutine(DelayedFade(GameManager.manager.trashDeckMenu));
                 // GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
                 GameManager.manager.trashText.text = "Take a potion from the trash!";
                 GameManager.manager.td.displayTrash();
@@ -3679,6 +3681,16 @@ public class CardPlayer : MonoBehaviour
         targetAnimator.Play("TargetIdle");
     }
 
+    public IEnumerator carnivalWin()
+    {
+        // play bell sfx in here!!!
+        SaveData saveData = SaveSystem.LoadGameData();
+        saveData.carnivalWin = true;
+        SaveSystem.SaveGameData(saveData);
+        yield return new WaitForSeconds(1.5f);
+        GameManager.manager.advanceStage();
+    }
+
     public void subHealth(int damage, string cardQuality = "")
     {
         // If they're dead don't damage them further
@@ -3756,7 +3768,8 @@ public class CardPlayer : MonoBehaviour
             if (damage >= GameManager.manager.carnivalTargetScore)
             {
                 Debug.Log("You won! Make sure you advance the stage in code!");
-                GameManager.manager.advanceStage();
+                // GameManager.manager.advanceStage();
+                StartCoroutine(carnivalWin());
                 return;
             }
         }
