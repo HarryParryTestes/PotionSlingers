@@ -65,6 +65,9 @@ public class GameManager : MonoBehaviour
     public Sprite[] fashionImages;
     public int carnivalTurns = 0;
     public CarnivalSlider carnivalSlider;
+    public GameObject carnivalTarget;
+    public GameObject carnivalHammer;
+    public GameObject carnivalBell;
 
     public List<Card> starterCards;
     public List<Card> starterArtifacts;
@@ -1301,7 +1304,10 @@ public class GameManager : MonoBehaviour
         switch (saveData.currentEnemyName)
         {
             case "Carnival":
-                background.sprite = backgrounds[0];
+                background.sprite = backgrounds[2];
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 60, background.gameObject.transform.position.z);
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 carnivalTurns = 2;
@@ -1318,6 +1324,9 @@ public class GameManager : MonoBehaviour
                 players[2].checkCharacter();
                 // instantiate slider
                 carnivalSlider.gameObject.SetActive(true);
+                carnivalTarget.SetActive(true);
+                carnivalHammer.SetActive(true);
+                carnivalBell.SetActive(true);
                 carnivalSlider.setTargetScore(carnivalTargetScore);
                 players[2].playerHP.SetActive(false);
                 players[2].playerHPCubes.SetActive(false);
@@ -1341,10 +1350,12 @@ public class GameManager : MonoBehaviour
                 players[2].updateHealthUI();
                 players[2].user_id = 1;
 
+                // players[2].playIdle();
+
                 players[1] = players[2];
                 players[2] = players[3];
                 p3.SetActive(false);
-                p4.SetActive(false);
+                p4.SetActive(false);                
                 break;
             case "Fingas":
                 background.sprite = backgrounds[0];

@@ -30,6 +30,8 @@ public class CardPlayer : MonoBehaviour
     public CharacterDisplay character;
     public CanvasGroup canvasGroup;
     public Animator animator;
+    public Animator targetAnimator;
+    public Animator hammerAnimator;
     public bool cubed = false;
     public bool ringBonus;
     public bool doubleRingBonus = false;
@@ -168,6 +170,10 @@ public class CardPlayer : MonoBehaviour
             case "Carnival":
                 Debug.Log("CARNIVAL TIME!!!");
                 animator.enabled = false;
+                this.transform.localScale = new Vector3(32.5f, 16.25f, 16.25f);
+                this.transform.position = new Vector3(this.transform.position.x + 60, this.transform.position.y - 120, this.transform.position.z);
+                this.GetComponent<Image>().raycastPadding = new Vector4(18f, 35f, 32f, 3f);
+                // this.transform.position = new Vector3(60f, -820f, 0);
                 return;
             case "Pluot":
                 Debug.Log("I AM PLUOT");
@@ -301,6 +307,10 @@ public class CardPlayer : MonoBehaviour
             case "Pluot":
                 Debug.Log("I AM PLUOT");
                 isPluot = true;
+                break;
+            case "Carnival":
+                Debug.Log("Carnival game!!!");
+                animator.Play("CarnivalIdle");
                 break;
             case "Bolo":
                 animator.Play("BoloIdle");
@@ -3658,6 +3668,17 @@ public class CardPlayer : MonoBehaviour
         return Math.Max(0, damage - tempShields);
     }
 
+    public IEnumerator setDamage(int damage)
+    {
+        // yield return new WaitForSeconds(hammerAnimator.GetCurrentAnimatorStateInfo(0).length); 
+        yield return new WaitForSeconds(0.4f);
+        GameManager.manager.carnivalSlider.setDamage(damage);
+        // play other animations for target and hammer
+        yield return new WaitForSeconds(2f);
+        hammerAnimator.Play("HammerIdle");
+        targetAnimator.Play("TargetIdle");
+    }
+
     public void subHealth(int damage, string cardQuality = "")
     {
         // If they're dead don't damage them further
@@ -3692,7 +3713,23 @@ public class CardPlayer : MonoBehaviour
         {
             hp += damage;
             Debug.Log("Implement carnival game slider animation here!!!");
-            GameManager.manager.carnivalSlider.setDamage(damage);
+            if(hammerAnimator != null)
+            {
+                Debug.Log("Hammer playing!");
+                hammerAnimator.Play("HammerIdle");
+                hammerAnimator.Play("HammerDown");
+            }
+                
+            if (targetAnimator != null)
+            {
+                Debug.Log("Target playing!");
+                targetAnimator.Play("TargetIdle");
+                targetAnimator.Play("TargetHit");
+            }
+                
+            // GameManager.manager.carnivalSlider.setDamage(damage);
+            // Invoke("setDamage", hammerAnimator.GetCurrentAnimatorStateInfo(0).length);
+            StartCoroutine(setDamage(damage));
             // GameManager.manager.slider.value = damage;
 
             if (damageSign != null && damageAmount != null)
@@ -3719,7 +3756,7 @@ public class CardPlayer : MonoBehaviour
             if (damage >= GameManager.manager.carnivalTargetScore)
             {
                 Debug.Log("You won! Make sure you advance the stage in code!");
-                // GameManager.manager.advanceStage();
+                GameManager.manager.advanceStage();
                 return;
             }
         }
