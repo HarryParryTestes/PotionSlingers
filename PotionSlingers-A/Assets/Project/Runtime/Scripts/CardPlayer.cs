@@ -264,6 +264,14 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Fingas!!!");
                 // this.transform.localScale = new Vector3(16.5f, 11f, 0);
                 break;
+            case "Dippit":
+                Debug.Log("Dippit!!!");
+                // this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                break;
+            case "Maskid":
+                Debug.Log("Maskid!!!");
+                // this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                break;
 
             default:
                 Debug.Log("Failed to set any bools");
@@ -360,6 +368,16 @@ public class CardPlayer : MonoBehaviour
                 animator.Play("SingeIdle");
                 break;
 
+            case "Dippit":
+                Debug.Log("Dippit animation");
+                animator.Play("Dippit_Idle");
+                break;
+
+            case "Maskid":
+                Debug.Log("Maskid animation");
+                animator.Play("Maskid_idle");
+                break;
+
             default:
                 Debug.Log("Failed to set any bools");
                 break;
@@ -421,6 +439,15 @@ public class CardPlayer : MonoBehaviour
             case "Carnival":
                 Debug.Log("Carnival hit animation should run here!");
                 // animator.Play("SingeHit");
+                break;
+            case "Dippit":
+                Debug.Log("Dippit hit animation");
+                animator.Play("Dippit_Hit");
+                break;
+
+            case "Maskid":
+                Debug.Log("Maskid hit animation");
+                animator.Play("Maskid_Hit");
                 break;
 
             default:
@@ -3673,7 +3700,7 @@ public class CardPlayer : MonoBehaviour
     public IEnumerator setDamage(int damage)
     {
         // yield return new WaitForSeconds(hammerAnimator.GetCurrentAnimatorStateInfo(0).length); 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.15f);
         GameManager.manager.carnivalSlider.setDamage(damage);
         // play other animations for target and hammer
         yield return new WaitForSeconds(2f);

@@ -367,6 +367,45 @@ public class ComputerPlayer : CardPlayer
             GameManager.manager.Invoke("endTurn", 2f);
             return;
         }
+
+        if (this.gameObject.GetComponent<CardPlayer>().name == "Dippit")
+        {
+            this.gameObject.GetComponent<CardPlayer>().animator.Play("Dippit_attack");
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_turn");
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_snap");
+            // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
+            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            // basic enemy that does 1-3 damage per turn
+            damage = rng.Next(1, 4);
+
+            // make the player take damage without using throwing functions
+
+            GameManager.manager.players[0].subHealth(damage);
+            GameManager.manager.sendMessage("Took " + damage + " damage!");
+
+            GameManager.manager.Invoke("endTurn", 2f);
+            return;
+        }
+
+        if (this.gameObject.GetComponent<CardPlayer>().name == "Maskid")
+        {
+            this.gameObject.GetComponent<CardPlayer>().animator.Play("Maskid_Attack");
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_turn");
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_snap");
+            // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
+            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            // basic enemy that does 1-3 damage per turn
+            damage = rng.Next(1, 4);
+
+            // make the player take damage without using throwing functions
+
+            GameManager.manager.players[0].subHealth(damage);
+            GameManager.manager.sendMessage("Took " + damage + " damage!");
+
+            GameManager.manager.Invoke("endTurn", 2f);
+            return;
+        }
+
         if (this.gameObject.GetComponent<CardPlayer>().name == "Fingas")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("Fingas_attack");

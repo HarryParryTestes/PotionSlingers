@@ -109,6 +109,12 @@ namespace Map
                 case "Bag o' Snakes":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
+                case "Dippit":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
+                case "Maskid":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
                 case "Bag o' Snakes+":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;

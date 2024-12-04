@@ -572,6 +572,14 @@ public class GameManager : MonoBehaviour
                 saveData.opp3Health = players[3].hp;
                 saveData.opp3Cubes = players[3].hpCubes;
                 break;
+            case "Dippit":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Maskid":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
         }
     }
 
@@ -1382,6 +1390,74 @@ public class GameManager : MonoBehaviour
                     players[2].hp = 10;
                     saveData.opp1Cubes = 1;
                     saveData.opp1Health = 10;
+                }
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Dippit":
+                background.sprite = backgrounds[0];
+                // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Dippit";
+                players[2].name = "Dippit";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Dippit");
+                players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
+
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 7;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 7;
+                }
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Maskid":
+                background.sprite = backgrounds[0];
+                // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Maskid";
+                players[2].name = "Maskid";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Maskid");
+                players[2].checkCharacter();
+                players[2].holster.gameObject.SetActive(false);
+                players[2].deck.gameObject.SetActive(false);
+
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 7;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 7;
                 }
                 players[2].updateHealthUI();
                 players[2].user_id = 1;
@@ -2295,6 +2371,15 @@ public class GameManager : MonoBehaviour
                     try
                     {
                         Debug.Log(saveData.playerHolster[i]);
+                    }
+                    catch (ArgumentException e)
+                    {
+                        break;
+                    }
+
+                    try
+                    {
+                        Debug.Log(saveData.cardStatuses[i]);
                     }
                     catch (ArgumentException e)
                     {
