@@ -1367,6 +1367,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Fingas":
                 background.sprite = backgrounds[3];
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1401,6 +1404,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Dippit":
                 background.sprite = backgrounds[3];
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1435,6 +1441,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Maskid":
                 background.sprite = backgrounds[3];
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1469,6 +1478,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Fingas+":
                 background.sprite = backgrounds[4];
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 numPlayers = 3;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -1522,6 +1534,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Bag o' Snakes+":
                 background.sprite = backgrounds[4];
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 numPlayers = 3;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -1609,7 +1624,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Bag o' Snakes":
                 background.sprite = backgrounds[3];
-                background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Bag o' Snakes";
@@ -1643,7 +1660,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk":
                 background.sprite = backgrounds[4];
-                background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Crowpunk";
@@ -1707,6 +1726,9 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk+":
                 background.sprite = backgrounds[4];
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 numPlayers = 4;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
