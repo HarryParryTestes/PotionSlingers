@@ -42,6 +42,11 @@ public class HoverBox : MonoBehaviour
         {
             textBox.text = "Your vessels do +2 damage.";
         }
+
+        if(card.cardName == "WitchSpecula")
+        {
+            textBox.text = "At the end of your turn, heal up to 3HP for each unspent pip.";
+        }
     }
 
     public void UpdateText(CardPlayer cp)
@@ -55,6 +60,12 @@ public class HoverBox : MonoBehaviour
         {
             textBox.text = "Attacks:\nDeal 1-4 damage";
         }
+
+        if (cp.charName == "Dippit" || cp.charName == "Maskid" || cp.charName == "Dippit+" || cp.charName == "Maskid+")
+        {
+            textBox.text = "Attacks:\nDeal 1-3 damage";
+        }
+
         // update this with the characters
         if (cp.charName == "Singelotte")
         {   

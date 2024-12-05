@@ -225,6 +225,13 @@ public class ComputerPlayer : CardPlayer
         return holsterNum;
     }
 
+    public IEnumerator subHealth(int damage)
+    {
+        yield return new WaitForSeconds(3f);
+        GameManager.manager.players[0].subHealth(damage);
+        GameManager.manager.sendMessage("Took " + damage + " damage!");
+    }
+
     public void storyModeTurn()
     {
         Debug.Log("STORY MODE LOGIC");
@@ -371,7 +378,7 @@ public class ComputerPlayer : CardPlayer
         if (this.gameObject.GetComponent<CardPlayer>().name == "Dippit")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("Dippit_attack");
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_turn");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Dippit_Attack");
             // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_snap");
             // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
@@ -380,18 +387,17 @@ public class ComputerPlayer : CardPlayer
 
             // make the player take damage without using throwing functions
 
-            GameManager.manager.players[0].subHealth(damage);
-            GameManager.manager.sendMessage("Took " + damage + " damage!");
+            // GameManager.manager.players[0].subHealth(damage);
+            StartCoroutine(subHealth(damage));
 
-            GameManager.manager.Invoke("endTurn", 2f);
+            GameManager.manager.Invoke("endTurn", 4f);
             return;
         }
 
         if (this.gameObject.GetComponent<CardPlayer>().name == "Maskid")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("Maskid_Attack");
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_turn");
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_snap");
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Maskid_Attack");
             // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
             // basic enemy that does 1-3 damage per turn

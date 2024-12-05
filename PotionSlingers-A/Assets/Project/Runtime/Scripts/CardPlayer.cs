@@ -266,11 +266,14 @@ public class CardPlayer : MonoBehaviour
                 break;
             case "Dippit":
                 Debug.Log("Dippit!!!");
-                // this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                this.transform.localScale = new Vector3(15f, 15f, 0);
+                this.GetComponent<Image>().raycastPadding = new Vector4(26f, 29f, 26f, 30f);
                 break;
             case "Maskid":
                 Debug.Log("Maskid!!!");
-                // this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                this.transform.position = new Vector3(this.transform.position.x + 50, this.transform.position.y, this.transform.position.z);
+                this.transform.localScale = new Vector3(12f, 12f, 0);
+                this.GetComponent<Image>().raycastPadding = new Vector4(15f, 18f, 17f, 7f);
                 break;
 
             default:
@@ -3714,8 +3717,17 @@ public class CardPlayer : MonoBehaviour
         SaveData saveData = SaveSystem.LoadGameData();
         saveData.carnivalWin = true;
         SaveSystem.SaveGameData(saveData);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(0.5f);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Bell");
+        yield return new WaitForSeconds(1f);
         GameManager.manager.advanceStage();
+    }
+
+    public IEnumerator hammerSound()
+    {
+        yield return new WaitForSeconds(0.15f);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Hammer");
+
     }
 
     public void subHealth(int damage, string cardQuality = "")
@@ -3757,6 +3769,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Hammer playing!");
                 hammerAnimator.Play("HammerIdle");
                 hammerAnimator.Play("HammerDown");
+                StartCoroutine(hammerSound());
             }
                 
             if (targetAnimator != null)
@@ -3764,6 +3777,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Target playing!");
                 targetAnimator.Play("TargetIdle");
                 targetAnimator.Play("TargetHit");
+                // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_GearCrank");
             }
                 
             // GameManager.manager.carnivalSlider.setDamage(damage);

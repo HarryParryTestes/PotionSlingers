@@ -1366,7 +1366,7 @@ public class GameManager : MonoBehaviour
                 p4.SetActive(false);                
                 break;
             case "Fingas":
-                background.sprite = backgrounds[0];
+                background.sprite = backgrounds[3];
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1400,7 +1400,7 @@ public class GameManager : MonoBehaviour
                 p4.SetActive(false);
                 break;
             case "Dippit":
-                background.sprite = backgrounds[0];
+                background.sprite = backgrounds[3];
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1434,7 +1434,7 @@ public class GameManager : MonoBehaviour
                 p4.SetActive(false);
                 break;
             case "Maskid":
-                background.sprite = backgrounds[0];
+                background.sprite = backgrounds[3];
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1468,6 +1468,7 @@ public class GameManager : MonoBehaviour
                 p4.SetActive(false);
                 break;
             case "Fingas+":
+                background.sprite = backgrounds[4];
                 numPlayers = 3;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -1520,6 +1521,7 @@ public class GameManager : MonoBehaviour
                 p4.SetActive(false);
                 break;
             case "Bag o' Snakes+":
+                background.sprite = backgrounds[4];
                 numPlayers = 3;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -1606,7 +1608,7 @@ public class GameManager : MonoBehaviour
                 p4.SetActive(false);
                 break;
             case "Bag o' Snakes":
-                background.sprite = backgrounds[0];
+                background.sprite = backgrounds[3];
                 background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1640,7 +1642,7 @@ public class GameManager : MonoBehaviour
                 p4.SetActive(false);
                 break;
             case "Crowpunk":
-                background.sprite = backgrounds[0];
+                background.sprite = backgrounds[4];
                 background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1704,6 +1706,7 @@ public class GameManager : MonoBehaviour
                 p4.SetActive(false);
                 break;
             case "Crowpunk+":
+                background.sprite = backgrounds[4];
                 numPlayers = 4;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -1778,178 +1781,7 @@ public class GameManager : MonoBehaviour
                 }
                 players[3].updateHealthUI();
                 break;
-        }
-        /*
-        if (saveData.stage == 3)
-        {
-            numPlayers = 4;
-            // Fingas is stage 1 enemy
-            players[1].gameObject.AddComponent<ComputerPlayer>();
-            players[1].charName = "Fingas";
-            players[1].name = "Fingas";
-            playerLeftName.text = players[1].charName;
-            players[1].character.onCharacterClick("Fingas");
-            players[1].checkCharacter();
-            players[1].hpCubes = 1;
-            players[1].hp = 10;
-            if (saveData.savedGame && !saveData.newStage)
-            {
-                players[1].hpCubes = saveData.opp1Cubes;
-                players[1].hp = saveData.opp1Health;
-                players[1].hBar.image.fillAmount = 0;
-            }
-            else
-            {
-                players[1].hpCubes = 1;
-                players[1].hp = 10;
-            }
-
-            players[1].updateHealthUI();
-
-            // Crow Punk is stage 1 enemy
-            players[2].gameObject.AddComponent<ComputerPlayer>();
-            players[2].charName = "CrowPunk";
-            players[2].name = "CrowPunk";
-            playerTopName.text = players[2].charName;
-            players[2].character.onCharacterClick("CrowPunk");
-            players[2].checkCharacter();
-            players[2].hpCubes = 1;
-            players[2].hp = 10;
-            if (saveData.savedGame && !saveData.newStage)
-            {
-                players[2].hpCubes = saveData.opp2Cubes;
-                players[2].hp = saveData.opp2Health;
-                players[2].hBar.image.fillAmount = 0;
-            }
-            else
-            {
-                players[2].hpCubes = 1;
-                players[2].hp = 10;
-            }
-            players[2].updateHealthUI();
-
-            // Fingas is stage 1 enemy
-            players[3].gameObject.AddComponent<ComputerPlayer>();
-            players[3].charName = "Fingas";
-            players[3].name = "Fingas";
-            playerRightName.text = players[3].charName;
-            players[3].character.onCharacterClick("Fingas");
-            players[3].checkCharacter();
-            players[3].hpCubes = 1;
-            players[3].hp = 10;
-            if (saveData.savedGame && !saveData.newStage)
-            {
-                players[3].hpCubes = saveData.opp3Cubes;
-                players[3].hp = saveData.opp3Health;
-                players[3].hBar.image.fillAmount = 0;
-            }
-            else
-            {
-                players[3].hpCubes = 1;
-                players[3].hp = 10;
-            }
-            players[3].updateHealthUI();
-        }
-        else if (saveData.stage == 1)
-        {
-            background.sprite = backgrounds[0];
-            background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
-            numPlayers = 2;
-            players[2].gameObject.AddComponent<ComputerPlayer>();
-            players[2].charName = "Bag o' Snakes";
-            players[2].name = "Bag o' Snakes";
-            playerTopName.text = players[2].charName;
-            players[2].character.onCharacterClick("Bag o' Snakes");
-            players[2].checkCharacter();
-
-            if (saveData.savedGame)
-            {
-                players[2].hpCubes = saveData.opp1Cubes;
-                players[2].hp = saveData.opp1Health;
-                players[2].hBar.image.fillAmount = 0;
-            }
-            else
-            {
-                players[2].hpCubes = 1;
-                players[2].hp = 10;
-                saveData.opp1Cubes = 1;
-                saveData.opp1Health = 10;
-            }
-            players[2].updateHealthUI();
-            players[2].user_id = 1;
-
-            players[1] = players[2];
-            players[2] = players[3];
-            p3.SetActive(false);
-            p4.SetActive(false);
-        }
-        else if (saveData.stage == 2)
-        {
-            // background.sprite = backgrounds[0];
-            // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
-            numPlayers = 2;
-            players[2].gameObject.AddComponent<ComputerPlayer>();
-            players[2].charName = "Saltimbocca";
-            players[2].name = "Saltimbocca";
-            playerTopName.text = players[2].charName;
-            players[2].character.onCharacterClick("Saltimbocca");
-            players[2].checkCharacter();
-            if (saveData.savedGame && !saveData.newStage)
-            {
-                players[2].hpCubes = saveData.opp1Cubes;
-                players[2].hp = saveData.opp1Health;
-                players[2].hBar.image.fillAmount = 0;
-            }
-            else
-            {
-                players[2].hpCubes = 1;
-                players[2].hp = 10;
-                saveData.opp1Cubes = 1;
-                saveData.opp1Health = 10;
-            }
-            players[2].hpCubes = 1;
-            players[2].updateHealthUI();
-            players[2].user_id = 1;
-
-            players[1] = players[2];
-            players[2] = players[3];
-            p3.SetActive(false);
-            p4.SetActive(false);
-        }
-        else if (saveData.stage == 4)
-        {
-            background.sprite = backgrounds[1];
-            numPlayers = 2;
-            players[2].gameObject.AddComponent<ComputerPlayer>();
-            players[2].charName = "Singelotte";
-            players[2].name = "Singelotte";
-            playerTopName.text = players[2].charName;
-            players[2].character.onCharacterClick("Singelotte");
-            players[2].checkCharacter();
-            if (saveData.savedGame && !saveData.newStage)
-            {
-                players[2].hpCubes = saveData.opp1Cubes;
-                players[2].hp = saveData.opp1Health;
-                players[2].hBar.image.fillAmount = 0;
-            }
-            else
-            {
-                players[2].hpCubes = 1;
-                players[2].hp = 33;
-                saveData.opp1Cubes = 1;
-                saveData.opp1Health = 33;
-            }
-
-
-            players[2].updateHealthUI();
-            players[2].user_id = 1;
-
-            players[1] = players[2];
-            players[2] = players[3];
-            p3.SetActive(false);
-            p4.SetActive(false);
-        }
-        */
+        }       
     }
 
     public void resetDurability()
@@ -2440,6 +2272,7 @@ public class GameManager : MonoBehaviour
                         {
                             players[0].holster.cardList[i].updateCard(card);
                             // add durability here
+                            players[0].holster.cardList[i].durability = saveData.cardDurabilities[i];
                         }
                     }
                 }
