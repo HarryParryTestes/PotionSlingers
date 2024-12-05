@@ -446,11 +446,13 @@ public class CardPlayer : MonoBehaviour
             case "Dippit":
                 Debug.Log("Dippit hit animation");
                 animator.Play("Dippit_Hit");
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Dippit_Hit");
                 break;
 
             case "Maskid":
                 Debug.Log("Maskid hit animation");
                 animator.Play("Maskid_Hit");
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Maskid_Hit");
                 break;
 
             default:

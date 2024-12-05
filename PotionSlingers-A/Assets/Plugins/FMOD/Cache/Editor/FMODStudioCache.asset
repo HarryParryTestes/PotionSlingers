@@ -347,7 +347,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: 4855233979835646208}
+  - {fileID: -2220943603191370304}
   MinDistance: 0
   MaxDistance: 0
   Length: 86454
@@ -386,7 +386,7 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638689212437137983
+  lastModified: 638689039248078886
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -586,6 +586,26 @@ MonoBehaviour:
   ID:
     data1: 321755867
     data2: 3344260982
+  Exists: 1
+--- !u!114 &-2220943603191370304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BGM_StoryMode/Story Music Select
+  m_EditorClassIdentifier: 
+  Name: Story Music Select
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
   Exists: 1
 --- !u!114 &-1478650980266006780
 MonoBehaviour:
@@ -794,7 +814,7 @@ MonoBehaviour:
   - {fileID: 7030555741822606184}
   StringsBanks:
   - {fileID: -4054006693100217806}
-  stringsBankWriteTime: 638689212437137983
+  stringsBankWriteTime: 638689039248078886
   cacheVersion: 6
 --- !u!114 &57260157274554455
 MonoBehaviour:
@@ -1314,7 +1334,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &5460202302076344649
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1553,7 +1573,7 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638689212437103110
+  lastModified: 638689039248078886
   LoadResult: 0
   FileSizes: []
   Exists: 1
