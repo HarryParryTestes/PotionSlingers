@@ -26,7 +26,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     private Vector3 cachedScale;
     public Vector2 originalPosition;
     private Vector3 startPoint;
-    public Vector3 cardRotation; 
+    public Vector3 cardRotation;
     public RectTransform rectTransform;
     public CanvasGroup canvasGroup;
     public Transform parentAfterDrag;
@@ -111,7 +111,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 default:
                     break;
             }
-        } else if (Screen.width == 3840)
+        }
+        else if (Screen.width == 3840)
         {
             switch (gameObject.name)
             {
@@ -199,6 +200,50 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                     break;
             }
         }
+        else if (Screen.width == 1280)
+        {
+            switch (gameObject.name)
+            {
+                case "Card1Display":
+                    originalPosition = new Vector3(334.5f, -1.1f, 0);
+                    break;
+                case "Card2Display":
+                    originalPosition = new Vector3(536.5f, 42f, 0);
+                    break;
+                case "Card3Display":
+                    originalPosition = new Vector3(740.5f, 42f, 0);
+                    break;
+                case "Card4Display":
+                    originalPosition = new Vector3(943.5f, -1.1f, 0);
+                    break;
+                case "CardDisplay (Potion1)":
+                    originalPosition = new Vector3(500f, 560f, 0);
+                    break;
+                case "CardDisplay (Potion2)":
+                    originalPosition = new Vector3(645f, 560f, 0);
+                    break;
+                case "CardDisplay (Potion3)":
+                    originalPosition = new Vector3(785f, 560f, 0);
+                    break;
+                case "CardDisplay (Potion4)":
+                    originalPosition = new Vector3(930f, 560f, 0);
+                    break;
+                case "CardDisplay (Special1)":
+                    originalPosition = new Vector3(500f, 356f, 0);
+                    break;
+                case "CardDisplay (Special2)":
+                    originalPosition = new Vector3(645f, 356f, 0);
+                    break;
+                case "CardDisplay (Special3)":
+                    originalPosition = new Vector3(785f, 356f, 0);
+                    break;
+                case "CardDisplay (Special4)":
+                    originalPosition = new Vector3(930f, 356f, 0);
+                    break;
+                default:
+                    break;
+            }
+        }
 
     }
 
@@ -218,8 +263,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         {
             // TODO: fix this so that the position changes depending on whether or not the market is selected or not
             originalPosition = transform.position + new Vector3(0, 647.5f, 0);
-        }       
-        
+        }
+
         canvasGroup = GetComponent<CanvasGroup>();
         image = GetComponent<Image>();
         cardRotation = rectTransform.rotation.eulerAngles;
@@ -319,7 +364,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 Destroy(obj2, 0.3f);
             }
         }
-        
+
     }
 
     public void OnPointerClick(PointerEventData pointerEventData)
@@ -486,13 +531,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             if (!market)
             {
                 transform.DOScale(2.15f, 0.5f).SetId(gameObject.name);
-            } else if(GameManager.manager.marketSelected)
+            }
+            else if (GameManager.manager.marketSelected)
             {
                 transform.DOScale(4f, 0.5f).SetId(gameObject.name);
                 transform.DOMove(pos, 0.5f).SetId(gameObject.name);
                 return;
             }
-            
+
             transform.DOMove(pos, 0.5f).SetId(gameObject.name);
 
             if (button != null)
@@ -504,14 +550,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             }
 
             // check for Bottle Rocket card here and Instantiate button to pay 3P
-            if (GetComponent<CardDisplay>().card.cardName == "BottleRocket" && !market && !loaded 
+            if (GetComponent<CardDisplay>().card.cardName == "BottleRocket" && !market && !loaded
                 && !GameManager.manager.players[GameManager.manager.myPlayerIndex].bottleRocketBonus &&
                 !GameManager.manager.rocketBonusUsed)
             {
                 Debug.Log("Bottle Rocket Button!!!");
                 // instantiate the button
                 if (button != null)
-                    Destroy(button);               
+                    Destroy(button);
 
                 // new Vector3(350f * GameManager.manager.widthRatio, 100f * GameManager.manager.heightRatio, 0)
                 button = Instantiate(GameManager.manager.payButton,
@@ -562,13 +608,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 if (gameObject.name == "Card1Display")
                 {
                     button.transform.DOMove(pos + new Vector3(375f * GameManager.manager.widthRatio, 0, 0), 0.3f);
-                } else if (gameObject.name == "Card4Display")
+                }
+                else if (gameObject.name == "Card4Display")
                 {
                     button.transform.DOMove(pos + new Vector3(550f * GameManager.manager.widthRatio, 0, 0), 0.3f);
-                } else if (gameObject.name == "Card3Display")
+                }
+                else if (gameObject.name == "Card3Display")
                 {
                     button.transform.DOMove(pos + new Vector3(475f * GameManager.manager.widthRatio, 0, 0), 0.3f);
-                } else
+                }
+                else
                     button.transform.DOMove(pos + new Vector3(450f * GameManager.manager.widthRatio, 0, 0), 0.3f);
 
                 // button.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Load";
@@ -579,7 +628,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             {
                 Debug.Log("Artifact durability!!!");
 
-                if(durabilitySign != null)
+                if (durabilitySign != null)
                     Destroy(durabilitySign);
 
                 durabilitySign = Instantiate(GameManager.manager.durabilitySign,
@@ -587,9 +636,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                         this.transform.rotation,
                         this.transform);
 
-                durabilitySign.SetActive(true);               
+                durabilitySign.SetActive(true);
 
-                if(GetComponent<CardDisplay>().durability == 1)
+                if (GetComponent<CardDisplay>().durability == 1)
                     durabilitySign.transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = GetComponent<CardDisplay>().durability.ToString() + " use left";
                 else
                     durabilitySign.transform.GetChild(1).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = GetComponent<CardDisplay>().durability.ToString() + " uses left";
@@ -613,7 +662,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                     durabilitySign.transform.DOMove(pos + new Vector3(-450f * GameManager.manager.widthRatio, 0, 0), 0.3f);
             }
 
-        } else
+        }
+        else
         {
             clicked = false;
             DOTween.Pause(gameObject.name);
@@ -627,7 +677,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 }
                 else
                     GameManager.manager.checkMarketPrice();
-                    // GetComponent<CardDisplay>().whiteCard();
+                // GetComponent<CardDisplay>().whiteCard();
             }
 
             if (market && !GameManager.manager.marketSelected)
@@ -636,7 +686,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
                 // transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear);
                 Vector2 thing = new Vector2(0, 647.5f * GameManager.manager.heightRatio);
-                if(obj != null)
+                if (obj != null)
                 {
                     obj.transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
                     obj.transform.DOScale(1f, 0.3f).SetId(gameObject.name);
@@ -706,7 +756,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             StartCoroutine(SibIndex());
             // transform.SetParent(parentAfterDrag);
         }
-        
+
     }
 
     public void makeInteractable()
@@ -731,10 +781,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         }
         Debug.Log("Sibling index changed");
 
-        if(!market)
+        if (!market)
             transform.DOScale(1f, 0.1f).SetId(gameObject.name);
 
-        if(market && !GameManager.manager.marketSelected)
+        if (market && !GameManager.manager.marketSelected)
         {
             // DOTween.Pause(gameObject.name);
             clicked = false;
@@ -831,7 +881,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // parentAfterDrag = transform.parent;
         // canvasGroup.alpha = 0.5f;
         image.CrossFadeAlpha(0.5f, 0.3f, true);
-        if(canvasGroup != null)
+        if (canvasGroup != null)
             canvasGroup.blocksRaycasts = false;
         GameManager.manager.canvasGroup.blocksRaycasts = false;
         if (transform.parent != transform.root)
@@ -911,10 +961,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             // this.transform.parent.transform.SetSiblingIndex(this.transform.parent.parent.transform.childCount - 1);
             // transform.SetSiblingIndex(transform.childCount - 1); // Sets card 
             // transform.localScale = new Vector3(1.25f, 1.25f, 1.25f);
-            if(!market)
+            if (!market)
                 DOTween.Pause(gameObject.name);
             transform.localScale = new Vector3(1f, 1f, 1f);
-            if(!market)
+            if (!market)
                 transform.DOScale(1.75f, 0.25f).SetId(gameObject.name);
             else
                 transform.DOScale(1.25f, 0.25f).SetId(gameObject.name);
@@ -952,7 +1002,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
     {
         if (!clicked && !grabbed && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
-            
+
             if (!market)
             {
                 // transform.position -= new Vector3(0, 150, 0);
@@ -980,7 +1030,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             }
             */
 
-        }   
+        }
         // StartCoroutine(SibIndex());
         // transform.parent.SetSiblingIndex(parentSiblingIndex);
         /*
@@ -1097,7 +1147,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 vesselCard4.CrossFadeAlpha(1f, 0.3f, true);
             }
         }
-        
+
         canvasGroup.blocksRaycasts = true;
         // GameManager.manager.canvasGroup.blocksRaycasts = true;
         transform.SetParent(parentAfterDrag);

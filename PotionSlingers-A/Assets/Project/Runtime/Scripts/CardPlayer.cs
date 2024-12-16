@@ -182,6 +182,11 @@ public class CardPlayer : MonoBehaviour
             case "Bolo":
                 Debug.Log("I AM BOLO");
                 isBolo = true;
+                if (Screen.width == 1280)
+                {
+                    if (this.gameObject.name == "CharacterCard (Top)")
+                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
+                }
                 break;
             case "Nickles":
                 Debug.Log("I AM NICKLES");
@@ -194,7 +199,13 @@ public class CardPlayer : MonoBehaviour
                 if (this.gameObject.name == "CharacterCard (Left)")
                     this.transform.localScale = new Vector3(2f, 2.6f, 0);
                 if (this.gameObject.name == "CharacterCard (Top)")
+                {
+                    if (Screen.width == 1280)
+                    {
+                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 30, this.transform.position.z);
+                    }
                     this.transform.localScale = new Vector3(7.5f, 10f, 0);
+                }                    
                 if (this.gameObject.name == "CharacterCard (Right)")
                     this.transform.localScale = new Vector3(5.2f, 6.3f, 0);
                 break;
@@ -208,7 +219,13 @@ public class CardPlayer : MonoBehaviour
                 }
 
                 if (this.gameObject.name == "CharacterCard (Top)")
+                {
+                    if (Screen.width == 1280)
+                    {
+                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 30, this.transform.position.z);
+                    }
                     this.transform.localScale = new Vector3(11f, 12.5f, 0);
+                }
                 if (this.gameObject.name == "CharacterCard (Left)")
                 {
                     this.transform.localScale = new Vector3(3f, 3.5f, 0);
@@ -226,7 +243,13 @@ public class CardPlayer : MonoBehaviour
                 }
 
                 if (this.gameObject.name == "CharacterCard (Top)")
+                {
+                    if (Screen.width == 1280 && GameManager.manager.numPlayers != 3)
+                    {
+                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 30, this.transform.position.z);
+                    }
                     this.transform.localScale = new Vector3(9.1f, 12.5f, 0);
+                }                    
                 if (this.gameObject.name == "CharacterCard (Left)")
                 {
                     this.transform.localScale = new Vector3(2.3f, 3.2f, 0);
@@ -249,9 +272,19 @@ public class CardPlayer : MonoBehaviour
             case "Crowpunk":
                 this.transform.localScale = new Vector3(16.5f, 11f, 0);
                 this.GetComponent<Image>().raycastPadding = new Vector4(36f, 2f, 26f, 2f);
+                if (Screen.width == 1280)
+                {
+                    if (this.gameObject.name == "CharacterCard (Top)" && GameManager.manager.numPlayers != 3)
+                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
+                }
                 break;
             case "Bag o' Snakes":
                 Debug.Log("Bag of Snakes!!!");
+                if (Screen.width == 1280)
+                {
+                    if (this.gameObject.name == "CharacterCard (Top)" && GameManager.manager.numPlayers != 3)
+                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
+                }
                 // this.transform.localScale = new Vector3(16.5f, 11f, 0);
                 break;
             case "Singelotte":
@@ -262,18 +295,32 @@ public class CardPlayer : MonoBehaviour
                 break;
             case "Fingas":
                 Debug.Log("Fingas!!!");
+                if (Screen.width == 1280)
+                {
+                    if (this.gameObject.name == "CharacterCard (Top)" && GameManager.manager.numPlayers != 3)
+                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
+                }
                 // this.transform.localScale = new Vector3(16.5f, 11f, 0);
                 break;
             case "Dippit":
                 Debug.Log("Dippit!!!");
                 this.transform.localScale = new Vector3(15f, 15f, 0);
                 this.GetComponent<Image>().raycastPadding = new Vector4(26f, 29f, 26f, 30f);
+                if (Screen.width == 1280)
+                {
+                    if (this.gameObject.name == "CharacterCard (Top)")
+                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
+                }
                 break;
             case "Maskid":
                 Debug.Log("Maskid!!!");
                 this.transform.position = new Vector3(this.transform.position.x + 50, this.transform.position.y, this.transform.position.z);
                 this.transform.localScale = new Vector3(12f, 12f, 0);
                 this.GetComponent<Image>().raycastPadding = new Vector4(15f, 18f, 17f, 7f);
+                if (Screen.width == 1280)
+                {
+                    this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
+                }
                 break;
 
             default:
@@ -953,7 +1000,7 @@ public class CardPlayer : MonoBehaviour
                     cd.aPotion.updateCard(GameManager.manager.starterPotionCards[random]);
                     // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
                 }
-            }            
+            }
         }
 
         // Liquid Cornucopia check
@@ -1374,7 +1421,7 @@ public class CardPlayer : MonoBehaviour
                     GameManager.manager.players[i].character.flipCardToFront();
                 }
             }
-            
+
         }
 
         // Soaked Standard
@@ -1689,9 +1736,9 @@ public class CardPlayer : MonoBehaviour
 
     public void checkHatBonuses()
     {
-        foreach(Card card in fashion)
+        foreach (Card card in fashion)
         {
-            if(card.cardName == "TroutTickler")
+            if (card.cardName == "TroutTickler")
             {
                 Debug.Log("Trout Tickler!!!");
                 pips++;
@@ -1746,10 +1793,10 @@ public class CardPlayer : MonoBehaviour
         var range = Enumerable.Range(0, cp.holster.cardList.Count).Where(i => !exclude.Contains(i));
         int index = rng.Next(0, cp.holster.cardList.Count - exclude.Count);
         int holsterNum = range.ElementAt(index);
-        
+
         cp.holster.cardList[holsterNum].makeSpicy();
 
-        if(!GameManager.manager.spicyExplanation)
+        if (!GameManager.manager.spicyExplanation)
         {
             GameManager.manager.spicyExplanation = true;
             GameManager.manager.dialog.directions.SetActive(true);
@@ -2816,7 +2863,7 @@ public class CardPlayer : MonoBehaviour
         // if you're at full health, set HP to 1 and gain an essence cube
         if (selectedCard.card.cardName == "AioliRamekin")
         {
-            if(hp == maxHp)
+            if (hp == maxHp)
             {
                 hp = 1;
                 hpCubes++;
@@ -2827,7 +2874,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "DecanteredLastGasp")
         {
             // +5 damage if you're less than 4 HP
-            if(hp < 4)
+            if (hp < 4)
             {
                 damage += 5;
             }
@@ -2872,7 +2919,7 @@ public class CardPlayer : MonoBehaviour
                 return damage;
             }
             Debug.Log("Make Droplet UI!!!");
-            
+
         }
 
         if (selectedCard.card.cardName == "Cube of Skeleton Jelly")
@@ -3072,7 +3119,7 @@ public class CardPlayer : MonoBehaviour
                     deck.deckList.RemoveAt(cardNumber);
                     deck.putCardOnTop(card);
                     deck.updateCardSprite();
-                }               
+                }
             }
             else
             {
@@ -3766,14 +3813,14 @@ public class CardPlayer : MonoBehaviour
         {
             hp += damage;
             Debug.Log("Implement carnival game slider animation here!!!");
-            if(hammerAnimator != null)
+            if (hammerAnimator != null)
             {
                 Debug.Log("Hammer playing!");
                 hammerAnimator.Play("HammerIdle");
                 hammerAnimator.Play("HammerDown");
                 StartCoroutine(hammerSound());
             }
-                
+
             if (targetAnimator != null)
             {
                 Debug.Log("Target playing!");
@@ -3781,7 +3828,7 @@ public class CardPlayer : MonoBehaviour
                 targetAnimator.Play("TargetHit");
                 // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_GearCrank");
             }
-                
+
             // GameManager.manager.carnivalSlider.setDamage(damage);
             // Invoke("setDamage", hammerAnimator.GetCurrentAnimatorStateInfo(0).length);
             StartCoroutine(setDamage(damage));

@@ -588,18 +588,18 @@ public class GameManager : MonoBehaviour
         if (!saveData.playerFashion.Any())
             return;
 
-        foreach(string name in saveData.playerFashion)
+        foreach (string name in saveData.playerFashion)
         {
-            foreach(Card card in database.cardList)
+            foreach (Card card in database.cardList)
             {
-                if(card.cardName == name)
+                if (card.cardName == name)
                 {
                     Debug.Log("Fashion found!");
                     players[0].fashion.Add(card);
                     break;
-                }                
+                }
             }
-        }      
+        }
     }
 
     public void handleSavedMarketStatuses()
@@ -1027,7 +1027,7 @@ public class GameManager : MonoBehaviour
                 return;
             }
 
-            if(numPlayers == 2 && players[1].dead)
+            if (numPlayers == 2 && players[1].dead)
             {
                 Debug.Log("Setting up new endless mode enemy");
                 defeatedEnemies++;
@@ -1313,9 +1313,12 @@ public class GameManager : MonoBehaviour
         {
             case "Carnival":
                 background.sprite = backgrounds[2];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 60, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 60, background.gameObject.transform.position.z);
+                }
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 carnivalTurns = 2;
@@ -1332,6 +1335,11 @@ public class GameManager : MonoBehaviour
                 players[2].checkCharacter();
                 // instantiate slider
                 carnivalSlider.gameObject.SetActive(true);
+                if(Screen.width == 1280)
+                {
+                    carnivalSlider.gameObject.transform.position = new Vector3(carnivalSlider.gameObject.transform.position.x + 20,
+                        carnivalSlider.gameObject.transform.position.y - 35, carnivalSlider.gameObject.transform.position.z);
+                }
                 carnivalTarget.SetActive(true);
                 carnivalHammer.SetActive(true);
                 carnivalBell.SetActive(true);
@@ -1363,13 +1371,16 @@ public class GameManager : MonoBehaviour
                 players[1] = players[2];
                 players[2] = players[3];
                 p3.SetActive(false);
-                p4.SetActive(false);                
+                p4.SetActive(false);
                 break;
             case "Fingas":
                 background.sprite = backgrounds[3];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                }
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1404,9 +1415,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Dippit":
                 background.sprite = backgrounds[3];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                }
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1441,9 +1455,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Maskid":
                 background.sprite = backgrounds[3];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                }
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1478,9 +1495,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Fingas+":
                 background.sprite = backgrounds[4];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                }
                 numPlayers = 3;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -1534,9 +1554,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Bag o' Snakes+":
                 background.sprite = backgrounds[4];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                }
                 numPlayers = 3;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -1624,9 +1647,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Bag o' Snakes":
                 background.sprite = backgrounds[3];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                }
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Bag o' Snakes";
@@ -1660,9 +1686,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk":
                 background.sprite = backgrounds[4];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                }
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Crowpunk";
@@ -1726,9 +1755,12 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk+":
                 background.sprite = backgrounds[4];
-                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                    background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                if (Screen.width == 1920)
+                {
+                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
+                }
                 numPlayers = 4;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -1803,7 +1835,7 @@ public class GameManager : MonoBehaviour
                 }
                 players[3].updateHealthUI();
                 break;
-        }       
+        }
     }
 
     public void resetDurability()
@@ -2252,7 +2284,7 @@ public class GameManager : MonoBehaviour
                     }
 
                     foreach (Card card in database.cardList)
-                    {                       
+                    {
                         if (card.cardName.Contains("dummy"))
                         {
                             // update with placeholder
@@ -2358,7 +2390,7 @@ public class GameManager : MonoBehaviour
                 // playerBottomName.text = players[0].name;
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
                 players[0].name = playerBottomName.text;
-                players[0].hpCubes = saveData.playerCubes;              
+                players[0].hpCubes = saveData.playerCubes;
                 players[0].hp = saveData.playerHealth;
                 players[0].maxHp = saveData.maxHealth;
                 players[0].pipCount = saveData.pipCount;
@@ -2404,9 +2436,10 @@ public class GameManager : MonoBehaviour
                         players[1].gameObject.transform.parent.parent.position = new Vector3(150f, 1180f, 0);
                         players[2].gameObject.transform.parent.position = new Vector3(1625f, 1305f, 0);
                     }
-                    else if (Screen.width == 3840)
+                    else if (Screen.width == 1280)
                     {
-
+                        players[1].gameObject.transform.parent.parent.position = new Vector3(200f, 590f, 0);
+                        players[2].gameObject.transform.parent.position = new Vector3(800f, 600f, 0);
                     }
                     p4.SetActive(false);
                 }
@@ -2680,6 +2713,11 @@ public class GameManager : MonoBehaviour
             playerTopName.text = "BOLO";
             players[2].hpCubes = 1;
             players[2].updateHealthUI();
+            if(Screen.width == 1280)
+            {
+                players[2].gameObject.transform.parent.position = new Vector3(players[2].gameObject.transform.parent.position.x,
+                players[2].gameObject.transform.parent.position.y - 60, 0);
+            }            
             p3.SetActive(false);
             p4.SetActive(false);
             return;
@@ -3088,7 +3126,7 @@ public class GameManager : MonoBehaviour
         bool jester = false;
 
         foreach (CardDisplay cds in player.holster.cardList)
-        {            
+        {
             if (cds.card.cardName == "JesterRing")
             {
                 Debug.Log("Jester Ring!!!");
@@ -3131,12 +3169,13 @@ public class GameManager : MonoBehaviour
         {
             status = player.deck.statuses[player.deck.statuses.Count - 1];
             card = player.deck.popCardOffBottom();
-        } else
+        }
+        else
         {
-            if(player.deck.statuses[0] != null)
+            if (player.deck.statuses[0] != null)
                 status = player.deck.statuses[0];
             card = player.deck.popCard();
-        }      
+        }
 
         if (card.cardName == "EarlyBirdSpecial")
         {
@@ -3144,7 +3183,7 @@ public class GameManager : MonoBehaviour
         }
 
         // When this enters your Holster, deal 2 damage to a random opponent
-        if(card.cardName == "SoakedStandard")
+        if (card.cardName == "SoakedStandard")
         {
             Debug.Log("Soaked Standard Bonus");
             int rand = rng.Next(1, numPlayers);
@@ -3214,7 +3253,7 @@ public class GameManager : MonoBehaviour
                 Debug.Log("BUTT BUTT BUTT!!!");
                 foreach (CardDisplay cd in player.holster.cardList)
                 {
-                    if(cd.card.cardType == "Artifact" && cd.aPotion.card.cardName == "placeholder")
+                    if (cd.card.cardType == "Artifact" && cd.aPotion.card.cardName == "placeholder")
                     {
                         Debug.Log("Artifact found!!!");
                         butt = player.deck.popCard();
@@ -3231,7 +3270,7 @@ public class GameManager : MonoBehaviour
                     {
                         Debug.Log("Vessel found!!!");
                         butt = player.deck.popCard();
-                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);                       
+                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
                         cd.vesselSlot1.SetActive(true);
                         cd.vesselSlot2.SetActive(false);
                         cd.vesselSlot3.SetActive(false);
@@ -3291,9 +3330,9 @@ public class GameManager : MonoBehaviour
                         checkShield(player);
                         break;
                     }
-                }                
+                }
             }
-        }       
+        }
     }
 
     public IEnumerator HolsterFill(CardPlayer player)
@@ -3337,7 +3376,7 @@ public class GameManager : MonoBehaviour
 
                     yield return new WaitForSeconds(0.25f);
                 }
-            } 
+            }
         }
         yield return new WaitForSeconds(0.3f);
         // check to see if this changes anything!!!
@@ -3862,7 +3901,7 @@ public class GameManager : MonoBehaviour
     {
         moveToDeck = true;
         opponentHolsterMenu.SetActive(true);
-        displayOpponentHolster(tempPlayer);               
+        displayOpponentHolster(tempPlayer);
     }
 
     public void bottomMove()
@@ -4937,7 +4976,7 @@ public class GameManager : MonoBehaviour
 
             foreach (CardDisplay cdis in players[myPlayerIndex].holster.cardList)
             {
-                if(cdis.card.cardName == "PocketDumpster")
+                if (cdis.card.cardName == "PocketDumpster")
                 {
                     whatever = cdis;
                     break;
@@ -5393,7 +5432,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Middle person");
             yield return new WaitForSeconds(1f);
             // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            throwingHand.transform.DOMoveX(1000f, 1f);
+            if (Screen.width == 1280)
+                throwingHand.transform.DOMoveX(600f, 1f);
+            else
+                throwingHand.transform.DOMoveX(1000f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
             // cp.subHealth(damage, cardQuality);
@@ -5405,7 +5447,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Right person");
             yield return new WaitForSeconds(1f);
             // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            throwingHand.transform.DOMoveX(1470f, 1f);
+            if (Screen.width == 1280)
+                throwingHand.transform.DOMoveX(960f, 1f);
+            else
+                throwingHand.transform.DOMoveX(1470f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
             // cp.subHealth(damage, cardQuality);
@@ -5418,7 +5463,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Middle person");
             yield return new WaitForSeconds(1f);
             // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            throwingHand.transform.DOMoveX(1000f, 1f);
+            if (Screen.width == 1280)
+                throwingHand.transform.DOMoveX(600f, 1f);
+            else
+                throwingHand.transform.DOMoveX(1000f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
@@ -5427,7 +5475,10 @@ public class GameManager : MonoBehaviour
             Debug.Log("Left person");
             yield return new WaitForSeconds(1f);
             // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            throwingHand.transform.DOMoveX(470f, 1f);
+            if (Screen.width == 1280)
+                throwingHand.transform.DOMoveX(300f, 1f);
+            else
+                throwingHand.transform.DOMoveX(470f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
@@ -5435,8 +5486,11 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Right person");
             yield return new WaitForSeconds(1f);
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            throwingHand.transform.DOMoveX(1470f, 1f);
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            if (Screen.width == 1280)
+                throwingHand.transform.DOMoveX(960f, 1f);
+            else
+                throwingHand.transform.DOMoveX(1470f, 1f);
             yield return new WaitForSeconds(1f);
             throwingHand.SetActive(false);
         }
@@ -5654,7 +5708,7 @@ public class GameManager : MonoBehaviour
 
             int damage = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.buyPrice;
 
-            
+
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
             {
@@ -5864,7 +5918,7 @@ public class GameManager : MonoBehaviour
                         Debug.Log("Eyedropper!!!");
                         StartCoroutine(DelayedFade(eyedropperMenu));
                         marketTopDeck();
-                    }                       
+                    }
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
 
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability--;
@@ -7654,7 +7708,7 @@ public class GameManager : MonoBehaviour
 
             if ((md2.cardDisplay1.card.buyPrice - 1 > players[myPlayerIndex].pips ||
                 (players[myPlayerIndex].bargainBonus && md2.cardDisplay1.card.buyPrice - 3 > players[myPlayerIndex].pips && (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel")) ||
-                (players[myPlayerIndex].bargainBonus && players[myPlayerIndex].doubleRingBonus && md2.cardDisplay1.card.buyPrice - 5 > players[myPlayerIndex].pips && 
+                (players[myPlayerIndex].bargainBonus && players[myPlayerIndex].doubleRingBonus && md2.cardDisplay1.card.buyPrice - 5 > players[myPlayerIndex].pips &&
                 (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))) && players[myPlayerIndex].isSaltimbocca)
             {
                 md2.cardDisplay1.grayCard();
@@ -8004,7 +8058,7 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].subPips(1);
                 }
                 else
-                {    
+                {
                     players[myPlayerIndex].subPips(buyPrice);
                 }
                 players[myPlayerIndex].deck.putCardOnTop(cd);
@@ -8122,8 +8176,8 @@ public class GameManager : MonoBehaviour
             {
                 // cardInt based on position of card in Top Market (position 1, 2, or 3)
                 case 1:
-                    if ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice 
-                        || ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus && 
+                    if ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus &&
                         (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
@@ -8178,8 +8232,8 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay1.card.buyPrice, 0);
                     }
-                    else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 1 || 
-                        ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus && 
+                    else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 1 ||
+                        ((players[myPlayerIndex].pips >= md2.cardDisplay1.card.buyPrice - 3) && players[myPlayerIndex].bargainBonus &&
                         (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))))
                     {
                         if (md2.cardDisplay1.card.buyPrice == 1 && players[myPlayerIndex].pips == 0)
@@ -8273,7 +8327,7 @@ public class GameManager : MonoBehaviour
                     break;
                 case 2:
                     if ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice
-                        || ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus && 
+                        || ((players[myPlayerIndex].pips >= md2.cardDisplay2.card.buyPrice - 2) && players[myPlayerIndex].bargainBonus &&
                         (md2.cardDisplay1.card.cardType != "Potion" && md2.cardDisplay1.card.cardType != "Vessel"))) && !players[myPlayerIndex].isSaltimbocca)
                     {
                         // All rings cost 4 logic
@@ -8297,7 +8351,8 @@ public class GameManager : MonoBehaviour
                                     players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay2.card.buyPrice - 4, 0));
                                 else
                                     players[myPlayerIndex].subPips(Math.Max(md2.cardDisplay2.card.buyPrice - 2, 0));
-                            } else
+                            }
+                            else
                                 players[myPlayerIndex].subPips(md2.cardDisplay2.card.buyPrice);
                         }
                         else
@@ -8495,18 +8550,18 @@ public class GameManager : MonoBehaviour
                             players[myPlayerIndex].subPips(1);
                         }
                         else
-                        {                          
-                                if (players[myPlayerIndex].bargainBonus)
+                        {
+                            if (players[myPlayerIndex].bargainBonus)
+                            {
+                                if (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel")
                                 {
-                                    if (md2.cardDisplay3.card.cardType != "Potion" && md2.cardDisplay3.card.cardType != "Vessel")
-                                    {
-                                        if (players[myPlayerIndex].doubleRingBonus)
-                                            buyPrice = Math.Max(1, buyPrice - 4);
-                                        else
-                                            buyPrice = Math.Max(1, buyPrice - 2);
-                                    }
+                                    if (players[myPlayerIndex].doubleRingBonus)
+                                        buyPrice = Math.Max(1, buyPrice - 4);
+                                    else
+                                        buyPrice = Math.Max(1, buyPrice - 2);
+                                }
                             }
-                                players[myPlayerIndex].subPips(buyPrice);
+                            players[myPlayerIndex].subPips(buyPrice);
                         }
                         players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay3);
                         if (md2.cardDisplay3.crucibleCards.Count > 0)
@@ -8777,7 +8832,7 @@ public class GameManager : MonoBehaviour
         if (!players[myPlayerIndex].dumpsterBonus)
         {
             td.displayTrash();
-            dumpsterBonus = true;           
+            dumpsterBonus = true;
         }
         moveMarketCards();
     }
@@ -9169,7 +9224,7 @@ public class GameManager : MonoBehaviour
     public void chooseTopDeckCard(int choice)
     {
         // top market deck
-        if(choice == 2)
+        if (choice == 2)
         {
             players[myPlayerIndex].deck.putCardOnTop(eyedropperMenu.transform.GetChild(2).gameObject.GetComponent<CardDisplay>());
             td.addCard(eyedropperMenu.transform.GetChild(3).gameObject.GetComponent<CardDisplay>());
