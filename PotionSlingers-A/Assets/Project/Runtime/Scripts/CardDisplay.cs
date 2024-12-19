@@ -153,7 +153,7 @@ public class CardDisplay : MonoBehaviour
         if (cardName == "Spoonful of Ambrosia")
             crucibleCards[1] = GameManager.manager.ambrosiaCard;
 
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.1f);
         obj.GetComponent<DragCard>().dontMoveThis = false;
     }
 
@@ -258,6 +258,8 @@ public class CardDisplay : MonoBehaviour
                     Debug.Log("Crucible stuff occurred in fourth card");
                 } else
                 {
+
+                    crucibleCards.Clear();
                     // Add two cards to display on top of market card display
                     if (card.cardName == "Crucible")
                     {

@@ -114,6 +114,7 @@ public class GameManager : MonoBehaviour
     public GameObject payButton;
     public GameObject trashLoadButton;
     public GameObject durabilitySign;
+    public GameObject noPotionUI;
     public DeckMenuScroll deckDisplay;
     public ExpUI expUI;
 
@@ -3094,6 +3095,87 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].pluotBonusType = bonus;
     }
 
+    public void refreshMarketCards(int marketNum)
+    {
+        if (myPlayerIndex != 0)
+            return;
+
+        if (players[myPlayerIndex].pips >= 3)
+        {
+            players[myPlayerIndex].subPips(3);
+        } else
+        {
+            sendMessage("You don't have enough pips to refresh the market!");
+            return;
+        }
+
+        if(marketNum == 1)
+        {
+            GameObject obj = Instantiate(md1.cardDisplay1.gameObject,
+                        md1.cardDisplay1.transform.parent.gameObject.transform.position,
+                        md1.cardDisplay1.transform.parent.gameObject.transform.rotation,
+                        md2.cardDisplay4.transform.parent.gameObject.transform);
+
+            GameObject obj2 = Instantiate(md1.cardDisplay2.gameObject,
+                        md1.cardDisplay2.transform.parent.gameObject.transform.position,
+                        md1.cardDisplay2.transform.parent.gameObject.transform.rotation,
+                        md2.cardDisplay4.transform.parent.gameObject.transform);
+
+            GameObject obj3 = Instantiate(md1.cardDisplay3.gameObject,
+                        md1.cardDisplay3.transform.parent.gameObject.transform.position,
+                        md1.cardDisplay3.transform.parent.gameObject.transform.rotation,
+                        md2.cardDisplay4.transform.parent.gameObject.transform);
+
+            StartCoroutine(MoveMarketCardToTrash(obj));
+            StartCoroutine(MoveMarketCardToTrash(obj2));
+            StartCoroutine(MoveMarketCardToTrash(obj3));
+
+            Card card = md1.popCard();
+            md1.cardDisplay1.updateCard(card);
+
+            Card card2 = md1.popCard();
+            md1.cardDisplay2.updateCard(card2);
+
+            Card card3 = md1.popCard();
+            md1.cardDisplay3.updateCard(card3);
+
+        }
+
+        if (marketNum == 2)
+        {
+            GameObject obj = Instantiate(md2.cardDisplay1.gameObject,
+                        md2.cardDisplay1.transform.parent.gameObject.transform.position,
+                        md2.cardDisplay1.transform.parent.gameObject.transform.rotation,
+                        md2.cardDisplay4.transform.parent.gameObject.transform);
+
+            GameObject obj2 = Instantiate(md2.cardDisplay2.gameObject,
+                        md2.cardDisplay2.transform.parent.gameObject.transform.position,
+                        md2.cardDisplay2.transform.parent.gameObject.transform.rotation,
+                        md2.cardDisplay4.transform.parent.gameObject.transform);
+
+            GameObject obj3 = Instantiate(md2.cardDisplay3.gameObject,
+                        md2.cardDisplay3.transform.parent.gameObject.transform.position,
+                        md2.cardDisplay3.transform.parent.gameObject.transform.rotation,
+                        md2.cardDisplay4.transform.parent.gameObject.transform);
+
+            StartCoroutine(MoveMarketCardToTrash(obj));
+            StartCoroutine(MoveMarketCardToTrash(obj2));
+            StartCoroutine(MoveMarketCardToTrash(obj3));
+
+            Card card = md2.popCard();
+            md2.cardDisplay1.updateCard(card);
+
+            Card card2 = md2.popCard();
+            md2.cardDisplay2.updateCard(card2);
+
+            Card card3 = md2.popCard();
+            md2.cardDisplay3.updateCard(card3);
+
+        }
+
+        checkMarketPrice();
+    }
+
     public IEnumerator DeckStealAnimation(CardDisplay cd, CardDisplay cardBeingStolen)
     {
         Debug.Log("Card animation starting");
@@ -3121,9 +3203,32 @@ public class GameManager : MonoBehaviour
         Destroy(obj);
     }
 
+    public IEnumerator turnNoPotionOff()
+    {
+        /*
+        yield return new WaitForSeconds(0.25f);
+        noPotionUI.transform.DOMove(new Vector3(noPotionUI.transform.position.x - 25,
+                noPotionUI.transform.position.y, 0), 0.25f);
+        yield return new WaitForSeconds(0.25f);
+        noPotionUI.SetActive(false);
+        */
+        noPotionUI.transform.DOShakePosition(.2f, new Vector3(20f, 5f, 0)).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.2f);
+        noPotionUI.transform.DOShakePosition(.2f, new Vector3(20f, 5f, 0)).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.2f);
+        noPotionUI.transform.DOShakePosition(.2f, new Vector3(20f, 5f, 0)).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.2f);
+        noPotionUI.transform.DOShakePosition(.2f, new Vector3(20f, 5f, 0)).SetEase(Ease.Linear);
+        yield return new WaitForSeconds(0.2f);
+        // noPotionUI.transform.DOShakePosition(.2f, 20f).SetEase(Ease.Linear);
+        // yield return new WaitForSeconds(0.2f);
+        noPotionUI.SetActive(false);
+    }
+
     public IEnumerator DeckAnimation(CardDisplay cd, CardPlayer player)
     {
         bool jester = false;
+        bool potion = false;
 
         foreach (CardDisplay cds in player.holster.cardList)
         {
@@ -3132,6 +3237,27 @@ public class GameManager : MonoBehaviour
                 Debug.Log("Jester Ring!!!");
                 jester = true;
             }
+        }
+
+        foreach (Card cds in player.deck.deckList)
+        {
+            if (cds.cardType == "Potion")
+            {
+                Debug.Log("Potions in your deck!!!");
+                potion = true;
+            }
+        }
+
+        if (!potion && player == players[0])
+        {
+            Debug.Log("No potion UI triggered!");
+            noPotionUI.SetActive(true);
+            // noPotionUI.transform.DOShakePosition(.2f, 20f).SetEase(Ease.Linear);
+            noPotionUI.transform.DOShakePosition(.2f, new Vector3(20f, 5f, 0)).SetEase(Ease.Linear);
+            // noPotionUI.transform.DOMove(new Vector3(noPotionUI.transform.position.x + 25,
+            //    noPotionUI.transform.position.y, 0), 0.2f);
+            // Invoke("turnNoPotionOff", 0.50f);
+            StartCoroutine(turnNoPotionOff());
         }
 
         Debug.Log("Card animation starting");
@@ -3370,6 +3496,8 @@ public class GameManager : MonoBehaviour
                 if (cd.card.name == "placeholder")
                 {
                     checkShield(player);
+
+                    Debug.Log("Deck animation triggered from holster fill!!!");
 
                     // cd.updateCard(player.deck.popCard());
                     StartCoroutine(DeckAnimation(cd, player));
@@ -6145,6 +6273,39 @@ public class GameManager : MonoBehaviour
         cd.artifactSlot.SetActive(false);
         yield return new WaitForSeconds(0.6f);
         // instance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        obj.GetComponent<Image>().CrossFadeAlpha(0, 0.2f, false);
+        yield return new WaitForSeconds(0.15f);
+
+        Destroy(obj);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+
+        // MATTEO : Add trash can thunk sfx here!
+        FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Trash");
+        yield return new WaitForSeconds(0.15f);
+        td.transform.parent.DOMove(new Vector2(td.transform.parent.position.x, td.transform.parent.position.y - 5), 0.2f).SetLoops(2, LoopType.Yoyo).SetEase(Ease.InOutSine);
+    }
+
+    public IEnumerator MoveMarketCardToTrash(GameObject obj)
+    {
+        Debug.Log("That triggered!");
+        if (obj.GetComponent<CanvasGroup>() != null)
+        {
+            Debug.Log("This triggered!");
+            obj.GetComponent<CanvasGroup>().interactable = false;
+            Destroy(obj.GetComponent<DragCard>());
+            // obj.GetComponent<DragCard>().currentlyBeingThrown = true;
+            // Destroy(obj.GetComponent<DragCard>());
+        }
+
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.gameObject.SetActive(false);
+        obj.transform.DOJump(new Vector2(1850f * widthRatio, 400f * heightRatio), 400f, 1, 1f, false);
+        obj.transform.DOScale(0.2f, 1f);
+        obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+        yield return new WaitForSeconds(0.1f);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.SetActive(false);
+        yield return new WaitForSeconds(0.6f);
         obj.GetComponent<Image>().CrossFadeAlpha(0, 0.2f, false);
         yield return new WaitForSeconds(0.15f);
 
