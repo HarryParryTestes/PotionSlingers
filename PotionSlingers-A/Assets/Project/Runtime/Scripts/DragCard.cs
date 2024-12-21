@@ -372,8 +372,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // experimenting
         // gameObject.GetComponent<CardDisplay>().colorCard();
 
+        /*
         if (dontMoveThis)
             return;
+        */
 
         if (crucible)
         {
@@ -670,6 +672,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             clicked = false;
             DOTween.Pause(gameObject.name);
 
+            if (dontMoveThis)
+                GetComponent<CardDisplay>().grayCard();
+
             if (market)
             {
                 if (gameObject.name == "CardDisplay (Special4)" ||
@@ -846,6 +851,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnBeginDrag(PointerEventData pointerEventData)
     {
+        if (dontMoveThis)
+            return;
+
         if (!Game.multiplayer && GameManager.manager.myPlayerIndex != 0)
         {
             return;
@@ -1057,6 +1065,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (dontMoveThis)
+            return;
+
         if (!Game.multiplayer && GameManager.manager.myPlayerIndex != 0)
         {
             return;

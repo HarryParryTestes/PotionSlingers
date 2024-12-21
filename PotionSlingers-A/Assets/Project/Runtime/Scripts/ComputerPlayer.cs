@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using DG.Tweening;
 
 [System.Serializable]
@@ -333,14 +334,14 @@ public class ComputerPlayer : CardPlayer
 
             if (cards == 4)
             {
-                damage = rng.Next(1, 4);
+                damage = rng.Next(1, 5);
             }
             else
-                damage = rng.Next(1, 5);
+                damage = rng.Next(1, 6);
             // damage = rng.Next(1, 5);
 
             // make the player take damage without using throwing functions
-            if (damage == 4)
+            if (damage == 5)
             {
                 int cardNumber = pickRandomHolsterCardCrow();
                 if (cardNumber == -1)
@@ -364,6 +365,16 @@ public class ComputerPlayer : CardPlayer
 
                 GameManager.manager.sendMessage("CrowPunk just trashed your card!");
 
+                GameManager.manager.Invoke("endTurn", 2f);
+                return;
+            }
+
+            if (damage == 4)
+            {
+                Debug.Log("Adding shields!!!");
+                GetComponent<Image>().DOColor(GameManager.manager.grayedColor, 0.5f).SetLoops(2, LoopType.Yoyo);
+                GetComponent<CardPlayer>().addShields(2);
+                GameManager.manager.sendMessage("CrowPunk gained 2 shield!");
                 GameManager.manager.Invoke("endTurn", 2f);
                 return;
             }
@@ -420,9 +431,20 @@ public class ComputerPlayer : CardPlayer
             // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
             // basic enemy that does 1-4 damage per turn
-            damage = rng.Next(1, 5);
+            // and add shields as an option
+            damage = rng.Next(1, 6);
 
             // make the player take damage without using throwing functions
+
+            if (damage == 5)
+            {
+                Debug.Log("Adding shields!!!");
+                GetComponent<Image>().DOColor(GameManager.manager.grayedColor, 0.5f).SetLoops(2, LoopType.Yoyo);
+                GetComponent<CardPlayer>().addShields(4);
+                GameManager.manager.sendMessage("Fingas gained 4 shield!");
+                GameManager.manager.Invoke("endTurn", 2f);
+                return;
+            }
 
             GameManager.manager.players[0].subHealth(damage);
             GameManager.manager.sendMessage("Took " + damage + " damage!");
@@ -438,7 +460,18 @@ public class ComputerPlayer : CardPlayer
             // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Crowpunk_attack");
             this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
             // basic enemy that does 1-4 damage per turn
-            damage = rng.Next(1, 5);
+            damage = rng.Next(1, 6);
+
+            if (damage == 5)
+            {
+                Debug.Log("Disabling card! Implement this!!!");
+                int cardNumber = pickRandomHolsterCardCrow();
+                GameManager.manager.playerHolster.cardList[cardNumber].grayCard();
+                GameManager.manager.playerHolster.cardList[cardNumber].GetComponent<DragCard>().dontMoveThis = true;
+                GameManager.manager.sendMessage("Bag o' Snakes stunned a card!");
+                GameManager.manager.Invoke("endTurn", 2f);
+                return;
+            }
 
             // make the player take damage without using throwing functions
 

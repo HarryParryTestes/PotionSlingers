@@ -4799,6 +4799,18 @@ public class GameManager : MonoBehaviour
 
             players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
 
+            foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
+            {
+                if (cd.GetComponent<DragCard>() != null)
+                {
+                    if (cd.GetComponent<DragCard>().dontMoveThis)
+                    {
+                        cd.GetComponent<DragCard>().dontMoveThis = false;
+                        cd.whiteCard();
+                    }                   
+                }                
+            }
+
             myPlayerIndex++;
 
             if (myPlayerIndex >= numPlayers)
@@ -5641,16 +5653,11 @@ public class GameManager : MonoBehaviour
     // THROW POTION REQUEST
     public void throwPotion()
     {
-        /*
-        if (snakeBonus)
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis)
         {
-            Debug.Log("SNAKE!!!");
-            // pull the opponent holster UI up here
-            opponentHolsterMenu.SetActive(true);
-            displayOpponentHolster();
+            sendMessage("That card is stunned!");
             return;
         }
-        */
 
         string cardQuality = "None";
         if (!players[myPlayerIndex].nicklesAction)
@@ -5888,7 +5895,8 @@ public class GameManager : MonoBehaviour
         }
         // This client is the current player.
         else
-        {
+        {           
+
             // If this client isn't the current player, display error message.
             if (players[myPlayerIndex].user_id != myPlayerIndex)
             {
@@ -6921,6 +6929,12 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].checkGauntletBonus();
         players[myPlayerIndex].checkDecoderBonus();
 
+        if (cd.GetComponent<DragCard>().dontMoveThis)
+        {
+            sendMessage("That card is stunned!");
+            return;
+        }
+
         // If this client isn't the current player, display error message.
         if (players[myPlayerIndex].user_id != myPlayerIndex)
         {
@@ -7205,7 +7219,12 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Load Potion");
 
-
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis ||
+            players[myPlayerIndex].holster.cardList[loadedCardInt].GetComponent<DragCard>().dontMoveThis)
+        {
+            sendMessage("That card is stunned!");
+            return;
+        }
 
         // TUTORIAL LOGIC
         if (Game.tutorial)
@@ -7619,6 +7638,12 @@ public class GameManager : MonoBehaviour
     public void cycleCard()
     {
         Debug.Log("Cycle Card");
+
+        if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis)
+        {
+            sendMessage("That card is stunned!");
+            return;
+        }
 
         // TUTORIAL LOGIC
         if (Game.tutorial)
