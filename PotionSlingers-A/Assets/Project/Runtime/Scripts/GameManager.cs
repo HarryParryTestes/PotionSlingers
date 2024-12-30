@@ -3265,8 +3265,18 @@ public class GameManager : MonoBehaviour
         if (jester)
         {
             Debug.Log("Use different sprite for jester!");
-            obj.GetComponent<Image>().sprite = player.deck.deckList[player.deck.deckList.Count - 1].cardSprite;
+            if(player.deck.deckList.Count > 0)
+                obj.GetComponent<Image>().sprite = player.deck.deckList[player.deck.deckList.Count - 1].cardSprite;
         }
+
+        /*
+        if(player.deck.deckList.Count == 0)
+        {
+            obj.SetActive(false);
+            Destroy(obj);
+        }
+        */
+
         /*
         if (player.deck.statuses[0] == "spicy")
         {
@@ -3286,6 +3296,7 @@ public class GameManager : MonoBehaviour
         if (player.GetComponent<ComputerPlayer>() != null)
             obj.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
         obj.transform.DOJump(cd.gameObject.transform.position, 200f, 1, 0.5f, false);
+        Destroy(obj, 0.55f);
 
         Card card;
         string status = "none";
@@ -3298,7 +3309,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            /*
             if (player.deck.statuses[0] != null)
+                status = player.deck.statuses[0];
+            */
+            if (player.deck.statuses.Count > 0)
                 status = player.deck.statuses[0];
             card = player.deck.popCard();
         }
@@ -5653,11 +5668,15 @@ public class GameManager : MonoBehaviour
     // THROW POTION REQUEST
     public void throwPotion()
     {
-        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis)
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>() != null)
         {
-            sendMessage("That card is stunned!");
-            return;
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis)
+            {
+                sendMessage("That card is stunned!");
+                return;
+            }
         }
+        
 
         string cardQuality = "None";
         if (!players[myPlayerIndex].nicklesAction)
@@ -6051,9 +6070,18 @@ public class GameManager : MonoBehaviour
                     // eyedropper check
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName == "SeeingEyedropper")
                     {
-                        Debug.Log("Eyedropper!!!");
-                        StartCoroutine(DelayedFade(eyedropperMenu));
-                        marketTopDeck();
+                        if (players[myPlayerIndex].GetComponent<ComputerPlayer>() != null)
+                        {
+                            Debug.Log("Eyedropper!!!");
+                            StartCoroutine(DelayedFade(eyedropperMenu));
+                            marketTopDeck();
+                        }
+                        else
+                        {
+                            Debug.Log("CPU Eyedropper Bonus!!!");
+                            Card card = md1.popCard();
+                            players[myPlayerIndex].deck.putCardOnTop(card);
+                        }
                     }
                     td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
 
@@ -6929,11 +6957,14 @@ public class GameManager : MonoBehaviour
         players[myPlayerIndex].checkGauntletBonus();
         players[myPlayerIndex].checkDecoderBonus();
 
-        if (cd.GetComponent<DragCard>().dontMoveThis)
+        if (cd.GetComponent<DragCard>() != null)
         {
-            sendMessage("That card is stunned!");
-            return;
-        }
+            if (cd.GetComponent<DragCard>().dontMoveThis)
+            {
+                sendMessage("That card is stunned!");
+                return;
+            }
+        }        
 
         // If this client isn't the current player, display error message.
         if (players[myPlayerIndex].user_id != myPlayerIndex)
@@ -7218,13 +7249,15 @@ public class GameManager : MonoBehaviour
     public void loadPotion()
     {
         Debug.Log("Load Potion");
-
-        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis ||
-            players[myPlayerIndex].holster.cardList[loadedCardInt].GetComponent<DragCard>().dontMoveThis)
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>() != null)
         {
-            sendMessage("That card is stunned!");
-            return;
-        }
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis ||
+            players[myPlayerIndex].holster.cardList[loadedCardInt].GetComponent<DragCard>().dontMoveThis)
+            {
+                sendMessage("That card is stunned!");
+                return;
+            }
+        }       
 
         // TUTORIAL LOGIC
         if (Game.tutorial)
@@ -7639,11 +7672,14 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Cycle Card");
 
-        if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis)
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>() != null)
         {
-            sendMessage("That card is stunned!");
-            return;
-        }
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis)
+            {
+                sendMessage("That card is stunned!");
+                return;
+            }
+        }        
 
         // TUTORIAL LOGIC
         if (Game.tutorial)
@@ -9322,9 +9358,17 @@ public class GameManager : MonoBehaviour
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SeeingEyedropper")
             {
-                Debug.Log("Eyedropper!!!");
-                StartCoroutine(DelayedFade(eyedropperMenu));
-                marketTopDeck();
+                if (players[myPlayerIndex].GetComponent<ComputerPlayer>() != null)
+                {
+                    Debug.Log("Eyedropper!!!");
+                    StartCoroutine(DelayedFade(eyedropperMenu));
+                    marketTopDeck();
+                } else
+                {
+                    Debug.Log("CPU Eyedropper Bonus!!!");
+                    Card card = md1.popCard();
+                    players[myPlayerIndex].deck.putCardOnTop(card);
+                }                
             }
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality != "Starter")
@@ -9511,9 +9555,18 @@ public class GameManager : MonoBehaviour
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SeeingEyedropper")
             {
-                Debug.Log("Eyedropper!!!");
-                StartCoroutine(DelayedFade(eyedropperMenu));
-                marketTopDeck();
+                if (players[myPlayerIndex].GetComponent<ComputerPlayer>() != null)
+                {
+                    Debug.Log("Eyedropper!!!");
+                    StartCoroutine(DelayedFade(eyedropperMenu));
+                    marketTopDeck();
+                }
+                else
+                {
+                    Debug.Log("CPU Eyedropper Bonus!!!");
+                    Card card = md1.popCard();
+                    players[myPlayerIndex].deck.putCardOnTop(card);
+                }
             }
 
             if (cd.card.cardQuality != "Starter")

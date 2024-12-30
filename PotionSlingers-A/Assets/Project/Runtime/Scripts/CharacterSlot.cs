@@ -209,7 +209,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
-        if(cp != null && this.gameObject.name != "DeckPile" && cp.name != "Carnival")
+        if(cp != null && this.gameObject.name != "DeckPile" && cp.name != "Carnival" && cp.name != "HolsterTop")
         {
             if(pointerEventData.pointerDrag != null)
             {
@@ -271,7 +271,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         // test this and double check
         if(dc != null)
         {
-            if (dc.market && this.gameObject.name == "DeckPile")
+            if (dc.market && (this.gameObject.name == "DeckPile" || this.gameObject.name == "HolsterTop"))
             {
                 Debug.Log("Buy triggered?");
                 if (heldCard.GetComponent<TopMarketBuy>() != null)
@@ -290,7 +290,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             }
 
             // attacking player
-            if (cd != null && !dc.market)
+            if (cd != null && !dc.market && this.gameObject.name != "HolsterTop")
             {
                 Debug.Log("Throw triggered?");
                 cd.gameObject.GetComponent<CardThrow>().throwCard();

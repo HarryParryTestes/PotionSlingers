@@ -104,12 +104,17 @@ public class Deck : MonoBehaviour
 
     public Card popCard()
     {
+        string thing = "none";
         if (deckList.Count >= 1)
         {
             Card temp = deckList[0];
             deckList.RemoveAt(0);
-            string thing = statuses[0];
-            statuses.RemoveAt(0);
+            if(statuses.Count > 0)
+            {
+                thing = statuses[0];
+                statuses.RemoveAt(0);
+            }
+            
             if (temp.cardName == "EarlyBirdSpecial" && GameManager.manager.earlyBirdSpecial)
             {
                 // +1 damage if put in holster this turn

@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Welcome
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: InspectorWindow
+  m_Name: WelcomeWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -272,14 +272,14 @@ MonoBehaviour:
     y: 0
     width: 354.40002
     height: 722.8
-  m_MinSize: {x: 276, y: 71}
+  m_MinSize: {x: 371, y: 641}
   m_MaxSize: {x: 4001, y: 4021}
-  m_ActualView: {fileID: 20}
+  m_ActualView: {fileID: 21}
   m_Panes:
   - {fileID: 20}
   - {fileID: 21}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -405,9 +405,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: f8a40000
+      m_SelectedIDs: d4360000
       m_LastClickedID: 0
-      m_ExpandedIDs: 4c7dfbff4689fbffd698fbffc2b5fbff88fbfbff3422fcffc0f1fcffd2b7fdff64dafdff36eefdff9efbfdffbc00feffbc4dfeffd68ffeff2e03ffffc259ffff0898ffff12e1ffff2efbfffff4fb0000880b0200c62e020018e1020016fa0200b2010300f4050300601b0300541d0300861f0300662b0800def208001cfa0800d8fe0800400109005613090052160900841809006a9e0e0094a40e00f6d20f0020d90f000653100050601000fe6810004e6b10008c7e1000b6841000
+      m_ExpandedIDs: 8ee0fdff36f7fdff1405feff1c0ffeff883dfeff9849feffa053feff1261feff1a6bfeff4075feffc688feff6ca2feff74acfeff34c2feff12cefeff3afdfeff5a6effff3c7dffffacf4ffff2efbffff7cac00005eba000066bf000058c0000014c8000064ca000008d40000fed80000a2dd0000cce30000d0e800006a9c0a00f4bf0a0058f20a00e2150b001a530b0070570b006e590b000ee90b0056fd0b00d0050c00980c0c00fa3e0c0084620c00d6400d001e550d0060640d00
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -454,7 +454,7 @@ MonoBehaviour:
     x: 250.40001
     y: 73.6
     width: 929.19995
-    height: 478.2
+    height: 479
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -788,7 +788,7 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: -111172
+  m_LastSelectedObjectID: 47710
 --- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1598,21 +1598,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets/Project/Runtime/Scripts
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scenes
+  - Assets/Project/Runtime/Scripts
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\potio\OneDrive\Documents\GitHub\PotionSlingers\PotionSlingers-A
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 1020}
-    m_SelectedIDs: 9ca40000
-    m_LastClickedID: 42140
+    scrollPos: {x: 0, y: 540}
+    m_SelectedIDs: 6ca40000
+    m_LastClickedID: 42092
     m_ExpandedIDs: 0000000016a4000018a400001aa400001ca400001ea4000020a4000022a4000024a4000026a4000028a400002aa400002ca400002ea4000030a4000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -1693,7 +1693,7 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
     m_NewAssetIndexInList: -1
-    m_ScrollPosition: {x: 0, y: 0}
+    m_ScrollPosition: {x: 0, y: 89}
     m_GridSize: 64
   m_SkipHiddenPackages: 0
   m_DirectoriesAreaWidth: 244
@@ -1759,7 +1759,7 @@ MonoBehaviour:
     m_CachedPref: 160
     m_ControlHash: -371814159
     m_PrefName: Preview_InspectorPreview
-  m_LastInspectedObjectInstanceID: -1
+  m_LastInspectedObjectInstanceID: 14036
   m_LastVerticalScrollValue: 0
   m_GlobalObjectId: 
   m_InspectorMode: 0
