@@ -557,6 +557,18 @@ public class GameManager : MonoBehaviour
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
                 break;
+            case "Isadore":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Reets":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
+            case "Bolo":
+                saveData.opp1Health = players[1].hp;
+                saveData.opp1Cubes = players[1].hpCubes;
+                break;
             case "Singelotte":
                 saveData.opp1Health = players[1].hp;
                 saveData.opp1Cubes = players[1].hpCubes;
@@ -1731,6 +1743,96 @@ public class GameManager : MonoBehaviour
                 players[2].name = "Saltimbocca";
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Saltimbocca");
+                players[2].checkCharacter();
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 10;
+                }
+                players[2].hpCubes = 1;
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Isadore":
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Isadore";
+                players[2].name = "Isadore";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Isadore");
+                players[2].checkCharacter();
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 10;
+                }
+                players[2].hpCubes = 1;
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Bolo":
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Bolo";
+                players[2].name = "Bolo";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Bolo");
+                players[2].checkCharacter();
+                if (saveData.savedGame && !saveData.newStage)
+                {
+                    players[2].hpCubes = saveData.opp1Cubes;
+                    players[2].hp = saveData.opp1Health;
+                    players[2].hBar.image.fillAmount = 0;
+                }
+                else
+                {
+                    players[2].hpCubes = 1;
+                    players[2].hp = 10;
+                    saveData.opp1Cubes = 1;
+                    saveData.opp1Health = 10;
+                }
+                players[2].hpCubes = 1;
+                players[2].updateHealthUI();
+                players[2].user_id = 1;
+
+                players[1] = players[2];
+                players[2] = players[3];
+                p3.SetActive(false);
+                p4.SetActive(false);
+                break;
+            case "Reets":
+                numPlayers = 2;
+                players[2].gameObject.AddComponent<ComputerPlayer>();
+                players[2].charName = "Reets";
+                players[2].name = "Reets";
+                playerTopName.text = players[2].charName;
+                players[2].character.onCharacterClick("Reets");
                 players[2].checkCharacter();
                 if (saveData.savedGame && !saveData.newStage)
                 {

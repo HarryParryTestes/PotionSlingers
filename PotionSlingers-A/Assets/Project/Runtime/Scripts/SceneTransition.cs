@@ -13,10 +13,34 @@ public class SceneTransition : MonoBehaviour
     public GameObject loadingScreen;
     public GameObject text;
     public CutsceneManager cutsceneManager;
+
+    // salt encounter buttons
     public Button saltButton;
+    public Button boloSaltButton;
+    public Button isadoreSaltButton;
+
     public Button crowButton;
     public Button singeButton;
     public Button demoOverButton;
+    public Button crowBoloButton;
+    public Button crowIsadoreButton;
+    public Button crowSaltButton;
+
+    // isadore encounter buttons
+    public Button reetsIsadoreButton;
+    public Button boloIsadoreButton;
+    public Button saltIsadoreButton;
+
+    // reets encounter buttons
+    public Button isadoreReetsButton;
+    public Button boloReetsButton;
+    public Button saltReetsButton;
+
+    // bolo encounter buttons
+    public Button reetsBoloButton;
+    public Button isadoreBoloButton;
+    public Button saltBoloButton;
+
     public Image background;
     public GameObject treasureMenu;
     public Scrollbar scrollRectHorizontal;
@@ -25,6 +49,21 @@ public class SceneTransition : MonoBehaviour
     public TMPro.TextMeshProUGUI health;
     public List<GameObject> objects = new List<GameObject>();
     public List<string> slingerPool = new List<string>();
+    public System.Random rng = new System.Random();
+
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -124,6 +163,148 @@ public class SceneTransition : MonoBehaviour
         else
             SceneManager.LoadScene("TownCenter");
             */
+    }
+
+    public int getSlinger()
+    {
+        SaveData saveData = SaveSystem.LoadGameData();
+        int num = rng.Next(0, slingerPool.Count);
+        if (slingerPool[num] == Game.storyModeCharName ||
+            slingerPool[num] == saveData.playerCharName)
+        {
+            Debug.Log("Same slinger! Redo!");
+            getSlinger();
+        }
+        return num;
+    }
+
+    public void handleCrowCutscene()
+    {
+        Debug.Log(Game.storyModeCharName);
+
+        SaveData saveData = SaveSystem.LoadGameData();
+        if (saveData.playerCharName == "")
+            saveData.playerCharName = Game.storyModeCharName;
+
+        switch (saveData.playerCharName)
+        {
+            case "Reets":
+                hideUI();
+                crowButton.onClick.Invoke();
+                break;
+            case "Saltimbocca":
+                hideUI();
+                crowSaltButton.onClick.Invoke();
+                break;
+            case "Isadore":
+                hideUI();
+                crowIsadoreButton.onClick.Invoke();
+                break;
+            case "Bolo":
+                hideUI();
+                crowBoloButton.onClick.Invoke();
+                break;
+        }
+    }
+
+    public void handleSaltCutscene()
+    {
+        Debug.Log(Game.storyModeCharName);
+
+        SaveData saveData = SaveSystem.LoadGameData();
+        if (saveData.playerCharName == "")
+            saveData.playerCharName = Game.storyModeCharName;
+
+        switch (saveData.playerCharName)
+        {
+            case "Reets":
+                hideUI();
+                saltButton.onClick.Invoke();
+                break;
+            case "Isadore":
+                hideUI();
+                isadoreSaltButton.onClick.Invoke();
+                break;
+            case "Bolo":
+                hideUI();
+                boloSaltButton.onClick.Invoke();
+                break;
+        }
+    }
+
+    public void handleReetsCutscene()
+    {
+        Debug.Log(Game.storyModeCharName);
+
+        SaveData saveData = SaveSystem.LoadGameData();
+        if (saveData.playerCharName == "")
+            saveData.playerCharName = Game.storyModeCharName;
+
+        switch (saveData.playerCharName)
+        {
+            case "Saltimbocca":
+                hideUI();
+                saltReetsButton.onClick.Invoke();
+                break;
+            case "Isadore":
+                hideUI();
+                isadoreReetsButton.onClick.Invoke();
+                break;
+            case "Bolo":
+                hideUI();
+                boloReetsButton.onClick.Invoke();
+                break;
+        }
+    }
+
+    public void handleBoloCutscene()
+    {
+        Debug.Log(Game.storyModeCharName);
+
+        SaveData saveData = SaveSystem.LoadGameData();
+        if (saveData.playerCharName == "")
+            saveData.playerCharName = Game.storyModeCharName;
+
+        switch (saveData.playerCharName)
+        {
+            case "Reets":
+                hideUI();
+                reetsBoloButton.onClick.Invoke();
+                break;
+            case "Isadore":
+                hideUI();
+                isadoreBoloButton.onClick.Invoke();
+                break;
+            case "Saltimbocca":
+                hideUI();
+                saltBoloButton.onClick.Invoke();
+                break;
+        }
+    }
+
+    public void handleIsadoreCutscene()
+    {
+        Debug.Log(Game.storyModeCharName);
+
+        SaveData saveData = SaveSystem.LoadGameData();
+        if (saveData.playerCharName == "")
+            saveData.playerCharName = Game.storyModeCharName;
+
+        switch (saveData.playerCharName)
+        {
+            case "Reets":
+                hideUI();
+                reetsIsadoreButton.onClick.Invoke();
+                break;
+            case "Bolo":
+                hideUI();
+                boloIsadoreButton.onClick.Invoke();
+                break;
+            case "Saltimbocca":
+                hideUI();
+                saltIsadoreButton.onClick.Invoke();
+                break;
+        }
     }
 
     public void doTransition()

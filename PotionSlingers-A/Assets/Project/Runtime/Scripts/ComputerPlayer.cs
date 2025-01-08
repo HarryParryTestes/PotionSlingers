@@ -512,7 +512,10 @@ public class ComputerPlayer : CardPlayer
         yield return new WaitForSeconds(1.5f);
 
         // story mode logic
-        if (Game.storyMode && this.gameObject.GetComponent<CardPlayer>().name != "Saltimbocca")
+        if (Game.storyMode && (this.gameObject.GetComponent<CardPlayer>().name != "Saltimbocca" &&
+            this.gameObject.GetComponent<CardPlayer>().name != "Bolo" &&
+            this.gameObject.GetComponent<CardPlayer>().name != "Isadore" &&
+            this.gameObject.GetComponent<CardPlayer>().name != "Reets"))
         {
             // insert appropriate logic for whatever enemies we have in here
             storyModeTurn();
