@@ -78,6 +78,7 @@ public class GamePlayer : NetworkBehaviour
 
     public void selectCharNameRight()
     {
+        /*
         charIndex += 1;
         if (charIndex > 8)
         {
@@ -89,19 +90,45 @@ public class GamePlayer : NetworkBehaviour
             charName = MainMenu.menu.characters[charIndex].cardName;
             item.charName = charName;
             item.charDisplay.onCharacterClick(charName);
-            // LobbyManager.instance.UpdateUI();
+            return;
+        }
+        */
+
+        charIndex += 1;
+        if (charIndex > 3)
+        {
+            charIndex = 0;
+        }
+
+        if (LobbyManager.instance.singleplayer)
+        {
+            charName = MainMenu.menu.demoCharacters[charIndex].cardName;
+            item.charName = charName;
+            item.charDisplay.onCharacterClick(charName);
             return;
         }
 
+        // CHANGE THIS BACK AFTER DEMO CONFIG
+        /*
+        charName = MainMenu.menu.characters[charIndex].cardName;
         charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
         LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
         LobbyManager.instance.UpdateUI();
+        */
+
+        charName = MainMenu.menu.demoCharacters[charIndex].cardName;
+        charName = MainMenu.menu.demoCharacters[charIndex].cardName;
+        LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
+        LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.demoCharacters[charIndex].cardName;
+        LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.demoCharacters[charIndex].cardName);
+        LobbyManager.instance.UpdateUI();
     }
 
     public void selectCharNameLeft()
     {
+        /*
         charIndex -= 1;
         if (charIndex < 0)
         {
@@ -116,10 +143,35 @@ public class GamePlayer : NetworkBehaviour
             // LobbyManager.instance.UpdateUI();
             return;
         }
+        */
+
+        charIndex -= 1;
+        if (charIndex < 0)
+        {
+            charIndex = 3;
+        }
+
+        if (LobbyManager.instance.singleplayer)
+        {
+            charName = MainMenu.menu.demoCharacters[charIndex].cardName;
+            item.charName = charName;
+            item.charDisplay.onCharacterClick(charName);
+            // LobbyManager.instance.UpdateUI();
+            return;
+        }
+
+        /*
         charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
         LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
         LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
+        LobbyManager.instance.UpdateUI();
+        */
+
+        charName = MainMenu.menu.demoCharacters[charIndex].cardName;
+        LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
+        LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.demoCharacters[charIndex].cardName;
+        LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.demoCharacters[charIndex].cardName);
         LobbyManager.instance.UpdateUI();
     }
 

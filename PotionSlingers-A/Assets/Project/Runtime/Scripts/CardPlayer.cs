@@ -506,7 +506,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Failed to set any bools");
                 break;
         }
-        if (charName == "Fingas")
+        if (charName == "Fingas" || charName == "Maskid")
         {
             Invoke("playIdle", 1.55f);
             return;

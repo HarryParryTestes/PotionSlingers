@@ -354,14 +354,20 @@ public class GameManager : MonoBehaviour
         // md1.cardDisplay4.updateCard(md1.deckList[0]);
         if (md1.cardDisplay4.artworkImage != null)
         {
-            md1.cardDisplay4.artworkImage.sprite = md1.deckList[0].cardSprite;
-            md1.cardDisplay4.card = md1.deckList[0];
+            if(md1.deckList.Count > 0)
+            {
+                md1.cardDisplay4.artworkImage.sprite = md1.deckList[0].cardSprite;
+                md1.cardDisplay4.card = md1.deckList[0];
+            }           
         }
         // md2.cardDisplay4.updateCard(md2.deckList[0]);
         if (md2.cardDisplay4.artworkImage != null)
         {
-            md2.cardDisplay4.artworkImage.sprite = md2.deckList[0].cardSprite;
-            md2.cardDisplay4.card = md2.deckList[0];
+            if(md2.deckList.Count > 0)
+            {
+                md2.cardDisplay4.artworkImage.sprite = md2.deckList[0].cardSprite;
+                md2.cardDisplay4.card = md2.deckList[0];
+            }           
         }
 
     }
@@ -1449,12 +1455,14 @@ public class GameManager : MonoBehaviour
                 {
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
+                    players[2].maxHp = 7;
                     players[2].hBar.image.fillAmount = 0;
                 }
                 else
                 {
                     players[2].hpCubes = 1;
                     players[2].hp = 7;
+                    players[2].maxHp = 7;
                     saveData.opp1Cubes = 1;
                     saveData.opp1Health = 7;
                 }
@@ -1487,6 +1495,7 @@ public class GameManager : MonoBehaviour
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
+                    players[2].maxHp = 7;
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
@@ -1495,6 +1504,7 @@ public class GameManager : MonoBehaviour
                 {
                     players[2].hpCubes = 1;
                     players[2].hp = 7;
+                    players[2].maxHp = 7;
                     saveData.opp1Cubes = 1;
                     saveData.opp1Health = 7;
                 }
@@ -1939,6 +1949,10 @@ public class GameManager : MonoBehaviour
                 players[3].updateHealthUI();
                 break;
         }
+
+        // do this to make sure it saves the hp values
+        SaveSystem.SaveGameData(saveData);
+
     }
 
     public void resetDurability()
@@ -2429,7 +2443,8 @@ public class GameManager : MonoBehaviour
                         {
                             players[0].holster.cardList[i].updateCard(card);
                             // add durability here
-                            players[0].holster.cardList[i].durability = saveData.cardDurabilities[i];
+                            if (saveData.cardDurabilities.Any())
+                                players[0].holster.cardList[i].durability = saveData.cardDurabilities[i];
                         }
                     }
                 }
@@ -2557,26 +2572,8 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 }
-                /*
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                // players[2].name = saveData.oppCharName;
-                // players[2].charName = saveData.oppCharName;
-                // players[2].character.onCharacterClick(players[2].charName);
-                // players[2].checkCharacter();
-                // players[2].name = "Reets";
-                // playerTopName.text = players[2].charName;
-
-                players[1] = players[2];
-                // hardcode this lol
-                // playerTopName.text = Game.singlePlayerNames[1];
-                players[1].user_id = 1;
-                players[2].user_id = 1;
-
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
-                return;
-                */
+                saveData.selectedStage = true;
+                SaveSystem.SaveGameData(saveData);
             }
             else
             {
@@ -2588,9 +2585,10 @@ public class GameManager : MonoBehaviour
                 md2.shuffle();
                 initDecks();
 
-                SaveData newSaveData = new SaveData(Game.storyModeCharName, stage, saveData.currentEnemyName);
-                saveData.savedGame = false;
+                SaveData newSaveData = new SaveData(Game.storyModeCharName, stage, saveData.currentEnemyName);                
                 saveData = newSaveData;
+                saveData.savedGame = false;
+                saveData.selectedStage = true;
                 // initialize saved cards in case of quit out
                 saveData.playerDeck = playersDeck;
                 saveData.playerHolster = playersHolster;

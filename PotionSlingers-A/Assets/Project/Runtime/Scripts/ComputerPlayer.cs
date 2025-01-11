@@ -409,8 +409,8 @@ public class ComputerPlayer : CardPlayer
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("Maskid_Attack");
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Maskid_Attack");
-            // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
-            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1f);
+            // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
             // basic enemy that does 1-3 damage per turn
             damage = rng.Next(1, 4);
 

@@ -30,7 +30,8 @@ public class MainMenu : MonoBehaviour
 	public GameManager gameManager;
 
 	public List<Character> characters;
-	public int charSelectIndex = 0;
+    public List<Character> demoCharacters;
+    public int charSelectIndex = 0;
 
 	public GameObject lobbyMenu;
 
@@ -187,7 +188,7 @@ public class MainMenu : MonoBehaviour
 	{
         // SteamAPI.Shutdown();
         Application.Quit();
-		Invoke("InfiniteLoop", 2f);
+		// Invoke("InfiniteLoop", 2f);
 	}
 
 	void Update()
