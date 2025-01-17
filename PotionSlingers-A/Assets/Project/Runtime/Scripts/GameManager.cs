@@ -481,6 +481,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void startEndDemo()
+    {
+        Debug.Log("Starting end dialogue after demo is done");
+        dialogBox.SetActive(true);
+        dialog.initEndDemoDialog();
+    }
+
     public void advanceStage()
     {
         Debug.Log("Advancing a stage in story mode");
@@ -530,7 +537,12 @@ public class GameManager : MonoBehaviour
         SaveSystem.SaveGameData(saveData);
         // Game.ServerChangeScene("StoryMode");
         // advanceStageUI.SetActive(true);
-        FadeIn(advanceStageUI);
+        if (players[1].charName == "Singelotte")
+        {
+            Invoke("startEndDemo", 4f);
+        }
+        else
+            FadeIn(advanceStageUI);
         // StartCoroutine(goToStory());
         // SceneManager.LoadScene("StoryMode");
     }
@@ -1112,6 +1124,11 @@ public class GameManager : MonoBehaviour
                 {
                     Debug.Log("Singelotte was just beaten... This should give the player an achievement!!!!!");
                     SteamUserStats.SetAchievement("BEAT_STAGE_1");
+                    Debug.Log("Starting end dialogue after demo is done");
+                    // dialogBox.SetActive(true);
+                    // dialog.initEndDemoDialog();
+                    Invoke("startEndDemo", 4f);
+                    return;
                 }
 
                 Debug.Log("Advancing a stage in story mode");
@@ -3078,6 +3095,24 @@ public class GameManager : MonoBehaviour
                     gp.CmdCheckFlip(currentPlayerName);
                 }
             }
+            return;
+        }
+
+        if (players[myPlayerIndex].isBolo && players[myPlayerIndex].pips >= 12 && !players[myPlayerIndex].character.flipped)
+        {
+            players[myPlayerIndex].subPips(12);
+            players[myPlayerIndex].character.canBeFlipped = true;
+            players[myPlayerIndex].character.flipCard();
+            players[myPlayerIndex].character.menu.SetActive(false);
+            players[myPlayerIndex].character.canBeFlipped = false;
+            sendSuccessMessage(11);
+            return;
+        }
+
+        if (players[myPlayerIndex].isBolo && players[myPlayerIndex].pips < 12 && !players[myPlayerIndex].character.flipped)
+        {
+            sendErrorMessage(11);
+            players[myPlayerIndex].character.menu.SetActive(false);
             return;
         }
 

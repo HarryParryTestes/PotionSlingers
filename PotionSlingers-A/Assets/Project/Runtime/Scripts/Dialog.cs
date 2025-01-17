@@ -64,6 +64,16 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         Bolotalk.SetActive(true);
     }
 
+    public void initEndDemoDialog()
+    {
+        textBoxCounter = 45;
+        textInfo = "Good Job, You won! This marks the end of the demo currently.\n\nWishlist us on Steam, join the Discord, and follow " +
+            "us on social\nmedia for development updates and an upcoming Beta Test!\n\nThank you so much for playing!!!";
+        ActivateText(dialogBox);
+        Boloidle.SetActive(false);
+        Bolotalk.SetActive(true);
+    }
+
     public void ActivateText(TMPro.TextMeshProUGUI textBox)
     {
         StartCoroutine(AnimateText(textBox));
@@ -310,6 +320,14 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
+        else if (textBoxCounter == 46)
+        {
+            SceneManager.LoadScene("TitleMenu");
+        }
+        else if (textBoxCounter == 47)
+        {
+            SceneManager.LoadScene("TitleMenu");
+        }
     }
 
     public void endTutorialDialog()
@@ -471,7 +489,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         {
             directions.SetActive(true);
             directionBox.text = "Drag a card from your holster " +
-                "to the\nmarket button to sell it!";
+                "to the\ncoin icon to sell it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -528,6 +546,14 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
                 "health down to 0!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 46)
+        {
+            SceneManager.LoadScene("TitleMenu");
+        }
+        else if (textBoxCounter == 47)
+        {
+            SceneManager.LoadScene("TitleMenu");
         }
     }             
 }
