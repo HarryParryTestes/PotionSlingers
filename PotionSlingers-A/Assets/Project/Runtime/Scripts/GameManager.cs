@@ -1254,7 +1254,7 @@ public class GameManager : MonoBehaviour
                 p3.SetActive(false);
                 p4.SetActive(false);
                 break;
-            case 1:
+            case 2:
                 numPlayers = 2;
                 // players[1].gameObject.AddComponent<ComputerPlayer>();
                 players[1].turnOn();
@@ -1271,7 +1271,7 @@ public class GameManager : MonoBehaviour
                 players[1].deck.gameObject.SetActive(false);
                 p2.SetActive(true);
                 break;
-            case 2:
+            case 1:
                 numPlayers = 2;
                 // players[1].gameObject.AddComponent<ComputerPlayer>();
                 players[1].turnOn();
@@ -1296,6 +1296,41 @@ public class GameManager : MonoBehaviour
                 players[1].name = "Crowpunk";
                 playerTopName.text = players[1].charName;
                 players[1].character.onCharacterClick("Crowpunk");
+                players[1].checkCharacter();
+                // update this however you see fit
+                players[1].hpCubes = 1;
+                players[1].hp = 10;
+                players[1].updateHealthUI();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
+                p2.SetActive(true);
+                break;
+            case 4:
+                numPlayers = 2;
+                // players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].turnOn();
+                players[1].charName = "Reets";
+                players[1].name = "Reets";
+                playerTopName.text = players[1].charName;
+                players[1].character.onCharacterClick("Reets");
+                players[1].checkCharacter();
+                // update this however you see fit
+                players[1].hpCubes = 1;
+                players[1].hp = 10;
+                players[1].updateHealthUI();
+                players[1].holster.gameObject.SetActive(false);
+                players[1].deck.gameObject.SetActive(false);
+                p2.SetActive(true);
+                break;
+            case 5:
+                SteamUserStats.SetAchievement("ENDLESS_1");
+                numPlayers = 2;
+                // players[1].gameObject.AddComponent<ComputerPlayer>();
+                players[1].turnOn();
+                players[1].charName = "Saltimbocca";
+                players[1].name = "Saltimbocca";
+                playerTopName.text = players[1].charName;
+                players[1].character.onCharacterClick("Saltimbocca");
                 players[1].checkCharacter();
                 // update this however you see fit
                 players[1].hpCubes = 1;
@@ -4595,6 +4630,16 @@ public class GameManager : MonoBehaviour
                     SteamUserStats.SetAchievement("THROW_10_POTIONS");
                 }
 
+                if (potions >= 100)
+                {
+                    SteamUserStats.SetAchievement("THROW_100_POTIONS");
+                }
+
+                if (potions >= 500)
+                {
+                    SteamUserStats.SetAchievement("THROW_500_POTIONS");
+                }
+
                 if (artifacts >= 10)
                 {
                     SteamUserStats.SetAchievement("USE_10_ARTIFACTS");
@@ -4881,18 +4926,37 @@ public class GameManager : MonoBehaviour
             // if character's name matches your Steam username
             if (SteamFriends.GetPersonaName().ToString() == players[myPlayerIndex].name)
             {
+                Debug.Log("Username matched, checking stats");
+
                 SteamUserStats.GetStat("potions_thrown", out potions);
                 SteamUserStats.GetStat("artifacts_used", out artifacts);
                 SteamUserStats.GetStat("pips_spent", out pips);
 
+                Debug.Log("Potions before: " + potions);
+                Debug.Log("Artifacts before: " + artifacts);
+                Debug.Log("Pips before: " + pips);
 
                 potions += players[myPlayerIndex].potionsThrown;
                 artifacts += players[myPlayerIndex].artifactsUsed;
                 pips += players[myPlayerIndex].pipsUsedThisTurn;
 
+                Debug.Log("Potions after: " + potions);
+                Debug.Log("Artifacts after: " + artifacts);
+                Debug.Log("Pips after: " + pips);
+
                 if (potions >= 10)
                 {
                     SteamUserStats.SetAchievement("THROW_10_POTIONS");
+                }
+
+                if (potions >= 100)
+                {
+                    SteamUserStats.SetAchievement("THROW_100_POTIONS");
+                }
+
+                if (potions >= 500)
+                {
+                    SteamUserStats.SetAchievement("THROW_500_POTIONS");
                 }
 
                 if (artifacts >= 10)

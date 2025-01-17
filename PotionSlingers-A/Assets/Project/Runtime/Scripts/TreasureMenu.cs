@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Steamworks;
 
 public class TreasureMenu : MonoBehaviour
 {
@@ -115,7 +116,21 @@ public class TreasureMenu : MonoBehaviour
 
         if(card.card.cardType == "Fashion")
         {
+            SteamUserStats.SetAchievement("FASHIONISTA_1");
+
+            int fashion;
+
             Debug.Log("Adding fashion!!!");
+            SteamUserStats.GetStat("fashion", out fashion);
+            fashion++;
+
+            if(fashion >= 5)
+                SteamUserStats.SetAchievement("FASHIONISTA_2");
+
+            SteamUserStats.SetStat("fashion", fashion);
+
+            SteamUserStats.StoreStats();
+
             data.playerFashion.Add(card.card.name);
         } else
             data.playerDeck.Add(card.card.name);

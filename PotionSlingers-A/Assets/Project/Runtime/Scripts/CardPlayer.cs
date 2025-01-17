@@ -663,7 +663,8 @@ public class CardPlayer : MonoBehaviour
         playerHP.gameObject.SetActive(false);
         playerHPCubes.GetComponent<Image>().DOFade(0, 1.5f);
         playerHPCubes.gameObject.SetActive(false);
-        playerHPCubes.transform.GetChild(0).GetComponent<Image>().DOFade(0, 1.5f);
+        // check and see if you need to add this back in or not
+        // playerHPCubes.transform.GetChild(0).GetComponent<Image>().DOFade(0, 1.5f);
         // playerHPCubes.transform.GetChild(0).gameObject.SetActive(false);
         // playerTopName.gameObject.transform.parent.gameObject.SetActive(false);
         StartCoroutine(turnOff());

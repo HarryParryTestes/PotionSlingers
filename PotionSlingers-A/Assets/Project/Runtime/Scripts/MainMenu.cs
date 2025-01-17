@@ -156,8 +156,18 @@ public class MainMenu : MonoBehaviour
 		Debug.Log("Experience Points: " + points);
 		Debug.Log("Experience Level: " + level);
 
+		if(level >= 5)
+		{
+            SteamUserStats.SetAchievement("REACH_LEVEL_5");
+        }
 
-		handleMaxValue();
+        if (level >= 10)
+        {
+            SteamUserStats.SetAchievement("REACH_LEVEL_10");
+        }
+
+
+        handleMaxValue();
 		// float numbers = (float)points / (float)levelBar.maxValue;
 		levelBar.value = points;
 		expText.text = points + " / " + levelBar.maxValue;

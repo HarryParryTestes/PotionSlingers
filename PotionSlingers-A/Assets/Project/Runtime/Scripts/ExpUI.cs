@@ -81,6 +81,9 @@ public class ExpUI : MonoBehaviour
 
             }
 
+            if (cp.name == SteamFriends.GetPersonaName().ToString())
+                return;
+
             Debug.Log("Adding " + pointsToAdd + " points!");
             points += pointsToAdd;
             // add points here
