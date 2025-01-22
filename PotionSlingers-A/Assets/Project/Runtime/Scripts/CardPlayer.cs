@@ -1197,9 +1197,10 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
-        if (stuff == 0)
+        if (stuff == 4)
         {
             Debug.Log("No room in your Holster!!!");
+            GameManager.manager.sendMessage("No room in your Holster!");
             return;
         }
 
@@ -1211,8 +1212,9 @@ public class CardPlayer : MonoBehaviour
             {
                 if (card.card.cardName == "placeholder")
                 {
-                    Card temp = deck.popCard();
-                    card.updateCard(temp);
+                    // Card temp = deck.popCard();
+                    // card.updateCard(temp);
+                    StartCoroutine(GameManager.manager.DeckAnimation(card, this));
                     // should reets cycle be infinite or limited to once per turn???
                     // reetsCycle = true;
                     GameManager.manager.sendMessage("Added a card into your holster!");

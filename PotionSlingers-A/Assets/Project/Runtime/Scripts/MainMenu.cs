@@ -38,6 +38,7 @@ public class MainMenu : MonoBehaviour
     public TMPro.TextMeshProUGUI stat1;
     public TMPro.TextMeshProUGUI stat2;
     public TMPro.TextMeshProUGUI stat3;
+    public TMPro.TextMeshProUGUI stat4;
 
     public TMPro.TextMeshProUGUI player1Name;
 	public TMPro.TextMeshProUGUI player2Name;
@@ -401,12 +402,15 @@ public class MainMenu : MonoBehaviour
         int potions;
         int artifacts;
         int pips;
+		int fashion;
         SteamUserStats.GetStat("potions_thrown", out potions);
         SteamUserStats.GetStat("artifacts_used", out artifacts);
         SteamUserStats.GetStat("pips_spent", out pips);
+        SteamUserStats.GetStat("fashion", out fashion);
         stat1.text = "Potions thrown:  " + potions;
         stat2.text = "Artifacts used:  " + artifacts;
         stat3.text = "Pips spent:  " + pips;
+        stat4.text = "Fashion items collected:  " + fashion;
     }
 
 	public void selectCharNameRight()

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class BonusMenuUIManager : MonoBehaviour
 {
@@ -32,7 +33,11 @@ public class BonusMenuUIManager : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        GetComponent<CanvasGroup>().alpha += Time.deltaTime * 1.5f;
+        // slower fade in for treasure menu
+        if(SceneManager.GetActiveScene().name == "StoryMode")
+            GetComponent<CanvasGroup>().alpha += Time.deltaTime * 1.3f;
+        else
+            GetComponent<CanvasGroup>().alpha += Time.deltaTime * 1.5f;
     }
 
     void changeAlpha()

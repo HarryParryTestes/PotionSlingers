@@ -104,6 +104,7 @@ namespace Map
             {
                 transition.GetComponent<SceneTransition>().treasureMenu.SetActive(true);
                 transition.GetComponent<SceneTransition>().treasureMenu.GetComponent<TreasureMenu>().chooseCards();
+                transition.GetComponent<SceneTransition>().treasureMenu.GetComponent<TreasureMenu>().treasureAnimInit();
                 return;
             }
 

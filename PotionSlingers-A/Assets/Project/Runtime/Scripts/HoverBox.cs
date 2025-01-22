@@ -55,10 +55,14 @@ public class HoverBox : MonoBehaviour
         {
             textBox.text = "Attacks:\nDeal 1-4 damage\nSteal a random card from your holster";
         }
-        if (cp.charName == "Bag o' Snakes" || cp.charName == "Bag o' Snakes+" ||
-            cp.charName == "Fingas" || cp.charName == "Fingas+")
+        if (cp.charName == "Bag o' Snakes" || cp.charName == "Bag o' Snakes+")
         {
-            textBox.text = "Attacks:\nDeal 1-4 damage";
+            textBox.text = "Attacks:\nDeal 1-4 damage\nStun a card in your holster for one turn";
+        }
+
+        if (cp.charName == "Fingas" || cp.charName == "Fingas+")
+        {
+            textBox.text = "Attacks:\nDeal 1-4 damage\nGain 2 shield";
         }
 
         if (cp.charName == "Dippit" || cp.charName == "Maskid" || cp.charName == "Dippit+" || cp.charName == "Maskid+")
@@ -69,7 +73,7 @@ public class HoverBox : MonoBehaviour
         // update this with the characters
         if (cp.charName == "Singelotte")
         {   
-            textBox.text = "Attacks: \nDeal 4 damage\nSpice up a card in your holster\nSpice up a card in the market";
+            textBox.text = "Attacks: \nDeal 4 damage\nSpice up 2 cards in your holster\nSpice up 2 cards in the market";
         }
         if (cp.charName == "Bolo")
         {

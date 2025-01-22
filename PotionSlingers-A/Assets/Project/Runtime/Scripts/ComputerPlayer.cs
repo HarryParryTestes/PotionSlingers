@@ -155,12 +155,12 @@ public class ComputerPlayer : CardPlayer
         int f = 0;
         foreach (CardDisplay cd in GameManager.manager.playerHolster.cardList)
         {
-            if (cd.card.name == "placeholder")
+            if (cd.card.name == "placeholder" || cd.spicy)
                 f++;
         }
         if (f == 4)
         {
-            GameManager.manager.sendMessage("Spiced up a card in your holster!");
+            GameManager.manager.sendMessage("Spiced up cards in your holster!");
             return;
         }
 
@@ -186,7 +186,7 @@ public class ComputerPlayer : CardPlayer
             return;
         }
         GameManager.manager.playerHolster.cardList[holsterNum].makeSpicy();
-        GameManager.manager.sendMessage("Spiced up a card in your holster!");
+        GameManager.manager.sendMessage("Spiced up cards in your holster!");
     }
 
     public int pickRandomHolsterCardCrow()
@@ -224,6 +224,40 @@ public class ComputerPlayer : CardPlayer
 
         // GameManager.manager.sendMessage("Spiced up a card in your holster!");
         return holsterNum;
+    }
+
+    public void spiceCard()
+    {
+        int cardNum = rng.Next(1, 7);
+        switch (cardNum)
+        {
+            case 1:
+                GameManager.manager.md1.cardDisplay1.makeSpicy();
+                // add DOTween animations for spicy magic here
+                break;
+            case 2:
+                GameManager.manager.md1.cardDisplay2.makeSpicy();
+                break;
+            case 3:
+                GameManager.manager.md1.cardDisplay3.makeSpicy();
+                break;
+            case 4:
+                GameManager.manager.md2.cardDisplay1.makeSpicy();
+                break;
+            case 5:
+                GameManager.manager.md2.cardDisplay2.makeSpicy();
+                break;
+            case 6:
+                GameManager.manager.md2.cardDisplay3.makeSpicy();
+                break;
+            default:
+                break;
+        }
+        GameManager.manager.sendMessage("Spiced up cards in the market!");
+        this.gameObject.GetComponent<CardPlayer>().animator.Play("SingePurpleAttack");
+        // MATTEO: Add Singelotte sfx
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Singe_Spell");
+        this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.2f);
     }
 
     public IEnumerator subHealth(int damage)
@@ -271,40 +305,14 @@ public class ComputerPlayer : CardPlayer
                     break;
                 // spicy holster card
                 case 2:
-                    int cardNum = rng.Next(1, 7);
-                    switch (cardNum)
-                    {
-                        case 1:
-                            GameManager.manager.md1.cardDisplay1.makeSpicy();
-                            // add DOTween animations for spicy magic here
-                            break;
-                        case 2:
-                            GameManager.manager.md1.cardDisplay2.makeSpicy();
-                            break;
-                        case 3:
-                            GameManager.manager.md1.cardDisplay3.makeSpicy();
-                            break;
-                        case 4:
-                            GameManager.manager.md2.cardDisplay1.makeSpicy();
-                            break;
-                        case 5:
-                            GameManager.manager.md2.cardDisplay2.makeSpicy();
-                            break;
-                        case 6:
-                            GameManager.manager.md2.cardDisplay3.makeSpicy();
-                            break;
-                        default:
-                            break;
-                    }
-                    GameManager.manager.sendMessage("Spiced up a card in the market!");
-                    this.gameObject.GetComponent<CardPlayer>().animator.Play("SingePurpleAttack");
-                    // MATTEO: Add Singelotte sfx
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Singe_Spell");
-                    this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 2.2f);
+                    // do it twice fuck it
+                    spiceCard();
+                    spiceCard();
                     GameManager.manager.Invoke("endTurn", 2.5f);
                     break;
                 // spicy market card
                 case 3:
+                    pickRandomHolsterCard();
                     pickRandomHolsterCard();
                     this.gameObject.GetComponent<CardPlayer>().animator.Play("SingeAttack");
                     // MATTEO: Add Singelotte sfx
@@ -373,8 +381,8 @@ public class ComputerPlayer : CardPlayer
             {
                 Debug.Log("Adding shields!!!");
                 GetComponent<Image>().DOColor(GameManager.manager.grayedColor, 0.5f).SetLoops(2, LoopType.Yoyo);
-                GetComponent<CardPlayer>().addShields(2);
-                GameManager.manager.sendMessage("CrowPunk gained 2 shield!");
+                GetComponent<CardPlayer>().addShields(1);
+                GameManager.manager.sendMessage("CrowPunk gained 1 shield!");
                 GameManager.manager.Invoke("endTurn", 2f);
                 return;
             }
@@ -440,8 +448,8 @@ public class ComputerPlayer : CardPlayer
             {
                 Debug.Log("Adding shields!!!");
                 GetComponent<Image>().DOColor(GameManager.manager.grayedColor, 0.5f).SetLoops(2, LoopType.Yoyo);
-                GetComponent<CardPlayer>().addShields(4);
-                GameManager.manager.sendMessage("Fingas gained 4 shield!");
+                GetComponent<CardPlayer>().addShields(2);
+                GameManager.manager.sendMessage("Fingas gained 2 shield!");
                 GameManager.manager.Invoke("endTurn", 2f);
                 return;
             }

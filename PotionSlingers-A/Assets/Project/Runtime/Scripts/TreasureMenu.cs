@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Steamworks;
+using DG.Tweening;
 
 public class TreasureMenu : MonoBehaviour
 {
@@ -21,6 +22,41 @@ public class TreasureMenu : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void treasureAnimInit()
+    {
+        StartCoroutine(treasureAnimation());
+    }
+
+    public void FadeIn(GameObject obj)
+    {
+        obj.SetActive(true);
+        if (obj.GetComponent<BonusMenuUIManager>() == null)
+            obj.AddComponent<BonusMenuUIManager>();
+        if (obj.GetComponent<CanvasGroup>() == null)
+            obj.AddComponent<CanvasGroup>();
+        obj.GetComponent<BonusMenuUIManager>().setAlphaZero();
+    }
+
+
+    public IEnumerator treasureAnimation()
+    {
+        FadeIn(this.gameObject);
+        foreach (CardDisplay cd in cardDisplays)
+        {
+            cd.gameObject.SetActive(false);
+        }
+
+        foreach (CardDisplay cd in cardDisplays)
+        {
+            Vector3 currentPosition = cd.transform.position;          
+            cd.transform.position = new Vector3(currentPosition.x + 20f, currentPosition.y - 20f, currentPosition.z);
+            cd.gameObject.SetActive(true);
+            cd.transform.DOJump(currentPosition, 10f, 1, 1f, false);
+            cd.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+            yield return new WaitForSeconds(0.5f);
+        }       
     }
 
     public int GetIntHat()
@@ -45,27 +81,6 @@ public class TreasureMenu : MonoBehaviour
 
     public int GetInt()
     {
-        /*
-        System.Random rng = new System.Random();
-        int i = rng.Next(cardPool.Count);
-        if (cardPool[i].name == cardDisplays[0].card.name)
-        {
-            Debug.Log("Duplicate card!");
-            return GetInt();
-        }
-            
-        if (cardPool[i].name == cardDisplays[1].card.name)
-        {
-            Debug.Log("Duplicate card!");
-            return GetInt();
-        }
-        if (cardPool[i].name == cardDisplays[2].card.name)
-        {
-            Debug.Log("Duplicate card!");
-            return GetInt();
-        }
-        return i;
-        */
 
         System.Random rng = new System.Random();
 

@@ -3301,12 +3301,18 @@ public class GameManager : MonoBehaviour
             StartCoroutine(MoveMarketCardToTrash(obj3));
 
             Card card = md1.popCard();
+            if (md1.cardDisplay1.spicy)
+                md1.cardDisplay1.spicy = false;
             md1.cardDisplay1.updateCard(card);
 
             Card card2 = md1.popCard();
+            if (md1.cardDisplay2.spicy)
+                md1.cardDisplay2.spicy = false;
             md1.cardDisplay2.updateCard(card2);
 
             Card card3 = md1.popCard();
+            if (md1.cardDisplay3.spicy)
+                md1.cardDisplay3.spicy = false;
             md1.cardDisplay3.updateCard(card3);
 
         }
@@ -3333,12 +3339,18 @@ public class GameManager : MonoBehaviour
             StartCoroutine(MoveMarketCardToTrash(obj3));
 
             Card card = md2.popCard();
+            if (md2.cardDisplay1.spicy)
+                md2.cardDisplay1.spicy = false;
             md2.cardDisplay1.updateCard(card);
 
             Card card2 = md2.popCard();
+            if (md2.cardDisplay2.spicy)
+                md2.cardDisplay2.spicy = false;
             md2.cardDisplay2.updateCard(card2);
 
             Card card3 = md2.popCard();
+            if (md2.cardDisplay3.spicy)
+                md2.cardDisplay3.spicy = false;
             md2.cardDisplay3.updateCard(card3);
 
         }
@@ -4824,7 +4836,7 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("Spicy card description box!!!");
             dialog.directions.SetActive(true);
-            dialog.directionBox.text = "Spicy cards in your holster do 2 damage to you at the start of your turn!\n\nTrash or throw the cards to get rid of them!";
+            dialog.directionBox.text = "Spicy cards in your holster do 2 damage to you at the start of your turn!\n\nTrash, throw, or sell the cards to get rid of them!";
         }
 
         // If this client isn't the current player, display error message.

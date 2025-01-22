@@ -81,6 +81,7 @@ public class SceneTransition : MonoBehaviour
             Debug.Log("You won the carnival game! Choose your prize!");
             treasureMenu.SetActive(true);
             treasureMenu.GetComponent<TreasureMenu>().chooseHats();
+            StartCoroutine(treasureMenu.GetComponent<TreasureMenu>().treasureAnimation());
         }
 
         switch (saveData.stage)
