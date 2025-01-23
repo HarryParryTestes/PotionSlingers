@@ -2038,10 +2038,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Load Potion");
 
-        // DONE?: Send potion with loadedCardInt to loaded CardDisplay of card in selectedCardInt
-        // test for protocol, must replace parameters later
-        // bool connected = networkManager.sendLoadRequest(0, 0);
-
         if (Game.multiplayer)
         {
             foreach (GamePlayer gp in Game.GamePlayers)
@@ -3566,6 +3562,7 @@ public class GameManager : MonoBehaviour
                 Card card = player.deck.popCard();
                 player.addShields(2);
                 checkShield(player);
+                return;
             }
 
             // slapshot butt check
@@ -3655,6 +3652,7 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+
         }
     }
 

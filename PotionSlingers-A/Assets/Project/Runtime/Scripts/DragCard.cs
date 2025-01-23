@@ -369,6 +369,33 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+
+        if (SceneManager.GetActiveScene().name == "StoryMode")
+        {
+            /*
+            if (!clicked)
+            {
+                clicked = true;
+                Vector3 pos = new Vector3(5 * (Screen.width / 1920f), 10 * (Screen.height / 1080f), 0);
+                if (loaded)
+                {
+                    transform.DOMove(pos, 0.5f).SetId(gameObject.name);
+                    transform.DOScale(4.4f, 0.5f).SetId(gameObject.name);
+                    return;
+                }
+            } else
+            {
+                clicked = false;
+                DOTween.Pause(gameObject.name);
+                transform.DOScale(1f, 0.3f).SetId(gameObject.name);
+                transform.DORotate(cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+                Vector2 thing = new Vector2(0, 647.5f * (Screen.height / 1080f));
+                transform.DOMove(originalPosition - thing, 0.3f).SetId(gameObject.name);
+            }
+            */
+            return;            
+        }
+
         // experimenting
         // gameObject.GetComponent<CardDisplay>().colorCard();
 
@@ -939,6 +966,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
+        if(SceneManager.GetActiveScene().name == "StoryMode")
+        {
+            transform.DOScale(1.25f, 0.25f).SetId(gameObject.name);
+            return;
+        }
+
         if (this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder" && !clicked)
         {
             if (market && !GameManager.manager.marketSelected)
@@ -1010,6 +1043,12 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
+        if (SceneManager.GetActiveScene().name == "StoryMode")
+        {
+            transform.DOScale(1f, 0.25f).SetId(gameObject.name);
+            return;
+        }
+
         if (!clicked && !grabbed && this.gameObject.GetComponent<CardDisplay>().card.cardName != "placeholder")
         {
 

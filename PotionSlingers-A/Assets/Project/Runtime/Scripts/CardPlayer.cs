@@ -1214,6 +1214,7 @@ public class CardPlayer : MonoBehaviour
                 {
                     // Card temp = deck.popCard();
                     // card.updateCard(temp);
+                    GameManager.manager.checkShield(this);
                     StartCoroutine(GameManager.manager.DeckAnimation(card, this));
                     // should reets cycle be infinite or limited to once per turn???
                     // reetsCycle = true;

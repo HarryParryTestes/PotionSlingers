@@ -51,6 +51,9 @@ public class SceneTransition : MonoBehaviour
     public List<string> slingerPool = new List<string>();
     public System.Random rng = new System.Random();
 
+    public Deck playerDeck;
+    public Holster playerHolster;
+
     public MyNetworkManager game;
     public MyNetworkManager Game
     {
