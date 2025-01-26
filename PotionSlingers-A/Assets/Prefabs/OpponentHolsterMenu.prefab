@@ -33,7 +33,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2887404183121189830}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -98,10 +98,16 @@ MonoBehaviour:
   aPotion: {fileID: 0}
   vesselSlot1: {fileID: 0}
   vesselSlot2: {fileID: 0}
+  vesselSlot3: {fileID: 0}
+  vesselSlot4: {fileID: 0}
   vPotion1: {fileID: 0}
   vPotion2: {fileID: 0}
+  vPotion3: {fileID: 0}
+  vPotion4: {fileID: 0}
+  crucibleCards: []
   flames: {fileID: 0}
   spicy: 0
+  durability: 5
 --- !u!114 &2887404181253256401
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,7 +197,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2887404183121189830}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -256,10 +262,16 @@ MonoBehaviour:
   aPotion: {fileID: 0}
   vesselSlot1: {fileID: 0}
   vesselSlot2: {fileID: 0}
+  vesselSlot3: {fileID: 0}
+  vesselSlot4: {fileID: 0}
   vPotion1: {fileID: 0}
   vPotion2: {fileID: 0}
+  vPotion3: {fileID: 0}
+  vPotion4: {fileID: 0}
+  crucibleCards: []
   flames: {fileID: 0}
   spicy: 0
+  durability: 5
 --- !u!114 &2887404181690190645
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +361,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2887404183121189830}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -414,10 +426,16 @@ MonoBehaviour:
   aPotion: {fileID: 0}
   vesselSlot1: {fileID: 0}
   vesselSlot2: {fileID: 0}
+  vesselSlot3: {fileID: 0}
+  vesselSlot4: {fileID: 0}
   vPotion1: {fileID: 0}
   vPotion2: {fileID: 0}
+  vPotion3: {fileID: 0}
+  vPotion4: {fileID: 0}
+  crucibleCards: []
   flames: {fileID: 0}
   spicy: 0
+  durability: 5
 --- !u!114 &2887404181993329800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +523,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2887404183121189830}
-  m_RootOrder: 6
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -788,7 +806,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2887404183121189830}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -853,10 +871,16 @@ MonoBehaviour:
   aPotion: {fileID: 0}
   vesselSlot1: {fileID: 0}
   vesselSlot2: {fileID: 0}
+  vesselSlot3: {fileID: 0}
+  vesselSlot4: {fileID: 0}
   vPotion1: {fileID: 0}
   vPotion2: {fileID: 0}
+  vPotion3: {fileID: 0}
+  vPotion4: {fileID: 0}
+  crucibleCards: []
   flames: {fileID: 0}
   spicy: 0
+  durability: 5
 --- !u!114 &2887404182746375233
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1021,11 +1045,11 @@ RectTransform:
   m_Children:
   - {fileID: 2887404183285857478}
   - {fileID: 2887404182901240656}
+  - {fileID: 2887404182506899420}
   - {fileID: 2887404181993329801}
   - {fileID: 2887404181690190642}
   - {fileID: 2887404181253256430}
   - {fileID: 2887404182746375262}
-  - {fileID: 2887404182506899420}
   - {fileID: 2887404182537815657}
   m_Father: {fileID: 0}
   m_RootOrder: 0

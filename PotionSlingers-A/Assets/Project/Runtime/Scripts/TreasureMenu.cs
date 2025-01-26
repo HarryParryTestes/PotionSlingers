@@ -12,6 +12,11 @@ public class TreasureMenu : MonoBehaviour
     public List<CardDisplay> cardDisplays;
     public TMPro.TextMeshProUGUI description;
 
+    public GameObject currencyHoverBox;
+    public GameObject healthHoverBox;
+    public GameObject deck;
+    public GameObject holster;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,6 +48,11 @@ public class TreasureMenu : MonoBehaviour
     public IEnumerator treasureAnimation()
     {
         FadeIn(this.gameObject);
+        FadeIn(this.transform.GetChild(9).GetChild(3).gameObject);
+        currencyHoverBox.SetActive(false);
+        healthHoverBox.SetActive(false);
+        deck.SetActive(false);
+        holster.SetActive(false);
         foreach (CardDisplay cd in cardDisplays)
         {
             cd.gameObject.SetActive(false);
@@ -50,9 +60,11 @@ public class TreasureMenu : MonoBehaviour
 
         foreach (CardDisplay cd in cardDisplays)
         {
-            Vector3 currentPosition = cd.transform.position;          
+            Vector3 currentPosition = cd.transform.position;
+            // cd.GetComponent<CardHover>().originalPosition = currentPosition;
             cd.transform.position = new Vector3(currentPosition.x + 20f, currentPosition.y - 20f, currentPosition.z);
             cd.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
             cd.transform.DOJump(currentPosition, 10f, 1, 1f, false);
             cd.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
             yield return new WaitForSeconds(0.5f);
@@ -151,5 +163,10 @@ public class TreasureMenu : MonoBehaviour
             data.playerDeck.Add(card.card.name);
         data.carnivalWin = false;
         SaveSystem.SaveGameData(data);
+        this.gameObject.SetActive(false);
+        currencyHoverBox.SetActive(true);
+        healthHoverBox.SetActive(true);
+        deck.SetActive(true);
+        holster.SetActive(true);
     }
 }
