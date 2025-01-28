@@ -72,6 +72,7 @@ public class ComputerPlayer : CardPlayer
         else if ((artifacts + vessels) >= 2)
         {
             // exclusively buy potions as ammunition
+            Debug.Log("Exclusively buying potions");
             numero = rng.Next(1, 4);
         }
         else
@@ -549,8 +550,9 @@ public class ComputerPlayer : CardPlayer
         if (easy)
         {
             AITurn();
-        }
-        AITurn();
+            yield break;
+        } else
+            AITurn();
     }
 
     public void AITurn()
