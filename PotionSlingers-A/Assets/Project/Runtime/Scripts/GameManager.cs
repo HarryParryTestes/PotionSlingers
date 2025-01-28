@@ -117,6 +117,7 @@ public class GameManager : MonoBehaviour
     public GameObject noPotionUI;
     public DeckMenuScroll deckDisplay;
     public ExpUI expUI;
+    public GameObject buyMask;
 
     public TMPro.TextMeshProUGUI trashText;
 

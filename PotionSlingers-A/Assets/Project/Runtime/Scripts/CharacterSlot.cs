@@ -271,7 +271,8 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
         // test this and double check
         if(dc != null)
         {
-            if (dc.market && (this.gameObject.name == "DeckPile" || this.gameObject.name == "HolsterTop"))
+            if (dc.market && (this.gameObject.name == "DeckPile" || this.gameObject.name == "HolsterTop" ||
+                this.gameObject.name == "HolsterMask"))
             {
                 Debug.Log("Buy triggered?");
                 if (heldCard.GetComponent<TopMarketBuy>() != null)

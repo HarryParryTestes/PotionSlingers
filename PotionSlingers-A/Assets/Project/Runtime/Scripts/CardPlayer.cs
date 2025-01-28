@@ -3146,9 +3146,15 @@ public class CardPlayer : MonoBehaviour
                 int random = GameManager.manager.rng.Next(0, GameManager.manager.starterPotionCards.Count);
                 if (Game.storyMode && GameManager.manager.players[i].GetComponent<ComputerPlayer>() != null
                     && GameManager.manager.players[i].charName != "Saltimbocca")
+                {
+                    Debug.Log("Continuing");
                     continue;
+                }
                 else
+                {
+                    Debug.Log("Added starter potion");
                     GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCards[random]);
+                }                    
                 // GameManager.manager.players[i].deck.putCardOnTop(GameManager.manager.starterPotionCard);
             }
         }

@@ -918,6 +918,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         // parentAfterDrag = transform.parent;
         // canvasGroup.alpha = 0.5f;
         image.CrossFadeAlpha(0.5f, 0.3f, true);
+        if (market)
+        {
+            GameManager.manager.buyMask.GetComponent<Image>().DOFade(0.5f, 0.3f);
+            GameManager.manager.buyMask.GetComponent<CanvasGroup>().blocksRaycasts = true;
+            GameManager.manager.buyMask.transform.GetChild(0).GetComponent<Image>().CrossFadeAlpha(0.7f, 0.3f, true);
+            GameManager.manager.buyMask.transform.GetChild(0).GetChild(0).GetComponent<Image>().CrossFadeAlpha(0.7f, 0.3f, true);
+            GameManager.manager.buyMask.transform.GetChild(0).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().DOFade(0.7f, 0.3f);
+        }       
         if (canvasGroup != null)
             canvasGroup.blocksRaycasts = false;
         GameManager.manager.canvasGroup.blocksRaycasts = false;
@@ -1172,6 +1180,16 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         clicked = false;
         // canvasGroup.alpha = 1f;
         image.CrossFadeAlpha(1f, 0.3f, true);
+        // GameManager.manager.buyMask.SetActive(false);
+        if (market)
+        {
+            GameManager.manager.buyMask.GetComponent<Image>().DOFade(0f, 0.3f);
+            GameManager.manager.buyMask.GetComponent<CanvasGroup>().blocksRaycasts = false;
+            GameManager.manager.buyMask.transform.GetChild(0).GetComponent<Image>().CrossFadeAlpha(0f, 0.3f, true);
+            GameManager.manager.buyMask.transform.GetChild(0).GetChild(0).GetComponent<Image>().CrossFadeAlpha(0f, 0.3f, true);
+            GameManager.manager.buyMask.transform.GetChild(0).GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().DOFade(0f, 0.3f);
+        }
+        
         if (!market && !loaded)
         {
             if (artifactCard.gameObject.activeInHierarchy)

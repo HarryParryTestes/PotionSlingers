@@ -189,6 +189,21 @@ public class MainMenu : MonoBehaviour
         if (!SteamManager.Initialized) { return; }
     }
 
+    public void openDiscordLink()
+    {
+        Application.OpenURL("https://discord.gg/xjU69XMZ8W");
+    }
+
+    public void openWebsiteLink()
+    {
+        Application.OpenURL("https://www.potionslingers.com/");
+    }
+
+    public void openRulesLink()
+    {
+        Application.OpenURL("https://www.potionslingers.com/s/Potionslingers-Full-Rules.pdf");
+    }
+
     public void InfiniteLoop()
     {
         // Application.Quit();

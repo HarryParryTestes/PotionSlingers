@@ -53,7 +53,7 @@ public class HoverBox : MonoBehaviour
     {
         if (cp.charName == "Crowpunk"  || cp.charName == "Crowpunk+")
         {
-            textBox.text = "Attacks:\nDeal 1-4 damage\nSteal a random card from your holster";
+            textBox.text = "Attacks:\nDeal 1-4 damage\nSteal a random card from your holster\nGain 2 shield";
         }
         if (cp.charName == "Bag o' Snakes" || cp.charName == "Bag o' Snakes+")
         {

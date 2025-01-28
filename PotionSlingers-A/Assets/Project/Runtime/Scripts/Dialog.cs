@@ -271,9 +271,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 32)
         {
             textInfo = "Usually flipping your character requires certain conditions" +
-                "to be met, but just this once, I'll let you flip for free!\n\n" +
+                " to be met, but just this once, I'll let you flip for free!\n\n" +
                 "Try flipping your character! Click on the character card" +
-                "and click FLIP!";
+                " and click FLIP!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -504,9 +504,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 32)
         {
             textInfo = "Usually flipping your character requires certain conditions\n" +
-                "to be met, but just this once, I'll let you flip for free!\n\n" +
+                " to be met, but just this once, I'll let you flip for free!\n\n" +
                 "Try flipping your character! Click on the character card\n" +
-                "and click FLIP!";
+                " and click FLIP!";
             ActivateText(dialogBox);
         }
         else if (textBoxCounter == 33)

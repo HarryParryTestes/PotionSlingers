@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1536
     height: 772.8
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 132
+  controlID: 30762
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 1
-  controlID: 133
+  controlID: 30763
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -165,11 +165,11 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 1149.6
-    height: 500
+    height: 498.4
   m_MinSize: {x: 200, y: 100}
   m_MaxSize: {x: 16192, y: 8096}
   vertical: 0
-  controlID: 134
+  controlID: 30764
 --- !u!114 &8
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -188,12 +188,12 @@ MonoBehaviour:
     x: 0
     y: 0
     width: 237.6
-    height: 500
-  m_MinSize: {x: 200, y: 200}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_ActualView: {fileID: 14}
+    height: 498.4
+  m_MinSize: {x: 201, y: 221}
+  m_MaxSize: {x: 4001, y: 4021}
+  m_ActualView: {fileID: 13}
   m_Panes:
-  - {fileID: 14}
+  - {fileID: 13}
   m_Selected: 0
   m_LastSelected: 0
 --- !u!114 &9
@@ -214,17 +214,17 @@ MonoBehaviour:
     x: 237.6
     y: 0
     width: 912
-    height: 500
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
-  m_ActualView: {fileID: 13}
+    height: 498.4
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_ActualView: {fileID: 12}
   m_Panes:
+  - {fileID: 14}
+  - {fileID: 12}
   - {fileID: 15}
-  - {fileID: 13}
   - {fileID: 16}
   - {fileID: 17}
   - {fileID: 18}
-  - {fileID: 12}
   m_Selected: 1
   m_LastSelected: 0
 --- !u!114 &10
@@ -243,9 +243,9 @@ MonoBehaviour:
   m_Position:
     serializedVersion: 2
     x: 0
-    y: 500
+    y: 498.4
     width: 1149.6
-    height: 222.79999
+    height: 224.4
   m_MinSize: {x: 231, y: 271}
   m_MaxSize: {x: 10001, y: 10021}
   m_ActualView: {fileID: 19}
@@ -289,215 +289,6 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3424c03dd9e533544a90f81267b56ab8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_MinSize: {x: 720, y: 240}
-  m_MaxSize: {x: 4000, y: 4000}
-  m_TitleContent:
-    m_Text: Dialogue
-    m_Image: {fileID: 0}
-    m_Tooltip: 
-  m_Pos:
-    serializedVersion: 2
-    x: 237.6
-    y: 73.6
-    width: 911.6
-    height: 479
-  m_ViewDataDictionary: {fileID: 0}
-  m_OverlayCanvas:
-    m_LastAppliedPresetName: Default
-    m_SaveData: []
-  actorFoldouts:
-    propertiesKeys: 
-    propertiesValues: 
-    fieldsKeys: ffffffff
-    fieldsValues: 00
-  actorFilter: 
-  hideFilteredOutActors: 0
-  actorListSelectedIndex: -1
-  actorTexturesFoldout: 0
-  actorSpritesFoldout: 0
-  showNodeEditor: 1
-  currentConversationID: 3
-  globalSearchText: 
-  globalReplaceText: 
-  globalSearchSpecificConversation: 0
-  globalSearchConversationIndex: -1
-  globalSearchUseRegex: 0
-  databaseFoldouts:
-    database: 1
-    emphasisSettings: 0
-    emphasisSetting: 
-    globalReplace: 0
-    merge: 0
-    export: 0
-    localization: 0
-    stats: 0
-    checkIssues: 0
-    editorSettings: 0
-    AI: 0
-  databaseToMerge: {fileID: 0}
-  conflictingIDRule: 0
-  mergeProperties: 1
-  mergeEmphases: 1
-  mergeActors: 1
-  mergeItems: 1
-  mergeLocations: 1
-  mergeVariables: 1
-  mergeConversations: 1
-  exportFormat: 0
-  chatMapperExportPath: 
-  csvExportPath: 
-  jsonExportPath: 
-  voiceoverExportPath: 
-  languageTextExportPath: 
-  screenplayExportPath: 
-  entrytagFormat: 0
-  encodingType: 4
-  isSearchBarOpen: 0
-  searchString: 
-  searchCaseSensitive: 0
-  currentEntryID: 1
-  itemFoldouts:
-    propertiesKeys: 
-    propertiesValues: 
-    fieldsKeys: 
-    fieldsValues: 
-  itemFilter: 
-  hideFilteredOutItems: 0
-  itemListSelectedIndex: -1
-  questEntrySelectedIdx: -1
-  showCompactQuestEntryList: 1
-  localizationLanguages:
-    languages: []
-    extraEntryFields: []
-    extraQuestFields: []
-    extraItemFields: []
-    importMainTextIndex: -1
-    outputFolder: 
-  exportLocalizationConversationTitle: 0
-  exportLocalizationKeyField: 0
-  exportAssignFieldValues: 0
-  exportLocalizationCreateNewFields: 0
-  localizationKeyField: Articy Id
-  locationFoldouts:
-    propertiesKeys: 
-    propertiesValues: 
-    fieldsKeys: 
-    fieldsValues: 
-  locationFilter: 
-  hideFilteredOutLocations: 0
-  locationListSelectedIndex: -1
-  toolbar:
-    current: 5
-  database: {fileID: 11400000, guid: 8cdc5f312fc738b48987cf68b1a85c5d, type: 2}
-  debug: 0
-  registerCompleteObjectUndo: 1
-  scrollPosition: {x: 0, y: 0}
-  templateFoldouts:
-    templates: 0
-    actors: 0
-    items: 0
-    quests: 0
-    locations: 0
-    conversations: 0
-    dialogueEntries: 0
-    variables: 0
-  variableView:
-    database: {fileID: 11400000, guid: 8cdc5f312fc738b48987cf68b1a85c5d, type: 2}
-    isDialogueEditorWindow: 1
-    variableFilter: 
-    showVariableGroupFoldouts: 0
-    expandedVariableGroups: []
-  watches: []
-  autoUpdateWatches: 0
-  watchUpdateFrequency: 1
-  nextWatchUpdateTime: 9416.2757258
-  watchableVariableNames:
-  - Actor
-  - ActorIndex
-  - Alert
-  - Conversant
-  - ConversantIndex
-  watchableQuestNames: []
-  luaCommand: 
-  zoomLocked: 0
-  _zoom: 0.97
-  canvasRectWidthMultiplier: 1
-  canvasScrollView: {x: 100000, y: 100000}
-  canvasScrollPosition: {x: 0, y: 0}
-  conversationTitles:
-  - Crowpunk / Crowpunk Ambush Reets
-  - Reets / Reets Meets Saltimbocca
-  - Demo Over
-  - Intro
-  - Singelotte Pre-Fight
-  - Crowpunk / Crowpunk Ambush Bolo
-  - Crowpunk / Crowpunk Ambush Isadore
-  - Crowpunk / Crowpunk Ambush Saltimbocca
-  - Reets / Reets Meets Isadore
-  - Reets / Reets Meets Bolo
-  - Salt / Saltimbocca Meets Reets
-  - Salt / Saltimbocca Meets Bolo
-  - Salt / Saltimbocca Meets Isadore
-  - Bolo / Bolo Meets Isadore
-  - Bolo / Bolo Meets Reets
-  - Bolo / Bolo Meets Saltimbocca
-  - Isadore / Isadore Meets Reets
-  - Isadore / Isadore Meets Bolo
-  - Isadore / Isadore Meets Saltimbocca
-  conversationIndex: 2
-  confirmDelete: 1
-  trimWhitespaceAroundPipes: 1
-  conversationTitleFilter: 
-  prevConversationStack:
-  - Crowpunk Ambush Bolo
-  - Crowpunk Ambush Reets
-  - Crowpunk Ambush Bolo
-  - Crowpunk Ambush Reets
-  - Crowpunk Ambush Bolo
-  - Crowpunk Ambush Reets
-  - Crowpunk Ambush Isadore
-  - Reets Meets Saltimbocca
-  - Crowpunk Ambush Saltimbocca
-  - Reets Meets Isadore
-  - Reets Meets Bolo
-  - Reets Meets Isadore
-  - Reets Meets Bolo
-  - Reets Meets Isadore
-  - Reets Meets Bolo
-  - Reets Meets Isadore
-  - Reets Meets Bolo
-  - Reets Meets Isadore
-  - Reets Meets Bolo
-  - Reets Meets Isadore
-  - Crowpunk Ambush Saltimbocca
-  - Reets / Reets Meets Bolo
-  - Reets / Reets Meets Isadore
-  - Reets / Reets Meets Saltimbocca
-  - Crowpunk / Crowpunk Ambush Reets
-  - Crowpunk / Crowpunk Ambush Bolo
-  - Crowpunk / Crowpunk Ambush Isadore
-  - Salt / Saltimbocca Meets Reets
-  - Reets / Reets Meets Saltimbocca
-  - Salt / Saltimbocca Meets Reets
-  - Crowpunk / Crowpunk Ambush Reets
-  - Isadore / Isadore Meets Bolo
-  - Isadore / Isadore Meets Saltimbocca
-  - Reets / Reets Meets Saltimbocca
-  - Reets / Reets Meets Isadore
-  - 
-  nextConversationStack: []
---- !u!114 &13
-MonoBehaviour:
-  m_ObjectHideFlags: 52
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
   m_EditorHideFlags: 1
   m_Script: {fileID: 12015, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
@@ -513,7 +304,7 @@ MonoBehaviour:
     x: 237.6
     y: 73.6
     width: 910
-    height: 479
+    height: 477.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -563,28 +354,28 @@ MonoBehaviour:
       x: 0
       y: 21
       width: 910
-      height: 458
-    m_Scale: {x: 0.5300926, y: 0.5300926}
-    m_Translation: {x: 455, y: 229}
+      height: 456.4
+    m_Scale: {x: 0.52824074, y: 0.52824074}
+    m_Translation: {x: 455, y: 228.2}
     m_MarginLeft: 0
     m_MarginRight: 0
     m_MarginTop: 0
     m_MarginBottom: 0
     m_LastShownAreaInsideMargins:
       serializedVersion: 2
-      x: -858.3406
+      x: -861.3497
       y: -432
-      width: 1716.6812
+      width: 1722.6993
       height: 864
     m_MinimalGUI: 1
-  m_defaultScale: 0.5300926
-  m_LastWindowPixelSize: {x: 1137.5, y: 598.75}
+  m_defaultScale: 0.52824074
+  m_LastWindowPixelSize: {x: 1137.5, y: 596.75}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000000000000
   m_XRRenderMode: 0
   m_RenderTexture: {fileID: 0}
---- !u!114 &14
+--- !u!114 &13
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -607,17 +398,17 @@ MonoBehaviour:
     x: 0
     y: 73.6
     width: 236.6
-    height: 479
+    height: 477.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: c0a50000
-      m_LastClickedID: 0
-      m_ExpandedIDs: e02afaff2e4cfaffe885faff08affaffc4d6faff6af8faff702cfbff6c47fbffd465fbff106dfbffd27efbff0899fbff54a0fbffbcd8fbff00fbfbff1e7dfcfff6e4fcffb4f5fcff3617fdffc240fdffc645fdffd25ffdffea66fdff9290fdff3eaefdff00fefdff4418feff841ffeff6e47feffea87feff268ffefffee5feff26fffeff3020ffff9e3cffff4a54ffff4e54ffff5454ffffce5dffff4499ffff8cf2ffffbef3ffff2efbffff0aa70000f0a70000c2aa0000f42a0200303d020084420200e247020016d202006cdb020084b20300fc570400f25804005a5d0400586104004e620400b666040016190500522b0500a6300500d2340500c8350500343a0500e6aa0500dcab050084c205007ac30500eac70500fc0d0600dc1b0600182e06006c3306001e6f060014700600fc470900e2480900a44c0900764f090052d50900c2de090054110a003a120a00d0180a00282d0a000e2e0a0094360a007a370a0004b70a00eab70a0080be0a0012280b00d6bb0b00bcbc0b00
+      scrollPos: {x: 0, y: 247.6}
+      m_SelectedIDs: 2cee1700
+      m_LastClickedID: 1568300
+      m_ExpandedIDs: 14b7f9ff9063fbfff8bdfbff50e8fbffe419fcff4a38fcff3a09fdff964dfdffe05ffdffb27afdffecc7fdff2216feff6033feff701effff2efbffffd68b0000f48e00000c9000001c920000be4f0200cc5c02004a5e0200f4720400e08e040006fd04002c6b0500987405001ee80500fe2a07009e4a07009e660700dc730700c0b70700a8bd0700eec9070090cd070042cf07002cee1700
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -641,7 +432,7 @@ MonoBehaviour:
       m_IsLocked: 0
     m_CurrentSortingName: TransformSorting
   m_WindowGUID: 78399adfd700b494d98e67d0b77e8085
---- !u!114 &15
+--- !u!114 &14
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -663,8 +454,8 @@ MonoBehaviour:
     serializedVersion: 2
     x: 237.6
     y: 73.6
-    width: 910.80005
-    height: 479
+    width: 910
+    height: 477.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -888,9 +679,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 6.4059243, y: -2.9893072, z: -30.478437}
+    m_Target: {x: 1201.958, y: 87.80195, z: -37.21946}
     speed: 2
-    m_Value: {x: 6.4059243, y: -2.9893072, z: -30.478437}
+    m_Value: {x: 1201.958, y: 87.80195, z: -37.21946}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -941,9 +732,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: 0, y: 0, z: 0, w: 1}
   m_Size:
-    m_Target: 9.137832
+    m_Target: 365.6707
     speed: 2
-    m_Value: 9.137832
+    m_Value: 365.6707
   m_Ortho:
     m_Target: 1
     speed: 2
@@ -968,7 +759,7 @@ MonoBehaviour:
   m_SceneVisActive: 1
   m_LastLockedObject: {fileID: 0}
   m_ViewIsLockedToObject: 0
---- !u!114 &16
+--- !u!114 &15
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -998,8 +789,8 @@ MonoBehaviour:
     m_SaveData: []
   m_LockTracker:
     m_IsLocked: 0
-  m_LastSelectedObjectID: 704128
---- !u!114 &17
+  m_LastSelectedObjectID: -279048
+--- !u!114 &16
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1199,7 +990,7 @@ MonoBehaviour:
   m_CurrentEditor: 1
   m_LayerEditor:
     m_SelectedLayerIndex: 0
---- !u!114 &18
+--- !u!114 &17
 MonoBehaviour:
   m_ObjectHideFlags: 52
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1767,6 +1558,215 @@ MonoBehaviour:
     []\n    },\n    \"m_SerializedDescriptor\": \"VertexDescription.Tangent\"\n}\n\n"
   m_AssetMaybeChangedOnDisk: 0
   m_AssetMaybeDeleted: 0
+--- !u!114 &18
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3424c03dd9e533544a90f81267b56ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MinSize: {x: 720, y: 240}
+  m_MaxSize: {x: 4000, y: 4000}
+  m_TitleContent:
+    m_Text: Dialogue
+    m_Image: {fileID: 0}
+    m_Tooltip: 
+  m_Pos:
+    serializedVersion: 2
+    x: 237.6
+    y: 73.6
+    width: 911.6
+    height: 479
+  m_ViewDataDictionary: {fileID: 0}
+  m_OverlayCanvas:
+    m_LastAppliedPresetName: Default
+    m_SaveData: []
+  actorFoldouts:
+    propertiesKeys: 
+    propertiesValues: 
+    fieldsKeys: ffffffff
+    fieldsValues: 00
+  actorFilter: 
+  hideFilteredOutActors: 0
+  actorListSelectedIndex: -1
+  actorTexturesFoldout: 0
+  actorSpritesFoldout: 0
+  showNodeEditor: 1
+  currentConversationID: 3
+  globalSearchText: 
+  globalReplaceText: 
+  globalSearchSpecificConversation: 0
+  globalSearchConversationIndex: -1
+  globalSearchUseRegex: 0
+  databaseFoldouts:
+    database: 1
+    emphasisSettings: 0
+    emphasisSetting: 
+    globalReplace: 0
+    merge: 0
+    export: 0
+    localization: 0
+    stats: 0
+    checkIssues: 0
+    editorSettings: 0
+    AI: 0
+  databaseToMerge: {fileID: 0}
+  conflictingIDRule: 0
+  mergeProperties: 1
+  mergeEmphases: 1
+  mergeActors: 1
+  mergeItems: 1
+  mergeLocations: 1
+  mergeVariables: 1
+  mergeConversations: 1
+  exportFormat: 0
+  chatMapperExportPath: 
+  csvExportPath: 
+  jsonExportPath: 
+  voiceoverExportPath: 
+  languageTextExportPath: 
+  screenplayExportPath: 
+  entrytagFormat: 0
+  encodingType: 4
+  isSearchBarOpen: 0
+  searchString: 
+  searchCaseSensitive: 0
+  currentEntryID: 1
+  itemFoldouts:
+    propertiesKeys: 
+    propertiesValues: 
+    fieldsKeys: 
+    fieldsValues: 
+  itemFilter: 
+  hideFilteredOutItems: 0
+  itemListSelectedIndex: -1
+  questEntrySelectedIdx: -1
+  showCompactQuestEntryList: 1
+  localizationLanguages:
+    languages: []
+    extraEntryFields: []
+    extraQuestFields: []
+    extraItemFields: []
+    importMainTextIndex: -1
+    outputFolder: 
+  exportLocalizationConversationTitle: 0
+  exportLocalizationKeyField: 0
+  exportAssignFieldValues: 0
+  exportLocalizationCreateNewFields: 0
+  localizationKeyField: Articy Id
+  locationFoldouts:
+    propertiesKeys: 
+    propertiesValues: 
+    fieldsKeys: 
+    fieldsValues: 
+  locationFilter: 
+  hideFilteredOutLocations: 0
+  locationListSelectedIndex: -1
+  toolbar:
+    current: 5
+  database: {fileID: 11400000, guid: 8cdc5f312fc738b48987cf68b1a85c5d, type: 2}
+  debug: 0
+  registerCompleteObjectUndo: 1
+  scrollPosition: {x: 0, y: 0}
+  templateFoldouts:
+    templates: 0
+    actors: 0
+    items: 0
+    quests: 0
+    locations: 0
+    conversations: 0
+    dialogueEntries: 0
+    variables: 0
+  variableView:
+    database: {fileID: 11400000, guid: 8cdc5f312fc738b48987cf68b1a85c5d, type: 2}
+    isDialogueEditorWindow: 1
+    variableFilter: 
+    showVariableGroupFoldouts: 0
+    expandedVariableGroups: []
+  watches: []
+  autoUpdateWatches: 0
+  watchUpdateFrequency: 1
+  nextWatchUpdateTime: 4902.3668216999995
+  watchableVariableNames:
+  - Actor
+  - ActorIndex
+  - Alert
+  - Conversant
+  - ConversantIndex
+  watchableQuestNames: []
+  luaCommand: 
+  zoomLocked: 0
+  _zoom: 0.97
+  canvasRectWidthMultiplier: 1
+  canvasScrollView: {x: 100000, y: 100000}
+  canvasScrollPosition: {x: 0, y: 0}
+  conversationTitles:
+  - Crowpunk / Crowpunk Ambush Reets
+  - Reets / Reets Meets Saltimbocca
+  - Demo Over
+  - Intro
+  - Singelotte Pre-Fight
+  - Crowpunk / Crowpunk Ambush Bolo
+  - Crowpunk / Crowpunk Ambush Isadore
+  - Crowpunk / Crowpunk Ambush Saltimbocca
+  - Reets / Reets Meets Isadore
+  - Reets / Reets Meets Bolo
+  - Salt / Saltimbocca Meets Reets
+  - Salt / Saltimbocca Meets Bolo
+  - Salt / Saltimbocca Meets Isadore
+  - Bolo / Bolo Meets Isadore
+  - Bolo / Bolo Meets Reets
+  - Bolo / Bolo Meets Saltimbocca
+  - Isadore / Isadore Meets Reets
+  - Isadore / Isadore Meets Bolo
+  - Isadore / Isadore Meets Saltimbocca
+  conversationIndex: 2
+  confirmDelete: 1
+  trimWhitespaceAroundPipes: 1
+  conversationTitleFilter: 
+  prevConversationStack:
+  - Crowpunk Ambush Bolo
+  - Crowpunk Ambush Reets
+  - Crowpunk Ambush Bolo
+  - Crowpunk Ambush Reets
+  - Crowpunk Ambush Bolo
+  - Crowpunk Ambush Reets
+  - Crowpunk Ambush Isadore
+  - Reets Meets Saltimbocca
+  - Crowpunk Ambush Saltimbocca
+  - Reets Meets Isadore
+  - Reets Meets Bolo
+  - Reets Meets Isadore
+  - Reets Meets Bolo
+  - Reets Meets Isadore
+  - Reets Meets Bolo
+  - Reets Meets Isadore
+  - Reets Meets Bolo
+  - Reets Meets Isadore
+  - Reets Meets Bolo
+  - Reets Meets Isadore
+  - Crowpunk Ambush Saltimbocca
+  - Reets / Reets Meets Bolo
+  - Reets / Reets Meets Isadore
+  - Reets / Reets Meets Saltimbocca
+  - Crowpunk / Crowpunk Ambush Reets
+  - Crowpunk / Crowpunk Ambush Bolo
+  - Crowpunk / Crowpunk Ambush Isadore
+  - Salt / Saltimbocca Meets Reets
+  - Reets / Reets Meets Saltimbocca
+  - Salt / Saltimbocca Meets Reets
+  - Crowpunk / Crowpunk Ambush Reets
+  - Isadore / Isadore Meets Bolo
+  - Isadore / Isadore Meets Saltimbocca
+  - Reets / Reets Meets Saltimbocca
+  - Reets / Reets Meets Isadore
+  - 
+  nextConversationStack: []
 --- !u!114 &19
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1788,9 +1788,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 573.60004
+    y: 572
     width: 1148.6
-    height: 201.79999
+    height: 203.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
@@ -1820,10 +1820,10 @@ MonoBehaviour:
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
-    scrollPos: {x: 0, y: 1098.2}
+    scrollPos: {x: 0, y: 1080}
     m_SelectedIDs: b0a40000
     m_LastClickedID: 42160
-    m_ExpandedIDs: 0000000026a4000028a400002aa400002ca400002ea4000030a4000032a4000034a4000036a4000038a400003aa400003ca400003ea4000040a40000aca400005ef4000000ca9a3bffffff7f
+    m_ExpandedIDs: 000000002aa400002ca400002ea4000030a4000032a4000034a4000036a4000038a400003aa400003ca400003ea4000040a4000042a4000044a4000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1851,7 +1851,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000026a4000028a400002aa400002ca400002ea4000030a4000032a4000034a4000036a4000038a400003aa400003ca400003ea4000040a40000
+    m_ExpandedIDs: 000000002aa400002ca400002ea4000030a4000032a4000034a4000036a4000038a400003aa400003ca400003ea4000040a4000042a4000044a4000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1928,9 +1928,9 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: 573.60004
+    y: 572
     width: 1148.6
-    height: 201.79999
+    height: 203.4
   m_ViewDataDictionary: {fileID: 0}
   m_OverlayCanvas:
     m_LastAppliedPresetName: Default
