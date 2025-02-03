@@ -115,6 +115,9 @@ public class DeckMenuScroll : MonoBehaviour
     {
         SaveData saveData = SaveSystem.LoadGameData();
 
+        if (!saveData.playerHolster.Any())
+            return;
+
         for (int i = 0; i < holster.cardList.Count; i++)
         {
             foreach (Card card in database.cardList)
