@@ -182,6 +182,9 @@ public class CardPlayer : MonoBehaviour
             case "Bolo":
                 Debug.Log("I AM BOLO");
                 isBolo = true;
+                // fuck with this more later
+                // this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
+                // this.GetComponent<Image>().SetNativeSize();               
                 if (Screen.width == 1280)
                 {
                     if (this.gameObject.name == "CharacterCard (Top)")

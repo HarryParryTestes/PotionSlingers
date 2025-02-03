@@ -51,20 +51,29 @@ public class PortraitSelector : MonoBehaviour
 
         if (charIndex == 1)
         {
-            image.gameObject.transform.localScale = new Vector3(6f, 6f, 6f);
+            image.gameObject.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
             image.gameObject.transform.position = new Vector3(
                 image.gameObject.transform.position.x, image.gameObject.transform.position.y - 0.5f, image.gameObject.transform.position.z);
         }
         else if (charIndex == 0)
         {
-            image.gameObject.transform.localScale = new Vector3(12f, 6.6f, 6.6f);
+            image.gameObject.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             image.gameObject.transform.position = new Vector3(
                 image.gameObject.transform.position.x, image.gameObject.transform.position.y + 0.5f, image.gameObject.transform.position.z);
-        }           
+        }
+        else if (charIndex == 2)
+        {
+            image.gameObject.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
+        }
+        else if (charIndex == 3)
+        {
+            image.gameObject.transform.localScale = new Vector3(0.27f, 0.27f, 0.27f);
+        }
 
         Game.storyModeCharName = MainMenu.menu.demoCharacters[charIndex].cardName;
         name.text = Game.storyModeCharName;
         image.sprite = characterImages[charIndex];
+        image.SetNativeSize();
     }
 
     public void selectCharNameLeft()
@@ -77,18 +86,28 @@ public class PortraitSelector : MonoBehaviour
 
         if (charIndex == 3)
         {
-            image.gameObject.transform.localScale = new Vector3(6f, 6f, 6f);
+            image.gameObject.transform.localScale = new Vector3(0.27f, 0.27f, 0.27f);
             image.gameObject.transform.position = new Vector3(
                 image.gameObject.transform.position.x, image.gameObject.transform.position.y - 0.5f, image.gameObject.transform.position.z);
         }
         else if (charIndex == 0)
         {
-            image.gameObject.transform.localScale = new Vector3(12f, 6.6f, 6.6f);
+            image.gameObject.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             image.gameObject.transform.position = new Vector3(
                 image.gameObject.transform.position.x, image.gameObject.transform.position.y + 0.5f, image.gameObject.transform.position.z);
         }
+        else if (charIndex == 2)
+        {
+            image.gameObject.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
+        }
+        else if (charIndex == 1)
+        {
+            image.gameObject.transform.localScale = new Vector3(0.12f, 0.12f, 0.12f);
+        }
 
         Game.storyModeCharName = MainMenu.menu.demoCharacters[charIndex].cardName;
+        name.text = Game.storyModeCharName;
         image.sprite = characterImages[charIndex];
+        image.SetNativeSize();
     }
 }
