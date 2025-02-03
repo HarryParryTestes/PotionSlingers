@@ -878,6 +878,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnBeginDrag(PointerEventData pointerEventData)
     {
+
+        if (SceneManager.GetActiveScene().name == "StoryMode")
+            return;
+
         if (dontMoveThis)
             return;
 
@@ -1112,6 +1116,10 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (SceneManager.GetActiveScene().name == "StoryMode")
+            return;
+
+
         if (dontMoveThis)
             return;
 
@@ -1169,6 +1177,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (SceneManager.GetActiveScene().name == "StoryMode")
+            return;
+
         if (!Game.multiplayer && GameManager.manager.myPlayerIndex != 0)
             return;
 
