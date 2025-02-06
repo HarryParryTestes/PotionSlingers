@@ -155,6 +155,23 @@ public class CardDisplay : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         obj.GetComponent<DragCard>().dontMoveThis = false;
+
+        // check to make sure the crucible or ambrosia was not placed on top
+        if(obj.GetComponent<CardDisplay>().card.cardName == "Crucible" ||
+            obj.GetComponent<CardDisplay>().card.cardName == "Spoonful of Ambrosia")
+        {
+            Debug.Log("Card not properly shuffled back!");
+            // assume crucible card is in front and that the other cards need to be shifted up 1
+            // Card temp;
+            // temp = obj.GetComponent<CardDisplay>().card;
+            // obj.GetComponent<CardDisplay>().card = crucibleCards[0];
+            obj.GetComponent<CardDisplay>().updateCard(crucibleCards[0]);
+            crucibleCards[0] = crucibleCards[1];
+            if (cardName == "Crucible")
+                crucibleCards[1] = GameManager.manager.crucibleCard;
+            if (cardName == "Spoonful of Ambrosia")
+                crucibleCards[1] = GameManager.manager.ambrosiaCard;
+        }
     }
 
     public void updatePlaceholder(CardDisplay cd)
@@ -206,6 +223,42 @@ public class CardDisplay : MonoBehaviour
                     cd.vPotion3.gameObject.SetActive(false);
                     cd.vPotion4.gameObject.SetActive(false);
                 }
+            }
+        }
+    }
+
+    public void moveCard(Card card, string status = null)
+    {
+        artworkImage = this.GetComponent<Image>();
+        this.card = card;
+        artworkImage.sprite = card.cardSprite;
+
+        if (spicy)
+        {
+            if (flames != null)
+                flames.SetActive(true);
+        }
+
+        else
+        {
+            if (flames != null)
+                flames.SetActive(false);
+        }
+
+        if (status != null)
+        {
+            if (status == "spicy")
+            {
+                spicy = true;
+                if (flames != null)
+                    flames.SetActive(true);
+            }
+
+            if (status == "none")
+            {
+                spicy = false;
+                if (flames != null)
+                    flames.SetActive(false);
             }
         }
     }

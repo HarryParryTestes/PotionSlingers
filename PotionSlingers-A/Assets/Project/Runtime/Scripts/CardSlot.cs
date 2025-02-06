@@ -1,12 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
+using System;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CardSlot : MonoBehaviour, IDropHandler
 {
-    CardDisplay cd;
+    public CardDisplay cd;
+    public bool placeholder;
 
     void Awake()
     {
@@ -14,8 +21,115 @@ public class CardSlot : MonoBehaviour, IDropHandler
             cd = this.gameObject.GetComponent<CardDisplay>();
     }
 
+    public void PlaceholderDrop(PointerEventData eventData)
+    {
+        Debug.Log("Drop occurred on CardSlot!");
+        GameObject heldCard = eventData.pointerDrag;
+
+        DragCard dc = heldCard.GetComponent<DragCard>();
+        // grabbing the card held by the cursor
+        CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
+        Debug.Log(grabbedCard.card.cardName);
+        Debug.Log(cd.card.cardName);
+
+        int tempDurability;
+
+        if(cd.card.cardName == "placeholder")
+        {
+            cd.moveCard(grabbedCard.card);
+            cd.gameObject.SetActive(true);
+            cd.transform.position = Input.mousePosition;
+            cd.transform.rotation = grabbedCard.transform.rotation;
+            cd.transform.DORotate(cd.gameObject.GetComponent<DragCard>().cardRotation, 0.3f).SetEase(Ease.Linear).SetId(gameObject.name);
+
+            if (grabbedCard.card.cardType == "Artifact")
+            {
+                tempDurability = grabbedCard.durability;
+                cd.durability = tempDurability;
+                grabbedCard.durability = 3;
+                if (grabbedCard.aPotion != null && grabbedCard.aPotion.card.cardName != "placeholder")
+                {
+                    cd.aPotion.updateCard(grabbedCard.aPotion.card);
+                    cd.artifactSlot.transform.parent.gameObject.SetActive(true);
+                    cd.artifactSlot.SetActive(true);
+                    cd.aPotion.gameObject.SetActive(true);
+                    grabbedCard.aPotion.updateCard(GameManager.manager.td.card);
+                    grabbedCard.aPotion.gameObject.SetActive(false);
+                }
+            }
+
+            if (grabbedCard.card.cardType == "Vessel")
+            {
+                // cd.updateCard(GameManager.manager.td.card);
+                if (grabbedCard.vPotion1 != null && grabbedCard.vPotion1.card.cardName != "placeholder")
+                {
+                    cd.vPotion1.updateCard(grabbedCard.vPotion1.card);
+                    cd.vPotion1.gameObject.SetActive(true);
+                    cd.vPotion2.gameObject.SetActive(false);
+                    cd.vPotion3.gameObject.SetActive(false);
+                    cd.vPotion4.gameObject.SetActive(false);
+                    cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                    grabbedCard.vPotion1.updateCard(GameManager.manager.td.card);
+                    grabbedCard.vPotion1.gameObject.SetActive(false);
+                    grabbedCard.vPotion2.gameObject.SetActive(false);
+                    grabbedCard.vPotion3.gameObject.SetActive(false);
+                    grabbedCard.vPotion4.gameObject.SetActive(false);
+                }
+
+                if (grabbedCard.vPotion2 != null && grabbedCard.vPotion2.card.cardName != "placeholder")
+                {
+                    cd.vPotion2.updateCard(grabbedCard.vPotion2.card);
+                    cd.vPotion2.gameObject.SetActive(true);
+                    cd.vPotion3.gameObject.SetActive(false);
+                    cd.vPotion4.gameObject.SetActive(false);
+                    cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                    grabbedCard.vPotion2.updateCard(GameManager.manager.td.card);
+                    grabbedCard.vPotion1.gameObject.SetActive(false);
+                    grabbedCard.vPotion2.gameObject.SetActive(false);
+                    grabbedCard.vPotion3.gameObject.SetActive(false);
+                    grabbedCard.vPotion4.gameObject.SetActive(false);
+                }
+
+                if (cd.card.cardEffect == "FourLoad")
+                {
+                    if (grabbedCard.vPotion3 != null && grabbedCard.vPotion3.card.cardName != "placeholder")
+                    {
+                        cd.vPotion3.updateCard(grabbedCard.vPotion3.card);
+                        cd.vPotion3.gameObject.SetActive(true);
+                        cd.vPotion4.gameObject.SetActive(false);
+                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                        grabbedCard.vPotion3.updateCard(GameManager.manager.td.card);
+                        grabbedCard.vPotion1.gameObject.SetActive(false);
+                        grabbedCard.vPotion2.gameObject.SetActive(false);
+                        grabbedCard.vPotion3.gameObject.SetActive(false);
+                        grabbedCard.vPotion4.gameObject.SetActive(false);
+                    }
+
+                    if (grabbedCard.vPotion4 != null && grabbedCard.vPotion4.card.cardName != "placeholder")
+                    {
+                        cd.vPotion4.updateCard(grabbedCard.vPotion4.card);
+                        cd.vPotion4.gameObject.SetActive(true);
+                        cd.vesselSlot1.transform.parent.gameObject.SetActive(true);
+                        grabbedCard.vPotion4.updateCard(GameManager.manager.td.card);
+                        grabbedCard.vPotion1.gameObject.SetActive(false);
+                        grabbedCard.vPotion2.gameObject.SetActive(false);
+                        grabbedCard.vPotion3.gameObject.SetActive(false);
+                        grabbedCard.vPotion4.gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            grabbedCard.updatePlaceholder(grabbedCard);
+        }
+    }
+
    public void OnDrop(PointerEventData eventData)
     {
+        if (placeholder)
+        {
+            PlaceholderDrop(eventData);
+            return;
+        }     
         /*
         add in implementation to distinguish between GameObjects
         that have a CardDisplay vs a CharacterDisplay
