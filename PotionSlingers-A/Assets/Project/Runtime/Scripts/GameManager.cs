@@ -9765,7 +9765,7 @@ public class GameManager : MonoBehaviour
 
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "SeeingEyedropper")
             {
-                if (players[myPlayerIndex].GetComponent<ComputerPlayer>() != null)
+                if (players[myPlayerIndex].GetComponent<ComputerPlayer>() == null)
                 {
                     Debug.Log("Eyedropper!!!");
                     StartCoroutine(DelayedFade(eyedropperMenu));
