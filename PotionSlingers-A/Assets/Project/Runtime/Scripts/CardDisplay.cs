@@ -155,7 +155,7 @@ public class CardDisplay : MonoBehaviour
 
         yield return new WaitForSeconds(0.1f);
         obj.GetComponent<DragCard>().dontMoveThis = false;
-
+        /*
         // check to make sure the crucible or ambrosia was not placed on top
         if(obj.GetComponent<CardDisplay>().card.cardName == "Crucible" ||
             obj.GetComponent<CardDisplay>().card.cardName == "Spoonful of Ambrosia")
@@ -172,6 +172,7 @@ public class CardDisplay : MonoBehaviour
             if (cardName == "Spoonful of Ambrosia")
                 crucibleCards[1] = GameManager.manager.ambrosiaCard;
         }
+        */
     }
 
     public void updatePlaceholder(CardDisplay cd)
