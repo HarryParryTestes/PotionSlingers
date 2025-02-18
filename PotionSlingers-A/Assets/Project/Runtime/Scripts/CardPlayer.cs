@@ -3941,7 +3941,8 @@ public class CardPlayer : MonoBehaviour
                         return;
                     }
                 }
-                hpCubes = 0;
+                // MODIFY THIS IF YOU NEED TO!!!
+                hpCubes = -1;
                 updateHealthUI();
                 fadeOut();
                 dead = true;

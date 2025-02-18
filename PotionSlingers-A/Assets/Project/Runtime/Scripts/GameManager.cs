@@ -192,6 +192,8 @@ public class GameManager : MonoBehaviour
     public Card starterPotionCard;
     public List<Card> starterPotionCards;
 
+    public GameObject smoke;
+
     GameObject mainMenu;
     MainMenu mainMenuScript;
 
@@ -1571,6 +1573,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Fingas+":
                 background.sprite = backgrounds[4];
+                smoke.SetActive(true);
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
@@ -1630,6 +1633,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Bag o' Snakes+":
                 background.sprite = backgrounds[4];
+                smoke.SetActive(true);
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
@@ -1762,6 +1766,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk":
                 background.sprite = backgrounds[4];
+                smoke.SetActive(true);
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
@@ -1921,6 +1926,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk+":
                 background.sprite = backgrounds[4];
+                smoke.SetActive(true);
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
@@ -1969,6 +1975,13 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp2Cubes;
                     players[2].hp = saveData.opp2Health;
                     players[2].hBar.image.fillAmount = 0;
+
+                    if (players[2].hpCubes == 0 && players[2].hp == 0)
+                    {
+                        Debug.Log("I think something went wrong so I'm resetting their health");
+                        players[2].hpCubes = 1;
+                        players[2].hp = 10;
+                    }
                 }
                 else
                 {
@@ -1993,6 +2006,13 @@ public class GameManager : MonoBehaviour
                     players[3].hpCubes = saveData.opp3Cubes;
                     players[3].hp = saveData.opp3Health;
                     players[3].hBar.image.fillAmount = 0;
+
+                    if (players[3].hpCubes == 0 && players[3].hp == 0)
+                    {
+                        Debug.Log("I think something went wrong so I'm resetting their health");
+                        players[3].hpCubes = 1;
+                        players[3].hp = 10;
+                    }
                 }
                 else
                 {
@@ -8039,11 +8059,46 @@ public class GameManager : MonoBehaviour
                 players[myPlayerIndex].checkDecoderBonus();
                 players[myPlayerIndex].checkGauntletBonus();
 
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName != "placeholder")
+                {
+                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].
+                        aPotion.updatePlaceholder(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion);
+                }
+
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder")
+                {
+                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].
+                        vPotion1.updatePlaceholder(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1);
+                }
+
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
+                {
+                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].
+                        vPotion2.updatePlaceholder(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2);
+                }
+
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card.cardName != "placeholder")
+                {
+                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].
+                        vPotion3.updatePlaceholder(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3);
+                }
+
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card.cardName != "placeholder")
+                {
+                    players[myPlayerIndex].deck.putCardOnBottom(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].
+                        vPotion4.updatePlaceholder(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4);
+                }
+
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.parent.gameObject.SetActive(false);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.parent.gameObject.SetActive(false);
                 players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.parent.gameObject.SetActive(false);
-                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.parent.gameObject.SetActive(false);
+                players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.parent.gameObject.SetActive(false);               
 
                 // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)

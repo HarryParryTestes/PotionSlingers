@@ -27,12 +27,36 @@ public class CardSlot : MonoBehaviour, IDropHandler
         GameObject heldCard = eventData.pointerDrag;
 
         DragCard dc = heldCard.GetComponent<DragCard>();
+
+        if(heldCard.name == "DeckPile")
+        {
+            Debug.Log("Deckpile!!!");
+            return;
+        }
+
+        if (dc == null)
+            return;
+
+        if (dc.loaded)
+        {
+            Debug.Log("Trying to grab loaded card");
+            return;
+        }
         // grabbing the card held by the cursor
         CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
         Debug.Log(grabbedCard.card.cardName);
         Debug.Log(cd.card.cardName);
 
         int tempDurability;
+
+        if (grabbedCard.spicy)
+        {
+            cd.spicy = true;
+            cd.flames.SetActive(true);
+
+            grabbedCard.spicy = false;
+            grabbedCard.flames.SetActive(false);
+        }
 
         if(cd.card.cardName == "placeholder")
         {
