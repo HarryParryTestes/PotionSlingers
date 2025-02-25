@@ -63,6 +63,8 @@ public class GameManager : MonoBehaviour
     public Image background;
     public Sprite[] backgrounds;
     public Sprite[] fashionImages;
+    public Sprite emptySlot;
+    public Card emptySlotCard;
     public int carnivalTurns = 0;
     public CarnivalSlider carnivalSlider;
     public GameObject carnivalTarget;
@@ -6380,6 +6382,78 @@ public class GameManager : MonoBehaviour
             }
             else if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Vessel")
             {
+                if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardName == "Bangle")
+                {
+                    damage = 0;
+                    if (players[myPlayerIndex].isIsadore)
+                        damage++;
+                    // bangle stuff
+                    Debug.Log("Bangle!!!");
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder")
+                    {
+                        GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform);
+                        StartCoroutine(MoveToTrash(obj));
+                        damage += players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.effectAmount;
+                        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card);
+                    }
+
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
+                    {
+                        GameObject obj2 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform);
+                        StartCoroutine(MoveToTrash(obj2));
+                        damage += players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.effectAmount;
+                        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card);
+                    }
+
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card.cardName != "placeholder")
+                    {
+                        GameObject obj4 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform);
+                        StartCoroutine(MoveToTrash(obj4));
+                        damage += players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card.effectAmount;
+                        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.card);
+                    }
+
+                    if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card.cardName != "placeholder")
+                    {
+                        GameObject obj5 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).gameObject,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).position,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).rotation,
+                        players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform);
+                        StartCoroutine(MoveToTrash(obj5));
+                        damage += players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card.effectAmount;
+                        td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.card);
+                    }
+
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion3.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion4.updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot1.transform.GetChild(0).gameObject.SetActive(false);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).gameObject.SetActive(false);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).gameObject.SetActive(false);
+                    players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).gameObject.SetActive(false);
+
+                    if (myPlayerIndex == 0)
+                    {
+                        StopCoroutine("waitThreeSecondsHand");
+                        throwingHand.SetActive(false);
+                        StartCoroutine(waitThreeSecondsHand(damage));
+                        StartCoroutine(doDamage(damage));
+                    }
+                    else
+                        tempPlayer.subHealth(damage, cardQuality);
+                    return;
+                }
+
                 if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder" &&
                             players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion2.card.cardName != "placeholder")
                 {
@@ -6865,6 +6939,44 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void handleEmptySlotUI(CardDisplay cd)
+    {
+        if (cd.aPotion.artifactEmptySlot != null)
+        {
+            Debug.Log("artifactEmptySlot exists!");
+            cd.aPotion.artifactEmptySlot.SetActive(false);
+            Destroy(cd.aPotion.artifactEmptySlot);
+        }
+
+        if (cd.vesselEmptySlot1 != null)
+        {
+            Debug.Log("vesselEmptySlot exists!");
+            cd.vesselEmptySlot1.SetActive(false);
+            Destroy(cd.vesselEmptySlot1);
+        }
+
+        if (cd.vesselEmptySlot2 != null)
+        {
+            Debug.Log("vesselEmptySlot exists!");
+            cd.vesselEmptySlot2.SetActive(false);
+            Destroy(cd.vesselEmptySlot2);
+        }
+
+        if (cd.vesselEmptySlot3 != null)
+        {
+            Debug.Log("vesselEmptySlot exists!");
+            cd.vesselEmptySlot3.SetActive(false);
+            Destroy(cd.vesselEmptySlot3);
+        }
+
+        if (cd.vesselEmptySlot4 != null)
+        {
+            Debug.Log("vesselEmptySlot exists!");
+            cd.vesselEmptySlot4.SetActive(false);
+            Destroy(cd.vesselEmptySlot4);
+        }
+    }
+
     public void takeMarket(int marketCard)
     {
         if (Game.multiplayer)
@@ -7224,6 +7336,14 @@ public class GameManager : MonoBehaviour
             {
                 // Enable Artifact menu if it wasn't already enabled.
                 Debug.Log("Artifact menu enabled.");
+
+                if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot != null)
+                {
+                    Debug.Log("artifactEmptySlot exists!");
+                    players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot.SetActive(false);
+                    Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot);
+                }
+
                 players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
                 players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
                 players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.gameObject.SetActive(true);
@@ -7305,6 +7425,14 @@ public class GameManager : MonoBehaviour
                                 if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card.cardName != "placeholder")
                                 {
                                     // Fill Vessel slot 4 with loaded potion.
+
+                                    if (players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot4 != null)
+                                    {
+                                        Debug.Log("vesselEmptySlot exists!");
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot4.SetActive(false);
+                                        Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot4);
+                                    }
+
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
@@ -7329,6 +7457,14 @@ public class GameManager : MonoBehaviour
                                 else
                                 {
                                     // Fill Vessel slot 3 with loaded potion.
+
+                                    if (players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot3 != null)
+                                    {
+                                        Debug.Log("vesselEmptySlot exists!");
+                                        players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot3.SetActive(false);
+                                        Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot3);
+                                    }
+
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
                                     players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
@@ -7368,6 +7504,14 @@ public class GameManager : MonoBehaviour
                         else
                         {
                             // Fill Vessel slot 2 with loaded potion.
+
+                            if (players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot2 != null)
+                            {
+                                Debug.Log("vesselEmptySlot exists!");
+                                players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot2.SetActive(false);
+                                Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot2);
+                            }
+
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
                             Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
@@ -7399,6 +7543,13 @@ public class GameManager : MonoBehaviour
                     // Vessel slot 1 is unloaded.
                     else
                     {
+                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot1 != null)
+                        {
+                            Debug.Log("vesselEmptySlot exists!");
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot1.SetActive(false);
+                            Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot1);
+                        }
+
                         Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = cd.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.updateCard(cd.card);
@@ -7447,6 +7598,13 @@ public class GameManager : MonoBehaviour
                     // Artifact slot is unloaded.
                     else
                     {
+                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot != null)
+                        {
+                            Debug.Log("artifactEmptySlot exists!");
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot.SetActive(false);
+                            Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot);
+                        }
+
                         Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = cd.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.updateCard(cd.card);
@@ -7662,6 +7820,12 @@ public class GameManager : MonoBehaviour
                 {
                     // Enable Artifact menu if it wasn't already enabled.
                     Debug.Log("Artifact menu enabled.");
+                    if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot != null)
+                    {
+                        Debug.Log("artifactEmptySlot exists!");
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot.SetActive(false);
+                        Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot);
+                    }
                     players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
                     players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.gameObject.SetActive(true);
@@ -7727,6 +7891,12 @@ public class GameManager : MonoBehaviour
                                     if (players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion3.card.cardName != "placeholder")
                                     {
                                         // Fill Vessel slot 4 with loaded potion.
+                                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot4 != null)
+                                        {
+                                            Debug.Log("vesselEmptySlot exists!");
+                                            players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot4.SetActive(false);
+                                            Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot4);
+                                        }
                                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
                                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
@@ -7751,6 +7921,12 @@ public class GameManager : MonoBehaviour
                                     else
                                     {
                                         // Fill Vessel slot 3 with loaded potion.
+                                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot3 != null)
+                                        {
+                                            Debug.Log("vesselEmptySlot exists!");
+                                            players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot3.SetActive(false);
+                                            Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot3);
+                                        }
                                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
                                         players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot3.SetActive(true);
@@ -7790,6 +7966,12 @@ public class GameManager : MonoBehaviour
                             else
                             {
                                 // Fill Vessel slot 2 with loaded potion.
+                                if (players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot2 != null)
+                                {
+                                    Debug.Log("vesselEmptySlot exists!");
+                                    players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot2.SetActive(false);
+                                    Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot2);
+                                }
                                 players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                                 players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot2.SetActive(true);
                                 Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion2.card;
@@ -7822,6 +8004,12 @@ public class GameManager : MonoBehaviour
                         // Vessel slot 1 is unloaded.
                         else
                         {
+                            if (players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot1 != null)
+                            {
+                                Debug.Log("vesselEmptySlot exists!");
+                                players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot1.SetActive(false);
+                                Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].vesselEmptySlot1);
+                            }
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                             Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card;
                             players[myPlayerIndex].holster.cardList[loadedCardInt].vPotion1.card = players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card;
@@ -7856,6 +8044,14 @@ public class GameManager : MonoBehaviour
                     {
                         // Enable Artifact menu if it wasn't already enabled.
                         Debug.Log("Artifact menu enabled.");
+
+                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot != null)
+                        {
+                            Debug.Log("artifactEmptySlot exists!");
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot.SetActive(false);
+                            Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot);
+                        }
+
                         players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
                         players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
 
@@ -7920,6 +8116,9 @@ public class GameManager : MonoBehaviour
                 //playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
+
+            handleEmptySlotUI(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+
             if (playerHolster.cardList[selectedCardInt - 1].card.cardType == "Potion" ||
                 playerHolster.cardList[selectedCardInt - 1].card.cardType == "Unique")
             {
@@ -7989,6 +8188,8 @@ public class GameManager : MonoBehaviour
                 }
                 return;
             }
+
+            handleEmptySlotUI(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
             // Cycling a Potion (costs 0 pips to do)
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType == "Potion")
@@ -8135,6 +8336,18 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Checking market price");
 
         // check for rings
+
+        if(players[myPlayerIndex].pips == 0)
+        {
+            Debug.Log("They're at 0, basically just gray it out");
+            md1.cardDisplay1.grayCard();
+            md1.cardDisplay2.grayCard();
+            md1.cardDisplay3.grayCard();
+            md2.cardDisplay1.grayCard();
+            md2.cardDisplay2.grayCard();
+            md2.cardDisplay3.grayCard();
+            return;
+        }
 
         foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
@@ -9636,6 +9849,8 @@ public class GameManager : MonoBehaviour
                 }                
             }
 
+            handleEmptySlotUI(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+
             if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardQuality != "Starter")
             {
                 players[myPlayerIndex].cardsTrashed++;
@@ -9761,6 +9976,8 @@ public class GameManager : MonoBehaviour
 
             Debug.Log("Triggering trash in tutorial!");
 
+            handleEmptySlotUI(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
+
             GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
                         playerHolster.cardList[selectedCardInt - 1].gameObject.transform.position,
                         playerHolster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
@@ -9797,6 +10014,8 @@ public class GameManager : MonoBehaviour
                 sendErrorMessage(7);
                 return;
             }
+
+            handleEmptySlotUI(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
             // Savory Layer Cake logic
             if (cd.card.cardName == "SavoryLayerCake")

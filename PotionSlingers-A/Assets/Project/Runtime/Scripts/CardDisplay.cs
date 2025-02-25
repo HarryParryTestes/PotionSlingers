@@ -34,6 +34,12 @@ public class CardDisplay : MonoBehaviour
     public bool spicy;
     public int durability = 5;
 
+    public GameObject artifactEmptySlot;
+    public GameObject vesselEmptySlot1;
+    public GameObject vesselEmptySlot2;
+    public GameObject vesselEmptySlot3;
+    public GameObject vesselEmptySlot4;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -228,6 +234,29 @@ public class CardDisplay : MonoBehaviour
         }
     }
 
+    public void emptySlot(GameObject obj)
+    {
+        obj.GetComponent<CardDisplay>().card = GameManager.manager.emptySlotCard;
+        obj.GetComponent<Image>().sprite = GameManager.manager.emptySlotCard.cardSprite;
+        obj.GetComponent<Image>().DOKill();
+        if(obj.GetComponent<CanvasGroup>() == null)
+        {
+            obj.AddComponent<CanvasGroup>();
+        }
+        // obj.GetComponent<CanvasGroup>().alpha = 0f;
+        // obj.GetComponent<CanvasGroup>().DOFade(0, 3f).SetDelay(1, true).SetLoops(-1, LoopType.Yoyo);
+
+        obj.GetComponent<CanvasGroup>().alpha = 0f;
+        Sequence mySequence = DOTween.Sequence();
+        mySequence.PrependInterval(1).Append(obj.GetComponent<CanvasGroup>().DOFade(1, 4f))
+          .PrependInterval(3)
+          .Append(obj.GetComponent<CanvasGroup>().DOFade(0, 3f))
+          .PrependInterval(1).SetLoops(-1, LoopType.Restart);
+
+        mySequence.Play();
+
+    }
+
     public void moveCard(Card card, string status = null)
     {
         artworkImage = this.GetComponent<Image>();
@@ -338,6 +367,93 @@ public class CardDisplay : MonoBehaviour
         {
             durability = 5;
         }
+
+        if (GetComponent<DragCard>() != null && !GetComponent<DragCard>().market)
+        {
+            if (this.card.cardType == "Vessel")
+            {
+                Debug.Log("Empty vessel slot animation triggering???");
+                this.vesselSlot1.transform.parent.gameObject.SetActive(true);
+
+                if (vesselEmptySlot1 != null)
+                {
+                    Destroy(vesselEmptySlot1);
+                }
+
+                if (vesselEmptySlot2 != null)
+                {
+                    Destroy(vesselEmptySlot2);
+                }
+
+                if (vesselEmptySlot3 != null)
+                {
+                    Destroy(vesselEmptySlot3);
+                }
+
+                if (vesselEmptySlot4 != null)
+                {
+                    Destroy(vesselEmptySlot4);
+                }
+
+                this.vPotion1.gameObject.SetActive(true);
+                this.vPotion2.gameObject.SetActive(true);
+                this.vPotion3.gameObject.SetActive(true);
+                this.vPotion4.gameObject.SetActive(true);
+
+                // vessel logic
+                vesselEmptySlot1 = Instantiate(this.vesselSlot1.transform.GetChild(0).gameObject,
+                    this.vesselSlot1.transform.GetChild(0).position,
+                    this.vesselSlot1.transform.GetChild(0).rotation,
+                    this.vesselSlot1.transform.parent);
+
+                emptySlot(vesselEmptySlot1);
+
+                vesselEmptySlot1.transform.SetAsFirstSibling();
+
+                /*
+                vesselEmptySlot2 = Instantiate(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].vesselSlot2.transform.GetChild(0).gameObject,
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].vesselSlot2.transform.GetChild(0).position,
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].vesselSlot2.transform.GetChild(0).rotation,
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].vesselSlot2.transform.parent);
+                */
+
+                vesselEmptySlot2 = Instantiate(this.vesselSlot2.transform.GetChild(0).gameObject,
+                    this.vesselSlot2.transform.GetChild(0).position,
+                    this.vesselSlot2.transform.GetChild(0).rotation,
+                    this.vesselSlot2.transform.parent);
+
+                emptySlot(vesselEmptySlot2);
+
+                vesselEmptySlot2.transform.SetAsFirstSibling();
+
+                if (this.card.cardEffect == "FourLoad")
+                {
+                    vesselEmptySlot3 = Instantiate(this.vesselSlot3.transform.GetChild(0).gameObject,
+                    this.vesselSlot3.transform.GetChild(0).position,
+                    this.vesselSlot3.transform.GetChild(0).rotation,
+                    this.vesselSlot3.transform.parent);
+
+                    emptySlot(vesselEmptySlot3);
+
+                    vesselEmptySlot3.transform.SetAsFirstSibling();
+
+                    vesselEmptySlot4 = Instantiate(this.vesselSlot4.transform.GetChild(0).gameObject,
+                    this.vesselSlot4.transform.GetChild(0).position,
+                    this.vesselSlot4.transform.GetChild(0).rotation,
+                    this.vesselSlot4.transform.parent);
+
+                    emptySlot(vesselEmptySlot4);
+
+                    vesselEmptySlot4.transform.SetAsFirstSibling();
+                }
+
+                this.vPotion1.gameObject.SetActive(false);
+                this.vPotion2.gameObject.SetActive(false);
+                this.vPotion3.gameObject.SetActive(false);
+                this.vPotion4.gameObject.SetActive(false);
+
+            }
+        }
         
         if(card.cardName == "placeholder" && this.gameObject.name != "DeckPile")
         {
@@ -349,7 +465,38 @@ public class CardDisplay : MonoBehaviour
             spicy = false;
                 
             this.gameObject.SetActive(false);
-            
+
+            if (GetComponent<DragCard>() != null && GetComponent<DragCard>().loaded)
+            {
+
+                
+
+                // add empty slot animation here
+                if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].card.cardType == "Artifact" &&
+                    GameManager.manager.myPlayerIndex == 0)
+                {
+                    Debug.Log("Empty slot animation triggering???");
+
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].artifactSlot.gameObject.SetActive(true);
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].aPotion.gameObject.SetActive(true);
+
+                    if(artifactEmptySlot != null)
+                    {
+                        Destroy(artifactEmptySlot);
+                    }
+                    // artifact logic
+                    artifactEmptySlot = Instantiate(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].artifactSlot.transform.GetChild(0).gameObject,
+                        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].artifactSlot.transform.GetChild(0).position,
+                        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].artifactSlot.transform.GetChild(0).rotation,
+                        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].artifactSlot.transform.parent);
+
+                    // obj.GetComponent<CardDisplay>().updateCard(GameManager.manager.emptySlotCard);
+                    emptySlot(artifactEmptySlot);
+
+                    GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].aPotion.gameObject.SetActive(false);
+                }
+            }
+
         }
         else
             this.gameObject.SetActive(true);

@@ -233,6 +233,15 @@ public class SceneTransition : MonoBehaviour
                 hideUI();
                 boloSaltButton.onClick.Invoke();
                 break;
+            default:
+                Debug.Log("Default case!!!");
+                hideUI();
+                boloSaltButton.onClick.Invoke();
+                saveData.currentEnemyName = "Bolo";
+                saveData.slingerName = saveData.currentEnemyName;
+                saveData.slingerEncounter = 1;
+                SaveSystem.SaveGameData(saveData);
+                break;
         }
     }
 
@@ -257,6 +266,15 @@ public class SceneTransition : MonoBehaviour
             case "Bolo":
                 hideUI();
                 boloReetsButton.onClick.Invoke();
+                break;
+            default:
+                Debug.Log("Default case!!!");
+                hideUI();
+                boloReetsButton.onClick.Invoke();
+                saveData.currentEnemyName = "Bolo";
+                saveData.slingerName = saveData.currentEnemyName;
+                saveData.slingerEncounter = 1;
+                SaveSystem.SaveGameData(saveData);
                 break;
         }
     }
@@ -283,6 +301,15 @@ public class SceneTransition : MonoBehaviour
                 hideUI();
                 saltBoloButton.onClick.Invoke();
                 break;
+            default:
+                Debug.Log("Default case!!!");
+                hideUI();
+                saltBoloButton.onClick.Invoke();
+                saveData.currentEnemyName = "Saltimbocca";
+                saveData.slingerName = saveData.currentEnemyName;
+                saveData.slingerEncounter = 1;
+                SaveSystem.SaveGameData(saveData);
+                break;
         }
     }
 
@@ -307,6 +334,15 @@ public class SceneTransition : MonoBehaviour
             case "Saltimbocca":
                 hideUI();
                 saltIsadoreButton.onClick.Invoke();
+                break;
+            default:
+                Debug.Log("Default case!!!");
+                hideUI();
+                saltIsadoreButton.onClick.Invoke();
+                saveData.currentEnemyName = "Saltimbocca";
+                saveData.slingerName = saveData.currentEnemyName;
+                saveData.slingerEncounter = 1;
+                SaveSystem.SaveGameData(saveData);
                 break;
         }
     }

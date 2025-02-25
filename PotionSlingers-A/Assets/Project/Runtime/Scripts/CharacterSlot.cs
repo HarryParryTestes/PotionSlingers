@@ -47,7 +47,11 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
         if(this.gameObject.name == "DeckPile")
         {
+            // check screen width
             originalPosition = new Vector2(transform.position.x, transform.position.y);
+
+            if (Screen.width == 1366)
+                originalPosition = new Vector2(1117f, 70f);
         }
     }
 

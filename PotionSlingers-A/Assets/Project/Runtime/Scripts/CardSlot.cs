@@ -21,6 +21,128 @@ public class CardSlot : MonoBehaviour, IDropHandler
             cd = this.gameObject.GetComponent<CardDisplay>();
     }
 
+    public void handleEmptySlotUI(CardDisplay cd, CardDisplay cd2)
+    {
+        if (cd.aPotion.artifactEmptySlot != null)
+        {
+            Debug.Log("artifactEmptySlot exists!");
+            cd.aPotion.artifactEmptySlot.SetActive(false);
+            Destroy(cd.aPotion.artifactEmptySlot);
+        }
+
+        if (cd.vesselEmptySlot1 != null)
+        {
+            Debug.Log("vesselEmptySlot exists!");
+            cd.vesselEmptySlot1.SetActive(false);
+            Destroy(cd.vesselEmptySlot1);
+        }
+
+        if (cd.vesselEmptySlot2 != null)
+        {
+            Debug.Log("vesselEmptySlot exists!");
+            cd.vesselEmptySlot2.SetActive(false);
+            Destroy(cd.vesselEmptySlot2);
+        }
+
+        if (cd.vesselEmptySlot3 != null)
+        {
+            Debug.Log("vesselEmptySlot exists!");
+            cd.vesselEmptySlot3.SetActive(false);
+            Destroy(cd.vesselEmptySlot3);
+        }
+
+        if (cd.vesselEmptySlot4 != null)
+        {
+            Debug.Log("vesselEmptySlot exists!");
+            cd.vesselEmptySlot4.SetActive(false);
+            Destroy(cd.vesselEmptySlot4);
+        }
+
+        if (cd2.card.cardType == "Vessel")
+        {
+            Debug.Log("Empty vessel slot animation triggering???");
+            cd2.vesselSlot1.transform.parent.gameObject.SetActive(true);
+
+            if (cd2.vesselEmptySlot1 != null)
+            {
+                Destroy(cd2.vesselEmptySlot1);
+            }
+
+            if (cd2.vesselEmptySlot2 != null)
+            {
+                Destroy(cd2.vesselEmptySlot2);
+            }
+
+            if (cd2.vesselEmptySlot3 != null)
+            {
+                Destroy(cd2.vesselEmptySlot3);
+            }
+
+            if (cd2.vesselEmptySlot4 != null)
+            {
+                Destroy(cd2.vesselEmptySlot4);
+            }
+
+            cd2.vPotion1.gameObject.SetActive(true);
+            cd2.vPotion2.gameObject.SetActive(true);
+            cd2.vPotion3.gameObject.SetActive(true);
+            cd2.vPotion4.gameObject.SetActive(true);
+
+            // vessel logic
+            cd2.vesselEmptySlot1 = Instantiate(cd2.vesselSlot1.transform.GetChild(0).gameObject,
+                cd2.vesselSlot1.transform.GetChild(0).position,
+                cd2.vesselSlot1.transform.GetChild(0).rotation,
+                cd2.vesselSlot1.transform.parent);
+
+            cd2.emptySlot(cd2.vesselEmptySlot1);
+
+            cd2.vesselEmptySlot1.transform.SetAsFirstSibling();
+
+            /*
+            vesselEmptySlot2 = Instantiate(GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].vesselSlot2.transform.GetChild(0).gameObject,
+                GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].vesselSlot2.transform.GetChild(0).position,
+                GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].vesselSlot2.transform.GetChild(0).rotation,
+                GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].vesselSlot2.transform.parent);
+            */
+
+            cd2.vesselEmptySlot2 = Instantiate(cd2.vesselSlot2.transform.GetChild(0).gameObject,
+                cd2.vesselSlot2.transform.GetChild(0).position,
+                cd2.vesselSlot2.transform.GetChild(0).rotation,
+                cd2.vesselSlot2.transform.parent);
+
+            cd2.emptySlot(cd2.vesselEmptySlot2);
+
+            cd2.vesselEmptySlot2.transform.SetAsFirstSibling();
+
+            if (cd2.card.cardEffect == "FourLoad")
+            {
+                cd2.vesselEmptySlot3 = Instantiate(cd2.vesselSlot3.transform.GetChild(0).gameObject,
+                cd2.vesselSlot3.transform.GetChild(0).position,
+                cd2.vesselSlot3.transform.GetChild(0).rotation,
+                cd2.vesselSlot3.transform.parent);
+
+                cd2.emptySlot(cd2.vesselEmptySlot3);
+
+                cd2.vesselEmptySlot3.transform.SetAsFirstSibling();
+
+                cd2.vesselEmptySlot4 = Instantiate(cd2.vesselSlot4.transform.GetChild(0).gameObject,
+                cd2.vesselSlot4.transform.GetChild(0).position,
+                cd2.vesselSlot4.transform.GetChild(0).rotation,
+                cd2.vesselSlot4.transform.parent);
+
+                cd2.emptySlot(cd2.vesselEmptySlot4);
+
+                cd2.vesselEmptySlot4.transform.SetAsFirstSibling();
+            }
+
+            cd2.vPotion1.gameObject.SetActive(false);
+            cd2.vPotion2.gameObject.SetActive(false);
+            cd2.vPotion3.gameObject.SetActive(false);
+            cd2.vPotion4.gameObject.SetActive(false);
+
+        }
+    }
+
     public void PlaceholderDrop(PointerEventData eventData)
     {
         Debug.Log("Drop occurred on CardSlot!");
@@ -37,9 +159,9 @@ public class CardSlot : MonoBehaviour, IDropHandler
         if (dc == null)
             return;
 
-        if (dc.loaded)
+        if (dc.loaded || dc.market)
         {
-            Debug.Log("Trying to grab loaded card");
+            Debug.Log("Trying to grab loaded or market card");
             return;
         }
         // grabbing the card held by the cursor
@@ -60,6 +182,7 @@ public class CardSlot : MonoBehaviour, IDropHandler
 
         if(cd.card.cardName == "placeholder")
         {
+            handleEmptySlotUI(grabbedCard, cd);
             cd.moveCard(grabbedCard.card);
             cd.gameObject.SetActive(true);
             cd.transform.position = Input.mousePosition;

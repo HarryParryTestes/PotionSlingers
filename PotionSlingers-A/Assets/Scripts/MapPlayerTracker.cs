@@ -147,46 +147,46 @@ namespace Map
                         // int num = rng.Next(0, transition.GetComponent<SceneTransition>().slingerPool.Count);
                         int num = transition.GetComponent<SceneTransition>().getSlinger();
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Saltimbocca")
-                        {
-                            transition.GetComponent<SceneTransition>().hideUI();
-                            transition.GetComponent<SceneTransition>().handleSaltCutscene();
+                        {                           
                             saveData.currentEnemyName = "Saltimbocca";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
                             SaveSystem.SaveGameData(saveData);
+                            transition.GetComponent<SceneTransition>().hideUI();
+                            transition.GetComponent<SceneTransition>().handleSaltCutscene();
                             break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Reets")
                         {
-                            Debug.Log("Implement Reets!!!");
-                            transition.GetComponent<SceneTransition>().hideUI();
-                            transition.GetComponent<SceneTransition>().handleReetsCutscene();
+                            Debug.Log("Implement Reets!!!");    
                             saveData.currentEnemyName = "Reets";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
                             SaveSystem.SaveGameData(saveData);
+                            transition.GetComponent<SceneTransition>().hideUI();
+                            transition.GetComponent<SceneTransition>().handleReetsCutscene();
                             break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Bolo")
                         {
                             Debug.Log("Implement Bolo!!!");
-                            transition.GetComponent<SceneTransition>().hideUI();
-                            transition.GetComponent<SceneTransition>().handleBoloCutscene();
                             saveData.currentEnemyName = "Bolo";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
                             SaveSystem.SaveGameData(saveData);
+                            transition.GetComponent<SceneTransition>().hideUI();
+                            transition.GetComponent<SceneTransition>().handleBoloCutscene();
                             break;
                         }
                         if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Isadore")
                         {
-                            Debug.Log("Implement Isadore!!!");
-                            transition.GetComponent<SceneTransition>().hideUI();
-                            transition.GetComponent<SceneTransition>().handleIsadoreCutscene();
+                            Debug.Log("Implement Isadore!!!");                           
                             saveData.currentEnemyName = "Isadore";
                             saveData.slingerName = saveData.currentEnemyName;
                             saveData.slingerEncounter = 1;
                             SaveSystem.SaveGameData(saveData);
+                            transition.GetComponent<SceneTransition>().hideUI();
+                            transition.GetComponent<SceneTransition>().handleIsadoreCutscene();
                             break;
                         }
                     } else
@@ -197,38 +197,38 @@ namespace Map
                         {
                             case "Saltimbocca":
                                 if(saveData.slingerEncounter == 1)
-                                {
-                                    transition.GetComponent<SceneTransition>().hideUI();
-                                    transition.GetComponent<SceneTransition>().handleSaltCutscene();
+                                {                                   
                                     saveData.currentEnemyName = saveData.slingerName;
                                     saveData.slingerEncounter++;
+                                    transition.GetComponent<SceneTransition>().hideUI();
+                                    transition.GetComponent<SceneTransition>().handleSaltCutscene();
                                 }                               
                                 break;
                             case "Reets":
                                 if (saveData.slingerEncounter == 1)
-                                {
-                                    transition.GetComponent<SceneTransition>().hideUI();
-                                    transition.GetComponent<SceneTransition>().handleReetsCutscene();
+                                {  
                                     saveData.currentEnemyName = saveData.slingerName;
                                     saveData.slingerEncounter++;
+                                    transition.GetComponent<SceneTransition>().hideUI();
+                                    transition.GetComponent<SceneTransition>().handleReetsCutscene();
                                 }
                                 break;
                             case "Bolo":
                                 if (saveData.slingerEncounter == 1)
-                                {
-                                    transition.GetComponent<SceneTransition>().hideUI();
-                                    transition.GetComponent<SceneTransition>().handleBoloCutscene();
+                                { 
                                     saveData.currentEnemyName = saveData.slingerName;
                                     saveData.slingerEncounter++;
+                                    transition.GetComponent<SceneTransition>().hideUI();
+                                    transition.GetComponent<SceneTransition>().handleBoloCutscene();
                                 }
                                 break;
                             case "Isadore":
                                 if (saveData.slingerEncounter == 1)
-                                {
-                                    transition.GetComponent<SceneTransition>().hideUI();
-                                    transition.GetComponent<SceneTransition>().handleIsadoreCutscene();
+                                {  
                                     saveData.currentEnemyName = saveData.slingerName;
                                     saveData.slingerEncounter++;
+                                    transition.GetComponent<SceneTransition>().hideUI();
+                                    transition.GetComponent<SceneTransition>().handleIsadoreCutscene();
                                 }
                                 break;
                         }
