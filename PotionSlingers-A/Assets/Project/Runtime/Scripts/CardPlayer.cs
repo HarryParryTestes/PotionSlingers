@@ -2385,6 +2385,7 @@ public class CardPlayer : MonoBehaviour
                         // int cardNumber = rng.Next(1, 5);
                         // GameManager.manager.selectedCardInt = cardNumber;
 
+                        /*
                         var exclude = new HashSet<int>() { };
                         for (int i = 0; i < GameManager.manager.tempPlayer.holster.cardList.Count; i++)
                         {
@@ -2408,6 +2409,7 @@ public class CardPlayer : MonoBehaviour
                         GameManager.manager.td.addCard(GameManager.manager.tempPlayer.holster.cardList[GameManager.manager.selectedCardInt]);
 
                         GameManager.manager.sendMessage("A card in your holster just got trashed!");
+                        */
                     }
 
                     // GameManager.manager.opponentHolsterMenu.SetActive(true);

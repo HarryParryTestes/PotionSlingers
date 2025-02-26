@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class CardTransition : MonoBehaviour
@@ -52,6 +54,15 @@ public class CardTransition : MonoBehaviour
 
     public IEnumerator transition()
     {
+        if(SceneManager.GetActiveScene().name == "TownCenter")
+        {
+            if (Screen.height == 800)
+            {
+                card1.transform.localScale = new Vector3(card1.transform.localScale.x, 11f, card1.transform.localScale.z);
+                card2.transform.localScale = new Vector3(card2.transform.localScale.x, 11f, card2.transform.localScale.z);
+            }
+        }
+
         yield return new WaitForSeconds(0.5f);
         card1.transform.DOMoveX(-1000 * GameManager.manager.widthRatio, 1.5f);
         card2.transform.DOMoveX(3000 * GameManager.manager.widthRatio, 1.5f);

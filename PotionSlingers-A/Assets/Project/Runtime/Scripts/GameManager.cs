@@ -2374,6 +2374,31 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void handleThreePlayerUI()
+    {
+        // experimenting
+        players[1].gameObject.transform.parent.parent.position = new Vector3(100f, 840f, 0);
+        players[2].gameObject.transform.parent.position = new Vector3(1260f, 870f, 0);
+
+        if (Screen.width == 2560)
+        {
+            players[1].gameObject.transform.parent.parent.position = new Vector3(150f, 1180f, 0);
+            players[2].gameObject.transform.parent.position = new Vector3(1625f, 1305f, 0);
+        }
+        else if (Screen.width == 1280)
+        {
+            players[1].gameObject.transform.parent.parent.position = new Vector3(200f, 590f, 0);
+            players[2].gameObject.transform.parent.position = new Vector3(800f, 600f, 0);
+        }
+        else if (Screen.width == 1366)
+        {
+            players[1].gameObject.transform.parent.parent.position = new Vector3(100f, 640f, 0);
+            players[2].gameObject.transform.parent.position = new Vector3(950f, 650f, 0);
+        }
+
+        p4.SetActive(false);
+    }
+
     void Start()
     {
         Debug.Log("GameManager started!!!");
@@ -2616,21 +2641,7 @@ public class GameManager : MonoBehaviour
                 if (numPlayers == 3)
                 {
                     Debug.Log("Three players!!!");
-                    // experimenting
-                    players[1].gameObject.transform.parent.parent.position = new Vector3(100f, 840f, 0);
-                    players[2].gameObject.transform.parent.position = new Vector3(1260f, 870f, 0);
-
-                    if (Screen.width == 2560)
-                    {
-                        players[1].gameObject.transform.parent.parent.position = new Vector3(150f, 1180f, 0);
-                        players[2].gameObject.transform.parent.position = new Vector3(1625f, 1305f, 0);
-                    }
-                    else if (Screen.width == 1280)
-                    {
-                        players[1].gameObject.transform.parent.parent.position = new Vector3(200f, 590f, 0);
-                        players[2].gameObject.transform.parent.position = new Vector3(800f, 600f, 0);
-                    }
-                    p4.SetActive(false);
+                    handleThreePlayerUI();
                 }
                 // onStartTurn(players[0]);
                 foreach (CardDisplay cd in players[0].holster.cardList)
@@ -2783,20 +2794,8 @@ public class GameManager : MonoBehaviour
 
             if (Game.numPlayers == 3)
             {
-                // experimenting
-                players[1].gameObject.transform.parent.parent.position = new Vector3(100f, 840f, 0);
-                players[2].gameObject.transform.parent.position = new Vector3(1260f, 870f, 0);
-
-                if (Screen.width == 2560)
-                {
-                    players[1].gameObject.transform.parent.parent.position = new Vector3(150f, 1180f, 0);
-                    players[2].gameObject.transform.parent.position = new Vector3(1625f, 1305f, 0);
-                }
-                else if (Screen.width == 3840)
-                {
-
-                }
-                p4.SetActive(false);
+                Debug.Log("Three players");
+                handleThreePlayerUI();
             }
 
             // initialize the ComputerPlayer classes and add them to the players that need them
@@ -5378,23 +5377,39 @@ public class GameManager : MonoBehaviour
                 // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.transform.parent.gameObject.SetActive(true);
                 // players[myPlayerIndex].holster.cardList[loadedCardInt].vesselSlot1.SetActive(true);
                 whatever.vesselSlot1.transform.parent.gameObject.SetActive(true);
-                whatever.vesselSlot1.SetActive(true);
-                whatever.vesselSlot2.SetActive(false);
-                whatever.vesselSlot3.SetActive(false);
-                whatever.vesselSlot4.SetActive(false);
+                whatever.vPotion1.gameObject.SetActive(true);
+                whatever.vPotion2.gameObject.SetActive(false);
+                whatever.vPotion3.gameObject.SetActive(false);
+                whatever.vPotion4.gameObject.SetActive(false);
 
                 // Card card = GameManager.manager.md1.popCard();
                 whatever.vPotion1.updateCard(cd);
                 sendMessage("Loaded a card!");
                 // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
+                if (whatever.vesselEmptySlot1 != null)
+                {
+                    Debug.Log("vesselEmptySlot exists!");
+                    whatever.vesselEmptySlot1.SetActive(false);
+                    Destroy(whatever.vesselEmptySlot1);
+                }
             }
             else if (cd.vPotion2.card.cardName == "placeholder")
             {
                 Debug.Log("Triggering in second vessel slot!");
                 whatever.vesselSlot2.SetActive(true);
+                whatever.vPotion2.gameObject.SetActive(true);
                 // Card card = GameManager.manager.md1.popCard();
                 whatever.vPotion2.updateCard(cd);
+
+                if (whatever.vesselEmptySlot2 != null)
+                {
+                    Debug.Log("vesselEmptySlot exists!");
+                    whatever.vesselEmptySlot2.SetActive(false);
+                    Destroy(whatever.vesselEmptySlot2);
+                }
             }
+
+            // handleEmptySlotUI(whatever);
             // whatever.updateCard(cd);
             players[myPlayerIndex].dumpsterBonus = true;
             dumpsterBonus = false;

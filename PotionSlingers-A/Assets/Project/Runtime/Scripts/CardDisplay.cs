@@ -232,6 +232,31 @@ public class CardDisplay : MonoBehaviour
                 }
             }
         }
+
+        if (artifactEmptySlot != null)
+        {
+            Destroy(artifactEmptySlot);
+        }
+
+        if (vesselEmptySlot1 != null)
+        {
+            Destroy(vesselEmptySlot1);
+        }
+
+        if (vesselEmptySlot2 != null)
+        {
+            Destroy(vesselEmptySlot2);
+        }
+
+        if (vesselEmptySlot3 != null)
+        {
+            Destroy(vesselEmptySlot3);
+        }
+
+        if (vesselEmptySlot4 != null)
+        {
+            Destroy(vesselEmptySlot4);
+        }
     }
 
     public void emptySlot(GameObject obj)
@@ -295,6 +320,31 @@ public class CardDisplay : MonoBehaviour
 
     public void updateCard(Card card, string status = null)
     {
+        if (artifactEmptySlot != null)
+        {
+            Destroy(artifactEmptySlot);
+        }
+
+        if (vesselEmptySlot1 != null)
+        {
+            Destroy(vesselEmptySlot1);
+        }
+
+        if (vesselEmptySlot2 != null)
+        {
+            Destroy(vesselEmptySlot2);
+        }
+
+        if (vesselEmptySlot3 != null)
+        {
+            Destroy(vesselEmptySlot3);
+        }
+
+        if (vesselEmptySlot4 != null)
+        {
+            Destroy(vesselEmptySlot4);
+        }
+
         artworkImage = this.GetComponent<Image>();
         this.card = card;
         artworkImage.sprite = card.cardSprite;
@@ -368,7 +418,7 @@ public class CardDisplay : MonoBehaviour
             durability = 5;
         }
 
-        if (GetComponent<DragCard>() != null && !GetComponent<DragCard>().market)
+        if (GetComponent<DragCard>() != null && !GetComponent<DragCard>().market && this.gameObject.name != "DeckPile")
         {
             if (this.card.cardType == "Vessel")
             {

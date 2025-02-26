@@ -52,6 +52,22 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
             if (Screen.width == 1366)
                 originalPosition = new Vector2(1117f, 70f);
+
+            if (Screen.width == 2560)
+                originalPosition = new Vector2(2090f, 135f);
+
+            if (Screen.width == 3840)
+                originalPosition = new Vector2(3135f, 205f);
+
+            if (Screen.width == 1280)
+            {
+                if(Screen.height == 800)
+                    originalPosition = new Vector2(1045f, 70f);
+
+                if (Screen.height == 720)
+                    originalPosition = new Vector2(1045f, 62f);
+            }
+                
         }
     }
 
