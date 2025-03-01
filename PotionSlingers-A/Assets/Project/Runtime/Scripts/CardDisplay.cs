@@ -420,6 +420,31 @@ public class CardDisplay : MonoBehaviour
 
         if (GetComponent<DragCard>() != null && !GetComponent<DragCard>().market && this.gameObject.name != "DeckPile")
         {
+            /*
+            if (this.card.cardType == "Artifact")
+            {
+                Debug.Log("Empty slot animation triggering???");
+
+                this.artifactSlot.gameObject.SetActive(true);
+                this.aPotion.gameObject.SetActive(true);
+
+                if (artifactEmptySlot != null)
+                {
+                    Destroy(artifactEmptySlot);
+                }
+                // artifact logic
+                artifactEmptySlot = Instantiate(this.artifactSlot.transform.GetChild(0).gameObject,
+                    this.artifactSlot.transform.GetChild(0).position,
+                    this.artifactSlot.transform.GetChild(0).rotation,
+                    this.artifactSlot.transform.parent);
+
+                // obj.GetComponent<CardDisplay>().updateCard(GameManager.manager.emptySlotCard);
+                emptySlot(artifactEmptySlot);
+
+                this.aPotion.gameObject.SetActive(false);
+            }
+            */
+
             if (this.card.cardType == "Vessel")
             {
                 Debug.Log("Empty vessel slot animation triggering???");
@@ -549,9 +574,41 @@ public class CardDisplay : MonoBehaviour
 
         }
         else
+        {
+            if (!this.gameObject.activeInHierarchy)
+            {
+                if (GetComponent<DragCard>() != null &&
+                !GetComponent<DragCard>().market)
+                {
+                    Debug.Log("Fixing resolution stuff hopefully");
+                    Invoke("marketBack", 0.05f);
+                    /*
+                    this.gameObject.SetActive(true);
+                    GetComponent<DragCard>().marketBack();
+                    this.transform.position = new Vector3(GetComponent<DragCard>().originalPosition.x, GetComponent<DragCard>().originalPosition.y, 0);
+                    this.transform.position = new Vector3(GetComponent<DragCard>().originalPosition.x, GetComponent<DragCard>().originalPosition.y, 0);
+                    this.transform.position = new Vector3(GetComponent<DragCard>().originalPosition.x, GetComponent<DragCard>().originalPosition.y, 0);
+                    
+                    Debug.Log("Fixing resolution stuff hopefully");
+                    this.gameObject.SetActive(true);
+                    this.transform.position = new Vector3(GetComponent<DragCard>().originalPosition.x, GetComponent<DragCard>().originalPosition.y, 0);
+                    transform.DOMove(GetComponent<DragCard>().originalPosition, 0.1f).SetId(gameObject.name);
+                    */
+                }
+            }
             this.gameObject.SetActive(true);
+        }
+            
         if(SceneManager.GetActiveScene().name == "TownCenter")
             GameManager.manager.updateMarketDeckDisplay();
+    }
+
+    public void marketBack()
+    {
+        // yield return new WaitForSeconds(.10f);
+        this.transform.position = new Vector3(GetComponent<DragCard>().originalPosition.x, GetComponent<DragCard>().originalPosition.y, 0);
+        this.transform.position = new Vector3(GetComponent<DragCard>().originalPosition.x, GetComponent<DragCard>().originalPosition.y, 0);
+        this.transform.position = new Vector3(GetComponent<DragCard>().originalPosition.x, GetComponent<DragCard>().originalPosition.y, 0);
     }
 
     public void fadeMarketCard()

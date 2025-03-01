@@ -244,7 +244,50 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                     break;
             }
         }
-
+        else if (Screen.width == 1920)
+        {
+            switch (gameObject.name)
+            {
+                case "Card1Display":
+                    originalPosition = new Vector3(503f, -2.2f, 0);
+                    break;
+                case "Card2Display":
+                    originalPosition = new Vector3(803.4f, 65.8f, 0);
+                    break;
+                case "Card3Display":
+                    originalPosition = new Vector3(1111.9f, 65.8f, 0);
+                    break;
+                case "Card4Display":
+                    originalPosition = new Vector3(1415.6f, -2.2f, 0);
+                    break;
+                case "CardDisplay (Potion1)":
+                    originalPosition = new Vector3(753.75f, 770.3f, 0);
+                    break;
+                case "CardDisplay (Potion2)":
+                    originalPosition = new Vector3(966.06f, 770.3f, 0);
+                    break;
+                case "CardDisplay (Potion3)":
+                    originalPosition = new Vector3(1178.37f, 770.3f, 0);
+                    break;
+                case "CardDisplay (Potion4)":
+                    originalPosition = new Vector3(1496.8f, 770.3f, 0);
+                    break;
+                case "CardDisplay (Special1)":
+                    originalPosition = new Vector3(753.75f, 465.3f, 0);
+                    break;
+                case "CardDisplay (Special2)":
+                    originalPosition = new Vector3(966.06f, 465.3f, 0);
+                    break;
+                case "CardDisplay (Special3)":
+                    originalPosition = new Vector3(1178.37f, 465.3f, 0);
+                    break;
+                case "CardDisplay (Special4)":
+                    originalPosition = new Vector3(1496.8f, 465.3f, 0);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void Awake()

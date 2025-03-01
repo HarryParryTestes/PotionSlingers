@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class OptionsMenu : MonoBehaviour
@@ -13,7 +15,15 @@ public class OptionsMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        resolutions.Clear();
+        Resolution[] resolutionsList = Screen.resolutions;
+
+        // Print the resolutions
+        foreach (var res in resolutionsList)
+        {
+            Debug.Log(res.width + "x" + res.height);
+            resolutions.Add(new Vector2(res.width, res.height));
+        }
     }
 
     // Update is called once per frame
@@ -42,6 +52,7 @@ public class OptionsMenu : MonoBehaviour
 
     public void loadOptions()
     {
+        index = 3;
         if (PlayerPrefs.HasKey("fullscreen"))
         {
             Debug.Log("Loading options...");
@@ -66,6 +77,8 @@ public class OptionsMenu : MonoBehaviour
         Debug.Log("Saving changes");
         PlayerPrefs.Save();
 
+        // if (SceneManager.GetActiveScene().name == "TownCenter")
+            // GameManager.manager.moveUI();
     }
 
     public void upResolution()

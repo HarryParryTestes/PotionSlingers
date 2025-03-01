@@ -166,6 +166,7 @@ public class GameManager : MonoBehaviour
     public bool earlyBirdSpecial = false;
     public bool holsterEarlyBirdSpecial = false;
     //public bool trashOrDamage = false;
+    public bool chooseOne = false;
     public bool miner = false;
     public bool droplet = false;
     public bool pemmican = false;
@@ -268,6 +269,12 @@ public class GameManager : MonoBehaviour
             dialog.initDialog();
         }
         // Debug.Log(Screen.width);
+    }
+
+    public void moveUI()
+    {
+        if (numPlayers == 3)
+            handleThreePlayerUI();
     }
 
     void Update()
@@ -617,6 +624,21 @@ public class GameManager : MonoBehaviour
                 saveData.opp1Cubes = players[1].hpCubes;
                 break;
         }
+    }
+
+    public void handleBackgroundUI()
+    {
+        if (background.sprite == backgrounds[2] ||
+            background.sprite == backgrounds[3] ||
+            background.sprite == backgrounds[4])
+        {
+            if (Screen.width == 1920)
+            {
+                background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
+                background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
+                    background.gameObject.transform.position.y + 58f, background.gameObject.transform.position.z);
+            }
+        }    
     }
 
     public void handleFashion()
@@ -1178,7 +1200,12 @@ public class GameManager : MonoBehaviour
                 // Game.ServerChangeScene("StoryMode");
                 // throw some message up on the screen saying you've completed the stage
                 // advanceStageUI.SetActive(true);
+
+                // rather than fading the advance stage UI in automatically, make the pass button fade it in
+
                 Invoke("setStageUI", 3f);
+                // endTurnButton.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "Advance Stage";
+
                 // StartCoroutine(goToStory());
                 // SceneManager.LoadScene("StoryMode");
                 return;
@@ -1392,9 +1419,8 @@ public class GameManager : MonoBehaviour
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 60, background.gameObject.transform.position.z);
                 }
+                handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 carnivalTurns = 2;
@@ -1451,12 +1477,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Fingas":
                 background.sprite = backgrounds[3];
-                if (Screen.width == 1920)
-                {
-                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
-                }
+                handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1491,12 +1512,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Dippit":
                 background.sprite = backgrounds[3];
-                if (Screen.width == 1920)
-                {
-                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
-                }
+                handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1533,12 +1549,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Maskid":
                 background.sprite = backgrounds[3];
-                if (Screen.width == 1920)
-                {
-                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
-                }
+                handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1575,12 +1586,11 @@ public class GameManager : MonoBehaviour
                 break;
             case "Fingas+":
                 background.sprite = backgrounds[4];
+                handleBackgroundUI();
                 smoke.SetActive(true);
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 }
                 numPlayers = 3;
                 // Fingas is stage 1 enemy
@@ -1635,12 +1645,11 @@ public class GameManager : MonoBehaviour
                 break;
             case "Bag o' Snakes+":
                 background.sprite = backgrounds[4];
+                handleBackgroundUI();
                 smoke.SetActive(true);
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 }
                 numPlayers = 3;
                 // Fingas is stage 1 enemy
@@ -1729,12 +1738,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Bag o' Snakes":
                 background.sprite = backgrounds[3];
-                if (Screen.width == 1920)
-                {
-                    background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
-                }
+                handleBackgroundUI();
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Bag o' Snakes";
@@ -1768,12 +1772,11 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk":
                 background.sprite = backgrounds[4];
+                handleBackgroundUI();
                 smoke.SetActive(true);
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 }
                 numPlayers = 2;
                 players[2].gameObject.AddComponent<ComputerPlayer>();
@@ -1928,12 +1931,11 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk+":
                 background.sprite = backgrounds[4];
+                handleBackgroundUI();
                 smoke.SetActive(true);
                 if (Screen.width == 1920)
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
-                    background.gameObject.transform.position = new Vector3(background.gameObject.transform.position.x,
-                        background.gameObject.transform.position.y - 67, background.gameObject.transform.position.z);
                 }
                 numPlayers = 4;
                 // Fingas is stage 1 enemy
@@ -2403,6 +2405,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("GameManager started!!!");
 
+        // moveMarketCards();
+
         // expUI.DisplayText();
 
         // just testing the new health bar
@@ -2410,6 +2414,8 @@ public class GameManager : MonoBehaviour
 
         // see if this works lol
         Invoke("turnOffCards", 0.3f);
+
+        // handleBackgroundUI();
 
         // set up endless mode in here
         if (Game.endless)
@@ -4258,6 +4264,22 @@ public class GameManager : MonoBehaviour
 
     public void replaceOpponentCardWithStarter(int selectedCard)
     {
+        if (chooseOne)
+        {
+            Debug.Log("Choose one and trash!!!");
+            GameObject obj = Instantiate(tempPlayer.holster.cardList[selectedCard - 1].gameObject,
+                        tempPlayer.holster.cardList[selectedCard - 1].gameObject.transform.position,
+                        tempPlayer.holster.cardList[selectedCard - 1].gameObject.transform.rotation,
+                        tempPlayer.holster.cardList[selectedCardInt - 1].gameObject.transform);
+
+            MoveToTrash(obj, tempPlayer.holster.cardList[selectedCard - 1]);
+            td.addCard(tempPlayer.holster.cardList[selectedCard - 1]);
+            sendMessage("Trashed your opponent's card!");
+            chooseOne = false;
+            opponentHolsterMenu.SetActive(false);
+            return;
+        }
+
         if (glove)
         {
             Debug.Log("Glove bonus!!!");
@@ -4267,6 +4289,7 @@ public class GameManager : MonoBehaviour
                 .updatePlaceholder(tempPlayer.holster.cardList[selectedCard - 1]);
             sendMessage("Moved card to the top of your deck!");
             opponentHolsterMenu.SetActive(false);
+            glove = false;
             return;
         }
 
@@ -4355,7 +4378,7 @@ public class GameManager : MonoBehaviour
             GameObject obj = Instantiate(tempPlayer.holster.cardList[selectedCard - 1].gameObject,
                         tempPlayer.holster.cardList[selectedCard - 1].gameObject.transform.position,
                         tempPlayer.holster.cardList[selectedCard - 1].gameObject.transform.rotation,
-                        playerHolster.cardList[selectedCardInt - 1].gameObject.transform);
+                        tempPlayer.holster.cardList[selectedCardInt - 1].gameObject.transform);
 
             MoveToTrash(obj, tempPlayer.holster.cardList[selectedCard - 1]);
             td.addCard(tempPlayer.holster.cardList[selectedCard - 1]);

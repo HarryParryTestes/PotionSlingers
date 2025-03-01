@@ -38,6 +38,7 @@ public class CardPlayer : MonoBehaviour
     public bool bargainBonus;
     public bool hotDogBonus = false;
     public bool spiritBonus = false;
+    public bool slinger = false;
     public int bonusAmount;
     public int cardsTrashed = 0;
     //public HealthController health;
@@ -178,10 +179,12 @@ public class CardPlayer : MonoBehaviour
             case "Pluot":
                 Debug.Log("I AM PLUOT");
                 isPluot = true;
+                slinger = true;
                 break;
             case "Bolo":
                 Debug.Log("I AM BOLO");
                 isBolo = true;
+                slinger = true;
                 // fuck with this more later
                 // this.transform.localScale = new Vector3(1.1f, 1.1f, 1.1f);
                 // this.GetComponent<Image>().SetNativeSize();               
@@ -194,10 +197,12 @@ public class CardPlayer : MonoBehaviour
             case "Nickles":
                 Debug.Log("I AM NICKLES");
                 isNickles = true;
+                slinger = true;
                 break;
             case "Isadore":
                 Debug.Log("I AM ISADORE");
                 isIsadore = true;
+                slinger = true;
                 // this.character.updateCharacter(character2);
                 if (this.gameObject.name == "CharacterCard (Left)")
                     this.transform.localScale = new Vector3(2f, 2.6f, 0);
@@ -215,6 +220,7 @@ public class CardPlayer : MonoBehaviour
             case "Reets":
                 Debug.Log("I AM REETS");
                 isReets = true;
+                slinger = true;
                 if (this.gameObject.name == "CharacterCard (Right)")
                 {
                     this.transform.localScale = new Vector3(7f, 8f, 0);
@@ -239,6 +245,7 @@ public class CardPlayer : MonoBehaviour
             case "Saltimbocca":
                 Debug.Log("I AM SALTIMBOCCA");
                 isSaltimbocca = true;
+                slinger = true;
                 if (this.gameObject.name == "CharacterCard (Right)")
                 {
                     this.transform.localScale = new Vector3(5.4f, 7.9f, 0);
@@ -263,14 +270,17 @@ public class CardPlayer : MonoBehaviour
             case "Scarpetta":
                 Debug.Log("I AM SCARPETTA");
                 isScarpetta = true;
+                slinger = true;
                 break;
             case "Sweetbitter":
                 Debug.Log("I AM SWEETBITTER");
                 isSweetbitter = true;
+                slinger = true;
                 break;
             case "Twins":
                 Debug.Log("I AM TWINS");
                 isTwins = true;
+                slinger = true;
                 break;
             case "Crowpunk":
                 this.transform.localScale = new Vector3(16.5f, 11f, 0);
@@ -740,6 +750,7 @@ public class CardPlayer : MonoBehaviour
         username.transform.GetChild(0).gameObject.SetActive(false);
         username.transform.GetChild(1).gameObject.SetActive(false);
         username.transform.GetChild(2).gameObject.SetActive(false);
+        hoverBox.SetActive(false);
         // GameManager.manager.playerTopName.gameObject.transform.parent.gameObject.SetActive(false);
     }
 
@@ -3339,8 +3350,12 @@ public class CardPlayer : MonoBehaviour
                 {
                     // GameManager.manager.opponentHolsterMenu.SetActive(true);
                     // GameManager.manager.FadeIn(GameManager.manager.opponentHolsterMenu);
-                    StartCoroutine(DelayedFade(GameManager.manager.opponentHolsterMenu));
-                    GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
+                    if(GameManager.manager.tempPlayer.slinger)
+                    {
+                        GameManager.manager.chooseOne = true;
+                        StartCoroutine(DelayedFade(GameManager.manager.opponentHolsterMenu));
+                        GameManager.manager.displayOpponentHolster(GameManager.manager.tempPlayer);
+                    }  
                 }
                 catch (ArgumentOutOfRangeException e)
                 {

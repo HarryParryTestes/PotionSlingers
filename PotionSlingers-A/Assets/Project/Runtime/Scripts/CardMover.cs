@@ -47,7 +47,8 @@ public class CardMover : MonoBehaviour, IPointerDownHandler
 
     public void Unmask()
     {
-        UnityEngine.Debug.Log("Mask clicked, not the card!");
+        Debug.Log("Mask clicked, not the card!");
+        mask.GetComponent<CanvasGroup>().interactable = false;
         transform.parent.GetChild(transform.parent.childCount - 1).GetComponent<CardMover>().checkClick();
         if (transform.parent.GetChild(transform.parent.childCount - 1).GetComponent<CardMover>().clicked == false)
         {
@@ -72,6 +73,7 @@ public class CardMover : MonoBehaviour, IPointerDownHandler
             transform.DOLocalPath(vec, speed, PathType.Linear);
             transform.DOScale(7f, speed);
             mask.SetActive(true);
+            mask.GetComponent<CanvasGroup>().interactable = true;
             // mask1.color = new Color(mask1.color.r, mask1.color.g, mask1.color.b, 0f);
             // mask2.color = new Color(mask2.color.r, mask2.color.g, mask2.color.b, 0f);
             mask1.GetComponent<CanvasRenderer>().SetAlpha(0f);
@@ -83,6 +85,7 @@ public class CardMover : MonoBehaviour, IPointerDownHandler
         else
         {
             clicked = false;
+            mask.GetComponent<CanvasGroup>().interactable = false;
             transform.DOMove(originalPosition, speed);
             transform.DOScale(3f, speed);
             mask1.CrossFadeAlpha(0, speed, true);

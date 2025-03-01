@@ -28,6 +28,37 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
     private Image vesselCard2;
     int parentSiblingIndex;
 
+    void Update()
+    {
+
+        if(this.gameObject.name == "DeckPile")
+        {
+            if (Screen.width == 1366)
+                originalPosition = new Vector2(1117f, 70f);
+
+            if (Screen.width == 1360)
+                originalPosition = new Vector2(1117f, 70f);
+
+            if (Screen.width == 1920)
+                originalPosition = new Vector2(1569.25f, 103f);
+
+            if (Screen.width == 2560)
+                originalPosition = new Vector2(2090f, 135f);
+
+            if (Screen.width == 3840)
+                originalPosition = new Vector2(3135f, 205f);
+
+            if (Screen.width == 1280)
+            {
+                if (Screen.height == 800)
+                    originalPosition = new Vector2(1045f, 70f);
+
+                if (Screen.height == 720)
+                    originalPosition = new Vector2(1045f, 62f);
+            }
+        }  
+    }
+
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -53,6 +84,12 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             if (Screen.width == 1366)
                 originalPosition = new Vector2(1117f, 70f);
 
+            if (Screen.width == 1360)
+                originalPosition = new Vector2(1117f, 70f);
+
+            if (Screen.width == 1920)
+                originalPosition = new Vector2(1569.25f, 103f);
+
             if (Screen.width == 2560)
                 originalPosition = new Vector2(2090f, 135f);
 
@@ -61,13 +98,12 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
 
             if (Screen.width == 1280)
             {
-                if(Screen.height == 800)
+                if (Screen.height == 800)
                     originalPosition = new Vector2(1045f, 70f);
 
                 if (Screen.height == 720)
                     originalPosition = new Vector2(1045f, 62f);
             }
-                
         }
     }
 
