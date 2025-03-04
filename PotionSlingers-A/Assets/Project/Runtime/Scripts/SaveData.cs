@@ -27,6 +27,7 @@ public class SaveData
     public List<string> playerFashion = new List<string>();
     public List<string> potionDeck = new List<string>();
     public List<string> itemDeck = new List<string>();
+    public List<string> trashDeck = new List<string>();
     public List<string[]> playerLoadedCards = new List<string[]>();
     // public Dictionary<string, string[]> playerHolsterDictionary = new Dictionary<string, string[]>();
     public List<int> cardDurabilities = new List<int>();
@@ -39,10 +40,16 @@ public class SaveData
     // public string oppCharName;
     public int opp1Health;
     public int opp1Cubes;
+    public int opp1Shields = 0;
+    public bool opp1Dead = false;
     public int opp2Health;
     public int opp2Cubes;
+    public int opp2Shields = 0;
+    public bool opp2Dead = false;
     public int opp3Health;
     public int opp3Cubes;
+    public int opp3Shields = 0;
+    public bool opp3Dead = false;
     public int stage;
     public int slingerEncounter;
     public bool savedGame;

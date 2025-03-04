@@ -63445,7 +63445,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &508894774
 RectTransform:
   m_ObjectHideFlags: 0
@@ -225857,6 +225857,7 @@ MonoBehaviour:
     playerFashion: []
     potionDeck: []
     itemDeck: []
+    trashDeck: []
     cardDurabilities: 
     cardStatuses: []
     marketStatuses: []
@@ -225864,10 +225865,16 @@ MonoBehaviour:
     deckStatuses: []
     opp1Health: 0
     opp1Cubes: 0
+    opp1Shields: 0
+    opp1Dead: 0
     opp2Health: 0
     opp2Cubes: 0
+    opp2Shields: 0
+    opp2Dead: 0
     opp3Health: 0
     opp3Cubes: 0
+    opp3Shields: 0
+    opp3Dead: 0
     stage: 0
     slingerEncounter: 0
     savedGame: 0

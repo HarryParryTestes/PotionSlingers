@@ -559,69 +559,76 @@ public class GameManager : MonoBehaviour
         // SceneManager.LoadScene("StoryMode");
     }
 
+    public void handlePlayerOneHealth()
+    {
+        saveData.opp1Health = players[1].hp;
+        saveData.opp1Cubes = players[1].hpCubes;
+        saveData.opp1Shields = players[1].shields;
+        saveData.opp1Dead = players[1].dead;
+    }
+
+    public void handlePlayerTwoHealth()
+    {
+        saveData.opp2Health = players[2].hp;
+        saveData.opp2Cubes = players[2].hpCubes;
+        saveData.opp2Shields = players[2].shields;
+        saveData.opp2Dead = players[2].dead;
+    }
+
+    public void handlePlayerThreeHealth()
+    {
+        saveData.opp3Health = players[3].hp;
+        saveData.opp3Cubes = players[3].hpCubes;
+        saveData.opp3Shields = players[3].shields;
+        saveData.opp3Dead = players[3].dead;
+    }
+
     public void saveEnemyHealth()
     {
         switch (saveData.currentEnemyName)
         {
             case "Bag o' Snakes":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Bag o' Snakes+":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                saveData.opp2Health = players[2].hp;
-                saveData.opp2Cubes = players[2].hpCubes;
+                handlePlayerOneHealth();
+                handlePlayerTwoHealth();
                 break;
             case "Fingas":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Fingas+":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                saveData.opp2Health = players[2].hp;
-                saveData.opp2Cubes = players[2].hpCubes;
+                handlePlayerOneHealth();
+                handlePlayerTwoHealth();
                 break;
             case "Saltimbocca":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Isadore":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Reets":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Bolo":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Singelotte":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Crowpunk":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Crowpunk+":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
-                saveData.opp2Health = players[2].hp;
-                saveData.opp2Cubes = players[2].hpCubes;
-                saveData.opp3Health = players[3].hp;
-                saveData.opp3Cubes = players[3].hpCubes;
+                handlePlayerOneHealth();
+                handlePlayerTwoHealth();
+                handlePlayerThreeHealth();
                 break;
             case "Dippit":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
             case "Maskid":
-                saveData.opp1Health = players[1].hp;
-                saveData.opp1Cubes = players[1].hpCubes;
+                handlePlayerOneHealth();
                 break;
         }
     }
@@ -976,6 +983,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void handleTrashDeck()
+    {
+        saveData.trashDeck.Clear();
+
+        foreach (Card card in td.deckList)
+        {
+            saveData.trashDeck.Add(card.cardName);
+        }
+    }
+
     public void saveGameManagerValues()
     {
         // saveData.playerHolster = playersHolster;
@@ -991,6 +1008,7 @@ public class GameManager : MonoBehaviour
         handleMarketStatuses();
         handleMarketCrucibleCards();
         handleMarketDecks();
+        handleTrashDeck();
 
         foreach (CardDisplay cd in playerHolster.cardList)
         {
@@ -1486,14 +1504,13 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Fingas");
                 players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp1Shields;
                 }
                 else
                 {
@@ -1521,8 +1538,6 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Dippit");
                 players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
@@ -1530,6 +1545,7 @@ public class GameManager : MonoBehaviour
                     players[2].hp = saveData.opp1Health;
                     players[2].maxHp = 7;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp1Shields;
                 }
                 else
                 {
@@ -1558,8 +1574,6 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Maskid");
                 players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
@@ -1567,6 +1581,7 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp1Shields;
                 }
                 else
                 {
@@ -1600,8 +1615,6 @@ public class GameManager : MonoBehaviour
                 playerLeftName.text = players[1].charName;
                 players[1].character.onCharacterClick("Fingas");
                 players[1].checkCharacter();
-                players[1].holster.gameObject.SetActive(false);
-                players[1].deck.gameObject.SetActive(false);
                 players[1].hpCubes = 1;
                 players[1].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -1609,6 +1622,15 @@ public class GameManager : MonoBehaviour
                     players[1].hpCubes = saveData.opp1Cubes;
                     players[1].hp = saveData.opp1Health;
                     players[1].hBar.image.fillAmount = 0;
+                    players[1].shields = saveData.opp1Shields;
+
+                    if (saveData.opp1Dead)
+                    {
+                        Debug.Log("Player 1 is dead!!!");
+                        players[1].dead = true;
+                        // players[1].turnOff();
+                        p3.SetActive(false);
+                    }
                 }
                 else
                 {
@@ -1634,6 +1656,15 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp2Cubes;
                     players[2].hp = saveData.opp2Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp2Shields;
+
+                    if (saveData.opp2Dead)
+                    {
+                        Debug.Log("Player 2 is dead!!!");
+                        players[2].dead = true;
+                        players[2].turnOff();
+                        p2.SetActive(false);
+                    }
                 }
                 else
                 {
@@ -1659,8 +1690,6 @@ public class GameManager : MonoBehaviour
                 playerLeftName.text = players[1].charName;
                 players[1].character.onCharacterClick("Bag o' Snakes");
                 players[1].checkCharacter();
-                players[1].holster.gameObject.SetActive(false);
-                players[1].deck.gameObject.SetActive(false);
                 players[1].hpCubes = 1;
                 players[1].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -1668,6 +1697,15 @@ public class GameManager : MonoBehaviour
                     players[1].hpCubes = saveData.opp1Cubes;
                     players[1].hp = saveData.opp1Health;
                     players[1].hBar.image.fillAmount = 0;
+                    players[1].shields = saveData.opp1Shields;
+
+                    if (saveData.opp1Dead)
+                    {
+                        Debug.Log("Player 1 is dead!!!");
+                        players[1].dead = true;
+                        // players[1].turnOff();
+                        p3.SetActive(false);
+                    }
                 }
                 else
                 {
@@ -1684,8 +1722,6 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Bag o' Snakes");
                 players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
                 players[2].hpCubes = 1;
                 players[2].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -1693,6 +1729,15 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp2Cubes;
                     players[2].hp = saveData.opp2Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp2Shields;
+
+                    if (saveData.opp2Dead)
+                    {
+                        Debug.Log("Player 2 is dead!!!");
+                        players[2].dead = true;
+                        // players[2].turnOff();
+                        p2.SetActive(false);
+                    }
                 }
                 else
                 {
@@ -1711,8 +1756,6 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Singelotte");
                 players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
                 if (saveData.savedGame && !saveData.newStage)
                 {
                     players[2].hpCubes = saveData.opp1Cubes;
@@ -1746,14 +1789,13 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Bag o' Snakes");
                 players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp2Shields;
                 }
                 else
                 {
@@ -1785,14 +1827,13 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Crowpunk");
                 players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
 
                 if (saveData.savedGame && !saveData.newStage)
                 {
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp1Shields;
                 }
                 else
                 {
@@ -1822,6 +1863,7 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp1Shields;
                 }
                 else
                 {
@@ -1852,6 +1894,7 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp1Shields;
                 }
                 else
                 {
@@ -1882,6 +1925,7 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp1Shields;
                 }
                 else
                 {
@@ -1912,6 +1956,7 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp1Cubes;
                     players[2].hp = saveData.opp1Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp1Shields;
                 }
                 else
                 {
@@ -1945,8 +1990,6 @@ public class GameManager : MonoBehaviour
                 playerLeftName.text = players[1].charName;
                 players[1].character.onCharacterClick("Fingas");
                 players[1].checkCharacter();
-                players[1].holster.gameObject.SetActive(false);
-                players[1].deck.gameObject.SetActive(false);
                 players[1].hpCubes = 1;
                 players[1].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -1954,6 +1997,15 @@ public class GameManager : MonoBehaviour
                     players[1].hpCubes = saveData.opp1Cubes;
                     players[1].hp = saveData.opp1Health;
                     players[1].hBar.image.fillAmount = 0;
+                    players[1].shields = saveData.opp1Shields;
+
+                    if (saveData.opp1Dead)
+                    {
+                        Debug.Log("Player 1 is dead!!!");
+                        players[1].dead = true;
+                        // players[1].turnOff();
+                        p3.SetActive(false);
+                    }
                 }
                 else
                 {
@@ -1970,8 +2022,6 @@ public class GameManager : MonoBehaviour
                 playerTopName.text = players[2].charName;
                 players[2].character.onCharacterClick("Crowpunk");
                 players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
                 players[2].hpCubes = 1;
                 players[2].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -1979,12 +2029,14 @@ public class GameManager : MonoBehaviour
                     players[2].hpCubes = saveData.opp2Cubes;
                     players[2].hp = saveData.opp2Health;
                     players[2].hBar.image.fillAmount = 0;
+                    players[2].shields = saveData.opp2Shields;
 
-                    if (players[2].hpCubes == 0 && players[2].hp == 0)
+                    if (saveData.opp2Dead)
                     {
-                        Debug.Log("I think something went wrong so I'm resetting their health");
-                        players[2].hpCubes = 1;
-                        players[2].hp = 10;
+                        Debug.Log("Player 2 is dead!!!");
+                        players[2].dead = true;
+                        // players[2].turnOff();
+                        p2.SetActive(false);
                     }
                 }
                 else
@@ -2001,8 +2053,6 @@ public class GameManager : MonoBehaviour
                 playerRightName.text = players[3].charName;
                 players[3].character.onCharacterClick("Fingas");
                 players[3].checkCharacter();
-                players[3].holster.gameObject.SetActive(false);
-                players[3].deck.gameObject.SetActive(false);
                 players[3].hpCubes = 1;
                 players[3].hp = 10;
                 if (saveData.savedGame && !saveData.newStage)
@@ -2010,12 +2060,14 @@ public class GameManager : MonoBehaviour
                     players[3].hpCubes = saveData.opp3Cubes;
                     players[3].hp = saveData.opp3Health;
                     players[3].hBar.image.fillAmount = 0;
+                    players[3].shields = saveData.opp3Shields;
 
-                    if (players[3].hpCubes == 0 && players[3].hp == 0)
+                    if (saveData.opp3Dead)
                     {
-                        Debug.Log("I think something went wrong so I'm resetting their health");
-                        players[3].hpCubes = 1;
-                        players[3].hp = 10;
+                        Debug.Log("Player 3 is dead!!!");
+                        players[3].dead = true;
+                        // players[3].turnOff();
+                        p4.SetActive(false);
                     }
                 }
                 else
@@ -2376,6 +2428,18 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void handleSavedTrashDeck()
+    {
+        foreach (string thing in saveData.trashDeck)
+        {
+            Card card = database.cardList.FirstOrDefault(name => name.cardName == thing);
+            if (card != null)
+            {
+                td.deckList.Add(card);
+            }
+        }
+    }
+
     public void handleThreePlayerUI()
     {
         // experimenting
@@ -2464,6 +2528,7 @@ public class GameManager : MonoBehaviour
                 handleSavedMarketStatuses();
                 handleSavedMarketCrucibleCards();
                 handleSavedMarketDecks();
+                handleSavedTrashDeck();
                 handleFashion();
 
                 players[0].shields = saveData.shields;
@@ -3556,8 +3621,11 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         cd.updateCard(card, status);
-        obj.SetActive(false);
-        Destroy(obj);
+        if(obj != null)
+        {
+            obj.SetActive(false);
+            Destroy(obj);
+        }      
     }
 
     public void checkSpicy(CardPlayer player)

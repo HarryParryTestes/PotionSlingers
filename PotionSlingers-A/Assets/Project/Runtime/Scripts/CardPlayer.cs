@@ -340,6 +340,20 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Failed to set any bools");
                 break;
         }
+
+        if (!slinger)
+        {
+            // not a slinger, remove the holster and deck UI
+            Debug.Log("Not a slinger!!!");
+            holster.gameObject.SetActive(false);
+            deck.gameObject.SetActive(false);
+        } else
+        {
+            Debug.Log("You are a slinger!!!");
+            holster.gameObject.SetActive(true);
+            deck.gameObject.SetActive(true);
+        }
+
         if (animator != null)
             playIdle();
     }
@@ -1415,6 +1429,8 @@ public class CardPlayer : MonoBehaviour
             }
         }
 
+        // might use this if i redesign the bangle
+        /*
         // A Bangle That Fires Ethereal Fists
         if (selectedCard.card.cardName == "Bangle")
         {
@@ -1427,11 +1443,12 @@ public class CardPlayer : MonoBehaviour
                 GameManager.manager.td.addCard(card);
             }
         }
+        */
 
         // Rubber Spatula
         if (selectedCard.card.cardName == "RubberSpatula")
         {
-            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Dry"))
             {
                 Debug.Log("Spatula Bonus!!!");
                 for (int i = 0; i < GameManager.manager.numPlayers; i++)
@@ -1445,7 +1462,7 @@ public class CardPlayer : MonoBehaviour
         // Soaked Standard
         if (selectedCard.card.cardName == "SoakedStandard")
         {
-            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Cold"))
                 damage++;
         }
 
@@ -1481,7 +1498,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "LoofahLauncher")
         {
             // Wet Bonus
-            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Wet"))
             {
 
                 foreach (CardDisplay cd in holster.cardList)
@@ -1609,7 +1626,7 @@ public class CardPlayer : MonoBehaviour
              * Hot Bonus: +2 Damage.
                Holster Bonus: +1 Damage if a ring is in your Holster.
              */
-            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Hot"))
             {
                 damage += 2;
             }
@@ -1624,7 +1641,7 @@ public class CardPlayer : MonoBehaviour
              * Hot Bonus: +1 Damage.
                Holster Bonus: +1 Damage for each Ring in your Holster.
              */
-            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Hot"))
             {
                 damage++;
             }
@@ -1637,7 +1654,7 @@ public class CardPlayer : MonoBehaviour
         {
             // Dry Bonus: Double potion damage
             // what they meant was "double the loaded potion's damage and add it to the artifact damage"
-            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Dry"))
             {
                 damage += (2 * selectedCard.aPotion.card.effectAmount);
             }
@@ -1664,12 +1681,12 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "Tablet Containing All Knowledge")
         {
             // Dry Bonus: +2 Damage
-            if (selectedCard.aPotion.card.cardQuality == "Dry" || selectedCard.aPotion.card.cardQuality == "Hot")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Dry") || selectedCard.aPotion.card.cardQuality.Contains("Hot"))
             {
                 addPips(1);
                 return 3;
             }
-            else if (selectedCard.aPotion.card.cardQuality == "Wet" || selectedCard.aPotion.card.cardQuality == "Cold")
+            else if (selectedCard.aPotion.card.cardQuality.Contains("Wet") || selectedCard.aPotion.card.cardQuality.Contains("Cold"))
             {
                 addPips(1);
                 if (healBonus)
@@ -1690,7 +1707,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "Daggerheels")
         {
             // Cold Bonus: +1 Damage
-            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Cold"))
             {
                 damage++;
             }
@@ -1700,7 +1717,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "RapidFireCaltrop")
         {
             // Dry Bonus: +2 Damage
-            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Dry"))
             {
                 damage += 2;
             }
@@ -1711,7 +1728,7 @@ public class CardPlayer : MonoBehaviour
         {
             addHealth(2);
             // Wet Bonus: +2 HP
-            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Cold"))
             {
                 addHealth(2);
             }
@@ -1724,7 +1741,7 @@ public class CardPlayer : MonoBehaviour
         {
             addHealth(2);
             // Wet Bonus: +2 HP
-            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Wet"))
             {
                 addHealth(2);
             }
@@ -1739,7 +1756,7 @@ public class CardPlayer : MonoBehaviour
             // 3 P: Double the damage of this artifact this turn. You may only do this once per turn.
             Debug.Log("Damage is " + damage);
 
-            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Wet"))
                 damage += 2;
 
             // double this bitch
@@ -4220,7 +4237,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "LoofahLauncher")
         {
             // Wet Bonus
-            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Wet"))
             {
                 selectedCard.colorCardWet();
                 selectedCard.aPotion.colorCardWet();
@@ -4230,7 +4247,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "SoakedStandard")
         {
             // Wet Bonus
-            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.aPotion.colorCardCold();
@@ -4244,7 +4261,7 @@ public class CardPlayer : MonoBehaviour
              * Hot Bonus: +2 Damage.
                Holster Bonus: +1 Damage if a ring is in your Holster.
              */
-            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Hot"))
             {
                 selectedCard.colorCardHot();
                 selectedCard.aPotion.colorCardHot();
@@ -4259,7 +4276,7 @@ public class CardPlayer : MonoBehaviour
              * Hot Bonus: +1 Damage.
                Holster Bonus: +1 Damage for each Ring in your Holster.
              */
-            if (selectedCard.aPotion.card.cardQuality == "Hot")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Hot"))
             {
                 selectedCard.colorCardHot();
                 selectedCard.aPotion.colorCardHot();
@@ -4272,7 +4289,7 @@ public class CardPlayer : MonoBehaviour
         {
             // Dry Bonus: Double potion damage
             // what they meant was "double the loaded potion's damage and add it to the artifact damage"
-            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Dry"))
             {
                 selectedCard.colorCardDry();
                 selectedCard.aPotion.colorCardDry();
