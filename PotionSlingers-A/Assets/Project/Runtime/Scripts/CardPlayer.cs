@@ -2034,10 +2034,10 @@ public class CardPlayer : MonoBehaviour
         // Oily Lantern
         if (selectedCard.card.cardName == "OilyLantern")
         {
-            if ((selectedCard.vPotion1.card.cardQuality == "Hot" &&
-                selectedCard.vPotion2.card.cardQuality == "Dry") ||
-                (selectedCard.vPotion1.card.cardQuality == "Dry" &&
-                selectedCard.vPotion2.card.cardQuality == "Hot"))
+            if ((selectedCard.vPotion1.card.cardQuality.Contains("Hot") &&
+                selectedCard.vPotion2.card.cardQuality.Contains("Dry")) ||
+                (selectedCard.vPotion1.card.cardQuality.Contains("Dry") &&
+                selectedCard.vPotion2.card.cardQuality.Contains("Hot")))
             {
                 Debug.Log("Lantern Bonus");
                 Invoke("lanturnAttack", 3f);
@@ -2051,8 +2051,18 @@ public class CardPlayer : MonoBehaviour
             bool cold = false;
             bool wet = false;
             bool dry = false;
+            bool fruit = false;
 
             // check all four vessel slots
+
+            if (selectedCard.vPotion1.card.cardName == "Fruit" ||
+                selectedCard.vPotion2.card.cardName == "Fruit" ||
+                selectedCard.vPotion3.card.cardName == "Fruit" ||
+                selectedCard.vPotion4.card.cardName == "Fruit")
+            {
+                fruit = true;
+            }
+
             if (selectedCard.vPotion1.card.cardQuality == "Hot" ||
                 selectedCard.vPotion2.card.cardQuality == "Hot" ||
                 selectedCard.vPotion3.card.cardQuality == "Hot" ||
@@ -2099,11 +2109,42 @@ public class CardPlayer : MonoBehaviour
                 updateHealthUI();
                 return damage;
             }
+
+            int counter = 0;
+
+            if (hot)
+                counter++;
+
+            if (cold)
+                counter++;
+
+            if (wet)
+                counter++;
+
+            if (dry)
+                counter++;
+
+            if(counter == 3 && fruit)
+            {
+                // add an essence cube and update the UI
+                Debug.Log("Triggered with fruit!");
+                Debug.Log("Bonus triggered! Adding an essence cube!");
+                Debug.Log("Add a animation for this!!!");
+                // probably doesn't matter
+                // GameManager.manager.sendMessage("You just gained an essence cube!");
+
+                // make an animation of gaining an essence cube
+
+                hpCubes++;
+                updateHealthUI();
+                return damage;
+            }
         }
 
         // Calculating Convector
         if (selectedCard.card.cardName == "CalculatingConvector")
         {
+            // remember you're going to change the behavior of this card once you get the revision from Anthony
             if ((selectedCard.vPotion1.card.cardQuality == "Wet" ||
                 selectedCard.vPotion2.card.cardQuality == "Wet") ||
                 (selectedCard.vPotion1.card.cardQuality == "Hot" ||
@@ -2120,8 +2161,8 @@ public class CardPlayer : MonoBehaviour
         // Drinking Horn of a Sea Unicorn's Tooth
         if (selectedCard.card.cardName == "Drinking Horn of a Sea Unicorn's Tooth")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Cold" ||
-                selectedCard.vPotion2.card.cardQuality == "Cold")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") ||
+                selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
             {
                 if (GameManager.manager.Game.multiplayer)
                 {
@@ -2137,17 +2178,19 @@ public class CardPlayer : MonoBehaviour
                 else
                 {
                     // TODO: check for computer player and disable this
-
-                    GameManager.manager.numTrashed += 2;
-                    // GameManager.manager.trashMarketUI.SetActive(true);
-                    // GameManager.manager.FadeIn(GameManager.manager.trashMarketUI);
-                    StartCoroutine(DelayedFade(GameManager.manager.trashMarketUI));
-                    GameManager.manager.updateTrashMarketMenu();
+                    if(GetComponent<ComputerPlayer>() == null)
+                    {
+                        GameManager.manager.numTrashed += 2;
+                        // GameManager.manager.trashMarketUI.SetActive(true);
+                        // GameManager.manager.FadeIn(GameManager.manager.trashMarketUI);
+                        StartCoroutine(DelayedFade(GameManager.manager.trashMarketUI));
+                        GameManager.manager.updateTrashMarketMenu();
+                    }
                 }
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Wet" ||
-                selectedCard.vPotion2.card.cardQuality == "Wet")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Wet") ||
+                selectedCard.vPotion2.card.cardQuality.Contains("Wet"))
             {
                 if (GameManager.manager.Game.multiplayer)
                 {
@@ -2162,11 +2205,14 @@ public class CardPlayer : MonoBehaviour
                 }
                 else
                 {
-                    GameManager.manager.numTrashed += 2;
-                    // GameManager.manager.trashMarketUI.SetActive(true);
-                    // GameManager.manager.FadeIn(GameManager.manager.trashMarketUI);
-                    StartCoroutine(DelayedFade(GameManager.manager.trashMarketUI));
-                    GameManager.manager.updateTrashMarketMenu();
+                    if (GetComponent<ComputerPlayer>() == null)
+                    {
+                        GameManager.manager.numTrashed += 2;
+                        // GameManager.manager.trashMarketUI.SetActive(true);
+                        // GameManager.manager.FadeIn(GameManager.manager.trashMarketUI);
+                        StartCoroutine(DelayedFade(GameManager.manager.trashMarketUI));
+                        GameManager.manager.updateTrashMarketMenu();
+                    }
                 }
             }
         }
@@ -2190,10 +2236,13 @@ public class CardPlayer : MonoBehaviour
             }
             else
             {
-                // GameManager.manager.takeMarketMenu.SetActive(true);
-                // GameManager.manager.FadeIn(GameManager.manager.takeMarketMenu);
-                StartCoroutine(DelayedFade(GameManager.manager.takeMarketMenu));
-                GameManager.manager.updateTakeMarketMenu();
+                if(GetComponent<ComputerPlayer>() == null)
+                {
+                    // GameManager.manager.takeMarketMenu.SetActive(true);
+                    // GameManager.manager.FadeIn(GameManager.manager.takeMarketMenu);
+                    StartCoroutine(DelayedFade(GameManager.manager.takeMarketMenu));
+                    GameManager.manager.updateTakeMarketMenu();
+                } 
             }
         }
 
@@ -2219,15 +2268,21 @@ public class CardPlayer : MonoBehaviour
             }
             else
             {
-                GameManager.manager.trashDeckBonus = true;
-                // GameManager.manager.trashDeckMenu.SetActive(true);
-                // GameManager.manager.FadeIn(GameManager.manager.trashDeckMenu);
-                // take this out for now I think
+                if(GetComponent<ComputerPlayer>() == null)
+                {
+                    GameManager.manager.trashDeckBonus = true;
+                    // GameManager.manager.trashDeckMenu.SetActive(true);
+                    // GameManager.manager.FadeIn(GameManager.manager.trashDeckMenu);
+                    // take this out for now I think
 
-                // StartCoroutine(DelayedFade(GameManager.manager.trashDeckMenu));
-                // GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
-                GameManager.manager.trashText.text = "Take a potion from the trash!";
-                GameManager.manager.td.displayTrash();
+                    // StartCoroutine(DelayedFade(GameManager.manager.trashDeckMenu));
+                    // GameManager.manager.trashText.text = "Take a potion from the trash and put it on top of your deck!";
+                    GameManager.manager.trashText.text = "Take a potion from the trash!";
+                    StartCoroutine(DelayedFade(GameManager.manager.td.menuUI));
+                    GameManager.manager.td.displayCards();
+                    GameManager.manager.td.trash = true;
+                    // GameManager.manager.td.displayTrash();
+                }
             }
         }
 
@@ -2259,8 +2314,12 @@ public class CardPlayer : MonoBehaviour
         {
             // just call it twice???
             Debug.Log("Death sauce triggered!!!");
-            pickRandomHolsterCard(GameManager.manager.tempPlayer);
-            pickRandomHolsterCard(GameManager.manager.tempPlayer);
+            if (GameManager.manager.tempPlayer.slinger)
+            {
+                Debug.Log("Time to spice things up!!!");
+                pickRandomHolsterCard(GameManager.manager.tempPlayer);
+                pickRandomHolsterCard(GameManager.manager.tempPlayer);
+            }        
         }
 
         // Vessel Bonus : Heal 3 HP
@@ -2380,7 +2439,7 @@ public class CardPlayer : MonoBehaviour
         // Hot Bonus: Opponent trashes 1 card. Wet Bonus: Opponent trashes 1 card.
         if (selectedCard.card.cardName == "CursedCucumella")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Hot" || selectedCard.vPotion2.card.cardQuality == "Hot")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Hot") || selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
             {
                 if (GameManager.manager.Game.multiplayer)
                 {
@@ -2445,7 +2504,7 @@ public class CardPlayer : MonoBehaviour
                 }
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Wet" || selectedCard.vPotion2.card.cardQuality == "Wet")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Wet") || selectedCard.vPotion2.card.cardQuality.Contains("Wet"))
             {
                 if (GameManager.manager.Game.multiplayer)
                 {
@@ -2507,8 +2566,8 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Hot + Dry Bonus
-        if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
-            (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Dry"))
+        if ((selectedCard.vPotion1.card.cardQuality.Contains("Hot") && selectedCard.vPotion2.card.cardQuality.Contains("Dry")) ||
+            (selectedCard.vPotion2.card.cardQuality.Contains("Hot") && selectedCard.vPotion1.card.cardQuality.Contains("Dry")))
         {
             // Filthy Urn Holding the Ashes of 60k
             // Hot + Dry Bonus: +4 Damage
@@ -2530,8 +2589,8 @@ public class CardPlayer : MonoBehaviour
 
 
         // Cold + Wet Bonus
-        if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
-            (selectedCard.vPotion2.card.cardQuality == "Cold" && selectedCard.vPotion1.card.cardQuality == "Wet"))
+        if ((selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Wet")) ||
+            (selectedCard.vPotion2.card.cardQuality.Contains("Cold") && selectedCard.vPotion1.card.cardQuality.Contains("Wet")))
         {
             // Philty Phlegmbic Alembic of Philters Polemic
             //  1 opponent trashes all cards in their holster, or all opponents trash 1 card 
@@ -2569,8 +2628,8 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Cold + Dry Bonus
-        if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
-            (selectedCard.vPotion2.card.cardQuality == "Cold" && selectedCard.vPotion1.card.cardQuality == "Dry"))
+        if ((selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Dry")) ||
+            (selectedCard.vPotion2.card.cardQuality.Contains("Cold") && selectedCard.vPotion1.card.cardQuality.Contains("Dry")))
         {
             Debug.Log("Cold and Dry Bonus!");
 
@@ -2618,24 +2677,33 @@ public class CardPlayer : MonoBehaviour
         {
             Debug.Log("Synergy of Opposing Minds!");
             addHealth(2);
-            if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Hot") ||
-            (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Cold"))
+            if ((selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Hot")) ||
+            (selectedCard.vPotion2.card.cardQuality.Contains("Hot") && selectedCard.vPotion1.card.cardQuality.Contains("Cold")))
             {
                 StartCoroutine(LookAtCards());
             }
         }
 
+        
+
         // Shining Reliquary of Bleeding Liquid Gold
         if (selectedCard.card.cardName == "ShiningReliquary")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            int coins = 0;
+
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Hot") || selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
             {
-                addPips(2);
+                // addPips(2);
+                coins += 2;
             }
-            if (selectedCard.vPotion1.card.cardQuality == "Dry" || selectedCard.vPotion2.card.cardQuality == "Dry")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Dry") || selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
             {
-                addPips(2);
+                // addPips(2);
+                coins += 2;
             }
+
+            if (coins > 0)
+                addPips(coins);
         }
 
         // A Curious Assortment of Apothecary Pills
@@ -2649,21 +2717,27 @@ public class CardPlayer : MonoBehaviour
         // Canteen Carved from a Living Meteorite
         if (selectedCard.card.cardName == "CanteenCarvedFromMeteorite")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            int health = 0;
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") || selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
             {
-                addHealth(3);
+                // addHealth(3);
+                health += 3;
             }
-            if (selectedCard.vPotion1.card.cardQuality == "Dry" || selectedCard.vPotion2.card.cardQuality == "Dry")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Dry") || selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
             {
-                addHealth(3);
+                // addHealth(3);
+                health += 3;
             }
+
+            if (health > 0)
+                addHealth(health);
         }
 
         // Silken Hanky with a Cool Delicate Heartbeat
         if (selectedCard.card.cardName == "SilkenHanky")
         {
             // Hot Bonus: +3 Damage
-            if (selectedCard.vPotion1.card.cardQuality == "Hot" || selectedCard.vPotion2.card.cardQuality == "Hot")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Hot") || selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
             {
                 damage += 3;
             }
@@ -2673,7 +2747,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "SandpaperGunnysack")
         {
             // Dry Bonus: +3 Damage
-            if (selectedCard.vPotion1.card.cardQuality == "Dry" || selectedCard.vPotion2.card.cardQuality == "Dry")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Dry") || selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
             {
                 damage += 3;
             }
@@ -2683,7 +2757,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "CooledCarafe")
         {
             // Cold Bonus: +3 Damage
-            if (selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") || selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
             {
                 damage += 3;
             }
@@ -2693,7 +2767,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "DrawstringPouch")
         {
             // Wet Bonus: +3 Damage
-            if (selectedCard.vPotion1.card.cardQuality == "Wet" || selectedCard.vPotion2.card.cardQuality == "Wet")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Wet") || selectedCard.vPotion2.card.cardQuality.Contains("Wet"))
             {
                 damage += 3;
             }
@@ -2862,7 +2936,7 @@ public class CardPlayer : MonoBehaviour
                 damage++;
             }
 
-
+            // keep these as == so low hanging fruit doesn't trigger all of these
             if (selectedCard.card.cardQuality == "Hot")
             {
                 pluotHot = true;
@@ -2924,7 +2998,7 @@ public class CardPlayer : MonoBehaviour
             int times = 0;
             foreach (CardDisplay cd in GameManager.manager.tempPlayer.holster.cardList)
             {
-                if (cd.card.cardQuality == "Dry")
+                if (cd.card.cardQuality.Contains("Dry"))
                 {
                     Debug.Log("Found a dry card!!!");
                     times++;
@@ -2970,11 +3044,8 @@ public class CardPlayer : MonoBehaviour
 
             foreach (CardDisplay cd in holster.cardList)
             {
-                // don't include itself in the calculation
-                /*
-                if (cd.card.cardName == "Cube of Skeleton Jelly")
-                    continue;
-                */
+                if (cd.card.cardName == "Fruit")
+                    localDamage++;
 
                 switch (cd.card.cardQuality)
                 {
@@ -2997,6 +3068,9 @@ public class CardPlayer : MonoBehaviour
 
             foreach (Card card in deck.deckList)
             {
+
+                if (card.cardName == "Fruit")
+                    localDamage++;
 
                 switch (card.cardQuality)
                 {
@@ -3056,7 +3130,7 @@ public class CardPlayer : MonoBehaviour
                 // GameManager.manager.deckMenu.SetActive(true);
 
                 // computer player check to prevent the menu from popping up
-                if (gameObject.GetComponent<ComputerPlayer>() != null)
+                if (GetComponent<ComputerPlayer>() != null)
                 {
                     Debug.Log("Computer just triggered the snake! Code in this logic later!");
                     Debug.Log("Or don't it's fine!");
@@ -3079,7 +3153,7 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Computer logic");
 
                 // you need to make a menu for a human tempPlayer to discard a card from their deck
-                if (GameManager.manager.tempPlayer.gameObject.GetComponent<ComputerPlayer>() == null)
+                if (GameManager.manager.tempPlayer.GetComponent<ComputerPlayer>() == null)
                 {
                     // make a menu for this
                     Debug.Log("Make a menu for someone to choose the card they want to discard");
@@ -3177,8 +3251,7 @@ public class CardPlayer : MonoBehaviour
             {
                 // cp.deck.putCardOnTop(starterPotionCard);
                 int random = GameManager.manager.rng.Next(0, GameManager.manager.starterPotionCards.Count);
-                if (Game.storyMode && GameManager.manager.players[i].GetComponent<ComputerPlayer>() != null
-                    && GameManager.manager.players[i].charName != "Saltimbocca")
+                if (Game.storyMode && !GameManager.manager.players[i].slinger)
                 {
                     Debug.Log("Continuing");
                     continue;
@@ -3563,6 +3636,15 @@ public class CardPlayer : MonoBehaviour
             {
                 if (cd.card.cardName != "ATearofBlackRain")
                 {
+                    if (cd.card.cardType == "Vessel" && (cd.vPotion1.card.cardName == "ATearofBlackRain" ||
+                        cd.vPotion2.card.cardName == "ATearofBlackRain" ||
+                        cd.vPotion3.card.cardName == "ATearofBlackRain" ||
+                        cd.vPotion4.card.cardName == "ATearofBlackRain"))
+                    {
+                        Debug.Log("Tear of Black Rain is in the vessel!!!");
+                        continue;
+                    }
+
                     if (cd.card.cardName != "placeholder")
                     {
                         return damage;
@@ -3570,6 +3652,7 @@ public class CardPlayer : MonoBehaviour
                 }
             }
             //GameManager.manager.put4CardsInHolster();
+            Debug.Log("Black rain bonus!!!");
             blackRainBonus = true;
         }
 
@@ -4226,7 +4309,7 @@ public class CardPlayer : MonoBehaviour
         // Rubber Spatula
         if (selectedCard.card.cardName == "RubberSpatula")
         {
-            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Dry"))
             {
                 selectedCard.colorCardDry();
                 selectedCard.aPotion.colorCardDry();
@@ -4327,7 +4410,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "Daggerheels")
         {
             // Cold Bonus: +1 Damage
-            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.aPotion.colorCardCold();
@@ -4338,7 +4421,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "RapidFireCaltrop")
         {
             // Dry Bonus: +2 Damage
-            if (selectedCard.aPotion.card.cardQuality == "Dry")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Dry"))
             {
                 selectedCard.colorCardDry();
                 selectedCard.aPotion.colorCardDry();
@@ -4349,7 +4432,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "PewterHeartNecklace")
         {
             // Wet Bonus: +2 HP
-            if (selectedCard.aPotion.card.cardQuality == "Cold")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.aPotion.colorCardCold();
@@ -4361,7 +4444,7 @@ public class CardPlayer : MonoBehaviour
         // Wooden Dryad's Kiss
         if (selectedCard.card.cardName == "WoodenDryadsKiss")
         {
-            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Wet"))
             {
                 selectedCard.colorCardWet();
                 selectedCard.aPotion.colorCardWet();
@@ -4380,7 +4463,7 @@ public class CardPlayer : MonoBehaviour
                 selectedCard.colorCardWet();
             }
 
-            if (selectedCard.aPotion.card.cardQuality == "Wet")
+            if (selectedCard.aPotion.card.cardQuality.Contains("Wet"))
             {
                 selectedCard.colorCardWet();
                 selectedCard.aPotion.colorCardWet();
@@ -4405,7 +4488,8 @@ public class CardPlayer : MonoBehaviour
             selectedCard.vPotion1.card.cardName == "ThimbleOfHoney" ||
             selectedCard.vPotion1.card.cardName == "KissFromTheLipsOfAnAncientLove" ||
             selectedCard.vPotion1.card.cardName == "TallDrinkOfWater" ||
-            selectedCard.vPotion1.card.cardName == "ATearofBlackRain")
+            selectedCard.vPotion1.card.cardName == "ATearofBlackRain" ||
+            selectedCard.vPotion1.card.cardName == "Fountainous Ale")
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion1.colorCardCold();
@@ -4415,7 +4499,8 @@ public class CardPlayer : MonoBehaviour
             selectedCard.vPotion2.card.cardName == "ThimbleOfHoney" ||
             selectedCard.vPotion2.card.cardName == "KissFromTheLipsOfAnAncientLove" ||
             selectedCard.vPotion2.card.cardName == "TallDrinkOfWater" ||
-            selectedCard.vPotion1.card.cardName == "ATearofBlackRain")
+            selectedCard.vPotion1.card.cardName == "ATearofBlackRain" ||
+            selectedCard.vPotion1.card.cardName == "Fountainous Ale")
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion2.colorCardCold();
@@ -4425,25 +4510,25 @@ public class CardPlayer : MonoBehaviour
         // Drinking Horn of a Sea Unicorn's Tooth
         if (selectedCard.card.cardName == "Drinking Horn of a Sea Unicorn's Tooth")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Cold")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion1.colorCardCold();
             }
 
-            if (selectedCard.vPotion2.card.cardQuality == "Cold")
+            if (selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion2.colorCardCold();
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Wet")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Wet"))
             {
                 selectedCard.colorCardWet();
                 selectedCard.vPotion1.colorCardWet();
             }
 
-            if (selectedCard.vPotion2.card.cardQuality == "Wet")
+            if (selectedCard.vPotion2.card.cardQuality.Contains("Wet"))
             {
                 selectedCard.colorCardWet();
                 selectedCard.vPotion2.colorCardWet();
@@ -4451,6 +4536,7 @@ public class CardPlayer : MonoBehaviour
         }
 
         // Calculating Convector
+        /*
         if (selectedCard.card.cardName == "CalculatingConvector")
         {
             if (selectedCard.vPotion1.card.cardQuality == "Hot")
@@ -4477,34 +4563,35 @@ public class CardPlayer : MonoBehaviour
                 selectedCard.vPotion2.colorCardWet();
             }
         }
+        */
 
         // Oily Lantern
         if (selectedCard.card.cardName == "OilyLantern")
         {
-            if ((selectedCard.vPotion1.card.cardQuality == "Hot" &&
-                selectedCard.vPotion2.card.cardQuality == "Dry") ||
-                (selectedCard.vPotion1.card.cardQuality == "Dry" &&
-                selectedCard.vPotion2.card.cardQuality == "Hot"))
+            if ((selectedCard.vPotion1.card.cardQuality.Contains("Hot") &&
+                selectedCard.vPotion2.card.cardQuality.Contains("Dry")) ||
+                (selectedCard.vPotion1.card.cardQuality.Contains("Dry") &&
+                selectedCard.vPotion2.card.cardQuality.Contains("Hot")))
             {
-                if (selectedCard.vPotion1.card.cardQuality == "Hot")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Hot"))
                 {
                     selectedCard.colorCardHot();
                     selectedCard.vPotion1.colorCardHot();
                 }
 
-                if (selectedCard.vPotion2.card.cardQuality == "Hot")
+                if (selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
                 {
                     selectedCard.colorCardHot();
                     selectedCard.vPotion2.colorCardHot();
                 }
 
-                if (selectedCard.vPotion1.card.cardQuality == "Dry")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Dry"))
                 {
                     selectedCard.colorCardDry();
                     selectedCard.vPotion1.colorCardDry();
                 }
 
-                if (selectedCard.vPotion2.card.cardQuality == "Dry")
+                if (selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
                 {
                     selectedCard.colorCardDry();
                     selectedCard.vPotion2.colorCardDry();
@@ -4534,33 +4621,33 @@ public class CardPlayer : MonoBehaviour
         // Hot + Wet Bonus
         // It's only two cards
         // three cards with DLC lol
-        if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
-           (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Wet"))
+        if ((selectedCard.vPotion1.card.cardQuality.Contains("Hot") && selectedCard.vPotion2.card.cardQuality.Contains("Wet")) ||
+           (selectedCard.vPotion2.card.cardQuality.Contains("Hot") && selectedCard.vPotion1.card.cardQuality.Contains("Wet")))
         {
             if (selectedCard.card.cardName == "Empty Ravioli" ||
                 selectedCard.card.cardName == "Furry Flagon fromthe Hide of Hairy Leeches" ||
                 selectedCard.card.cardName == "VoluptuousGallipot")
             {
                 // addHealth(4);
-                if (selectedCard.vPotion1.card.cardQuality == "Hot")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Hot"))
                 {
                     selectedCard.colorCardHot();
                     selectedCard.vPotion1.colorCardHot();
                 }
 
-                if (selectedCard.vPotion2.card.cardQuality == "Hot")
+                if (selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
                 {
                     selectedCard.colorCardHot();
                     selectedCard.vPotion2.colorCardHot();
                 }
 
-                if (selectedCard.vPotion1.card.cardQuality == "Wet")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Wet"))
                 {
                     selectedCard.colorCardWet();
                     selectedCard.vPotion1.colorCardWet();
                 }
 
-                if (selectedCard.vPotion2.card.cardQuality == "Wet")
+                if (selectedCard.vPotion2.card.cardQuality.Contains("Wet"))
                 {
                     selectedCard.colorCardWet();
                     selectedCard.vPotion2.colorCardWet();
@@ -4588,25 +4675,25 @@ public class CardPlayer : MonoBehaviour
         // Hot Bonus: Opponent trashes 1 card. Wet Bonus: Opponent trashes 1 card.
         if (selectedCard.card.cardName == "CursedCucumella")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Hot")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Hot"))
             {
                 selectedCard.colorCardHot();
                 selectedCard.vPotion1.colorCardHot();
             }
 
-            if (selectedCard.vPotion2.card.cardQuality == "Hot")
+            if (selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
             {
                 selectedCard.colorCardHot();
                 selectedCard.vPotion2.colorCardHot();
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Wet")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Wet"))
             {
                 selectedCard.colorCardWet();
                 selectedCard.vPotion1.colorCardWet();
             }
 
-            if (selectedCard.vPotion2.card.cardQuality == "Wet")
+            if (selectedCard.vPotion2.card.cardQuality.Contains("Wet"))
             {
                 selectedCard.colorCardWet();
                 selectedCard.vPotion2.colorCardWet();
@@ -4620,14 +4707,14 @@ public class CardPlayer : MonoBehaviour
             selectedCard.card.cardName == "DualRhyton")
         {
             // damage += 4;
-            if (selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Dry")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Hot") && selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
             {
                 selectedCard.colorCardHot();
                 selectedCard.vPotion1.colorCardHot();
                 selectedCard.vPotion2.colorCardDry();
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Dry" && selectedCard.vPotion2.card.cardQuality == "Hot")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Dry") && selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
             {
                 selectedCard.colorCardDry();
                 selectedCard.vPotion1.colorCardDry();
@@ -4641,14 +4728,14 @@ public class CardPlayer : MonoBehaviour
         //  1 opponent trashes all cards in their holster, or all opponents trash 1 card 
         if (selectedCard.card.cardName == "PhiltyPhlegmbicAlembic")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Wet")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Wet"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion1.colorCardCold();
                 selectedCard.vPotion2.colorCardWet();
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Wet" && selectedCard.vPotion2.card.cardQuality == "Cold")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Wet") && selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardWet();
                 selectedCard.vPotion1.colorCardWet();
@@ -4658,22 +4745,22 @@ public class CardPlayer : MonoBehaviour
 
 
         // Cold + Dry Bonus
-        if ((selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry") ||
-            (selectedCard.vPotion2.card.cardQuality == "Cold" && selectedCard.vPotion1.card.cardQuality == "Dry"))
+        if ((selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Dry")) ||
+            (selectedCard.vPotion2.card.cardQuality.Contains("Cold") && selectedCard.vPotion1.card.cardQuality.Contains("Dry")))
         {
             Debug.Log("Cold and Dry Bonus!");
 
             if (selectedCard.card.cardName == "Empty Ravioli")
             {
                 // return damage + 4;
-                if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
                 {
                     selectedCard.colorCardCold();
                     selectedCard.vPotion1.colorCardCold();
                     selectedCard.vPotion2.colorCardDry();
                 }
 
-                if (selectedCard.vPotion1.card.cardQuality == "Dry" && selectedCard.vPotion2.card.cardQuality == "Cold")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Dry") && selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
                 {
                     selectedCard.colorCardDry();
                     selectedCard.vPotion1.colorCardDry();
@@ -4685,14 +4772,14 @@ public class CardPlayer : MonoBehaviour
             // Deal +3 damage to all other opponents
             if (selectedCard.card.cardName == "Boxing Flask of the Fist Wizard")
             {
-                if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
                 {
                     selectedCard.colorCardCold();
                     selectedCard.vPotion1.colorCardCold();
                     selectedCard.vPotion2.colorCardDry();
                 }
 
-                if (selectedCard.vPotion1.card.cardQuality == "Dry" && selectedCard.vPotion2.card.cardQuality == "Cold")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Dry") && selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
                 {
                     selectedCard.colorCardDry();
                     selectedCard.vPotion1.colorCardDry();
@@ -4704,14 +4791,14 @@ public class CardPlayer : MonoBehaviour
             // Put a market card on the top of your deck
             if (selectedCard.card.cardName == "VinylDemijohnofTunesandLibation")
             {
-                if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Dry")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
                 {
                     selectedCard.colorCardCold();
                     selectedCard.vPotion1.colorCardCold();
                     selectedCard.vPotion2.colorCardDry();
                 }
 
-                if (selectedCard.vPotion1.card.cardQuality == "Dry" && selectedCard.vPotion2.card.cardQuality == "Cold")
+                if (selectedCard.vPotion1.card.cardQuality.Contains("Dry") && selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
                 {
                     selectedCard.colorCardDry();
                     selectedCard.vPotion1.colorCardDry();
@@ -4722,14 +4809,14 @@ public class CardPlayer : MonoBehaviour
         // Synergy of Opposing Minds
         if (selectedCard.card.cardName == "Synergy of Opposing Minds")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Cold" && selectedCard.vPotion2.card.cardQuality == "Hot")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") && selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion1.colorCardCold();
                 selectedCard.vPotion2.colorCardHot();
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Cold")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Hot") && selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardHot();
                 selectedCard.vPotion1.colorCardHot();
@@ -4740,25 +4827,25 @@ public class CardPlayer : MonoBehaviour
         // Shining Reliquary of Bleeding Liquid Gold
         if (selectedCard.card.cardName == "ShiningReliquary")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Hot")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Hot"))
             {
                 selectedCard.colorCardHot();
                 selectedCard.vPotion1.colorCardHot();
             }
 
-            if (selectedCard.vPotion2.card.cardQuality == "Hot")
+            if (selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
             {
                 selectedCard.colorCardHot();
                 selectedCard.vPotion2.colorCardHot();
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Dry")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Dry"))
             {
                 selectedCard.colorCardDry();
                 selectedCard.vPotion1.colorCardDry();
             }
 
-            if (selectedCard.vPotion2.card.cardQuality == "Dry")
+            if (selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
             {
                 selectedCard.colorCardDry();
                 selectedCard.vPotion2.colorCardDry();
@@ -4768,25 +4855,25 @@ public class CardPlayer : MonoBehaviour
         // Canteen Carved from a Living Meteorite
         if (selectedCard.card.cardName == "CanteenCarvedFromMeteorite")
         {
-            if (selectedCard.vPotion1.card.cardQuality == "Cold")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion1.colorCardCold();
             }
 
-            if (selectedCard.vPotion2.card.cardQuality == "Cold")
+            if (selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
             {
                 selectedCard.colorCardCold();
                 selectedCard.vPotion2.colorCardCold();
             }
 
-            if (selectedCard.vPotion1.card.cardQuality == "Dry")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Dry"))
             {
                 selectedCard.colorCardDry();
                 selectedCard.vPotion1.colorCardDry();
             }
 
-            if (selectedCard.vPotion2.card.cardQuality == "Dry")
+            if (selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
             {
                 selectedCard.colorCardDry();
                 selectedCard.vPotion2.colorCardDry();
@@ -4797,7 +4884,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "SilkenHanky")
         {
             // Hot Bonus: +3 Damage
-            if (selectedCard.vPotion1.card.cardQuality == "Hot" || selectedCard.vPotion2.card.cardQuality == "Hot")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Hot") || selectedCard.vPotion2.card.cardQuality.Contains("Hot"))
             {
                 // damage += 3;
                 selectedCard.colorCardHot();
@@ -4809,7 +4896,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "SandpaperGunnysack")
         {
             // Dry Bonus: +3 Damage
-            if (selectedCard.vPotion1.card.cardQuality == "Dry" || selectedCard.vPotion2.card.cardQuality == "Dry")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Dry") || selectedCard.vPotion2.card.cardQuality.Contains("Dry"))
             {
                 // damage += 3;
                 selectedCard.colorCardDry();
@@ -4821,7 +4908,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "CooledCarafe")
         {
             // Cold Bonus: +3 Damage
-            if (selectedCard.vPotion1.card.cardQuality == "Cold" || selectedCard.vPotion2.card.cardQuality == "Cold")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Cold") || selectedCard.vPotion2.card.cardQuality.Contains("Cold"))
             {
                 // damage += 3;
                 selectedCard.colorCardCold();
@@ -4833,7 +4920,7 @@ public class CardPlayer : MonoBehaviour
         if (selectedCard.card.cardName == "DrawstringPouch")
         {
             // Wet Bonus: +3 Damage
-            if (selectedCard.vPotion1.card.cardQuality == "Wet" || selectedCard.vPotion2.card.cardQuality == "Wet")
+            if (selectedCard.vPotion1.card.cardQuality.Contains("Wet") || selectedCard.vPotion2.card.cardQuality.Contains("Wet"))
             {
                 // damage += 3;
                 selectedCard.colorCardWet();

@@ -54,6 +54,8 @@ public class SceneTransition : MonoBehaviour
     public Deck playerDeck;
     public Holster playerHolster;
 
+    public CanvasGroup mapCanvasGroup;
+
     public MyNetworkManager game;
     public MyNetworkManager Game
     {
@@ -349,6 +351,7 @@ public class SceneTransition : MonoBehaviour
 
     public void doTransition()
     {
+        mapCanvasGroup.blocksRaycasts = false;
         StartCoroutine(doIt());
     }
 }

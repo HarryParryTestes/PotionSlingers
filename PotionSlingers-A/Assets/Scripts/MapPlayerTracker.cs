@@ -96,6 +96,7 @@ namespace Map
 
             if (mapNode.Node.nodeType == NodeType.Carnival)
             {
+                transition.GetComponent<SceneTransition>().mapCanvasGroup.blocksRaycasts = false;
                 transition.GetComponent<SceneTransition>().doTransition();
                 return;
             }
@@ -238,7 +239,7 @@ namespace Map
                 case "Crowpunk":
                     Debug.Log(saveData.playerCharName);
 
-                    transition.GetComponent<SceneTransition>().handleCrowCutscene();                                        
+                    transition.GetComponent<SceneTransition>().handleCrowCutscene();
                     break;
                 case "Crowpunk+":
                     transition.GetComponent<SceneTransition>().doTransition();

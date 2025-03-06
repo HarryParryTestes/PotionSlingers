@@ -2097,6 +2097,7 @@ GameObject:
   - component: {fileID: 178801310}
   - component: {fileID: 178801308}
   - component: {fileID: 178801312}
+  - component: {fileID: 178801313}
   m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
@@ -2207,6 +2208,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b01ca9ba1789574189ab9bd2376d6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &178801313
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 178801307}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &188712494
 GameObject:
   m_ObjectHideFlags: 0
@@ -2743,6 +2756,7 @@ MonoBehaviour:
   - Isadore
   playerDeck: {fileID: 0}
   playerHolster: {fileID: 0}
+  mapCanvasGroup: {fileID: 178801313}
   game: {fileID: 0}
 --- !u!114 &228522196
 MonoBehaviour:
@@ -57895,6 +57909,7 @@ MonoBehaviour:
     playerFashion: []
     potionDeck: []
     itemDeck: []
+    trashDeck: []
     cardDurabilities: 
     cardStatuses: []
     marketStatuses: []
@@ -57902,10 +57917,16 @@ MonoBehaviour:
     deckStatuses: []
     opp1Health: 0
     opp1Cubes: 0
+    opp1Shields: 0
+    opp1Dead: 0
     opp2Health: 0
     opp2Cubes: 0
+    opp2Shields: 0
+    opp2Dead: 0
     opp3Health: 0
     opp3Cubes: 0
+    opp3Shields: 0
+    opp3Dead: 0
     stage: 0
     slingerEncounter: 0
     savedGame: 0

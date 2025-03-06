@@ -1427,6 +1427,230 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void setDuelCharacter(string charName, int health)
+    {
+        Debug.Log("Setting duel character!!!");
+        numPlayers = 2;
+        players[2].gameObject.AddComponent<ComputerPlayer>();
+        players[2].charName = charName;
+        players[2].name = charName;
+        playerTopName.text = players[2].charName;
+        players[2].character.onCharacterClick(charName);
+        players[2].checkCharacter();
+
+        if (saveData.savedGame && !saveData.newStage)
+        {
+            players[2].hpCubes = saveData.opp1Cubes;
+            players[2].hp = saveData.opp1Health;
+            if (health != players[2].maxHp)
+                players[2].maxHp = health;
+            players[2].hBar.image.fillAmount = 0;
+            players[2].shields = saveData.opp1Shields;
+        }
+        else
+        {
+            players[2].hpCubes = 1;
+            players[2].hp = health;
+            if(health != players[2].maxHp)
+                players[2].maxHp = health;
+            saveData.opp1Cubes = 1;
+            saveData.opp1Health = health;
+        }
+        players[2].updateHealthUI();
+        players[2].user_id = 1;
+
+        players[1] = players[2];
+        players[2] = players[3];
+        p3.SetActive(false);
+        p4.SetActive(false);
+    }
+
+    void set3PCharacters(string charName1, int health1, string charName2, int health2)
+    {
+        numPlayers = 3;
+        // Fingas is stage 1 enemy
+        players[1].gameObject.AddComponent<ComputerPlayer>();
+        players[1].charName = charName1;
+        players[1].name = charName1;
+        playerLeftName.text = players[1].charName;
+        players[1].character.onCharacterClick(charName1);
+        players[1].checkCharacter();
+        players[1].hpCubes = 1;
+        players[1].hp = 10;
+        if (saveData.savedGame && !saveData.newStage)
+        {
+            players[1].hpCubes = saveData.opp1Cubes;
+            players[1].hp = saveData.opp1Health;
+            if (health1 != players[1].maxHp)
+                players[1].maxHp = health1;
+            players[1].hBar.image.fillAmount = 0;
+            players[1].shields = saveData.opp1Shields;
+
+            if (saveData.opp1Dead)
+            {
+                Debug.Log("Player 1 is dead!!!");
+                players[1].dead = true;
+                // players[1].turnOff();
+                p3.SetActive(false);
+            }
+        }
+        else
+        {
+            players[1].hpCubes = 1;
+            players[1].hp = health1;
+            if (health1 != players[1].maxHp)
+                players[1].maxHp = health1;
+        }
+
+        players[1].updateHealthUI();
+
+        // Crow Punk is stage 1 enemy
+        players[2].gameObject.AddComponent<ComputerPlayer>();
+        players[2].charName = charName2;
+        players[2].name = charName2;
+        playerTopName.text = players[2].charName;
+        players[2].character.onCharacterClick(charName2);
+        players[2].checkCharacter();
+        players[2].hpCubes = 1;
+        players[2].hp = 10;
+        if (saveData.savedGame && !saveData.newStage)
+        {
+            players[2].hpCubes = saveData.opp2Cubes;
+            players[2].hp = saveData.opp2Health;
+            if (health2 != players[2].maxHp)
+                players[2].maxHp = health2;
+            players[2].hBar.image.fillAmount = 0;
+            players[2].shields = saveData.opp2Shields;
+
+            if (saveData.opp2Dead)
+            {
+                Debug.Log("Player 2 is dead!!!");
+                players[2].dead = true;
+                // players[2].turnOff();
+                p2.SetActive(false);
+            }
+        }
+        else
+        {
+            players[2].hpCubes = 1;
+            players[2].hp = health2;
+            if (health2 != players[2].maxHp)
+                players[2].maxHp = health2;
+        }
+        players[2].updateHealthUI();
+        p4.SetActive(false);
+    }
+
+    void set4PCharacters(string charName1, int health1, string charName2, int health2, string charName3, int health3)
+    {
+        numPlayers = 4;
+        // Fingas is stage 1 enemy
+        players[1].gameObject.AddComponent<ComputerPlayer>();
+        players[1].charName = charName1;
+        players[1].name = charName1;
+        playerLeftName.text = players[1].charName;
+        players[1].character.onCharacterClick(charName1);
+        players[1].checkCharacter();
+        players[1].hpCubes = 1;
+        players[1].hp = 10;
+        if (saveData.savedGame && !saveData.newStage)
+        {
+            players[1].hpCubes = saveData.opp1Cubes;
+            players[1].hp = saveData.opp1Health;
+            if (health1 != players[1].maxHp)
+                players[1].maxHp = health1;
+            players[1].hBar.image.fillAmount = 0;
+            players[1].shields = saveData.opp1Shields;
+
+            if (saveData.opp1Dead)
+            {
+                Debug.Log("Player 1 is dead!!!");
+                players[1].dead = true;
+                // players[1].turnOff();
+                p3.SetActive(false);
+            }
+        }
+        else
+        {
+            players[1].hpCubes = 1;
+            players[1].hp = health1;
+            if (health1 != players[1].maxHp)
+                players[1].maxHp = health1;
+        }
+
+        players[1].updateHealthUI();
+
+        // Crow Punk is stage 1 enemy
+        players[2].gameObject.AddComponent<ComputerPlayer>();
+        players[2].charName = charName2;
+        players[2].name = charName2;
+        playerTopName.text = players[2].charName;
+        players[2].character.onCharacterClick(charName2);
+        players[2].checkCharacter();
+        players[2].hpCubes = 1;
+        players[2].hp = 10;
+        if (saveData.savedGame && !saveData.newStage)
+        {
+            players[2].hpCubes = saveData.opp2Cubes;
+            players[2].hp = saveData.opp2Health;
+            if (health2 != players[2].maxHp)
+                players[2].maxHp = health2;
+            players[2].hBar.image.fillAmount = 0;
+            players[2].shields = saveData.opp2Shields;
+
+            if (saveData.opp2Dead)
+            {
+                Debug.Log("Player 2 is dead!!!");
+                players[2].dead = true;
+                // players[2].turnOff();
+                p2.SetActive(false);
+            }
+        }
+        else
+        {
+            players[2].hpCubes = 1;
+            players[2].hp = health2;
+            if (health2 != players[2].maxHp)
+                players[2].maxHp = health2;
+        }
+        players[2].updateHealthUI();
+
+        // Fingas is stage 1 enemy
+        players[3].gameObject.AddComponent<ComputerPlayer>();
+        players[3].charName = charName3;
+        players[3].name = charName3;
+        playerRightName.text = players[3].charName;
+        players[3].character.onCharacterClick(charName3);
+        players[3].checkCharacter();
+        players[3].hpCubes = 1;
+        players[3].hp = 10;
+        if (saveData.savedGame && !saveData.newStage)
+        {
+            players[3].hpCubes = saveData.opp3Cubes;
+            players[3].hp = saveData.opp3Health;
+            if (health3 != players[3].maxHp)
+                players[3].maxHp = health3;
+            players[3].hBar.image.fillAmount = 0;
+            players[3].shields = saveData.opp3Shields;
+
+            if (saveData.opp3Dead)
+            {
+                Debug.Log("Player 3 is dead!!!");
+                players[3].dead = true;
+                // players[3].turnOff();
+                p4.SetActive(false);
+            }
+        }
+        else
+        {
+            players[3].hpCubes = 1;
+            players[3].hp = health3;
+            if (health3 != players[3].maxHp)
+                players[3].maxHp = health3;
+        }
+        players[3].updateHealthUI();
+    }
+
     void setStoryModeCharacters()
     {
         // changing from stage number to currentEnemyName
@@ -1497,107 +1721,19 @@ public class GameManager : MonoBehaviour
                 background.sprite = backgrounds[3];
                 handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Fingas";
-                players[2].name = "Fingas";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Fingas");
-                players[2].checkCharacter();
-
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp1Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 10;
-                }
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Fingas", 10);
                 break;
             case "Dippit":
                 background.sprite = backgrounds[3];
                 handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Dippit";
-                players[2].name = "Dippit";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Dippit");
-                players[2].checkCharacter();
-
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].maxHp = 7;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp1Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 7;
-                    players[2].maxHp = 7;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 7;
-                }
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Dippit", 7);
                 break;
             case "Maskid":
                 background.sprite = backgrounds[3];
                 handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Maskid";
-                players[2].name = "Maskid";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Maskid");
-                players[2].checkCharacter();
-
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].maxHp = 7;
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp1Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 7;
-                    players[2].maxHp = 7;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 7;
-                }
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Maskid", 7);
                 break;
             case "Fingas+":
                 background.sprite = backgrounds[4];
@@ -1607,72 +1743,7 @@ public class GameManager : MonoBehaviour
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
                 }
-                numPlayers = 3;
-                // Fingas is stage 1 enemy
-                players[1].gameObject.AddComponent<ComputerPlayer>();
-                players[1].charName = "Fingas";
-                players[1].name = "Fingas";
-                playerLeftName.text = players[1].charName;
-                players[1].character.onCharacterClick("Fingas");
-                players[1].checkCharacter();
-                players[1].hpCubes = 1;
-                players[1].hp = 10;
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[1].hpCubes = saveData.opp1Cubes;
-                    players[1].hp = saveData.opp1Health;
-                    players[1].hBar.image.fillAmount = 0;
-                    players[1].shields = saveData.opp1Shields;
-
-                    if (saveData.opp1Dead)
-                    {
-                        Debug.Log("Player 1 is dead!!!");
-                        players[1].dead = true;
-                        // players[1].turnOff();
-                        p3.SetActive(false);
-                    }
-                }
-                else
-                {
-                    players[1].hpCubes = 1;
-                    players[1].hp = 10;
-                }
-
-                players[1].updateHealthUI();
-
-                // Crow Punk is stage 1 enemy
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Fingas";
-                players[2].name = "Fingas";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Fingas");
-                players[2].checkCharacter();
-                players[2].holster.gameObject.SetActive(false);
-                players[2].deck.gameObject.SetActive(false);
-                players[2].hpCubes = 1;
-                players[2].hp = 10;
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp2Cubes;
-                    players[2].hp = saveData.opp2Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp2Shields;
-
-                    if (saveData.opp2Dead)
-                    {
-                        Debug.Log("Player 2 is dead!!!");
-                        players[2].dead = true;
-                        players[2].turnOff();
-                        p2.SetActive(false);
-                    }
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                }
-                players[2].updateHealthUI();
-                p4.SetActive(false);
+                set3PCharacters("Fingas", 10, "Fingas", 10);
                 break;
             case "Bag o' Snakes+":
                 background.sprite = backgrounds[4];
@@ -1682,135 +1753,16 @@ public class GameManager : MonoBehaviour
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
                 }
-                numPlayers = 3;
-                // Fingas is stage 1 enemy
-                players[1].gameObject.AddComponent<ComputerPlayer>();
-                players[1].charName = "Bag o' Snakes";
-                players[1].name = "Bag o' Snakes";
-                playerLeftName.text = players[1].charName;
-                players[1].character.onCharacterClick("Bag o' Snakes");
-                players[1].checkCharacter();
-                players[1].hpCubes = 1;
-                players[1].hp = 10;
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[1].hpCubes = saveData.opp1Cubes;
-                    players[1].hp = saveData.opp1Health;
-                    players[1].hBar.image.fillAmount = 0;
-                    players[1].shields = saveData.opp1Shields;
-
-                    if (saveData.opp1Dead)
-                    {
-                        Debug.Log("Player 1 is dead!!!");
-                        players[1].dead = true;
-                        // players[1].turnOff();
-                        p3.SetActive(false);
-                    }
-                }
-                else
-                {
-                    players[1].hpCubes = 1;
-                    players[1].hp = 10;
-                }
-
-                players[1].updateHealthUI();
-
-                // Crow Punk is stage 1 enemy
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Bag o' Snakes";
-                players[2].name = "Bag o' Snakes";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Bag o' Snakes");
-                players[2].checkCharacter();
-                players[2].hpCubes = 1;
-                players[2].hp = 10;
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp2Cubes;
-                    players[2].hp = saveData.opp2Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp2Shields;
-
-                    if (saveData.opp2Dead)
-                    {
-                        Debug.Log("Player 2 is dead!!!");
-                        players[2].dead = true;
-                        // players[2].turnOff();
-                        p2.SetActive(false);
-                    }
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                }
-                players[2].updateHealthUI();
-                p4.SetActive(false);
+                set3PCharacters("Bag o' Snakes", 10, "Bag o' Snakes", 10);
                 break;
             case "Singelotte":
                 background.sprite = backgrounds[1];
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Singelotte";
-                players[2].name = "Singelotte";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Singelotte");
-                players[2].checkCharacter();
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 33;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 33;
-                }
-
-
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Singelotte", 33);
                 break;
             case "Bag o' Snakes":
                 background.sprite = backgrounds[3];
                 handleBackgroundUI();
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Bag o' Snakes";
-                players[2].name = "Bag o' Snakes";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Bag o' Snakes");
-                players[2].checkCharacter();
-
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp2Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 10;
-                }
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Bag o' Snakes", 10);
                 break;
             case "Crowpunk":
                 background.sprite = backgrounds[4];
@@ -1820,159 +1772,19 @@ public class GameManager : MonoBehaviour
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
                 }
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Crowpunk";
-                players[2].name = "Crowpunk";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Crowpunk");
-                players[2].checkCharacter();
-
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp1Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 10;
-                }
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Crowpunk", 10);
                 break;
             case "Saltimbocca":
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Saltimbocca";
-                players[2].name = "Saltimbocca";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Saltimbocca");
-                players[2].checkCharacter();
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp1Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 10;
-                }
-                players[2].hpCubes = 1;
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Saltimbocca", 10);
                 break;
             case "Isadore":
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Isadore";
-                players[2].name = "Isadore";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Isadore");
-                players[2].checkCharacter();
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp1Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 10;
-                }
-                players[2].hpCubes = 1;
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Isadore", 10);
                 break;
             case "Bolo":
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Bolo";
-                players[2].name = "Bolo";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Bolo");
-                players[2].checkCharacter();
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp1Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 10;
-                }
-                players[2].hpCubes = 1;
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Bolo", 10);
                 break;
             case "Reets":
-                numPlayers = 2;
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Reets";
-                players[2].name = "Reets";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Reets");
-                players[2].checkCharacter();
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp1Cubes;
-                    players[2].hp = saveData.opp1Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp1Shields;
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                    saveData.opp1Cubes = 1;
-                    saveData.opp1Health = 10;
-                }
-                players[2].hpCubes = 1;
-                players[2].updateHealthUI();
-                players[2].user_id = 1;
-
-                players[1] = players[2];
-                players[2] = players[3];
-                p3.SetActive(false);
-                p4.SetActive(false);
+                setDuelCharacter("Reets", 10);
                 break;
             case "Crowpunk+":
                 background.sprite = backgrounds[4];
@@ -1982,6 +1794,8 @@ public class GameManager : MonoBehaviour
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
                 }
+                set4PCharacters("Fingas", 10, "Crowpunk", 10, "Fingas", 10);
+                /*
                 numPlayers = 4;
                 // Fingas is stage 1 enemy
                 players[1].gameObject.AddComponent<ComputerPlayer>();
@@ -2076,6 +1890,7 @@ public class GameManager : MonoBehaviour
                     players[3].hp = 10;
                 }
                 players[3].updateHealthUI();
+                */
                 break;
         }
 
@@ -4281,6 +4096,12 @@ public class GameManager : MonoBehaviour
 
     public void displayOpponentHolster(CardPlayer cardPlayer)
     {
+
+        opponentCard1.flames.SetActive(false);
+        opponentCard2.flames.SetActive(false);
+        opponentCard3.flames.SetActive(false);
+        opponentCard4.flames.SetActive(false);
+
         if (nicklesAttackMenu.activeInHierarchy)
         {
             opponentHolsterMenu.SetActive(false);
@@ -4293,6 +4114,18 @@ public class GameManager : MonoBehaviour
         opponentCard2.updateCard(cardPlayer.holster.cardList[1].card);
         opponentCard3.updateCard(cardPlayer.holster.cardList[2].card);
         opponentCard4.updateCard(cardPlayer.holster.cardList[3].card);
+
+        if (cardPlayer.holster.cardList[0].spicy)
+            opponentCard1.flames.SetActive(true);
+
+        if (cardPlayer.holster.cardList[1].spicy)
+            opponentCard2.flames.SetActive(true);
+
+        if (cardPlayer.holster.cardList[2].spicy)
+            opponentCard3.flames.SetActive(true);
+
+        if (cardPlayer.holster.cardList[3].spicy)
+            opponentCard4.flames.SetActive(true);
     }
 
     public void stealCard(string opponentName, int selectedCard)
@@ -5728,6 +5561,7 @@ public class GameManager : MonoBehaviour
 
     public void put4CardsInHolster()
     {
+        Debug.Log("4 Cards into holster!!!");
         foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
         {
             cd.updateCard(md1.popCard());
@@ -6667,6 +6501,13 @@ public class GameManager : MonoBehaviour
                     // MATTEO: taking this out for now, may want to add back in
                     // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     sendSuccessMessage(4);
+
+                    if (players[myPlayerIndex].blackRainBonus)
+                    {
+                        put4CardsInHolster();
+                        players[myPlayerIndex].blackRainBonus = false;
+                    }
+
                     // players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>() != null)
                     {
