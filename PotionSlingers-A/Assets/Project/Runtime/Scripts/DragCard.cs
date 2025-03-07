@@ -292,6 +292,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     private void Awake()
     {
+        if (SceneManager.GetActiveScene().name == "StoryMode")
+            return;
+
         parentAfterDrag = transform.parent;
         parentSiblingIndex = transform.parent.GetSiblingIndex();
         lineRenderer = GetComponent<LineRenderer>();

@@ -2333,8 +2333,8 @@ public class CardPlayer : MonoBehaviour
 
         // Hot + Wet Bonus
         // It's only two cards
-        if ((selectedCard.vPotion1.card.cardQuality == "Hot" && selectedCard.vPotion2.card.cardQuality == "Wet") ||
-           (selectedCard.vPotion2.card.cardQuality == "Hot" && selectedCard.vPotion1.card.cardQuality == "Wet"))
+        if ((selectedCard.vPotion1.card.cardQuality.Contains("Hot") && selectedCard.vPotion2.card.cardQuality.Contains("Wet")) ||
+           (selectedCard.vPotion2.card.cardQuality.Contains("Hot") && selectedCard.vPotion1.card.cardQuality.Contains("Wet")))
         {
             if (selectedCard.card.cardName == "Empty Ravioli")
             {

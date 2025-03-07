@@ -11,11 +11,11 @@ public class UIHandler : MonoBehaviour
     {
         if(gameObject.name == "Smoke")
         {
-            // if(Screen.width == 1366)
-                // transform.position = new Vector3(transform.position.x, transform.position.y + 85f, 0);
+            if(Screen.width == 1366)
+                transform.position = new Vector3(transform.position.x, transform.position.y - 10f, 0);
 
-            // if (Screen.width == 2560)
-                // transform.position = new Vector3(transform.position.x, transform.position.y + 85f, 0);
+            if (Screen.width == 2560)
+                transform.position = new Vector3(transform.position.x, transform.position.y - 20f, 0);
         }
     }
 

@@ -53,6 +53,7 @@ public class SceneTransition : MonoBehaviour
 
     public Deck playerDeck;
     public Holster playerHolster;
+    public DeckMenuScroll deckMenuScroll;
 
     public CanvasGroup mapCanvasGroup;
 
@@ -99,6 +100,8 @@ public class SceneTransition : MonoBehaviour
                 // scrollRectHorizontal.normalizedPosition = Vector2.zero;
                 break;
         }
+
+        // deckMenuScroll.displayHolsterInStoryModeMenu();
     }
 
     // Update is called once per frame

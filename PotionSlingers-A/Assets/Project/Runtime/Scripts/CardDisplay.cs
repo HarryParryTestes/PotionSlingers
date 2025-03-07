@@ -181,6 +181,11 @@ public class CardDisplay : MonoBehaviour
         */
     }
 
+    public void updatePlaceholderSM()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void updatePlaceholder(CardDisplay cd)
     {
         cd.updateCard(GameManager.manager.td.card);
@@ -261,6 +266,9 @@ public class CardDisplay : MonoBehaviour
 
     public void emptySlot(GameObject obj)
     {
+        if (SceneManager.GetActiveScene().name == "StoryMode")
+            return;
+
         obj.GetComponent<CardDisplay>().card = GameManager.manager.emptySlotCard;
         obj.GetComponent<Image>().sprite = GameManager.manager.emptySlotCard.cardSprite;
         obj.GetComponent<Image>().DOKill();
@@ -448,6 +456,8 @@ public class CardDisplay : MonoBehaviour
             if (this.card.cardType == "Vessel")
             {
                 Debug.Log("Empty vessel slot animation triggering???");
+                if (SceneManager.GetActiveScene().name == "StoryMode")
+                    return;
                 this.vesselSlot1.transform.parent.gameObject.SetActive(true);
 
                 if (vesselEmptySlot1 != null)
@@ -577,6 +587,9 @@ public class CardDisplay : MonoBehaviour
         {
             if (!this.gameObject.activeInHierarchy)
             {
+                if (SceneManager.GetActiveScene().name == "StoryMode")
+                    return;
+
                 if (GetComponent<DragCard>() != null &&
                 !GetComponent<DragCard>().market)
                 {

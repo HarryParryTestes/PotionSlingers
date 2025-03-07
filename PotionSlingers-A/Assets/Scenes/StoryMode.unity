@@ -2756,6 +2756,7 @@ MonoBehaviour:
   - Isadore
   playerDeck: {fileID: 0}
   playerHolster: {fileID: 0}
+  deckMenuScroll: {fileID: 1739699844}
   mapCanvasGroup: {fileID: 178801313}
   game: {fileID: 0}
 --- !u!114 &228522196
@@ -50092,6 +50093,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1398598868}
     m_Modifications:
+    - target: {fileID: 110120095712584419, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 321989980667864604, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2055625114271501273, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -50200,6 +50209,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4044144009561623859, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4857037749310997426, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6564267845094686525, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
+      propertyPath: card
+      value: 
+      objectReference: {fileID: 11400000, guid: ef48841b20ed0004d821268bc9bc44a9, type: 2}
+    - target: {fileID: 7538664508559671989, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
+      propertyPath: card
+      value: 
+      objectReference: {fileID: 11400000, guid: 61fd1397f9b961743ab52a483a2c91af, type: 2}
+    - target: {fileID: 8586728772009034362, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
+      propertyPath: card
+      value: 
+      objectReference: {fileID: 11400000, guid: de395ff66f2a2d14d98db8044db1029b, type: 2}
+    - target: {fileID: 8720505078677049051, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
+      propertyPath: card
+      value: 
+      objectReference: {fileID: 11400000, guid: 17339dc9bfe163a4a85a72aa93826ddd, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89747ffb627e1ca49a31f82553470cd9, type: 3}
 --- !u!224 &1744692510 stripped

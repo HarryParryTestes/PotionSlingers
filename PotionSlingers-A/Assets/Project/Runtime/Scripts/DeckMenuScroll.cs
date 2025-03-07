@@ -26,6 +26,8 @@ public class DeckMenuScroll : MonoBehaviour
     public CardDisplay cd2;
     public CardDisplay cd3;
 
+    public bool initHolster = false;
+
     public GameObject errorText;
 
     public CardDatabase database;
@@ -106,17 +108,45 @@ public class DeckMenuScroll : MonoBehaviour
 
     public void initHolsterDisplay()
     {
-        displayHolsterInStoryModeMenu();
+        // displayHolsterInStoryModeMenu();
         holster.transform.parent.parent.parent.gameObject.SetActive(true);
+        // displayHolsterInStoryModeMenu();
         Invoke("displayHolsterInStoryModeMenu", 0.01f);
+    }
+
+    public IEnumerator moveCard(CardDisplay cd)
+    {
+        yield return new WaitForSeconds(0.1f);
+        Debug.Log("Sending them back");
+        cd.transform.position = new Vector3(0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        cd.transform.position = new Vector3(0, 0, 0);
+        yield return new WaitForSeconds(0.1f);
+        cd.transform.position = new Vector3(0, 0, 0);
     }
 
     public void displayHolsterInStoryModeMenu()
     {
+
+        Debug.Log("Display holster menu");
+
         SaveData saveData = SaveSystem.LoadGameData();
 
         if (!saveData.playerHolster.Any())
             return;
+
+        // holster.cardList[0].transform.position = new Vector3(0, 0, 0);
+
+        // fail safe for now cause this was glitching out
+        /*
+        if (initHolster)
+            return;
+        */
+
+        // card = database.cardList.FirstOrDefault(name => name.cardName == saveData.marketCards[0]);
+        // holster.cardList[i].card = card;
+        // holster.cardList[i].artworkImage.sprite = card.cardSprite;
+        // holster.cardList[i].gameObject.SetActive(true);
 
         for (int i = 0; i < holster.cardList.Count; i++)
         {
@@ -125,12 +155,23 @@ public class DeckMenuScroll : MonoBehaviour
                 if (card.name == saveData.playerHolster[i])
                 {
                     holster.cardList[i].updateCard(card);
+                    // holster.cardList[i].card = card;
+                    // holster.cardList[i].artworkImage.sprite = card.cardSprite;
+                    holster.cardList[i].gameObject.SetActive(true);
+                    // StartCoroutine(moveCard(holster.cardList[i]));
                     // add durability here
-                    if (saveData.cardDurabilities.Any())
-                        holster.cardList[i].durability = saveData.cardDurabilities[i];
                 }
             }
+
+            if (saveData.playerHolster[i].Contains("dummy"))
+            {
+                Debug.Log("Dummy card");
+                holster.cardList[i].gameObject.SetActive(false);
+            }
         }
+
+        if (initHolster)
+            return;
 
         for (int i = 0; i < holster.cardList.Count; i++)
         {
@@ -148,9 +189,7 @@ public class DeckMenuScroll : MonoBehaviour
             
         }
 
-        
-
-
+        initHolster = true;
     }
 
     public void displayDeckInStoryModeMenu()
@@ -160,6 +199,8 @@ public class DeckMenuScroll : MonoBehaviour
         Card temp;
         Card temp2;
         Card temp3;
+
+        deckList.Clear();
 
         SaveData saveData = SaveSystem.LoadGameData();
 
