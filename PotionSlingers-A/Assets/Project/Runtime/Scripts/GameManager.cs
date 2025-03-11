@@ -185,12 +185,16 @@ public class GameManager : MonoBehaviour
     public bool dumpsterBonus = false;
     public bool moveToDeck = false;
     public bool spicyExplanation = false;
+    public bool postGame = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
 
     public Sprite sprite1;
     public Sprite sprite2;
+
+    public Sprite nextButtonSprite;
+    public Sprite nextButtonPressedSprite;
 
     public Card starterPotionCard;
     public List<Card> starterPotionCards;
@@ -1059,6 +1063,18 @@ public class GameManager : MonoBehaviour
 
         }
 
+        playersDeck.Clear();
+
+        foreach (Card card in players[0].deck.deckList)
+        {
+            playersDeck.Add(card.name);
+        }
+
+        foreach (string thing in players[0].deck.statuses)
+        {
+            saveData.deckStatuses.Add(thing);
+        }
+
         saveData.playerDeck = playersDeck;
         saveData.playerHealth = players[0].hp;
         saveData.maxHealth = players[0].maxHp;
@@ -1221,9 +1237,29 @@ public class GameManager : MonoBehaviour
 
                 // rather than fading the advance stage UI in automatically, make the pass button fade it in
 
-                Invoke("setStageUI", 3f);
+                // Invoke("setStageUI", 3f);
                 // endTurnButton.transform.GetChild(0).GetComponent<TMPro.TextMeshProUGUI>().text = "Advance Stage";
 
+                Debug.Log("Changing pass button!");
+                postGame = true;
+                if(myPlayerIndex == 0)
+                {
+                    endTurnButton.GetComponent<Image>().CrossFadeAlpha(1f, 0.5f, false);
+                    endTurnButton.GetComponent<CanvasGroup>().interactable = true;
+                    SpriteState nextSpriteState;
+                    endTurnButton.GetComponent<Image>().sprite = nextButtonSprite;
+                    nextSpriteState.pressedSprite = nextButtonPressedSprite;
+                    endTurnButton.GetComponent<Button>().spriteState = nextSpriteState;
+
+                    if(stage == 1)
+                    {
+                        dialog.directions.SetActive(true);
+                        dialog.directionBox.text = "Finish up any actions you'd like to do and press the Next button to advance to the next stage!";
+                    }
+                } else
+                {
+                    Invoke("setStageUI", 3f);
+                }
                 // StartCoroutine(goToStory());
                 // SceneManager.LoadScene("StoryMode");
                 return;
@@ -4715,6 +4751,15 @@ public class GameManager : MonoBehaviour
     {
         FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_EndTurn");
 
+        if(postGame)
+        {
+            Debug.Log("Stage complete!!!");
+            saveGameManagerValues();
+            SaveSystem.SaveGameData(saveData);
+            setStageUI();
+            return;
+        }
+
         // checkForEndGame();
         // reset the market at the end of your turn
         if (marketSelected)
@@ -6242,7 +6287,7 @@ public class GameManager : MonoBehaviour
                     // eyedropper check
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.card.cardName == "SeeingEyedropper")
                     {
-                        if (players[myPlayerIndex].GetComponent<ComputerPlayer>() != null)
+                        if (players[myPlayerIndex].GetComponent<ComputerPlayer>() == null)
                         {
                             Debug.Log("Eyedropper!!!");
                             StartCoroutine(DelayedFade(eyedropperMenu));
@@ -6261,6 +6306,12 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Durability is now " + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability);
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability <= 0)
                     {
+
+                        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.artifactEmptySlot != null)
+                        {
+                            Destroy(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.artifactEmptySlot);
+                        }
+
                         // trash the artifact
                         Debug.Log("Trashing artifact!");
                         GameObject obj2 = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
@@ -6948,7 +6999,6 @@ public class GameManager : MonoBehaviour
             case 1:
                 if (md1.cardDisplay1.crucibleCards.Count > 0)
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1);
                     card = md1.cardDisplay1.crucibleCards[0];
                     md1.cardDisplay1.crucibleCards.RemoveAt(0);
@@ -6962,7 +7012,6 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay1);
                     card = md1.popCard();
                     md1.cardDisplay1.updateCard(card);
@@ -6971,7 +7020,6 @@ public class GameManager : MonoBehaviour
             case 2:
                 if (md1.cardDisplay2.crucibleCards.Count > 0)
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2);
                     card = md1.cardDisplay2.crucibleCards[0];
                     md1.cardDisplay2.crucibleCards.RemoveAt(0);
@@ -6985,7 +7033,6 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay2);
                     card = md1.popCard();
                     md1.cardDisplay2.updateCard(card);
@@ -6995,7 +7042,6 @@ public class GameManager : MonoBehaviour
             case 3:
                 if (md1.cardDisplay3.crucibleCards.Count > 0)
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md1.cardDisplay3);
                     card = md1.cardDisplay3.crucibleCards[0];
                     md1.cardDisplay3.crucibleCards.RemoveAt(0);
@@ -7020,7 +7066,6 @@ public class GameManager : MonoBehaviour
                 // players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1.card);
                 if (md2.cardDisplay1.crucibleCards.Count > 0)
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
                     card = md2.cardDisplay1.crucibleCards[0];
                     md2.cardDisplay1.crucibleCards.RemoveAt(0);
@@ -7034,19 +7079,15 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay1);
                     card = md2.popCard();
                     md2.cardDisplay1.updateCard(card);
                 }
-                // Card card4 = md2.popCard();
-                // md2.cardDisplay1.updateCard(card4);
                 sendSuccessMessage(17);
                 break;
             case 5:
                 if (md2.cardDisplay2.crucibleCards.Count > 0)
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2);
                     card = md2.cardDisplay2.crucibleCards[0];
                     md2.cardDisplay2.crucibleCards.RemoveAt(0);
@@ -7060,7 +7101,6 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    // td.addCard(md2.cardDisplay1);
                     players[myPlayerIndex].deck.putCardOnTop(md2.cardDisplay2);
                     card = md2.popCard();
                     md2.cardDisplay2.updateCard(card);
@@ -9699,6 +9739,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Trash Card");
 
+        if(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>() != null)
+        {
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis)
+            {
+                sendMessage("That card is stunned!");
+                return;
+            }
+        }       
+
         if (Game.tutorial)
         {
             if (dialog.textBoxCounter != 22 && dialog.textBoxCounter < 39)
@@ -9910,6 +9959,15 @@ public class GameManager : MonoBehaviour
     public void trashCard(CardDisplay cd)
     {
         Debug.Log("Trash Card");
+
+        if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>() != null)
+        {
+            if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].GetComponent<DragCard>().dontMoveThis)
+            {
+                sendMessage("That card is stunned!");
+                return;
+            }
+        }
 
         if (Game.tutorial)
         {

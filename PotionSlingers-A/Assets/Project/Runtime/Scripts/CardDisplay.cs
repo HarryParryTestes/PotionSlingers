@@ -154,7 +154,8 @@ public class CardDisplay : MonoBehaviour
                 Destroy(obj2);
             }            
         }
-        if(cardName == "Crucible")
+        yield return new WaitForSeconds(.10f);
+        if (cardName == "Crucible")
             crucibleCards[1] = GameManager.manager.crucibleCard;
         if (cardName == "Spoonful of Ambrosia")
             crucibleCards[1] = GameManager.manager.ambrosiaCard;
