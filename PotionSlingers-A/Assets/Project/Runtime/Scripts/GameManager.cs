@@ -50,6 +50,11 @@ public class GameManager : MonoBehaviour
     GameObject obLeft;
     GameObject obRight;
     public GameObject throwingHand;
+    public GameObject potionThrowingHand1;
+    public GameObject potionThrowingHand2;
+    public GameObject potion1;
+    public GameObject potion2;
+    public GameObject damageSplat;
     public TrashDeck td;
     public MarketDeck md1;
     public MarketDeck md2;
@@ -194,6 +199,7 @@ public class GameManager : MonoBehaviour
     public Sprite sprite2;
 
     public Sprite nextButtonSprite;
+    public Sprite nextButtonHighlightedSprite;
     public Sprite nextButtonPressedSprite;
 
     public Card starterPotionCard;
@@ -1249,6 +1255,7 @@ public class GameManager : MonoBehaviour
                     SpriteState nextSpriteState;
                     endTurnButton.GetComponent<Image>().sprite = nextButtonSprite;
                     nextSpriteState.pressedSprite = nextButtonPressedSprite;
+                    nextSpriteState.highlightedSprite = nextButtonHighlightedSprite;
                     endTurnButton.GetComponent<Button>().spriteState = nextSpriteState;
 
                     if(stage == 1)
@@ -5761,6 +5768,30 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator doDamagePotionThrow(int damage, string cardQuality = "None")
+    {
+        CardPlayer cp = tempPlayer;
+
+        yield return new WaitForSeconds(1.3f);
+        damageSplat.SetActive(true);
+        damageSplat.transform.position = cp.transform.position;
+
+        if (Game.tutorial)
+        {
+            cp.subHealth(damage, cardQuality);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            StartCoroutine(waitThreeSeconds(dialog));
+        }
+        else
+        {
+            cp.subHealth(damage, cardQuality);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+        }
+
+        yield return new WaitForSeconds(0.3f);
+        damageSplat.SetActive(false);
+    }
+
     IEnumerator doDamage(int damage, string cardQuality = "")
     {
         CardPlayer cp = tempPlayer;
@@ -5778,6 +5809,158 @@ public class GameManager : MonoBehaviour
             cp.subHealth(damage, cardQuality);
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
         }
+    }
+
+    void handlePotionJump(GameObject potion)
+    {
+        CardPlayer cp = tempPlayer;
+
+        if(numPlayers == 2)
+        {
+            if(Screen.width == 1920)
+            {
+                potion.transform.DOJump(new Vector2(900f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
+            }
+        }
+
+        if (cp.user_id == 2 && numPlayers == 3)
+        {
+            Debug.Log("Right person");
+            if (Screen.width == 1920)
+                potion.transform.DOJump(new Vector2(1500f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
+        }
+
+        if (cp.user_id == 1 && numPlayers == 3)
+        {
+            Debug.Log("Left person");
+            if (Screen.width == 1920)
+                potion.transform.DOJump(new Vector2(300f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
+        }
+
+        if(numPlayers == 4)
+        {
+            if (cp.user_id == 2)
+            {
+                Debug.Log("Middle person");
+                potion.transform.DOJump(new Vector2(900f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
+
+            }
+            else if (cp.user_id == 1)
+            {
+                Debug.Log("Left person");
+                potion.transform.DOJump(new Vector2(450f * widthRatio, 630f * heightRatio), 400f, 1, 1f, false);
+            }
+            else if (cp.user_id == 3)
+            {
+                Debug.Log("Right person");
+                potion.transform.DOJump(new Vector2(1450f * widthRatio, 630f * heightRatio), 400f, 1, 1f, false);
+            }
+        }
+    }
+
+    IEnumerator waitThreeSecondsPotionThrow(int damage, string cardQuality)
+    {
+        CardPlayer cp = tempPlayer;
+
+        if (potionThrowingHand1.activeInHierarchy ||
+            potion1.activeInHierarchy)
+        {
+            potionThrowingHand2.SetActive(true);
+
+            switch (cardQuality)
+            {
+                case "Hot":
+                    potionThrowingHand2.GetComponent<Animator>().Play("Isa_Throw_Hot");
+                    break;
+                case "Cold":
+                    potionThrowingHand2.GetComponent<Animator>().Play("Isa_Throw_Cold");
+                    break;
+                case "Wet":
+                    potionThrowingHand2.GetComponent<Animator>().Play("Isa_Throw_Wet");
+                    break;
+                case "Dry":
+                    potionThrowingHand2.GetComponent<Animator>().Play("Isa_Throw_Dry");
+                    break;
+            }
+
+            yield return new WaitForSeconds(0.3f);
+            potion2.SetActive(true);
+
+            switch (cardQuality)
+            {
+                case "Hot":
+                    potion2.GetComponent<Animator>().Play("Potionthrow_Hot");
+                    break;
+                case "Cold":
+                    potion2.GetComponent<Animator>().Play("Potionthrow_Cold");
+                    break;
+                case "Wet":
+                    potion2.GetComponent<Animator>().Play("Potionthrow_Wet");
+                    break;
+                case "Dry":
+                    potion2.GetComponent<Animator>().Play("Potionthrow_Dry");
+                    break;
+            }
+
+            potion2.transform.localScale = new Vector3(-0.687f, 0.513f, 0.436f);
+            potion2.transform.position = potionThrowingHand2.transform.position;
+            handlePotionJump(potion2);
+            // potion2.transform.DOJump(new Vector2(900f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
+            potion2.transform.DOScale(new Vector3(-0.15f, 0.15f, 0.15f), 1f);
+            yield return new WaitForSeconds(0.2f);
+            potionThrowingHand2.SetActive(false);
+            yield return new WaitForSeconds(0.8f);
+            potion2.SetActive(false);
+        } else
+        {
+            potionThrowingHand1.SetActive(true);
+
+            switch (cardQuality)
+            {
+                case "Hot":
+                    potionThrowingHand1.GetComponent<Animator>().Play("Isa_Throw_Hot");
+                    break;
+                case "Cold":
+                    potionThrowingHand1.GetComponent<Animator>().Play("Isa_Throw_Cold");
+                    break;
+                case "Wet":
+                    potionThrowingHand1.GetComponent<Animator>().Play("Isa_Throw_Wet");
+                    break;
+                case "Dry":
+                    potionThrowingHand1.GetComponent<Animator>().Play("Isa_Throw_Dry");
+                    break;
+            }
+
+            yield return new WaitForSeconds(0.3f);
+            potion1.SetActive(true);
+
+            switch (cardQuality)
+            {
+                case "Hot":
+                    potion1.GetComponent<Animator>().Play("Potionthrow_Hot");
+                    break;
+                case "Cold":
+                    potion1.GetComponent<Animator>().Play("Potionthrow_Cold");
+                    break;
+                case "Wet":
+                    potion1.GetComponent<Animator>().Play("Potionthrow_Wet");
+                    break;
+                case "Dry":
+                    potion1.GetComponent<Animator>().Play("Potionthrow_Dry");
+                    break;
+            }
+
+            potion1.transform.localScale = new Vector3(0.504f, 0.376f, 0.32f);
+            potion1.transform.position = potionThrowingHand1.transform.position;
+            handlePotionJump(potion1);
+            // potion1.transform.DOJump(new Vector2(900f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
+            potion1.transform.DOScale(new Vector3(0.15f, 0.15f, 0.15f), 1f);
+            yield return new WaitForSeconds(0.2f);
+            potionThrowingHand1.SetActive(false);
+            yield return new WaitForSeconds(0.8f);
+            potion1.SetActive(false);
+        }
+
     }
 
     IEnumerator waitThreeSecondsHand(int damage, string cardQuality = "")
@@ -5933,10 +6116,10 @@ public class GameManager : MonoBehaviour
                 // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
 
                 // THROWING ANIMATION
-                StopCoroutine("waitThreeSecondsHand");
-                throwingHand.SetActive(false);
-                StartCoroutine(waitThreeSecondsHand(damage));
-                StartCoroutine(doDamage(damage));
+                // StopCoroutine("waitThreeSecondsHand");
+                // throwingHand.SetActive(false);
+                StartCoroutine(waitThreeSecondsPotionThrow(damage, cardQuality));
+                StartCoroutine(doDamagePotionThrow(damage, cardQuality));
 
                 // PASSING THIS LOGIC TO COROUTINE
                 /*
@@ -6098,6 +6281,21 @@ public class GameManager : MonoBehaviour
                 // damage = players[myPlayerIndex].checkBonus(damage, players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             }
 
+            if (myPlayerIndex == 0)
+            {
+                StartCoroutine(waitThreeSecondsPotionThrow(damage, cardQuality));
+                StartCoroutine(doDamagePotionThrow(damage, cardQuality));
+
+                /*
+                StopCoroutine("waitThreeSecondsHand");
+                throwingHand.SetActive(false);
+                StartCoroutine(waitThreeSecondsHand(damage));
+                StartCoroutine(doDamage(damage));
+                */
+            }
+            else
+                tempPlayer.subHealth(damage, cardQuality);
+
             GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.position,
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.transform.rotation,
@@ -6105,8 +6303,8 @@ public class GameManager : MonoBehaviour
 
             StartCoroutine(MoveToTrash(obj));
 
-            StartCoroutine(waitThreeSecondsHand(damage));
-            StartCoroutine(doDamage(damage));
+            // StartCoroutine(waitThreeSecondsHand(damage));
+            // StartCoroutine(doDamage(damage));
             // tempPlayer.subHealth(damage);
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
             td.addCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
@@ -6236,10 +6434,15 @@ public class GameManager : MonoBehaviour
                 // may need to add this back in
                 if (myPlayerIndex == 0)
                 {
+                    StartCoroutine(waitThreeSecondsPotionThrow(damage, cardQuality));
+                    StartCoroutine(doDamagePotionThrow(damage, cardQuality));
+
+                    /*
                     StopCoroutine("waitThreeSecondsHand");
                     throwingHand.SetActive(false);
                     StartCoroutine(waitThreeSecondsHand(damage));
                     StartCoroutine(doDamage(damage));
+                    */
                 }
                 else
                     tempPlayer.subHealth(damage, cardQuality);

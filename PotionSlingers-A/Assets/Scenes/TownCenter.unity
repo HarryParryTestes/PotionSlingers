@@ -51664,7 +51664,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &396239425
 RectTransform:
   m_ObjectHideFlags: 0
@@ -146839,7 +146839,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1349256017
 RectTransform:
   m_ObjectHideFlags: 0
@@ -158261,7 +158261,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1451823019
 RectTransform:
   m_ObjectHideFlags: 0
@@ -213913,7 +213913,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1966860711
 RectTransform:
   m_ObjectHideFlags: 0
@@ -223319,7 +223319,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2058396538
 RectTransform:
   m_ObjectHideFlags: 0
@@ -226665,6 +226665,11 @@ MonoBehaviour:
   whiteColor: {r: 1, g: 1, b: 1, a: 1}
   grayedColor: {r: 0.2735849, g: 0.2735849, b: 0.2735849, a: 1}
   throwingHand: {fileID: 1028394599}
+  potionThrowingHand1: {fileID: 1349256016}
+  potionThrowingHand2: {fileID: 1451823018}
+  potion1: {fileID: 2058396537}
+  potion2: {fileID: 396239424}
+  damageSplat: {fileID: 1966860710}
   td: {fileID: 1985676516}
   md1: {fileID: 57222626}
   md2: {fileID: 310796753}
@@ -226867,6 +226872,7 @@ MonoBehaviour:
   sprite1: {fileID: 21300000, guid: 6cc2da1c051a46e4eac60e4cf60724ce, type: 3}
   sprite2: {fileID: 21300000, guid: 92d9e0e61e79b76488a1fa25cac2f8ac, type: 3}
   nextButtonSprite: {fileID: 21300000, guid: c587d316a5faafb409321c8d6d127a25, type: 3}
+  nextButtonHighlightedSprite: {fileID: 21300000, guid: c0510a2e3bc629b43b7e26d919ab7fe2, type: 3}
   nextButtonPressedSprite: {fileID: 21300000, guid: 44a48db7851183f44a9d24e933b8cf23, type: 3}
   starterPotionCard: {fileID: 11400000, guid: 99fb25942e77b1b4b844fdfdf39b50f4, type: 2}
   starterPotionCards:
