@@ -5815,47 +5815,7 @@ public class GameManager : MonoBehaviour
     {
         CardPlayer cp = tempPlayer;
 
-        if(numPlayers == 2)
-        {
-            if(Screen.width == 1920)
-            {
-                potion.transform.DOJump(new Vector2(900f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
-            }
-        }
-
-        if (cp.user_id == 2 && numPlayers == 3)
-        {
-            Debug.Log("Right person");
-            if (Screen.width == 1920)
-                potion.transform.DOJump(new Vector2(1500f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
-        }
-
-        if (cp.user_id == 1 && numPlayers == 3)
-        {
-            Debug.Log("Left person");
-            if (Screen.width == 1920)
-                potion.transform.DOJump(new Vector2(300f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
-        }
-
-        if(numPlayers == 4)
-        {
-            if (cp.user_id == 2)
-            {
-                Debug.Log("Middle person");
-                potion.transform.DOJump(new Vector2(900f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
-
-            }
-            else if (cp.user_id == 1)
-            {
-                Debug.Log("Left person");
-                potion.transform.DOJump(new Vector2(450f * widthRatio, 630f * heightRatio), 400f, 1, 1f, false);
-            }
-            else if (cp.user_id == 3)
-            {
-                Debug.Log("Right person");
-                potion.transform.DOJump(new Vector2(1450f * widthRatio, 630f * heightRatio), 400f, 1, 1f, false);
-            }
-        }
+        potion.transform.DOJump(new Vector2(cp.transform.position.x, cp.transform.position.y), 400f, 1, 1f, false);
     }
 
     IEnumerator waitThreeSecondsPotionThrow(int damage, string cardQuality)
@@ -5881,6 +5841,9 @@ public class GameManager : MonoBehaviour
                 case "Dry":
                     potionThrowingHand2.GetComponent<Animator>().Play("Isa_Throw_Dry");
                     break;
+                default:
+                    potionThrowingHand2.GetComponent<Animator>().Play("Isa_Throw_Hot");
+                    break;
             }
 
             yield return new WaitForSeconds(0.3f);
@@ -5900,12 +5863,14 @@ public class GameManager : MonoBehaviour
                 case "Dry":
                     potion2.GetComponent<Animator>().Play("Potionthrow_Dry");
                     break;
+                default:
+                    potion2.GetComponent<Animator>().Play("Potionthrow_Hot");
+                    break;
             }
 
             potion2.transform.localScale = new Vector3(-0.687f, 0.513f, 0.436f);
             potion2.transform.position = potionThrowingHand2.transform.position;
-            handlePotionJump(potion2);
-            // potion2.transform.DOJump(new Vector2(900f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
+            potion2.transform.DOJump(new Vector2(cp.transform.position.x, cp.transform.position.y), 400f, 1, 1f, false);
             potion2.transform.DOScale(new Vector3(-0.15f, 0.15f, 0.15f), 1f);
             yield return new WaitForSeconds(0.2f);
             potionThrowingHand2.SetActive(false);
@@ -5929,6 +5894,9 @@ public class GameManager : MonoBehaviour
                 case "Dry":
                     potionThrowingHand1.GetComponent<Animator>().Play("Isa_Throw_Dry");
                     break;
+                default:
+                    potionThrowingHand1.GetComponent<Animator>().Play("Isa_Throw_Hot");
+                    break;
             }
 
             yield return new WaitForSeconds(0.3f);
@@ -5948,12 +5916,14 @@ public class GameManager : MonoBehaviour
                 case "Dry":
                     potion1.GetComponent<Animator>().Play("Potionthrow_Dry");
                     break;
+                default:
+                    potion1.GetComponent<Animator>().Play("Potionthrow_Hot");
+                    break;
             }
 
             potion1.transform.localScale = new Vector3(0.504f, 0.376f, 0.32f);
             potion1.transform.position = potionThrowingHand1.transform.position;
-            handlePotionJump(potion1);
-            // potion1.transform.DOJump(new Vector2(900f * widthRatio, 650f * heightRatio), 400f, 1, 1f, false);
+            potion1.transform.DOJump(new Vector2(cp.transform.position.x, cp.transform.position.y), 400f, 1, 1f, false);
             potion1.transform.DOScale(new Vector3(0.15f, 0.15f, 0.15f), 1f);
             yield return new WaitForSeconds(0.2f);
             potionThrowingHand1.SetActive(false);
@@ -5981,88 +5951,10 @@ public class GameManager : MonoBehaviour
         throwingHand.SetActive(true);
         throwingHand.GetComponent<Animator>().SetTrigger("Throw");
 
-        // hardcoded logic for two players
-        if (numPlayers == 2)
-        {
-            Debug.Log("Middle person");
-            yield return new WaitForSeconds(1f);
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            if (Screen.width == 1280)
-                throwingHand.transform.DOMoveX(600f, 1f);
-            else
-                throwingHand.transform.DOMoveX(1000f, 1f);
-            yield return new WaitForSeconds(1f);
-            throwingHand.SetActive(false);
-            // cp.subHealth(damage, cardQuality);
-            yield break;
-        }
-
-        if (cp.user_id == 2 && numPlayers == 3)
-        {
-            Debug.Log("Right person");
-            yield return new WaitForSeconds(1f);
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            if (Screen.width == 1280)
-                throwingHand.transform.DOMoveX(960f, 1f);
-            else
-                throwingHand.transform.DOMoveX(1470f, 1f);
-            yield return new WaitForSeconds(1f);
-            throwingHand.SetActive(false);
-            // cp.subHealth(damage, cardQuality);
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            yield break;
-        }
-
-        if (cp.user_id == 2)
-        {
-            Debug.Log("Middle person");
-            yield return new WaitForSeconds(1f);
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            if (Screen.width == 1280)
-                throwingHand.transform.DOMoveX(600f, 1f);
-            else
-                throwingHand.transform.DOMoveX(1000f, 1f);
-            yield return new WaitForSeconds(1f);
-            throwingHand.SetActive(false);
-        }
-        else if (cp.user_id == 1)
-        {
-            Debug.Log("Left person");
-            yield return new WaitForSeconds(1f);
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            if (Screen.width == 1280)
-                throwingHand.transform.DOMoveX(300f, 1f);
-            else
-                throwingHand.transform.DOMoveX(470f, 1f);
-            yield return new WaitForSeconds(1f);
-            throwingHand.SetActive(false);
-        }
-        else if (cp.user_id == 3)
-        {
-            Debug.Log("Right person");
-            yield return new WaitForSeconds(1f);
-            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            if (Screen.width == 1280)
-                throwingHand.transform.DOMoveX(960f, 1f);
-            else
-                throwingHand.transform.DOMoveX(1470f, 1f);
-            yield return new WaitForSeconds(1f);
-            throwingHand.SetActive(false);
-        }
-
-        /*
-        if (Game.tutorial)
-        {
-            cp.subHealth(damage, cardQuality);
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-            StartCoroutine(waitThreeSeconds(dialog));
-        }
-        else
-        {
-            cp.subHealth(damage, cardQuality);
-            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
-        }
-        */
+        yield return new WaitForSeconds(1f);
+        throwingHand.transform.DOMoveX(cp.transform.position.x, 1f);
+        yield return new WaitForSeconds(1f);
+        throwingHand.SetActive(false);
     }
 
     // THROW POTION REQUEST
