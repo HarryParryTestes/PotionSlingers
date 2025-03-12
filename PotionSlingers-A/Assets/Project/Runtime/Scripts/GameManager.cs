@@ -604,6 +604,10 @@ public class GameManager : MonoBehaviour
                 handlePlayerOneHealth();
                 handlePlayerTwoHealth();
                 break;
+            case "Dipkid":
+                handlePlayerOneHealth();
+                handlePlayerTwoHealth();
+                break;
             case "Fingas":
                 handlePlayerOneHealth();
                 break;
@@ -628,6 +632,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Crowpunk":
                 handlePlayerOneHealth();
+                handlePlayerTwoHealth();
                 break;
             case "Crowpunk+":
                 handlePlayerOneHealth();
@@ -1582,6 +1587,7 @@ public class GameManager : MonoBehaviour
         }
         players[2].updateHealthUI();
         p4.SetActive(false);
+        handleThreePlayerUI();
     }
 
     void set4PCharacters(string charName1, int health1, string charName2, int health2, string charName3, int health3)
@@ -1771,12 +1777,19 @@ public class GameManager : MonoBehaviour
                 handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 setDuelCharacter("Dippit", 7);
+                // set4PCharacters("Dippit", 7, "Dippit", 7, "Dippit", 7);
                 break;
             case "Maskid":
                 background.sprite = backgrounds[3];
                 handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 setDuelCharacter("Maskid", 7);
+                break;
+            case "Dipkid":
+                background.sprite = backgrounds[3];
+                handleBackgroundUI();
+                // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
+                set3PCharacters("Dippit", 7, "Maskid", 7);
                 break;
             case "Fingas+":
                 background.sprite = backgrounds[4];
@@ -1815,7 +1828,7 @@ public class GameManager : MonoBehaviour
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
                 }
-                setDuelCharacter("Crowpunk", 10);
+                set3PCharacters("Crowpunk", 10, "Crowpunk", 10);
                 break;
             case "Saltimbocca":
                 setDuelCharacter("Saltimbocca", 10);
@@ -1837,103 +1850,7 @@ public class GameManager : MonoBehaviour
                 {
                     background.gameObject.transform.localScale = new Vector3(1.46f, 1.3f, 1.46f);
                 }
-                set4PCharacters("Fingas", 10, "Crowpunk", 10, "Fingas", 10);
-                /*
-                numPlayers = 4;
-                // Fingas is stage 1 enemy
-                players[1].gameObject.AddComponent<ComputerPlayer>();
-                players[1].charName = "Fingas";
-                players[1].name = "Fingas";
-                playerLeftName.text = players[1].charName;
-                players[1].character.onCharacterClick("Fingas");
-                players[1].checkCharacter();
-                players[1].hpCubes = 1;
-                players[1].hp = 10;
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[1].hpCubes = saveData.opp1Cubes;
-                    players[1].hp = saveData.opp1Health;
-                    players[1].hBar.image.fillAmount = 0;
-                    players[1].shields = saveData.opp1Shields;
-
-                    if (saveData.opp1Dead)
-                    {
-                        Debug.Log("Player 1 is dead!!!");
-                        players[1].dead = true;
-                        // players[1].turnOff();
-                        p3.SetActive(false);
-                    }
-                }
-                else
-                {
-                    players[1].hpCubes = 1;
-                    players[1].hp = 10;
-                }
-
-                players[1].updateHealthUI();
-
-                // Crow Punk is stage 1 enemy
-                players[2].gameObject.AddComponent<ComputerPlayer>();
-                players[2].charName = "Crowpunk";
-                players[2].name = "Crowpunk";
-                playerTopName.text = players[2].charName;
-                players[2].character.onCharacterClick("Crowpunk");
-                players[2].checkCharacter();
-                players[2].hpCubes = 1;
-                players[2].hp = 10;
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[2].hpCubes = saveData.opp2Cubes;
-                    players[2].hp = saveData.opp2Health;
-                    players[2].hBar.image.fillAmount = 0;
-                    players[2].shields = saveData.opp2Shields;
-
-                    if (saveData.opp2Dead)
-                    {
-                        Debug.Log("Player 2 is dead!!!");
-                        players[2].dead = true;
-                        // players[2].turnOff();
-                        p2.SetActive(false);
-                    }
-                }
-                else
-                {
-                    players[2].hpCubes = 1;
-                    players[2].hp = 10;
-                }
-                players[2].updateHealthUI();
-
-                // Fingas is stage 1 enemy
-                players[3].gameObject.AddComponent<ComputerPlayer>();
-                players[3].charName = "Fingas";
-                players[3].name = "Fingas";
-                playerRightName.text = players[3].charName;
-                players[3].character.onCharacterClick("Fingas");
-                players[3].checkCharacter();
-                players[3].hpCubes = 1;
-                players[3].hp = 10;
-                if (saveData.savedGame && !saveData.newStage)
-                {
-                    players[3].hpCubes = saveData.opp3Cubes;
-                    players[3].hp = saveData.opp3Health;
-                    players[3].hBar.image.fillAmount = 0;
-                    players[3].shields = saveData.opp3Shields;
-
-                    if (saveData.opp3Dead)
-                    {
-                        Debug.Log("Player 3 is dead!!!");
-                        players[3].dead = true;
-                        // players[3].turnOff();
-                        p4.SetActive(false);
-                    }
-                }
-                else
-                {
-                    players[3].hpCubes = 1;
-                    players[3].hp = 10;
-                }
-                players[3].updateHealthUI();
-                */
+                set4PCharacters("Dippit", 7, "Crowpunk", 10, "Dippit", 7);
                 break;
         }
 
@@ -2319,6 +2236,31 @@ public class GameManager : MonoBehaviour
             players[1].gameObject.transform.parent.parent.position = new Vector3(100f, 640f, 0);
             players[2].gameObject.transform.parent.position = new Vector3(950f, 650f, 0);
         }
+
+        /*
+        if(background.sprite == backgrounds[3])
+        {
+            Debug.Log("Desert background");
+            players[1].gameObject.transform.parent.parent.position = new Vector3(300f, 840f, 0);
+            players[2].gameObject.transform.parent.position = new Vector3(1060f, 870f, 0);
+
+            if (Screen.width == 2560)
+            {
+                players[1].gameObject.transform.parent.parent.position = new Vector3(150f, 1180f, 0);
+                players[2].gameObject.transform.parent.position = new Vector3(1625f, 1305f, 0);
+            }
+            else if (Screen.width == 1280)
+            {
+                players[1].gameObject.transform.parent.parent.position = new Vector3(200f, 590f, 0);
+                players[2].gameObject.transform.parent.position = new Vector3(800f, 600f, 0);
+            }
+            else if (Screen.width == 1366)
+            {
+                players[1].gameObject.transform.parent.parent.position = new Vector3(100f, 640f, 0);
+                players[2].gameObject.transform.parent.position = new Vector3(950f, 650f, 0);
+            }
+        }
+        */
 
         p4.SetActive(false);
     }

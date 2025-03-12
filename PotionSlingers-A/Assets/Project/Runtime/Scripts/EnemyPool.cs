@@ -8,6 +8,7 @@ public class EnemyPool : MonoBehaviour
 
     public List<string> level1Enemies;
     public List<string> level2Enemies;
+    public List<string> cutsceneEnemies;
     public List<string> encounteredEnemies = new List<string>();
     public List<string> bosses;
     // Start is called before the first frame update
@@ -31,6 +32,29 @@ public class EnemyPool : MonoBehaviour
         // int index = rng.Next(bosses.Count);
         return "Singelotte";
         // return bosses[index];
+    }
+
+    public string GetCutsceneEnemy()
+    {
+        System.Random rng = new System.Random();
+        SaveData saveData = SaveSystem.LoadGameData();
+
+        var exclude = new HashSet<int>() { };
+        for (int i = 0; i < cutsceneEnemies.Count; i++)
+        {
+            if (encounteredEnemies.Contains(cutsceneEnemies[i]) || saveData.visitedEnemies.Contains(cutsceneEnemies[i]))
+            {
+                // exclude.Add(j);
+                if (cutsceneEnemies.Count > 1)
+                    cutsceneEnemies.RemoveAt(i);
+            }
+        }
+
+        // var range = Enumerable.Range(0, level1Enemies.Count).Where(j => !exclude.Contains(j));
+        // Debug.Log("Number of available enemies to select from: " + (level1Enemies.Count - exclude.Count));
+        int index = rng.Next(0, cutsceneEnemies.Count);
+        encounteredEnemies.Add(cutsceneEnemies[index]);
+        return cutsceneEnemies[index];
     }
 
     public string GetRandomEnemy()

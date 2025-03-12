@@ -283,12 +283,23 @@ public class CardPlayer : MonoBehaviour
                 slinger = true;
                 break;
             case "Crowpunk":
-                this.transform.localScale = new Vector3(16.5f, 11f, 0);
-                this.GetComponent<Image>().raycastPadding = new Vector4(36f, 2f, 26f, 2f);
                 if (Screen.width == 1280)
                 {
                     if (this.gameObject.name == "CharacterCard (Top)" && GameManager.manager.numPlayers != 3)
                         this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
+                }
+
+                if (this.gameObject.name == "CharacterCard (Top)")
+                {
+                    this.transform.localScale = new Vector3(16.5f, 11f, 0);
+                    this.GetComponent<Image>().raycastPadding = new Vector4(36f, 2f, 26f, 2f);
+                }
+
+                if (this.gameObject.name == "CharacterCard (Left)")
+                {
+                    Debug.Log("Left character!");
+                    this.transform.parent.localScale = new Vector3(5.6f, 3.85f, 0);
+                    this.GetComponent<Image>().raycastPadding = new Vector4(36f, 2f, 26f, 2f);
                 }
                 break;
             case "Bag o' Snakes":
@@ -317,23 +328,32 @@ public class CardPlayer : MonoBehaviour
                 break;
             case "Dippit":
                 Debug.Log("Dippit!!!");
-                this.transform.localScale = new Vector3(15f, 15f, 0);
-                this.GetComponent<Image>().raycastPadding = new Vector4(26f, 29f, 26f, 30f);
-                if (Screen.width == 1280)
+                if (this.gameObject.name == "CharacterCard (Top)")
                 {
-                    if (this.gameObject.name == "CharacterCard (Top)")
-                        this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
+                    // this.transform.position = new Vector3(this.transform.position.x, 
+                        // this.transform.position.y - (40 * GameManager.manager.heightRatio), this.transform.position.z);
+                    this.transform.localScale = new Vector3(14f, 14f, 0);
+                    this.GetComponent<Image>().raycastPadding = new Vector4(26f, 29f, 26f, 30f);
+                }
+
+                if (this.gameObject.name == "CharacterCard (Left)")
+                {
+                    Debug.Log("Left character!");
+                    this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 80, this.transform.position.z);
+                    // this.transform.position = new Vector3(this.transform.position.x,
+                    // this.transform.position.y - (180 * GameManager.manager.heightRatio), this.transform.position.z);
+                    this.transform.parent.localScale = new Vector3(1.2f, 1.2f, 0);
+                    this.GetComponent<Image>().raycastPadding = new Vector4(26f, 29f, 26f, 30f);
                 }
                 break;
             case "Maskid":
                 Debug.Log("Maskid!!!");
-                this.transform.position = new Vector3(this.transform.position.x + 50, this.transform.position.y, this.transform.position.z);
+                if(GameManager.manager.numPlayers == 2)
+                    this.transform.position = new Vector3(this.transform.position.x + (50 * GameManager.manager.heightRatio), this.transform.position.y, this.transform.position.z);
                 this.transform.localScale = new Vector3(12f, 12f, 0);
                 this.GetComponent<Image>().raycastPadding = new Vector4(15f, 18f, 17f, 7f);
-                if (Screen.width == 1280)
-                {
-                    this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 40, this.transform.position.z);
-                }
+                this.transform.position = new Vector3(this.transform.position.x,
+                        this.transform.position.y - (40 * GameManager.manager.heightRatio), this.transform.position.z);
                 break;
 
             default:

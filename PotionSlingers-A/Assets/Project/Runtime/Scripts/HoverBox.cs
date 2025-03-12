@@ -18,6 +18,14 @@ public class HoverBox : MonoBehaviour
             Debug.Log("Moving HoverBox for Singelotte");
             transform.position = new Vector3(-184f * GameManager.manager.widthRatio, 0, 0) + new Vector3(transform.position.x, transform.position.y, transform.position.z);    
         }
+
+        if(player.charName == "Dippit" && player.user_id == 1 &&
+            GameManager.manager.numPlayers == 3)
+        {
+            // + 200, - 150
+            Debug.Log("Moving HoverBox for left Dippit");
+            transform.position = new Vector3(transform.position.x + (200 * GameManager.manager.widthRatio), transform.position.y - (100 * GameManager.manager.heightRatio), transform.position.z);
+        }
     }
 
     // Update is called once per frame

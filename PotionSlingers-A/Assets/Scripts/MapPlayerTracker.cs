@@ -120,6 +120,121 @@ namespace Map
                 return;
             }
 
+            if (mapNode.Node.nodeType == NodeType.Mystery)
+            {
+                // transition.GetComponent<SceneTransition>().mapCanvasGroup.blocksRaycasts = false;
+                // transition.GetComponent<SceneTransition>().doTransition();
+                Debug.Log("Entering cutscene space!!!");
+
+                switch (saveData.currentEnemyName)
+                {
+                    case "Slinger":
+
+                        if (saveData.slingerName == null)
+                        {
+                            Debug.Log("Slinger not picked yet!!!");
+                            // int num = rng.Next(0, transition.GetComponent<SceneTransition>().slingerPool.Count);
+                            int num = transition.GetComponent<SceneTransition>().getSlinger();
+                            if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Saltimbocca")
+                            {
+                                saveData.currentEnemyName = "Saltimbocca";
+                                saveData.slingerName = saveData.currentEnemyName;
+                                saveData.slingerEncounter = 1;
+                                SaveSystem.SaveGameData(saveData);
+                                transition.GetComponent<SceneTransition>().hideUI();
+                                transition.GetComponent<SceneTransition>().handleSaltCutscene();
+                                break;
+                            }
+                            if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Reets")
+                            {
+                                Debug.Log("Implement Reets!!!");
+                                saveData.currentEnemyName = "Reets";
+                                saveData.slingerName = saveData.currentEnemyName;
+                                saveData.slingerEncounter = 1;
+                                SaveSystem.SaveGameData(saveData);
+                                transition.GetComponent<SceneTransition>().hideUI();
+                                transition.GetComponent<SceneTransition>().handleReetsCutscene();
+                                break;
+                            }
+                            if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Bolo")
+                            {
+                                Debug.Log("Implement Bolo!!!");
+                                saveData.currentEnemyName = "Bolo";
+                                saveData.slingerName = saveData.currentEnemyName;
+                                saveData.slingerEncounter = 1;
+                                SaveSystem.SaveGameData(saveData);
+                                transition.GetComponent<SceneTransition>().hideUI();
+                                transition.GetComponent<SceneTransition>().handleBoloCutscene();
+                                break;
+                            }
+                            if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Isadore")
+                            {
+                                Debug.Log("Implement Isadore!!!");
+                                saveData.currentEnemyName = "Isadore";
+                                saveData.slingerName = saveData.currentEnemyName;
+                                saveData.slingerEncounter = 1;
+                                SaveSystem.SaveGameData(saveData);
+                                transition.GetComponent<SceneTransition>().hideUI();
+                                transition.GetComponent<SceneTransition>().handleIsadoreCutscene();
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            // 2nd encounter with the slinger during the story mode
+                            Debug.Log("2nd+ Encounter!!!");
+                            switch (saveData.slingerName)
+                            {
+                                case "Saltimbocca":
+                                    if (saveData.slingerEncounter == 1)
+                                    {
+                                        saveData.currentEnemyName = saveData.slingerName;
+                                        saveData.slingerEncounter++;
+                                        transition.GetComponent<SceneTransition>().hideUI();
+                                        transition.GetComponent<SceneTransition>().handleSaltCutscene();
+                                    }
+                                    break;
+                                case "Reets":
+                                    if (saveData.slingerEncounter == 1)
+                                    {
+                                        saveData.currentEnemyName = saveData.slingerName;
+                                        saveData.slingerEncounter++;
+                                        transition.GetComponent<SceneTransition>().hideUI();
+                                        transition.GetComponent<SceneTransition>().handleReetsCutscene();
+                                    }
+                                    break;
+                                case "Bolo":
+                                    if (saveData.slingerEncounter == 1)
+                                    {
+                                        saveData.currentEnemyName = saveData.slingerName;
+                                        saveData.slingerEncounter++;
+                                        transition.GetComponent<SceneTransition>().hideUI();
+                                        transition.GetComponent<SceneTransition>().handleBoloCutscene();
+                                    }
+                                    break;
+                                case "Isadore":
+                                    if (saveData.slingerEncounter == 1)
+                                    {
+                                        saveData.currentEnemyName = saveData.slingerName;
+                                        saveData.slingerEncounter++;
+                                        transition.GetComponent<SceneTransition>().hideUI();
+                                        transition.GetComponent<SceneTransition>().handleIsadoreCutscene();
+                                    }
+                                    break;
+                            }
+                            SaveSystem.SaveGameData(saveData);
+                        }
+                        break;
+                    case "Crowpunk":
+                        Debug.Log(saveData.playerCharName);
+
+                        transition.GetComponent<SceneTransition>().handleCrowCutscene();
+                        break;
+                }
+
+                return;
+            }
+
             switch (saveData.currentEnemyName)
             {
                 case "Bag o' Snakes":
@@ -131,6 +246,9 @@ namespace Map
                 case "Maskid":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
+                case "Dipkid":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
                 case "Bag o' Snakes+":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
@@ -139,107 +257,6 @@ namespace Map
                     break;
                 case "Fingas+":
                     transition.GetComponent<SceneTransition>().doTransition();
-                    break;
-                case "Slinger":
-
-                    if (saveData.slingerName == null)
-                    {
-                        Debug.Log("Slinger not picked yet!!!");
-                        // int num = rng.Next(0, transition.GetComponent<SceneTransition>().slingerPool.Count);
-                        int num = transition.GetComponent<SceneTransition>().getSlinger();
-                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Saltimbocca")
-                        {                           
-                            saveData.currentEnemyName = "Saltimbocca";
-                            saveData.slingerName = saveData.currentEnemyName;
-                            saveData.slingerEncounter = 1;
-                            SaveSystem.SaveGameData(saveData);
-                            transition.GetComponent<SceneTransition>().hideUI();
-                            transition.GetComponent<SceneTransition>().handleSaltCutscene();
-                            break;
-                        }
-                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Reets")
-                        {
-                            Debug.Log("Implement Reets!!!");    
-                            saveData.currentEnemyName = "Reets";
-                            saveData.slingerName = saveData.currentEnemyName;
-                            saveData.slingerEncounter = 1;
-                            SaveSystem.SaveGameData(saveData);
-                            transition.GetComponent<SceneTransition>().hideUI();
-                            transition.GetComponent<SceneTransition>().handleReetsCutscene();
-                            break;
-                        }
-                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Bolo")
-                        {
-                            Debug.Log("Implement Bolo!!!");
-                            saveData.currentEnemyName = "Bolo";
-                            saveData.slingerName = saveData.currentEnemyName;
-                            saveData.slingerEncounter = 1;
-                            SaveSystem.SaveGameData(saveData);
-                            transition.GetComponent<SceneTransition>().hideUI();
-                            transition.GetComponent<SceneTransition>().handleBoloCutscene();
-                            break;
-                        }
-                        if (transition.GetComponent<SceneTransition>().slingerPool[num] == "Isadore")
-                        {
-                            Debug.Log("Implement Isadore!!!");                           
-                            saveData.currentEnemyName = "Isadore";
-                            saveData.slingerName = saveData.currentEnemyName;
-                            saveData.slingerEncounter = 1;
-                            SaveSystem.SaveGameData(saveData);
-                            transition.GetComponent<SceneTransition>().hideUI();
-                            transition.GetComponent<SceneTransition>().handleIsadoreCutscene();
-                            break;
-                        }
-                    } else
-                    {
-                        // 2nd encounter with the slinger during the story mode
-                        Debug.Log("2nd+ Encounter!!!");
-                        switch (saveData.slingerName)
-                        {
-                            case "Saltimbocca":
-                                if(saveData.slingerEncounter == 1)
-                                {                                   
-                                    saveData.currentEnemyName = saveData.slingerName;
-                                    saveData.slingerEncounter++;
-                                    transition.GetComponent<SceneTransition>().hideUI();
-                                    transition.GetComponent<SceneTransition>().handleSaltCutscene();
-                                }                               
-                                break;
-                            case "Reets":
-                                if (saveData.slingerEncounter == 1)
-                                {  
-                                    saveData.currentEnemyName = saveData.slingerName;
-                                    saveData.slingerEncounter++;
-                                    transition.GetComponent<SceneTransition>().hideUI();
-                                    transition.GetComponent<SceneTransition>().handleReetsCutscene();
-                                }
-                                break;
-                            case "Bolo":
-                                if (saveData.slingerEncounter == 1)
-                                { 
-                                    saveData.currentEnemyName = saveData.slingerName;
-                                    saveData.slingerEncounter++;
-                                    transition.GetComponent<SceneTransition>().hideUI();
-                                    transition.GetComponent<SceneTransition>().handleBoloCutscene();
-                                }
-                                break;
-                            case "Isadore":
-                                if (saveData.slingerEncounter == 1)
-                                {  
-                                    saveData.currentEnemyName = saveData.slingerName;
-                                    saveData.slingerEncounter++;
-                                    transition.GetComponent<SceneTransition>().hideUI();
-                                    transition.GetComponent<SceneTransition>().handleIsadoreCutscene();
-                                }
-                                break;
-                        }
-                        SaveSystem.SaveGameData(saveData);
-                    }                   
-                    break;
-                case "Crowpunk":
-                    Debug.Log(saveData.playerCharName);
-
-                    transition.GetComponent<SceneTransition>().handleCrowCutscene();
                     break;
                 case "Crowpunk+":
                     transition.GetComponent<SceneTransition>().doTransition();

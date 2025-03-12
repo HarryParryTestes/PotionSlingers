@@ -157,6 +157,10 @@ namespace Map
                 {
                     enemyName = enemyPool.GetBossEnemy();
                 }
+                else if (Node.nodeType == NodeType.Mystery)
+                {
+                    enemyName = enemyPool.GetCutsceneEnemy();
+                } 
                 else
                     enemyName = enemyPool.GetRandomEnemy();
             }
