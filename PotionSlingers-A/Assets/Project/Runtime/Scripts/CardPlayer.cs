@@ -468,6 +468,20 @@ public class CardPlayer : MonoBehaviour
             case "Dippit":
                 Debug.Log("Dippit animation");
                 animator.Play("Dippit_Idle");
+                if (this.gameObject.name == "CharacterCard (Right)")
+                {
+                    this.transform.parent.localScale = new Vector3(1f, 1f, 1f);
+                    this.transform.parent.position = new Vector3(this.transform.parent.position.x + (20 * GameManager.manager.widthRatio),
+                        this.transform.parent.position.y - (20 * GameManager.manager.heightRatio), 0);
+                }                   
+
+                if (this.gameObject.name == "CharacterCard (Left)")
+                {
+                    this.transform.parent.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                    this.transform.parent.position = new Vector3(this.transform.parent.position.x + (80 * GameManager.manager.widthRatio),
+                        this.transform.parent.position.y - (80 * GameManager.manager.heightRatio), 0);
+                }
+                    
                 break;
 
             case "Maskid":
@@ -541,6 +555,21 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Dippit hit animation");
                 animator.Play("Dippit_Hit");
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Dippit_Hit");
+                // idk why the scale is changing so i'm just gonna force it back to what it previously was
+                if (this.gameObject.name == "CharacterCard (Right)")
+                {
+                    this.transform.parent.localScale = new Vector3(1.57f, 1.57f, 1.57f);
+                    this.transform.parent.position = new Vector3(this.transform.parent.position.x - (20 * GameManager.manager.widthRatio),
+                        this.transform.parent.position.y + (20 * GameManager.manager.heightRatio), 0);
+                }                  
+
+                if (this.gameObject.name == "CharacterCard (Left)")
+                {
+                    this.transform.parent.localScale = new Vector3(4.63f, 4.63f, 4.63f);
+                    this.transform.parent.position = new Vector3(this.transform.parent.position.x - (80 * GameManager.manager.widthRatio), 
+                        this.transform.parent.position.y + (80 * GameManager.manager.heightRatio), 0);
+                }
+                    
                 break;
 
             case "Maskid":
