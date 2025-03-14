@@ -282,10 +282,10 @@ public class CardDisplay : MonoBehaviour
 
         obj.GetComponent<CanvasGroup>().alpha = 0f;
         Sequence mySequence = DOTween.Sequence();
-        mySequence.PrependInterval(1).Append(obj.GetComponent<CanvasGroup>().DOFade(1, 4f))
-          .PrependInterval(3)
-          .Append(obj.GetComponent<CanvasGroup>().DOFade(0, 3f))
-          .PrependInterval(1).SetLoops(-1, LoopType.Restart);
+        mySequence.PrependInterval(1).Append(obj.GetComponent<CanvasGroup>().DOFade(1, 3f))
+          .PrependInterval(2)
+          .Append(obj.GetComponent<CanvasGroup>().DOFade(0, 2f))
+          .SetLoops(-1, LoopType.Restart);
 
         mySequence.Play();
 
@@ -429,10 +429,9 @@ public class CardDisplay : MonoBehaviour
 
         if (GetComponent<DragCard>() != null && !GetComponent<DragCard>().market && this.gameObject.name != "DeckPile")
         {
-            /*
             if (this.card.cardType == "Artifact")
             {
-                Debug.Log("Empty slot animation triggering???");
+                Debug.Log("Empty artifact slot animation triggering???");
 
                 this.artifactSlot.gameObject.SetActive(true);
                 this.aPotion.gameObject.SetActive(true);
@@ -448,11 +447,11 @@ public class CardDisplay : MonoBehaviour
                     this.artifactSlot.transform.parent);
 
                 // obj.GetComponent<CardDisplay>().updateCard(GameManager.manager.emptySlotCard);
-                emptySlot(artifactEmptySlot);
+                this.aPotion.emptySlot(artifactEmptySlot);
 
                 this.aPotion.gameObject.SetActive(false);
+                this.artifactSlot.transform.parent.gameObject.SetActive(true);
             }
-            */
 
             if (this.card.cardType == "Vessel")
             {
@@ -555,13 +554,12 @@ public class CardDisplay : MonoBehaviour
             if (GetComponent<DragCard>() != null && GetComponent<DragCard>().loaded)
             {
 
-                
-
                 // add empty slot animation here
-                if (GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].card.cardType == "Artifact" &&
+                if (GameManager.manager.players[GameManager.manager.myPlayerIndex].
+                    holster.cardList[GameManager.manager.loadedCardInt].card.cardType == "Artifact" &&
                     GameManager.manager.myPlayerIndex == 0)
                 {
-                    Debug.Log("Empty slot animation triggering???");
+                    Debug.Log("Empty artifact slot animation on loaded card triggering???");
 
                     GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].artifactSlot.gameObject.SetActive(true);
                     GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.loadedCardInt].aPotion.gameObject.SetActive(true);

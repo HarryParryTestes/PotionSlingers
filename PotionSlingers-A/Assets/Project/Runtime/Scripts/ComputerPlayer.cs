@@ -398,10 +398,26 @@ public class ComputerPlayer : CardPlayer
         if (this.gameObject.GetComponent<CardPlayer>().name == "Dippit")
         {
             this.gameObject.GetComponent<CardPlayer>().animator.Play("Dippit_attack");
+
+            if (this.gameObject.name == "CharacterCard (Left)")
+            {
+                this.transform.parent.localScale = new Vector3(4.63f, 4.63f, 4.63f);
+                this.transform.parent.position = new Vector3(this.transform.parent.position.x - (70 * GameManager.manager.widthRatio),
+                    this.transform.parent.position.y + (80 * GameManager.manager.heightRatio), 0);
+            }
+
+            if (this.gameObject.name == "CharacterCard (Right)")
+            {
+                this.transform.parent.localScale = new Vector3(1.57f, 1.57f, 1.57f);
+                this.transform.parent.position = new Vector3(this.transform.parent.position.x - (20 * GameManager.manager.widthRatio),
+                    this.transform.parent.position.y + (20 * GameManager.manager.heightRatio), 0);
+            }
+
             FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/Dippit_Attack");
             // FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Fingas_snap");
             // this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", 1.55f);
-            this.gameObject.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            this.GetComponent<CardPlayer>().Invoke("playIdle", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
+            this.GetComponent<CardPlayer>().Invoke("moveBirdBack", this.gameObject.GetComponent<CardPlayer>().animator.GetCurrentAnimatorStateInfo(0).length);
             // basic enemy that does 1-3 damage per turn
             damage = rng.Next(1, 4);
 
@@ -409,6 +425,8 @@ public class ComputerPlayer : CardPlayer
 
             // GameManager.manager.players[0].subHealth(damage);
             StartCoroutine(subHealth(damage));
+
+            
 
             GameManager.manager.Invoke("endTurn", 4f);
             return;

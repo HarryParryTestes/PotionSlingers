@@ -468,6 +468,7 @@ public class CardPlayer : MonoBehaviour
             case "Dippit":
                 Debug.Log("Dippit animation");
                 animator.Play("Dippit_Idle");
+                /*
                 if (this.gameObject.name == "CharacterCard (Right)")
                 {
                     this.transform.parent.localScale = new Vector3(1f, 1f, 1f);
@@ -478,9 +479,10 @@ public class CardPlayer : MonoBehaviour
                 if (this.gameObject.name == "CharacterCard (Left)")
                 {
                     this.transform.parent.localScale = new Vector3(1.2f, 1.2f, 1.2f);
-                    this.transform.parent.position = new Vector3(this.transform.parent.position.x + (80 * GameManager.manager.widthRatio),
+                    this.transform.parent.position = new Vector3(this.transform.parent.position.x + (70 * GameManager.manager.widthRatio),
                         this.transform.parent.position.y - (80 * GameManager.manager.heightRatio), 0);
                 }
+                */
                     
                 break;
 
@@ -582,14 +584,38 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Failed to set any bools");
                 break;
         }
-        if (charName == "Fingas" || charName == "Maskid" || charName == "Dippit")
+        if (charName == "Fingas" || charName == "Maskid")
         {
             Invoke("playIdle", 1.55f);
             return;
         }
 
+        if (charName == "Dippit")
+        {
+            Invoke("playIdle", 1.55f);
+            Invoke("moveBirdBack", 1.55f);
+            return;
+        }
+
         if (animator != null && !dead)
             Invoke("playIdle", animator.GetCurrentAnimatorStateInfo(0).length);
+    }
+
+    public void moveBirdBack()
+    {
+        if (this.gameObject.name == "CharacterCard (Right)")
+        {
+            this.transform.parent.localScale = new Vector3(1f, 1f, 1f);
+            this.transform.parent.position = new Vector3(this.transform.parent.position.x + (20 * GameManager.manager.widthRatio),
+                this.transform.parent.position.y - (20 * GameManager.manager.heightRatio), 0);
+        }
+
+        if (this.gameObject.name == "CharacterCard (Left)")
+        {
+            this.transform.parent.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+            this.transform.parent.position = new Vector3(this.transform.parent.position.x + (70 * GameManager.manager.widthRatio),
+                this.transform.parent.position.y - (80 * GameManager.manager.heightRatio), 0);
+        }
     }
 
     public void checkReetsCondition()

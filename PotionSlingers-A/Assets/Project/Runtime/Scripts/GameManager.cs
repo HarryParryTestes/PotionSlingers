@@ -6976,11 +6976,20 @@ public class GameManager : MonoBehaviour
 
     public void handleEmptySlotUI(CardDisplay cd)
     {
+        Debug.Log("handling empty slot UI!!!");
+
         if (cd.aPotion.artifactEmptySlot != null)
         {
             Debug.Log("artifactEmptySlot exists!");
             cd.aPotion.artifactEmptySlot.SetActive(false);
             Destroy(cd.aPotion.artifactEmptySlot);
+        }
+
+        if (cd.artifactEmptySlot != null)
+        {
+            Debug.Log("artifactEmptySlot not on loaded card exists!");
+            cd.artifactEmptySlot.SetActive(false);
+            Destroy(cd.artifactEmptySlot);
         }
 
         if (cd.vesselEmptySlot1 != null)
@@ -7622,12 +7631,23 @@ public class GameManager : MonoBehaviour
                     // Artifact slot is unloaded.
                     else
                     {
+                        
                         if (players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot != null)
                         {
                             Debug.Log("artifactEmptySlot exists!");
                             players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot.SetActive(false);
                             Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot);
                         }
+
+                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot != null)
+                        {
+                            Debug.Log("artifactEmptySlot not on loaded card exists!");
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot.SetActive(false);
+                            Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot);
+                        }
+
+                        handleEmptySlotUI(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion);
+                        handleEmptySlotUI(players[myPlayerIndex].holster.cardList[loadedCardInt]);
 
                         Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card = cd.card;
@@ -7765,6 +7785,21 @@ public class GameManager : MonoBehaviour
                     }
                     // Enable Artifact menu if it wasn't already enabled.
                     Debug.Log("Artifact menu enabled.");
+
+                    if (playerHolster.cardList[loadedCardInt].aPotion.artifactEmptySlot != null)
+                    {
+                        Debug.Log("artifactEmptySlot exists!");
+                        playerHolster.cardList[loadedCardInt].aPotion.artifactEmptySlot.SetActive(false);
+                        Destroy(playerHolster.cardList[loadedCardInt].aPotion.artifactEmptySlot);
+                    }
+
+                    if (playerHolster.cardList[loadedCardInt].artifactEmptySlot != null)
+                    {
+                        Debug.Log("artifactEmptySlot not on loaded card exists!");
+                        playerHolster.cardList[loadedCardInt].artifactEmptySlot.SetActive(false);
+                        Destroy(playerHolster.cardList[loadedCardInt].artifactEmptySlot);
+                    }
+
                     playerHolster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
                     playerHolster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
 
@@ -7850,6 +7885,16 @@ public class GameManager : MonoBehaviour
                         players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot.SetActive(false);
                         Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot);
                     }
+
+                    if (players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot != null)
+                    {
+                        Debug.Log("artifactEmptySlot exists!");
+                        players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot.SetActive(false);
+                        Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot);
+                    }
+
+                    // handleEmptySlotUI(players[myPlayerIndex].holster.cardList[loadedCardInt]);
+
                     players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);
                     players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.gameObject.SetActive(true);
                     players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.gameObject.SetActive(true);
@@ -8074,6 +8119,13 @@ public class GameManager : MonoBehaviour
                             Debug.Log("artifactEmptySlot exists!");
                             players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot.SetActive(false);
                             Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.artifactEmptySlot);
+                        }
+
+                        if (players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot != null)
+                        {
+                            Debug.Log("artifactEmptySlot not on loaded card exists!");
+                            players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot.SetActive(false);
+                            Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot);
                         }
 
                         players[myPlayerIndex].holster.cardList[loadedCardInt].artifactSlot.transform.parent.gameObject.SetActive(true);

@@ -11680,13 +11680,14 @@ GameObject:
   - component: {fileID: 364065177}
   - component: {fileID: 364065176}
   - component: {fileID: 364065175}
+  - component: {fileID: 364065179}
   m_Layer: 5
   m_Name: TUTORIAL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &364065174
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11706,7 +11707,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -95}
+  m_AnchoredPosition: {x: 0, y: -100}
   m_SizeDelta: {x: 420, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &364065175
@@ -11820,6 +11821,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 364065173}
   m_CullTransparentMesh: 1
+--- !u!225 &364065179
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364065173}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &368444041
 GameObject:
   m_ObjectHideFlags: 0
@@ -12406,13 +12419,14 @@ GameObject:
   - component: {fileID: 380438652}
   - component: {fileID: 380438651}
   - component: {fileID: 380438650}
+  - component: {fileID: 380438655}
   m_Layer: 5
   m_Name: MULTIPLAYER
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &380438649
 RectTransform:
   m_ObjectHideFlags: 0
@@ -12432,7 +12446,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 62}
+  m_AnchoredPosition: {x: 0, y: 50}
   m_SizeDelta: {x: 400, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &380438650
@@ -12558,6 +12572,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380438648}
   m_CullTransparentMesh: 1
+--- !u!225 &380438655
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 380438648}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &384174848
 GameObject:
   m_ObjectHideFlags: 0
@@ -47342,13 +47368,14 @@ GameObject:
   - component: {fileID: 1660192252}
   - component: {fileID: 1660192251}
   - component: {fileID: 1660192250}
+  - component: {fileID: 1660192255}
   m_Layer: 5
   m_Name: ENDLESS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1660192249
 RectTransform:
   m_ObjectHideFlags: 0
@@ -47518,6 +47545,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1660192248}
   m_CullTransparentMesh: 1
+--- !u!225 &1660192255
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660192248}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1670756677
 GameObject:
   m_ObjectHideFlags: 0
@@ -51993,13 +52032,14 @@ GameObject:
   - component: {fileID: 1885811152}
   - component: {fileID: 1885811151}
   - component: {fileID: 1885811150}
+  - component: {fileID: 1885811155}
   m_Layer: 5
   m_Name: PLAY VS CPU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1885811149
 RectTransform:
   m_ObjectHideFlags: 0
@@ -52145,6 +52185,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885811148}
   m_CullTransparentMesh: 1
+--- !u!225 &1885811155
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885811148}
+  m_Enabled: 1
+  m_Alpha: 0.5
+  m_Interactable: 0
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1892665099
 GameObject:
   m_ObjectHideFlags: 0

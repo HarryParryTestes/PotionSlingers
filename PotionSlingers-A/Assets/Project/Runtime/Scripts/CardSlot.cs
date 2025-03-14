@@ -30,6 +30,13 @@ public class CardSlot : MonoBehaviour, IDropHandler
             Destroy(cd.aPotion.artifactEmptySlot);
         }
 
+        if (cd.artifactEmptySlot != null)
+        {
+            Debug.Log("artifactEmptySlot exists!");
+            cd.artifactEmptySlot.SetActive(false);
+            Destroy(cd.artifactEmptySlot);
+        }
+
         if (cd.vesselEmptySlot1 != null)
         {
             Debug.Log("vesselEmptySlot exists!");
