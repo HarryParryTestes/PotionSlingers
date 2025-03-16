@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour
     public GameObject throwingHand;
     public GameObject potionThrowingHand1;
     public GameObject potionThrowingHand2;
+    public GameObject artifactHand1;
+    public GameObject artifactHand2;
     public GameObject potion1;
     public GameObject potion2;
     public GameObject damageSplat;
@@ -5737,6 +5739,24 @@ public class GameManager : MonoBehaviour
         damageSplat.SetActive(false);
     }
 
+    IEnumerator doArtifactDamage(int damage, string cardQuality = "")
+    {
+        CardPlayer cp = tempPlayer;
+
+        yield return new WaitForSeconds(0.6f);
+        if (Game.tutorial)
+        {
+            cp.subHealth(damage, cardQuality);
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+            StartCoroutine(waitThreeSeconds(dialog));
+        }
+        else
+        {
+            cp.subHealth(damage, cardQuality);
+            // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
+        }
+    }
+
     IEnumerator doDamage(int damage, string cardQuality = "")
     {
         CardPlayer cp = tempPlayer;
@@ -5761,6 +5781,82 @@ public class GameManager : MonoBehaviour
         CardPlayer cp = tempPlayer;
 
         potion.transform.DOJump(new Vector2(cp.transform.position.x, cp.transform.position.y), 400f, 1, 1f, false);
+    }
+
+    IEnumerator artifactAnimation(int damage)
+    {
+        CardPlayer cp = tempPlayer;
+
+        if(numPlayers == 2)
+        {
+            int random = rng.Next(0, 2);
+            // right hand
+            if(random == 0)
+            {
+                artifactHand1.transform.position = new Vector3(cp.transform.position.x + (225 * widthRatio),
+                artifactHand1.transform.position.y, 0);
+                artifactHand1.SetActive(true);
+                yield return new WaitForSeconds(1.1f);
+                artifactHand1.SetActive(false);
+            }
+
+            if (random == 1)
+            {
+                artifactHand2.transform.position = new Vector3(cp.transform.position.x - (225 * widthRatio),
+                artifactHand2.transform.position.y, 0);
+                artifactHand2.SetActive(true);
+                yield return new WaitForSeconds(1.1f);
+                artifactHand2.SetActive(false);
+            }
+            yield break;
+        }
+
+        if (numPlayers == 3)
+        {
+            // right hand
+            if (cp.user_id == 2)
+            {
+                artifactHand1.transform.position = new Vector3(cp.transform.position.x + (225 * widthRatio),
+                artifactHand1.transform.position.y, 0);
+                artifactHand1.SetActive(true);
+                yield return new WaitForSeconds(1.1f);
+                artifactHand1.SetActive(false);
+            }
+            // left hand
+            if (cp.user_id == 1)
+            {
+                artifactHand2.transform.position = new Vector3(cp.transform.position.x - (225 * widthRatio),
+                artifactHand2.transform.position.y, 0);
+                artifactHand2.SetActive(true);
+                yield return new WaitForSeconds(1.1f);
+                artifactHand2.SetActive(false);
+            }
+            yield break;
+        }
+
+        if (numPlayers == 4)
+        {
+            // right hand
+            if (cp.user_id == 2 ||
+                cp.user_id == 3)
+            {
+                artifactHand1.transform.position = new Vector3(cp.transform.position.x + (225 * widthRatio),
+                artifactHand1.transform.position.y, 0);
+                artifactHand1.SetActive(true);
+                yield return new WaitForSeconds(1.1f);
+                artifactHand1.SetActive(false);
+            }
+            // left hand
+            if (cp.user_id == 1)
+            {
+                artifactHand2.transform.position = new Vector3(cp.transform.position.x - (225 * widthRatio),
+                artifactHand2.transform.position.y, 0);
+                artifactHand2.SetActive(true);
+                yield return new WaitForSeconds(1.1f);
+                artifactHand2.SetActive(false);
+            }
+            yield break;
+        }
     }
 
     IEnumerator waitThreeSecondsPotionThrow(int damage, string cardQuality)
@@ -5816,7 +5912,7 @@ public class GameManager : MonoBehaviour
             potion2.transform.localScale = new Vector3(-0.687f, 0.513f, 0.436f);
             potion2.transform.position = potionThrowingHand2.transform.position;
             potion2.transform.DOJump(new Vector2(cp.transform.position.x, cp.transform.position.y), 400f, 1, 1f, false);
-            potion2.transform.DOScale(new Vector3(-0.15f, 0.15f, 0.15f), 1f);
+            potion2.transform.DOScale(new Vector3(-0.2f, 0.2f, 0.2f), 1f);
             yield return new WaitForSeconds(0.2f);
             potionThrowingHand2.SetActive(false);
             yield return new WaitForSeconds(0.8f);
@@ -5869,7 +5965,7 @@ public class GameManager : MonoBehaviour
             potion1.transform.localScale = new Vector3(0.504f, 0.376f, 0.32f);
             potion1.transform.position = potionThrowingHand1.transform.position;
             potion1.transform.DOJump(new Vector2(cp.transform.position.x, cp.transform.position.y), 400f, 1, 1f, false);
-            potion1.transform.DOScale(new Vector3(0.15f, 0.15f, 0.15f), 1f);
+            potion1.transform.DOScale(new Vector3(0.2f, 0.2f, 0.2f), 1f);
             yield return new WaitForSeconds(0.2f);
             potionThrowingHand1.SetActive(false);
             yield return new WaitForSeconds(0.8f);
@@ -6365,13 +6461,15 @@ public class GameManager : MonoBehaviour
                     }
 
                     // MATTEO: taking this out for now, may want to add back in
-                    FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
+                    
                     if (myPlayerIndex == 0)
                     {
-                        StopCoroutine("waitThreeSecondsHand");
-                        throwingHand.SetActive(false);
-                        StartCoroutine(waitThreeSecondsHand(damage));
-                        StartCoroutine(doDamage(damage));
+                        // add new artifact animation here!
+                        // StopCoroutine("waitThreeSecondsHand");
+                        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
+                        artifactHand1.SetActive(false);
+                        StartCoroutine(artifactAnimation(damage));
+                        StartCoroutine(doArtifactDamage(damage));
                     }
                     else
                         tempPlayer.subHealth(damage, cardQuality);
