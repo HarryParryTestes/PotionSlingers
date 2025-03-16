@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -860, y: -100}
+  m_AnchoredPosition: {x: -860, y: -173}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4852622
@@ -2328,6 +2328,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 83529398}
     m_Modifications:
+    - target: {fileID: 1281827951710231074, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7701.002
+      objectReference: {fileID: 0}
+    - target: {fileID: 2114797935012753128, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.0997849
+      objectReference: {fileID: 0}
+    - target: {fileID: 2122152410703883014, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 5005
+      objectReference: {fileID: 0}
+    - target: {fileID: 3243267424127231428, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 5005
+      objectReference: {fileID: 0}
     - target: {fileID: 3758030997728110612, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
       propertyPath: m_SizeDelta.x
       value: 1570.9213
@@ -2451,6 +2467,30 @@ PrefabInstance:
     - target: {fileID: 5706894510950557980, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
       propertyPath: m_ConstrainProportionsScale
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708440368705878415, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5141177
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708440368705878415, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708440368705878415, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5754717
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708440368705878416, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708440368705878416, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -1313.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6720988353919550871, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -7701
       objectReference: {fileID: 0}
     - target: {fileID: 9040547263571684228, guid: e55a7397142849b4ab3eef3adf6861f8, type: 3}
       propertyPath: m_Name
@@ -5909,7 +5949,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: 50}
+  m_AnchoredPosition: {x: -500, y: -132}
   m_SizeDelta: {x: 5555.1533, y: 3000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &176061070
@@ -15105,7 +15145,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -140.00002, y: -100}
+  m_AnchoredPosition: {x: -140.00002, y: -173.00002}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &473429735
@@ -54644,24 +54684,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_text
-      value: 'Bolo is an adept salesman. He will always be able to upsell his items,
-        and can even trade useless baubles for powerful treasure!
-
-
-        Front:
-
-        You
-        gain +1P when you sell a non-potion card.
-
-
-        Back:
-
-        All cards
-        in your Holster sell for +1P.'
+      value: "\tBolo is an adept salesman. He will always be able to upsell his items,
+        and can even trade useless baubles for powerful treasure!\n\nFront:\nYou
+        gain +1P when you sell a non-potion card.\n\nBack:\nAll cards in your Holster
+        sell for +1P."
       objectReference: {fileID: 0}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_fontSize
-      value: 21.99
+      value: 26.22
       objectReference: {fileID: 0}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_margin.w
@@ -54682,7 +54712,11 @@ PrefabInstance:
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: cac496df2b966644aa0013ac461a993c, type: 2}
+      objectReference: {fileID: 11400000, guid: 9c4800bcd09a3c74cb750cd930090940, type: 2}
+    - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_fontSizeMax
       value: 72
@@ -54693,7 +54727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_fontSizeBase
-      value: 21.99
+      value: 26.22
       objectReference: {fileID: 0}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_RaycastTarget
@@ -54702,7 +54736,7 @@ PrefabInstance:
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 8557940270208330022, guid: cac496df2b966644aa0013ac461a993c, type: 2}
+      objectReference: {fileID: 2807456263583307541, guid: 9c4800bcd09a3c74cb750cd930090940, type: 2}
     - target: {fileID: 8738816384488840853, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_enableAutoSizing
       value: 0
@@ -54818,6 +54852,18 @@ PrefabInstance:
     - target: {fileID: 8900744996441804119, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903421291220753860, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6132076
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903421291220753860, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
+      propertyPath: m_Color.g
+      value: 0.6132076
+      objectReference: {fileID: 0}
+    - target: {fileID: 8903421291220753860, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
+      propertyPath: m_Color.r
+      value: 0.6132076
       objectReference: {fileID: 0}
     - target: {fileID: 8903421291220753860, guid: fed00bff0ec16894b8069e852e940e18, type: 3}
       propertyPath: m_Enabled

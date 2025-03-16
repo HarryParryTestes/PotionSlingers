@@ -123,6 +123,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &-8186024211398094571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/BGM_Chicken
+  m_EditorClassIdentifier: 
+  Path: event:/Music/BGM_Chicken
+  guid: ed935d63e7b4b04ba5a518e8e97c7a74
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 66461
 --- !u!114 &-7892719842436852755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +361,46 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-5744046020608570503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Gameplay/MusicSelect
+  m_EditorClassIdentifier: 
+  Name: MusicSelect
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
+--- !u!114 &-5675018868036288029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BGM_StoryMode/StoryMusicSelect
+  m_EditorClassIdentifier: 
+  Name: StoryMusicSelect
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &-5573548732444420920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -487,7 +550,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -4239356600299025644}
+  - {fileID: 8567098888383319508}
   MinDistance: 0
   MaxDistance: 0
   Length: 86454
@@ -566,11 +629,11 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638776698546557688
+  lastModified: 638776820173066889
   LoadResult: 0
   FileSizes:
   - Name: 
-    Value: 2492
+    Value: 2612
   Exists: 1
 --- !u!114 &-3972685713885462727
 MonoBehaviour:
@@ -787,6 +850,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 1
+--- !u!114 &-2923324451937640950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/BGM_Sitary
+  m_EditorClassIdentifier: 
+  Path: event:/Music/BGM_Sitary
+  guid: ad3a40adbaa8b2439d5693f5735bab34
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 52363
 --- !u!114 &-2331501480181884093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1108,12 +1194,15 @@ MonoBehaviour:
   - {fileID: -3591952263388247855}
   - {fileID: 5460202302076344649}
   - {fileID: -3972685713885462727}
+  - {fileID: 2982781835036792800}
+  - {fileID: -2923324451937640950}
+  - {fileID: -8186024211398094571}
   EditorParameters: []
   MasterBanks:
   - {fileID: 7030555741822606184}
   StringsBanks:
   - {fileID: -4054006693100217806}
-  stringsBankWriteTime: 638776698546557688
+  stringsBankWriteTime: 638776820173066889
   cacheVersion: 6
 --- !u!114 &57260157274554455
 MonoBehaviour:
@@ -1450,6 +1539,29 @@ MonoBehaviour:
     data1: 0
     data2: 0
   Exists: 0
+--- !u!114 &2982781835036792800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Music/BGM_DesertWandering
+  m_EditorClassIdentifier: 
+  Path: event:/Music/BGM_DesertWandering
+  guid: 57050d69053f1f4e9aba7dffa3375ed2
+  Banks:
+  - {fileID: 7030555741822606184}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 0
+  MaxDistance: 0
+  Length: 60813
 --- !u!114 &3091188132159045750
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1473,6 +1585,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 76591
+--- !u!114 &3196204181202957695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Gameplay/MusicSelect
+  m_EditorClassIdentifier: 
+  Name: MusicSelect
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &3229300192963969757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1584,7 +1716,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 0
   MaxDistance: 0
-  Length: 980
+  Length: 1111
 --- !u!114 &4317635769065773515
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1651,10 +1783,10 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -651123530778612294}
+  - {fileID: -5744046020608570503}
   MinDistance: 0
   MaxDistance: 0
-  Length: 303904
+  Length: 303889
 --- !u!114 &4855233979835646208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1855,6 +1987,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1900
+--- !u!114 &6208410854051686833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BGM_StoryMode/StoryMusicSelect
+  m_EditorClassIdentifier: 
+  Name: StoryMusicSelect
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &6808336060049668539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1913,7 +2065,7 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638776698546512703
+  lastModified: 638776820173047047
   LoadResult: 0
   FileSizes: []
   Exists: 1
@@ -1986,6 +2138,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 756
+--- !u!114 &7630811120796465536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Gameplay/MusicSelect
+  m_EditorClassIdentifier: 
+  Name: MusicSelect
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 0
 --- !u!114 &7847163421174041527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2138,6 +2310,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 290
+--- !u!114 &8567098888383319508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BGM_StoryMode/StoryMusicSelect
+  m_EditorClassIdentifier: 
+  Name: StoryMusicSelect
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &8765636527844749678
 MonoBehaviour:
   m_ObjectHideFlags: 0
