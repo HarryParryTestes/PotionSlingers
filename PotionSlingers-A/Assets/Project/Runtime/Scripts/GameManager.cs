@@ -126,6 +126,8 @@ public class GameManager : MonoBehaviour
     public ExpUI expUI;
     public GameObject buyMask;
 
+    public GameObject BossMusicTrigger;
+
     public TMPro.TextMeshProUGUI trashText;
 
     public Holster playerHolster;
@@ -1814,6 +1816,7 @@ public class GameManager : MonoBehaviour
             case "Singelotte":
                 background.sprite = backgrounds[1];
                 setDuelCharacter("Singelotte", 33);
+                BossMusicTrigger.SetActive(true);
                 break;
             case "Bag o' Snakes":
                 background.sprite = backgrounds[3];

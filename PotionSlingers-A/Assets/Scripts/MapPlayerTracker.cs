@@ -17,6 +17,7 @@ namespace Map
         public MapView view;
         public static System.Random rng = new System.Random();
         public static MapPlayerTracker Instance;
+        
 
         public bool Locked { get; set; }
 
