@@ -6089,7 +6089,7 @@ public class GameManager : MonoBehaviour
 
                         StartCoroutine(MoveToTrash(obj2));
                         td.addCard(playerHolster.cardList[selectedCardInt - 1].card);
-                        playerHolster.cardList[selectedCardInt - 1].updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);
+                        playerHolster.cardList[selectedCardInt - 1].updateCard(playerHolster.cardList[selectedCardInt - 1].placeholder);                       
                     }
                     // playerHolster.cardList[selectedCardInt - 1].artifactSlot.transform.parent.gameObject.SetActive(false);
 
@@ -6442,6 +6442,7 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Durability is now " + players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability);
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].durability <= 0)
                     {
+                        handleEmptySlotUI(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
 
                         if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].aPotion.artifactEmptySlot != null)
                         {

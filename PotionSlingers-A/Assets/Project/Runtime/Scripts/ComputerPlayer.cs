@@ -367,6 +367,9 @@ public class ComputerPlayer : CardPlayer
 
                 GameManager.manager.StartCoroutine(MoveToTrash(obj));
 
+                GameManager.manager.handleEmptySlotUI(GameManager.manager.players
+                    [GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1]);
+
                 GameManager.manager.td.addCard(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt]);
 
                 // GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt - 1].updateCard

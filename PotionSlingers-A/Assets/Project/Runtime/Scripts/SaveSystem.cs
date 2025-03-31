@@ -134,6 +134,7 @@ public class SaveSystem : MonoBehaviour
         SaveData data = new SaveData();
         // data.playerCharName = Game.storyModeCharName;
         data.playerCharName = "";
+        data.currentEnemyName = "";
         data.stage = 1;
         data.savedGame = false;
         data.selectedStage = false;
@@ -185,6 +186,14 @@ public class SaveSystem : MonoBehaviour
             stream2.Close();
         */
 
+    }
+
+    public static void clearGame()
+    {
+        // set save settings to empty string and save it
+        PlayerPrefs.SetString("SaveSettings", "");
+        PlayerPrefs.Save();
+        Debug.Log("Game cleared");
     }
 
     public static void checkGameDataWithManager()

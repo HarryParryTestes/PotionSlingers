@@ -601,6 +601,12 @@ public class MainMenu : MonoBehaviour
         //networkManager.ServerChangeScene("TownCenter");
     }
 
+	public void setNewGame()
+	{
+        SaveSystem.setNewGame();
+		Debug.Log("New game set");
+    }
+
 	public void StartStoryMode()
 	{
 		// endless mode check cause i'm lazy
@@ -620,7 +626,10 @@ public class MainMenu : MonoBehaviour
 		networkManager.multiplayer = false;
 		networkManager.quickplay = false;
 		networkManager.storyMode = true;
-		SaveSystem.setNewGame();
+        networkManager.endless = false;
+		SaveSystem.clearGame();
+		Invoke("setNewGame", 0.1f);
+        // SaveSystem.setNewGame();
         // SaveSystem.instance.savedGame = false;
 
         StartCoroutine(networkManager.LoadStory());

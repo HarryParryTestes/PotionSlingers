@@ -55,7 +55,7 @@ public class SaveData
     public bool savedGame;
     public bool newStage;
     public bool selectedStage;
-    public string currentEnemyName;
+    public string currentEnemyName = "Dippit";
     public string slingerName;
     public List<string> visitedEnemies = new List<string>();
     // public List<string> oppDeck = new List<string>();
@@ -87,42 +87,7 @@ public class SaveData
     {
         stage = manager.stage;
 
-        // playerName = manager.players[0].name;
         playerCharName = manager.players[0].charName;
-        // oppName = manager.players[1].name;
-        // oppCharName = manager.players[1].charName;
-        // playerHealth = manager.players[0].hp;
-        // playerCubes = manager.players[0].hpCubes;
-
-        /*
-        foreach(Card card in manager.players[0].deck.deckList)
-        {
-            playerDeck.Add(card.cardName);
-        }
-
-        foreach (CardDisplay cd in manager.players[0].holster.cardList)
-        {
-            playerHolster.Add(cd.card.cardName);
-        }
-
-        // playerDeck = manager.players[0].deck.deckList;
-        // playerHolster = manager.players[0].holster.cardList;
-        
-        oppHealth = manager.players[1].hp;
-        oppCubes = manager.players[1].hpCubes;
-        foreach (Card card in manager.players[1].deck.deckList)
-        {
-            oppDeck.Add(card.cardName);
-        }
-
-        foreach (CardDisplay cd in manager.players[1].holster.cardList)
-        {
-            oppHolster.Add(cd.card.cardName);
-        }
-
-        */
-        // oppDeck = manager.players[2].deck.deckList;
-        // oppHolster = manager.players[2].holster.cardList;
     }
 
     
