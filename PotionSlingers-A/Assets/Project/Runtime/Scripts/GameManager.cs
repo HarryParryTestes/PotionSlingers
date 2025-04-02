@@ -312,6 +312,7 @@ public class GameManager : MonoBehaviour
                 pauseUI.transform.GetChild(0).Find("GRAPHICS").gameObject.SetActive(true);
                 pauseUI.transform.GetChild(0).Find("DEBUG").gameObject.SetActive(true);
                 pauseUI.transform.GetChild(0).Find("MAIN MENU").gameObject.SetActive(true);
+                pauseUI.transform.GetChild(0).Find("QUIT GAME").gameObject.SetActive(true);
                 pauseUI.transform.GetChild(0).Find("Card Menu").gameObject.SetActive(false);
                 pauseUI.SetActive(false);
             }
@@ -321,6 +322,46 @@ public class GameManager : MonoBehaviour
         widthRatio = Screen.width / 1920f;
         heightRatio = Screen.height / 1080f;
 
+    }
+
+    public void QuitOut()
+    {
+        Debug.Log("Quitting out!!!");
+        Game.tutorial = false;
+
+        if (Game.storyMode && saveData != null)
+        {
+            saveData.savedGame = true;
+            saveData.newStage = false;
+            saveData.selectedStage = true;
+            // I think I should take this out for now, I might put this back in
+            // saveEnemyHealth();
+            // take this out here, saving gamestate info will occur at the end of each turn
+            // saveGameManagerValues();
+
+            // make sure to initialize values to be saved if you haven't ended the first turn
+            if (!saveData.potionDeck.Any())
+            {
+                Debug.Log("First turn, save stuff!");
+                saveGameStuff();
+            }
+
+            SaveSystem.SaveGameData(saveData);
+            Debug.Log("Game data saved");
+            Invoke("Quit", 0.3f);
+            return;
+        }
+
+        SteamMatchmaking.LeaveLobby((CSteamID)Game.steamLobby.current_lobbyID);
+        Game.StopHost();
+        Invoke("Quit", 0.3f);
+
+    }
+
+    void Quit()
+    {
+        Application.Quit();
+        // GetComponent<MainMenu>().QuitGame();
     }
 
     public IEnumerator cardDisappear()
