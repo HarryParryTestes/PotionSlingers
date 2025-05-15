@@ -18,6 +18,18 @@ public class PauseMenu : MonoBehaviour
         SceneManager.LoadScene("TitleMenu");
     }
 
+    public void handlePauseMenu()
+    {
+        if (menu.activeInHierarchy == false)
+        {
+            menu.SetActive(true);
+        }
+        else
+        {
+            menu.SetActive(false);
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
