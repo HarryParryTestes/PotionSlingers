@@ -3937,11 +3937,17 @@ public class CardPlayer : MonoBehaviour
 
         if (healSign != null && healAmount != null)
         {
+            healAmount.GetComponent<TMPro.TextMeshProUGUI>().text = "+" + health.ToString();
+            GameObject healthAmountCopy = Instantiate(healAmount, healAmount.transform.position, healAmount.transform.rotation, healAmount.transform.parent);
+            healthAmountCopy.SetActive(true);
+            StartCoroutine(healthAnimation(healthAmountCopy));
+            /*
             healAmount.GetComponent<TMPro.TextMeshProUGUI>().text = health.ToString();
             healSign.SetActive(true);
             healAmount.SetActive(true);
             StartCoroutine(waitThreeSeconds(healSign));
             StartCoroutine(waitThreeSeconds(healAmount));
+            */
         }
 
         updateHealthUI();

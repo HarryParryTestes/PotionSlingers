@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 [System.Serializable]
-public class HealthController : MonoBehaviour
+public class HealthController : MonoBehaviour, IDropHandler
 {
+    public CardPlayer player;
     public int hp;
     public int essenceCubes;
     public int takenEssenceCubes;    //HP Cubes that have been taken from opponents
@@ -22,6 +25,28 @@ public class HealthController : MonoBehaviour
         }
 
         // healthText.text = hp.ToString();
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        Debug.Log("Drop happened");
+        GameObject heldCard = eventData.pointerDrag;
+        DragCard dc = heldCard.GetComponent<DragCard>();
+        // grabbing the card held by the cursor
+        CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
+        player.addHealth(grabbedCard.card.effectAmount);
+        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
+        GameObject obj = Instantiate(grabbedCard.gameObject,
+                        grabbedCard.gameObject.transform.position,
+                        grabbedCard.gameObject.transform.rotation,
+                        grabbedCard.gameObject.transform);
+
+        GameManager.manager.StartCoroutine(GameManager.manager.MoveToTrash(obj));
+        GameManager.manager.td.addCard(grabbedCard);
+        GameManager.manager.sendMessage("You healed with a potion!");
+        grabbedCard.updatePlaceholder(grabbedCard);
+       
     }
 
     public void subHealth(int health) {

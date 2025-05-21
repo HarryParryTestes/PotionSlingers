@@ -166,7 +166,8 @@ public class TreasureMenu : MonoBehaviour
         this.gameObject.SetActive(false);
         currencyHoverBox.SetActive(true);
         healthHoverBox.SetActive(true);
-        deck.SetActive(true);
-        holster.SetActive(true);
+        // ADD THIS BACK IN WHEN YOU WANT TO SHOW THE UI AGAIN!
+        // deck.SetActive(true);
+        // holster.SetActive(true);
     }
 }
