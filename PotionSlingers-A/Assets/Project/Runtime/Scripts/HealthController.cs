@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 
 [System.Serializable]
-public class HealthController : MonoBehaviour, IDropHandler
+public class HealthController : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public CardPlayer player;
     public int hp;
@@ -32,21 +32,46 @@ public class HealthController : MonoBehaviour, IDropHandler
         Debug.Log("Drop happened");
         GameObject heldCard = eventData.pointerDrag;
         DragCard dc = heldCard.GetComponent<DragCard>();
+        if (dc.loaded || dc.market)
+            return;
+
         // grabbing the card held by the cursor
         CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
-        player.addHealth(grabbedCard.card.effectAmount);
-        FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+        if(grabbedCard.card.cardType == "Potion")
+        {
+            player.addHealth(grabbedCard.card.effectAmount);
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
-        GameObject obj = Instantiate(grabbedCard.gameObject,
-                        grabbedCard.gameObject.transform.position,
-                        grabbedCard.gameObject.transform.rotation,
-                        grabbedCard.gameObject.transform);
+            GameObject obj = Instantiate(grabbedCard.gameObject,
+                            grabbedCard.gameObject.transform.position,
+                            grabbedCard.gameObject.transform.rotation,
+                            grabbedCard.gameObject.transform);
 
-        GameManager.manager.StartCoroutine(GameManager.manager.MoveToTrash(obj));
-        GameManager.manager.td.addCard(grabbedCard);
-        GameManager.manager.sendMessage("You healed with a potion!");
-        grabbedCard.updatePlaceholder(grabbedCard);
-       
+            GameManager.manager.StartCoroutine(GameManager.manager.MoveToTrash(obj));
+            GameManager.manager.td.addCard(grabbedCard);
+            GameManager.manager.sendMessage("You healed with a potion!");
+            grabbedCard.updatePlaceholder(grabbedCard);
+        }     
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        transform.DOScale(1f, 0.25f).SetId(gameObject.name);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        GameObject heldCard = eventData.pointerDrag;
+        if(heldCard != null)
+        {
+            DragCard dc = heldCard.GetComponent<DragCard>();
+            if (dc.loaded || dc.market)
+                return;
+            // grabbing the card held by the cursor
+            CardDisplay grabbedCard = heldCard.GetComponent<CardDisplay>();
+            if (grabbedCard.card.cardType == "Potion")
+                transform.DOScale(1.25f, 0.25f).SetId(gameObject.name);
+        }
+        
     }
 
     public void subHealth(int health) {
