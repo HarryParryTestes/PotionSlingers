@@ -21,6 +21,7 @@ public class CardPlayer : MonoBehaviour
     public int pipCount = 6;
     public int pipsUsedThisTurn = 0;
     public int shields = 0;
+    public int ability = 0;
     public bool dead;           //Does the player still have health left?
     public int potionsThrown = 0;
     public int vesselsThrown = 0;
@@ -3923,6 +3924,17 @@ public class CardPlayer : MonoBehaviour
         updateHealthUI();
     }
 
+    public void addAbility(int amount)
+    {
+        ability += amount;
+        if (ability >= 10)
+            ability = 10;
+
+        Debug.Log("Ability amount is now " + ability);
+        // add in UI functionality with an ability bar later
+
+    }
+
     // WHEN YOU IMPLEMENT HATS THAT CHANGE HOW THINGS HEAL, DO IT HERE!!!
     public void addHealth(int health)
     {
@@ -4010,6 +4022,9 @@ public class CardPlayer : MonoBehaviour
             Debug.Log("Shields are now " + shields);
             Debug.Log("Remaining damage to be dealt is " + damage);
         }
+
+        // add to the ability whenever you're damaged
+        addAbility(damage);
 
         /*
          * call a function instead of this

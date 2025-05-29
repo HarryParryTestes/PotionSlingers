@@ -6435,6 +6435,7 @@ public class GameManager : MonoBehaviour
                 {
                     StartCoroutine(waitThreeSecondsPotionThrow(damage, cardQuality));
                     StartCoroutine(doDamagePotionThrow(damage, cardQuality));
+                    players[myPlayerIndex].addAbility(damage);
 
                     /*
                     StopCoroutine("waitThreeSecondsHand");
@@ -6444,7 +6445,11 @@ public class GameManager : MonoBehaviour
                     */
                 }
                 else
+                {
                     tempPlayer.subHealth(damage, cardQuality);
+                    players[myPlayerIndex].addAbility(damage);
+                }
+
                 /*
                 tempPlayer.subHealth(damage, cardQuality);
                 FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
@@ -6537,9 +6542,14 @@ public class GameManager : MonoBehaviour
                         artifactHand1.SetActive(false);
                         StartCoroutine(artifactAnimation(damage));
                         StartCoroutine(doArtifactDamage(damage));
+                        players[myPlayerIndex].addAbility(damage);
                     }
                     else
+                    {
                         tempPlayer.subHealth(damage, cardQuality);
+                        players[myPlayerIndex].addAbility(damage);
+                    }
+                        
                     // tempPlayer.subHealth(damage, cardQuality);
 
                     // ISADORE LOGIC
@@ -6751,9 +6761,14 @@ public class GameManager : MonoBehaviour
                         throwingHand.SetActive(false);
                         StartCoroutine(waitThreeSecondsHand(damage));
                         StartCoroutine(doDamage(damage));
+                        players[myPlayerIndex].addAbility(damage);
                     }
                     else
+                    {
                         tempPlayer.subHealth(damage, cardQuality);
+                        players[myPlayerIndex].addAbility(damage);
+                    }
+                        
                     // MATTEO: taking this out for now, may want to add back in
                     // FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowPotion");
                     sendSuccessMessage(4);
