@@ -5853,7 +5853,7 @@ RectTransform:
   - {fileID: 1737492489}
   - {fileID: 13715384}
   m_Father: {fileID: 1899439223}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
@@ -37508,7 +37508,7 @@ RectTransform:
   - {fileID: 2112033206}
   - {fileID: 2108213118}
   m_Father: {fileID: 1899439223}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -123202,6 +123202,82 @@ RectTransform:
   m_AnchoredPosition: {x: 119.99997, y: -32.70999}
   m_SizeDelta: {x: 450, y: 157.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1105181321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1105181322}
+  - component: {fileID: 1105181324}
+  - component: {fileID: 1105181323}
+  m_Layer: 0
+  m_Name: AbilityBar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1105181322
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105181321}
+  m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1899439223}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -591, y: 207.1}
+  m_SizeDelta: {x: 291, y: 938}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1105181323
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105181321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 192d9fbad93687448aacfe16a0a40be9, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 1
+  m_FillAmount: 0
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1105181324
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1105181321}
+  m_CullTransparentMesh: 1
 --- !u!1 &1105329892
 GameObject:
   m_ObjectHideFlags: 0
@@ -128761,7 +128837,7 @@ RectTransform:
   - {fileID: 1246341450}
   - {fileID: 697737729}
   m_Father: {fileID: 1899439223}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
@@ -175251,6 +175327,7 @@ MonoBehaviour:
   pipCount: 0
   pipsUsedThisTurn: 0
   shields: 0
+  ability: 0
   dead: 0
   potionsThrown: 0
   vesselsThrown: 0
@@ -175283,6 +175360,7 @@ MonoBehaviour:
   healSign: {fileID: 514978359}
   healAmount: {fileID: 1859431382}
   hpBar: {fileID: 222567432}
+  abilityBar: {fileID: 0}
   shieldBar: {fileID: 0}
   shieldCount: {fileID: 0}
   pipsSign: {fileID: 0}
@@ -183833,6 +183911,7 @@ MonoBehaviour:
   pipCount: 0
   pipsUsedThisTurn: 0
   shields: 0
+  ability: 0
   dead: 0
   potionsThrown: 0
   vesselsThrown: 0
@@ -183865,6 +183944,7 @@ MonoBehaviour:
   healSign: {fileID: 164053555}
   healAmount: {fileID: 48977211}
   hpBar: {fileID: 1007990585}
+  abilityBar: {fileID: 0}
   shieldBar: {fileID: 0}
   shieldCount: {fileID: 0}
   pipsSign: {fileID: 0}
@@ -206349,6 +206429,7 @@ RectTransform:
   m_Children:
   - {fileID: 1307137418}
   - {fileID: 1316039901}
+  - {fileID: 1105181322}
   - {fileID: 5882537788788070700}
   - {fileID: 1157592093}
   - {fileID: 276182457}
@@ -242465,6 +242546,7 @@ MonoBehaviour:
   pipCount: 0
   pipsUsedThisTurn: 0
   shields: 0
+  ability: 0
   dead: 0
   potionsThrown: 0
   vesselsThrown: 0
@@ -242497,6 +242579,7 @@ MonoBehaviour:
   healSign: {fileID: 301505643}
   healAmount: {fileID: 1737492488}
   hpBar: {fileID: 981219336}
+  abilityBar: {fileID: 1105181321}
   shieldBar: {fileID: 616662362}
   shieldCount: {fileID: 13715383}
   pipsSign: {fileID: 550996049}
@@ -245106,7 +245189,7 @@ RectTransform:
   m_Children:
   - {fileID: 422031815}
   m_Father: {fileID: 1899439223}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

@@ -55,6 +55,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject healSign;
     public GameObject healAmount;
     public GameObject hpBar;
+    public GameObject abilityBar;
     public GameObject shieldBar;
     public GameObject shieldCount;
     public GameObject pipsSign;
@@ -3931,8 +3932,10 @@ public class CardPlayer : MonoBehaviour
             ability = 10;
 
         Debug.Log("Ability amount is now " + ability);
+        float numbers = (float)ability / 10f;
         // add in UI functionality with an ability bar later
-
+        if (abilityBar != null)
+            abilityBar.GetComponent<Image>().fillAmount = numbers;
     }
 
     // WHEN YOU IMPLEMENT HATS THAT CHANGE HOW THINGS HEAL, DO IT HERE!!!
