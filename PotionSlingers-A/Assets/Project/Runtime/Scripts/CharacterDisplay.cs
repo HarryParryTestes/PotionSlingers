@@ -104,8 +104,10 @@ public class CharacterDisplay : MonoBehaviour, IPointerDownHandler, IPointerEnte
         }
 
         Debug.Log("Send CharReq");
+        Debug.Log("Character is " + character);
         foreach (Character character2 in MainMenu.menu.characters)
         {
+            Debug.Log(character2.cardName);
             if (character2.cardName == character)
             {
                 Debug.Log(character + " chosen");

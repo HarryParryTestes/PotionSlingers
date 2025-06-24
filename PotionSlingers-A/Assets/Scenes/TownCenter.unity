@@ -49522,7 +49522,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &374533604
 RectTransform:
   m_ObjectHideFlags: 0
@@ -63000,7 +63000,7 @@ RectTransform:
   - {fileID: 15678927}
   - {fileID: 373611267}
   m_Father: {fileID: 2094841792}
-  m_RootOrder: 64
+  m_RootOrder: 63
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -64055,7 +64055,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &508894774
 RectTransform:
   m_ObjectHideFlags: 0
@@ -73547,7 +73547,7 @@ RectTransform:
   - {fileID: 929881728}
   - {fileID: 398386466}
   m_Father: {fileID: 2094841792}
-  m_RootOrder: 33
+  m_RootOrder: 32
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -92367,11 +92367,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 65d1177565866a34788da4035ff3b0d9, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
+  m_FillMethod: 3
+  m_FillAmount: 0
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
@@ -122176,7 +122176,7 @@ RectTransform:
   - {fileID: 221871696}
   - {fileID: 59010400}
   m_Father: {fileID: 2094841792}
-  m_RootOrder: 30
+  m_RootOrder: 28
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -132355,7 +132355,7 @@ RectTransform:
   - {fileID: 644883283}
   - {fileID: 747288490}
   m_Father: {fileID: 2094841792}
-  m_RootOrder: 55
+  m_RootOrder: 54
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -143588,7 +143588,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 138, y: 24.999985}
+  m_AnchoredPosition: {x: 138, y: 80}
   m_SizeDelta: {x: 350, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1307723277
@@ -144107,7 +144107,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1316039901
 RectTransform:
   m_ObjectHideFlags: 0
@@ -175760,6 +175760,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
   - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
   - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  profileImages: []
   lastArtifactUsed: 
   fashion: []
   uniqueCards: []
@@ -184344,6 +184345,7 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
   - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
   - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  profileImages: []
   lastArtifactUsed: 
   fashion: []
   uniqueCards: []
@@ -220353,6 +220355,7 @@ GameObject:
   - component: {fileID: 2004380877}
   - component: {fileID: 2004380879}
   - component: {fileID: 2004380878}
+  - component: {fileID: 2004380880}
   m_Layer: 5
   m_Name: PlayerProfile
   m_TagString: Untagged
@@ -220418,6 +220421,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2004380876}
   m_CullTransparentMesh: 1
+--- !u!114 &2004380880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004380876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d824e6e0e650e479ba06f0c1a6b10cfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  character: {fileID: 11400000, guid: b3fa98b132be44beda013cba1c0bea2d, type: 2}
+  artworkImage: {fileID: 0}
+  parentObject: {fileID: 0}
+  menu: {fileID: 0}
+  viewed: 0
+  clicked: 0
+  canBeFlipped: 0
+  flipped: 0
+  uniqueCardUsed: 0
 --- !u!1 &2006330543
 GameObject:
   m_ObjectHideFlags: 0
@@ -230184,12 +230208,12 @@ RectTransform:
   - {fileID: 1966860711}
   - {fileID: 344823237}
   - {fileID: 272749011}
+  - {fileID: 1081830691}
   - {fileID: 1846390484}
   - {fileID: 488504021}
-  - {fileID: 1081830691}
   - {fileID: 2017186514}
-  - {fileID: 177322216}
   - {fileID: 590710511}
+  - {fileID: 177322216}
   - {fileID: 692710817}
   - {fileID: 1137251201}
   - {fileID: 1868661982}
@@ -230210,8 +230234,8 @@ RectTransform:
   - {fileID: 516262369}
   - {fileID: 1983315231}
   - {fileID: 927979827}
-  - {fileID: 1225763511}
   - {fileID: 1183015910}
+  - {fileID: 1225763511}
   - {fileID: 2135008492}
   - {fileID: 210674504}
   - {fileID: 1966100848}
@@ -230219,8 +230243,8 @@ RectTransform:
   - {fileID: 1500402090}
   - {fileID: 656169584}
   - {fileID: 690921528}
-  - {fileID: 1674622731}
   - {fileID: 502128172}
+  - {fileID: 1674622731}
   - {fileID: 1936360824}
   - {fileID: 508894774}
   - {fileID: 527484254}
@@ -243410,7 +243434,7 @@ MonoBehaviour:
   artifactsUsed: 0
   uniqueArtifactsUsed: 0
   tricks: 0
-  character: {fileID: 1316039902}
+  character: {fileID: 2004380880}
   canvasGroup: {fileID: 0}
   animator: {fileID: 0}
   targetAnimator: {fileID: 0}
@@ -243436,7 +243460,7 @@ MonoBehaviour:
   healSign: {fileID: 301505643}
   healAmount: {fileID: 1737492488}
   hpBar: {fileID: 981219336}
-  abilityBar: {fileID: 0}
+  abilityBar: {fileID: 785853954}
   shieldBar: {fileID: 616662362}
   shieldCount: {fileID: 13715383}
   pipsSign: {fileID: 550996049}
@@ -243451,6 +243475,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: b3beb234279c8664f8c89230b568cee0, type: 3}
   - {fileID: 21300000, guid: 8ca73e416c7841d4e828ca3e11e69dfe, type: 3}
   - {fileID: 21300000, guid: cc7e2cb9185e3ea4eb8cc33841c298ed, type: 3}
+  profileImages:
+  - {fileID: 21300000, guid: 3933d93acaddc754da1935e2e827095f, type: 3}
+  - {fileID: 21300000, guid: 3c75b2bdf5524d444a04ac58f4f000cd, type: 3}
+  - {fileID: 21300000, guid: bcd79db5c3dac3543bf70564d93b4cc9, type: 3}
+  - {fileID: 21300000, guid: fa8ba9a93b4b71046b2fea723cb9414f, type: 3}
   lastArtifactUsed: 
   fashion: []
   uniqueCards:

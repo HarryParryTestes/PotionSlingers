@@ -65,6 +65,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject shieldsNum;
     public GameObject hoverBox;
     public List<Sprite> hitImages;
+    public List<Sprite> profileImages;
     private System.Random rng = new System.Random();
     public string lastArtifactUsed = "";
 
@@ -163,6 +164,40 @@ public class CardPlayer : MonoBehaviour
         // may or may not want to remove this, ask matteo
         GameManager.manager.moveMarketCards();
         GameManager.manager.deckDisplay.displayCards(deck);
+    }
+
+    public void checkProfile(string character)
+    {
+        switch (charName)
+        {
+            case "Bolo":
+                Debug.Log("I AM BOLO");
+                isBolo = true;
+                slinger = true;
+                this.character.GetComponent<Image>().sprite = profileImages[0];
+                break;
+            case "Reets":
+                Debug.Log("I AM BOLO");
+                isReets = true;
+                slinger = true;
+                this.character.GetComponent<Image>().sprite = profileImages[1];
+                break;
+            case "Saltimbocca":
+                Debug.Log("I AM BOLO");
+                isSaltimbocca = true;
+                slinger = true;
+                this.character.GetComponent<Image>().sprite = profileImages[2];
+                break;
+            case "Isadore":
+                Debug.Log("I AM BOLO");
+                isIsadore = true;
+                slinger = true;
+                this.character.GetComponent<Image>().sprite = profileImages[3];
+                break;
+            default:
+                Debug.Log("Failed to set any bools");
+                break;
+        }
     }
 
     public void checkCharacter()

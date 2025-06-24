@@ -2543,6 +2543,7 @@ public class GameManager : MonoBehaviour
                 players[0].charName = saveData.playerCharName;
                 players[0].character.onCharacterClick(players[0].charName);
                 players[0].checkCharacter();
+                players[0].checkProfile(players[0].charName);
                 // playerBottomName.text = players[0].name;
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
                 players[0].name = playerBottomName.text;
@@ -2622,6 +2623,7 @@ public class GameManager : MonoBehaviour
                 players[0].charName = Game.storyModeCharName;
                 players[0].character.onCharacterClick(players[0].charName);
                 players[0].checkCharacter();
+                players[0].checkProfile(players[0].charName);
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
                 currentPlayerName = players[0].name;
 
