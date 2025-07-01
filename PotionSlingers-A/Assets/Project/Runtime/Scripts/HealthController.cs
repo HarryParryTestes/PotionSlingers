@@ -54,8 +54,9 @@ public class HealthController : MonoBehaviour, IDropHandler, IPointerEnterHandle
         }     
     }
     public void OnPointerExit(PointerEventData eventData)
-    {
-        transform.DOScale(1f, 0.25f).SetId(gameObject.name);
+    {   
+        if(gameObject.name == "PlayerHP")
+            transform.DOScale(1f, 0.25f).SetId(gameObject.name);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -3960,14 +3960,19 @@ public class CardPlayer : MonoBehaviour
         updateHealthUI();
     }
 
+    public void doAbility()
+    {
+
+    }
+
     public void addAbility(int amount)
     {
         ability += amount;
-        if (ability >= 10)
-            ability = 10;
+        if (ability >= 20)
+            ability = 20;
 
         Debug.Log("Ability amount is now " + ability);
-        float numbers = (float)ability / 10f;
+        float numbers = (float)ability / 20f;
         // add in UI functionality with an ability bar later
         if (abilityBar != null)
             abilityBar.GetComponent<Image>().fillAmount = numbers;

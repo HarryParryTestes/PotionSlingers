@@ -18,6 +18,7 @@ public class SaveData
     public int playerCubes = 3;
     public int currencyCubes = 0;
     public int shields = 0;
+    public int ability = 0;
     public bool canBeFlipped;
     public bool flipped;
     public bool transition;

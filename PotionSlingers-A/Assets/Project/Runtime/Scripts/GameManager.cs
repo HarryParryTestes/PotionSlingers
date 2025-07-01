@@ -1162,8 +1162,9 @@ public class GameManager : MonoBehaviour
         saveData.shields = players[0].shields;
         saveData.pipCount = players[0].pipCount;
         saveData.playerCubes = players[0].hpCubes;
-        saveData.flipped = players[0].character.flipped;
-        saveData.canBeFlipped = players[0].character.canBeFlipped;
+        saveData.ability = players[0].ability;
+        // saveData.flipped = players[0].character.flipped;
+        // saveData.canBeFlipped = players[0].character.canBeFlipped;
         saveData.transition = false;
         saveEnemyHealth();
     }
@@ -2565,7 +2566,11 @@ public class GameManager : MonoBehaviour
 
                 players[0].updateHealthUI();
                 players[0].updatePipsUI();
+                players[0].addAbility(saveData.ability);
                 currentPlayerName = players[0].name;
+
+                // all my homies hate flipping
+                /*
                 if (saveData.canBeFlipped)
                 {
                     players[0].character.canBeFlipped = true;
@@ -2577,6 +2582,7 @@ public class GameManager : MonoBehaviour
                     players[0].character.flipped = false;
                     players[0].character.flipCardToBack();
                 }
+                */
                 // players[0].deck.loadDeck();
 
                 // numPlayers = 4;
@@ -6435,9 +6441,9 @@ public class GameManager : MonoBehaviour
                 // may need to add this back in
                 if (myPlayerIndex == 0)
                 {
-                    StartCoroutine(waitThreeSecondsPotionThrow(damage, cardQuality));
-                    StartCoroutine(doDamagePotionThrow(damage, cardQuality));
                     players[myPlayerIndex].addAbility(damage);
+                    StartCoroutine(waitThreeSecondsPotionThrow(damage, cardQuality));
+                    StartCoroutine(doDamagePotionThrow(damage, cardQuality)); 
 
                     /*
                     StopCoroutine("waitThreeSecondsHand");
@@ -6448,8 +6454,8 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    tempPlayer.subHealth(damage, cardQuality);
                     players[myPlayerIndex].addAbility(damage);
+                    tempPlayer.subHealth(damage, cardQuality); 
                 }
 
                 /*
@@ -6540,16 +6546,16 @@ public class GameManager : MonoBehaviour
                     {
                         // add new artifact animation here!
                         // StopCoroutine("waitThreeSecondsHand");
+                        players[myPlayerIndex].addAbility(damage);
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
                         artifactHand1.SetActive(false);
                         StartCoroutine(artifactAnimation(damage));
-                        StartCoroutine(doArtifactDamage(damage));
-                        players[myPlayerIndex].addAbility(damage);
+                        StartCoroutine(doArtifactDamage(damage)); 
                     }
                     else
                     {
-                        tempPlayer.subHealth(damage, cardQuality);
                         players[myPlayerIndex].addAbility(damage);
+                        tempPlayer.subHealth(damage, cardQuality);
                     }
                         
                     // tempPlayer.subHealth(damage, cardQuality);
@@ -6759,16 +6765,16 @@ public class GameManager : MonoBehaviour
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
                     if (myPlayerIndex == 0)
                     {
+                        players[myPlayerIndex].addAbility(damage);
                         StopCoroutine("waitThreeSecondsHand");
                         throwingHand.SetActive(false);
                         StartCoroutine(waitThreeSecondsHand(damage));
-                        StartCoroutine(doDamage(damage));
-                        players[myPlayerIndex].addAbility(damage);
+                        StartCoroutine(doDamage(damage));    
                     }
                     else
                     {
-                        tempPlayer.subHealth(damage, cardQuality);
                         players[myPlayerIndex].addAbility(damage);
+                        tempPlayer.subHealth(damage, cardQuality);   
                     }
                         
                     // MATTEO: taking this out for now, may want to add back in
