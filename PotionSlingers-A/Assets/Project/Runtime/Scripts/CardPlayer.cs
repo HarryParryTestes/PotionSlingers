@@ -56,6 +56,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject healAmount;
     public GameObject hpBar;
     public GameObject abilityBar;
+    public Image barImage;
     public GameObject shieldBar;
     public GameObject shieldCount;
     public GameObject pipsSign;
@@ -1359,10 +1360,14 @@ public class CardPlayer : MonoBehaviour
                     // should reets cycle be infinite or limited to once per turn???
                     // reetsCycle = true;
                     GameManager.manager.sendMessage("Added a card into your holster!");
+                    subPips(2);
+                    reetsCycle = true;
                     break;
                 }
             }
 
+            // old code
+            /*
             if (!character.flipped)
             {
                 subPips(2);
@@ -1371,6 +1376,7 @@ public class CardPlayer : MonoBehaviour
             {
                 subPips(1);
             }
+            */
         }
         else
         {
@@ -3962,7 +3968,18 @@ public class CardPlayer : MonoBehaviour
 
     public void doAbility()
     {
-
+        if (isReets)
+        {
+            if (pips >= 2)
+            {
+                addReetsCard();
+                abilityBar.GetComponent<Image>().DOKill();
+                abilityBar.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
+            }
+                
+            else
+                GameManager.manager.sendMessage("You don't have enough pips to perform this action!");
+        }        
     }
 
     public void addAbility(int amount)
@@ -3975,7 +3992,19 @@ public class CardPlayer : MonoBehaviour
         float numbers = (float)ability / 20f;
         // add in UI functionality with an ability bar later
         if (abilityBar != null)
-            abilityBar.GetComponent<Image>().fillAmount = numbers;
+            barImage.fillAmount = numbers;
+
+        if(barImage != null)
+        {
+            if (ability == 20)
+                barImage.DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+            else
+            {
+                Debug.Log("Kill the image");
+                barImage.DOKill();
+                barImage.DOColor(GameManager.manager.whiteColor, 0.5f);
+            }
+        }        
     }
 
     // WHEN YOU IMPLEMENT HATS THAT CHANGE HOW THINGS HEAL, DO IT HERE!!!

@@ -8,6 +8,7 @@ public class AbilityUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 {
     public HoverBox hoverBox;
     public CardPlayer cp;
+    bool unfill = false;
 
     // Start is called before the first frame update
     void Start()
@@ -21,13 +22,30 @@ public class AbilityUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         
     }
 
+    void FixedUpdate()
+    {
+        if (unfill)
+            cp.barImage.fillAmount -= 0.025f;
+
+        if (cp.barImage.fillAmount == 0)
+            unfill = false;
+    }
+
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        if (cp.abilityBar.GetComponent<Image>().fillAmount == 1)
+        if (gameObject.name == "Character_Profile")
+            return;
+
+        if (gameObject.name == "AbilityBar")
+            Debug.Log("Ability Bar");
+
+        if (cp.barImage.fillAmount == 1)
         {
             Debug.Log("Bar full!");
-            cp.abilityBar.GetComponent<Image>().fillAmount = 0;
+            // cp.abilityBar.GetComponent<Image>().fillAmount = 0;
+            unfill = true;
             cp.doAbility();
+            cp.ability = 0;
         }
         else
         {

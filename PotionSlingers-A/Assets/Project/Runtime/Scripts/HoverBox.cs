@@ -65,21 +65,25 @@ public class HoverBox : MonoBehaviour
                 textBox.text = "Pay 2P to put the top card of your Deck into your Holster.\n\n" +
                     "SUPER: Draw cards from your Deck until your Holster is full.\n\n" +
                     "Amount: " + cp.ability + " / 20";
+                gameObject.transform.GetChild(2).gameObject.SetActive(true);
                 break;
             case "Bolo":
                 textBox.text = "All cards in your Holster sell for +1P.\n\n" +
                     "SUPER: All cards in your Holster sell for +2P. Attacks give +1P.\n\n" +
                     "Amount: " + cp.ability + " / 20";
+                gameObject.transform.GetChild(2).gameObject.SetActive(false);
                 break;
             case "Saltimbocca":
                 textBox.text = "Market cards cost you -1P. Cards cannot cost less than 1P.\n\n" +
                     "SUPER: All cards in your Holster can be thrown. Damage is equal to their BUY cost.\n\n" +
                     "Amount: " + cp.ability + " / 20";
+                gameObject.transform.GetChild(2).gameObject.SetActive(false);
                 break;
             case "Isadore":
                 textBox.text = "Artifacts in your Holster deal +1 damage.\n\n" +
                     "SUPER: Create and load a starter potion into all Artifacts in your Holster. Artifacts in your Holster deal +2 damage.\n\n" +
                     "Amount: " + cp.ability + " / 20";
+                gameObject.transform.GetChild(2).gameObject.SetActive(false);
                 break;
             default:
                 break;
