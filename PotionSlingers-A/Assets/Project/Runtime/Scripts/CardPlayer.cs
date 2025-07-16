@@ -1194,6 +1194,9 @@ public class CardPlayer : MonoBehaviour
         bargainBonus = false;
         spiritBonus = false;
 
+        // disable super ability from last turn
+        character.flipped = false;
+
         foreach (CardDisplay cd in holster.cardList)
         {
             // Ring of the Rings
@@ -1525,7 +1528,13 @@ public class CardPlayer : MonoBehaviour
     {
         // +1 damage on artifacts for Isadore
         if (isIsadore)
-            damage++;
+        {
+            if (character.flipped)
+                damage += 2;
+            else
+                damage++;
+        }
+            
 
         if (GameManager.manager.tempPlayer.hotDogBonus)
         {
@@ -3964,6 +3973,37 @@ public class CardPlayer : MonoBehaviour
             StartCoroutine(waitThreeSeconds(shieldCount));
         }
         updateHealthUI();
+    }
+
+    public void doSuper()
+    {
+        if (isReets)
+        {
+            GameManager.manager.StartCoroutine(GameManager.manager.ReetsFill(this));
+            abilityBar.GetComponent<Image>().DOKill();
+            abilityBar.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
+            GameManager.manager.sendMessage("You used your super ability!");
+        }
+
+        if (isBolo)
+        {
+            this.character.flipped = true;
+            GameManager.manager.sendMessage("You used your super ability!");
+        }
+
+        if (isSaltimbocca)
+        {
+            this.character.flipped = true;
+            GameManager.manager.sendMessage("You used your super ability!");
+        }
+
+        if (isIsadore)
+        {
+            GameManager.manager.StartCoroutine(GameManager.manager.IsadoreLoad(this));
+            this.character.flipped = true;
+            GameManager.manager.sendMessage("You used your super ability!");
+        }
+
     }
 
     public void doAbility()

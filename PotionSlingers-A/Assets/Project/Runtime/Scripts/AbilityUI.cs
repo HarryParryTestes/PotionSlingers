@@ -44,7 +44,7 @@ public class AbilityUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             Debug.Log("Bar full!");
             // cp.abilityBar.GetComponent<Image>().fillAmount = 0;
             unfill = true;
-            cp.doAbility();
+            cp.doSuper();
             cp.ability = 0;
         }
         else

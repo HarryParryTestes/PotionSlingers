@@ -3631,6 +3631,111 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public IEnumerator IsadoreLoad(CardPlayer player)
+    {
+
+        foreach (CardDisplay cd in player.holster.cardList)
+        {
+            if (cd.card.cardType == "Artifact")
+            {
+                if (cd.aPotion.artifactEmptySlot != null)
+                {
+                    Debug.Log("artifactEmptySlot exists!");
+                    cd.aPotion.artifactEmptySlot.SetActive(false);
+                    Destroy(cd.aPotion.artifactEmptySlot);
+                }
+
+                if (cd.artifactEmptySlot != null)
+                {
+                    Debug.Log("artifactEmptySlot not on loaded card exists!");
+                    cd.artifactEmptySlot.SetActive(false);
+                    Destroy(cd.artifactEmptySlot);
+                }
+
+                cd.artifactSlot.transform.parent.gameObject.SetActive(true);
+                cd.artifactSlot.transform.gameObject.SetActive(true);
+            }
+
+            if(cd.aPotion.card.cardName == "placeholder")
+            {
+                int random = rng.Next(0, starterPotionCards.Count);
+                cd.aPotion.card = starterPotionCards[random];
+                cd.aPotion.updateCard(starterPotionCards[random]);
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+            }    
+
+            yield return new WaitForSeconds(0.3f);
+        }
+        
+    }
+
+    public IEnumerator ReetsFill(CardPlayer player)
+    {
+        // MATTEO: Add holster fill sfx here!
+
+        int times = 0;
+        bool boxing = false;
+        bool jester = false;
+
+        foreach (CardDisplay cd in player.holster.cardList)
+        {
+            if (cd.card.name == "placeholder")
+            {
+                times++;
+            }
+
+            if (cd.card.cardName == "BoxingRing")
+            {
+                Debug.Log("Boxing Ring!!!");
+                boxing = true;
+            }
+        }
+
+        if (times > 0)
+            FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Draw");
+
+        // set default turn BEFORE YOU ADD CARDS IN!
+        // player.setDefaultTurn();
+
+        foreach (CardDisplay cd in player.holster.cardList)
+        {
+            if (player.deck.deckList.Count >= 1)
+            {
+                if (cd.card.name == "placeholder")
+                {
+                    checkShield(player);
+
+                    Debug.Log("Deck animation triggered from holster fill!!!");
+
+                    // cd.updateCard(player.deck.popCard());
+                    StartCoroutine(DeckAnimation(cd, player));
+
+                    yield return new WaitForSeconds(0.25f);
+                }
+            }
+        }
+        yield return new WaitForSeconds(0.3f);
+        // check to see if this changes anything!!!
+        Debug.Log("Checking player bonuses!");
+        checkSpicy(player);
+
+        if (boxing && player.deck.deckList.Count == 0)
+        {
+            Debug.Log("Boxing Ring Damage!!!");
+            if (player.doubleRingBonus)
+            {
+                Debug.Log("Boxing Ring Bonus!!!");
+                dealDamageToAll(6);
+            }
+            else
+            {
+                Debug.Log("Boxing Ring Bonus!!!");
+                deal3ToAll();
+            }
+        }
+        // player.setDefaultTurn();
+    }
+
     public IEnumerator HolsterFill(CardPlayer player)
     {
         // MATTEO: Add holster fill sfx here!
@@ -6438,6 +6543,9 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].gameObject.GetComponent<CPUHoverCard>().resetCard();
                 }
 
+                if (players[myPlayerIndex].isBolo && players[myPlayerIndex].character.flipped)
+                    players[myPlayerIndex].addPips(1);
+
                 // may need to add this back in
                 if (myPlayerIndex == 0)
                 {
@@ -6540,8 +6648,11 @@ public class GameManager : MonoBehaviour
                         players[myPlayerIndex].holster.cardList[selectedCardInt - 1].updateCard(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].placeholder);
                     }
 
+                    if (players[myPlayerIndex].isBolo && players[myPlayerIndex].character.flipped)
+                        players[myPlayerIndex].addPips(1);
+
                     // MATTEO: taking this out for now, may want to add back in
-                    
+
                     if (myPlayerIndex == 0)
                     {
                         // add new artifact animation here!
@@ -6566,7 +6677,7 @@ public class GameManager : MonoBehaviour
                     {
                         if (!players[myPlayerIndex].character.canBeFlipped)
                         {
-                            sendSuccessMessage(13);
+                            sendSuccessMessage(3);
                         }
                         players[myPlayerIndex].character.canBeFlipped = true;
                     }
@@ -6600,7 +6711,15 @@ public class GameManager : MonoBehaviour
                 {
                     damage = 0;
                     if (players[myPlayerIndex].isIsadore)
-                        damage++;
+                    {
+                        if (players[myPlayerIndex].character.flipped)
+                        {
+                            damage += 2;
+                        }
+                        else
+                            damage++;
+                    }
+                    
                     // bangle stuff
                     Debug.Log("Bangle!!!");
                     if (players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vPotion1.card.cardName != "placeholder")
@@ -6655,6 +6774,9 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot2.transform.GetChild(0).gameObject.SetActive(false);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot3.transform.GetChild(0).gameObject.SetActive(false);
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).gameObject.SetActive(false);
+
+                    if (players[myPlayerIndex].isBolo && players[myPlayerIndex].character.flipped)
+                        players[myPlayerIndex].addPips(1);
 
                     if (myPlayerIndex == 0)
                     {
@@ -6763,6 +6885,10 @@ public class GameManager : MonoBehaviour
                     players[myPlayerIndex].holster.cardList[selectedCardInt - 1].vesselSlot4.transform.GetChild(0).gameObject.SetActive(false);
                     // bool connected = networkManager.SendThrowPotionRequest(damage, myPlayerIndex + 1, selectedCardInt, selectedOpponentInt);
                     // bool connected = networkManager.SendThrowPotionRequest(Constants.USER_ID, selectedCardInt, targetUserId, damage, false, true);
+
+                    if (players[myPlayerIndex].isBolo && players[myPlayerIndex].character.flipped)
+                        players[myPlayerIndex].addPips(1);
+
                     if (myPlayerIndex == 0)
                     {
                         players[myPlayerIndex].addAbility(damage);
@@ -9982,14 +10108,14 @@ public class GameManager : MonoBehaviour
 
             // LOGIC FOR BOLO SELLING ABILITY
             // Bolo not flipped and he's selling something that's not a potion
-            if (players[myPlayerIndex].isBolo && !players[myPlayerIndex].character.flipped && players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.cardType != "Potion")
+            if (players[myPlayerIndex].isBolo && !players[myPlayerIndex].character.flipped)
             {
                 players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
                 // Bolo flipped selling anything
             }
             else if (players[myPlayerIndex].isBolo && players[myPlayerIndex].character.flipped)
             {
-                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 1);
+                players[myPlayerIndex].addPips(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].card.sellPrice + 2);
             }
             else
             {
