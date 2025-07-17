@@ -1013,6 +1013,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
                 vesselCard4.CrossFadeAlpha(0.3f, 0.3f, true);
             }
         }
+
+        GameManager.manager.hideAbilityBar();
     }
 
     /*
@@ -1203,6 +1205,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
         // transform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+
+        GameManager.manager.hideAbilityBar();
     }
 
     public void beforeDisappear()
@@ -1285,6 +1289,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         transform.DOMove(originalPosition, 0.3f).SetId(gameObject.name);
         // EndLine();
         GameManager.manager.checkMarketPrice();
+        GameManager.manager.showAbilityBar();
     }
 
 }

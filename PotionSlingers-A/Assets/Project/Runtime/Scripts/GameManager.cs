@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
     public GameObject trashLoadButton;
     public GameObject durabilitySign;
     public GameObject noPotionUI;
+    public GameObject abilityBar;
     public DeckMenuScroll deckDisplay;
     public ExpUI expUI;
     public GameObject buyMask;
@@ -347,6 +348,16 @@ public class GameManager : MonoBehaviour
             pauseUI.transform.GetChild(0).Find("Card Menu").gameObject.SetActive(false);
             pauseUI.SetActive(false);
         }
+    }
+
+    public void hideAbilityBar()
+    {
+        abilityBar.GetComponent<AbilityUI>().enabled = false;
+    }
+
+    public void showAbilityBar()
+    {
+        abilityBar.GetComponent<AbilityUI>().enabled = true;
     }
 
     public void QuitOut()
@@ -1785,7 +1796,7 @@ public class GameManager : MonoBehaviour
                 handleBackgroundUI();
                 // background.gameObject.transform.localScale = new Vector3(1.5f, 1.4553f, 1.4553f);
                 numPlayers = 2;
-                carnivalTurns = 2;
+                carnivalTurns = 3;
                 carnivalUI.SetActive(true);
                 carnivalTargetScore = rng.Next(3, 7);
                 carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage in one throw to win a prize! 2 turns left!";
@@ -4675,12 +4686,14 @@ public class GameManager : MonoBehaviour
             // this.gameObject.SetActive(false);
             endTurnButton.GetComponent<Image>().CrossFadeAlpha(0.25f, 0.5f, true);
             endTurnButton.GetComponent<CanvasGroup>().interactable = false;
+            // abilityBar.GetComponent<AbilityBar>().enabled = false;
         }
         else
         {
             // this.gameObject.SetActive(true);
             endTurnButton.GetComponent<Image>().CrossFadeAlpha(1, 0.5f, true);
             endTurnButton.GetComponent<CanvasGroup>().interactable = true;
+            // abilityBar.GetComponent<AbilityBar>().enabled = true;
         }
     }
 

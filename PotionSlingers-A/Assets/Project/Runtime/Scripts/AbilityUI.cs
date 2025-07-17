@@ -10,6 +10,19 @@ public class AbilityUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     public CardPlayer cp;
     bool unfill = false;
 
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,8 +49,11 @@ public class AbilityUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (gameObject.name == "Character_Profile")
             return;
 
-        if (gameObject.name == "AbilityBar")
-            Debug.Log("Ability Bar");
+        if (!Game.multiplayer && GameManager.manager.myPlayerIndex != 0)
+        {
+            Debug.Log("Not your turn!");
+            return;
+        }
 
         if (cp.barImage.fillAmount == 1)
         {

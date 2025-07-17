@@ -4008,6 +4008,12 @@ public class CardPlayer : MonoBehaviour
 
     public void doAbility()
     {
+        if (!Game.multiplayer && GameManager.manager.myPlayerIndex != 0)
+        {
+            Debug.Log("Not your turn!");
+            return;
+        }
+
         if (isReets)
         {
             if (pips >= 2)
@@ -4025,18 +4031,18 @@ public class CardPlayer : MonoBehaviour
     public void addAbility(int amount)
     {
         ability += amount;
-        if (ability >= 20)
-            ability = 20;
+        if (ability >= 30)
+            ability = 30;
 
         Debug.Log("Ability amount is now " + ability);
-        float numbers = (float)ability / 20f;
+        float numbers = (float)ability / 30f;
         // add in UI functionality with an ability bar later
         if (abilityBar != null)
             barImage.fillAmount = numbers;
 
         if(barImage != null)
         {
-            if (ability == 20)
+            if (ability == 30)
                 barImage.DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
             else
             {
