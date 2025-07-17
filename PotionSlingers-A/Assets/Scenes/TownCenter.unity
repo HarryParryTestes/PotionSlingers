@@ -92748,6 +92748,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverBox: {fileID: 0}
   cp: {fileID: 3975660438111221350}
+  game: {fileID: 0}
 --- !u!225 &785853959
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -95623,7 +95624,7 @@ RectTransform:
   m_GameObject: {fileID: 812867819}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.8, y: 1.8, z: 1.8}
+  m_LocalScale: {x: 1.6, y: 1.6, z: 1.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2094841792}
@@ -95631,7 +95632,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 750, y: -120}
+  m_AnchoredPosition: {x: 760, y: -120}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &812867821
@@ -95649,12 +95650,12 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: 15, y: 10, z: 15, w: 10}
+  m_RaycastPadding: {x: 4, y: 3, z: 4, w: 3}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 365ec8be68c3b834597c4f713654acf2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e3b4708f6bf719049bedb1ceeefa76c3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -128900,7 +128901,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Do 7 damage in one throw to win a prize! 2 turns left!
+  m_text: Do 7 damage in one throw to win a prize! 3 turns left!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cac496df2b966644aa0013ac461a993c, type: 2}
   m_sharedMaterial: {fileID: 8557940270208330022, guid: cac496df2b966644aa0013ac461a993c, type: 2}
@@ -218186,6 +218187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverBox: {fileID: 148607113}
   cp: {fileID: 3975660438111221350}
+  game: {fileID: 0}
 --- !u!225 &1983804166
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -220877,6 +220879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hoverBox: {fileID: 0}
   cp: {fileID: 3975660438111221350}
+  game: {fileID: 0}
 --- !u!1 &2006330543
 GameObject:
   m_ObjectHideFlags: 0

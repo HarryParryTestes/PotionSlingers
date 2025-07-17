@@ -1799,7 +1799,7 @@ public class GameManager : MonoBehaviour
                 carnivalTurns = 3;
                 carnivalUI.SetActive(true);
                 carnivalTargetScore = rng.Next(3, 7);
-                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage in one throw to win a prize! 2 turns left!";
+                carnivalUI.transform.GetChild(1).GetComponent<TMPro.TextMeshProUGUI>().text = "Do " + carnivalTargetScore + " damage in one throw to win a prize! 3 turns left!";
                 // change this to Carnival strength game sprite instead of fingas
                 players[2].gameObject.AddComponent<ComputerPlayer>();
                 players[2].charName = "Carnival";

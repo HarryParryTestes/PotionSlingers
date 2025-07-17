@@ -102,6 +102,14 @@ namespace Map
                 return;
             }
 
+            if (mapNode.Node.nodeType == NodeType.Store)
+            {
+                // transition.GetComponent<SceneTransition>().mapCanvasGroup.blocksRaycasts = false;
+                // transition.GetComponent<SceneTransition>().doTransition();
+                Debug.Log("Store code here!");
+                return;
+            }
+
             if (mapNode.Node.nodeType == NodeType.Treasure)
             {
                 transition.GetComponent<SceneTransition>().treasureMenu.SetActive(true);
