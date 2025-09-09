@@ -291,7 +291,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-6516966150685910297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -590,7 +590,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -616275580590456340}
+  - {fileID: -1426728317909044132}
   MinDistance: 0
   MaxDistance: 0
   Length: 86454
@@ -689,7 +689,7 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638776820173066889
+  lastModified: 638777243850092395
   LoadResult: 0
   FileSizes:
   - Name: 
@@ -1039,6 +1039,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 1392
+--- !u!114 &-1426728317909044132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/BGM_StoryMode/StoryMusicSelect
+  m_EditorClassIdentifier: 
+  Name: StoryMusicSelect
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &-1330222945937292302
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1201,7 +1221,7 @@ MonoBehaviour:
   ID:
     data1: 0
     data2: 0
-  Exists: 1
+  Exists: 0
 --- !u!114 &-477022900837532377
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1302,7 +1322,7 @@ MonoBehaviour:
   - {fileID: 7030555741822606184}
   StringsBanks:
   - {fileID: -4054006693100217806}
-  stringsBankWriteTime: 638776820173066889
+  stringsBankWriteTime: 638777243850092395
   cacheVersion: 6
 --- !u!114 &57260157274554455
 MonoBehaviour:
@@ -1327,6 +1347,26 @@ MonoBehaviour:
   MinDistance: 0
   MaxDistance: 0
   Length: 760
+--- !u!114 &140706140834008192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/Gameplay/MusicSelect
+  m_EditorClassIdentifier: 
+  Name: MusicSelect
+  Min: 0
+  Max: 1
+  Default: 0
+  ID:
+    data1: 0
+    data2: 0
+  Exists: 1
 --- !u!114 &304777633655871262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1923,7 +1963,7 @@ MonoBehaviour:
   Is3D: 0
   IsOneShot: 0
   Parameters:
-  - {fileID: -6778758112346788055}
+  - {fileID: 140706140834008192}
   MinDistance: 0
   MaxDistance: 0
   Length: 303889
@@ -2205,7 +2245,7 @@ MonoBehaviour:
   Path: Assets/Plugins/FMOD/SOUNDBANKS/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638776820173047047
+  lastModified: 638777243850092395
   LoadResult: 0
   FileSizes: []
   Exists: 1

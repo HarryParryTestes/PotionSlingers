@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using Steamworks;
 
 public class SceneTransition : MonoBehaviour
 {
+    public GameObject UIbackground;
     public GameObject card1;
     public GameObject card2;
     public GameObject loadingScreen;
@@ -41,6 +44,8 @@ public class SceneTransition : MonoBehaviour
     public Button isadoreBoloButton;
     public Button saltBoloButton;
 
+    public List<CardDisplay> shopCardDisplays;
+    public List<Card> cardPool;
     public Image background;
     public GameObject treasureMenu;
     public Scrollbar scrollRectHorizontal;
@@ -130,6 +135,106 @@ public class SceneTransition : MonoBehaviour
         foreach (GameObject obj in objects)
         {
             obj.SetActive(false);
+        }
+    }
+
+    public void buyBolo(CardDisplay card)
+    {
+        Debug.Log("Adding card...");
+        SaveData data = SaveSystem.LoadGameData();
+
+        if (card.card.cardType == "Fashion")
+        {
+            SteamUserStats.SetAchievement("FASHIONISTA_1");
+
+            int fashion;
+
+            Debug.Log("Adding fashion!!!");
+            SteamUserStats.GetStat("fashion", out fashion);
+            fashion++;
+
+            if (fashion >= 5)
+                SteamUserStats.SetAchievement("FASHIONISTA_2");
+
+            SteamUserStats.SetStat("fashion", fashion);
+
+            SteamUserStats.StoreStats();
+
+            data.playerFashion.Add(card.card.name);
+        }
+        else
+            data.playerDeck.Add(card.card.name);
+
+        System.Random rng = new System.Random();
+        int index = GetInt();
+        card.updateCard(cardPool[index]);
+
+        SaveSystem.SaveGameData(data);
+        // this.gameObject.SetActive(false);
+        // ADD THIS BACK IN WHEN YOU WANT TO SHOW THE UI AGAIN!
+        // deck.SetActive(true);
+        // holster.SetActive(true);
+    }
+
+    public int GetInt()
+    {
+
+        System.Random rng = new System.Random();
+
+        var exclude = new HashSet<int>() { };
+        for (int i = 0; i < cardPool.Count; i++)
+        {
+            if (cardPool[i].name == shopCardDisplays[0].card.name ||
+                cardPool[i].name == shopCardDisplays[1].card.name ||
+                cardPool[i].name == shopCardDisplays[2].card.name)
+            {
+                exclude.Add(i);
+            }
+        }
+
+        var range = Enumerable.Range(0, cardPool.Count).Where(i => !exclude.Contains(i));
+        int index = rng.Next(0, cardPool.Count - exclude.Count);
+        return range.ElementAt(index);
+    }
+
+    public void chooseCards()
+    {
+        foreach (CardDisplay cd in shopCardDisplays)
+        {
+            System.Random rng = new System.Random();
+            int index = GetInt();
+            cd.updateCard(cardPool[index]);
+        }
+    }
+
+    public void shopAnimInit()
+    {
+        StartCoroutine(shopAnimation());
+    }
+
+    public IEnumerator shopAnimation()
+    {
+        // FadeIn(this.gameObject);
+        // FadeIn(this.transform.GetChild(9).GetChild(3).gameObject);
+        // currencyHoverBox.SetActive(false);
+        // healthHoverBox.SetActive(false);
+        // deck.SetActive(false);
+        // holster.SetActive(false);
+        foreach (CardDisplay cd in shopCardDisplays)
+        {
+            cd.gameObject.SetActive(false);
+        }
+
+        foreach (CardDisplay cd in shopCardDisplays)
+        {
+            Vector3 currentPosition = cd.transform.position;
+            // cd.GetComponent<CardHover>().originalPosition = currentPosition;
+            cd.transform.position = new Vector3(currentPosition.x + 20f, currentPosition.y - 20f, currentPosition.z);
+            cd.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            cd.transform.DOJump(currentPosition, 10f, 1, 1f, false);
+            cd.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 

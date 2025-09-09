@@ -107,6 +107,12 @@ namespace Map
                 // transition.GetComponent<SceneTransition>().mapCanvasGroup.blocksRaycasts = false;
                 // transition.GetComponent<SceneTransition>().doTransition();
                 Debug.Log("Store code here!");
+                // transition.GetComponent<SceneTransition>().hideUI();
+                transition.GetComponent<SceneTransition>().UIbackground.SetActive(false);
+                transition.GetComponent<SceneTransition>().chooseCards();
+                transition.GetComponent<SceneTransition>().background.gameObject.SetActive(false);
+                // run some code to initShop here
+                transition.GetComponent<SceneTransition>().shopAnimInit();
                 return;
             }
 
