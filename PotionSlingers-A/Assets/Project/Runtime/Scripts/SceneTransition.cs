@@ -143,6 +143,13 @@ public class SceneTransition : MonoBehaviour
         Debug.Log("Adding card...");
         SaveData data = SaveSystem.LoadGameData();
 
+        if (data.currencyCubes < 3)
+        {
+            Debug.Log("Gray out buy boxes to show that you can't select it");
+            return;
+        }
+            
+
         if (card.card.cardType == "Fashion")
         {
             SteamUserStats.SetAchievement("FASHIONISTA_1");
