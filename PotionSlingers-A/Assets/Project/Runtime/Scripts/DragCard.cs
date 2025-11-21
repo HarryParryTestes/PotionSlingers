@@ -1084,14 +1084,20 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
             // Card Hover sound effect:
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Hover");
-            /*
-            Outline outline = gameObject.AddComponent<Outline>();
 
-            outline.OutlineMode = Outline.Mode.OutlineAll;
-            outline.OutlineColor = Color.yellow;
-            outline.OutlineWidth = 5f;
-            */
+            // trying description hitbox here
+            Debug.Log("Description should show up!");
+            displayCardText(this.gameObject.GetComponent<CardDisplay>().card.desc);
         }
+    }
+
+    public void displayCardText(string text)
+    {
+        if (text == "")
+            return;
+
+        GameManager.manager.cardHoverBox.gameObject.SetActive(true);
+        GameManager.manager.cardHoverBox.textBox.text = text;
     }
 
     public IEnumerator setPadding()
@@ -1146,6 +1152,8 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
         if(!clicked && grabbed)
             transform.DOScale(1f, 0.3f);
         */
+
+        GameManager.manager.cardHoverBox.gameObject.SetActive(false);
     }
 
     public void findCard(CardDisplay cd)

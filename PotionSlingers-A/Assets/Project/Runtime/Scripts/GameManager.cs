@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public Color dryBonusColor;
     public Color whiteColor;
     public Color grayedColor;
+    public HoverBox cardHoverBox;
     GameObject ob;
     GameObject obTop;
     GameObject obLeft;
