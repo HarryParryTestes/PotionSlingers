@@ -109,6 +109,7 @@ namespace Map
                 Debug.Log("Store code here!");
                 // transition.GetComponent<SceneTransition>().hideUI();
                 transition.GetComponent<SceneTransition>().UIbackground.SetActive(false);
+                transition.GetComponent<SceneTransition>().boloShop.SetActive(true);
                 transition.GetComponent<SceneTransition>().chooseCards();
                 transition.GetComponent<SceneTransition>().background.gameObject.SetActive(false);
                 // run some code to initShop here
@@ -140,6 +141,7 @@ namespace Map
                 // transition.GetComponent<SceneTransition>().mapCanvasGroup.blocksRaycasts = false;
                 // transition.GetComponent<SceneTransition>().doTransition();
                 Debug.Log("Entering cutscene space!!!");
+                transition.GetComponent<SceneTransition>().UIbackground.SetActive(true);
 
                 switch (saveData.currentEnemyName)
                 {
@@ -249,6 +251,8 @@ namespace Map
 
                 return;
             }
+
+            transition.GetComponent<SceneTransition>().UIbackground.SetActive(true);
 
             switch (saveData.currentEnemyName)
             {

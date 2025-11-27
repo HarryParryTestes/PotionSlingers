@@ -1087,17 +1087,21 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
             // trying description hitbox here
             Debug.Log("Description should show up!");
-            displayCardText(this.gameObject.GetComponent<CardDisplay>().card.desc);
+            displayCardText(this.gameObject.GetComponent<CardDisplay>().card);
         }
     }
 
-    public void displayCardText(string text)
+    public void displayCardText(Card card)
     {
-        if (text == "")
+        if (card.desc == "")
+        {
+            GameManager.manager.cardHoverBox.gameObject.SetActive(true);
+            GameManager.manager.cardHoverBox.textBox.text = card.effectAmount + " Damage";
             return;
+        }
 
         GameManager.manager.cardHoverBox.gameObject.SetActive(true);
-        GameManager.manager.cardHoverBox.textBox.text = text;
+        GameManager.manager.cardHoverBox.textBox.text = card.desc;
     }
 
     public IEnumerator setPadding()

@@ -44,6 +44,8 @@ public class SceneTransition : MonoBehaviour
     public Button isadoreBoloButton;
     public Button saltBoloButton;
 
+    public GameObject boloShop;
+
     public List<CardDisplay> shopCardDisplays;
     public List<Card> cardPool;
     public Image background;
@@ -148,7 +150,14 @@ public class SceneTransition : MonoBehaviour
             Debug.Log("Gray out buy boxes to show that you can't select it");
             return;
         }
+        else
+        {
+            data.currencyCubes -= 3;
+            currencyCubes.text = data.currencyCubes.ToString();
+            FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
+        }
             
+
 
         if (card.card.cardType == "Fashion")
         {
@@ -251,14 +260,6 @@ public class SceneTransition : MonoBehaviour
         saveData.transition = true;
         saveData.selectedStage = true;
         SaveSystem.SaveGameData(saveData);
-
-        // DialogueManager.BarkString("I'm barking this text.", this.transform);
-        /*
-        foreach (GameObject obj in objects) 
-        { 
-            obj.SetActive(false);
-        }
-        */
 
 
         card1.transform.DOMoveX(-4.5f, 1f);
