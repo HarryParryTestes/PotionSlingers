@@ -266,10 +266,14 @@ public class SceneTransition : MonoBehaviour
         card2.transform.DOMoveX(4.5f, 1f);
         yield return new WaitForSeconds(1f);
 
+        /*
         if (saveData.visitedEnemies.Contains("Singelotte"))
             SceneManager.LoadScene("TitleMenu");
         else
-            SceneManager.LoadScene("TownCenter");
+        */
+
+        SceneManager.LoadScene("TownCenter");
+
         /*
         card1.transform.DOMoveX(-4.5f, 1.5f);
         card2.transform.DOMoveX(4.5f, 1.5f);

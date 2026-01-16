@@ -52,6 +52,8 @@ public class SaveData
     public int opp3Shields = 0;
     public bool opp3Dead = false;
     public int stage;
+    public int world = 1;
+    public bool newWorld = false;
     public int slingerEncounter;
     public bool savedGame;
     public bool newStage;

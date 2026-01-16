@@ -7,6 +7,7 @@ namespace Map
     public class MapManager : MonoBehaviour
     {
         public MapConfig config;
+        public MapConfig stage2Config;
         public MapView view;
 
         public Map CurrentMap { get; private set; }
@@ -18,6 +19,18 @@ namespace Map
             {
                 Debug.Log("New game started! Making new map...");
                 GenerateNewMap();
+                return;
+            }
+
+            if (data.newWorld)
+            {
+                Debug.Log("Generating new world!!!");
+
+                if (data.world == 2)
+                    GenerateNewMap(stage2Config);
+
+                data.newWorld = false;
+                SaveSystem.SaveGameData(data);
                 return;
             }
 
@@ -42,6 +55,15 @@ namespace Map
             {
                 GenerateNewMap();
             }
+        }
+
+        public void GenerateNewMap(MapConfig config)
+        {
+            Debug.Log("Generating world 2 map");
+            var map = MapGenerator.GetMap(config);
+            CurrentMap = map;
+            Debug.Log(map.ToJson());
+            view.ShowMap(map);
         }
 
         public void GenerateNewMap()

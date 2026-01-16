@@ -563,6 +563,61 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void resetMap()
+    {
+        // test swapping out the maps once the boss is defeated
+        saveData = SaveSystem.LoadGameData();
+
+        // clear out the visited enemies from the previous map
+        saveData.visitedEnemies.Clear();
+
+        // go from world 1 to world 2
+        saveData.world++;
+        saveData.newWorld = true;
+
+        Debug.Log("Advancing a world in story mode");
+        saveData.newStage = true;
+        saveData.visitedEnemies.Add(saveData.currentEnemyName);
+        saveData.cardDurabilities.Clear();
+        saveData.cardStatuses.Clear();
+        saveData.playerHolster.Clear();
+        saveData.playerLoadedCards.Clear();
+        saveGameManagerValues();
+        saveData.stage = 1;
+        saveData.savedGame = true;
+        saveData.selectedStage = false;
+        saveData.currencyCubes++;
+        // reset cards back to normal after defeating Singelotte
+        if (players[1].charName == "Singelotte")
+        {
+            saveData.cardStatuses.Clear();
+            foreach (CardDisplay cd in playerHolster.cardList)
+            {
+                saveData.cardStatuses.Add("none");
+            }
+        }
+        playersHolster.Clear();
+        playersDeck.Clear();
+        foreach (CardDisplay cd in players[0].holster.cardList)
+        {
+            playersHolster.Add(cd.card.name);
+        }
+        foreach (Card card in players[0].deck.deckList)
+        {
+            playersDeck.Add(card.name);
+        }
+        /*
+        saveData.playerHolster = playersHolster;
+        saveData.playerDeck = playersDeck;
+        saveData.playerHealth = players[0].hp;
+        saveData.playerCubes = players[0].hpCubes;
+        */
+        Debug.Log("Now onto stage " + saveData.stage + "!");
+        SaveSystem.SaveGameData(saveData);
+
+        FadeIn(advanceStageUI);
+    }
+
     public void moveMarketCards()
     {
         md1.cardDisplay1.GetComponent<DragCard>().marketBack();
@@ -641,9 +696,12 @@ public class GameManager : MonoBehaviour
         SaveSystem.SaveGameData(saveData);
         // Game.ServerChangeScene("StoryMode");
         // advanceStageUI.SetActive(true);
+        // take this out for demo
         if (players[1].charName == "Singelotte")
         {
-            Invoke("startEndDemo", 4f);
+            // Invoke("startEndDemo", 4f);
+            Debug.Log("Resetting map after defeating boss!");
+            resetMap();
         }
         else
             FadeIn(advanceStageUI);
@@ -1282,7 +1340,12 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Starting end dialogue after demo is done");
                     // dialogBox.SetActive(true);
                     // dialog.initEndDemoDialog();
-                    Invoke("startEndDemo", 4f);
+
+                    // TAKE THIS OUT FOR NOW TO TEST! PUT BACK IN FOR THE DEMO!
+                    // Invoke("startEndDemo", 4f);
+
+                    Debug.Log("Resetting map after defeating boss!");
+                    resetMap();
                     return;
                 }
 
@@ -3668,7 +3731,7 @@ public class GameManager : MonoBehaviour
                 cd.artifactSlot.transform.gameObject.SetActive(true);
             }
 
-            if(cd.aPotion.card.cardName == "placeholder")
+            if(cd.aPotion.card.cardName == "placeholder" && cd.card.cardType == "Artifact")
             {
                 int random = rng.Next(0, starterPotionCards.Count);
                 cd.aPotion.card = starterPotionCards[random];

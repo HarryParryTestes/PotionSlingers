@@ -172,7 +172,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -119.278564, y: 300.00003}
+  m_AnchoredPosition: {x: -119.278564, y: 0.000030517578}
   m_SizeDelta: {x: 119.2791, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &13354376 stripped
@@ -36596,13 +36596,25 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e, type: 3}
+      propertyPath: allMapConfigs.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e, type: 3}
       propertyPath: allMapConfigs.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 911f4004870e5c249be19c0b5d380928, type: 2}
+    - target: {fileID: 3015013619643396332, guid: f3d397d8780414037811524dd988a62e, type: 3}
+      propertyPath: allMapConfigs.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 1448308d4f4d5ff44b5c397d93aa72c0, type: 2}
     - target: {fileID: 3339309020100004304, guid: f3d397d8780414037811524dd988a62e, type: 3}
       propertyPath: config
       value: 
       objectReference: {fileID: 11400000, guid: 911f4004870e5c249be19c0b5d380928, type: 2}
+    - target: {fileID: 3339309020100004304, guid: f3d397d8780414037811524dd988a62e, type: 3}
+      propertyPath: stage2Config
+      value: 
+      objectReference: {fileID: 11400000, guid: 1448308d4f4d5ff44b5c397d93aa72c0, type: 2}
     - target: {fileID: 3339309021387442498, guid: f3d397d8780414037811524dd988a62e, type: 3}
       propertyPath: background
       value: 
@@ -64177,6 +64189,8 @@ MonoBehaviour:
     opp3Shields: 0
     opp3Dead: 0
     stage: 0
+    world: 1
+    newWorld: 0
     slingerEncounter: 0
     savedGame: 0
     newStage: 0
