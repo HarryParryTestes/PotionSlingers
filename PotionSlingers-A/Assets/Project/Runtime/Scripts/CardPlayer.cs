@@ -49,6 +49,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject playerHP;
     public GameObject playerHPCubes;
     public GameObject playerPips;
+    public GameObject pipIcon;
     public GameObject currentPlayerHighlight;
     public GameObject damageSign;
     public GameObject damageAmount;
@@ -4453,10 +4454,39 @@ public class CardPlayer : MonoBehaviour
         updatePipsUI();
     }
 
+    public void pipAnimation(int pips)
+    {
+        Debug.Log("Pip animation!");
+        for(int i = 0; i < pips; i++)
+        {
+            Invoke("pipSpawn", 0.05f);
+        }
+    }
+
+    public void pipSpawn()
+    {
+        GameObject obj = Instantiate(pipIcon, pipIcon.transform.position, pipIcon.transform.rotation, pipIcon.transform);
+        if (obj.GetComponent<CanvasGroup>() == null)
+            obj.AddComponent<CanvasGroup>();
+        int position = rng.Next(-125, 125);
+        obj.transform.localScale = new Vector3(1f, 1f, 1f);
+        obj.transform.DOJump(pipIcon.transform.position + new Vector3(position, 0, 0), 100f, 1, 0.5f, false);
+        obj.transform.DORotate(new Vector3(0, 0, 360f), 0.5f, RotateMode.FastBeyond360);
+        obj.GetComponent<CanvasGroup>().DOFade(0, 1f);
+        // obj.GetComponent<Image>().CrossFadeAlpha(0, 1f, true);
+        Destroy(obj, 1f);
+    }
+
     public void subPips(int lessPips)
     {
         pips -= lessPips;
         pipsUsedThisTurn += lessPips;
+        if (playerPips != null)
+        {
+            // playerPips.GetComponent<Text>().text = pips.ToString() + " Pips";
+            playerPips.GetComponent<Text>().text = pips.ToString();
+            pipAnimation(lessPips);
+        }
         updatePipsUI();
         GameManager.manager.checkMarketPrice();
 
