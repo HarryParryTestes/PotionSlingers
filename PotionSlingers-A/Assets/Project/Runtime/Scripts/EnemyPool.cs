@@ -8,6 +8,7 @@ public class EnemyPool : MonoBehaviour
 
     public List<string> level1Enemies;
     public List<string> level2Enemies;
+    public List<string> world2Enemies;
     public List<string> cutsceneEnemies;
     public List<string> encounteredEnemies = new List<string>();
     public List<string> bosses;
@@ -109,6 +110,29 @@ public class EnemyPool : MonoBehaviour
         return "Bolo";
     }
 
+    public string GetWorld2Enemy()
+    {
+        System.Random rng = new System.Random();
+        SaveData saveData = SaveSystem.LoadGameData();
+
+        var exclude = new HashSet<int>() { };
+        for (int j = 0; j < world2Enemies.Count; j++)
+        {
+            if (encounteredEnemies.Contains(world2Enemies[j]) || saveData.visitedEnemies.Contains(world2Enemies[j]))
+            {
+                // exclude.Add(j);
+                if (world2Enemies.Count > 1)
+                    world2Enemies.RemoveAt(j);
+            }
+        }
+
+        // var range = Enumerable.Range(0, level1Enemies.Count).Where(j => !exclude.Contains(j));
+        // Debug.Log("Number of available enemies to select from: " + (level1Enemies.Count - exclude.Count));
+        int index = rng.Next(0, world2Enemies.Count);
+        encounteredEnemies.Add(world2Enemies[index]);
+        return world2Enemies[index];
+    }
+
     public string GetRandomEnemy()
     {
         System.Random rng = new System.Random();
@@ -129,7 +153,7 @@ public class EnemyPool : MonoBehaviour
         if (saveData.world == 1)
             return GetWorld1Enemy();
         else if (saveData.world == 2)
-            return GetWorld1Enemy(); // please make sure to change that to world 2
+            return GetWorld2Enemy(); // please make sure to change that to world 2
 
         return "Bolo";
     }

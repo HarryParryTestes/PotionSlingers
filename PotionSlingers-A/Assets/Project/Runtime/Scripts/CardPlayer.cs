@@ -374,6 +374,15 @@ public class CardPlayer : MonoBehaviour
                     this.transform.localScale = new Vector3(14f, 14f, 0);
                     this.GetComponent<Image>().raycastPadding = new Vector4(26f, 29f, 26f, 30f);
                 }
+                break;
+
+            case "RoboDoll":
+                Debug.Log("RoboDoll!!!");
+                if (this.gameObject.name == "CharacterCard (Top)")
+                {
+                    this.transform.localScale = new Vector3(7.75f, 7.75f, 0);
+                    this.GetComponent<Image>().raycastPadding = new Vector4(4f, 2f, 6f, 6f);
+                }
 
                 if (this.gameObject.name == "CharacterCard (Left)")
                 {
@@ -528,6 +537,26 @@ public class CardPlayer : MonoBehaviour
             case "Maskid":
                 Debug.Log("Maskid animation");
                 animator.Play("Maskid_idle");
+                break;
+
+            case "Cactus Soldier":
+                Debug.Log("Cactus Soldier animation");
+                animator.Play("Cactus_idle");
+                break;
+
+            case "Shuvit":
+                Debug.Log("Shuvit animation");
+                animator.Play("Shuvit_idle");
+                break;
+
+            case "RoboDoll":
+                Debug.Log("RoboDoll animation");
+                animator.Play("Doll_idle");
+                break;
+
+            case "Iron Snail":
+                Debug.Log("Iron Snail animation");
+                animator.Play("Snail_idle");
                 break;
 
             default:
@@ -1165,6 +1194,11 @@ public class CardPlayer : MonoBehaviour
 
                     Card card = GameManager.manager.md1.popCard();
                     cd.vPotion1.updateCard(card);
+                    if(card.cardName == "Pemmican")
+                    {
+                        cd.vesselSlot2.SetActive(true);
+                        cd.vPotion2.updateCard(card);
+                    }
                     // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
                 }
                 else if (cd.vPotion2.card.cardName == "placeholder")

@@ -274,6 +274,18 @@ namespace Map
                 case "Fingas":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
+                case "Cactus Soldier":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
+                case "Shuvit":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
+                case "RoboDoll":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
+                case "Iron Snail":
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
                 case "Fingas+":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;

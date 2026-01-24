@@ -792,7 +792,8 @@ public class GameManager : MonoBehaviour
     {
         if (background.sprite == backgrounds[2] ||
             background.sprite == backgrounds[3] ||
-            background.sprite == backgrounds[4])
+            background.sprite == backgrounds[4] ||
+            background.sprite == backgrounds[5])
         {
             if (Screen.width == 1920)
             {
@@ -1851,6 +1852,30 @@ public class GameManager : MonoBehaviour
         // changing from stage number to currentEnemyName
         switch (saveData.currentEnemyName)
         {
+            case "Cactus Soldier":
+                background.sprite = backgrounds[5];
+                handleBackgroundUI();
+                setDuelCharacter("Cactus Soldier", 10);
+                break;
+
+            case "RoboDoll":
+                background.sprite = backgrounds[5];
+                handleBackgroundUI();
+                setDuelCharacter("RoboDoll", 10);
+                break;
+
+            case "Shuvit":
+                background.sprite = backgrounds[5];
+                handleBackgroundUI();
+                setDuelCharacter("Shuvit", 10);
+                break;
+
+            case "Iron Snail":
+                background.sprite = backgrounds[5];
+                handleBackgroundUI();
+                setDuelCharacter("Iron Snail", 10);
+                break;
+
             case "Carnival":
                 background.sprite = backgrounds[2];
                 if (Screen.width == 1920)
