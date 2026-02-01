@@ -70,12 +70,11 @@ public class StoryModeLobbyUI : MonoBehaviour
         {
             case "Bolo":
                 infoBox.text = "Bolo is an adept salesman. He will always be able to upsell his items, and can even trade useless baubles for powerful treasure!" +
-            "\n\nFront:\nYou gain +1P when you sell a non-potion card.\n\nBack:\nAll cards in your Holster sell for +1P.";
+            "\n\nAll cards in your Holster sell for +1P.\n\nSuper: All cards in your Holster sell for +2P. Attacks sell for +1P.";
                 break;
             case "Isadore":
-                infoBox.text = "Isadore is a master of artifacts, and is extremely versatile with them. Flip her to equip her badge, and punish her foes even further!" +
-            "\n\nFront:\nArtifacts in your Holster deal +1 damage.\n\nBack:\nOnce per turn you may create a starter potion loaded into an artifact in your Holster." +
-            "\nPay 3P: Put The Cherrybomb Badge into your Holster.";
+                infoBox.text = "Isadore is a master of artifacts, and is extremely versatile with them. Use her super to deal a punishing blow to your opponents!" +
+            "\n\nArtifacts in your Holster deal +1 damage.\n\nSuper: Create and load a starter potion into all Artifacts in your Holster. Artifacts in your Holster deal +2 Damage.";
                 break;
             case "Nickles":
                 infoBox.text = "Nickles can use leftover pips as an extra resource. Use his unique item to rustle up a couple extra pips to sling or even to spend!" +
@@ -89,11 +88,11 @@ public class StoryModeLobbyUI : MonoBehaviour
                 break;
             case "Reets":
                 infoBox.text = "Reets always has the right tools on hand! He can cycle through his items in his Holster and Deck much faster than the rest." +
-            "\n\nFront:\nPay 2P to put the top card of your Deck into your Holster.\n\nBack:\nDrop items for free. Pay 1P to put the top card of your Deck into your Holster.";
+            "\n\nPay 2P to put the top card of your Deck into your Holster.\n\nSuper: Draw cards from your Deck until your Holster is full.";
                 break;
             case "Saltimbocca":
                 infoBox.text = "With intimidation and an eye for quality, Bocca wants the best items and wants 'em cheap! Preferably also sharp, heavy, and aerodynamic..." +
-            "\n\nFront:\nMarket cards cost you -1P. Cards cannot cost less than 1P.\n\nBack:\nAll cards in your Holster can be thrown. Damage is equal to their buy cost.";
+            "\n\nMarket cards cost you -1P. Cards cannot cost less than 1P.\n\nSuper: All cards in your Holster can be thrown. Damage is equal to their BUY cost.";
                 break;
             case "Scarpetta":
                 infoBox.text = "Scarpetta loves trash. While others may scoff at as useless junk, he revels in a never-increasing pile of treasures. Refuse, reuse, recycle!" +
