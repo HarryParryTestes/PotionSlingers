@@ -161,6 +161,8 @@ public class TreasureMenu : MonoBehaviour
             data.playerFashion.Add(card.card.name);
         } else
             data.playerDeck.Add(card.card.name);
+
+        SaveSystem.DebugCards(data);
         data.carnivalWin = false;
         SaveSystem.SaveGameData(data);
         this.gameObject.SetActive(false);

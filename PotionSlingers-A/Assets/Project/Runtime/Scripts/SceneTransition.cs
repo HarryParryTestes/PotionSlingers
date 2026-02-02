@@ -185,6 +185,8 @@ public class SceneTransition : MonoBehaviour
         int index = GetInt();
         card.updateCard(cardPool[index]);
 
+        SaveSystem.DebugCards(data);
+
         SaveSystem.SaveGameData(data);
         // this.gameObject.SetActive(false);
         // ADD THIS BACK IN WHEN YOU WANT TO SHOW THE UI AGAIN!

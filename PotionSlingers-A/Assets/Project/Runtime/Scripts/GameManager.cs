@@ -1238,6 +1238,8 @@ public class GameManager : MonoBehaviour
         // saveData.canBeFlipped = players[0].character.canBeFlipped;
         saveData.transition = false;
         saveEnemyHealth();
+
+        SaveSystem.DebugCards(saveData);
     }
 
     public void setStageUI()

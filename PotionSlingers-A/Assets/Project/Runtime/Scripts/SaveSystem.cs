@@ -65,6 +65,20 @@ public class SaveSystem : MonoBehaviour
         }
     }
 
+    public static void DebugCards(SaveData data)
+    {
+        // var settings = PlayerPrefs.GetString("SaveSettings");
+        // SaveData data = JsonConvert.DeserializeObject<SaveData>(settings);
+
+        Debug.Log("PLAYER DECK");
+        foreach (string card in data.playerDeck)
+            Debug.Log(card);
+
+        Debug.Log("PLAYER FASHION");
+        foreach (string card in data.playerFashion)
+            Debug.Log(card);
+    }
+
     public static void checkGameData()
     {
         var settings = PlayerPrefs.GetString("SaveSettings");
