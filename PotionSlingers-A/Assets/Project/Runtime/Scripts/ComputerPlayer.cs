@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -133,15 +134,24 @@ public class ComputerPlayer : CardPlayer
 
     public IEnumerator MoveToTrash(GameObject obj)
     {
-        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList
-            [GameManager.manager.selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        // GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1]
+        // .artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        try
+        {
+            GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList
+                [GameManager.manager.selectedCardInt].artifactSlot.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        catch (ArgumentException e)
+        {
+            Debug.Log("Something went wrong");
+        }
         obj.transform.DOJump(new Vector2(1850f, 400f), 400f, 1, 1f, false);
         obj.transform.DOScale(0.2f, 1f);
         obj.transform.DORotate(new Vector3(0, 0, 720f), 1f, RotateMode.FastBeyond360);
         yield return new WaitForSeconds(0.1f);
         GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList
-            [GameManager.manager.selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
-        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1].artifactSlot.SetActive(false);
+            [GameManager.manager.selectedCardInt].artifactSlot.transform.GetChild(0).gameObject.SetActive(true);
+        GameManager.manager.players[GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt].artifactSlot.SetActive(false);
         yield return new WaitForSeconds(0.9f);
 
         Destroy(obj);
@@ -368,7 +378,7 @@ public class ComputerPlayer : CardPlayer
                 GameManager.manager.StartCoroutine(MoveToTrash(obj));
 
                 GameManager.manager.handleEmptySlotUI(GameManager.manager.players
-                    [GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt - 1]);
+                    [GameManager.manager.myPlayerIndex].holster.cardList[GameManager.manager.selectedCardInt]);
 
                 GameManager.manager.td.addCard(GameManager.manager.playerHolster.cardList[GameManager.manager.selectedCardInt]);
 

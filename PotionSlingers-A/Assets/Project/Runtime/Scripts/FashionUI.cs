@@ -25,6 +25,7 @@ public class FashionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void updateCard(Card card)
     {
+        Debug.Log("Updating " + card + " sprite.");
         gameObject.SetActive(true);
         this.card = card;
         GetComponent<Image>().sprite = card.cardlessSprite;

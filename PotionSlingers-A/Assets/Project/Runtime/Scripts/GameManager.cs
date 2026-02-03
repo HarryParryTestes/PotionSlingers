@@ -7399,12 +7399,16 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("handling empty slot UI!!!");
 
-        if (cd.aPotion.artifactEmptySlot != null)
+        if (cd.aPotion != null)
         {
-            Debug.Log("artifactEmptySlot exists!");
-            cd.aPotion.artifactEmptySlot.SetActive(false);
-            Destroy(cd.aPotion.artifactEmptySlot);
+            if (cd.aPotion.artifactEmptySlot != null)
+            {
+                Debug.Log("artifactEmptySlot exists!");
+                cd.aPotion.artifactEmptySlot.SetActive(false);
+                Destroy(cd.aPotion.artifactEmptySlot);
+            }
         }
+        
 
         if (cd.artifactEmptySlot != null)
         {
@@ -8067,7 +8071,8 @@ public class GameManager : MonoBehaviour
                             Destroy(players[myPlayerIndex].holster.cardList[loadedCardInt].artifactEmptySlot);
                         }
 
-                        handleEmptySlotUI(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion);
+                        if(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion != null)
+                            handleEmptySlotUI(players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion);
                         handleEmptySlotUI(players[myPlayerIndex].holster.cardList[loadedCardInt]);
 
                         Card placeholder = players[myPlayerIndex].holster.cardList[loadedCardInt].aPotion.card;
