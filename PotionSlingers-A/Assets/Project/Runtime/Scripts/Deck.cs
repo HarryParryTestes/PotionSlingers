@@ -200,7 +200,8 @@ public class Deck : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        buildDeck();
+        // removing starter ring!!! 
+        // buildDeck();
         if (statuses.Count > 0)
         {
             statuses.RemoveAt(0);

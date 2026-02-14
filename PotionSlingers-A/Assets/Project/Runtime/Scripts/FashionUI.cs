@@ -28,7 +28,10 @@ public class FashionUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         Debug.Log("Updating " + card + " sprite.");
         gameObject.SetActive(true);
         this.card = card;
-        GetComponent<Image>().sprite = card.cardlessSprite;
+        if(card.cardType == "Ring")
+            GetComponent<Image>().sprite = card.cardSprite;
+        else
+            GetComponent<Image>().sprite = card.cardlessSprite;
     }
 
     public void OnPointerEnter(PointerEventData pointerEventData)

@@ -158,9 +158,18 @@ public class TreasureMenu : MonoBehaviour
 
             SteamUserStats.StoreStats();
 
-            data.playerFashion.Add(card.card.name);
-        } else
-            data.playerDeck.Add(card.card.name);
+            data.playerFashion.Add(card.card.cardName);
+        } else if (card.card.cardType == "Ring")
+        {
+            Debug.Log("Adding ring!!!");
+            data.playerRings.Add(card.card.cardName);
+        }
+        else
+        {
+            Debug.Log("Adding card!!!");
+            data.treasure.Add(card.card.cardName);
+        }
+            
 
         SaveSystem.DebugCards(data);
         data.carnivalWin = false;

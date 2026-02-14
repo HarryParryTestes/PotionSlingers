@@ -35,7 +35,7 @@ public class HoverBox : MonoBehaviour
     }
 
     public void UpdateText(Card card)
-    {
+    {/*
         if (card.cardName == "TroutTickler")
         {
             textBox.text = "Gain +1P at the start of your turn.";
@@ -55,6 +55,9 @@ public class HoverBox : MonoBehaviour
         {
             textBox.text = "At the end of your turn, heal up to 3HP for each unspent pip.";
         }
+        */
+
+        textBox.text = card.desc;
     }
 
     public void UpdateAbility(CardPlayer cp)

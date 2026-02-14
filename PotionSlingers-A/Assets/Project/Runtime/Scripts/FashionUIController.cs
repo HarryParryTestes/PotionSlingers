@@ -6,6 +6,7 @@ public class FashionUIController : MonoBehaviour
 {
 
     public List<FashionUI> fashionList;
+    public List<FashionUI> ringList;
     public MyNetworkManager game;
     public MyNetworkManager Game
     {
@@ -33,6 +34,19 @@ public class FashionUIController : MonoBehaviour
                     {
                         Debug.Log("Fashion found!");
                         fashionList[i].updateCard(card);
+                        break;
+                    }
+                }
+            }
+
+            for (int i = 0; i < saveData.playerRings.Count; i++)
+            {
+                foreach (Card card in GameManager.manager.database.cardList)
+                {
+                    if (card.cardName == saveData.playerRings[i])
+                    {
+                        Debug.Log("Fashion found!");
+                        ringList[i].updateCard(card);
                         break;
                     }
                 }

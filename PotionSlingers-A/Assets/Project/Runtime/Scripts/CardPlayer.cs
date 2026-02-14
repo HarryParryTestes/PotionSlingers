@@ -72,6 +72,7 @@ public class CardPlayer : MonoBehaviour
     public string lastArtifactUsed = "";
 
     public List<Card> fashion;
+    public List<Card> rings;
     // TODO: Refactor methods that use UniqueCard and replace them all with Card
     // also, make ScriptableObjects that are regular Cards and not UniqueCards
     public List<Card> uniqueCards;
@@ -371,9 +372,19 @@ public class CardPlayer : MonoBehaviour
                 {
                     // this.transform.position = new Vector3(this.transform.position.x, 
                         // this.transform.position.y - (40 * GameManager.manager.heightRatio), this.transform.position.z);
-                    this.transform.localScale = new Vector3(14f, 14f, 0);
-                    this.GetComponent<Image>().raycastPadding = new Vector4(26f, 29f, 26f, 30f);
+                    this.transform.localScale = new Vector3(14f, 14f, 0);                   
                 }
+
+                if (this.gameObject.name == "CharacterCard (Right)")
+                {
+                    this.transform.parent.localScale = new Vector3(1f, 1f, 1f);
+                }
+
+                if (this.gameObject.name == "CharacterCard (Left)")
+                {
+                    this.transform.parent.localScale = new Vector3(1.2f, 1.2f, 1.2f);
+                }
+                this.GetComponent<Image>().raycastPadding = new Vector4(26f, 29f, 26f, 30f);
                 break;
 
             case "RoboDoll":
@@ -913,9 +924,9 @@ public class CardPlayer : MonoBehaviour
 
     public void checkGauntletBonus()
     {
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
-            if (cd.card.cardName == "Gauntlet Ring of the Chatelaine")
+            if (cd.cardName == "Gauntlet Ring of the Chatelaine")
             {
                 Debug.Log("Gauntlet Ring Bonus!!!");
                 if (deck.GetComponent<CharacterSlot>() != null)
@@ -930,11 +941,11 @@ public class CardPlayer : MonoBehaviour
 
     public void checkDecoderBonus()
     {
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
             // && decoderBonus == false
             // make sure you don't trigger it if a computer player has it in their holster
-            if (cd.card.cardName == "Decoder Ring" && decoderBonus == false)
+            if (cd.cardName == "Decoder Ring" && decoderBonus == false)
             {
                 Debug.Log("Decoder Ring Bonus!!!");
                 if (GetComponent<ComputerPlayer>() != null)
@@ -1232,21 +1243,21 @@ public class CardPlayer : MonoBehaviour
         // disable super ability from last turn
         character.flipped = false;
 
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
             // Ring of the Rings
             // Double all ring effects, your rings cost 4 pips
-            if (cd.card.cardName == "RingoftheRings")
+            if (cd.cardName == "RingoftheRings")
             {
                 doubleRingBonus = true;
             }
         }
 
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
 
             // check for gambling ring
-            if (cd.card.cardName == "RingofGamblingMopoji" && pipsUsedThisTurn == 0)
+            if (cd.cardName == "RingofGamblingMopoji" && pipsUsedThisTurn == 0)
             {
                 Debug.Log("It's gambling time...");
                 pipCount = rng.Next(1, 11);
@@ -1257,17 +1268,16 @@ public class CardPlayer : MonoBehaviour
                 }
                 Debug.Log("New pip count: " + pipCount);
                 pips = pipCount;
+
                 updatePipsUI();
             }
         }
 
-        pipsUsedThisTurn = 0;
-
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
             // Tiny Ring of Extra Coin Purse
             // Start your turn with +2 pips
-            if (cd.card.cardName == "Tiny Ring of the Extra Coin Purse")
+            if (cd.cardName == "Tiny Ring of the Extra Coin Purse")
             {
                 if (doubleRingBonus)
                 {
@@ -1278,6 +1288,12 @@ public class CardPlayer : MonoBehaviour
                     pips += 2;
                 }
             }
+        }
+
+        pipsUsedThisTurn = 0;
+
+        foreach (CardDisplay cd in holster.cardList)
+        {
 
             if (cd.card.cardName == "Blacksnake Pip Sling")
             {
@@ -1343,9 +1359,9 @@ public class CardPlayer : MonoBehaviour
     public void boxingRingCheck()
     {
         // check for boxing ring
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
-            if (cd.card.cardName == "BoxingRing" && deck.deckList.Count == 0)
+            if (cd.cardName == "BoxingRing" && deck.deckList.Count == 0)
             {
                 if (doubleRingBonus)
                 {
@@ -1425,9 +1441,9 @@ public class CardPlayer : MonoBehaviour
         }
 
         // check for boxing ring
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
-            if (cd.card.cardName == "BoxingRing" && deck.deckList.Count == 0)
+            if (cd.cardName == "BoxingRing" && deck.deckList.Count == 0)
             {
                 if (doubleRingBonus)
                 {
@@ -1495,26 +1511,18 @@ public class CardPlayer : MonoBehaviour
 
     public int checkRings()
     {
-        int rings = 0;
-        foreach (CardDisplay cd in holster.cardList)
+        int ringss = 0;
+        foreach (Card cd in rings)
         {
-            if (cd.card.cardType == "Ring")
-            {
-                rings++;
-            }
+            ringss++;
         }
-        return rings;
+        return ringss;
     }
 
     public int checkOneRing()
     {
-        foreach (CardDisplay cd in holster.cardList)
-        {
-            if (cd.card.cardType == "Ring")
-            {
-                return 1;
-            }
-        }
+        if (rings.Any())
+            return 1;
         return 0;
     }
 
@@ -2100,9 +2108,9 @@ public class CardPlayer : MonoBehaviour
         bool stone = false;
 
         // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
-            if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
+            if (cd.cardName == "Contemplation Ring of the Stone Monk")
                 stone = true;
         }
 
@@ -2987,18 +2995,18 @@ public class CardPlayer : MonoBehaviour
         // ring bonuses obviously, but only the ones that relate to damage
         // all defensive stuff is going in its own separate method
 
-        foreach (CardDisplay cd in holster.cardList)
+        foreach (Card cd in rings)
         {
-            if (cd.card.cardType == "Ring")
+            if (cd.cardType == "Ring")
             {
                 Debug.Log(selectedCard.card.cardType);
-                if (cd.card.cardQuality == "Starter" && potionsThrown == 0 && vesselsThrown == 0 && selectedCard.card.cardType != "Artifact")
+                if (cd.cardQuality == "Starter" && potionsThrown == 0 && vesselsThrown == 0 && selectedCard.card.cardType != "Artifact")
                 {
                     Debug.Log("Starter ring bonus");
                     damage++;
                 }
                 // Sharpened Ring of Bauble Collector
-                if (cd.card.cardName == "Sharpened Ring of the Bauble Collector")
+                if (cd.cardName == "Sharpened Ring of the Bauble Collector")
                 {
                     if (selectedCard.card.cardType == "Artifact")
                     {
@@ -3021,7 +3029,7 @@ public class CardPlayer : MonoBehaviour
                 }
 
                 // Finger Ring of Additional Pinkie
-                if (cd.card.cardName == "FingerRingoftheAdditionalPinkie")
+                if (cd.cardName == "FingerRingoftheAdditionalPinkie")
                 {
                     // Thrown potions deal +1 damage
                     if (selectedCard.card.cardType == "Potion")
@@ -3038,7 +3046,7 @@ public class CardPlayer : MonoBehaviour
                 }
 
                 // Glass Ring of Things That Contain Things
-                if (cd.card.cardName == "GlassRingofThingsThatContainThings")
+                if (cd.cardName == "GlassRingofThingsThatContainThings")
                 {
                     // All of your thrown vessels deal +3 damage
                     if (selectedCard.card.cardType == "Vessel")
@@ -3982,6 +3990,84 @@ public class CardPlayer : MonoBehaviour
                                     {
                                         preventedDamage -= 1;
                                     }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        foreach(Card cd in rings)
+        {
+            // Crusty Ring of the Crying Rusty Tears
+            if (cd.cardName == "Crusty Ring of the Crying Rusty Tears")
+            {
+                // Opponent's ARTIFACTS prevent 2 damage.
+                // (prevents 4 damage with Ring of Rings in Holster)
+                // checks throwers hand for the artifact, to my knowledge the card is not mutated yet
+                foreach (CardPlayer cd2 in GameManager.manager.players)
+                {
+                    if (cd2.name == GameManager.manager.currentPlayerName)
+                    {
+                        if (cd2.holster.cardList[selectedCardInt - 1].card.cardType == "Artifact")
+                        {
+                            preventedDamage += doubleRingBonus ? 4 : 2;
+                            foreach (CardPlayer cp in GameManager.manager.players)
+                            {
+                                if (cp.isIsadore)
+                                {
+                                    foreach (CardDisplay cd3 in cp.holster.cardList)
+                                    {
+                                        if (cd3.card.cardName == "CherryBomb Badge")
+                                        {
+                                            preventedDamage -= 1;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            // Foggy Ring of the Nearsighted Old Crone
+            else if (cd.cardName == "Foggy Ring of the Nearsighted Old Crone")
+            {
+                // All items thrown at you prevent 1 damage.
+                // (prevents 2 damage with Ring of Rings in Holster)
+                preventedDamage += doubleRingBonus ? 2 : 1;
+                foreach (CardPlayer cp in GameManager.manager.players)
+                {
+                    if (cp.isIsadore)
+                    {
+                        foreach (CardDisplay cd2 in cp.holster.cardList)
+                        {
+                            if (cd2.card.cardName == "CherryBomb Badge")
+                            {
+                                preventedDamage -= 1;
+                            }
+                        }
+                    }
+                }
+            }
+            // Thick Ring of the Furrowed Brow Dolt
+            else if (cd.cardName == "Thick Ring of the Furrowed Brow Dolt")
+            {
+                // During each opponent turn, prevent 2 damage to your HP.
+                // (prevents 4 damage with Ring of Rings in Holster)
+                if (!opponentPreventedDamage)
+                {
+                    preventedDamage += doubleRingBonus ? 4 : 2;
+                    opponentPreventedDamage = true;
+                    foreach (CardPlayer cp in GameManager.manager.players)
+                    {
+                        if (cp.isIsadore)
+                        {
+                            foreach (CardDisplay cd2 in cp.holster.cardList)
+                            {
+                                if (cd2.card.cardName == "CherryBomb Badge")
+                                {
+                                    preventedDamage -= 1;
                                 }
                             }
                         }

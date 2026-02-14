@@ -176,10 +176,15 @@ public class SceneTransition : MonoBehaviour
 
             SteamUserStats.StoreStats();
 
-            data.playerFashion.Add(card.card.name);
+            data.playerFashion.Add(card.card.cardName);
         }
+        else if (card.card.cardType == "Ring")
+            data.playerRings.Add(card.card.cardName);
         else
-            data.playerDeck.Add(card.card.name);
+        {
+            Debug.Log("Adding card!!!");
+            data.treasure.Add(card.card.cardName);
+        }
 
         System.Random rng = new System.Random();
         int index = GetInt();

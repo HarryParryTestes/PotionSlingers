@@ -77,6 +77,10 @@ public class SaveSystem : MonoBehaviour
         Debug.Log("PLAYER FASHION");
         foreach (string card in data.playerFashion)
             Debug.Log(card);
+
+        Debug.Log("PLAYER RINGS");
+        foreach (string card in data.playerRings)
+            Debug.Log(card);
     }
 
     public static void checkGameData()

@@ -804,6 +804,37 @@ public class GameManager : MonoBehaviour
         }    
     }
 
+    public void handleRings()
+    {
+        /*
+        if (!saveData.playerRings.Any())
+            return;
+        */
+
+        Debug.Log("Handling rings!!!");
+
+        foreach (string name in saveData.playerRings)
+        {
+            foreach (Card card in database.cardList)
+            {
+                // Debug.Log("Name: " + name + "\nDatabase Name: " + card.cardName);
+                if (card.cardName == name)
+                {
+                    Debug.Log("Ring found!");
+                    players[0].rings.Add(card);
+                    break;
+                }
+            }
+        }
+
+        Debug.Log("RINGS IN BACKPACK!!!");
+        foreach(Card card in players[0].rings)
+        {
+            Debug.Log(card.cardName);
+        }
+
+    }
+
     public void handleFashion()
     {
         if (!saveData.playerFashion.Any())
@@ -1159,6 +1190,7 @@ public class GameManager : MonoBehaviour
         saveData.playerLoadedCards.Clear();
         saveData.potionDeck.Clear();
         saveData.itemDeck.Clear();
+        saveData.treasure.Clear();
         int dummyCount = 1;
 
         handleMarketStatuses();
@@ -2334,11 +2366,17 @@ public class GameManager : MonoBehaviour
         numba = rng.Next(0, starterVessels.Count);
         playerHolster.cardList[2].updateCard(starterVessels[numba]);
 
+        /*
         // starter ring
         numba = rng.Next(0, starterRings.Count);
         playerDeck.cardDisplay.updateCard(starterRings[numba]);
         playerDeck.deckList.RemoveAt(0);
         playerDeck.putCardOnBottom(starterRings[numba]);
+        */
+
+        // removing starter ring at start of game
+        // playerDeck.deckList.RemoveAt(0);
+        // playerDeck.cardDisplay.updateCard(playerDeck.placeholder);
     }
 
     public void handleSavedMarketDecks()
@@ -2504,6 +2542,7 @@ public class GameManager : MonoBehaviour
                 handleSavedMarketDecks();
                 handleSavedTrashDeck();
                 handleFashion();
+                handleRings();
 
                 players[0].shields = saveData.shields;
 
@@ -2580,7 +2619,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (Card card in database.cardList)
                     {
-                        if (card.name == saveData.playerHolster[i])
+                        if (card.cardName == saveData.playerHolster[i])
                         {
                             players[0].holster.cardList[i].updateCard(card);
                             // add durability here
@@ -2596,7 +2635,7 @@ public class GameManager : MonoBehaviour
                 {
                     foreach (Card card in database.cardList)
                     {
-                        if (card.name == saveData.playerDeck[i])
+                        if (card.cardName == saveData.playerDeck[i])
                         {
                             try
                             {
@@ -2613,6 +2652,18 @@ public class GameManager : MonoBehaviour
                         }
                     }
                 }
+
+                foreach(string name in saveData.treasure)
+                {
+                    foreach (Card card in database.cardList)
+                    {
+                        if (card.cardName == name)
+                        {
+                            Debug.Log("Adding treasure card!!!");
+                            players[0].deck.putCardOnTop(card);
+                        }
+                    }
+                }               
 
                 // check for any shields that were gotten rid of
                 foreach (CardDisplay cd in players[0].holster.cardList)
@@ -3482,9 +3533,9 @@ public class GameManager : MonoBehaviour
         bool jester = false;
         bool potion = false;
 
-        foreach (CardDisplay cds in player.holster.cardList)
+        foreach (Card cds in player.rings)
         {
-            if (cds.card.cardName == "JesterRing")
+            if (cds.cardName == "JesterRing")
             {
                 Debug.Log("Jester Ring!!!");
                 jester = true;
@@ -3617,15 +3668,19 @@ public class GameManager : MonoBehaviour
             {
                 if (player.charName != "Singelotte")
                     player.subHealth(2);
-            }
+            }           
+        }
 
-            if (cd.card.cardName == "Gauntlet Ring of the Chatelaine")
+        foreach(Card card in player.rings)
+        {
+            if (card.cardName == "Gauntlet Ring of the Chatelaine")
             {
                 Debug.Log("Gauntlet Ring Bonus!!!");
                 if (player.deck.GetComponent<CharacterSlot>() != null)
                     player.deck.GetComponent<CharacterSlot>().gauntletBonus = true;
             }
         }
+
         player.updateHealthUI();
     }
 
@@ -3784,9 +3839,12 @@ public class GameManager : MonoBehaviour
             if (cd.card.name == "placeholder")
             {
                 times++;
-            }
+            }           
+        }
 
-            if (cd.card.cardName == "BoxingRing")
+        foreach (Card card in player.rings)
+        {
+            if (card.cardName == "BoxingRing")
             {
                 Debug.Log("Boxing Ring!!!");
                 boxing = true;
@@ -3852,8 +3910,11 @@ public class GameManager : MonoBehaviour
             {
                 times++;
             }
+        }
 
-            if (cd.card.cardName == "BoxingRing")
+        foreach (Card card in player.rings)
+        {
+            if (card.cardName == "BoxingRing")
             {
                 Debug.Log("Boxing Ring!!!");
                 boxing = true;
@@ -4014,7 +4075,8 @@ public class GameManager : MonoBehaviour
         if (temp.card.cardType == "Ring")
         {
             Debug.Log("Updating a ring");
-            temp.updateCard(cd.card);
+            players[0].rings.Add(temp.card);
+            return;
         }
 
         temp.updateCard(cd.card);
@@ -4835,10 +4897,12 @@ public class GameManager : MonoBehaviour
             handleTurnButton();
 
             // Logic to check for end of turn effect ring
-            foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+            Debug.Log("Vengeful ring check!");
+            foreach (Card cd in players[myPlayerIndex].rings)
             {
-                if (cd.card.cardName == "Vengeful Ring of the Cursed Mutterings")
+                if (cd.cardName == "Vengeful Ring of the Cursed Mutterings")
                 {
+                    Debug.Log("Vengeful ring triggered!");
                     if (players[myPlayerIndex].doubleRingBonus)
                     {
                         dealDamageToAll(4);
@@ -4849,13 +4913,10 @@ public class GameManager : MonoBehaviour
                     }
                 }
 
-                // check for Blacksnake Pip Sling
-                if (cd.card.cardName == "Blacksnake Pip Sling")
-                {
-                    players[myPlayerIndex].deck.putCardOnBottom(cd.card);
-                    cd.updateCard(cd.placeholder);
-                }
+
                 /*
+                 // check for Blacksnake Pip Sling
+                
                 // check for gambling ring
                 if (cd.card.cardName == "RingofGamblingMopoji" && players[myPlayerIndex].pipsUsedThisTurn == 0)
                 {
@@ -4871,6 +4932,15 @@ public class GameManager : MonoBehaviour
             }
             // taking this out for now
             // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
+
+            foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
+            {
+                if (cd.card.cardName == "Blacksnake Pip Sling")
+                {
+                    players[myPlayerIndex].deck.putCardOnBottom(cd.card);
+                    cd.updateCard(cd.placeholder);
+                }
+            }
 
             int potions;
             int artifacts;
@@ -5154,10 +5224,12 @@ public class GameManager : MonoBehaviour
             handleTurnButton();
 
             // Logic to check for end of turn effect ring
-            foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+            Debug.Log("Vengeful ring check!");
+            foreach (Card cd in players[myPlayerIndex].rings)
             {
-                if (cd.card.cardName == "Vengeful Ring of the Cursed Mutterings")
+                if (cd.cardName == "Vengeful Ring of the Cursed Mutterings")
                 {
+                    Debug.Log("Vengeful ring triggered!");
                     if (players[myPlayerIndex].doubleRingBonus)
                     {
                         dealDamageToAll(4);
@@ -5167,29 +5239,18 @@ public class GameManager : MonoBehaviour
                         dealDamageToAll(2);
                     }
                 }
+            }
+            // taking this out for now
+            // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
 
-                // check for Blacksnake Pip Sling
+            foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+            {
                 if (cd.card.cardName == "Blacksnake Pip Sling")
                 {
                     players[myPlayerIndex].deck.putCardOnBottom(cd.card);
                     cd.updateCard(cd.placeholder);
                 }
-                /*
-                // check for gambling ring
-                if (cd.card.cardName == "RingofGamblingMopoji" && players[myPlayerIndex].pipsUsedThisTurn == 0)
-                {
-                    players[myPlayerIndex].pipCount = rng.Next(1, 11);
-                    if (players[myPlayerIndex].doubleRingBonus)
-                    {
-                        Debug.Log("Double ring bonus");
-                        players[myPlayerIndex].pipCount *= 2;
-                    }
-                    Debug.Log("New pip count: " + players[myPlayerIndex].pipCount);
-                }
-                */
             }
-            // taking this out for now
-            // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
 
             int potions;
             int artifacts;
@@ -6485,9 +6546,9 @@ public class GameManager : MonoBehaviour
                 bool stone = false;
 
                 // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
-                foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+                foreach (Card cd in players[myPlayerIndex].rings)
                 {
-                    if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
+                    if (cd.cardName == "Contemplation Ring of the Stone Monk")
                         stone = true;
                 }
 
@@ -6578,9 +6639,9 @@ public class GameManager : MonoBehaviour
                 bool stone = false;
 
                 // Stone Ring logic will simply pass the damage of the potion without checking any of the card text effects
-                foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+                foreach (Card cd in players[myPlayerIndex].rings)
                 {
-                    if (cd.card.cardName == "Contemplation Ring of the Stone Monk")
+                    if (cd.cardName == "Contemplation Ring of the Stone Monk")
                         stone = true;
                 }
 
@@ -8851,11 +8912,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        foreach (Card cd in players[myPlayerIndex].rings)
         {
             // Ring of the Rings
             // Double all ring effects, your rings cost 4 pips
-            if (cd.card.cardName == "BargainRing")
+            if (cd.cardName == "BargainRing")
             {
                 players[myPlayerIndex].bargainBonus = true;
                 Debug.Log("Bargain bonus in market check");
@@ -8864,11 +8925,11 @@ public class GameManager : MonoBehaviour
             players[myPlayerIndex].bargainBonus = false;
         }
 
-        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        foreach (Card cd in players[myPlayerIndex].rings)
         {
             // Ring of the Rings
             // Double all ring effects, your rings cost 4 pips
-            if (cd.card.cardName == "RingoftheRings")
+            if (cd.cardName == "RingoftheRings")
             {
                 players[myPlayerIndex].doubleRingBonus = true;
                 Debug.Log("Double ring bonus in market check");
@@ -9018,11 +9079,11 @@ public class GameManager : MonoBehaviour
 
         Debug.Log("Top Market Buy");
 
-        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        foreach (Card cd in players[myPlayerIndex].rings)
         {
             // Ring of the Rings
             // Double all ring effects, your rings cost 4 pips
-            if (cd.card.cardName == "BargainRing")
+            if (cd.cardName == "BargainRing")
             {
                 players[myPlayerIndex].bargainBonus = true;
                 Debug.Log("Bargain Bonus!!!");
@@ -9324,11 +9385,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("No Bargain Bonus!!!");
         }
 
-        foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+        foreach (Card cd in players[myPlayerIndex].rings)
         {
             // Ring of the Rings
             // Double all ring effects, your rings cost 4 pips
-            if (cd.card.cardName == "RingoftheRings")
+            if (cd.cardName == "RingoftheRings")
             {
                 players[myPlayerIndex].doubleRingBonus = true;
                 break;
@@ -10284,11 +10345,11 @@ public class GameManager : MonoBehaviour
             td.addCard(playerHolster.cardList[selectedCardInt - 1]);
             StartCoroutine(waitThreeSeconds(dialog));
 
-            foreach (CardDisplay cd in players[myPlayerIndex].holster.cardList)
+            foreach (Card cd in players[myPlayerIndex].rings)
             {
                 // Ring of the Rings
                 // Double all ring effects, your rings cost 4 pips
-                if (cd.card.cardName == "RingoftheRings")
+                if (cd.cardName == "RingoftheRings")
                 {
                     players[myPlayerIndex].doubleRingBonus = true;
                     break;

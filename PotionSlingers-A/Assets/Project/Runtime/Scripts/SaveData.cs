@@ -26,6 +26,8 @@ public class SaveData
     public List<string> playerDeck = new List<string>();
     public List<string> playerHolster = new List<string>();
     public List<string> playerFashion = new List<string>();
+    public List<string> playerRings = new List<string>();
+    public List<string> treasure = new List<string>();
     public List<string> potionDeck = new List<string>();
     public List<string> itemDeck = new List<string>();
     public List<string> trashDeck = new List<string>();
