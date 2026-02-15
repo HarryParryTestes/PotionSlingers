@@ -5258,6 +5258,16 @@ public class GameManager : MonoBehaviour
                     }
                 }
             }
+
+            foreach (Card cd in players[myPlayerIndex].fashion)
+            {
+                if (cd.cardName == "Witch Specula")
+                {
+                    // add no more than 3 health based on the amount of unspent pips
+                    Debug.Log("Witch Specula triggered!!!");
+                    players[myPlayerIndex].addHealth(Math.Min(players[myPlayerIndex].pips, 3));
+                }
+            }
             // taking this out for now
             // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
 

@@ -10,8 +10,10 @@ public class TreasureMenu : MonoBehaviour
     public List<Card> cardPool;
     public List<Card> hatPool;
     public List<CardDisplay> cardDisplays;
+    public List<CardDisplay> discardCardDisplays;
     public TMPro.TextMeshProUGUI description;
 
+    public GameObject discardMenu;
     public GameObject currencyHoverBox;
     public GameObject healthHoverBox;
     public GameObject deck;
@@ -42,6 +44,84 @@ public class TreasureMenu : MonoBehaviour
         if (obj.GetComponent<CanvasGroup>() == null)
             obj.AddComponent<CanvasGroup>();
         obj.GetComponent<BonusMenuUIManager>().setAlphaZero();
+    }
+
+    public void DisplayDiscardRings()
+    {
+        SaveData saveData = SaveSystem.LoadGameData();
+        discardMenu.SetActive(true);
+        FadeIn(discardMenu);
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (Card card in GameManager.manager.database.cardList)
+            {
+                // Debug.Log("Name: " + name + "\nDatabase Name: " + card.cardName);
+                if (card.cardName == saveData.playerRings[i])
+                {
+                    Debug.Log("Ring found!");
+                    discardCardDisplays[i].updateCard(card);
+                    break;
+                }
+            }
+            // discardCardDisplays[i].updateCard(saveData.playerRings[i]);
+        }
+    }
+
+    public void DisplayDiscardHats()
+    {
+        SaveData saveData = SaveSystem.LoadGameData();
+        discardMenu.SetActive(true);
+        FadeIn(discardMenu);
+        for (int i = 0; i < 3; i++)
+        {
+            foreach (Card card in GameManager.manager.database.cardList)
+            {
+                // Debug.Log("Name: " + name + "\nDatabase Name: " + card.cardName);
+                if (card.cardName == saveData.playerFashion[i])
+                {
+                    Debug.Log("Hat found!");
+                    discardCardDisplays[i].updateCard(card);
+                    break;
+                }
+            }
+            // discardCardDisplays[i].updateCard(saveData.playerRings[i]);
+        }
+    }
+
+    public void DiscardCard(CardDisplay cd)
+    {
+        SaveData saveData = SaveSystem.LoadGameData();
+        // determine if it's a hat or a ring
+        if (cd.card.cardType == "Ring")
+        {
+            for(int i = 0; i < saveData.playerRings.Count; i++)
+            {
+                if (saveData.playerRings[i] == cd.card.cardName)
+                {
+                    Debug.Log("Discarding ring!!!");
+                    saveData.playerRings.RemoveAt(i);
+                    discardMenu.SetActive(false);
+                    SaveSystem.SaveGameData(saveData);
+                    checkExtras();
+                    break;
+                }
+            }
+        }
+        else
+        {
+            for (int i = 0; i < saveData.playerFashion.Count; i++)
+            {
+                if (saveData.playerFashion[i] == cd.card.cardName)
+                {
+                    Debug.Log("Discarding ring!!!");
+                    saveData.playerFashion.RemoveAt(i);
+                    discardMenu.SetActive(false);
+                    SaveSystem.SaveGameData(saveData);
+                    checkExtras();
+                    break;
+                }
+            }
+        }
     }
 
 
@@ -180,5 +260,26 @@ public class TreasureMenu : MonoBehaviour
         // ADD THIS BACK IN WHEN YOU WANT TO SHOW THE UI AGAIN!
         // deck.SetActive(true);
         // holster.SetActive(true);
+
+        checkExtras();
     }
+
+    public void checkExtras()
+    {
+        SaveData data = SaveSystem.LoadGameData();
+        if (data.playerRings.Count > 2)
+        {
+            Debug.Log("Need to discard a ring!");
+            DisplayDiscardRings();
+            return;
+        }
+
+        if (data.playerFashion.Count > 2)
+        {
+            Debug.Log("Need to discard a ring!");
+            DisplayDiscardHats();
+            return;
+        }
+    }
+
 }
