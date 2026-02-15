@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     GameObject obTop;
     GameObject obLeft;
     GameObject obRight;
+    public GameObject backpack;
     public GameObject throwingHand;
     public GameObject potionThrowingHand1;
     public GameObject potionThrowingHand2;
@@ -189,6 +190,7 @@ public class GameManager : MonoBehaviour
     public bool mirrorCommand = false;
     public bool snakeBonus = false;
     public bool marketSelected = false;
+    public bool backpackSelected = false;
     public bool holster = false;
     public bool glove = false;
     public bool cardGameBonus = false;
@@ -488,6 +490,20 @@ public class GameManager : MonoBehaviour
         md2.cardDisplay4.GetComponent<DragCard>().checkPosition();
     }
 
+    public void moveBackpack()
+    {
+        if (!backpackSelected)
+        {
+            // insert backpack unzipping sfx or something
+            backpack.transform.DOMoveY(740f * heightRatio, .75f);
+            backpackSelected = true;
+        } else
+        {
+            backpack.transform.DOMoveY(1040f * heightRatio, .75f);
+            backpackSelected = false;
+        }
+    }
+
     public void moveMarket()
     {
         StopCoroutine(cardDisappear());
@@ -582,6 +598,7 @@ public class GameManager : MonoBehaviour
         saveData.cardStatuses.Clear();
         saveData.playerHolster.Clear();
         saveData.playerLoadedCards.Clear();
+        saveData.treasure.Clear();
         saveGameManagerValues();
         saveData.stage = 1;
         saveData.savedGame = true;
@@ -2716,6 +2733,7 @@ public class GameManager : MonoBehaviour
 
                 // handle fashion
                 players[0].checkHatBonuses();
+                players[0].checkRingBonuses();
 
                 players[0].updateHealthUI();
                 players[0].updatePipsUI();

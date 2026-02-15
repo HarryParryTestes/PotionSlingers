@@ -1939,6 +1939,34 @@ public class CardPlayer : MonoBehaviour
         return damage;
     }
 
+    public void checkRingBonuses()
+    {
+        foreach (Card cd in rings)
+        {
+            // Ring of the Rings
+            // Double all ring effects, your rings cost 4 pips
+            if (cd.cardName == "RingoftheRings")
+            {
+                doubleRingBonus = true;
+            }
+        }
+
+        foreach (Card cd in rings)
+        {
+            if (cd.cardName == "Tiny Ring of the Extra Coin Purse")
+            {
+                if (doubleRingBonus)
+                {
+                    pips += 4;
+                }
+                else
+                {
+                    pips += 2;
+                }
+            }
+        }
+    }
+
     public void checkHatBonuses()
     {
         foreach (Card card in fashion)

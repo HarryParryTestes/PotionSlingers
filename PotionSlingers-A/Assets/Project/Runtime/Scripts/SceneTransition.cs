@@ -269,9 +269,9 @@ public class SceneTransition : MonoBehaviour
         SaveSystem.SaveGameData(saveData);
 
 
-        card1.transform.DOMoveX(-4.5f, 1f);
-        card2.transform.DOMoveX(4.5f, 1f);
-        yield return new WaitForSeconds(1f);
+        card1.transform.DOMoveX(-4.5f, .75f);
+        card2.transform.DOMoveX(4.5f, .75f);
+        yield return new WaitForSeconds(.75f);
 
         /*
         if (saveData.visitedEnemies.Contains("Singelotte"))

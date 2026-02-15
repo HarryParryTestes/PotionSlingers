@@ -274,7 +274,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             // hoverbox code in here!
             if (cp.hoverBox != null)
             {
-                GameManager.manager.fashionUI.transform.SetSiblingIndex(3);
+                GameManager.manager.backpack.transform.SetSiblingIndex(3);
                 cp.hoverBox.SetActive(true);
                 cp.hoverBox.GetComponent<HoverBox>().UpdateText(cp);
             }               
@@ -298,7 +298,7 @@ public class CharacterSlot : MonoBehaviour, IDropHandler, IPointerEnterHandler, 
             if(cp.hoverBox != null)
             {
                 cp.hoverBox.SetActive(false);
-                GameManager.manager.fashionUI.transform.SetSiblingIndex(7);
+                GameManager.manager.backpack.transform.SetSiblingIndex(7);
             }
                 
         }
