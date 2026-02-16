@@ -1087,21 +1087,24 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
             // trying description hitbox here
             Debug.Log("Description should show up!");
-            displayCardText(this.gameObject.GetComponent<CardDisplay>().card);
+            displayCardText(this.gameObject.GetComponent<CardDisplay>());
         }
     }
 
-    public void displayCardText(Card card)
+    public void displayCardText(CardDisplay cd)
     {
-        if (card.desc == "")
+        if (cd.card.desc == "")
         {
             GameManager.manager.cardHoverBox.gameObject.SetActive(true);
-            GameManager.manager.cardHoverBox.textBox.text = card.effectAmount + " Damage";
+            GameManager.manager.cardHoverBox.textBox.text = cd.card.effectAmount + " Damage";
             return;
         }
 
         GameManager.manager.cardHoverBox.gameObject.SetActive(true);
-        GameManager.manager.cardHoverBox.textBox.text = card.desc;
+        if(cd.card.cardType == "Artifact" && !market && !crucible)
+            GameManager.manager.cardHoverBox.textBox.text = cd.card.desc + "\n\n" + cd.durability + " uses left!";
+        else
+            GameManager.manager.cardHoverBox.textBox.text = cd.card.desc;
     }
 
     public IEnumerator setPadding()

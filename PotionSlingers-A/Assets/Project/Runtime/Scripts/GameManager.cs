@@ -5680,6 +5680,8 @@ public class GameManager : MonoBehaviour
                 // Card card = GameManager.manager.md1.popCard();
                 whatever.vPotion1.updateCard(cd);
                 sendMessage("Loaded a card!");
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
+
                 // cd.aPotion.updateCard(GameManager.manager.starterPotionCard);
                 if (whatever.vesselEmptySlot1 != null)
                 {
@@ -5695,6 +5697,8 @@ public class GameManager : MonoBehaviour
                 whatever.vPotion2.gameObject.SetActive(true);
                 // Card card = GameManager.manager.md1.popCard();
                 whatever.vPotion2.updateCard(cd);
+                sendMessage("Loaded a card!");
+                FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_Load");
 
                 if (whatever.vesselEmptySlot2 != null)
                 {
