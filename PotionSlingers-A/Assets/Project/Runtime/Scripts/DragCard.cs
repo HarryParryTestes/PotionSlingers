@@ -948,6 +948,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
         FMODUnity.RuntimeManager.PlayOneShot("event:/UI/UI_Card_Pickup");
 
+        // if(GameManager.manager.dialog.textBoxCounter)
+        GameManager.manager.tutorialHand.SetActive(false);
+
         if (obj != null)
         {
             obj.GetComponent<CanvasGroup>().DOFade(0, 0.3f);
@@ -1250,6 +1253,14 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
         if (crucible)
             return;
+
+        /*
+        if(GameManager.manager.dialog.textBoxCounter == 5)
+        {
+            GameManager.manager.tutorialHand.SetActive(true);
+            GameManager.manager.potionDragAnimation();
+        }
+        */
 
         DOTween.Pause(gameObject.name);
         grabbed = false;

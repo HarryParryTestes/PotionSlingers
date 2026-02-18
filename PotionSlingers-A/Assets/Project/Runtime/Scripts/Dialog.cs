@@ -56,8 +56,11 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
 
     public void initDialog()
     {
+        GameManager.manager.tutorialArrow.SetActive(false);
+        GameManager.manager.tutorialArrow2.SetActive(false);
+
         textBoxCounter = 0;
-        textInfo = "Hello, and welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion-slinging\n" +
+        textInfo = "Hey it's me, tutorial girl! Welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion-slinging " +
             "action this game has to offer!";
         ActivateText(dialogBox);
         Boloidle.SetActive(false);
@@ -122,28 +125,29 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         textBoxCounter++;
         if (textBoxCounter == 1)
         {
-            textInfo = "In each game of Potion Slingers, each player starts with the same starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a fancy ring at the top of your deck!\n\n"
-                + "Try throwing a starter potion at me! Take your best shot!";
+            textInfo = "Let's not waste too much time doing this... even though it's MY favorite thing";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
-            //dialogBox.text = "In each game of Potion Slingers, each player starts with the\nsame starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a\nfancy ring at the top of your deck!\n\n"
-            //+ "Try throwing a starter potion at me! Take your best shot!";
 
         }
         else if (textBoxCounter == 2)
         {
-            directions.SetActive(true);
-            gameObject.SetActive(false);
-            nameTag.SetActive(false);
-            // SetActive the arrow here
-            GameManager.manager.tutorialArrow.SetActive(true);
-            GameManager.manager.tutorialArrow2.SetActive(true);
+            textInfo = "We need to get you to learn how to play as quickly as you can. I promise you'll get the hang of it!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);       
+        }
+        else if (textBoxCounter == 3)
+        {
+            textInfo = "Let's start with the bread and butter, throwing potions! There’s one right here in your HOLSTER!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 4)
         {
-            textInfo = "Speaking of artifacts, try loading a potion into an artifact card!\n\n" +
-                "Try dragging a potion card onto that artifact card!";
+            textInfo = "Now drag it across the screen towards the enemy over there to throw it! ";
                 // "artifact card!";
 
             ActivateText(dialogBox);
@@ -153,13 +157,21 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 5)
         {
             directions.SetActive(true);
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+            // SetActive the arrow here
+            // GameManager.manager.tutorialArrow.SetActive(true);
+            // GameManager.manager.tutorialArrow2.SetActive(true);
+            GameManager.manager.potionDragAnimation();
+            /*
+            directions.SetActive(true);
             directionBox.text = "Drag a potion card onto the artifact card to load it!";
                 // "Then click on the artifact card!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
             GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
             GameManager.manager.tutorialArrow.SetActive(true);
-            
+            */
         }
         else if (textBoxCounter == 7)
         {
@@ -371,7 +383,56 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             return;
         }
 
+        if (textBoxCounter == 1)
+        {
+            textInfo = "Let's not waste too much time doing this... even though it's MY favorite thing.";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
 
+        }
+        else if (textBoxCounter == 2)
+        {
+            textInfo = "We need to get you to learn how to play as quickly as you can. I promise you'll get the hang of it!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 3)
+        {
+            textInfo = "Let's start with the bread and butter, throwing potions! There’s one right here in your HOLSTER!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 4)
+        {
+            textInfo = "Now drag it across the screen towards the enemy over there to throw it! ";
+            // "artifact card!";
+
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 5)
+        {
+            directions.SetActive(true);
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+            // trigger hand move animation here
+            GameManager.manager.potionDragAnimation();
+            /*
+            directions.SetActive(true);
+            directionBox.text = "Drag a potion card onto the artifact card to load it!";
+                // "Then click on the artifact card!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+            GameManager.manager.tutorialArrow.SetActive(true);
+            */
+        }
+
+        /*
         if(textBoxCounter == 1)
         {
             textInfo = "In each game of Potion Slingers, each player starts with the\nsame starter cards!\n\nYou get two potions, a vessel, and an artifact! You also get a\nfancy ring at the top of your deck!\n\n"
@@ -555,5 +616,6 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         {
             SceneManager.LoadScene("TitleMenu");
         }
+        */
     }             
 }

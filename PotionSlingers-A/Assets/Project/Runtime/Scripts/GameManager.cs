@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
     GameObject obRight;
     public GameObject backpack;
     public GameObject throwingHand;
+    public GameObject tutorialHand;
     public GameObject potionThrowingHand1;
     public GameObject potionThrowingHand2;
     public GameObject artifactHand1;
@@ -439,6 +440,12 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay4.GetComponent<DragCard>().checkPosition();
             */
         }
+    }
+
+    public void potionDragAnimation()
+    {
+        tutorialHand.SetActive(true);
+        tutorialHand.transform.DOMove(bolo.transform.position, 1.5f).SetLoops(-1, LoopType.Restart);
     }
 
     public void unblockRaycasts()
@@ -2804,6 +2811,8 @@ public class GameManager : MonoBehaviour
                 playerBottomName.text = SteamFriends.GetPersonaName().ToString();
                 currentPlayerName = players[0].name;
 
+                // make sure there's no ring sprite in the deck!
+                playerDeck.cardDisplay.updateCard(playerDeck.placeholder);
                 setStoryModeCharacters();
 
                 // do numPlayers == 3 check here
@@ -3012,6 +3021,7 @@ public class GameManager : MonoBehaviour
             }            
             p3.SetActive(false);
             p4.SetActive(false);
+            playerDeck.cardDisplay.updateCard(playerDeck.placeholder);
             return;
             //Debug.Log("Shuffling market decks for tutorial");
         }
@@ -5968,7 +5978,6 @@ public class GameManager : MonoBehaviour
             dialog.directions.gameObject.SetActive(false);
             // tutorialArrow.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
             dialog.textInfo = "Potions are the lifeblood of this game, and you will be seeing them a lot!\n\nNot only are they cheap ammunition, but they fuel " +
                 "your more powerful artifacts and vessels!";
             dialog.ActivateText(dialog.dialogBox);
@@ -5977,7 +5986,6 @@ public class GameManager : MonoBehaviour
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
             dialog.textInfo = "Artifacts are powerful items that only require one potion in order to use." +
                 "\n\nTry using that artifact on me!\n\n" +
                 "Drag the artifact card over your foe and let 'em have it!";
@@ -5986,7 +5994,6 @@ public class GameManager : MonoBehaviour
         else if (dialog.textBoxCounter == 8)
         {
             dialog.directions.gameObject.SetActive(false);
-            dialog.gameObject.SetActive(true);
             dialog.nameTag.SetActive(true);
             dialog.textInfo = "Artifacts can be used as many times as you want per turn!\n\n" +
                 "Whenever an artifact is used, the loaded potion will be trashed!";
@@ -6394,7 +6401,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if ((dialog.textBoxCounter != 2 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 17
+            if ((dialog.textBoxCounter != 5 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 17
                 && dialog.textBoxCounter != 18 && dialog.textBoxCounter != 19) && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(19);
@@ -6408,7 +6415,7 @@ public class GameManager : MonoBehaviour
                 if (dialog.textBoxCounter == 17 || dialog.textBoxCounter == 18)
                 {
                     sendErrorMessage(19);
-                    playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
+                    // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 }
                 int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
                 damage = cardPlayer.checkBonus(damage, playerHolster.cardList[selectedCardInt - 1]);
