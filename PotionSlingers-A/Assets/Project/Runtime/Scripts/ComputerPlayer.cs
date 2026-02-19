@@ -551,6 +551,12 @@ public class ComputerPlayer : CardPlayer
 
         yield return new WaitForSeconds(1.5f);
 
+        if (Game.tutorial)
+        {
+            storyModeTurn();
+            yield break;
+        }
+
         // story mode logic
         if (Game.storyMode && (this.gameObject.GetComponent<CardPlayer>().name != "Saltimbocca" &&
             this.gameObject.GetComponent<CardPlayer>().name != "Bolo" &&

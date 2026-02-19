@@ -200,6 +200,8 @@ public class GameManager : MonoBehaviour
     public bool moveToDeck = false;
     public bool spicyExplanation = false;
     public bool postGame = false;
+    public bool tutorialPotionBuy = false;
+    public bool tutorialArtifactBuy = false;
 
     public TMPro.TextMeshProUGUI reetsMenuText;
     public GameObject reetsCard;
@@ -522,6 +524,7 @@ public class GameManager : MonoBehaviour
         if (Game.tutorial && dialog.textBoxCounter < 9)
             return;
 
+
         if (!marketSelected)
         {
             marketSelected = true;
@@ -541,6 +544,28 @@ public class GameManager : MonoBehaviour
             md2.cardDisplay1.gameObject.SetActive(true);
             md2.cardDisplay2.gameObject.SetActive(true);
             md2.cardDisplay3.gameObject.SetActive(true);
+
+            if(Game.tutorial)
+            {
+                if(dialog.textBoxCounter == 10 || dialog.textBoxCounter == 11)
+                {
+                    // just one potion card
+                    md1.cardDisplay1.gameObject.SetActive(false);
+                    md1.cardDisplay3.gameObject.SetActive(false);
+                    md2.cardDisplay1.gameObject.SetActive(false);
+                    md2.cardDisplay2.gameObject.SetActive(false);
+                    md2.cardDisplay3.gameObject.SetActive(false);
+                }
+
+                if(dialog.textBoxCounter == 15)
+                {
+                    md1.cardDisplay1.gameObject.SetActive(false);
+                    md1.cardDisplay2.gameObject.SetActive(false);
+                    md1.cardDisplay3.gameObject.SetActive(false);
+                    md2.cardDisplay1.gameObject.SetActive(false);
+                    md2.cardDisplay3.gameObject.SetActive(false);
+                }
+            }
             // md2.cardDisplay4.gameObject.SetActive(true);
             FMODUnity.RuntimeManager.PlayOneShot("event:/UI/Market_open");
             if (dialog.textBoxCounter == 10)
@@ -3011,17 +3036,23 @@ public class GameManager : MonoBehaviour
             cardPlayer.name = SteamFriends.GetPersonaName().ToString();
             currentPlayerName = playerBottomName.text;
             players[0].currentPlayerHighlight.SetActive(true);
-            playerTopName.text = "BOLO";
-            players[2].hpCubes = 1;
-            players[2].updateHealthUI();
-            if(Screen.width == 1280)
-            {
-                players[2].gameObject.transform.parent.position = new Vector3(players[2].gameObject.transform.parent.position.x,
-                players[2].gameObject.transform.parent.position.y - 60, 0);
-            }            
+            // playerTopName.text = "BOLO";
+            // players[2].hpCubes = 1;
+            // players[2].updateHealthUI();
+            numPlayers = 2;
+            background.sprite = backgrounds[4];
+            handleBackgroundUI();
+            setDuelCharacter("Dippit", 10);
+            /*
+            players[1].gameObject.transform.parent.position = new Vector3(players[1].gameObject.transform.parent.position.x,
+                players[1].gameObject.transform.parent.position.y - (120 * heightRatio), 0);
+            */
             p3.SetActive(false);
             p4.SetActive(false);
             playerDeck.cardDisplay.updateCard(playerDeck.placeholder);
+            playerHolster.card2.updateCard(playerDeck.placeholder);
+            playerHolster.card3.updateCard(playerDeck.placeholder);
+            playerHolster.card4.updateCard(playerDeck.placeholder);
             return;
             //Debug.Log("Shuffling market decks for tutorial");
         }
@@ -3991,7 +4022,13 @@ public class GameManager : MonoBehaviour
                 deal3ToAll();
             }
         }
-        // player.setDefaultTurn();
+
+        if (dialog.textBoxCounter == 20)
+        {
+            yield return new WaitForSeconds(0.5f);
+            dialog.gameObject.SetActive(true);
+            dialog.doThis();
+        }
     }
 
     public void saveGameStuff()
@@ -4036,6 +4073,14 @@ public class GameManager : MonoBehaviour
         trashDeckBonus = false;
 
         player.currentPlayerHighlight.SetActive(true);
+
+        if (dialog.textBoxCounter == 17 && player == cardPlayer)
+        {
+            dialog.gameObject.SetActive(true);
+            dialog.doThis();
+            return;
+        }
+
 
         // This is where to make the animation that deals the cards from the deck to the holster
         if (player.holster.gameObject.activeInHierarchy)
@@ -5124,23 +5169,22 @@ public class GameManager : MonoBehaviour
             onStartTurn(cardPlayer);
             return;
         }
+
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if ((dialog.textBoxCounter != 14 && dialog.textBoxCounter != 24) && dialog.textBoxCounter < 39)
+            if ((dialog.textBoxCounter != 17 && dialog.textBoxCounter != 24) && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(18);
-                playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
-            Debug.Log("Tutorial turn ended");
-            onStartTurn(cardPlayer);
-            if (dialog.textBoxCounter == 24)
-            {
-                dialog.textBoxCounter++;
-            }
-            StartCoroutine(waitThreeSeconds(dialog));
-            return;
+
+            dialog.directions.SetActive(false);
+            // Debug.Log("Tutorial turn ended");
+            // players[1].gameObject.GetComponent<ComputerPlayer>().StartCoroutine(players[1].gameObject.GetComponent<ComputerPlayer>().waitASecBro());
+            // onStartTurn(cardPlayer);
+            
+            // StartCoroutine(waitThreeSeconds(dialog));          
         }
 
         // turn the direction box off after you've taken a turn to explain it
@@ -5967,10 +6011,6 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator waitThreeSeconds(Dialog dialog)
     {
-        if (dialog.textBoxCounter == 24)
-        {
-            yield break;
-        }
         yield return new WaitForSeconds(2);
         dialog.textBoxCounter++;
         if (dialog.textBoxCounter == 3)
@@ -5986,48 +6026,41 @@ public class GameManager : MonoBehaviour
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.textInfo = "Artifacts are powerful items that only require one potion in order to use." +
-                "\n\nTry using that artifact on me!\n\n" +
-                "Drag the artifact card over your foe and let 'em have it!";
+            dialog.textInfo = "Did you see that? It dealt DAMAGE to the enemy! Potions deal damage based on the amount shown on the card.";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 8)
         {
             dialog.directions.gameObject.SetActive(false);
-            dialog.nameTag.SetActive(true);
             dialog.textInfo = "Artifacts can be used as many times as you want per turn!\n\n" +
                 "Whenever an artifact is used, the loaded potion will be trashed!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 12)
         {
+            if (marketSelected)
+                moveMarket();
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
             tutorialArrow.SetActive(false);
             tutorialArrow2.SetActive(false);
-            dialog.textInfo = "Cards bought from the market appear face-up on top of " +
-                "your deck! The order in which you buy things is important!\n\n" +
-                "Keep in mind that any unspent Pips do not get saved, " +
-                "so use 'em or lose 'em!";
+            dialog.textInfo = "Good! See how they went to the top of your deck?";
             dialog.ActivateText(dialog.dialogBox);
         }
-        else if (dialog.textBoxCounter == 15)
+        else if (dialog.textBoxCounter == 16)
         {
+            if (marketSelected)
+                moveMarket();
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
             tutorialArrow.SetActive(false);
-            dialog.textInfo = "Upon the start of your next turn, empty spots in your holster " +
-                "will be replaced by the cards on top of your deck!\n\n" +
-                "You also get 6 new Pips to start your turn with.";
+            dialog.textInfo = "Well, we're all out of Pips and our Holster is empty, so let's click on the PASS button in the lower right corner to end your turn!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 20)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
             dialog.textInfo = "Good job! When a vessel is thrown, the vessel is trashed, and " +
                 "the potions are dropped into the bottom of your deck!";
             dialog.ActivateText(dialog.dialogBox);
@@ -6036,40 +6069,37 @@ public class GameManager : MonoBehaviour
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
             dialog.textInfo = "Excellent! Now let's buy more cards from the market.\n\n" +
                 "Buy some more potions from the market and then end your turn!";
             dialog.ActivateText(dialog.dialogBox);
         }
-        else if (dialog.textBoxCounter == 26)
+        else if (dialog.textBoxCounter == 25)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
-            dialog.textInfo = "While buying cards is all fun and games, selling is where you " +
-                "really make your dough!\n\n" +
-                "Selling items allows you to increase your Pip total beyond " +
-                "6 Pips, allowing you to buy more powerful and expensive " +
-                "items!";
+            dialog.textInfo = "Great! Now that it’s fully loaded, you can throw it just like a potion! Give it a try!";
             dialog.ActivateText(dialog.dialogBox);
         }
-        else if (dialog.textBoxCounter == 29)
+        else if (dialog.textBoxCounter == 27)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
-            dialog.textInfo = "If you don't want to sell a card but you don't want it in your " +
-                "holster, you can cycle it to the bottom of your deck as well!\n\n" +
-                "Be aware that cycling non-potion cards costs 1 Pip!\n\n" +
-                "Try cycling a card from your holster! Drag a card from " +
-                "your holster to your deck!";
+            dialog.textInfo = "Not only does it do big damage, but the loaded potions get cycled back into the bottom of your deck!";
             dialog.ActivateText(dialog.dialogBox);
         }
-        else if (dialog.textBoxCounter == 31)
+        else if (dialog.textBoxCounter == 28)
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
+            dialog.textInfo = "Not only does it do big damage, but the loaded potions get cycled back into the bottom of your deck!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 32)
+        {
+            tutorialPotionBuy = false;
+            tutorialArtifactBuy = false;
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
             dialog.textInfo = "Now let's talk about you! Your character that is...\n\n" +
                 "Every character has a special ability detailed on the front of " +
                 "their character card!\n\n" +
@@ -6081,7 +6111,6 @@ public class GameManager : MonoBehaviour
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
             dialog.textInfo = "Try using your character's upgraded action!\n\n" +
                 "Click on your character card and click ACTION to use it!";
             dialog.ActivateText(dialog.dialogBox);
@@ -6090,7 +6119,6 @@ public class GameManager : MonoBehaviour
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.nameTag.SetActive(true);
             dialog.textInfo = "Some characters have unique items that can be obtained " +
                 "by using the character's flipped action!\n\n" +
                 "Try getting them all with each specific character!";
@@ -6402,7 +6430,7 @@ public class GameManager : MonoBehaviour
         if (Game.tutorial)
         {
             if ((dialog.textBoxCounter != 5 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 17
-                && dialog.textBoxCounter != 18 && dialog.textBoxCounter != 19) && dialog.textBoxCounter < 39)
+                && dialog.textBoxCounter != 18 && dialog.textBoxCounter != 19 && dialog.textBoxCounter != 26) && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(19);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -8220,7 +8248,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if ((dialog.textBoxCounter != 5 && dialog.textBoxCounter != 17 && dialog.textBoxCounter != 18) && dialog.textBoxCounter < 39)
+            if (dialog.textBoxCounter != 23 && dialog.textBoxCounter != 24)
             {
                 sendErrorMessage(12);
                 // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -9135,8 +9163,8 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if ((dialog.textBoxCounter != 10 && dialog.textBoxCounter != 11 &&
-                dialog.textBoxCounter != 24) && dialog.textBoxCounter < 38)
+            if ((dialog.textBoxCounter != 10 && dialog.textBoxCounter != 11 && dialog.textBoxCounter != 24 && dialog.textBoxCounter != 30
+                && dialog.textBoxCounter != 31) && dialog.textBoxCounter < 38 || tutorialPotionBuy)
             {
                 Debug.Log("You weren't supposed to do that, add UI for tutorial error");
                 sendErrorMessage(19);
@@ -9213,6 +9241,11 @@ public class GameManager : MonoBehaviour
                 default:
                     Debug.Log("MarketDeck Error!");
                     break;
+            }
+
+            if(dialog.textBoxCounter == 30 || dialog.textBoxCounter == 31)
+            {
+                tutorialPotionBuy = true;
             }
             return;
         }
@@ -9438,7 +9471,7 @@ public class GameManager : MonoBehaviour
 
         if (Game.tutorial)
         {
-            if (dialog.textBoxCounter < 38)
+            if (dialog.textBoxCounter != 15 && dialog.textBoxCounter != 30 && dialog.textBoxCounter != 31 && dialog.textBoxCounter < 38 || tutorialArtifactBuy)
             {
                 Debug.Log("You weren't supposed to do that, add UI for tutorial error");
                 sendErrorMessage(19);
@@ -9959,9 +9992,6 @@ public class GameManager : MonoBehaviour
                         checkMarketPrice();
                         players[myPlayerIndex].decoderBonus = true;
                         players[myPlayerIndex].checkDecoderBonus();
-
-                        if (players[myPlayerIndex].isReets)
-                            players[myPlayerIndex].checkReetsCondition();
                         // bool connected = networkManager.sendBuyRequest(md2.cardInt, md2.cardDisplay3.card.buyPrice, 0);
                     }
                     else if (players[myPlayerIndex].isSaltimbocca && (players[myPlayerIndex].pips >= md2.cardDisplay4.card.buyPrice - 1 ||
@@ -10032,8 +10062,10 @@ public class GameManager : MonoBehaviour
                         FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_BuySell");
                         sendSuccessMessage(1);
                         checkMarketPrice();
+                        /*
                         if (players[myPlayerIndex].isReets)
                             players[myPlayerIndex].checkReetsCondition();
+                        */
                     }
                     else
                     {
@@ -10044,6 +10076,16 @@ public class GameManager : MonoBehaviour
                 default:
                     Debug.Log("MarketDeck Error!");
                     break;
+            }
+
+            if (dialog.textBoxCounter == 30 || dialog.textBoxCounter == 31)
+            {
+                tutorialPotionBuy = true;
+            }
+
+            if (Game.tutorial)
+            {
+                StartCoroutine(waitThreeSeconds(dialog));
             }
         }
     }

@@ -125,7 +125,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         textBoxCounter++;
         if (textBoxCounter == 1)
         {
-            textInfo = "Let's not waste too much time doing this... even though it's MY favorite thing";
+            textInfo = "Let's not waste too much time doing this... even though it's MY favorite thing.";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -140,7 +140,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 3)
         {
-            textInfo = "Let's start with the bread and butter, throwing potions! There’s one right here in your HOLSTER!";
+            textInfo = "Let's start with the bread and butter, throwing potions! There’s one right here in your Holster!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -175,17 +175,21 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 7)
         {
-            directions.SetActive(true);
-            directionBox.text = "Drag the artifact card onto your opponent to use it on them!";
-            gameObject.SetActive(false);
-            nameTag.SetActive(false);
+            textInfo = "Since your Holster is empty, you’ll need to buy more potions now. Let’s open the market!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 8)
+        {
+            textInfo = "Every turn you can buy items from the market with Pips, and you get 6P every turn!\n\nThey go away though, so you gotta use em or lose em!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 9)
         {
-            textInfo = "Let's try buying a few things! Click on the market " +
-                "button to open up the market and buy two potions!\n\nThe top row in the market is exclusively for potions, " +
-                "and the bottom row is for vessels, artifacts, and rings!\n\n" +
-                "Buy cards using your hard-earned Pips! You get 6 Pips at the start of your turn!";
+            textInfo = "Try buying a couple potions now!";
             ActivateText(dialogBox); 
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -201,50 +205,93 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 13)
         {
-            textInfo = "Now let's end your turn... Click that PASS button " +
-                "in the lower right corner!";
+            textInfo = "You don’t get them immediately, but at the start of your NEXT turn, the cards will go into the empty slots of your Holster until they are full!\n\nMake sure to make room for them!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 14)
         {
-            directions.SetActive(true);
-            directionBox.text = "Click the PASS button!";
-            gameObject.SetActive(false);
-            nameTag.SetActive(false);
-            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
-            GameManager.manager.tutorialArrow.SetActive(true);
-        }
-        else if (textBoxCounter == 16)
-        {
-            textInfo = "Now let's talk about vessels. Vessels require two loaded " +
-                "potions to use and can deal huge damage with the right set of cards!\n\n" +
-                "Load two potions into the starter vessel and sling it over here!";
+            textInfo = "Ok, next let’s buy a VESSEL from the bottom row of the market, and I’ll explain once it’s in your Holster!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
         }
-        else if (textBoxCounter == 17)
+        else if (textBoxCounter == 15)
         {
+            /*
+            textInfo = "Now let's talk about vessels. Vessels require two loaded " +
+                "potions to use and can deal huge damage with the right set of cards!\n\n" +
+                "Load two potions into the starter vessel and sling it over here!";
+            */
+            /*
+            textInfo = "Ok, next let’s buy a VESSEL from the bottom row of the market, and I’ll explain once it’s in your Holster!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+            */
             directions.SetActive(true);
-            directionBox.text = "Load two potions into the starter vessel and throw it!";
+            directionBox.text = "Buy a vessel from the bottom row of the market!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
+        else if (textBoxCounter == 16)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Buy a vessel from the bottom row of the market!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 17)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Click the PASS button to end your turn!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 18)
+        {
+            textInfo = "This is where YOUR health is!\n\nEnemies will want to hit you so be careful not to lose it all!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 19)
+        {
+            textInfo = "These are your Essence Cubes! If your health is empty you’ll use one of these automatically to refill it. If you lose all your Essence Cubes, who knows what’ll happen?";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 20)
+        {
+            gameObject.SetActive(false);
+            GameManager.manager.StartCoroutine(GameManager.manager.HolsterFill(GameManager.manager.cardPlayer));
+            /*
+            textInfo = "Ok, your turn again! At the start of your turn your Holster will reload with the cards on top of your deck!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+            */
+        }
         else if (textBoxCounter == 21)
         {
-            textInfo = "Now what do we do when we're faced with junk? We get rid of it!\n\n" +
-                "Try dragging your artifact card into the trash!\n\n" +
-                "It's just over there on the right!";
+            textInfo = "Ok, your turn again! At the start of your turn your Holster will reload with the cards on top of your deck!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 22)
         {
+            textInfo = "Now let's try using that vessel you bought. We can LOAD two potions into it and combine them together! Try dragging the potion cards on top of the vessel card!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 23)
+        {
             directions.SetActive(true);
-            directionBox.text = "Drag the artifact card into the trash can on the right!";
+            directionBox.text = "Load both potions into the vessel by dragging the cards on top of it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -255,28 +302,38 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
+        else if (textBoxCounter == 26)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Drag the vessel onto the enemy to throw it!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
         else if (textBoxCounter == 27)
         {
-            textInfo = "Some items sell for more than what you can buy them for!\n\n" +
-                "Try selling an item in your holster! Drag a card " +
-                "you want to sell onto the coin icon to sell it!";
+            textInfo = "Not only does it do big damage, but the loaded potions get cycled back into the bottom of your deck!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 28)
         {
-            directions.SetActive(true);
-            directionBox.text = "Drag a card from your holster " +
-                "to the coin icon to sell it!";
-            gameObject.SetActive(false);
-            nameTag.SetActive(false);
+            textInfo = "Ok, your Holster is empty again, what does that mean?";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 29)
+        {
+            textInfo = "BUYING! Remember to visit the market every turn and use your Pips so you can always be on the attack!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 30)
         {
             directions.SetActive(true);
-            directionBox.text = "Drag a card from your holster " +
-                "to your deck to cycle it!";
+            directionBox.text = "Buy a potion and an artifact from the market!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
@@ -365,8 +422,6 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             textSpeed = 0.001f;
             return;
         }
-        textBoxCounter++;
-
 
         if (endDialog)
         {
@@ -382,6 +437,13 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             SceneManager.LoadScene("TitleMenu");
             return;
         }
+
+        doThis();
+        return;
+        textBoxCounter++;
+
+
+        
 
         if (textBoxCounter == 1)
         {
@@ -400,7 +462,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 3)
         {
-            textInfo = "Let's start with the bread and butter, throwing potions! There’s one right here in your HOLSTER!";
+            textInfo = "Let's start with the bread and butter, throwing potions! There’s one right here in your Holster!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -419,7 +481,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directions.SetActive(true);
             gameObject.SetActive(false);
             nameTag.SetActive(false);
-            // trigger hand move animation here
+            // SetActive the arrow here
+            // GameManager.manager.tutorialArrow.SetActive(true);
+            // GameManager.manager.tutorialArrow2.SetActive(true);
             GameManager.manager.potionDragAnimation();
             /*
             directions.SetActive(true);
@@ -430,6 +494,69 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
             GameManager.manager.tutorialArrow.SetActive(true);
             */
+        }
+        else if (textBoxCounter == 7)
+        {
+            textInfo = "Since your Holster is empty, you’ll need to buy more potions now. Let’s open the market!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 8)
+        {
+            textInfo = "Every turn you can buy items from the market with Pips, and you get 6P every turn!\n\nThey go away though, so you gotta use em or lose em!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 9)
+        {
+            textInfo = "Try buying a couple potions now!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 10)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Buy two potions from the top row of the market!\n\nDrag a card from the market onto your deck to buy them!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+            GameManager.manager.tutorialArrow.GetComponent<ArrowMover>().checkArrow();
+            GameManager.manager.tutorialArrow.SetActive(true);
+        }
+        else if (textBoxCounter == 13)
+        {
+            textInfo = "Good! See how they went to the top of your deck?";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 14)
+        {
+            textInfo = "You don’t get them immediately, but at the start of your NEXT turn, the cards will go into the empty slots of your Holster until they are full!\n\nMake sure to make room for them!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 15)
+        {
+            /*
+            textInfo = "Now let's talk about vessels. Vessels require two loaded " +
+                "potions to use and can deal huge damage with the right set of cards!\n\n" +
+                "Load two potions into the starter vessel and sling it over here!";
+            */
+            textInfo = "Ok, next let’s buy a VESSEL from the bottom row of the market, and I’ll explain once it’s in your Holster!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 17)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Buy a vessel from the bottom row of the market!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
         }
 
         /*

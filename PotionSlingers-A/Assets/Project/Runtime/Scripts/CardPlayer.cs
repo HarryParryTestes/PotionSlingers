@@ -370,8 +370,11 @@ public class CardPlayer : MonoBehaviour
                 Debug.Log("Dippit!!!");
                 if (this.gameObject.name == "CharacterCard (Top)")
                 {
-                    // this.transform.position = new Vector3(this.transform.position.x, 
-                        // this.transform.position.y - (40 * GameManager.manager.heightRatio), this.transform.position.z);
+                    if (Game.tutorial)
+                    {
+                        this.transform.position = new Vector3(this.transform.position.x,
+                        this.transform.position.y - (40 * GameManager.manager.heightRatio), this.transform.position.z);
+                    }                   
                     this.transform.localScale = new Vector3(14f, 14f, 0);                   
                 }
 
