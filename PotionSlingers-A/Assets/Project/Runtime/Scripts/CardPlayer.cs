@@ -4166,6 +4166,12 @@ public class CardPlayer : MonoBehaviour
             return;
         }
 
+        if (Game.tutorial)
+        {
+            Debug.Log("No!");
+            return;
+        }
+
         if (isReets)
         {
             if (pips >= 2)

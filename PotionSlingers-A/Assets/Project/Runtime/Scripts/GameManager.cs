@@ -50,6 +50,9 @@ public class GameManager : MonoBehaviour
     GameObject obTop;
     GameObject obLeft;
     GameObject obRight;
+    public GameObject daggerheels;
+    public GameObject tutorialHealth;
+    public GameObject tutorialEssence;
     public GameObject backpack;
     public GameObject throwingHand;
     public GameObject tutorialHand;
@@ -450,6 +453,22 @@ public class GameManager : MonoBehaviour
         tutorialHand.transform.DOMove(bolo.transform.position, 1.5f).SetLoops(-1, LoopType.Restart);
     }
 
+    public void artifactDragAnimation()
+    {
+        CardDisplay cd = playerHolster.cardList[1];
+        foreach(CardDisplay card in playerHolster.cardList)
+        {
+            if (card.card.cardType == "Artifact")
+                cd = card;
+            break;
+        }
+
+        tutorialHand.SetActive(true);
+        tutorialHand.transform.position = new Vector3(playerHolster.card2.GetComponent<DragCard>().originalPosition.x,
+            playerHolster.card2.GetComponent<DragCard>().originalPosition.y, 0);
+        tutorialHand.transform.DOMove(cd.gameObject.transform.position, 1.5f).SetLoops(-1, LoopType.Restart);
+    }
+
     public void unblockRaycasts()
     {
         md1.cardDisplay1.GetComponent<CanvasGroup>().blocksRaycasts = true;
@@ -561,6 +580,14 @@ public class GameManager : MonoBehaviour
                 {
                     md1.cardDisplay1.gameObject.SetActive(false);
                     md1.cardDisplay2.gameObject.SetActive(false);
+                    md1.cardDisplay3.gameObject.SetActive(false);
+                    md2.cardDisplay1.gameObject.SetActive(false);
+                    md2.cardDisplay3.gameObject.SetActive(false);
+                }
+
+                if (dialog.textBoxCounter == 30 || dialog.textBoxCounter == 31)
+                {
+                    md1.cardDisplay1.gameObject.SetActive(false);
                     md1.cardDisplay3.gameObject.SetActive(false);
                     md2.cardDisplay1.gameObject.SetActive(false);
                     md2.cardDisplay3.gameObject.SetActive(false);
@@ -3032,6 +3059,11 @@ public class GameManager : MonoBehaviour
             Debug.Log("Happened in Start");
             dialogBox.SetActive(true);
             dialog.initDialog();
+            players[0].name = "Reets";
+            players[0].charName = "Reets";
+            players[0].character.onCharacterClick("Reets");
+            players[0].checkCharacter();
+            players[0].checkProfile("Reets");
             playerBottomName.text = SteamFriends.GetPersonaName().ToString();
             cardPlayer.name = SteamFriends.GetPersonaName().ToString();
             currentPlayerName = playerBottomName.text;
@@ -3042,7 +3074,7 @@ public class GameManager : MonoBehaviour
             numPlayers = 2;
             background.sprite = backgrounds[4];
             handleBackgroundUI();
-            setDuelCharacter("Dippit", 10);
+            setDuelCharacter("Dippit", 20);
             /*
             players[1].gameObject.transform.parent.position = new Vector3(players[1].gameObject.transform.parent.position.x,
                 players[1].gameObject.transform.parent.position.y - (120 * heightRatio), 0);
@@ -4085,6 +4117,13 @@ public class GameManager : MonoBehaviour
         // This is where to make the animation that deals the cards from the deck to the holster
         if (player.holster.gameObject.activeInHierarchy)
             StartCoroutine(HolsterFill(player));
+
+        if (dialog.textBoxCounter == 33 && player == cardPlayer)
+        {
+            dialog.gameObject.SetActive(true);
+            dialog.doThis();
+            return;
+        }
 
         if (Game.storyMode && myPlayerIndex == 0)
             Invoke("saveGameStuff", 1f);
@@ -5173,7 +5212,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if ((dialog.textBoxCounter != 17 && dialog.textBoxCounter != 24) && dialog.textBoxCounter < 39)
+            if ((dialog.textBoxCounter != 17 && dialog.textBoxCounter != 24 && dialog.textBoxCounter != 33) && dialog.textBoxCounter < 39)
             {
                 sendErrorMessage(18);
                 return;
@@ -6096,15 +6135,13 @@ public class GameManager : MonoBehaviour
         }
         else if (dialog.textBoxCounter == 32)
         {
+            if (marketSelected)
+                moveMarket();
             tutorialPotionBuy = false;
             tutorialArtifactBuy = false;
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.textInfo = "Now let's talk about you! Your character that is...\n\n" +
-                "Every character has a special ability detailed on the front of " +
-                "their character card!\n\n" +
-                "Additionally, the card can be flipped to reveal an upgraded " +
-                "version of your character!";
+            dialog.textInfo = "We’re out of actions again so time to PASS the turn!\n\nClick on the PASS button again!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 34)
@@ -6119,9 +6156,59 @@ public class GameManager : MonoBehaviour
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.textInfo = "Some characters have unique items that can be obtained " +
-                "by using the character's flipped action!\n\n" +
-                "Try getting them all with each specific character!";
+            dialog.textInfo = "Now drag it onto your foe to use it on them!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 38)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.textInfo = "Nice Shot! See how the ARTIFACT stays in your holster? It’s actually reusable! " +
+                "The loaded potion is trashed but you can use the artifact as many times you want in a turn! It will break eventually though, so plan accordingly!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 42)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.textInfo = "Now fire away!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 44)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.textInfo = "Keep an eye out for any cards in the market that may SYNERGIZE with any artifact or vessels you have in your Holster. There are all kinds of crazy combinations to discover!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 48)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.textInfo = "Good! You can also TRASH a card by dragging a card to the trash can! You can also view what’s in the trash at any time by clicking on the trash can!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 51)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.textInfo = "You can also CYCLE a card in your Holster back in your deck by dragging it to your deck!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+        else if (dialog.textBoxCounter == 54)
+        {
+            players[myPlayerIndex].addAbility(30);
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.textInfo = "Ok, I think we did enough damage to reach our max power! When your Super Gauge is FULL, you can click it to unleash an ULTIMATE ATTACK!";
+            dialog.ActivateText(dialog.dialogBox);
+        }
+
+        else if (dialog.textBoxCounter == 57)
+        {
+            dialog.directions.gameObject.SetActive(false);
+            dialog.gameObject.SetActive(true);
+            dialog.textInfo = "Amazing! Every Slinger has a unique ability and a super attack, so make sure to read up on them and play to your strengths the best you can!";
             dialog.ActivateText(dialog.dialogBox);
         }
     }
@@ -6429,8 +6516,9 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if ((dialog.textBoxCounter != 5 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 17
-                && dialog.textBoxCounter != 18 && dialog.textBoxCounter != 19 && dialog.textBoxCounter != 26) && dialog.textBoxCounter < 39)
+            if (dialog.textBoxCounter != 5 && dialog.textBoxCounter != 7 && dialog.textBoxCounter != 17
+                && dialog.textBoxCounter != 18 && dialog.textBoxCounter != 19 
+                && dialog.textBoxCounter != 26 && dialog.textBoxCounter != 37 && dialog.textBoxCounter != 43)
             {
                 sendErrorMessage(19);
                 playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -6440,9 +6528,10 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Tutorial throw");
 
-                if (dialog.textBoxCounter == 17 || dialog.textBoxCounter == 18)
+                if (dialog.textBoxCounter == 37 || dialog.textBoxCounter == 43)
                 {
                     sendErrorMessage(19);
+                    return;
                     // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 }
                 int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
@@ -6479,6 +6568,9 @@ public class GameManager : MonoBehaviour
                     int damage = playerHolster.cardList[selectedCardInt - 1].card.effectAmount;
                     damage = cardPlayer.checkArtifactBonus(damage, playerHolster.cardList[selectedCardInt - 1]);
 
+                    playerHolster.cardList[selectedCardInt - 1].whiteCard();
+                    playerHolster.cardList[selectedCardInt - 1].aPotion.whiteCard();
+
                     // Update response to account for trashing loaded artifact's potion and not the artifact
                     GameObject obj = Instantiate(players[myPlayerIndex].holster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).gameObject,
                         playerHolster.cardList[selectedCardInt - 1].artifactSlot.transform.GetChild(0).position,
@@ -6507,11 +6599,12 @@ public class GameManager : MonoBehaviour
                     // THROWING ANIMATION
                     StopCoroutine("waitThreeSecondsHand");
                     throwingHand.SetActive(false);
-                    StartCoroutine(waitThreeSecondsHand(damage));
-                    StartCoroutine(doDamage(damage));
-                    //tempPlayer.subHealth(damage);
-                    sendSuccessMessage(3);
+                    // change here
                     FMODUnity.RuntimeManager.PlayOneShot("event:/SFX/SFX_ThrowArtifact");
+                    artifactHand1.SetActive(false);
+                    StartCoroutine(artifactAnimation(damage));
+                    StartCoroutine(doArtifactDamage(damage));
+                    sendSuccessMessage(3);
                     // StartCoroutine(waitThreeSeconds(dialog));
                     // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                     // MATTEO: Add Artifact using SFX here.
@@ -8248,7 +8341,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if (dialog.textBoxCounter != 23 && dialog.textBoxCounter != 24)
+            if (dialog.textBoxCounter != 23 && dialog.textBoxCounter != 24 && dialog.textBoxCounter != 35 && dialog.textBoxCounter != 41)
             {
                 sendErrorMessage(12);
                 // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -8375,6 +8468,7 @@ public class GameManager : MonoBehaviour
                         // bool connected = networkManager.sendLoadRequest(selectedCardInt, loadedCardInt);
                         sendSuccessMessage(5);
                         StartCoroutine(waitThreeSeconds(dialog));
+                        players[myPlayerIndex].checkArtifactBonusAnimation(playerHolster.cardList[loadedCardInt]);
                         // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                         Debug.Log("Potion loaded in Artifact slot!");
 
@@ -8740,7 +8834,7 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if (dialog.textBoxCounter != 30 && dialog.textBoxCounter < 39)
+            if (dialog.textBoxCounter != 53)
             {
                 sendErrorMessage(19);
                 //playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -10080,7 +10174,7 @@ public class GameManager : MonoBehaviour
 
             if (dialog.textBoxCounter == 30 || dialog.textBoxCounter == 31)
             {
-                tutorialPotionBuy = true;
+                tutorialArtifactBuy = true;
             }
 
             if (Game.tutorial)
@@ -10301,13 +10395,14 @@ public class GameManager : MonoBehaviour
         // TUTORIAL LOGIC
         if (Game.tutorial)
         {
-            if (dialog.textBoxCounter != 28 && dialog.textBoxCounter < 39)
+            if (dialog.textBoxCounter != 47 && playerHolster.cardList[selectedCardInt - 1].card.cardType != "Artifact")
             {
                 sendErrorMessage(19);
                 // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
                 return;
             }
             cardPlayer.addPips(playerHolster.cardList[selectedCardInt - 1].card.sellPrice);
+            handleEmptySlotUI(players[myPlayerIndex].holster.cardList[selectedCardInt - 1]);
             td.addCard(playerHolster.cardList[selectedCardInt - 1]);
             // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             StartCoroutine(waitThreeSeconds(dialog));
@@ -10407,7 +10502,7 @@ public class GameManager : MonoBehaviour
 
         if (Game.tutorial)
         {
-            if (dialog.textBoxCounter != 22 && dialog.textBoxCounter < 39)
+            if (dialog.textBoxCounter != 50)
             {
                 sendErrorMessage(19);
                 // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
@@ -10425,19 +10520,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(MoveToTrash(obj));
             td.addCard(playerHolster.cardList[selectedCardInt - 1]);
             StartCoroutine(waitThreeSeconds(dialog));
-
-            foreach (Card cd in players[myPlayerIndex].rings)
-            {
-                // Ring of the Rings
-                // Double all ring effects, your rings cost 4 pips
-                if (cd.cardName == "RingoftheRings")
-                {
-                    players[myPlayerIndex].doubleRingBonus = true;
-                    break;
-                }
-                players[myPlayerIndex].doubleRingBonus = false;
-            }
-            // playerHolster.cardList[selectedCardInt - 1].gameObject.GetComponent<Hover_Card>().resetCard();
             sendSuccessMessage(9);
             return;
         }

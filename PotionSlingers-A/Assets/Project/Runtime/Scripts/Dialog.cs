@@ -251,13 +251,18 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 18)
         {
-            textInfo = "This is where YOUR health is!\n\nEnemies will want to hit you so be careful not to lose it all!";
+            GameManager.manager.tutorialHealth.SetActive(true);
+            GameManager.manager.FadeIn(GameManager.manager.tutorialHealth);
+            textInfo = "This is where your HEALTH is!\n\nEnemies will want to hit you so be careful not to lose it all!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 19)
         {
+            GameManager.manager.tutorialHealth.SetActive(false);
+            GameManager.manager.tutorialEssence.SetActive(true);
+            GameManager.manager.FadeIn(GameManager.manager.tutorialEssence);
             textInfo = "These are your Essence Cubes! If your health is empty you’ll use one of these automatically to refill it. If you lose all your Essence Cubes, who knows what’ll happen?";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
@@ -265,6 +270,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 20)
         {
+            GameManager.manager.tutorialEssence.SetActive(false);
             gameObject.SetActive(false);
             GameManager.manager.StartCoroutine(GameManager.manager.HolsterFill(GameManager.manager.cardPlayer));
             /*
@@ -325,7 +331,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 29)
         {
-            textInfo = "BUYING! Remember to visit the market every turn and use your Pips so you can always be on the attack!";
+            textInfo = "BUYING! Remember to visit the market every turn and use your Pips so you can always be on the attack!\n\nThis time try buying a potion and an artifact!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -350,50 +356,153 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         else if (textBoxCounter == 33)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on the character card and click FLIP!";
+            directionBox.text = "Click the PASS button to end your turn!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 34)
+        {
+            textInfo = "Ok now that your ARTIFACT is available, you can fire it! Load ONE POTION in and fire away!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
         }
         else if (textBoxCounter == 35)
         {
             directions.SetActive(true);
-            directionBox.text = "Click on the character card and click ACTION!";
+            directionBox.text = "Drag a potion card onto the artifact card to load it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+            GameManager.manager.artifactDragAnimation();
         }
         else if (textBoxCounter == 37)
         {
-            textInfo = "The object of the game is to beat your opponents down " +
-                "to 0 health and take all of their Essence Cubes!\n\n" +
-                "The last person standing is declared the winner!";
-            ActivateText(dialogBox); 
-            Boloidle.SetActive(false);
-            Bolotalk.SetActive(true);
-        }
-        else if (textBoxCounter == 38)
-        {
-            textInfo = "Once a player's health is reduced to 0, one of their Essence " +
-                "Cubes will be awarded to the player that deals the killing blow!\n\n" +
-                "Try finishing me off and getting me to 0 health!";
-            ActivateText(dialogBox);
-            // setting Bolo back to 10 health
-            GameManager.manager.tempPlayer.hp = 10;
-            GameManager.manager.tempPlayer.updateHealthUI();
-            Boloidle.SetActive(false);
-            Bolotalk.SetActive(true);
-        }
-        else if (textBoxCounter == 39)
-        {
             directions.SetActive(true);
-            directionBox.text = "Use cards to reduce Bolo's health down to 0!";
+            directionBox.text = "Drag the artifact card onto the enemy to use it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
         }
+        else if (textBoxCounter == 39)
+        {
+            GameManager.manager.daggerheels.SetActive(true);
+            GameManager.manager.FadeIn(GameManager.manager.daggerheels);
+            textInfo = "One more thing, see the bonus on this particular artifact? That means if you load a particular QUALITY of potion into it, you’ll trigger a bonus!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 40)
+        {
+            textInfo = "This time, try loading the COLD quality potion into the artifact!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 41)
+        {
+            GameManager.manager.daggerheels.SetActive(false);
+            directions.SetActive(true);
+            directionBox.text = "Drag the cold potion onto the artifact to load it!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+            GameManager.manager.artifactDragAnimation();
+        }
+        else if (textBoxCounter == 43)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Drag the artifact card onto the enemy to use it!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 45)
+        {
+            textInfo = "Now say you need to make space in your Holster, or don’t have enough money for a shiny new artifact in the market. You can SELL cards in your holster by dragging them to the SELL ICON on the right!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
         else if (textBoxCounter == 46)
+        {
+            textInfo = "Try dragging your artifact card onto the sell icon to SELL it!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 47)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Drag your artifact card onto the sell icon to sell it!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 49)
+        {
+            textInfo = "Try dragging a card to the trash!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 50)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Drag a card onto the trash can to trash it!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 52)
+        {
+            textInfo = "Try cycling a card to your deck!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 53)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Drag a card onto your deck to cycle it!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 55)
+        {
+            textInfo = "C'mon, try it out! Click on your character portrait to use it!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 56)
+        {
+            directions.SetActive(true);
+            directionBox.text = "Click on your character portrait to unleash your ultimate attack!";
+            gameObject.SetActive(false);
+            nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 58)
+        {
+            textInfo = "Last but not least, your BACKPACK is up here! It will store special gear you can pick up that will give you permanent buffs throughout your run!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 59)
+        {
+            textInfo = "A seasoned slinger should always optimize their builds depending on the situations they find themselves in!";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 60)
+        {
+            textInfo = "I think that's it! You are on your own now!\n\nThey grow up so fast! Come visit me some time on the main menu, yeah?";
+            ActivateText(dialogBox);
+            Boloidle.SetActive(false);
+            Bolotalk.SetActive(true);
+        }
+        else if (textBoxCounter == 61)
         {
             SceneManager.LoadScene("TitleMenu");
         }
-        else if (textBoxCounter == 47)
+        else if (textBoxCounter == 62)
         {
             SceneManager.LoadScene("TitleMenu");
         }
