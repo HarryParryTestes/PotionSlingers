@@ -108,7 +108,7 @@ public class MainMenu : MonoBehaviour
 	public TMPro.TextMeshProUGUI nameText;
 	public TMPro.TextMeshProUGUI uniqueCardText;
 	public List<string> infoQuotes;
-	public List<UniqueCard> uniqueCards;
+    public List<UniqueCard> uniqueCards;
 
 	public Slider levelBar;
 	public TMPro.TextMeshProUGUI levelText;
@@ -431,62 +431,75 @@ public class MainMenu : MonoBehaviour
 	public void selectCharNameRight()
 	{
 		charSelectIndex += 1;
-		if (charSelectIndex > 8)
+		if (charSelectIndex > 3)
 		{
 			charSelectIndex = 0;
 		}
 
-		if(charSelectIndex == 1)
+        charSelectChar.onCharacterClick(demoCharacters[charSelectIndex].cardName);
+        nameText.text = demoCharacters[charSelectIndex].cardName;
+        switch (demoCharacters[charSelectIndex].cardName)
         {
-			// Isadore's item
-			uniqueCard.gameObject.SetActive(true);
-			uniqueCard.updateUniqueCard(uniqueCards[1]);
-			uniqueCardText.gameObject.SetActive(true);
-			uniqueCardText.text = "Special Item:\nThe CherryBomb\nBadge";
+            case "Bolo":
+                infoText.text = "Bolo is an adept salesman. He will always be able to upsell his items, and can even trade useless baubles for powerful treasure!" +
+            "\n\nAll cards in your Holster sell for +1P.\n\nSuper: All cards in your Holster sell for +2P. Attacks sell for +1P.";
+                break;
+            case "Reets":
+                infoText.text = "Reets always has the right tools on hand! He can cycle through his items in his Holster and Deck much faster than the rest." +
+            "\n\nPay 2P to put the top card of your Deck into your Holster.\n\nSuper: Draw cards from your Deck until your Holster is full.";
+                break;
+            case "Isadore":
+                infoText.text = "Isadore is a master of artifacts, and is extremely versatile with them. Use her super to deal a punishing blow to your opponents!" +
+            "\n\nArtifacts in your Holster deal +1 damage.\n\nSuper: Create and load a starter potion into all Artifacts in your Holster. Artifacts in your Holster deal +2 Damage.";
+                break;
+            case "Saltimbocca":
+                infoText.text = "With intimidation and an eye for quality, Bocca wants the best items and wants 'em cheap! Preferably also sharp, heavy, and aerodynamic..." +
+            "\n\nMarket cards cost you -1P. Cards cannot cost less than 1P.\n\nSuper: All cards in your Holster can be thrown. Damage is equal to their BUY cost.";
+                break;
         }
-		else if (charSelectIndex == 2)
-        {
-			uniqueCard.gameObject.SetActive(true);
-			uniqueCard.updateUniqueCard(uniqueCards[0]);
-			uniqueCardText.gameObject.SetActive(true);
-			uniqueCardText.text = "Special Item:\nThe Blacksnake\nPip Sling";
-		}
-		else if (charSelectIndex == 3)
-		{
-			// Pluot's item
-			uniqueCard.gameObject.SetActive(true);
-			uniqueCard.updateUniqueCard(uniqueCards[2]);
-			uniqueCardText.gameObject.SetActive(true);
-			uniqueCardText.text = "Special Item:\nThe Extra\nInventory";
-		}
-		else if (charSelectIndex == 7)
-		{
-			// Sweetbitter's item
-			uniqueCard.gameObject.SetActive(true);
-			uniqueCard.updateUniqueCard(uniqueCards[3]);
-			uniqueCardText.gameObject.SetActive(true);
-			uniqueCardText.text = "Special Item:\nThe Phlactery";
-		}
-		else
-        {
-			uniqueCard.gameObject.SetActive(false);
-			uniqueCardText.gameObject.SetActive(false);
-		}
-		charSelectChar.onCharacterClick(characters[charSelectIndex].cardName);
-		nameText.text = characters[charSelectIndex].cardName;
-		infoText.text = infoQuotes[charSelectIndex];
-		
-		/*
+
+        /*
 		charName = MainMenu.menu.characters[charIndex].cardName;
 		LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
 		LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
 		LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
 		LobbyManager.instance.UpdateUI();
 		*/
-	}
+    }
 
 	public void selectCharNameLeft()
 	{
+        charSelectIndex -= 1;
+        if (charSelectIndex < 0)
+        {
+            charSelectIndex = 3;
+        }
+
+        charSelectChar.onCharacterClick(demoCharacters[charSelectIndex].cardName);
+        nameText.text = demoCharacters[charSelectIndex].cardName;
+		switch (demoCharacters[charSelectIndex].cardName)
+		{
+			case "Bolo":
+                infoText.text = "Bolo is an adept salesman. He will always be able to upsell his items, and can even trade useless baubles for powerful treasure!" +
+            "\n\nAll cards in your Holster sell for +1P.\n\nSuper: All cards in your Holster sell for +2P. Attacks sell for +1P.";
+                break;
+            case "Reets":
+                infoText.text = "Reets always has the right tools on hand! He can cycle through his items in his Holster and Deck much faster than the rest." +
+            "\n\nPay 2P to put the top card of your Deck into your Holster.\n\nSuper: Draw cards from your Deck until your Holster is full.";
+                break;
+            case "Isadore":
+                infoText.text = "Isadore is a master of artifacts, and is extremely versatile with them. Use her super to deal a punishing blow to your opponents!" +
+            "\n\nArtifacts in your Holster deal +1 damage.\n\nSuper: Create and load a starter potion into all Artifacts in your Holster. Artifacts in your Holster deal +2 Damage.";
+                break;
+            case "Saltimbocca":
+                infoText.text = "With intimidation and an eye for quality, Bocca wants the best items and wants 'em cheap! Preferably also sharp, heavy, and aerodynamic..." +
+            "\n\nMarket cards cost you -1P. Cards cannot cost less than 1P.\n\nSuper: All cards in your Holster can be thrown. Damage is equal to their BUY cost.";
+                break;
+        }
+        
+
+        // old code
+        /*
 		charSelectIndex -= 1;
 		if (charSelectIndex < 0)
 		{
@@ -532,15 +545,8 @@ public class MainMenu : MonoBehaviour
 		charSelectChar.onCharacterClick(characters[charSelectIndex].cardName);
 		nameText.text = characters[charSelectIndex].cardName;
 		infoText.text = infoQuotes[charSelectIndex];
-		
-		/*
-		charName = MainMenu.menu.characters[charIndex].cardName;
-		LobbyManager.instance.localGamePlayerScript.charIndex = charIndex;
-		LobbyManager.instance.localGamePlayerScript.charName = MainMenu.menu.characters[charIndex].cardName;
-		LobbyManager.instance.localGamePlayerScript.CmdChangeCharacter(MainMenu.menu.characters[charIndex].cardName);
-		LobbyManager.instance.UpdateUI();
 		*/
-	}
+    }
 
 	public void checkSaveGame()
     {
@@ -766,45 +772,9 @@ reuse, recycle!
 		flippable = !flippable;
 		charSelectChar.onCharacterClick(characters[0].cardName);
 		nameText.text = "Bolo";
-		// Bolo
-		infoQuotes[0] = "Bolo\nPlaystyle: Strategic\nDifficulty: * * *\nProficiency: Sales\n\n\n" +
-			"Bolo is an adept salesman. He will always\nbe able to upsell his items, and can even\ntrade useless baubles for powerful\ntreasure!";
-
-		// Isadore
-		infoQuotes[1] = "Isadore\t\tPlaystyle: Aggressive\nDifficulty: * *\tProficiency: Artifacts\nIsadore is a master of artifacts, and is\nextremely" +
-			" versatile with them. Flip her to\nequip her badge, and punish her foes\n   even further!";
-
-		//Nickles
-		infoQuotes[2] = "Nickles\t\tPlaystyle: Flexible\nDifficulty: * *\tProficiency: Pips\nNickles can use " +
-            "leftover pips as an extra\nresource. Use his unique item to rustle\nup a couple extra pips to sling or even\n   to spend!";
-
-		// Pluot
-		infoQuotes[3] = "Pluot\t\t\tPlaystyle: Aggressive\nDifficulty: *\t\tProficiency: Potions\nPluot's strategy is simple; collect potions\n" +
-			"and throw them for a lot of damage! Her\nitem allows you to be even more efficient!";
-
-		// Reets
-		infoQuotes[4] = "Reets\nPlaystyle: Technical\nDifficulty: * * *\nProficiency: Inventory\n\n\nReets always has the right tools on hand!\n" +
-            "He can cycle through his items in his\nHolster and Deck much faster than the\nrest.";
-
-		// Saltimbocca
-		infoQuotes[5] = "Saltimbocca\nPlaystyle: Strategic\nDifficulty: * *\nProficiency: Thrifting\n\n\n" +
-			"With intimidation and an eye for quality,\nBocca wants the best items and wants 'em\ncheap. Preferably also sharp, heavy, and\naerodynamic.";
-
-		// Scarpetta
-		infoQuotes[6] = "Scarpetta\nPlaystyle:  ? ? ?\nDifficulty: ? ? ?\nProficiency: Trash\n\n\nScarpetta loves trash. While others may\n" +
-            "scoff at as useless junk, he revels in an\never-increasing pile of treasures. Refuse,\nreuse, recycle!";
-
-		// Sweetbitter
-		infoQuotes[7] = "Sweetbitter\t\tPlaystyle: Technical\nDifficulty: * * * *  Proficiency: Resilience\nSweetbitter has a strange object that\n" +
-            "prevents her from dying. She also has a\nnefarious plan. She just has to collect a\n  few things...";
-
-        // Twins
-        infoQuotes[8] = "Twins\nPlaystyle: Flexible\nDifficulty: *\nProficiency: Self Healing\n\n\n" +
-            "The Twins focus on keeping their HP\nhigh, at the expense of everyone else! Flip\nthem over to have their vessels heal too!";
-
-		infoText.text = "Bolo\nPlaystyle: Strategic\nDifficulty: * * *\nProficiency: Sales\n\n\n" +
-			"Bolo is an adept salesman. He will always\nbe able to upsell his items, and can even\ntrade useless baubles for powerful\ntreasure!";
-	}
+        infoText.text = "Bolo is an adept salesman. He will always be able to upsell his items, and can even trade useless baubles for powerful treasure!" +
+            "\n\nAll cards in your Holster sell for +1P.\n\nSuper: All cards in your Holster sell for +2P. Attacks sell for +1P.";
+    }
 
 	public void onCharacterClick(string character)
     {

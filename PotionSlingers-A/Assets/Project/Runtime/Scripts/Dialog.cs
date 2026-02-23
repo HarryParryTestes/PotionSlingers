@@ -369,6 +369,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 35)
         {
+            // try this
+            GameManager.manager.playerHolster.card3.updateCard(GameManager.manager.playerDeck.placeholder);
+            GameManager.manager.playerHolster.card4.updateCard(GameManager.manager.playerDeck.placeholder);
             directions.SetActive(true);
             directionBox.text = "Drag a potion card onto the artifact card to load it!";
             gameObject.SetActive(false);
@@ -393,6 +396,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 40)
         {
+            GameManager.manager.playerHolster.card3.updateCard(GameManager.manager.database.cardList[74]);
             textInfo = "This time, try loading the COLD quality potion into the artifact!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
@@ -416,7 +420,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 45)
         {
-            textInfo = "Now say you need to make space in your Holster, or don’t have enough money for a shiny new artifact in the market. You can SELL cards in your holster by dragging them to the SELL ICON on the right!";
+            textInfo = "Now say you need to make space in your Holster, or don’t have enough money for a shiny new artifact in the market. You can SELL cards in your Holster by dragging them to the SELL ICON on the right!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -437,6 +441,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 49)
         {
+            GameManager.manager.playerHolster.card3.updateCard(GameManager.manager.database.cardList[12]);
             textInfo = "Try dragging a card to the trash!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
@@ -451,6 +456,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 52)
         {
+            GameManager.manager.playerHolster.card3.updateCard(GameManager.manager.database.cardList[55]);
             textInfo = "Try cycling a card to your deck!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
@@ -465,6 +471,9 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 55)
         {
+            GameManager.manager.playerDeck.putCardOnBottom(GameManager.manager.database.cardList[38]);
+            GameManager.manager.playerDeck.putCardOnBottom(GameManager.manager.database.cardList[50]);
+            GameManager.manager.playerDeck.putCardOnBottom(GameManager.manager.database.cardList[77]);
             textInfo = "C'mon, try it out! Click on your character portrait to use it!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);

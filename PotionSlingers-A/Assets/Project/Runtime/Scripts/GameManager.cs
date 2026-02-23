@@ -6178,7 +6178,7 @@ public class GameManager : MonoBehaviour
         {
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
-            dialog.textInfo = "Keep an eye out for any cards in the market that may SYNERGIZE with any artifact or vessels you have in your Holster. There are all kinds of crazy combinations to discover!";
+            dialog.textInfo = "Keep an eye out for any cards in the market that may SYNERGIZE with any artifacts or vessels you have in your Holster. There are all kinds of crazy combinations to discover!";
             dialog.ActivateText(dialog.dialogBox);
         }
         else if (dialog.textBoxCounter == 48)
@@ -9264,6 +9264,14 @@ public class GameManager : MonoBehaviour
                 sendErrorMessage(19);
                 return;
             }
+
+            if ((dialog.textBoxCounter == 10 || dialog.textBoxCounter == 11) && playerDeck.deckList.Count == 2)
+            {
+                Debug.Log("You weren't supposed to do that, add UI for tutorial error");
+                sendErrorMessage(19);
+                return;
+            }
+
             switch (md1.cardInt)
             {
                 // Change this to just grab the CardDisplay at the start and then just have one code block instead of 4
