@@ -56,6 +56,8 @@ public class GameManager : MonoBehaviour
     public GameObject backpack;
     public GameObject throwingHand;
     public GameObject tutorialHand;
+    public GameObject sellArrow;
+    public GameObject trashArrow;
     public GameObject potionThrowingHand1;
     public GameObject potionThrowingHand2;
     public GameObject artifactHand1;
@@ -3482,6 +3484,13 @@ public class GameManager : MonoBehaviour
         if (myPlayerIndex != 0)
             return;
 
+        if (Game.tutorial)
+        {
+            sendErrorMessage(19);
+            return;
+        }
+            
+
         if (players[myPlayerIndex].pips >= 3)
         {
             players[myPlayerIndex].subPips(3);
@@ -6183,6 +6192,7 @@ public class GameManager : MonoBehaviour
         }
         else if (dialog.textBoxCounter == 48)
         {
+            sellArrow.SetActive(false);
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.textInfo = "Good! You can also TRASH a card by dragging a card to the trash can! You can also view what’s in the trash at any time by clicking on the trash can!";
@@ -6190,6 +6200,7 @@ public class GameManager : MonoBehaviour
         }
         else if (dialog.textBoxCounter == 51)
         {
+            trashArrow.SetActive(false);
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.textInfo = "You can also CYCLE a card in your Holster back in your deck by dragging it to your deck!";

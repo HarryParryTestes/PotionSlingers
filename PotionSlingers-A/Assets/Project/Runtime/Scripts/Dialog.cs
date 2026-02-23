@@ -140,7 +140,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 3)
         {
-            textInfo = "Let's start with the bread and butter, throwing potions! There’s one right here in your Holster!";
+            textInfo = "Let's start with the bread and butter, throwing potions!\n\nThere’s one right here in your Holster!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -263,7 +263,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             GameManager.manager.tutorialHealth.SetActive(false);
             GameManager.manager.tutorialEssence.SetActive(true);
             GameManager.manager.FadeIn(GameManager.manager.tutorialEssence);
-            textInfo = "These are your Essence Cubes! If your health is empty you’ll use one of these automatically to refill it. If you lose all your Essence Cubes, who knows what’ll happen?";
+            textInfo = "These are your Essence Cubes! If your health is empty you’ll use one of these automatically to refill it.\n\nIf you lose all your Essence Cubes, who knows what’ll happen?";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -376,7 +376,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directionBox.text = "Drag a potion card onto the artifact card to load it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
-            GameManager.manager.artifactDragAnimation();
+            // GameManager.manager.artifactDragAnimation();
         }
         else if (textBoxCounter == 37)
         {
@@ -409,7 +409,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directionBox.text = "Drag the cold potion onto the artifact to load it!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
-            GameManager.manager.artifactDragAnimation();
+            // GameManager.manager.artifactDragAnimation();
         }
         else if (textBoxCounter == 43)
         {
@@ -434,6 +434,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 47)
         {
+            GameManager.manager.sellArrow.SetActive(true);
             directions.SetActive(true);
             directionBox.text = "Drag your artifact card onto the sell icon to sell it!";
             gameObject.SetActive(false);
@@ -449,6 +450,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 50)
         {
+            GameManager.manager.trashArrow.SetActive(true);
             directions.SetActive(true);
             directionBox.text = "Drag a card onto the trash can to trash it!";
             gameObject.SetActive(false);
@@ -502,7 +504,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 60)
         {
-            textInfo = "I think that's it! You are on your own now!\n\nThey grow up so fast! Come visit me some time on the main menu, yeah?";
+            textInfo = "I think that's it! You're all on your own now!\n\nThey grow up so fast! Come visit me some time in the main menu, yeah?";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
