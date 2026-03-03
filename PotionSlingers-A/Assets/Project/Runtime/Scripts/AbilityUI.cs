@@ -62,7 +62,8 @@ public class AbilityUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
             unfill = true;
             cp.doSuper();
             cp.ability = 0;
-            GameManager.manager.StartCoroutine(GameManager.manager.waitThreeSeconds(GameManager.manager.dialog));
+            if(Game.tutorial)
+                GameManager.manager.StartCoroutine(GameManager.manager.waitThreeSeconds(GameManager.manager.dialog));
         }
         else
         {

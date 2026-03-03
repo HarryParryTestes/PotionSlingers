@@ -6,6 +6,7 @@ public class HoverBox : MonoBehaviour
 {
     public CardPlayer player;
     Vector3 originalPos;
+    public bool super = false;
 
     public TMPro.TextMeshProUGUI textBox;
     // Start is called before the first frame update
@@ -35,34 +36,65 @@ public class HoverBox : MonoBehaviour
     }
 
     public void UpdateText(Card card)
-    {/*
-        if (card.cardName == "TroutTickler")
-        {
-            textBox.text = "Gain +1P at the start of your turn.";
-        }
-
-        if (card.cardName == "Ding-a-Ling Clochet")
-        {
-            textBox.text = "Gain +2 Shields at the start of your turn.";
-        }
-
-        if (card.cardName == "GormlessPileus")
-        {
-            textBox.text = "Your vessels do +2 damage.";
-        }
-
-        if(card.cardName == "WitchSpecula")
-        {
-            textBox.text = "At the end of your turn, heal up to 3HP for each unspent pip.";
-        }
-        */
-
+    {
         textBox.text = card.desc;
+    }
+
+    public void UpdateText(CardDisplay cd)
+    {
+        gameObject.SetActive(true);
+        textBox.text = cd.card.desc;
+
+        if (cd.card.cardType == "Artifact" && !cd.gameObject.GetComponent<DragCard>().market && !cd.gameObject.GetComponent<DragCard>().crucible)
+            textBox.text = cd.card.desc + "\n\n" + cd.durability + " uses left!";
+        else
+            textBox.text = cd.card.desc;
+
+        if (cd.card.desc == "")
+        {
+            gameObject.SetActive(true);
+            textBox.text = cd.card.effectAmount + " Damage";
+        }
+
+        if(gameObject.name == "CardHoverBox")
+        {
+            Debug.Log("CharHoverBox!");
+            Vector3 vec = new Vector3(0, 80 * GameManager.manager.heightRatio, 0);
+            if (GameManager.manager.cardPlayer.ability == 30 && super == false)
+            {
+                Debug.Log("Moving UI slightly up");
+                transform.position = transform.position + vec;
+                super = true;
+            }
+            else if (GameManager.manager.cardPlayer.ability < 30 && super)
+            {
+                Debug.Log("Moving UI slightly down");
+                transform.position = transform.position - vec;
+                super = false;
+            }
+        }
     }
 
     public void UpdateAbility(CardPlayer cp)
     {
-        switch(cp.charName)
+        if (gameObject.name == "CharHoverBox")
+        {
+            Debug.Log("CardHoverBox!");
+            Vector3 vec = new Vector3(0, 80 * GameManager.manager.heightRatio, 0);
+            if (GameManager.manager.cardPlayer.ability == 30 && super == false)
+            {
+                Debug.Log("Moving UI slightly up");
+                transform.position = transform.position + vec;
+                super = true;
+            }
+            else if (GameManager.manager.cardPlayer.ability < 30 && super)
+            {
+                Debug.Log("Moving UI slightly down");
+                transform.position = transform.position - vec;
+                super = false;
+            }
+        }
+        switch (cp.charName)
         {
             case "Reets":
                 textBox.text = "Pay 2P to put the top card of your Deck into your Holster.\n\n" +

@@ -1096,6 +1096,7 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
 
     public void displayCardText(CardDisplay cd)
     {
+        /*
         if (cd.card.desc == "")
         {
             GameManager.manager.cardHoverBox.gameObject.SetActive(true);
@@ -1108,6 +1109,9 @@ public class DragCard : MonoBehaviour, IBeginDragHandler, IEndDragHandler, IDrag
             GameManager.manager.cardHoverBox.textBox.text = cd.card.desc + "\n\n" + cd.durability + " uses left!";
         else
             GameManager.manager.cardHoverBox.textBox.text = cd.card.desc;
+        */
+
+        GameManager.manager.cardHoverBox.UpdateText(cd);
     }
 
     public IEnumerator setPadding()

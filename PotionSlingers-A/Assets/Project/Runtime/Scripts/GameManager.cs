@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     GameObject obTop;
     GameObject obLeft;
     GameObject obRight;
+    public GameObject superAnimation;
     public GameObject daggerheels;
     public GameObject tutorialHealth;
     public GameObject tutorialEssence;
@@ -451,8 +452,9 @@ public class GameManager : MonoBehaviour
 
     public void potionDragAnimation()
     {
+        Vector3 vec = new Vector3(300f * widthRatio, 0, 0);
         tutorialHand.SetActive(true);
-        tutorialHand.transform.DOMove(bolo.transform.position, 1.5f).SetLoops(-1, LoopType.Restart);
+        tutorialHand.transform.DOMove(bolo.transform.position - vec, 1.5f).SetLoops(-1, LoopType.Restart);
     }
 
     public void artifactDragAnimation()

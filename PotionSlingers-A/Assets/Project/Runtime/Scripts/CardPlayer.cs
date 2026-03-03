@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 
 public class CardPlayer : MonoBehaviour
@@ -57,6 +59,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject healAmount;
     public GameObject hpBar;
     public GameObject abilityBar;
+    public GameObject superButton;
     public Image barImage;
     public GameObject shieldBar;
     public GameObject shieldCount;
@@ -137,6 +140,7 @@ public class CardPlayer : MonoBehaviour
 
     void Update()
     {
+
         // yes damage
         if (GameManager.manager.damage && name == GameManager.manager.currentPlayerName)
         {
@@ -4129,6 +4133,35 @@ public class CardPlayer : MonoBehaviour
 
     public void doSuper()
     {
+        StartCoroutine(superAttackAnim());
+    }
+
+    public IEnumerator superAttackAnim()
+    {
+        GameManager.manager.superAnimation.SetActive(true);
+        superButton.transform.DOMoveY(100f * GameManager.manager.heightRatio, .75f);
+        superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOKill();
+        superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
+        if (isReets)
+        {
+            GameManager.manager.superAnimation.GetComponent<Animator>().Play("SuperAttack");
+        }
+
+        if (isIsadore)
+        {
+            GameManager.manager.superAnimation.GetComponent<Animator>().Play("SA_Isadore");
+        }
+
+        if (isSaltimbocca)
+        {
+            GameManager.manager.superAnimation.GetComponent<Animator>().Play("SA_Salty");
+        }
+
+        if (isBolo)
+        {
+            GameManager.manager.superAnimation.GetComponent<Animator>().Play("SA_Bolo");
+        }
+        yield return new WaitForSeconds(2f);
         if (isReets)
         {
             GameManager.manager.StartCoroutine(GameManager.manager.ReetsFill(this));
@@ -4140,12 +4173,16 @@ public class CardPlayer : MonoBehaviour
         if (isBolo)
         {
             this.character.flipped = true;
+            abilityBar.GetComponent<Image>().DOKill();
+            abilityBar.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
             GameManager.manager.sendMessage("You used your super ability!");
         }
 
         if (isSaltimbocca)
         {
             this.character.flipped = true;
+            abilityBar.GetComponent<Image>().DOKill();
+            abilityBar.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
             GameManager.manager.sendMessage("You used your super ability!");
         }
 
@@ -4153,9 +4190,12 @@ public class CardPlayer : MonoBehaviour
         {
             GameManager.manager.StartCoroutine(GameManager.manager.IsadoreLoad(this));
             this.character.flipped = true;
+            abilityBar.GetComponent<Image>().DOKill();
+            abilityBar.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
             GameManager.manager.sendMessage("You used your super ability!");
         }
-
+        yield return new WaitForSeconds(.25f);
+        GameManager.manager.superAnimation.SetActive(false);
     }
 
     public void doAbility()
@@ -4201,12 +4241,21 @@ public class CardPlayer : MonoBehaviour
         if(barImage != null)
         {
             if (ability == 30)
+            {
                 barImage.DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+                superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+                // superButton.transform.DOMove(abilityBar.transform.position, 1f).SetEase(Ease.Linear);
+                superButton.transform.DOMoveY(314f * GameManager.manager.heightRatio, .75f);
+
+            }               
             else
             {
                 Debug.Log("Kill the image");
                 barImage.DOKill();
                 barImage.DOColor(GameManager.manager.whiteColor, 0.5f);
+                superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOKill();
+                superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
+                superButton.transform.DOMoveY(100f * GameManager.manager.heightRatio, .75f);
             }
         }        
     }
