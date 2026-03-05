@@ -4243,19 +4243,26 @@ public class CardPlayer : MonoBehaviour
             if (ability == 30)
             {
                 barImage.DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
-                superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
-                // superButton.transform.DOMove(abilityBar.transform.position, 1f).SetEase(Ease.Linear);
-                superButton.transform.DOMoveY(314f * GameManager.manager.heightRatio, .75f);
-
+                if(superButton != null)
+                {
+                    Debug.Log("Super activated!");
+                    superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(GameManager.manager.hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+                    // superButton.transform.DOMove(abilityBar.transform.position, 1f).SetEase(Ease.Linear);
+                    superButton.transform.DOMoveY(314f * GameManager.manager.heightRatio, .75f);
+                }          
             }               
             else
             {
                 Debug.Log("Kill the image");
                 barImage.DOKill();
                 barImage.DOColor(GameManager.manager.whiteColor, 0.5f);
-                superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOKill();
-                superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
-                superButton.transform.DOMoveY(100f * GameManager.manager.heightRatio, .75f);
+                if (superButton != null)
+                {
+                    superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOKill();
+                    superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(GameManager.manager.whiteColor, 0.5f);
+                    superButton.transform.DOMoveY(100f * GameManager.manager.heightRatio, .75f);
+                }
+                
             }
         }        
     }

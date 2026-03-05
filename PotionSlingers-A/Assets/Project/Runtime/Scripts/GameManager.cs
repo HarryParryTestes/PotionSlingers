@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     GameObject obLeft;
     GameObject obRight;
     public GameObject superAnimation;
+    public GameObject superButton;
     public GameObject daggerheels;
     public GameObject tutorialHealth;
     public GameObject tutorialEssence;
@@ -527,11 +528,11 @@ public class GameManager : MonoBehaviour
         if (!backpackSelected)
         {
             // insert backpack unzipping sfx or something
-            backpack.transform.DOMoveY(740f * heightRatio, .75f);
+            backpack.transform.DOMoveY(875f * heightRatio, .75f);
             backpackSelected = true;
         } else
         {
-            backpack.transform.DOMoveY(1040f * heightRatio, .75f);
+            backpack.transform.DOMoveY(1125f * heightRatio, .75f);
             backpackSelected = false;
         }
     }
@@ -3059,6 +3060,7 @@ public class GameManager : MonoBehaviour
         // dummy players for tutorial
         if (Game.tutorial)
         {
+            smoke.SetActive(true);
             Debug.Log("Starting tutorial");
             Debug.Log("Happened in Start");
             dialogBox.SetActive(true);
@@ -6210,11 +6212,14 @@ public class GameManager : MonoBehaviour
         }
         else if (dialog.textBoxCounter == 54)
         {
-            players[myPlayerIndex].addAbility(30);
+            cardPlayer.addAbility(30);
             dialog.directions.gameObject.SetActive(false);
             dialog.gameObject.SetActive(true);
             dialog.textInfo = "Ok, I think we did enough damage to reach our max power! When your Super Gauge is FULL, you can click it to unleash an ULTIMATE ATTACK!";
             dialog.ActivateText(dialog.dialogBox);
+            cardPlayer.superButton.SetActive(true);
+            cardPlayer.superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+            cardPlayer.superButton.transform.DOMoveY(314f * heightRatio, .75f);
         }
 
         else if (dialog.textBoxCounter == 57)

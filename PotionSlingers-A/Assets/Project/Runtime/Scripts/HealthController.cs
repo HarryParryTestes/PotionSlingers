@@ -16,6 +16,19 @@ public class HealthController : MonoBehaviour, IDropHandler, IPointerEnterHandle
     public Text essenceCubesText;
     public bool dead;               //Does the player still have health left?
 
+    public MyNetworkManager game;
+    public MyNetworkManager Game
+    {
+        get
+        {
+            if (game != null)
+            {
+                return game;
+            }
+            return game = MyNetworkManager.singleton as MyNetworkManager;
+        }
+    }
+
     public void addHealth(int health) {
         hp += health;
 
@@ -29,6 +42,10 @@ public class HealthController : MonoBehaviour, IDropHandler, IPointerEnterHandle
 
     public void OnDrop(PointerEventData eventData)
     {
+
+        if (Game.tutorial)
+            return;
+
         Debug.Log("Drop happened");
         GameObject heldCard = eventData.pointerDrag;
         DragCard dc = heldCard.GetComponent<DragCard>();
@@ -61,6 +78,9 @@ public class HealthController : MonoBehaviour, IDropHandler, IPointerEnterHandle
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (Game.tutorial)
+            return;
+
         GameObject heldCard = eventData.pointerDrag;
         if(heldCard != null)
         {
