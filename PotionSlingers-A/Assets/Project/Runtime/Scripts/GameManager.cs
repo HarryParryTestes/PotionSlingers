@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
     GameObject obLeft;
     GameObject obRight;
     public GameObject superAnimation;
-    public GameObject superButton;
+    public GameObject bossHealthBar;
     public GameObject daggerheels;
     public GameObject tutorialHealth;
     public GameObject tutorialEssence;
@@ -1775,6 +1775,49 @@ public class GameManager : MonoBehaviour
         p4.SetActive(false);
     }
 
+    void setBossCharacter(string charName, int health)
+    {
+        Debug.Log("Setting duel character!!!");
+        numPlayers = 2;
+        players[2].gameObject.AddComponent<ComputerPlayer>();
+        players[2].charName = charName;
+        players[2].name = charName;
+        playerTopName.text = players[2].charName;
+        players[2].character.onCharacterClick(charName);
+        players[2].checkCharacter();
+
+        if (saveData.savedGame && !saveData.newStage)
+        {
+            players[2].hpCubes = saveData.opp1Cubes;
+            players[2].hp = saveData.opp1Health;
+            if (health != players[2].maxHp)
+                players[2].maxHp = health;
+            players[2].hBar.image.fillAmount = 0;
+            players[2].shields = saveData.opp1Shields;
+        }
+        else
+        {
+            players[2].hpCubes = 1;
+            players[2].hp = health;
+            if (health != players[2].maxHp)
+                players[2].maxHp = health;
+            saveData.opp1Cubes = 1;
+            saveData.opp1Health = health;
+        }
+        players[2].updateHealthUI();
+        players[2].user_id = 1;
+
+        players[2].username.SetActive(false);
+        players[2].bar.SetActive(false);
+        players[2].playerHPCubes.SetActive(false);
+
+        players[1] = players[2];
+        players[2] = players[3];
+        p3.SetActive(false);
+        p4.SetActive(false);
+        bossHealthBar.SetActive(true);
+    }
+
     void set3PCharacters(string charName1, int health1, string charName2, int health2)
     {
         numPlayers = 3;
@@ -2099,7 +2142,7 @@ public class GameManager : MonoBehaviour
                 break;
             case "Singelotte":
                 background.sprite = backgrounds[1];
-                setDuelCharacter("Singelotte", 33);
+                setBossCharacter("Singelotte", 33);
                 BossMusicTrigger.SetActive(true);
                 break;
             case "Bag o' Snakes":
@@ -4961,15 +5004,19 @@ public class GameManager : MonoBehaviour
     {
         if (myPlayerIndex != 0)
         {
-            // this.gameObject.SetActive(false);
             endTurnButton.GetComponent<Image>().CrossFadeAlpha(0.25f, 0.5f, true);
+            bossHealthBar.GetComponent<Image>().CrossFadeAlpha(1, 0.5f, true);
+            bossHealthBar.transform.GetChild(1).GetComponent<Image>().CrossFadeAlpha(1, 0.5f, true);
+            bossHealthBar.transform.GetChild(2).GetComponent<Image>().CrossFadeAlpha(1, 0.5f, true);
             endTurnButton.GetComponent<CanvasGroup>().interactable = false;
             // abilityBar.GetComponent<AbilityBar>().enabled = false;
         }
         else
         {
-            // this.gameObject.SetActive(true);
             endTurnButton.GetComponent<Image>().CrossFadeAlpha(1, 0.5f, true);
+            bossHealthBar.GetComponent<Image>().CrossFadeAlpha(0.25f, 0.5f, true);
+            bossHealthBar.transform.GetChild(1).GetComponent<Image>().CrossFadeAlpha(0.25f, 0.5f, true);
+            bossHealthBar.transform.GetChild(2).GetComponent<Image>().CrossFadeAlpha(0.25f, 0.5f, true);
             endTurnButton.GetComponent<CanvasGroup>().interactable = true;
             // abilityBar.GetComponent<AbilityBar>().enabled = true;
         }

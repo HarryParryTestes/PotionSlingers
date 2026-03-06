@@ -14,6 +14,9 @@ public class HoverBox : MonoBehaviour
     {
         originalPos = transform.position;
 
+        if (gameObject.name == "CardHoverBox" || gameObject.name == "CharHoverBox")
+            return;
+
         if (player.charName == "Singelotte")
         {
             Debug.Log("Moving HoverBox for Singelotte");

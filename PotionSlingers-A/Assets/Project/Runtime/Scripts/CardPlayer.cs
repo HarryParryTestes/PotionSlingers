@@ -58,6 +58,7 @@ public class CardPlayer : MonoBehaviour
     public GameObject healSign;
     public GameObject healAmount;
     public GameObject hpBar;
+    public GameObject bossHpBar;
     public GameObject abilityBar;
     public GameObject superButton;
     public Image barImage;
@@ -741,6 +742,8 @@ public class CardPlayer : MonoBehaviour
                 numbers = (float)hp / (float)maxHp;
             // Debug.Log("Fill amount is: " + numbers);
             hpBar.GetComponent<Image>().fillAmount = numbers;
+            if(bossHpBar != null)
+                bossHpBar.GetComponent<Image>().fillAmount = numbers;
         }
 
         if (shieldBar != null)
