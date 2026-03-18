@@ -993,7 +993,7 @@ public class CardPlayer : MonoBehaviour
     public void setDefaultTurn()
     {
         Debug.Log("setDefaultTurn triggered");
-        currentPlayerHighlight.SetActive(true);
+        // currentPlayerHighlight.SetActive(true);
 
         reetsCycle = false;
         // check if cube should be taken
@@ -1511,12 +1511,12 @@ public class CardPlayer : MonoBehaviour
 
     public void setCurrentPlayer()
     {
-        currentPlayerHighlight.SetActive(true);
+        // currentPlayerHighlight.SetActive(true);
     }
 
     public void removeCurrentPlayer()
     {
-        currentPlayerHighlight.SetActive(false);
+        // currentPlayerHighlight.SetActive(false);
     }
 
     public int checkRings()

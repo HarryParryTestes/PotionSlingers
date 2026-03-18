@@ -33,6 +33,8 @@ public class DeckMenuScroll : MonoBehaviour
     public CardDatabase database;
     public Holster holster;
 
+    public GameObject backpackMenu;
+
     public MyNetworkManager game;
     public MyNetworkManager Game
     {
@@ -152,7 +154,7 @@ public class DeckMenuScroll : MonoBehaviour
         {
             foreach (Card card in database.cardList)
             {
-                if (card.name == saveData.playerHolster[i])
+                if (card.cardName == saveData.playerHolster[i])
                 {
                     holster.cardList[i].updateCard(card);
                     // holster.cardList[i].card = card;
@@ -192,6 +194,94 @@ public class DeckMenuScroll : MonoBehaviour
         initHolster = true;
     }
 
+    public void initBackpackDisplay()
+    {
+        SaveData saveData = SaveSystem.LoadGameData();
+
+        List<Card> fashion = new List<Card>();
+        List<Card> rings = new List<Card>();
+
+        CardDisplay fashionCard1 = backpackMenu.transform.GetChild(2).gameObject.GetComponent<CardDisplay>();
+        CardDisplay fashionCard2 = backpackMenu.transform.GetChild(3).gameObject.GetComponent<CardDisplay>();
+        CardDisplay ringCard1 = backpackMenu.transform.GetChild(4).gameObject.GetComponent<CardDisplay>();
+        CardDisplay ringCard2 = backpackMenu.transform.GetChild(9).gameObject.GetComponent<CardDisplay>();
+
+        if (!saveData.playerHolster.Any())
+            return;
+
+        foreach (string name in saveData.playerFashion)
+        {
+            foreach (Card card in database.cardList)
+            {
+                if (card.cardName == name)
+                {
+                    Debug.Log("Fashion found!");
+                    fashion.Add(card);
+                    break;
+                }
+            }
+        }
+
+        foreach (string name in saveData.playerRings)
+        {
+            foreach (Card card in database.cardList)
+            {
+                if (card.cardName == name)
+                {
+                    Debug.Log("Ring found!");
+                    rings.Add(card);
+                    break;
+                }
+            }
+        }
+
+        if (fashion.Count == 0)
+        {
+            fashionCard1.gameObject.SetActive(false);
+            fashionCard2.gameObject.SetActive(false);
+        }
+
+        if (fashion.Count == 1)
+        {
+            fashionCard1.gameObject.SetActive(true);
+            fashionCard2.gameObject.SetActive(false);
+
+            fashionCard1.updateCard(fashion[0]);
+        }
+
+        if (fashion.Count == 2)
+        {
+            fashionCard1.gameObject.SetActive(true);
+            fashionCard2.gameObject.SetActive(true);
+
+            fashionCard1.updateCard(fashion[0]);
+            fashionCard2.updateCard(fashion[1]);
+        }
+
+        if (rings.Count == 0)
+        {
+            ringCard1.gameObject.SetActive(false);
+            ringCard2.gameObject.SetActive(false);
+        }
+
+        if (rings.Count == 1)
+        {
+            ringCard1.gameObject.SetActive(true);
+            ringCard2.gameObject.SetActive(false);
+
+            ringCard1.updateCard(rings[0]);
+        }
+
+        if (rings.Count == 2)
+        {
+            ringCard1.gameObject.SetActive(true);
+            ringCard2.gameObject.SetActive(true);
+
+            ringCard1.updateCard(rings[0]);
+            ringCard2.updateCard(rings[1]);
+        }
+    }
+
     public void displayDeckInStoryModeMenu()
     {
         this.gameObject.SetActive(true);
@@ -208,7 +298,7 @@ public class DeckMenuScroll : MonoBehaviour
         {
             foreach (Card card in database.cardList)
             {
-                if (card.name == saveData.playerDeck[i])
+                if (card.cardName == saveData.playerDeck[i])
                 {                    
                     deckList.Add(card);
                 }

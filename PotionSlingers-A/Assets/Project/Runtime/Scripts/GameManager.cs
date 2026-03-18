@@ -2836,7 +2836,9 @@ public class GameManager : MonoBehaviour
                     Debug.Log("Health bar edit");
                     players[0].hBar.image.fillAmount = 0;
                 }
-                players[0].currentPlayerHighlight.SetActive(true);
+
+                // fuck this thing!
+                // players[0].currentPlayerHighlight.SetActive(true);
 
                 // handle fashion
                 players[0].checkHatBonuses();
@@ -2845,6 +2847,12 @@ public class GameManager : MonoBehaviour
                 players[0].updateHealthUI();
                 players[0].updatePipsUI();
                 players[0].addAbility(saveData.ability);
+                if (players[0].ability == 30)
+                {
+                    cardPlayer.superButton.SetActive(true);
+                    cardPlayer.superButton.transform.GetChild(0).gameObject.GetComponent<Image>().DOColor(hotBonusColor, 1.5f).SetLoops(-1, LoopType.Yoyo);
+                    cardPlayer.superButton.transform.DOMoveY(314f * heightRatio, .75f);
+                }
                 currentPlayerName = players[0].name;
 
                 // all my homies hate flipping
@@ -2942,7 +2950,7 @@ public class GameManager : MonoBehaviour
                 players[0].charName = "Pluot";
                 players[0].character.onCharacterClick("Pluot");
                 players[0].checkCharacter();
-                players[0].currentPlayerHighlight.SetActive(true);
+                // players[0].currentPlayerHighlight.SetActive(true);
                 currentPlayerName = playerBottomName.text;
                 // everyone except player 1
                 if (i > 0)
@@ -2989,7 +2997,7 @@ public class GameManager : MonoBehaviour
             md2.shuffle();
             initDecks();
 
-            players[0].currentPlayerHighlight.SetActive(true);
+            // players[0].currentPlayerHighlight.SetActive(true);
 
             // take this out for now, maybe put it back in
             /*
@@ -3116,7 +3124,7 @@ public class GameManager : MonoBehaviour
             playerBottomName.text = SteamFriends.GetPersonaName().ToString();
             cardPlayer.name = SteamFriends.GetPersonaName().ToString();
             currentPlayerName = playerBottomName.text;
-            players[0].currentPlayerHighlight.SetActive(true);
+            // players[0].currentPlayerHighlight.SetActive(true);
             // playerTopName.text = "BOLO";
             // players[2].hpCubes = 1;
             // players[2].updateHealthUI();
@@ -3195,7 +3203,7 @@ public class GameManager : MonoBehaviour
                 }
                 */
                 Debug.Log("Found local player");
-                players[0].currentPlayerHighlight.SetActive(true);
+                // players[0].currentPlayerHighlight.SetActive(true);
                 // maybe use this?
                 // players[i].currentPlayerHighlight.SetActive(true);
                 playerBottomName.text = Game.GamePlayers[i].playerName;
@@ -3217,7 +3225,7 @@ public class GameManager : MonoBehaviour
                     players[1].name = Game.GamePlayers[i].playerName;
                     players[1].charName = Game.GamePlayers[i].charName;
                     players[1].user_id = i;
-                    players[1].currentPlayerHighlight.SetActive(false);
+                    // players[1].currentPlayerHighlight.SetActive(false);
                     Game.GamePlayers[i].hp = players[1].hp;
                     Game.GamePlayers[i].essenceCubes = players[1].hpCubes;
                     players[1].character.onCharacterClick(Game.GamePlayers[i].charName);
@@ -3227,7 +3235,7 @@ public class GameManager : MonoBehaviour
                 }
                 if (tracker == 1)
                 {
-                    players[2].currentPlayerHighlight.SetActive(false);
+                    // players[2].currentPlayerHighlight.SetActive(false);
                     playerTopName.text = Game.GamePlayers[i].playerName;
                     players[2].name = Game.GamePlayers[i].playerName;
                     players[2].charName = Game.GamePlayers[i].charName;
@@ -3240,7 +3248,7 @@ public class GameManager : MonoBehaviour
                 }
                 if (tracker == 2)
                 {
-                    players[3].currentPlayerHighlight.SetActive(false);
+                    // players[3].currentPlayerHighlight.SetActive(false);
                     playerRightName.text = Game.GamePlayers[i].playerName;
                     players[3].name = Game.GamePlayers[i].playerName;
                     players[3].charName = Game.GamePlayers[i].charName;
@@ -4160,7 +4168,7 @@ public class GameManager : MonoBehaviour
         damage = false;
         trashDeckBonus = false;
 
-        player.currentPlayerHighlight.SetActive(true);
+        // player.currentPlayerHighlight.SetActive(true);
 
         if (dialog.textBoxCounter == 17 && player == cardPlayer)
         {
@@ -5163,7 +5171,7 @@ public class GameManager : MonoBehaviour
                 SteamUserStats.StoreStats();
             }
 
-            players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
+            // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
 
             myPlayerIndex++;
 
@@ -5491,7 +5499,7 @@ public class GameManager : MonoBehaviour
                 SteamUserStats.StoreStats();
             }
 
-            players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
+            // players[myPlayerIndex].currentPlayerHighlight.SetActive(false);
 
             foreach(CardDisplay cd in players[myPlayerIndex].holster.cardList)
             {

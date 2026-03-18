@@ -60,7 +60,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         GameManager.manager.tutorialArrow2.SetActive(false);
 
         textBoxCounter = 0;
-        textInfo = "Hey its me, tutorial girl! Welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion slinging " +
+        textInfo = "Hey it's me, tutorial girl! Welcome to the world of Potion Slingers!\n\nThis tutorial should teach the basics of all the potion slinging " +
             "action this game has to offer!";
         ActivateText(dialogBox);
         Boloidle.SetActive(false);
@@ -125,7 +125,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         textBoxCounter++;
         if (textBoxCounter == 1)
         {
-            textInfo = "Lets not waste too much time doing this... even though its MY favorite thing.";
+            textInfo = "Let's not waste too much time doing this... even though its MY favorite thing.";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -133,14 +133,14 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 2)
         {
-            textInfo = "We need to get you to learn how to play as quickly as you can. I promise youll get the hang of it!";
+            textInfo = "We need to get you to learn how to play as quickly as you can. I promise you'll get the hang of it!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);       
         }
         else if (textBoxCounter == 3)
         {
-            textInfo = "Lets start with the bread and butter, throwing potions!\n\nTheres one right here in your Holster!";
+            textInfo = "Let's start with the bread and butter, throwing potions!\n\nTheres one right here in your Holster!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -175,7 +175,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 7)
         {
-            textInfo = "Since your Holster is empty, youll need to buy more potions now. Lets open the market!";
+            textInfo = "Since your Holster is empty, you'll need to buy more potions now. Lets open the market!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -263,7 +263,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             GameManager.manager.tutorialHealth.SetActive(false);
             GameManager.manager.tutorialEssence.SetActive(true);
             GameManager.manager.FadeIn(GameManager.manager.tutorialEssence);
-            textInfo = "These are your Essence Cubes! If your health is empty youll use one of these automatically to refill it.\n\nIf you lose all your Essence Cubes, who knows whatll happen?";
+            textInfo = "These are your Essence Cubes! If your health is empty you'll use one of these automatically to refill it.\n\nIf you lose all your Essence Cubes, who knows what'll happen?";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -289,7 +289,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         }
         else if (textBoxCounter == 22)
         {
-            textInfo = "Now lets try using that vessel you bought. We can LOAD two potions into it and combine them together! Try dragging the potion cards on top of the vessel card!";
+            textInfo = "Now let's try using that vessel you bought. We can LOAD two potions into it and combine them together! Try dragging the potion cards on top of the vessel card!";
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
@@ -494,6 +494,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
+            if(!GameManager.manager.backpackSelected)
+                GameManager.manager.moveBackpack();
         }
         else if (textBoxCounter == 59)
         {
@@ -508,6 +510,8 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             ActivateText(dialogBox);
             Boloidle.SetActive(false);
             Bolotalk.SetActive(true);
+            if (GameManager.manager.backpackSelected)
+                GameManager.manager.moveBackpack();
         }
         else if (textBoxCounter == 61)
         {

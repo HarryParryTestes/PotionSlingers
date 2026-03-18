@@ -16,6 +16,7 @@ public class TreasureMenu : MonoBehaviour
     public GameObject discardMenu;
     public GameObject currencyHoverBox;
     public GameObject healthHoverBox;
+    public GameObject backpackHoverBox;
     public GameObject deck;
     public GameObject holster;
 
@@ -131,6 +132,7 @@ public class TreasureMenu : MonoBehaviour
         FadeIn(this.transform.GetChild(9).GetChild(3).gameObject);
         currencyHoverBox.SetActive(false);
         healthHoverBox.SetActive(false);
+        backpackHoverBox.SetActive(false);
         deck.SetActive(false);
         holster.SetActive(false);
         foreach (CardDisplay cd in cardDisplays)
@@ -257,6 +259,7 @@ public class TreasureMenu : MonoBehaviour
         this.gameObject.SetActive(false);
         currencyHoverBox.SetActive(true);
         healthHoverBox.SetActive(true);
+        backpackHoverBox.SetActive(true);
         // ADD THIS BACK IN WHEN YOU WANT TO SHOW THE UI AGAIN!
         // deck.SetActive(true);
         // holster.SetActive(true);
