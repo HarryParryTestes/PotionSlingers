@@ -232,6 +232,10 @@ public class SceneTransition : MonoBehaviour
 
     public void shopAnimInit()
     {
+        // hide backpack, holster, and deck buttons
+        objects[2].SetActive(false);
+        objects[3].SetActive(false);
+        objects[4].SetActive(false);
         StartCoroutine(shopAnimation());
     }
 

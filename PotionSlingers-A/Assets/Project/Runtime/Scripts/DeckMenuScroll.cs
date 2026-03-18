@@ -206,6 +206,11 @@ public class DeckMenuScroll : MonoBehaviour
         CardDisplay ringCard1 = backpackMenu.transform.GetChild(4).gameObject.GetComponent<CardDisplay>();
         CardDisplay ringCard2 = backpackMenu.transform.GetChild(9).gameObject.GetComponent<CardDisplay>();
 
+        fashionCard1.gameObject.SetActive(false);
+        fashionCard2.gameObject.SetActive(false);
+        ringCard1.gameObject.SetActive(false);
+        ringCard2.gameObject.SetActive(false);
+
         if (!saveData.playerHolster.Any())
             return;
 

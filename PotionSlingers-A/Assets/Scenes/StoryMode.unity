@@ -2609,6 +2609,7 @@ MonoBehaviour:
   - {fileID: 5283088080993187826}
   - {fileID: 143302087}
   - {fileID: 986062327}
+  - {fileID: 2079534701}
   slingerPool:
   - Saltimbocca
   - Bolo
@@ -9926,6 +9927,7 @@ MonoBehaviour:
   discardMenu: {fileID: 810588850}
   currencyHoverBox: {fileID: 993742899}
   healthHoverBox: {fileID: 5283088080993187826}
+  backpackHoverBox: {fileID: 0}
   deck: {fileID: 143302087}
   holster: {fileID: 986062327}
 --- !u!114 &386707791 stripped
@@ -30401,6 +30403,42 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
       - m_Target: {fileID: 178801307}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 143302087}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 986062327}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2079534701}
         m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
         m_MethodName: SetActive
         m_Mode: 6
@@ -68212,12 +68250,17 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 26598128763283124, guid: 61c80abca4165ab47ba3c788ef64f4f9, type: 3}
   m_PrefabInstance: {fileID: 2079534698}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 2079534701}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2079534701 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 26598128763283135, guid: 61c80abca4165ab47ba3c788ef64f4f9, type: 3}
+  m_PrefabInstance: {fileID: 2079534698}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2086506602 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 98190811547720585, guid: de1f6784ba94f1848bab4d0700354a0f, type: 3}
