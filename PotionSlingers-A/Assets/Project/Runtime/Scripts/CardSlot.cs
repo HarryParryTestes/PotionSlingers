@@ -279,8 +279,11 @@ public class CardSlot : MonoBehaviour, IDropHandler
 
    public void OnDrop(PointerEventData eventData)
     {
+        // I'm going to disable this functionality for now because it's having some issues with properly showing the UI
         if (placeholder)
         {
+            return;
+            Debug.Log("Placeholder drop happening!");
             PlaceholderDrop(eventData);
             return;
         }     

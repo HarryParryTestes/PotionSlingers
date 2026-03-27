@@ -191,7 +191,7 @@ public class MainMenu : MonoBehaviour
 
     public void openDiscordLink()
     {
-        Application.OpenURL("https://discord.gg/xjU69XMZ8W");
+        Application.OpenURL("https://discord.gg/5JMuhd3Kr6");
     }
 
     public void openWebsiteLink()
