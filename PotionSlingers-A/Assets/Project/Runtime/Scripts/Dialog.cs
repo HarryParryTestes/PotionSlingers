@@ -69,7 +69,7 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
 
     public void initEndDemoDialog()
     {
-        textBoxCounter = 45;
+        textBoxCounter = 99;
         textInfo = "Good Job, You won! This marks the end of the demo currently.\n\nWishlist us on Steam, join the Discord, and follow " +
             "us on social\nmedia for development updates and an upcoming Beta Test!\n\nThank you so much for playing!!!";
         ActivateText(dialogBox);
@@ -521,6 +521,10 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
         {
             SceneManager.LoadScene("TitleMenu");
         }
+        else if (textBoxCounter == 100)
+        {
+            SceneManager.LoadScene("TitleMenu");
+        }
     }
 
     public void endTutorialDialog()
@@ -681,6 +685,10 @@ public class Dialog : MonoBehaviour, IPointerDownHandler
             directionBox.text = "Buy a vessel from the bottom row of the market!";
             gameObject.SetActive(false);
             nameTag.SetActive(false);
+        }
+        else if (textBoxCounter == 100)
+        {
+            SceneManager.LoadScene("TitleMenu");
         }
 
         /*

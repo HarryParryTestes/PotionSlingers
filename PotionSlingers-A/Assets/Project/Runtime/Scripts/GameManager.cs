@@ -780,9 +780,13 @@ public class GameManager : MonoBehaviour
         // take this out for demo
         if (players[1].charName == "Singelotte")
         {
-            // Invoke("startEndDemo", 4f);
+            Invoke("startEndDemo", 4f);
+
+            // WORLD 2 CODE
+            /*
             Debug.Log("Resetting map after defeating boss!");
             resetMap();
+            */
         }
         else
             FadeIn(advanceStageUI);
@@ -1458,10 +1462,11 @@ public class GameManager : MonoBehaviour
                     // dialog.initEndDemoDialog();
 
                     // TAKE THIS OUT FOR NOW TO TEST! PUT BACK IN FOR THE DEMO!
-                    // Invoke("startEndDemo", 4f);
-
+                    Invoke("startEndDemo", 4f);
+                    /*
                     Debug.Log("Resetting map after defeating boss!");
                     resetMap();
+                    */
                     return;
                 }
 
@@ -11038,7 +11043,7 @@ public class GameManager : MonoBehaviour
 
     public IEnumerator DelayedFade(GameObject gameObj)
     {
-        yield return new WaitForSeconds(2.25f);
+        yield return new WaitForSeconds(1.75f);
         FadeIn(gameObj);
     }
 
