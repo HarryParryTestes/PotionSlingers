@@ -362,6 +362,13 @@ public class CardPlayer : MonoBehaviour
                 this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 60, this.transform.position.z);
                 this.GetComponent<Image>().raycastPadding = new Vector4(44f, 32f, 43f, 0.5f);
                 break;
+            case "Aniara":
+                Debug.Log("Aniara!!!");
+                this.GetComponent<Image>().SetNativeSize();
+                this.transform.localScale = new Vector3(0.6f, 0.6f, 0);
+                // this.transform.position = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+                // this.GetComponent<Image>().raycastPadding = new Vector4(44f, 32f, 43f, 0.5f);
+                break;
             case "Fingas":
                 Debug.Log("Fingas!!!");
                 if (Screen.width == 1280)
@@ -532,6 +539,11 @@ public class CardPlayer : MonoBehaviour
                 animator.Play("SingeIdle");
                 break;
 
+            case "Aniara":
+                Debug.Log("Aniara animation");
+                animator.Play("AniaraIdle");
+                break;
+
             case "Dippit":
                 Debug.Log("Dippit animation");
                 animator.Play("Dippit_Idle");
@@ -635,6 +647,10 @@ public class CardPlayer : MonoBehaviour
             case "Singelotte":
                 Debug.Log("Singe Hit animation");
                 animator.Play("SingeHit");
+                break;
+            case "Aniara":
+                Debug.Log("Aniara Hit animation");
+                animator.Play("AniaraHit");
                 break;
             case "Carnival":
                 Debug.Log("Carnival hit animation should run here!");

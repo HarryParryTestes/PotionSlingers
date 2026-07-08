@@ -26,13 +26,14 @@ public class EnemyPool : MonoBehaviour
 
     public string GetBossEnemy()
     {
-        System.Random rng = new System.Random();
+        SaveData saveData = SaveSystem.LoadGameData();
 
-        // change this later lol
+        if (saveData.world == 1)
+            return "Singelotte";
+        else if (saveData.world == 2)
+            return "Aniara";
 
-        // int index = rng.Next(bosses.Count);
         return "Singelotte";
-        // return bosses[index];
     }
 
     public string GetCutsceneEnemy()

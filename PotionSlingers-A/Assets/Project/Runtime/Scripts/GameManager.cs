@@ -778,15 +778,14 @@ public class GameManager : MonoBehaviour
         // Game.ServerChangeScene("StoryMode");
         // advanceStageUI.SetActive(true);
         // take this out for demo
-        if (players[1].charName == "Singelotte")
+        if (players[1].charName == "Singelotte" || players[1].charName == "Aniara")
         {
-            Invoke("startEndDemo", 4f);
+            // DEMO CODE, ADD BACK IN FOR DEMO BUILD
+            // Invoke("startEndDemo", 4f);
 
             // WORLD 2 CODE
-            /*
             Debug.Log("Resetting map after defeating boss!");
             resetMap();
-            */
         }
         else
             FadeIn(advanceStageUI);
@@ -1820,6 +1819,10 @@ public class GameManager : MonoBehaviour
         players[2] = players[3];
         p3.SetActive(false);
         p4.SetActive(false);
+        if (charName == "Singelotte")
+            bossHealthBar.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "Singelotte, the Burn Witch";
+        else if (charName == "Aniara")
+            bossHealthBar.transform.GetChild(0).gameObject.GetComponent<TMPro.TextMeshProUGUI>().text = "Aniara, the Placeholder";
         bossHealthBar.SetActive(true);
     }
 
@@ -2148,6 +2151,11 @@ public class GameManager : MonoBehaviour
             case "Singelotte":
                 background.sprite = backgrounds[1];
                 setBossCharacter("Singelotte", 33);
+                BossMusicTrigger.SetActive(true);
+                break;
+            case "Aniara":
+                background.sprite = backgrounds[1];
+                setBossCharacter("Aniara", 10);
                 BossMusicTrigger.SetActive(true);
                 break;
             case "Bag o' Snakes":

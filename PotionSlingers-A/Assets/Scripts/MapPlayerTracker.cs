@@ -292,6 +292,10 @@ namespace Map
                 case "Crowpunk+":
                     transition.GetComponent<SceneTransition>().doTransition();
                     break;
+                case "Aniara":
+                    // implement button for the cutscene later
+                    transition.GetComponent<SceneTransition>().doTransition();
+                    break;
                 case "Singelotte":
                     transition.GetComponent<SceneTransition>().hideUI();
                     transition.GetComponent<SceneTransition>().singeButton.onClick.Invoke();
