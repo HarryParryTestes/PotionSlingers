@@ -9184,7 +9184,10 @@ MonoBehaviour:
         type: 0
         typeString: CustomFieldType_Text
       - title: Sequence
-        value: 
+        value: 'HidePanel(5, portrait, immediate);
+
+          HidePanel(6, portrait,
+          immediate);'
         type: 0
         typeString: CustomFieldType_Text
       conversationID: 14
@@ -9586,61 +9589,6 @@ MonoBehaviour:
       - originConversationID: 14
         originDialogueID: 23
         destinationConversationID: 14
-        destinationDialogueID: 24
-        isConnector: 0
-        priority: 2
-      conditionsString: 
-      userScript: 
-      onExecute:
-        m_PersistentCalls:
-          m_Calls: []
-      canvasRect:
-        serializedVersion: 2
-        x: 48.315796
-        y: 520.1217
-        width: 160
-        height: 30
-    - id: 24
-      fields:
-      - title: Title
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Description
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Actor
-        value: 7
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Conversant
-        value: -1
-        type: 5
-        typeString: CustomFieldType_Actor
-      - title: Menu Text
-        value: 
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Dialogue Text
-        value: LeviosAAA!  LeviosAAAAH!  CORRECT ME, I DARE YOU! COME ON!
-        type: 0
-        typeString: CustomFieldType_Text
-      - title: Sequence
-        value: AnimatorPlay(Brash,speakerportrait);
-        type: 0
-        typeString: CustomFieldType_Text
-      conversationID: 14
-      isRoot: 0
-      isGroup: 0
-      nodeColor: 
-      delaySimStatus: 0
-      falseConditionAction: Block
-      conditionPriority: 2
-      outgoingLinks:
-      - originConversationID: 14
-        originDialogueID: 24
-        destinationConversationID: 14
         destinationDialogueID: 25
         isConnector: 0
         priority: 2
@@ -9652,7 +9600,7 @@ MonoBehaviour:
       canvasRect:
         serializedVersion: 2
         x: 48.315796
-        y: 570.1217
+        y: 520.1217
         width: 160
         height: 30
     - id: 25
